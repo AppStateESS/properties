@@ -395,11 +395,11 @@ class Roommate_User {
             foreach ($_SESSION['roommate_search'] as $key => $value) {
                 switch ($key) {
                     case 'sub':
-                        $pager->db->addWhere('sublease', '1', '=', 'and', 'search');
+                        //$pager->db->addWhere('sublease', '1', '=', 'and', 'search');
                         break;
 
                     case 'nosub':
-                        $pager->db->addWhere('sublease', '0', '=', 'and', 'search');
+                        //$pager->db->addWhere('sublease', '0', '=', 'and', 'search');
                         break;
 
                     case 'gen':

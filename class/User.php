@@ -607,10 +607,13 @@ class User {
         $link = 'index.php?module=properties&uop=search';
         $page['ALL'] = sprintf('<li class="%s"><a href="%s">All properties</a></li>',
                 $all_class, 'index.php?module=properties&uop=remove&s=allsub');
-        $page['NEW'] = sprintf('<li class="%s"><a href="%s%s">New leases only</a></li>',
-                $new_class, $link, '&amp;nosub=1');
-        $page['SUB'] = sprintf('<li class="%s"><a href="%s%s">Subleases only</a></li>',
-                $sub_class, $link, '&amp;sub=1');
+        /*
+          $page['NEW'] = sprintf('<li class="%s"><a href="%s%s">New leases only</a></li>',
+          $new_class, $link, '&amp;nosub=1');
+          $page['SUB'] = sprintf('<li class="%s"><a href="%s%s">Subleases only</a></li>',
+          $sub_class, $link, '&amp;sub=1');
+         */
+
 
         $pager->addPageTags($page);
         $content = $pager->get();
