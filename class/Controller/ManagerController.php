@@ -15,15 +15,15 @@ use properties\Factory\ManagerFactory as Factory;
  *
  * @author Matthew McNaney <mcnaneym@appstate.edu>
  */
-class ManagerController extends \phpws2\Http\Controller
+class ManagerController extends BaseController
 {
 
-    public function get(\Request $request)
+    public function __construct($module)
     {
-        $data = array();
-        $view = $this->getView($data, $request);
-        $response = new \Response($view);
-        return $response;
+        parent::__construct($module);
+        $this->adminPermissions = array('adminlist', 'create', 'edit', 'save');
+        $this->managerPermissions = array('edit', 'save');
+        $this->userPermissions = array('userlist', 'view', 'list');
     }
 
     public function getHtmlView($data, \Request $request)
@@ -39,13 +39,10 @@ class ManagerController extends \phpws2\Http\Controller
 
         $factory = new Factory;
 
+        \Layout::addStyle('properties');
         switch ($command) {
-            case 'adminlist':
-                $this->adminListing();
-                break;
-
             case 'list':
-                $content = $factory->listing();
+                $content = $factory->listView();
                 break;
 
             case 'create';
@@ -56,32 +53,30 @@ class ManagerController extends \phpws2\Http\Controller
                 break;
         }
         $view = new \phpws2\View\HtmlView($content);
-        $response = new \Response($view);
-        return $response;
+        return $view;
     }
 
-    private function allow($command, \Request $request)
+    public function getJsonView($data, \Request $request)
     {
-        $session = \phpws2\Session::getInstance();
+        $command = $request->shiftCommand();
 
-        $admins = array('adminlist', 'create', 'edit', 'save');
-        $managers = array('edit', 'save');
-        $users = array('userlist', 'view', 'list');
-
-        if (\Current_User::allow('properties') && in_array($command, $admins)) {
-            return true;
+        if (empty($command)) {
+            $command = 'list';
         }
 
-        if (in_array($command, $users)) {
-            return true;
+        if (!$this->allow($command, $request)) {
+            throw new \phpws2\Http\NotAcceptableException;
         }
 
-        if (in_array($command, $managers) &&
-                $session->currentManagerId === $request->getVar('managerId')) {
-            return true;
-        }
+        $factory = new Factory;
 
-        return false;
+        switch ($command) {
+            case 'list':
+                $json = $factory->listingJson();
+                break;
+        }
+        $view = new \View\JsonView($json);
+        return $view;
     }
 
 }

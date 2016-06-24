@@ -11,11 +11,11 @@ namespace properties\Factory;
 use \phpws2\Database;
 
 /**
- * Description of ManagerFactory
+ * Description of PropertyFactory
  *
  * @author Matthew McNaney <mcnaneym@appstate.edu>
  */
-class ManagerFactory
+class PropertyFactory
 {
 
     public function listView()
@@ -23,30 +23,27 @@ class ManagerFactory
         if (PROPERTIES_REACT_DEV) {
             $script[] = \properties\Factory\React::development('Mixin/',
                             'Mixins.js');
-            $script[] = \properties\Factory\React::development('Mixin/',
-                            'Modal.js');
-            $script[] = \properties\Factory\React::development('Manager/',
+            $script[] = \properties\Factory\React::development('Property/',
                             'Listing.js');
         } else {
             $script[] = \properties\Factory\React::production('Mixin/',
                             'script.min.js');
-            $script[] = \properties\Factory\React::production('Manager/',
+            $script[] = \properties\Factory\React::production('Property/',
                             'script.min.js');
         }
         $react = implode("\n", $script);
-        //\Layout::addStyle('properties', 'style.css');
-        //$icons = json_encode(\properties\Factory\Base::categoryIcons());
         $content = <<<EOF
-<div id="manager"></div>
+<div id="properties"></div>
 $react
 EOF;
+
         return $content;
     }
 
     public function listingJson()
     {
         $db = Database::getDB();
-        $db->addTable('prop_contacts');
-        return $db->select();
+        $db->addTable('');
     }
+
 }

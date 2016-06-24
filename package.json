@@ -1,0 +1,29 @@
+{
+  "name": "properties",
+  "version": "2.0.0",
+  "description": "Online property manager",
+  "main": "Gruntfile.js",
+  "dependencies": {
+    "react-dom": "~15.1.0",
+    "react": "~15.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/AppStateESS/properties.git"
+  },
+  "keywords": [
+    "properties",
+    "real",
+    "estate",
+    "rent"
+  ],
+  "author": "Matt McNaney <mcnaneym@appstate.edu>",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/AppStateESS/properties/issues"
+  }
+}

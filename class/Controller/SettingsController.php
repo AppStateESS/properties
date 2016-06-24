@@ -8,12 +8,34 @@
 
 namespace properties\Controller;
 
+use properties\Factory\SettingsFactory as Factory;
+
 /**
  * Description of Settings
  *
  * @author Matthew McNaney <mcnaneym@appstate.edu>
  */
-class Settings
+class SettingsController extends BaseController
 {
-    //put your code here
+
+    public function __construct($module)
+    {
+        parent::__construct($module);
+        $this->adminPermissions = array('edit', 'save');
+    }
+
+    public function getHtmlView($data, \Request $request)
+    {
+        $content = self::settingsForm();
+        $view = new \phpws2\View\HtmlView($content);
+        return $view;
+    }
+
+    private function settingsForm()
+    {
+        $template = new \phpws2\Template();
+        $template->setModuleTemplate('properties', 'settings.html');
+        return $template->get();
+    }
+
 }

@@ -25,7 +25,7 @@ class View
         $vars['username'] = \Current_User::getDisplayName();
         $vars['home'] = \Server::getSiteUrl();
         $template = new \phpws2\Template($vars);
-        $template->setModuleTemplate('properties', 'Admin/navbar.html');
+        $template->setModuleTemplate('properties', 'navbar.html');
         $content = $template->get();
 
         \Layout::plug($content, 'NAV_LINKS');
