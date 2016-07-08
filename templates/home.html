@@ -1,17 +1,83 @@
 <style>
-    .btn-big {
-        font-size:1.8em;
-        padding : 1em;
+    a.option-block {
+        display: block;
+        padding: .5em 1em;
+        font-size: 20px;
+        font-weight: bold;
+        border: #1d3557 3px;
+        border-radius: 8px;
+        color: white;
+        text-decoration: none;
+        margin-bottom: 1em;
+        min-height: 68px;
     }
 
-    .property-intro {
-        height : 400px;
-        padding: 2em;
-        background-image: url('mod/properties/img/computer.jpg')
+    a.option-block.left {
+        background-color: #0c4767;
+    }
+
+    a.option-block.left:hover {
+        background-color: #1C5D80;
+    }
+
+    a.option-block.middle {
+        background-color: #fa7921;
+    }
+
+    a.option-block.middle:hover {
+        background-color: #FF8F42;
+    }
+
+    a.option-block.right {
+        background-color: #566e3d;
+    }
+
+    a.option-block.right:hover {
+        background-color: #708758;
+    }
+
+    .prop-icon {
+        font-size: 50px;
+        float:left;
+        margin-right: 8px;
+    }
+    
+    .option-text {
+        margin-top : 10px;
+    }
+
+    @media screen and (min-width: 768px) {
+        a.option-block.right {
+            font-size : 18px;
+        }
+        
+        .prop-icon {
+            display: block;
+            float:none;
+            font-size: 100px;
+            margin: 0px 0px 10px 0px;
+        }
+        a.option-block {
+            text-align: center;
+            width: 29%;
+            min-height: 245px;
+            float: left;
+            margin: 2%;
+            padding: 2.4em 1.5em 1em 1.5em;
+        }
     }
 </style>
 <div class="property-intro">
-    <a href="./properties/Property/list" style="margin-bottom:1em" class="btn btn-block btn-primary btn-big"><i class="fa fa-building-o"></i> I am looking for a place to rent</a>
-    <a href="./properties/sublease" style="margin-bottom:1em" class="btn btn-block btn-big  btn-primary"><i class="fa fa-suitcase"></i> I need a short-term sublease</a>
-    <a href="./properties/sublease/create" class="btn btn-block btn-big  btn-primary"><i class="fa fa-truck"></i> I am moving and need to sublease my apartment</a>
+    <a class="option-block left" href="./properties/Property/list">
+        <span class="prop-icon"><i class="prop-icon fa fa-building-o"></i></span> <span class="option-text">I'm looking for a place to rent</span>
+    </a>
+    <a class="option-block middle" href="./properties/sublease">
+        <span class="prop-icon"><i class="prop-icon fa fa-suitcase"></i></span> <span class="option-text">I need a short-term sublease</span>
+    </a>
+    <a class="option-block right" href="./properties/sublease/create">
+        <span class="prop-icon"><i class="prop-icon fa fa-truck"></i></span> <span class="option-text">I'm moving and need to sublease my place</span>
+    </a>
+</div>
+<div>
+    <p><a href="properties/Manager/Signin">Are you a manager? Sign in!</a></p>
 </div>

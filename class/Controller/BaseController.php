@@ -60,7 +60,7 @@ abstract class BaseController extends \phpws2\Http\Controller
             return true;
         }
 
-        if (in_array($command, $this->managerPermissions) &&
+        if (in_array($command, $this->managerPermissions) && isset($session->currentManagerId) && 
                 $session->currentManagerId === $request->getVar('managerId')) {
             return true;
         }

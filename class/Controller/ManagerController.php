@@ -23,7 +23,7 @@ class ManagerController extends BaseController
         parent::__construct($module);
         $this->adminPermissions = array('adminlist', 'create', 'edit', 'save');
         $this->managerPermissions = array('edit', 'save');
-        $this->userPermissions = array('userlist', 'view', 'list');
+        $this->userPermissions = array('userlist', 'view', 'list', 'checkUsername', 'checkEmail');
     }
 
     public function getHtmlView($data, \Request $request)
@@ -72,11 +72,33 @@ class ManagerController extends BaseController
 
         switch ($command) {
             case 'list':
-                $json = $factory->listingJson();
+                $result = $factory->listingJson();
+                if (empty($result)) {
+                    $json = array();
+                } else {
+                    return new \phpws2\View\HtmlView($result);
+                }
+                break;
+
+            case 'checkUsername':
+                $json = array('duplicate' => $factory->checkUsername($factory->pullGetString('username')));
+                break;
+
+            case 'checkEmail':
+                $json = array('duplicate' => $factory->checkEmail($factory->pullGetString('email_address')));
                 break;
         }
         $view = new \View\JsonView($json);
         return $view;
+    }
+
+    public function post(\Request $request)
+    {
+        $factory = new Factory;
+        $json = $factory->post();
+        $view = new \View\JsonView($json);
+        $response = new \Response($view);
+        return $response;
     }
 
 }
