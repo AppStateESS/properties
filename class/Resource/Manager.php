@@ -50,8 +50,6 @@ class Manager extends Base
         $this->active = new Variable\Bool(1, 'active');
         $this->private = new Variable\Bool(0, 'private');
         $this->approved = new Variable\Bool(1, 'approved');
-
-        $this->addHiddenVariable('password');
     }
 
 }
