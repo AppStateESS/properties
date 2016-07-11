@@ -4,7 +4,15 @@ var Modal = React.createClass({
     },
 
     getDefaultProps: function() {
-        return {header: null, body: null, footer: null, modalId: 'reactModal'};
+        return {header: null, body: null, footer: null, modalId: 'reactModal', onClose: null};
+    },
+
+    componentDidMount: function() {
+        if (this.props.onClose) {
+            $('#' + this.props.modalId).on('hidden.bs.modal', function (e) {
+                this.props.onClose();
+            }.bind(this));
+        }
     },
 
     render: function() {

@@ -156,12 +156,15 @@ var ManagerForm = React.createClass({
             company_name: '',
             company_address: '',
             company_url: '',
-            times_available: ''
+            times_available: '',
+            errorFree: false
         };
     },
 
     resetForm: function() {
         this.setState(this.getInitialState());
+        $('.managerForm form input').removeClass('error-highlight');
+        $('.managerForm form input').attr('placeholder', '');
         $('#reactModal').modal('hide');
     },
 
@@ -234,8 +237,7 @@ var ManagerForm = React.createClass({
     },
 
     save: function() {
-        this.resetErrors();
-        if (this.checkValues()) {
+        let success = function() {
             $.post('properties/Manager/', {
                 id: this.state.id,
                 username: this.state.username,
@@ -255,7 +257,10 @@ var ManagerForm = React.createClass({
             .fail(function(data){
 
             });
-        }
+        }.bind(this);
+
+        this.resetErrors();
+        this.checkValues(success);
     },
 
     duplicateUsername: function() {
@@ -268,27 +273,6 @@ var ManagerForm = React.createClass({
         return $.getJSON('properties/Manager/checkEmail', {
         	email_address : this.state.email_address,
         });
-    },
-
-    checkUsername : function() {
-        if (this.isEmpty(this.state.username)) {
-            this.flagBlankInput($('#managerUsername'));
-            return false;
-        } else if (this.state.username.match(/\s/)) {
-            this.flagBadFormat($('#managerUsername'), 'No spaces allowed in username');
-            return false;
-        } else {
-            let dupe = this.duplicateUsername();
-            dupe.done(function(data){
-                if (data.duplicate) {
-                    this.flagBadFormat($('#managerUsername'), 'Username already in use.');
-                    return false;
-                } else {
-                    this.copyUsername(this.state.username);
-                    return true;
-                }
-            }.bind(this));
-        }
     },
 
     checkPassword: function() {
@@ -331,7 +315,31 @@ var ManagerForm = React.createClass({
         }
     },
 
-    checkEmailAddress: function() {
+    checkUsername : function(event, callback) {
+        if (this.isEmpty(this.state.username)) {
+            this.flagBlankInput($('#managerUsername'));
+            return false;
+        } else if (this.state.username.match(/\s/)) {
+            this.flagBadFormat($('#managerUsername'), 'No spaces allowed in username');
+            return false;
+        } else {
+            let dupe = this.duplicateUsername();
+            dupe.done(function(data){
+                if (data.duplicate) {
+                    this.flagBadFormat($('#managerUsername'), 'Username already in use.');
+                    return false;
+                } else {
+                    this.copyUsername(this.state.username);
+                    if (callback !== undefined) {
+                        callback();
+                    }
+                    return true;
+                }
+            }.bind(this));
+        }
+    },
+
+    checkEmailAddress: function(event, callback) {
         if (this.isEmpty(this.state.email_address)) {
             this.flagBlankInput($('#managerEmailAddress'));
             return false;
@@ -345,6 +353,9 @@ var ManagerForm = React.createClass({
                     this.flagBadFormat($('#managerEmailAddress'), 'Email address already in use.');
                     return false;
                 } else {
+                    if (callback !== undefined) {
+                        callback();
+                    }
                     return true;
                 }
             }.bind(this));
@@ -367,39 +378,19 @@ var ManagerForm = React.createClass({
         }
     },
 
-    checkValues: function() {
-        let errorFree = true;
-
-        if (!this.checkPassword()) {
-            errorFree = false;
-        }
-
-        if (!this.checkFirstName()) {
-            errorFree = false;
-        }
-
-        if (!this.checkLastName()) {
-            errorFree = false;
-        }
-
-        if (!this.checkPhone()) {
-            errorFree = false;
-        }
-
-        if (!this.checkCompanyName()) {
-            errorFree = false;
-        }
-
-        if (!this.checkUsername()) {
-            errorFree = false;
-        }
-
-        if (!this.checkEmailAddress()) {
-            errorFree = false;
-        }
-
-        console.log(errorFree);
-        return errorFree;
+    checkValues: function(success) {
+        let checkEmail = function() {
+            this.checkEmailAddress(null, function(){
+                if (this.checkPassword() &&
+                this.checkFirstName() &&
+                this.checkLastName() &&
+                this.checkPhone() &&
+                this.checkCompanyName()) {
+                    success();
+                }
+            }.bind(this));
+        }.bind(this);
+        this.checkUsername(null, checkEmail);
     },
 
     addTestData: function() {
@@ -481,7 +472,7 @@ var ManagerForm = React.createClass({
                 </form>
             </div>
         );
-        return <Modal body={managerForm} header='Create manager' footer={footer}/>;
+        return <Modal body={managerForm} header='Create manager' footer={footer} onClose={this.resetForm}/>;
     }
 });
 ReactDOM.render(

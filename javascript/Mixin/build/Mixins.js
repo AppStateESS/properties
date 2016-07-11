@@ -30,13 +30,12 @@ var CheckValues = {
     },
 
     flagBlankInput: function (node) {
-        node.css('borderColor', 'red').attr('placeholder', 'May not be blank');
-        node.addClass('error-highlight');
+        node.attr('placeholder', 'May not be blank').addClass('error-highlight');
     },
 
     flagBadFormat: function (node, message) {
         let tempId = this.randomId();
-        node.css('borderColor', 'red');
+        node.addClass('error-highlight');
         node.after('<span id="' + tempId + '" class="error-label label label-danger">' + message + '</span>');
         node.focus(function () {
             $(this).css('borderColor', 'inherit');
@@ -46,7 +45,7 @@ var CheckValues = {
 
     resetErrors: function () {
         $('.error-label').remove();
-        $('.error-highlight').css('borderColor', 'inherit');
+        $('.error-highlight').removeClass('error-highlight');
     },
 
     randomId: function () {
