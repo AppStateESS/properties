@@ -51,6 +51,21 @@ EOF;
         if ((int) $limit > 0) {
             $db->setLimit(100);
         }
+        $tbl->addField('username');
+        $tbl->addField('password');
+        $tbl->addField('first_name');
+        $tbl->addField('last_name');
+        $tbl->addField('phone');
+        $tbl->addField('email_address');
+        $tbl->addField('company_name');
+        $tbl->addField('company_address');
+        $tbl->addField('company_url');
+        $tbl->addField('times_available');
+        $tbl->addField('last_log');
+        $tbl->addField('active');
+        $tbl->addField('approved');
+
+
         $result = $db->select();
         if (empty($result)) {
             return null;
@@ -60,6 +75,10 @@ EOF;
         return $result;
     }
 
+    /**
+     * Administrative post of the manager
+     * @return string
+     */
     public function post()
     {
         $r = new Resource;
