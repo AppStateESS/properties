@@ -17,16 +17,21 @@ abstract class BaseController extends \phpws2\Http\Controller
 {
 
     /**
+     * Array of permissions allowed for only administrators
+     * Inherits all manager permissions
      * @var array
      */
     protected $adminPermissions;
 
     /**
+     * Array of permissions allowed only for managers
+     * Inherits all user permissions
      * @var array
      */
     protected $managerPermissions;
 
     /**
+     * Array of permissions allowed for standard user
      * @var array
      */
     protected $userPermissions;
@@ -41,10 +46,23 @@ abstract class BaseController extends \phpws2\Http\Controller
 
     public function get(\Request $request)
     {
-        $data = array();
-        $view = $this->getView($data, $request);
+        try {
+            $data = array();
+            $view = $this->getView($data, $request);
+        } catch (\properties\Exception\PrivilegeMissing $e) {
+            $view = $this->errorPage($e);
+        }
         $response = new \Response($view);
         return $response;
+    }
+
+    protected function errorPage(\Exception $e)
+    {
+        $content = $e->getMessage();
+        $template = new \phpws2\Template(array('message'=>$e->getMessage()));
+        $template->setModuleTemplate('properties', 'error.html');
+        $view = new \phpws2\View\HtmlView($template->get());
+        return $view;
     }
 
     protected function allow($command, \Request $request)
@@ -60,7 +78,7 @@ abstract class BaseController extends \phpws2\Http\Controller
             return true;
         }
 
-        if (in_array($command, $this->managerPermissions) && isset($session->currentManagerId) && 
+        if (in_array($command, $this->managerPermissions) && isset($session->currentManagerId) &&
                 $session->currentManagerId === $request->getVar('managerId')) {
             return true;
         }

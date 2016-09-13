@@ -2,14 +2,29 @@
   "name": "properties",
   "version": "2.0.0",
   "description": "Online property manager",
-  "main": "Gruntfile.js",
   "dependencies": {
-    "react-dom": "~15.1.0",
-    "react": "~15.1.0"
+    "react": "~15.3.0",
+    "react-dom": "~15.3.0",
+    "react-addons-css-transition-group": "~15.3.0",
+    "react-dropzone": "~3.5.3",
+    "react-select": "~1.0.0-beta14"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-core": "~6.13.2",
+    "babel-loader": "~6.2.4",
+    "babel-preset-es2015": "~6.13.2",
+    "babel-preset-react": "~6.11.1",
+    "css-loader": "~0.23.1",
+    "es6-promise": "~3.2.1",
+    "jshint": "^2.9.3",
+    "jshint-loader": "^0.8.3",
+    "strip-loader": "~0.1.2",
+    "style-loader": "~0.13.1",
+    "webpack": "~1.13.1"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "webpack --config webpack.config.js -d --watch",
+    "prod": "webpack --config webpack.production.config.js -p"
   },
   "repository": {
     "type": "git",
@@ -21,6 +36,7 @@
     "estate",
     "rent"
   ],
+  "homepage": "https://github.com/AppStateESS/election#readme",
   "author": "Matt McNaney <mcnaneym@appstate.edu>",
   "license": "BSD-2-Clause",
   "bugs": {

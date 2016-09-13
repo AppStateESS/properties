@@ -62,4 +62,16 @@ class Base extends \phpws2\ResourceFactory
         }
     }
 
+    protected function getScript($filename)
+    {
+        $root_directory = PHPWS_SOURCE_HTTP . 'mod/properties/javascript/';
+        if (PROPERTIES_REACT_DEV) {
+            $path = "dev/$filename.js";
+        } else {
+            $path = "build/$filename.js";
+        }
+        $script = "<script type='text/javascript' src='{$root_directory}$path'></script>";
+        return $script;
+    }
+
 }

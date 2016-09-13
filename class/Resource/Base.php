@@ -12,7 +12,7 @@ class Base extends \phpws2\Resource
 
     public function __set($name, $value)
     {
-        if (!$this->$name->allowNull() && 
+        if ( (!$this->$name->allowNull() || !$this->$name->allowEmpty()) &&
                 ( (is_string($value) && $value === '') || is_null($value))) {
             throw new \properties\Exception\MissingInput("$name may not be empty");
         }

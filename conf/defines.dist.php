@@ -1,5 +1,4 @@
 <?php
-
 // 1 : smtp
 // 2 : sendmail
 // 3 : Mail

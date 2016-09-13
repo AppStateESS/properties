@@ -21,9 +21,10 @@ class ManagerController extends BaseController
     public function __construct($module)
     {
         parent::__construct($module);
-        $this->adminPermissions = array('adminlist', 'create', 'edit', 'save');
+        // only admins may 
+        $this->adminPermissions = array('adminlist', 'create', 'edit', 'save', 'list');
         $this->managerPermissions = array('edit', 'save');
-        $this->userPermissions = array('userlist', 'view', 'list', 'checkUsername', 'checkEmail');
+        $this->userPermissions = array('userlist', 'view', 'checkUsername', 'checkEmail', 'checkCompanyName', 'Signin');
     }
 
     public function getHtmlView($data, \Request $request)
@@ -34,7 +35,7 @@ class ManagerController extends BaseController
         }
 
         if (!$this->allow($command, $request)) {
-            throw new \phpws2\Http\NotAcceptableException;
+            throw new \properties\Exception\PrivilegeMissing;
         }
 
         $factory = new Factory;
@@ -45,9 +46,12 @@ class ManagerController extends BaseController
                 $content = $factory->listView();
                 break;
 
-            case 'create';
+            case 'create':
                 $content = $factory->create();
                 break;
+
+            case 'signin':
+                $content = $factory->signInForm();
 
             case 'view':
                 break;
@@ -81,11 +85,18 @@ class ManagerController extends BaseController
                 break;
 
             case 'checkUsername':
-                $json = array('duplicate' => $factory->checkUsername($factory->pullGetString('username')));
+                $json = array('duplicate' => $factory->checkUsername($factory->pullGetString('username'),
+                            $factory->pullGetInteger('id')));
                 break;
 
             case 'checkEmail':
-                $json = array('duplicate' => $factory->checkEmail($factory->pullGetString('email_address')));
+                $json = array('duplicate' => $factory->checkEmail($factory->pullGetString('email_address'),
+                            $factory->pullGetInteger('id')));
+                break;
+
+            case 'checkCompanyName':
+                $json = array('duplicate' => $factory->checkCompanyName($factory->pullGetString('company_name'),
+                            $factory->pullGetInteger('id')));
                 break;
         }
         $view = new \View\JsonView($json);

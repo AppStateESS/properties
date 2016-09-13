@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Exception for missing input
  *
@@ -9,4 +10,5 @@ namespace properties\Exception;
 
 class MissingInput extends \Exception
 {
+    
 }

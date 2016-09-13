@@ -8,7 +8,8 @@ namespace properties\Factory;
  */
 class React
 {
-public static function development($directory, $filename)
+
+    public static function development($directory, $filename)
     {
         self::requireReact(true, false);
 
@@ -26,9 +27,9 @@ public static function development($directory, $filename)
         return $script;
     }
 
-    public static function requireReact($addons=true, $minified=true)
+    public static function requireReact($addons = true, $minified = true)
     {
-        $node_directory = PHPWS_SOURCE_HTTP .  'mod/properties/node_modules/';
+        $node_directory = PHPWS_SOURCE_HTTP . 'mod/properties/node_modules/';
 
         $react_directory = $node_directory . 'react/dist/';
         $react_file = $react_directory . ($addons ? 'react-with-addons' : 'react') . ($minified ? '.min.js' : '.js');
