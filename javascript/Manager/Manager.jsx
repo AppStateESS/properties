@@ -4,19 +4,18 @@ import ListManagers from './ListManagers.jsx'
 import ManagerForm from './ManagerForm.jsx'
 import Message from '../Mixin/Message.jsx'
 import Loading from '../Mixin/Loading.jsx'
-import ManagerObject from '../Mixin/ManagerObject'
 
 /* global $ */
 
 class Manager extends React.Component {
   constructor(props) {
     super(props)
-    let manager = new ManagerObject
+    this.delay
+    this.admin = true
     this.state = {
       managers: null,
-      admin: true,
       message: null,
-      currentManager : manager
+      currentManager : {}
     }
 
     let bindable = ['load', 'fillForm', 'searchManager']
@@ -47,8 +46,8 @@ class Manager extends React.Component {
     }
   }
 
-  load() {
-    $.getJSON('properties/Manager', {}).done(function (data) {
+  load(search) {
+    $.getJSON('properties/Manager', {search:search}).done(function (data) {
       this.setState({managers: data, loading: false})
     }.bind(this)).fail(function () {
       this.setState({managers: null, loading: false})
@@ -56,11 +55,15 @@ class Manager extends React.Component {
     }.bind(this))
   }
 
-  searchManager() {
-    clearTimeout(delay)
-    let delay = setTimeout(function () {
-      //console.log('hi')
-    }, 2000)
+  searchManager(e) {
+    clearTimeout(this.delay)
+    const search = e.target.value
+    if (search.length < 3 && search.length > 0) {
+      return
+    }
+    this.delay = setTimeout(function () {
+      this.load(search)
+    }.bind(this, search), 500)
   }
 
   render() {
@@ -82,7 +85,7 @@ class Manager extends React.Component {
                 onChange={this.searchManager}/>
             </div>
             <div className="col-sm-2">
-              {this.state.admin
+              {this.admin
                 ? (
                   <button
                     className="btn btn-success"

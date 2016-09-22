@@ -21982,15 +21982,15 @@
 	
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Manager).call(this, props));
 	
+	    _this.delay;
+	    _this.admin = true;
 	    _this.state = {
-	      managers: [],
-	      loading: false,
-	      admin: true,
+	      managers: null,
 	      message: null,
 	      currentManager: {}
 	    };
 	
-	    var bindable = ['load', 'searchManager', 'fillForm'];
+	    var bindable = ['load', 'fillForm', 'searchManager'];
 	
 	    bindable.map(function (v) {
 	      this[v] = this[v].bind(this);
@@ -22025,9 +22025,8 @@
 	    }
 	  }, {
 	    key: 'load',
-	    value: function load() {
-	      this.setState({ loading: true });
-	      $.getJSON('properties/Manager', {}).done(function (data) {
+	    value: function load(search) {
+	      $.getJSON('properties/Manager', { search: search }).done(function (data) {
 	        this.setState({ managers: data, loading: false });
 	      }.bind(this)).fail(function () {
 	        this.setState({ managers: null, loading: false });
@@ -22036,16 +22035,20 @@
 	    }
 	  }, {
 	    key: 'searchManager',
-	    value: function searchManager() {
-	      clearTimeout(delay);
-	      var delay = setTimeout(function () {
-	        //console.log('hi')
-	      }, 2000);
+	    value: function searchManager(e) {
+	      clearTimeout(this.delay);
+	      var search = e.target.value;
+	      if (search.length < 3 && search.length > 0) {
+	        return;
+	      }
+	      this.delay = setTimeout(function () {
+	        this.load(search);
+	      }.bind(this, search), 500);
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      if (this.state.loading) {
+	      if (this.state.managers === null) {
 	        return _react2.default.createElement(_Loading2.default, { label: 'managers' });
 	      } else {
 	        var message = this.getMessage();
@@ -22054,7 +22057,6 @@
 	          'div',
 	          null,
 	          _react2.default.createElement(_ManagerForm2.default, { manager: this.state.currentManager, reload: this.load }),
-	          ' ',
 	          message,
 	          _react2.default.createElement(
 	            'div',
@@ -22071,7 +22073,7 @@
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'col-sm-2' },
-	              this.state.admin ? _react2.default.createElement(
+	              this.admin ? _react2.default.createElement(
 	                'button',
 	                {
 	                  className: 'btn btn-success',
@@ -22539,7 +22541,14 @@
 	      company_name: '',
 	      company_address: '',
 	      company_url: '',
-	      times_available: ''
+	      times_available: '',
+	      usernameError: null,
+	      passwordError: null,
+	      firstNameError: null,
+	      lastNameError: null,
+	      phoneError: null,
+	      emailError: null,
+	      companyNameError: null
 	    };
 	
 	    var bindable = ['addTestData', 'checkCompanyName', 'checkEmailAddress', 'checkEmailDuplicate', 'checkPassword', 'checkPhone', 'checkUsername', 'checkUsernameDuplicate', 'resetForm', 'save', 'setCompanyName', 'setCompanyAddress', 'setCompanyUrl', 'setEmailAddress', 'setFirstName', 'setLastName', 'setPassword', 'setPhone', 'setTimesAvailable', 'setUsername'];
@@ -22554,7 +22563,9 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      var manager = this.props.manager;
-	
+	      if (manager.length === 0) {
+	        return;
+	      }
 	      this.setState({
 	        id: manager.id,
 	        username: manager.username,
@@ -22584,7 +22595,7 @@
 	        this.setState({
 	          id: manager.id,
 	          username: manager.username,
-	          password: 'empty',
+	          password: '',
 	          first_name: manager.first_name,
 	          last_name: manager.last_name,
 	          phone: manager.phone,
@@ -22690,6 +22701,8 @@
 	    value: function postErrors(errors) {
 	      if (errors.companyEmpty) {
 	        this.setState({ companyNameError: 'Please enter a company name' });
+	      } else if (errors.companyDuplicate) {
+	        this.setState({ companyNameError: 'Company name already in use' });
 	      }
 	
 	      if (errors.emailEmpty) {
@@ -22706,17 +22719,21 @@
 	
 	      if (errors.passwordEmpty) {
 	        this.setState({ passwordError: 'Password may not be empty' });
+	      } else if (errors.passwordShort) {
+	        this.setState({ passwordError: 'Password must be a least 8 characters' });
 	      }
 	
 	      if (errors.phoneEmpty) {
 	        this.setState({ phoneError: 'Phone number may not be empty' });
+	      } else if (errors.phoneBadFormat) {
+	        this.setState({ phoneError: 'Phone number is improperly formatted' });
 	      }
 	
 	      if (errors.usernameEmpty) {
 	        this.setState({ usernameError: 'Username may not be empty' });
+	      } else if (errors.usernameDuplicate) {
+	        this.setState({ usernameError: 'Username already in use' });
 	      }
-	
-	      //console.log(errors)
 	    }
 	  }, {
 	    key: 'save',
@@ -22884,7 +22901,8 @@
 	        null,
 	        button,
 	        ' ',
-	        testButton
+	        testButton,
+	        ' '
 	      );
 	
 	      var managerForm = _react2.default.createElement(
@@ -23303,9 +23321,9 @@
 	};
 	
 	Modal.propTypes = {
-	  header: _react2.default.PropTypes.string,
-	  body: _react2.default.PropTypes.string,
-	  footer: _react2.default.PropTypes.string,
+	  header: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.element]),
+	  body: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.element]),
+	  footer: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.element]),
 	  modalId: _react2.default.PropTypes.string,
 	  onClose: _react2.default.PropTypes.func
 	};

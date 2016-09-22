@@ -76,7 +76,7 @@ class ManagerController extends BaseController
 
         switch ($command) {
             case 'list':
-                $result = $factory->listingJson();
+                $result = $factory->listingJson($factory->pullGetInteger('limit'), $factory->pullGetString('search'));
                 if (empty($result)) {
                     $json = array();
                 } else {

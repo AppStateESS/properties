@@ -20,7 +20,14 @@ class ManagerForm extends React.Component {
       company_name: '',
       company_address: '',
       company_url: '',
-      times_available: ''
+      times_available: '',
+      usernameError: null,
+      passwordError: null,
+      firstNameError: null,
+      lastNameError: null,
+      phoneError: null,
+      emailError: null,
+      companyNameError: null
     }
 
     let bindable = [
@@ -53,7 +60,9 @@ class ManagerForm extends React.Component {
 
   componentDidMount() {
     const manager = this.props.manager
-
+    if (manager.length === 0) {
+      return
+    }
     this.setState({
       id: manager.id,
       username: manager.username,
@@ -175,6 +184,8 @@ class ManagerForm extends React.Component {
   postErrors(errors) {
     if (errors.companyEmpty) {
       this.setState({companyNameError: 'Please enter a company name'})
+    } else if(errors.companyDuplicate) {
+      this.setState({companyNameError: 'Company name already in use'})
     }
 
     if (errors.emailEmpty) {
@@ -191,14 +202,20 @@ class ManagerForm extends React.Component {
 
     if (errors.passwordEmpty) {
       this.setState({passwordError: 'Password may not be empty'})
+    } else if (errors.passwordShort) {
+      this.setState({passwordError: 'Password must be a least 8 characters'})
     }
 
     if (errors.phoneEmpty) {
       this.setState({phoneError: 'Phone number may not be empty'})
+    } else if (errors.phoneBadFormat) {
+      this.setState({phoneError: 'Phone number is improperly formatted'})
     }
 
     if (errors.usernameEmpty) {
       this.setState({usernameError: 'Username may not be empty'})
+    } else if (errors.usernameDuplicate) {
+      this.setState({usernameError: 'Username already in use'})
     }
   }
 

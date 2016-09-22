@@ -22,6 +22,7 @@ class ManagerFactory extends Base
 
     public function listView()
     {
+        
         $script[] = $this->getScript('manager');
         $react = implode("\n", $script);
         //\Layout::addStyle('properties', 'style.css');
@@ -33,7 +34,7 @@ EOF;
         return $content;
     }
 
-    public function listingJson($limit = 100)
+    public function listingJson($limit = 100, $search=null)
     {
         $db = Database::getDB();
         $tbl = $db->addTable('prop_contacts');
@@ -54,7 +55,18 @@ EOF;
         $tbl->addField('active');
         $tbl->addField('approved');
 
-
+        $search_string = "%$search%";
+        if (!empty($search)) {
+            $s1 = $db->createConditional($tbl->getField('username'), $search_string, 'like');
+            $s2 = $db->createConditional($tbl->getField('first_name'), $search_string, 'like');
+            $s3 = $db->createConditional($tbl->getField('last_name'), $search_string, 'like');
+            $s4 = $db->createConditional($tbl->getField('company_name'), $search_string, 'like');
+            $sf1 = $db->createConditional($s1, $s2, 'or');
+            $sf2 = $db->createConditional($s3, $s4, 'or');
+            $conditional = $db->createConditional($sf1, $sf2, 'or');
+            $db->addConditional($conditional);
+        }
+        
         $result = $db->select();
         if (empty($result)) {
             return null;
@@ -97,7 +109,7 @@ EOF;
                     $errors['passwordEmpty'] = true;
                 }
             } else {
-                if (strlen($password) < 9) {
+                if (strlen($password) < 8) {
                     $errors['passwordShort'] = true;
                 } else {
                     $r->password = $password;
@@ -144,6 +156,8 @@ EOF;
             $company_name = $this->pullPostString('company_name');
             if (empty($company_name)) {
                 $errors['companyEmpty'] = true;
+            } elseif ($this->checkCompanyName($company_name, $id)) {
+                $errors['companyDuplicate'] = true;
             } else {
                 $r->company_name = $company_name;
             }
@@ -163,6 +177,7 @@ EOF;
         } catch (\properties\Exception\MissingInput $e) {
             $json = array('status' => 'usererror', 'error' => $e->getMessage());
         } catch (\Exception $e) {
+            \phpws2\Error::log($e);
             $json = array('status' => 'fail', 'error' => 'An unrecoverable error occurred.');
         }
 
@@ -230,7 +245,7 @@ EOF;
     {
         $db = Database::getDB();
         $tbl = $db->addTable('prop_contacts');
-        $company = $tbl->createConditional('company_name',
+        $company = $db->createConditional('company_name',
                 strtolower($company_name), 'like');
         if ($id > 0) {
             $idCheck = $db->createConditional($tbl->getField('id'), $id, '!=');
