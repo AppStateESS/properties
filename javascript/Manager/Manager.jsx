@@ -4,21 +4,22 @@ import ListManagers from './ListManagers.jsx'
 import ManagerForm from './ManagerForm.jsx'
 import Message from '../Mixin/Message.jsx'
 import Loading from '../Mixin/Loading.jsx'
+import ManagerObject from '../Mixin/ManagerObject'
 
 /* global $ */
 
 class Manager extends React.Component {
   constructor(props) {
     super(props)
+    let manager = new ManagerObject
     this.state = {
-      managers: [],
-      loading: false,
+      managers: null,
       admin: true,
       message: null,
-      currentManager : {}
+      currentManager : manager
     }
 
-    let bindable = ['load', 'searchManager', 'fillForm']
+    let bindable = ['load', 'fillForm', 'searchManager']
 
     bindable.map(function (v) {
       this[v] = this[v].bind(this)
@@ -47,7 +48,6 @@ class Manager extends React.Component {
   }
 
   load() {
-    this.setState({loading: true})
     $.getJSON('properties/Manager', {}).done(function (data) {
       this.setState({managers: data, loading: false})
     }.bind(this)).fail(function () {
@@ -64,14 +64,15 @@ class Manager extends React.Component {
   }
 
   render() {
-    if (this.state.loading) {
+    if (this.state.managers === null) {
       return (<Loading label="managers"/>)
     } else {
       let message = this.getMessage()
 
       return (
         <div>
-          <ManagerForm manager={this.state.currentManager} reload={this.load}/> {message}
+          <ManagerForm manager={this.state.currentManager} reload={this.load}/>
+          {message}
           <div className="row">
             <div className="col-sm-6">
               <input
