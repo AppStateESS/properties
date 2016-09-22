@@ -54,9 +54,9 @@ Modal.defaultProps = {
 }
 
 Modal.propTypes = {
-  header: React.PropTypes.string,
-  body: React.PropTypes.string,
-  footer: React.PropTypes.string,
+  header: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]),
+  body: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]),
+  footer: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]),
   modalId: React.PropTypes.string,
   onClose: React.PropTypes.func
 }
