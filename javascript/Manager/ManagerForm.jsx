@@ -82,7 +82,7 @@ class ManagerForm extends React.Component {
       this.setState({
         id: manager.id,
         username: manager.username,
-        password: 'empty',
+        password: '',
         first_name: manager.first_name,
         last_name: manager.last_name,
         phone: manager.phone,
@@ -174,34 +174,32 @@ class ManagerForm extends React.Component {
 
   postErrors(errors) {
     if (errors.companyEmpty) {
-      this.setState({companyNameError : 'Please enter a company name'})
+      this.setState({companyNameError: 'Please enter a company name'})
     }
 
     if (errors.emailEmpty) {
-      this.setState({emailError : 'Email may not be empty'})
+      this.setState({emailError: 'Email may not be empty'})
     }
 
     if (errors.firstNameEmpty) {
-      this.setState({firstNameError : 'First name may not be empty'})
+      this.setState({firstNameError: 'First name may not be empty'})
     }
 
     if (errors.lastNameEmpty) {
-      this.setState({lastNameError : 'Last name may not be empty'})
+      this.setState({lastNameError: 'Last name may not be empty'})
     }
 
     if (errors.passwordEmpty) {
-      this.setState({passwordError : 'Password may not be empty'})
+      this.setState({passwordError: 'Password may not be empty'})
     }
 
     if (errors.phoneEmpty) {
-      this.setState({phoneError : 'Phone number may not be empty'})
+      this.setState({phoneError: 'Phone number may not be empty'})
     }
 
     if (errors.usernameEmpty) {
-      this.setState({usernameError : 'Username may not be empty'})
+      this.setState({usernameError: 'Username may not be empty'})
     }
-
-    //console.log(errors)
   }
 
   save() {
@@ -345,7 +343,7 @@ class ManagerForm extends React.Component {
     let button = <button className="btn btn-success" onClick={this.save}>
       <i className="fa fa-floppy-o"></i>&nbsp;Save</button>
 
-    let footer = <span>{button}&nbsp;{testButton}</span>
+    let footer = <span>{button}&nbsp;{testButton}&nbsp;</span>
 
     let managerForm = (
       <div className="managerForm">
