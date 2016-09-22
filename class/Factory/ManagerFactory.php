@@ -79,6 +79,7 @@ EOF;
         $r = new Resource;
         try {
             $id = $this->pullPostInteger('id');
+            $r->setId($id);
             $username = strtolower($this->pullPostString('username'));
 
             if (empty($username)) {
@@ -91,12 +92,16 @@ EOF;
 
             $password = $this->pullPostString('password');
 
-            if (empty($password) && $id == 0) {
-                $errors['passwordEmpty'] = true;
-            } elseif (strlen($password) < 9) {
-                $errors['passwordShort'] = true;
+            if (empty($password)) {
+                if ($id == 0) {
+                    $errors['passwordEmpty'] = true;
+                }
             } else {
-                $r->password = $password;
+                if (strlen($password) < 9) {
+                    $errors['passwordShort'] = true;
+                } else {
+                    $r->password = $password;
+                }
             }
 
             $first_name = $this->pullPostString('first_name');
@@ -125,7 +130,7 @@ EOF;
             }
 
             $email_address = strtolower($this->pullPostString('email_address'));
-            
+
             if (empty($email_address)) {
                 $errors['emailEmpty'] = true;
             } else {
@@ -135,19 +140,20 @@ EOF;
                     $errors['emailBadFormat'] = true;
                 }
             }
-            
+
+            $company_name = $this->pullPostString('company_name');
             if (empty($company_name)) {
                 $errors['companyEmpty'] = true;
             } else {
-                $r->company_name = $this->pullPostString('company_name');
+                $r->company_name = $company_name;
             }
-            
+
             if (!empty($errors)) {
                 $json = $errors;
                 $json['status'] = 'error';
                 return $json;
             }
-            
+
             $r->company_address = $this->pullPostString('company_address');
             $r->company_url = $this->pullPostString('company_url');
             $r->times_available = $this->pullPostString('times_available');
