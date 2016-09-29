@@ -11,8 +11,8 @@
  */
 namespace properties;
 
-define('PROPERTIES_REACT_DEV', true);
 require_once PHPWS_SOURCE_DIR . 'src/Module.php';
+require_once PHPWS_SOURCE_DIR . 'mod/properties/conf/defines.php';
 
 class Module extends \Module
 {
