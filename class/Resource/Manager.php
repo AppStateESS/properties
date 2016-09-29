@@ -26,6 +26,7 @@ class Manager extends Base
     protected $active;
     protected $private;
     protected $approved;
+    protected $property_count;
     protected $table = 'prop_contacts';
 
     public function __construct()
@@ -57,6 +58,8 @@ class Manager extends Base
         $this->active = new Variable\Bool(1, 'active');
         $this->private = new Variable\Bool(0, 'private');
         $this->approved = new Variable\Bool(1, 'approved');
+        $this->property_count = new Variable\Integer(0, 'properties_count');
+        $this->property_count->setIsTableColumn(false);
     }
 
 }
