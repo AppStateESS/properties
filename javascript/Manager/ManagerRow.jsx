@@ -2,14 +2,57 @@
 import React from 'react'
 import Dropdown from '../Mixin/Dropdown.jsx'
 
+/* global $ */
+
 class ManagerRow extends React.Component {
   constructor(props) {
     super(props)
     this.delete = this.delete.bind(this)
+    this.activate = this.activate.bind(this)
+    this.deactivate = this.deactivate.bind(this)
   }
 
   delete() {
-    prompt('Are you sure?')
+    if (prompt("Deleting this manager will remove their account and all their properties.\nType " +
+        "'DELETE' to confirm") === 'DELETE') {
+      $.ajax({
+        url: './properties/Manager/?managerId=' + this.props.id,
+        dataType: 'json',
+        type: 'delete'
+      }).done(function (data) {
+        if (data.success === true) {
+          this.props.reload()
+        }
+      }.bind(this))
+    }
+  }
+
+  activate() {
+    $.ajax({
+      url: './properties/Manager',
+      type: 'patch',
+      data: {
+        param: 'active',
+        active: true,
+        managerId: this.props.id
+      }
+    }).done(function () {
+      this.props.reload()
+    }.bind(this))
+  }
+
+  deactivate() {
+    $.ajax({
+      url: './properties/Manager',
+      type: 'patch',
+      data: {
+        param: 'active',
+        active: false,
+        managerId: this.props.id
+      }
+    }).done(function () {
+      this.props.reload()
+    }.bind(this))
   }
 
   render() {
@@ -19,8 +62,16 @@ class ManagerRow extends React.Component {
     let lastLog = 'Never'
     let companyName = this.props.company_name
     const active = this.props.active === '1'
-      ? <i className="text-success fa fa-lg fa-check-circle" role="button" title="Click to deactivate"></i>
-      : <i className="text-danger fa fa-lg fa-times-circle" role="button" title="Click to activate"></i>
+      ? <i
+          className="text-success fa fa-lg fa-check-circle"
+          role="button"
+          title="Click to deactivate"
+          onClick={this.deactivate}></i>
+      : <i
+        className="text-danger fa fa-lg fa-times-circle"
+        role="button"
+        title="Click to activate"
+        onClick={this.activate}></i>
 
     if (this.props.last_log > 0) {
       let lastDate = new Date(this.props.last_log * 1000)
@@ -37,6 +88,11 @@ class ManagerRow extends React.Component {
         handleClick: this.props.fillForm
       },
       {
+        label: 'Properties',
+        icon: <i className="fa fa-building"></i>,
+        handleClick: function(){window.location.href = './properties/Property/Manager/' + this.props.id}.bind(this)
+      },
+      {
         label: 'Delete',
         icon: <i className="fa fa-trash"></i>,
         handleClick: this.delete
@@ -50,13 +106,13 @@ class ManagerRow extends React.Component {
           {active}
         </td>
         <td>
-          {companyName}<br />
+          {companyName}<br/>
         </td>
         <td>
-          <a href={call}>{phone}</a><br />
           <a href={email}>{this.props.first_name} {this.props.last_name}&nbsp;
-          <i className="fa fa-envelope-o"></i>
-          </a>
+            <i className="fa fa-envelope-o"></i>
+          </a><br />
+          <a href={call}>{phone}</a>
         </td>
         <td>
           {lastLog}
@@ -87,8 +143,12 @@ ManagerRow.propTypes = {
   first_name: React.PropTypes.string,
   last_name: React.PropTypes.string,
   last_log: React.PropTypes.string,
+  property_count: React.PropTypes.string,
   active: React.PropTypes.string,
-  fillForm: React.PropTypes.func
+  fillForm: React.PropTypes.func,
+  remove: React.PropTypes.func,
+  reload: React.PropTypes.func,
+  showProperties: React.PropTypes.func
 }
 
 export default ManagerRow

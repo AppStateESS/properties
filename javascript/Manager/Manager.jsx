@@ -15,10 +15,10 @@ class Manager extends React.Component {
     this.state = {
       managers: null,
       message: null,
-      currentManager : {}
+      currentManager: {}
     }
-
-    let bindable = ['load', 'fillForm', 'searchManager']
+    this.search = ''
+    let bindable = ['clearSearch', 'load', 'fillForm', 'searchManager', 'updateManager']
 
     bindable.map(function (v) {
       this[v] = this[v].bind(this)
@@ -46,12 +46,21 @@ class Manager extends React.Component {
     }
   }
 
-  load(search) {
-    $.getJSON('properties/Manager', {search:search}).done(function (data) {
+  load() {
+    $.getJSON('properties/Manager', {search: this.search}).done(function (data) {
       this.setState({managers: data, loading: false})
     }.bind(this)).fail(function () {
       this.setState({managers: null, loading: false})
       this.setMessage('Error: failure pulling managers')
+    }.bind(this))
+  }
+
+  updateManager(key) {
+    let managers = this.state.managers
+    let manager = this.state.managers[key]
+    $.getJSON('properties/Manager/' + manager.id).done(function(data) {
+      managers[key] = data
+      this.setState({managers: managers})
     }.bind(this))
   }
 
@@ -62,8 +71,15 @@ class Manager extends React.Component {
       return
     }
     this.delay = setTimeout(function () {
-      this.load(search)
+      this.search = search
+      this.load()
     }.bind(this, search), 500)
+  }
+
+  clearSearch() {
+    this.refs.managerSearch.value = ''
+    this.search = ''
+    this.load()
   }
 
   render() {
@@ -74,15 +90,20 @@ class Manager extends React.Component {
 
       return (
         <div>
-          <ManagerForm manager={this.state.currentManager} reload={this.load}/>
-          {message}
+          <ManagerForm manager={this.state.currentManager} reload={this.load}/> {message}
           <div className="row">
             <div className="col-sm-6">
-              <input
-                className="form-control"
-                type="text"
-                placeholder="Search for managers..."
-                onChange={this.searchManager}/>
+              <div className="input-group">
+                <input
+                  ref="managerSearch"
+                  className="form-control"
+                  type="text"
+                  placeholder="Search for managers..."
+                  onChange={this.searchManager}/>
+                <span className="input-group-btn">
+                  <button className="btn btn-default" type="button" onClick={this.clearSearch}>Clear</button>
+                </span>
+              </div>
             </div>
             <div className="col-sm-2">
               {this.admin
@@ -96,7 +117,7 @@ class Manager extends React.Component {
                 : null}
             </div>
           </div>
-          <ListManagers managers={this.state.managers} fillForm={this.fillForm}/>
+          <ListManagers managers={this.state.managers} fillForm={this.fillForm} reload={this.updateManager}/>
         </div>
       )
     }

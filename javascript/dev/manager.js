@@ -21989,8 +21989,8 @@
 	      message: null,
 	      currentManager: {}
 	    };
-	
-	    var bindable = ['load', 'fillForm', 'searchManager'];
+	    _this.search = '';
+	    var bindable = ['clearSearch', 'load', 'fillForm', 'searchManager', 'updateManager'];
 	
 	    bindable.map(function (v) {
 	      this[v] = this[v].bind(this);
@@ -22025,12 +22025,22 @@
 	    }
 	  }, {
 	    key: 'load',
-	    value: function load(search) {
-	      $.getJSON('properties/Manager', { search: search }).done(function (data) {
+	    value: function load() {
+	      $.getJSON('properties/Manager', { search: this.search }).done(function (data) {
 	        this.setState({ managers: data, loading: false });
 	      }.bind(this)).fail(function () {
 	        this.setState({ managers: null, loading: false });
 	        this.setMessage('Error: failure pulling managers');
+	      }.bind(this));
+	    }
+	  }, {
+	    key: 'updateManager',
+	    value: function updateManager(key) {
+	      var managers = this.state.managers;
+	      var manager = this.state.managers[key];
+	      $.getJSON('properties/Manager/' + manager.id).done(function (data) {
+	        managers[key] = data;
+	        this.setState({ managers: managers });
 	      }.bind(this));
 	    }
 	  }, {
@@ -22042,8 +22052,16 @@
 	        return;
 	      }
 	      this.delay = setTimeout(function () {
-	        this.load(search);
+	        this.search = search;
+	        this.load();
 	      }.bind(this, search), 500);
+	    }
+	  }, {
+	    key: 'clearSearch',
+	    value: function clearSearch() {
+	      this.refs.managerSearch.value = '';
+	      this.search = '';
+	      this.load();
 	    }
 	  }, {
 	    key: 'render',
@@ -22057,6 +22075,7 @@
 	          'div',
 	          null,
 	          _react2.default.createElement(_ManagerForm2.default, { manager: this.state.currentManager, reload: this.load }),
+	          ' ',
 	          message,
 	          _react2.default.createElement(
 	            'div',
@@ -22064,11 +22083,25 @@
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'col-sm-6' },
-	              _react2.default.createElement('input', {
-	                className: 'form-control',
-	                type: 'text',
-	                placeholder: 'Search for managers...',
-	                onChange: this.searchManager })
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'input-group' },
+	                _react2.default.createElement('input', {
+	                  ref: 'managerSearch',
+	                  className: 'form-control',
+	                  type: 'text',
+	                  placeholder: 'Search for managers...',
+	                  onChange: this.searchManager }),
+	                _react2.default.createElement(
+	                  'span',
+	                  { className: 'input-group-btn' },
+	                  _react2.default.createElement(
+	                    'button',
+	                    { className: 'btn btn-default', type: 'button', onClick: this.clearSearch },
+	                    'Clear'
+	                  )
+	                )
+	              )
 	            ),
 	            _react2.default.createElement(
 	              'div',
@@ -22084,7 +22117,7 @@
 	              ) : null
 	            )
 	          ),
-	          _react2.default.createElement(_ListManagers2.default, { managers: this.state.managers, fillForm: this.fillForm })
+	          _react2.default.createElement(_ListManagers2.default, { managers: this.state.managers, fillForm: this.fillForm, reload: this.updateManager })
 	        );
 	      }
 	    }
@@ -22149,7 +22182,12 @@
 	        );
 	      } else {
 	        listRows = this.props.managers.map(function (value, key) {
-	          return _react2.default.createElement(_ManagerRow2.default, _extends({ key: key }, value, { fillForm: this.props.fillForm.bind(this, value) }));
+	          return _react2.default.createElement(_ManagerRow2.default, _extends({
+	            key: key
+	          }, value, {
+	            showProperties: this.props.showProperties,
+	            fillForm: this.props.fillForm.bind(this, value),
+	            reload: this.props.reload.bind(this, key) }));
 	        }.bind(this));
 	      }
 	      return _react2.default.createElement(
@@ -22211,7 +22249,9 @@
 	
 	ListManagers.propTypes = {
 	  managers: _react2.default.PropTypes.array,
-	  fillForm: _react2.default.PropTypes.func
+	  fillForm: _react2.default.PropTypes.func,
+	  reload: _react2.default.PropTypes.func,
+	  showProperties: _react2.default.PropTypes.func
 	};
 	
 	exports.default = ListManagers;
@@ -22247,6 +22287,8 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	/* global $ */
+	
 	var ManagerRow = function (_React$Component) {
 	  _inherits(ManagerRow, _React$Component);
 	
@@ -22256,13 +22298,55 @@
 	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ManagerRow).call(this, props));
 	
 	    _this.delete = _this.delete.bind(_this);
+	    _this.activate = _this.activate.bind(_this);
+	    _this.deactivate = _this.deactivate.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(ManagerRow, [{
 	    key: 'delete',
 	    value: function _delete() {
-	      prompt('Are you sure?');
+	      if (prompt("Deleting this manager will remove their account and all their properties.\nType " + "'DELETE' to confirm") === 'DELETE') {
+	        $.ajax({
+	          url: './properties/Manager/?managerId=' + this.props.id,
+	          dataType: 'json',
+	          type: 'delete'
+	        }).done(function (data) {
+	          if (data.success === true) {
+	            this.props.reload();
+	          }
+	        }.bind(this));
+	      }
+	    }
+	  }, {
+	    key: 'activate',
+	    value: function activate() {
+	      $.ajax({
+	        url: './properties/Manager',
+	        type: 'patch',
+	        data: {
+	          param: 'active',
+	          active: true,
+	          managerId: this.props.id
+	        }
+	      }).done(function () {
+	        this.props.reload();
+	      }.bind(this));
+	    }
+	  }, {
+	    key: 'deactivate',
+	    value: function deactivate() {
+	      $.ajax({
+	        url: './properties/Manager',
+	        type: 'patch',
+	        data: {
+	          param: 'active',
+	          active: false,
+	          managerId: this.props.id
+	        }
+	      }).done(function () {
+	        this.props.reload();
+	      }.bind(this));
 	    }
 	  }, {
 	    key: 'render',
@@ -22272,7 +22356,15 @@
 	      var email = 'mailto:' + this.props.email_address;
 	      var lastLog = 'Never';
 	      var companyName = this.props.company_name;
-	      var active = this.props.active === '1' ? _react2.default.createElement('i', { className: 'text-success fa fa-lg fa-check-circle', role: 'button', title: 'Click to deactivate' }) : _react2.default.createElement('i', { className: 'text-danger fa fa-lg fa-times-circle', role: 'button', title: 'Click to activate' });
+	      var active = this.props.active === '1' ? _react2.default.createElement('i', {
+	        className: 'text-success fa fa-lg fa-check-circle',
+	        role: 'button',
+	        title: 'Click to deactivate',
+	        onClick: this.deactivate }) : _react2.default.createElement('i', {
+	        className: 'text-danger fa fa-lg fa-times-circle',
+	        role: 'button',
+	        title: 'Click to activate',
+	        onClick: this.activate });
 	
 	      if (this.props.last_log > 0) {
 	        var lastDate = new Date(this.props.last_log * 1000);
@@ -22290,6 +22382,12 @@
 	        label: 'Edit',
 	        icon: _react2.default.createElement('i', { className: 'fa fa-pencil-square-o' }),
 	        handleClick: this.props.fillForm
+	      }, {
+	        label: 'Properties',
+	        icon: _react2.default.createElement('i', { className: 'fa fa-building' }),
+	        handleClick: function () {
+	          window.location.href = './properties/Property/Manager/' + this.props.id;
+	        }.bind(this)
 	      }, {
 	        label: 'Delete',
 	        icon: _react2.default.createElement('i', { className: 'fa fa-trash' }),
@@ -22320,18 +22418,18 @@
 	          null,
 	          _react2.default.createElement(
 	            'a',
-	            { href: call },
-	            phone
-	          ),
-	          _react2.default.createElement('br', null),
-	          _react2.default.createElement(
-	            'a',
 	            { href: email },
 	            this.props.first_name,
 	            ' ',
 	            this.props.last_name,
 	            ' ',
 	            _react2.default.createElement('i', { className: 'fa fa-envelope-o' })
+	          ),
+	          _react2.default.createElement('br', null),
+	          _react2.default.createElement(
+	            'a',
+	            { href: call },
+	            phone
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -22369,8 +22467,12 @@
 	  first_name: _react2.default.PropTypes.string,
 	  last_name: _react2.default.PropTypes.string,
 	  last_log: _react2.default.PropTypes.string,
+	  property_count: _react2.default.PropTypes.string,
 	  active: _react2.default.PropTypes.string,
-	  fillForm: _react2.default.PropTypes.func
+	  fillForm: _react2.default.PropTypes.func,
+	  remove: _react2.default.PropTypes.func,
+	  reload: _react2.default.PropTypes.func,
+	  showProperties: _react2.default.PropTypes.func
 	};
 	
 	exports.default = ManagerRow;

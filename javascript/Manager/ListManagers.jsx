@@ -13,7 +13,12 @@ class ListManagers extends React.Component {
       return <h2>No managers found.</h2>
     } else {
       listRows = this.props.managers.map(function (value, key) {
-        return <ManagerRow key={key} {...value} fillForm={this.props.fillForm.bind(this, value)}/>
+        return <ManagerRow
+          key={key}
+          {...value}
+          showProperties={this.props.showProperties}
+          fillForm={this.props.fillForm.bind(this, value)}
+          reload={this.props.reload.bind(this, key)}/>
       }.bind(this))
     }
     return (
@@ -40,7 +45,9 @@ class ListManagers extends React.Component {
 
 ListManagers.propTypes = {
   managers: React.PropTypes.array,
-  fillForm: React.PropTypes.func
+  fillForm: React.PropTypes.func,
+  reload: React.PropTypes.func,
+  showProperties: React.PropTypes.func
 }
 
 export default ListManagers

@@ -18,32 +18,43 @@ use \phpws2\Database;
 class PropertyFactory
 {
 
-    public function listView()
+    public function delete($id)
     {
-        if (PROPERTIES_REACT_DEV) {
-            $script[] = \properties\Factory\React::development('Mixin/',
-                            'Mixins.js');
-            $script[] = \properties\Factory\React::development('Property/',
-                            'Listing.js');
-        } else {
-            $script[] = \properties\Factory\React::production('Mixin/',
-                            'script.min.js');
-            $script[] = \properties\Factory\React::production('Property/',
-                            'script.min.js');
+        if (empty($id) || !is_numeric($id)) {
+            throw new \Exception('Property id invalid');
         }
-        $react = implode("\n", $script);
-        $content = <<<EOF
-<div id="properties"></div>
-$react
-EOF;
-
-        return $content;
-    }
-
-    public function listingJson()
-    {
         $db = Database::getDB();
-        $db->addTable('');
+        $tbl = $db->addTable('properties');
+        $tbl->addFieldConditional('id', $id);
+        $db->delete();
+        $this->removePhotos($id);
     }
+    
+    public function removePhotos($id)
+    {
+        if (empty($id) || !is_numeric($id)) {
+            throw new \Exception('Property id invalid');
+        }
+        $photo_list = $this->getPhotos($id, true);
+        if (empty($photo_list)) {
+            return true;
+        }
 
+        $photoFactory = new PhotoFactory;
+        foreach ($photo_list as $photo) {
+            $photoFactory->delete($photo);
+        }
+    }
+    
+    public function getPhotos($id, $as_resource=false)
+    {
+        if (empty($id) || !is_numeric($id)) {
+            throw new \Exception('Property id invalid');
+        }
+        $db = Database::getDB();
+        $img_tbl = $db->addTable('prop_photo');
+        $img_tbl->addFieldConditional('pid', $id);
+        $result = $db->selectAsResources('\properties\Resource\Photo');
+        return $result;
+    }   
 }
