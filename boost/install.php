@@ -12,8 +12,11 @@ function properties_install(&$content)
     try {
         $manager = new \properties\Resource\Manager;
         $manager->createTable($db);
+        $property = new \properties\Resource\Property;
+        $property->createTable($db);
     } catch (\Exception $e) {
         $db->buildTable($manager->getTable())->drop(true);
+        $db->buildTable($property->getTable())->drop(true);
 
         $db->rollback();
         throw $e;
