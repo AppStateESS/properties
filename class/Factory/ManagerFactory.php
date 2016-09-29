@@ -1,9 +1,9 @@
 <?php
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Factory file for Managers
+ * Be aware they used to be called "contacts" and you will see some
+ * remnants of this.
  */
 
 namespace properties\Factory;
@@ -20,9 +20,14 @@ use \properties\Exception\MissingInput;
 class ManagerFactory extends Base
 {
 
+    protected function build()
+    {
+        return new Resource;
+    }
+
     public function listView()
     {
-        
+
         $script[] = $this->getScript('manager');
         $react = implode("\n", $script);
         //\Layout::addStyle('properties', 'style.css');
@@ -34,11 +39,13 @@ EOF;
         return $content;
     }
 
-    public function listingJson($limit = 100, $search=null)
+    public function listingJson($limit = 100, $search = null)
     {
         $db = Database::getDB();
         $tbl = $db->addTable('prop_contacts');
-        if ((int) $limit > 0) {
+        $tbl2 = $db->addTable('properties');
+        $tbl2->addField('id', 'property_count')->showCount();
+        if ((int) $limit <= 0) {
             $db->setLimit(100);
         }
         $tbl->addField('id');
@@ -55,18 +62,26 @@ EOF;
         $tbl->addField('active');
         $tbl->addField('approved');
 
+        $join_conditional = $db->createConditional($tbl->getField('id'),
+                $tbl2->getField('contact_id'));
+        $db->joinResources($tbl, $tbl2, $join_conditional, 'left');
+
         $search_string = "%$search%";
         if (!empty($search)) {
-            $s1 = $db->createConditional($tbl->getField('username'), $search_string, 'like');
-            $s2 = $db->createConditional($tbl->getField('first_name'), $search_string, 'like');
-            $s3 = $db->createConditional($tbl->getField('last_name'), $search_string, 'like');
-            $s4 = $db->createConditional($tbl->getField('company_name'), $search_string, 'like');
+            $s1 = $db->createConditional($tbl->getField('username'),
+                    $search_string, 'like');
+            $s2 = $db->createConditional($tbl->getField('first_name'),
+                    $search_string, 'like');
+            $s3 = $db->createConditional($tbl->getField('last_name'),
+                    $search_string, 'like');
+            $s4 = $db->createConditional($tbl->getField('company_name'),
+                    $search_string, 'like');
             $sf1 = $db->createConditional($s1, $s2, 'or');
             $sf2 = $db->createConditional($s3, $s4, 'or');
             $conditional = $db->createConditional($sf1, $sf2, 'or');
             $db->addConditional($conditional);
         }
-        
+        $db->setGroupBy($tbl->getField('id'));
         $result = $db->select();
         if (empty($result)) {
             return null;
@@ -77,22 +92,32 @@ EOF;
             unset($row['password']);
             return $row;
         }, $resourceArray);
-
         return json_encode($final);
+    }
+
+    public function load($id)
+    {
+        $manager = parent::load($id);
+        $db = Database::getDB();
+        $db->addTable('properties')->addField('id', 'count')->showCount();
+        $manager->property_count = $db->selectColumn();
+        return $manager;
     }
 
     /**
      * Administrative post of the manager
      * @return string
      */
-    public function post()
+    public function post(\Request $request)
     {
         $errors = array();
         $r = new Resource;
         try {
-            $id = $this->pullPostInteger('id');
-            $r->setId($id);
-            $username = strtolower($this->pullPostString('username'));
+            $id = $request->pullPostInteger('id', true);
+            if ($id) {
+                $r->setId($id);
+            }
+            $username = strtolower($request->pullPostString('username', true));
 
             if (empty($username)) {
                 $errors['usernameEmpty'] = true;
@@ -102,7 +127,7 @@ EOF;
                 $r->username = $username;
             }
 
-            $password = $this->pullPostString('password');
+            $password = $request->pullPostString('password', true);
 
             if (empty($password)) {
                 if ($id == 0) {
@@ -116,7 +141,7 @@ EOF;
                 }
             }
 
-            $first_name = $this->pullPostString('first_name');
+            $first_name = $request->pullPostString('first_name', true);
 
             if (empty($first_name)) {
                 $errors['firstNameEmpty'] = true;
@@ -124,7 +149,7 @@ EOF;
                 $r->first_name = $first_name;
             }
 
-            $last_name = $this->pullPostString('last_name');
+            $last_name = $request->pullPostString('last_name', true);
 
             if (empty($last_name)) {
                 $errors['lastNameEmpty'] = true;
@@ -132,7 +157,8 @@ EOF;
                 $r->last_name = $last_name;
             }
 
-            $phone = preg_replace('/[^\d]/', '', $this->pullPostString('phone'));
+            $phone = preg_replace('/[^\d]/', '',
+                    $request->pullPostString('phone', true));
             if (empty($phone)) {
                 $errors['phoneEmpty'] = true;
             } elseif (strlen($phone < 7)) {
@@ -141,7 +167,8 @@ EOF;
                 $r->phone = $phone;
             }
 
-            $email_address = strtolower($this->pullPostString('email_address'));
+            $email_address = strtolower($request->pullPostString('email_address',
+                            true));
 
             if (empty($email_address)) {
                 $errors['emailEmpty'] = true;
@@ -153,7 +180,7 @@ EOF;
                 }
             }
 
-            $company_name = $this->pullPostString('company_name');
+            $company_name = $request->pullPostString('company_name', true);
             if (empty($company_name)) {
                 $errors['companyEmpty'] = true;
             } elseif ($this->checkCompanyName($company_name, $id)) {
@@ -168,9 +195,11 @@ EOF;
                 return $json;
             }
 
-            $r->company_address = $this->pullPostString('company_address');
-            $r->company_url = $this->pullPostString('company_url');
-            $r->times_available = $this->pullPostString('times_available');
+            $r->company_address = $request->pullPostString('company_address',
+                    true);
+            $r->company_url = $request->pullPostString('company_url', true);
+            $r->times_available = $request->pullPostString('times_available',
+                    true);
 
             $this->saveResource($r);
             $json = array('status' => 'success');
@@ -259,9 +288,78 @@ EOF;
         return (bool) $result;
     }
 
-    public function signInForm()
+    public function getProperties($contact_id)
     {
-        
+        $db = \phpws2\Database::getDB();
+        $tbl = $db->addTable('properties');
+        $tbl->addFieldConditional('contact_id', $contact_id);
+        return $db->select();
     }
 
+    public function delete($id)
+    {
+        if (!$id) {
+            throw new \Exception('Id is null');
+        }
+
+        $db = \phpws2\Database::getDB();
+        $db->begin();
+        try {
+            $tbl = $db->addTable('prop_contacts');
+            $tbl->addFieldConditional('id', (int) $id);
+            $db->delete();
+
+            $properties = $this->getProperties($id);
+
+            if (empty($properties)) {
+                $db->commit();
+                return true;
+            }
+
+            // Delete all their properties.
+            $propertyFactory = new PropertyFactory;
+            foreach ($properties as $property) {
+                $propertyFactory->delete($property['id']);
+            }
+            $db->commit();
+        } catch (\Exception $e) {
+            $db->rollback();
+            throw $e;
+        }
+        // Delete the manager's image directory
+        $this->deleteImageDirectory($id);
+        return true;
+    }
+
+    public function deleteImageDirectory($id)
+    {
+        $directory = 'c' . $id;
+        if (is_dir($directory)) {
+            $files = glob($directory . '*', GLOB_MARK);
+
+            foreach ($files as $file) {
+                unlink($file);
+            }
+
+            rmdir($directory);
+        } else {
+            throw \Exception('Manager directory not found: ' . $directory);
+        }
+    }
+
+    public function patch($id, $param, $value)
+    {
+        static $allowed_params = array('username', 'passwddord', 'first_name',
+            'last_name', 'phone', 'email_address', 'company_name', 'company_address',
+            'company_url', 'times_available', 'active', 'approved');
+        
+        if (!in_array($param, $allowed_params)) {
+            throw new \Exception('Parameter may not be patched');
+        }
+        $manager = $this->load($id);
+        $manager->$param = $value;
+        $this->saveResource($manager);
+        return true;
+    }
+    
 }
