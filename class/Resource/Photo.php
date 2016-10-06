@@ -20,9 +20,38 @@ namespace properties\Resource;
 
 class Photo extends \phpws2\Resource
 {
+    /**
+     * Contact id
+     * @var phpws2\Variable\Integer
+     */
+    protected $cid;
+    protected $width;
+    protected $height;
+    /**
+     * Property id
+     * @var phpws2\Variable\Integer
+     */
+    protected $pid;
+    protected $path;
+    protected $title;
+    protected $main_pic;
     
+    protected $table = 'prop_photo';
+            
     public function __construct()
     {
+        parent::__construct();
+        $this->cid = new \phpws2\Variable\Integer(0, 'cid');
+        $this->width = new \phpws2\Variable\Integer(0, 'width');
+        $this->width->setRange(5, 1920);
+        $this->height = new \phpws2\Variable\Integer(0, 'height');
+        $this->height->setRange(5, 1080);
+        $this->pid = new \phpws2\Variable\Integer(0, 'pid');
+        $this->path = new \phpws2\Variable\File(null, 'path');
+        $this->path->setLimit(255);
+        $this->title = new \phpws2\Variable\String('', 'title');
+        $this->title->setLimit(255);
+        $this->main_pic = new \phpws2\Variable\Bool(false, 'main_pic');
         
     }
 }
