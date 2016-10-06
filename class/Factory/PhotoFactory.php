@@ -17,11 +17,24 @@
  */
 
 namespace properties\Factory;
+namespace properties\Resource\Photo;
 
 class PhotoFactory extends Base
 {
+
     protected function build()
     {
         return new \properties\Resource\Photo;
     }
+
+    public function delete($photo)
+    {
+        if (is_numeric($photo)) {
+            $photo = $this->load($photo);
+        } elseif (!is_a($photo, '\properties\Resource\Photo')) {
+            throw new \Exception('Improper parameter');
+        }
+        var_dump($photo);
+    }
+
 }
