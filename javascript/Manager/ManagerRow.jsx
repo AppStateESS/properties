@@ -21,7 +21,7 @@ class ManagerRow extends React.Component {
         type: 'delete'
       }).done(function (data) {
         if (data.success === true) {
-          this.props.reload()
+          this.props.remove()
         }
       }.bind(this))
     }
@@ -37,6 +37,7 @@ class ManagerRow extends React.Component {
         managerId: this.props.id
       }
     }).done(function () {
+      this.props.message('Manager activated')
       this.props.reload()
     }.bind(this))
   }
@@ -51,76 +52,105 @@ class ManagerRow extends React.Component {
         managerId: this.props.id
       }
     }).done(function () {
+      this.props.message('Manager deactivated')
       this.props.reload()
     }.bind(this))
   }
 
   render() {
-    const phone = this.props.phone
-    const call = 'tel:+1' + this.props.phone
-    const email = 'mailto:' + this.props.email_address
-    let lastLog = 'Never'
-    let companyName = this.props.company_name
-    const active = this.props.active === '1'
-      ? <i
-          className="text-success fa fa-lg fa-check-circle"
-          role="button"
-          title="Click to deactivate"
-          onClick={this.deactivate}></i>
-      : <i
-        className="text-danger fa fa-lg fa-times-circle"
-        role="button"
-        title="Click to activate"
-        onClick={this.activate}></i>
+    //let lastLog = 'Never'
 
+    /*
     if (this.props.last_log > 0) {
       let lastDate = new Date(this.props.last_log * 1000)
       lastLog = lastDate.toDateString()
     }
-    if (this.props.company_url.length > 0) {
-      companyName = <a href={this.props.company_url}>{companyName}</a>
+    */
+
+    let alabel = null
+    let aicon = null
+    let ahandle = null
+
+    if (this.props.active === '1') {
+      alabel = 'Deactivate'
+      aicon = <i
+        className="text-danger fa fa-lg fa-times-circle"
+        role="button"
+        title="Click to deactivate"></i>
+      ahandle = this.deactivate
+    } else {
+      alabel = 'Activate'
+      aicon = <i
+        className="text-success fa fa-lg fa-check-circle"
+        role="button"
+        title="Click to activate"></i>
+      ahandle = this.activate
     }
 
-    const options = [
-      {
-        label: 'Edit',
-        icon: <i className="fa fa-pencil-square-o"></i>,
-        handleClick: this.props.fillForm
-      },
-      {
-        label: 'Properties',
-        icon: <i className="fa fa-building"></i>,
-        handleClick: function(){window.location.href = './properties/Property/Manager/' + this.props.id}.bind(this)
-      },
-      {
-        label: 'Delete',
-        icon: <i className="fa fa-trash"></i>,
-        handleClick: this.delete
-      }
-    ]
+    let optionList = null
+    if (this.props.admin) {
+      const options = [
+        {
+          label: 'Edit',
+          icon: <i className="fa fa-pencil-square-o"></i>,
+          handleClick: this.props.fillForm
+        }, {
+          label : 'Add property',
+          icon: <i className="fa fa-building-o"></i>,
+          link: './properties/Property/create/?managerId=' + this.props.id
+        },
+        {
+          label: alabel,
+          icon: aicon,
+          handleClick: ahandle
+        }, {
+          label: 'Delete',
+          icon: <i className="fa fa-trash"></i>,
+          handleClick: this.delete
+        }
+      ]
+      optionList = <Dropdown options={options} label="Options"/>
+    }
+
+    let properties = <div>
+      <em>No properties</em>
+    </div>
+    if (this.props.property_count > 0) {
+      properties = <a
+        href="./properties/Property/?managerId={this.props.id}"
+        className="btn btn-default">View Properties</a>
+    }
+
+    let co = null
+    if (this.props.first_name.length > 0) {
+      co = <span>(c/o {this.props.first_name}&nbsp;{this.props.last_name})</span>
+    }
+    const email = 'mailto:' + this.props.email_address
+    const phone = 'tel:+1' + this.props.phone.replace(/[^\d]/g, '')
 
     return (
-      <tr>
-        <td><input type="checkbox"/></td>
-        <td>
-          {active}
-        </td>
-        <td>
-          {companyName}<br/>
-        </td>
-        <td>
-          <a href={email}>{this.props.first_name} {this.props.last_name}&nbsp;
-            <i className="fa fa-envelope-o"></i>
-          </a><br />
-          <a href={call}>{phone}</a>
-        </td>
-        <td>
-          {lastLog}
-        </td>
-        <td>
-          <Dropdown options={options} label="Options"/>
-        </td>
-      </tr>
+      <div
+        className={this.props.active === '0'
+        ? 'bg-danger row manager-row'
+        : 'row manager-row'}>
+        <div className="col-sm-3">
+          <span className="company-name">{this.props.company_name}</span><br/>{co}
+        </div>
+        <div className="col-sm-3">
+          {properties}
+        </div>
+        <div className="col-sm-4">
+          <LinkToButton url={phone} icon="fa-phone" label={this.props.phone}/>
+          <Website url={this.props.company_url}/>
+          <LinkToButton
+            url={email}
+            icon="fa-envelope-o"
+            label={this.props.email_address}/>
+        </div>
+        {this.props.admin
+          ? <div className="col-sm-2">{optionList}</div>
+          : null}
+      </div>
     )
   }
 }
@@ -131,7 +161,8 @@ ManagerRow.defaultProps = {
   last_log: 0,
   company_url: '',
   first_name: '',
-  last_name: ''
+  last_name: '',
+  admin: false
 }
 
 ManagerRow.propTypes = {
@@ -148,7 +179,43 @@ ManagerRow.propTypes = {
   fillForm: React.PropTypes.func,
   remove: React.PropTypes.func,
   reload: React.PropTypes.func,
-  showProperties: React.PropTypes.func
+  showProperties: React.PropTypes.func,
+  message: React.PropTypes.func,
+  admin: React.PropTypes.bool
+}
+
+class Website extends React.Component {
+  render() {
+    if (this.props.url.length > 0) {
+      return (<LinkToButton url={this.props.url} label={this.props.url} icon="fa-link"/>)
+    }
+  }
+}
+
+Website.propTypes = {
+  url: React.PropTypes.string
+}
+
+class LinkToButton extends React.Component {
+  render() {
+    const bigIconClass = 'fa fa-2x ' + this.props.icon
+    const smallIconClass = 'fa ' + this.props.icon
+    return (
+      <span>
+        <a href={this.props.url} className="link-button visible-xs-inline-block btn btn-primary">
+          <i className={bigIconClass}></i>
+        </a>
+        <a href={this.props.url} className="visible-sm visible-md visible-lg">
+          <i className={smallIconClass}></i>&nbsp;{this.props.label}
+        </a>
+      </span>
+    )
+  }
+}
+LinkToButton.propTypes = {
+  url: React.PropTypes.string,
+  icon: React.PropTypes.string,
+  label: React.PropTypes.string
 }
 
 export default ManagerRow
