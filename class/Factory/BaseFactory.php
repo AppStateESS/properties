@@ -6,7 +6,7 @@ namespace properties\Factory;
  *
  * @author Matthew McNaney <mcnaneym@appstate.edu>
  */
-abstract class Base extends \phpws2\ResourceFactory
+abstract class BaseFactory extends \phpws2\ResourceFactory
 {
 
     abstract protected function build();
@@ -35,18 +35,6 @@ abstract class Base extends \phpws2\ResourceFactory
         } else {
             return ucfirst($name);
         }
-    }
-
-    protected function getScript($filename)
-    {
-        $root_directory = PHPWS_SOURCE_HTTP . 'mod/properties/javascript/';
-        if (PROPERTIES_REACT_DEV) {
-            $path = "dev/$filename.js";
-        } else {
-            $path = "build/$filename.js";
-        }
-        $script = "<script type='text/javascript' src='{$root_directory}$path'></script>";
-        return $script;
     }
 
 }
