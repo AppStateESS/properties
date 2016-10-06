@@ -9,68 +9,86 @@
 namespace properties\Controller;
 
 use properties\Factory\PropertyFactory as Factory;
+use properties\Factory\ManagerFactory;
 
 /**
- * Description of Property
+ * Description of Property.
  *
  * @author Matthew McNaney <mcnaneym@appstate.edu>
  */
 class PropertyController extends BaseController
 {
+    private $factory;
 
     public function __construct($module)
     {
         parent::__construct($module);
-        $this->adminPermissions = array('create', 'edit', 'save');
-        $this->managerPermissions = array('edit', 'save');
-        $this->userPermissions = array('view', 'list', 'home');
+        $this->factory = new Factory();
     }
 
     public function getHtmlView($data, \Request $request)
     {
+        \Layout::addStyle('properties');
+        $this->role->setController('property');
         $command = $this->checkCommand($request, 'list');
-
-        $factory = new Factory;
-
+        if (is_numeric($command)) {
+            $propertyId = (int) $command;
+            $command = 'view';
+        } else {
+            $propertyId = $request->pullGetInteger('propertyId', true);
+        }
+        $managerId = $request->pullGetInteger('managerId', true);
         switch ($command) {
             case 'list':
-                $content = $factory->listView();
+                $content = $this->reactView('property');
                 break;
 
             case 'create';
-                $content = $factory->create();
+                $content = $this->reactView('propertyform');
                 break;
 
             case 'view':
+                $content = 'property view';
                 break;
 
             default:
                 throw new \phpws2\Http\MethodNotAllowedException();
         }
         $view = new \phpws2\View\HtmlView($content);
+
         return $view;
     }
 
     public function getJsonView($data, \Request $request)
     {
-        $command = $request->shiftCommand();
-        if (empty($command)) {
-            $command = 'list';
+        $command = $this->checkCommand($request, 'list');
+        if (is_numeric($command)) {
+            $propertyId = (int) $command;
+            $command = 'view';
+        } else {
+            $propertyId = $request->pullGetInteger('propertyId', true);
         }
-
-        if (!$this->allow($command, $request)) {
-            throw new \phpws2\Http\NotAcceptableException;
-        }
-
-        $factory = new Factory;
 
         switch ($command) {
             case 'list':
-                $json = $factory->listingJson();
+                $manager_id = $request->pullGetInteger('managerId', true);
+                $json['properties'] = $this->factory->listing($manager_id,
+                        $request->pullGetString('search', true),
+                        $request->pullGetInteger('limit', true));
+                if ($manager_id) {
+                    $managerFactory = new ManagerFactory();
+                    $manager = $managerFactory->load($manager_id);
+                    $json['manager'] = $manager->getStringVars();
+                } else {
+                    $json['manager'] = null;
+                }
                 break;
+
+            default:
+                throw new \phpws2\Http\MethodNotAllowedException();
         }
         $view = new \View\JsonView($json);
+
         return $view;
     }
-
 }
