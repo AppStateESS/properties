@@ -8,38 +8,24 @@
 
 namespace properties\Factory;
 
-use \phpws2\Database;
-use \properties\Resource\Manager as Resource;
-use \properties\Exception\MissingInput;
+use phpws2\Database;
+use properties\Resource\Manager as Resource;
+use properties\Exception\MissingInput;
+use properties\Exception\PrivilegeMissing;
 
 /**
  * Description of ManagerFactory
  *
  * @author Matthew McNaney <mcnaneym@appstate.edu>
  */
-class ManagerFactory extends Base
+class ManagerFactory extends BaseFactory
 {
-
     protected function build()
     {
         return new Resource;
     }
 
-    public function listView()
-    {
-
-        $script[] = $this->getScript('manager');
-        $react = implode("\n", $script);
-        //\Layout::addStyle('properties', 'style.css');
-        //$icons = json_encode(\properties\Factory\Base::categoryIcons());
-        $content = <<<EOF
-<div id="manager"></div>
-$react
-EOF;
-        return $content;
-    }
-
-    public function listingJson($limit = 100, $search = null)
+    public function listing($role, $limit = 100, $search = null)
     {
         $db = Database::getDB();
         $tbl = $db->addTable('prop_contacts');
@@ -81,20 +67,35 @@ EOF;
             $conditional = $db->createConditional($sf1, $sf2, 'or');
             $db->addConditional($conditional);
         }
+        if (!$role->isAdmin()) {
+            $tbl->addFieldConditional('active', 1);
+        }
         $db->setGroupBy($tbl->getField('id'));
         $result = $db->select();
         if (empty($result)) {
-            return null;
+            return array();
         }
+        
+        
+        if ($role->isUser() || $role->isLogged()) {
+            $hide = array('private', 'username', 'first_name', 'last_name', 'last_log', 'active', 'approved');
+        }
+        $hide[] = 'password';
+        
         $resourceArray = \phpws2\ResourceFactory::makeResourceStringArray($result,
-                        '\properties\Resource\Manager');
+                        '\properties\Resource\Manager', $hide);
         $final = array_map(function($row) {
             unset($row['password']);
             return $row;
         }, $resourceArray);
-        return json_encode($final);
+        return $final;
     }
 
+    /**
+     * 
+     * @param integer $id
+     * @return properties\Resource\Manager
+     */
     public function load($id)
     {
         $manager = parent::load($id);
