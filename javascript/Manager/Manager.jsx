@@ -11,14 +11,23 @@ class Manager extends React.Component {
   constructor(props) {
     super(props)
     this.delay
-    this.admin = true
+    this.addManager = false
     this.state = {
       managers: null,
       message: null,
       currentManager: {}
     }
     this.search = ''
-    let bindable = ['clearSearch', 'load', 'fillForm', 'searchManager', 'updateManager']
+    let bindable = [
+      'clearSearch',
+      'dropManager',
+      'getMessage',
+      'load',
+      'fillForm',
+      'searchManager',
+      'setMessage',
+      'updateManager'
+    ]
 
     bindable.map(function (v) {
       this[v] = this[v].bind(this)
@@ -39,7 +48,10 @@ class Manager extends React.Component {
   }
 
   getMessage() {
-    if (this.state.message != null) {
+    if (this.state.message !== null) {
+      setTimeout(function(){
+        this.setState({message: null})
+      }.bind(this), 4000)
       return <Message message={this.state.message}/>
     } else {
       return null
@@ -48,7 +60,8 @@ class Manager extends React.Component {
 
   load() {
     $.getJSON('properties/Manager', {search: this.search}).done(function (data) {
-      this.setState({managers: data, loading: false})
+      this.addManager = data.addManager
+      this.setState({managers: data['managerList'], loading: false})
     }.bind(this)).fail(function () {
       this.setState({managers: null, loading: false})
       this.setMessage('Error: failure pulling managers')
@@ -58,10 +71,16 @@ class Manager extends React.Component {
   updateManager(key) {
     let managers = this.state.managers
     let manager = this.state.managers[key]
-    $.getJSON('properties/Manager/' + manager.id).done(function(data) {
+    $.getJSON('properties/Manager/' + manager.id).done(function (data) {
       managers[key] = data
       this.setState({managers: managers})
     }.bind(this))
+  }
+
+  dropManager(key) {
+    let managers = this.state.managers
+    managers.splice(key, 1)
+    this.setState({managers: managers})
   }
 
   searchManager(e) {
@@ -83,14 +102,19 @@ class Manager extends React.Component {
   }
 
   render() {
+    let managerForm = null
+    let message = this.getMessage()
+
+    if (this.addManager) {
+      managerForm = <ManagerForm manager={this.state.currentManager} reload={this.load} message={this.setMessage}/>
+    }
     if (this.state.managers === null) {
       return (<Loading label="managers"/>)
     } else {
-      let message = this.getMessage()
-
       return (
         <div>
-          <ManagerForm manager={this.state.currentManager} reload={this.load}/> {message}
+          {managerForm}
+          {message}
           <div className="row">
             <div className="col-sm-6">
               <div className="input-group">
@@ -106,7 +130,7 @@ class Manager extends React.Component {
               </div>
             </div>
             <div className="col-sm-2">
-              {this.admin
+              {this.addManager
                 ? (
                   <button
                     className="btn btn-success"
@@ -117,7 +141,14 @@ class Manager extends React.Component {
                 : null}
             </div>
           </div>
-          <ListManagers managers={this.state.managers} fillForm={this.fillForm} reload={this.updateManager}/>
+          <hr />
+          <ListManagers
+            managers={this.state.managers}
+            fillForm={this.fillForm}
+            reload={this.updateManager}
+            remove={this.dropManager}
+            message={this.setMessage}
+            admin={this.addManager}/>
         </div>
       )
     }
