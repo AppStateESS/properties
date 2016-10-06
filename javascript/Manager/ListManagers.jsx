@@ -18,26 +18,15 @@ class ListManagers extends React.Component {
           {...value}
           showProperties={this.props.showProperties}
           fillForm={this.props.fillForm.bind(this, value)}
-          reload={this.props.reload.bind(this, key)}/>
+          reload={this.props.reload.bind(this, key)}
+          remove={this.props.remove.bind(this, key)}
+          message={this.props.message}
+          admin={this.props.admin}/>
       }.bind(this))
     }
     return (
       <div>
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th><input type="checkbox"/></th>
-              <th>&nbsp;</th>
-              <th>Company</th>
-              <th>Contact</th>
-              <th>Last logged</th>
-              <th>&nbsp;</th>
-            </tr>
-          </thead>
-          <tbody>
-            {listRows}
-          </tbody>
-        </table>
+        {listRows}
       </div>
     )
   }
@@ -47,7 +36,10 @@ ListManagers.propTypes = {
   managers: React.PropTypes.array,
   fillForm: React.PropTypes.func,
   reload: React.PropTypes.func,
-  showProperties: React.PropTypes.func
+  showProperties: React.PropTypes.func,
+  message: React.PropTypes.func,
+  remove: React.PropTypes.func,
+  admin: React.PropTypes.bool
 }
 
 export default ListManagers
