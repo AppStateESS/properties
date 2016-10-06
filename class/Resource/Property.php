@@ -134,8 +134,7 @@ class Property extends Base
         $this->utilities_inc = new Variable\Bool(false, 'utilities_inc');
         $this->tv_type = new Variable\Integer(0, 'tv_type');
         $this->tv_type->setRange(0, 10);
-        $this->window_number = new Variable\Integer(0, 'window_number');
-        $this->window_number->setRange(0, 1000);
+        $this->window_number = new Variable\Bool(true, 'window_number');
         $this->workout_room = new Variable\Bool(false, 'workout_room');
     }
 
