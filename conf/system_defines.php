@@ -66,3 +66,6 @@ define('GRAD_STUDENT', 2);
 
 define('NONSMOKER', 1);
 define('SMOKER', 2);
+
+define('PROP_MAX_IMAGE_WIDTH', 1920);
+define('PROP_MAX_IMAGE_HEIGHT', 1080);
