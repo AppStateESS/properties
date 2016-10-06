@@ -5,3 +5,43 @@
 .error-highlight {
     border-color : red;
 }
+
+.company-name {
+    font-size : 1.3em;
+    font-weight : bold;
+}
+
+.manager-row {
+    font-size : 1.2em;
+    border : 1px solid #b3b3b3;
+    padding : 5px;
+    border-radius : 5px;
+    margin-bottom : 1em;
+}
+
+.link-button {
+    margin-right : 5px;
+}
+
+label, input {
+    margin-right : 5px;
+}
+
+.marginTop {
+    margin-top : 2em;
+}
+
+.marginBottom {
+    margin-bottom : 2em;
+}
+
+.marginRight {
+    margin-right : 2em;
+}
+
+.marginLeft {
+    margin-left : 2em;
+}
+.form-group {
+    margin-bottom : 2em;
+}
