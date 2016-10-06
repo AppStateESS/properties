@@ -23,40 +23,34 @@ class ManagerController extends BaseController
     public function __construct($module)
     {
         parent::__construct($module);
-        // only admins may 
-        $this->adminPermissions = array('adminlist', 'create', 'edit', 'save', 'list', 'post', 'delete', 'patch');
-        $this->managerPermissions = array('edit', 'save');
-        $this->userPermissions = array('userlist', 'view', 'checkUsername', 'checkEmail', 'checkCompanyName', 'Signin');
         $this->factory = new Factory;
     }
 
     public function getHtmlView($data, \Request $request)
     {
-        $command = $request->shiftCommand();
-        if (empty($command)) {
-            $command = 'list';
-        }
+        $this->role->setController('manager');
 
-        if (!$this->allow($command, $request)) {
-            throw new \properties\Exception\PrivilegeMissing;
+        $command = $this->checkCommand($request, 'list');
+
+        if (is_numeric($command) && $this->role->allow('view')) {
+            $managerId = (int) $command;
+            $command = 'view';
+        } else {
+            $managerId = $request->pullGetInteger('managerId', true);
         }
 
         \Layout::addStyle('properties');
         switch ($command) {
             case 'list':
-                $content = $this->factory->listView();
+                $content = $this->reactView('manager');
                 break;
-
-            case 'create':
-                $content = $this->factory->create();
-                break;
-
-            case 'signin':
-                $content = $this->factory->signInForm();
 
             case 'view':
                 $content = 'html view';
                 break;
+
+            default:
+                throw new \phpws2\Http\MethodNotAllowedException();
         }
         $view = new \phpws2\View\HtmlView($content);
         return $view;
@@ -64,29 +58,24 @@ class ManagerController extends BaseController
 
     public function getJsonView($data, \Request $request)
     {
-        $command = $request->shiftCommand();
-        if (empty($command)) {
-            $command = 'list';
-        } elseif (is_numeric($command)) {
-            $managerId = (int)$command;
+        $this->role->setController('manager');
+        $command = $this->checkCommand($request, 'list');
+
+        if (is_numeric($command)) {
+            $managerId = (int) $command;
             $command = 'view';
         } else {
             $managerId = $request->pullGetInteger('managerId', true);
         }
 
-        if (!$this->allow($command, $request)) {
-            throw new \properties\Exception\PrivilegeMissing;
-        }
-
         switch ($command) {
             case 'list':
-                $result = $this->factory->listingJson($request->pullGetVarIfSet('limit',
-                                true), $request->pullGetString('search', true));
-                if (empty($result)) {
-                    $json = array();
-                } else {
-                    return new \phpws2\View\HtmlView($result);
-                }
+                $json = array();
+                $json['addManager'] = $this->role->allow('post');
+                $json['managerList'] = $this->factory->listing($this->role,
+                        $request->pullGetVarIfSet('limit', true),
+                        $request->pullGetString('search', true));
+                return new \View\JsonView($json);
                 break;
 
             case 'checkUsername':
@@ -103,7 +92,7 @@ class ManagerController extends BaseController
                 $json = array('duplicate' => $this->factory->checkCompanyName($request->pullGetString('company_name',
                                     true), $request->pullGetInteger('id', true)));
                 break;
-            
+
             case 'view':
                 $manager = $this->factory->load($managerId);
                 $json = $manager->getStringVars(null, 'password');
@@ -115,7 +104,8 @@ class ManagerController extends BaseController
 
     public function delete(\Request $request)
     {
-        if (!$this->allow('delete', $request)) {
+        $this->role->setController('manager');
+        if (!$this->role->allow()) {
             throw new \properties\Exception\PrivilegeMissing;
         }
         $id = $request->pullGetInteger('managerId');
@@ -130,7 +120,8 @@ class ManagerController extends BaseController
 
     public function post(\Request $request)
     {
-        if (!$this->allow('post', $request)) {
+        $this->role->setController('manager');
+        if (!$this->role->allow()) {
             throw new \properties\Exception\PrivilegeMissing;
         }
         $json = $this->factory->post($request);
@@ -141,7 +132,8 @@ class ManagerController extends BaseController
 
     public function patch(\Request $request)
     {
-        if (!$this->allow('patch', $request)) {
+        $this->role->setController('manager');
+        if (!$this->role->allow()) {
             throw new \properties\Exception\PrivilegeMissing;
         }
         $param = $request->pullPatchString('param');

@@ -35,17 +35,24 @@ abstract class BaseController extends \phpws2\Http\Controller
      * @var array
      */
     protected $userPermissions;
+    protected $role;
 
-    public function __construct($module)
+    protected function loadRole($controller, $method)
     {
-        parent::__construct($module);
-        $this->adminPermissions = array();
-        $this->managerPermissions = array();
-        $this->userPermissions = array();
+        if (\Current_User::allow('properties')) {
+            $this->role = new \properties\Role\AdminRole($controller, $method);
+        } elseif ((bool) isset($_SESSION['Contact_Manager']) && $_SESSION['Contact_Manager']->id) {
+            $this->role = new \properties\Role\ManagerRole($controller, $method);
+        } elseif (\Current_User::isLogged()) {
+            $this->role = new \properties\Role\LoggedRole($controller, $method);
+        } else {
+            $this->role = new \properties\Role\UserRole($controller, $method);
+        }
     }
 
     public function get(\Request $request)
     {
+        $this->loadRole(null, 'GET');
         try {
             $data = array();
             $view = $this->getView($data, $request);
@@ -55,35 +62,20 @@ abstract class BaseController extends \phpws2\Http\Controller
         $response = new \Response($view);
         return $response;
     }
+    
+    public function execute(\Request $request)
+    {
+        $this->loadRole(null, $request->getMethod());
+        return parent::execute($request);
+    }
 
     protected function errorPage(\Exception $e)
     {
         $content = $e->getMessage();
-        $template = new \phpws2\Template(array('message'=>$e->getMessage()));
+        $template = new \phpws2\Template(array('message' => $e->getMessage()));
         $template->setModuleTemplate('properties', 'error.html');
         $view = new \phpws2\View\HtmlView($template->get());
         return $view;
-    }
-
-    protected function allow($command, \Request $request)
-    {
-        $session = \phpws2\Session::getInstance();
-
-        if (\Current_User::allow('properties') && in_array($command,
-                        $this->adminPermissions)) {
-            return true;
-        }
-
-        if (in_array($command, $this->userPermissions)) {
-            return true;
-        }
-
-        if (in_array($command, $this->managerPermissions) && isset($session->currentManagerId) &&
-                $session->currentManagerId === $request->getVar('managerId')) {
-            return true;
-        }
-
-        return false;
     }
 
     protected function checkCommand($request, $defaultCommand = null)
@@ -93,10 +85,44 @@ abstract class BaseController extends \phpws2\Http\Controller
             $command = $defaultCommand;
         }
 
-        if (!$this->allow($command, $request)) {
-            throw new \Exception("'$command' not recognized");
+        if (!empty($command)) {
+            // this a view of a specific item
+            if (is_numeric($command)) {
+                if (!$this->role->allow('view')) {
+                    throw new \properties\Exception\PrivilegeMissing;
+                } else {
+                    return $command;
+                }
+            } else {
+                if (!$this->role->allow($command)) {
+                    throw new \properties\Exception\PrivilegeMissing;
+                }
+            }
         }
         return $command;
+    }
+
+    protected function getScript($filename)
+    {
+        $root_directory = PHPWS_SOURCE_HTTP . 'mod/properties/javascript/';
+        if (PROPERTIES_REACT_DEV) {
+            $path = "dev/$filename.js";
+        } else {
+            $path = "build/$filename.js";
+        }
+        $script = "<script type='text/javascript' src='{$root_directory}$path'></script>";
+        return $script;
+    }
+
+    protected function reactView($view_name)
+    {
+        $script[] = $this->getScript($view_name);
+        $react = implode("\n", $script);
+        $content = <<<EOF
+<div id="$view_name"></div>
+$react
+EOF;
+        return $content;
     }
 
 }
