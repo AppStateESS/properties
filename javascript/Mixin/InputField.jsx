@@ -50,7 +50,8 @@ class InputField extends React.Component {
 
     return (
       <div className="form-group">
-        <label htmlFor={this.props.name}>{this.props.label} {required}</label>
+        {this.props.label.length > 0 ?
+        <label htmlFor={this.props.name}>{this.props.label} {required}</label> : undefined}
         <input
           id={this.props.iid}
           type={this.props.type}
@@ -59,6 +60,7 @@ class InputField extends React.Component {
           className={inputClass}
           onChange={this.props.change}
           onBlur={this.handleBlur}
+          disabled={this.props.disabled}
           placeholder={this.state.placeholder}
           autoComplete={this.props.autocomplete}/> {this.state.errorMessage
           ? <div className="label label-danger">{this.state.errorMessage}</div>
@@ -69,7 +71,6 @@ class InputField extends React.Component {
 }
 
 InputField.defaultProps = {
-  iid: '0',
   label: '',
   type: 'text',
   name: '',
@@ -80,21 +81,23 @@ InputField.defaultProps = {
   id: null,
   autocomplete: false,
   placeholder: null,
-  errorMessage: ''
+  errorMessage: '',
+  disabled: false
 }
 
 InputField.propTypes = {
   name: React.PropTypes.string,
   label: React.PropTypes.string,
   type: React.PropTypes.string,
-  value: React.PropTypes.string,
+  value: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
   change: React.PropTypes.func,
   blur: React.PropTypes.func,
   placeholder: React.PropTypes.string,
   errorMessage: React.PropTypes.string,
   iid: React.PropTypes.string,
   autocomplete: React.PropTypes.bool,
-  required: React.PropTypes.bool
+  required: React.PropTypes.bool,
+  disabled: React.PropTypes.bool
 }
 
 export default InputField
