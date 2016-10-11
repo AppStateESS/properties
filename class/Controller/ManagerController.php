@@ -50,7 +50,7 @@ class ManagerController extends BaseController
                 break;
 
             default:
-                throw new \phpws2\Http\MethodNotAllowedException();
+                throw new \properties\Exception\BadCommand;
         }
         $view = new \phpws2\View\HtmlView($content);
         return $view;
