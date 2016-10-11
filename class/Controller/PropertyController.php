@@ -28,8 +28,8 @@ class PropertyController extends BaseController
 
     public function getHtmlView($data, \Request $request)
     {
-        \Layout::addStyle('properties');
         $this->role->setController('property');
+        \Layout::addStyle('properties');
         $command = $this->checkCommand($request, 'list');
         if (is_numeric($command)) {
             $propertyId = (int) $command;
@@ -52,7 +52,7 @@ class PropertyController extends BaseController
                 break;
 
             default:
-                throw new \phpws2\Http\MethodNotAllowedException();
+                throw new \properties\Exception\BadCommand;
         }
         $view = new \phpws2\View\HtmlView($content);
 
@@ -61,6 +61,7 @@ class PropertyController extends BaseController
 
     public function getJsonView($data, \Request $request)
     {
+        $this->role->setController('property');
         $command = $this->checkCommand($request, 'list');
         if (is_numeric($command)) {
             $propertyId = (int) $command;
