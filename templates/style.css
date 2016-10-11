@@ -45,3 +45,26 @@ label, input {
 .form-group {
     margin-bottom : 2em;
 }
+
+.single-input {
+    font-size : 1.5em;
+    text-align: center;
+    border : 1px solid #e3e3e3;
+    border-radius : 5px;
+}
+
+.property-form .row {
+    border : 1px solid #e3e3e3;
+}
+
+.property-form .row > div {
+    padding : 1em;
+}
+
+.property-form .form-group {
+    margin: 0;
+}
+
+.property-form label {
+    font-size : 1.2em;
+}
