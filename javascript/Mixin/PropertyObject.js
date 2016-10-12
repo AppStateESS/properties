@@ -18,7 +18,7 @@ let PropertyObject = {
   dishwasher: false,
   efficiency: false,
   furnished: false,
-  heat_type: '',
+  heat_type: [],
   internet_type: 0,
   lease_type: 0,
   laundry_type: 0,
@@ -45,7 +45,7 @@ let PropertyObject = {
   util_power: false,
   utilities_inc: false,
   tv_type: 0,
-  window_number: false,
+  window_number: true,
   workout_room: false,
   id : 0
 }
