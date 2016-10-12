@@ -19,15 +19,23 @@ class BooleanButton extends React.Component {
   }
 
   positiveIcon() {
-    return this.props.icon !== null
-      ? this.props.icon[0]
-      : null
+    if (this.props.icon === true) {
+      return 'fa fa-check'
+    } else if(this.props.icon !== null && typeof this.props.icon === 'object') {
+      return this.props.icon[0]
+    } else {
+      return null
+    }
   }
 
   negativeIcon() {
-    return this.props.icon !== null
-      ? this.props.icon[1]
-      : null
+    if (this.props.icon === true) {
+      return 'fa fa-times'
+    } else if(this.props.icon !== null && typeof this.props.icon === 'object') {
+      return this.props.icon[1]
+    } else {
+      return null
+    }
   }
 
   render() {
@@ -54,7 +62,7 @@ BooleanButton.defaultProps = {
 
 BooleanButton.propTypes = {
   label: React.PropTypes.array,
-  icon: React.PropTypes.array,
+  icon: React.PropTypes.oneOfType([React.PropTypes.array, React.PropTypes.bool]),
   handleClick: React.PropTypes.func,
   current: React.PropTypes.bool
 }
