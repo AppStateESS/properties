@@ -27,10 +27,11 @@ export default class PropertyForm extends React.Component {
     this.setValue = this.setValue.bind(this)
     this.setMoveIn = this.setMoveIn.bind(this)
     this.togglePets = this.togglePets.bind(this)
+    this.updateHeatType = this.updateHeatType.bind(this)
     this.updateLease = this.updateLease.bind(this)
     this.updateBedroom = this.updateBedroom.bind(this)
     this.updateBathroom = this.updateBathroom.bind(this)
-    this.updateStudentPreference = this.updateStudentPreference.bind(this)
+    this.updateStudentType = this.updateStudentType.bind(this)
   }
 
   setValue(varname, value) {
@@ -51,15 +52,46 @@ export default class PropertyForm extends React.Component {
   getLeaseType() {
     return [
       {
-        active: this.state.property.lease_type === 0,
         value: 0,
         label: <span>
             <i className="fa fa-user"></i>&nbsp; Per unit</span>
       }, {
-        active: this.state.property.lease_type === 1,
         value: 1,
         label: <span>
             <i className="fa fa-users"></i>&nbsp; Per tenant</span>
+      }
+    ]
+  }
+
+  heatingTypes() {
+    return [
+      {
+        value: 1,
+        label: 'Heat pump'
+      },
+      {
+        value: 2,
+        label: 'Oil'
+      },
+      {
+        value: 3,
+        label: 'Propane'
+      },
+      {
+        value: 4,
+        label: 'Electric baseboard'
+      },
+      {
+        value: 5,
+        label: 'Kerosene'
+      },
+      {
+        value: 6,
+        label: 'Woodstove/Fireplace'
+      },
+      {
+        value: 7,
+        label: 'Natural gas'
       }
     ]
   }
@@ -106,8 +138,20 @@ export default class PropertyForm extends React.Component {
     }
   }
 
-  updateStudentPreference(type) {
+  updateStudentType(type) {
     this.setValue('student_type', type)
+  }
+
+  updateHeatType(type) {
+    let heatType = this.state.property.heat_type
+
+    const index = heatType.indexOf(type)
+    if (index === -1) {
+      heatType.push(type)
+    } else {
+      heatType.splice(index, 1)
+    }
+    this.setValue('heat_type', heatType)
   }
 
   getRangeButtons(current, deci = false) {
@@ -116,32 +160,25 @@ export default class PropertyForm extends React.Component {
       ? 1.5
       : 1
     for (let i = start; i < 7; i++) {
-      range.push({
-        active: i === current,
-        value: i,
-        label: i
-      })
+      range.push({value: i, label: i})
     }
     return range
   }
 
-  studentPreference() {
-    let preferences = [
+  studentType() {
+    let types = [
       {
-        active: this.state.property.student_type === 0,
         value: 0,
         label: 'No preference'
       }, {
-        active: this.state.property.student_type === 1,
         value: 1,
         label: 'Undergraduate'
       }, {
-        active: this.state.property.student_type === 2,
         value: 2,
         label: 'Graduate'
       }
     ]
-    return preferences
+    return types
   }
 
   select(e) {
@@ -201,6 +238,7 @@ export default class PropertyForm extends React.Component {
                 required={true}/>
               <ButtonGroup
                 buttons={this.getLeaseType()}
+                match={property.lease_type}
                 handle={this.updateLease}
                 activeColor="success"/></div>
           </div>
@@ -244,6 +282,7 @@ export default class PropertyForm extends React.Component {
               className="single-input"/><br/>
             <ButtonGroup
               buttons={bedrooms}
+              match={property.bedroom_no}
               handle={this.updateBedroom}
               activeColor="success"/>
           </div>
@@ -260,6 +299,7 @@ export default class PropertyForm extends React.Component {
             </div>
             <ButtonGroup
               buttons={bathrooms}
+              match={property.bathroom_no}
               handle={this.updateBathroom}
               activeColor="success"/>
             <button className={halfcn} onClick={this.half}>1/2</button>
@@ -267,12 +307,25 @@ export default class PropertyForm extends React.Component {
         </div>
         <div className="row">
           <div className="col-sm-12">
+            <label>Student preference</label>
             <ButtonGroup
-              buttons={this.studentPreference()}
-              handle={this.updateStudentPreference}
+              buttons={this.studentType()}
+              match={property.student_type}
+              handle={this.updateStudentType}
               activeColor="success"/>
           </div>
         </div>
+        <div className="row bg-info">
+          <div className="col-sm-12">
+            <label>Heating</label> <small>(Click all that apply)</small>
+            <ButtonGroup
+              buttons={this.heatingTypes()}
+              match={property.heat_type}
+              handle={this.updateHeatType}
+              activeColor="success"/>
+          </div>
+        </div>
+
         <PropertyFeatures property={property} setValue={this.setValue}/>
 
         <h3>Pets</h3>

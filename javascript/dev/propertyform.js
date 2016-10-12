@@ -22224,10 +22224,11 @@
 	    _this.setValue = _this.setValue.bind(_this);
 	    _this.setMoveIn = _this.setMoveIn.bind(_this);
 	    _this.togglePets = _this.togglePets.bind(_this);
+	    _this.updateHeatType = _this.updateHeatType.bind(_this);
 	    _this.updateLease = _this.updateLease.bind(_this);
 	    _this.updateBedroom = _this.updateBedroom.bind(_this);
 	    _this.updateBathroom = _this.updateBathroom.bind(_this);
-	    _this.updateStudentPreference = _this.updateStudentPreference.bind(_this);
+	    _this.updateStudentType = _this.updateStudentType.bind(_this);
 	    return _this;
 	  }
 	
@@ -22253,7 +22254,6 @@
 	    key: 'getLeaseType',
 	    value: function getLeaseType() {
 	      return [{
-	        active: this.state.property.lease_type === 0,
 	        value: 0,
 	        label: _react2.default.createElement(
 	          'span',
@@ -22262,7 +22262,6 @@
 	          '\xA0 Per unit'
 	        )
 	      }, {
-	        active: this.state.property.lease_type === 1,
 	        value: 1,
 	        label: _react2.default.createElement(
 	          'span',
@@ -22270,6 +22269,32 @@
 	          _react2.default.createElement('i', { className: 'fa fa-users' }),
 	          '\xA0 Per tenant'
 	        )
+	      }];
+	    }
+	  }, {
+	    key: 'heatingTypes',
+	    value: function heatingTypes() {
+	      return [{
+	        value: 1,
+	        label: 'Heat pump'
+	      }, {
+	        value: 2,
+	        label: 'Oil'
+	      }, {
+	        value: 3,
+	        label: 'Propane'
+	      }, {
+	        value: 4,
+	        label: 'Electric baseboard'
+	      }, {
+	        value: 5,
+	        label: 'Kerosene'
+	      }, {
+	        value: 6,
+	        label: 'Woodstove/Fireplace'
+	      }, {
+	        value: 7,
+	        label: 'Natural gas'
 	      }];
 	    }
 	  }, {
@@ -22320,9 +22345,22 @@
 	      }
 	    }
 	  }, {
-	    key: 'updateStudentPreference',
-	    value: function updateStudentPreference(type) {
+	    key: 'updateStudentType',
+	    value: function updateStudentType(type) {
 	      this.setValue('student_type', type);
+	    }
+	  }, {
+	    key: 'updateHeatType',
+	    value: function updateHeatType(type) {
+	      var heatType = this.state.property.heat_type;
+	
+	      var index = heatType.indexOf(type);
+	      if (index === -1) {
+	        heatType.push(type);
+	      } else {
+	        heatType.splice(index, 1);
+	      }
+	      this.setValue('heat_type', heatType);
 	    }
 	  }, {
 	    key: 'getRangeButtons',
@@ -22332,31 +22370,24 @@
 	      var range = [];
 	      var start = deci ? 1.5 : 1;
 	      for (var i = start; i < 7; i++) {
-	        range.push({
-	          active: i === current,
-	          value: i,
-	          label: i
-	        });
+	        range.push({ value: i, label: i });
 	      }
 	      return range;
 	    }
 	  }, {
-	    key: 'studentPreference',
-	    value: function studentPreference() {
-	      var preferences = [{
-	        active: this.state.property.student_type === 0,
+	    key: 'studentType',
+	    value: function studentType() {
+	      var types = [{
 	        value: 0,
 	        label: 'No preference'
 	      }, {
-	        active: this.state.property.student_type === 1,
 	        value: 1,
 	        label: 'Undergraduate'
 	      }, {
-	        active: this.state.property.student_type === 2,
 	        value: 2,
 	        label: 'Graduate'
 	      }];
-	      return preferences;
+	      return types;
 	    }
 	  }, {
 	    key: 'select',
@@ -22431,6 +22462,7 @@
 	                required: true }),
 	              _react2.default.createElement(_ButtonGroup2.default, {
 	                buttons: this.getLeaseType(),
+	                match: property.lease_type,
 	                handle: this.updateLease,
 	                activeColor: 'success' })
 	            )
@@ -22531,6 +22563,7 @@
 	            _react2.default.createElement('br', null),
 	            _react2.default.createElement(_ButtonGroup2.default, {
 	              buttons: bedrooms,
+	              match: property.bedroom_no,
 	              handle: this.updateBedroom,
 	              activeColor: 'success' })
 	          ),
@@ -22555,6 +22588,7 @@
 	            ),
 	            _react2.default.createElement(_ButtonGroup2.default, {
 	              buttons: bathrooms,
+	              match: property.bathroom_no,
 	              handle: this.updateBathroom,
 	              activeColor: 'success' }),
 	            _react2.default.createElement(
@@ -22570,9 +22604,39 @@
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'col-sm-12' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Student preference'
+	            ),
 	            _react2.default.createElement(_ButtonGroup2.default, {
-	              buttons: this.studentPreference(),
-	              handle: this.updateStudentPreference,
+	              buttons: this.studentType(),
+	              match: property.student_type,
+	              handle: this.updateStudentType,
+	              activeColor: 'success' })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row bg-info' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-12' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Heating'
+	            ),
+	            ' ',
+	            _react2.default.createElement(
+	              'small',
+	              null,
+	              '(Click all that apply)'
+	            ),
+	            _react2.default.createElement(_ButtonGroup2.default, {
+	              buttons: this.heatingTypes(),
+	              match: property.heat_type,
+	              handle: this.updateHeatType,
 	              activeColor: 'success' })
 	          )
 	        ),
@@ -22789,7 +22853,7 @@
 	  dishwasher: false,
 	  efficiency: false,
 	  furnished: false,
-	  heat_type: '',
+	  heat_type: [],
 	  internet_type: 0,
 	  lease_type: 0,
 	  laundry_type: 0,
@@ -22816,7 +22880,7 @@
 	  util_power: false,
 	  utilities_inc: false,
 	  tv_type: 0,
-	  window_number: false,
+	  window_number: true,
 	  workout_room: false,
 	  id: 0
 	};
@@ -22876,7 +22940,34 @@
 	        _react2.default.createElement(
 	          'h3',
 	          null,
-	          'Features'
+	          'Conditions'
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          _react2.default.createElement(_BooleanButton2.default, {
+	            current: property.efficiency,
+	            label: ['Efficiency', 'Not an efficiency'],
+	            icon: true,
+	            handleClick: this.props.setValue.bind(this, 'efficiency') })
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          _react2.default.createElement(_BooleanButton2.default, {
+	            current: property.sublease,
+	            label: ['Tenant may sublease', 'Tenant may not sublease'],
+	            icon: true,
+	            handleClick: this.props.setValue.bind(this, 'sublease') })
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          _react2.default.createElement(_BooleanButton2.default, {
+	            current: property.window_number,
+	            icon: true,
+	            label: ['Windows in unit', 'Windowless unit'],
+	            handleClick: this.props.setValue.bind(this, 'window_number') })
 	        ),
 	        _react2.default.createElement(
 	          'div',
@@ -22885,184 +22976,81 @@
 	            'div',
 	            { className: 'col-sm-6' },
 	            _react2.default.createElement(
-	              'table',
-	              { className: 'table' },
-	              _react2.default.createElement(
-	                'tbody',
-	                null,
-	                _react2.default.createElement(
-	                  'tr',
-	                  null,
-	                  _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    'Utilities included'
-	                  ),
-	                  _react2.default.createElement(
-	                    'td',
-	                    { className: 'text-right' },
-	                    _react2.default.createElement(_BooleanButton2.default, {
-	                      current: property.utilities_inc,
-	                      handleClick: this.props.setValue.bind(this, 'utilities_inc') })
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  'tr',
-	                  null,
-	                  _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    'Efficiency'
-	                  ),
-	                  _react2.default.createElement(
-	                    'td',
-	                    { className: 'text-right' },
-	                    _react2.default.createElement(_BooleanButton2.default, {
-	                      current: property.efficiency,
-	                      handleClick: this.props.setValue.bind(this, 'efficiency') })
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  'tr',
-	                  null,
-	                  _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    'Subleasing permitted'
-	                  ),
-	                  _react2.default.createElement(
-	                    'td',
-	                    { className: 'text-right' },
-	                    _react2.default.createElement(_BooleanButton2.default, {
-	                      current: property.sublease,
-	                      handleClick: this.props.setValue.bind(this, 'sublease') })
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  'tr',
-	                  null,
-	                  _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    'Furnished'
-	                  ),
-	                  _react2.default.createElement(
-	                    'td',
-	                    { className: 'text-right' },
-	                    _react2.default.createElement(_BooleanButton2.default, {
-	                      current: property.furnished,
-	                      handleClick: this.props.setValue.bind(this, 'furnished') })
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  'tr',
-	                  null,
-	                  _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    'Dishwasher'
-	                  ),
-	                  _react2.default.createElement(
-	                    'td',
-	                    { className: 'text-right' },
-	                    _react2.default.createElement(_BooleanButton2.default, {
-	                      current: property.dishwasher,
-	                      handleClick: this.props.setValue.bind(this, 'dishwasher') })
-	                  )
-	                )
-	              )
+	              'h3',
+	              null,
+	              'Amenities'
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              null,
+	              _react2.default.createElement(_BooleanButton2.default, {
+	                current: property.utilities_inc,
+	                label: ['Utilities included', 'Utilities not included'],
+	                icon: true,
+	                handleClick: this.props.setValue.bind(this, 'utilities_inc') })
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              null,
+	              _react2.default.createElement(_BooleanButton2.default, {
+	                current: property.furnished,
+	                label: ['Furnished', 'Not furnished'],
+	                icon: true,
+	                handleClick: this.props.setValue.bind(this, 'furnished') })
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              null,
+	              _react2.default.createElement(_BooleanButton2.default, {
+	                current: property.dishwasher,
+	                label: ['Dishwasher included', 'No dishwasher'],
+	                icon: true,
+	                handleClick: this.props.setValue.bind(this, 'dishwasher') })
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              null,
+	              _react2.default.createElement(_BooleanButton2.default, {
+	                current: property.airconditioning,
+	                icon: true,
+	                label: ['Air conditioning', 'No air conditioning'],
+	                handleClick: this.props.setValue.bind(this, 'airconditioning') })
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              null,
+	              _react2.default.createElement(_BooleanButton2.default, {
+	                current: property.appalcart,
+	                icon: true,
+	                label: ['On Appalcart route', 'Not on Appalcart route'],
+	                handleClick: this.props.setValue.bind(this, 'appalcart') })
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              null,
+	              _react2.default.createElement(_BooleanButton2.default, {
+	                current: property.clubhouse,
+	                icon: true,
+	                label: ['Club house available', 'No club house'],
+	                handleClick: this.props.setValue.bind(this, 'clubhouse') })
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              null,
+	              _react2.default.createElement(_BooleanButton2.default, {
+	                current: property.workout_room,
+	                icon: true,
+	                label: ['Workout room', 'No workout room'],
+	                handleClick: this.props.setValue.bind(this, 'workout_room') })
 	            )
 	          ),
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'col-sm-6' },
 	            _react2.default.createElement(
-	              'table',
-	              { className: 'table' },
-	              _react2.default.createElement(
-	                'tbody',
-	                null,
-	                _react2.default.createElement(
-	                  'tr',
-	                  null,
-	                  _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    'Windows (i.e. not in basement)'
-	                  ),
-	                  _react2.default.createElement(
-	                    'td',
-	                    { className: 'text-right' },
-	                    _react2.default.createElement(_BooleanButton2.default, {
-	                      current: property.window_number,
-	                      handleClick: this.props.setValue.bind(this, 'window_number') })
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  'tr',
-	                  null,
-	                  _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    'Air Conditioning'
-	                  ),
-	                  _react2.default.createElement(
-	                    'td',
-	                    { className: 'text-right' },
-	                    _react2.default.createElement(_BooleanButton2.default, {
-	                      current: property.airconditioning,
-	                      handleClick: this.props.setValue.bind(this, 'airconditioning') })
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  'tr',
-	                  null,
-	                  _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    'Appalcart route'
-	                  ),
-	                  _react2.default.createElement(
-	                    'td',
-	                    { className: 'text-right' },
-	                    _react2.default.createElement(_BooleanButton2.default, {
-	                      current: property.appalcart,
-	                      handleClick: this.props.setValue.bind(this, 'appalcart') })
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  'tr',
-	                  null,
-	                  _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    'Clubhouse'
-	                  ),
-	                  _react2.default.createElement(
-	                    'td',
-	                    { className: 'text-right' },
-	                    _react2.default.createElement(_BooleanButton2.default, {
-	                      current: property.clubhouse,
-	                      handleClick: this.props.setValue.bind(this, 'clubhouse') })
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  'tr',
-	                  null,
-	                  _react2.default.createElement(
-	                    'td',
-	                    null,
-	                    'Workout room'
-	                  ),
-	                  _react2.default.createElement(
-	                    'td',
-	                    { className: 'text-right' },
-	                    _react2.default.createElement(_BooleanButton2.default, {
-	                      current: property.workout_room,
-	                      handleClick: this.props.setValue.bind(this, 'workout_room') })
-	                  )
-	                )
-	              )
+	              'label',
+	              null,
+	              'something here?'
 	            )
 	          )
 	        )
@@ -23092,6 +23080,8 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
@@ -23134,12 +23124,24 @@
 	  }, {
 	    key: 'positiveIcon',
 	    value: function positiveIcon() {
-	      return this.props.icon !== null ? this.props.icon[0] : null;
+	      if (this.props.icon === true) {
+	        return 'fa fa-check';
+	      } else if (this.props.icon !== null && _typeof(this.props.icon) === 'object') {
+	        return this.props.icon[0];
+	      } else {
+	        return null;
+	      }
 	    }
 	  }, {
 	    key: 'negativeIcon',
 	    value: function negativeIcon() {
-	      return this.props.icon !== null ? this.props.icon[1] : null;
+	      if (this.props.icon === true) {
+	        return 'fa fa-times';
+	      } else if (this.props.icon !== null && _typeof(this.props.icon) === 'object') {
+	        return this.props.icon[1];
+	      } else {
+	        return null;
+	      }
 	    }
 	  }, {
 	    key: 'render',
@@ -23168,7 +23170,7 @@
 	
 	BooleanButton.propTypes = {
 	  label: _react2.default.PropTypes.array,
-	  icon: _react2.default.PropTypes.array,
+	  icon: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.array, _react2.default.PropTypes.bool]),
 	  handleClick: _react2.default.PropTypes.func,
 	  current: _react2.default.PropTypes.bool
 	};
@@ -23339,6 +23341,8 @@
 	  value: true
 	});
 	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(/*! react */ 1);
@@ -23370,9 +23374,15 @@
 	    key: 'render',
 	    value: function render() {
 	      var buttons = this.props.buttons.map(function (value, key) {
-	
 	        var activeColor = 'btn-' + this.props.activeColor;
-	        var cn = (0, _classnames2.default)('btn', value.active ? activeColor + ' active' : 'btn-default');
+	        var cn = (0, _classnames2.default)('btn', 'btn-default');
+	        if (this.props.match !== null) {
+	          if (_typeof(this.props.match) === 'object' && this.props.match.indexOf(value.value) !== -1) {
+	            cn = (0, _classnames2.default)('btn', 'active', activeColor);
+	          } else if (this.props.match === value.value) {
+	            cn = (0, _classnames2.default)('btn', 'active', activeColor);
+	          }
+	        }
 	        return _react2.default.createElement(
 	          'button',
 	          {
@@ -23397,11 +23407,13 @@
 	ButtonGroup.propTypes = {
 	  buttons: _react2.default.PropTypes.array.isRequired,
 	  handle: _react2.default.PropTypes.func.isRequired,
-	  activeColor: _react2.default.PropTypes.string
+	  activeColor: _react2.default.PropTypes.string,
+	  match: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.number, _react2.default.PropTypes.array])
 	};
 	
 	ButtonGroup.defaultProp = {
-	  activeColor: 'default'
+	  activeColor: 'default',
+	  match: null
 	};
 	
 	exports.default = ButtonGroup;
