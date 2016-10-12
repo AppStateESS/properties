@@ -9,9 +9,15 @@ class ButtonGroup extends React.Component {
 
   render() {
     let buttons = this.props.buttons.map(function (value, key) {
-
       const activeColor = 'btn-' + this.props.activeColor
-      let cn = classnames('btn', value.active ? activeColor + ' active' : 'btn-default')
+      let cn = classnames('btn', 'btn-default')
+      if (this.props.match !== null) {
+        if (typeof this.props.match === 'object' && this.props.match.indexOf(value.value) !== -1) {
+          cn = classnames('btn', 'active', activeColor)
+        } else if (this.props.match === value.value) {
+          cn = classnames('btn', 'active', activeColor)
+        }
+      }
       return (
         <button
           key={key}
@@ -33,11 +39,13 @@ class ButtonGroup extends React.Component {
 ButtonGroup.propTypes = {
   buttons: React.PropTypes.array.isRequired,
   handle: React.PropTypes.func.isRequired,
-  activeColor: React.PropTypes.string
+  activeColor: React.PropTypes.string,
+  match: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number, React.PropTypes.array])
 }
 
 ButtonGroup.defaultProp = {
-  activeColor : 'default'
+  activeColor: 'default',
+  match: null
 }
 
 export default ButtonGroup
