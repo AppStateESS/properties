@@ -2,7 +2,7 @@
  * Adapted from http://ideasandpixels.com/get-post-variables-with-javascript
  */
 
-class DecodeUrl {
+export default class DecodeUrl {
   constructor() {
     this.url = document.location.search
     this.values = []
@@ -19,5 +19,3 @@ class DecodeUrl {
     }.bind(this))
   }
 }
-
-export default DecodeUrl
