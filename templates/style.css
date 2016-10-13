@@ -68,3 +68,8 @@ label, input {
 .property-form label {
     font-size : 1.2em;
 }
+
+.submit-form {
+    padding: 1em;
+    text-align : center;
+}
