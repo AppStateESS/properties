@@ -2,7 +2,7 @@
 import React from 'react'
 import BooleanButton from '../Mixin/BooleanButton.jsx'
 
-class PropertyFeatures extends React.Component {
+export default class Features extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
@@ -12,31 +12,9 @@ class PropertyFeatures extends React.Component {
     const property = this.props.property
     return (
       <div>
-        <h3>Conditions</h3>
-        <p>
-          <BooleanButton
-            current={property.efficiency}
-            label={['Efficiency', 'Not an efficiency']}
-            icon={true}
-            handleClick={this.props.setValue.bind(this, 'efficiency')}/>
-        </p>
-        <p>
-          <BooleanButton
-            current={property.sublease}
-            label={['Tenant may sublease', 'Tenant may not sublease']}
-            icon={true}
-            handleClick={this.props.setValue.bind(this, 'sublease')}/>
-        </p>
-        <p>
-          <BooleanButton
-            current={property.window_number}
-            icon={true}
-            label={['Windows in unit', 'Windowless unit']}
-            handleClick={this.props.setValue.bind(this, 'window_number')}/>
-        </p>
+        <h3>Amenities</h3>
         <div className="row">
           <div className="col-sm-6">
-            <h3>Amenities</h3>
             <p>
               <BooleanButton
                 current={property.utilities_inc}
@@ -65,6 +43,8 @@ class PropertyFeatures extends React.Component {
                 label={['Air conditioning', 'No air conditioning']}
                 handleClick={this.props.setValue.bind(this, 'airconditioning')}/>
             </p>
+          </div>
+          <div className="col-sm-6">
             <p>
               <BooleanButton
                 current={property.appalcart}
@@ -87,18 +67,13 @@ class PropertyFeatures extends React.Component {
                 handleClick={this.props.setValue.bind(this, 'workout_room')}/>
             </p>
           </div>
-          <div className="col-sm-6">
-            <label>something here?</label>
-          </div>
         </div>
       </div>
     )
   }
 }
 
-PropertyFeatures.propTypes = {
+Features.propTypes = {
   property: React.PropTypes.object,
   setValue: React.PropTypes.func
 }
-
-export default PropertyFeatures
