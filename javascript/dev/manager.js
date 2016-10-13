@@ -21956,9 +21956,9 @@
 	
 	var _Message2 = _interopRequireDefault(_Message);
 	
-	var _Loading = __webpack_require__(/*! ../Mixin/Loading.jsx */ 181);
+	var _Waiting = __webpack_require__(/*! ../Mixin/Waiting.jsx */ 181);
 	
-	var _Loading2 = _interopRequireDefault(_Loading);
+	var _Waiting2 = _interopRequireDefault(_Waiting);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -22080,7 +22080,7 @@
 	        managerForm = _react2.default.createElement(_ManagerForm2.default, { manager: this.state.currentManager, reload: this.load, message: this.setMessage });
 	      }
 	      if (this.state.managers === null) {
-	        return _react2.default.createElement(_Loading2.default, { label: 'managers' });
+	        return _react2.default.createElement(_Waiting2.default, { label: 'managers' });
 	      } else {
 	        return _react2.default.createElement(
 	          'div',
@@ -23251,6 +23251,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.RequiredIcon = undefined;
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
@@ -23290,7 +23291,7 @@
 	  }, {
 	    key: 'componentWillUpdate',
 	    value: function componentWillUpdate(props, state) {
-	      if (props.errorMessage !== state.errorMessage) {
+	      if (props.errorMessage !== null && props.errorMessage.length > 0 && props.errorMessage !== state.errorMessage) {
 	        this.setState({ errorMessage: props.errorMessage });
 	      }
 	    }
@@ -23315,33 +23316,43 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var inputClass = 'form-control';
-	      inputClass += this.state.errorMessage !== null && this.state.errorMessage.length > 0 ? ' error-highlight' : '';
+	      var inputClass = void 0;
+	      if (this.state.errorMessage !== null && this.state.errorMessage.length > 0) {
+	        inputClass = 'form-control error-highlight';
+	      } else {
+	        inputClass = 'form-control';
+	      }
+	      var required = this.props.required ? _react2.default.createElement(RequiredIcon, null) : null;
 	
-	      var required = this.props.required ? _react2.default.createElement('i', { className: 'fa fa-asterisk required' }) : null;
+	      var input = _react2.default.createElement('input', {
+	        id: this.props.iid,
+	        type: this.props.type,
+	        name: this.props.name,
+	        value: this.props.value,
+	        className: inputClass,
+	        onChange: this.props.change,
+	        onBlur: this.handleBlur,
+	        disabled: this.props.disabled,
+	        size: this.props.size,
+	        maxLength: this.props.maxLength,
+	        placeholder: this.state.placeholder,
+	        autoComplete: this.props.autocomplete });
+	
+	      if (this.props.wrap) {
+	        input = this.props.wrap(input);
+	      }
 	
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'form-group' },
 	        this.props.label.length > 0 ? _react2.default.createElement(
 	          'label',
-	          { htmlFor: this.props.name },
+	          { htmlFor: this.props.iid },
 	          this.props.label,
 	          ' ',
 	          required
 	        ) : undefined,
-	        _react2.default.createElement('input', {
-	          id: this.props.iid,
-	          type: this.props.type,
-	          name: this.props.name,
-	          value: this.props.value,
-	          className: inputClass,
-	          onChange: this.props.change,
-	          onBlur: this.handleBlur,
-	          disabled: this.props.disabled,
-	          placeholder: this.state.placeholder,
-	          autoComplete: this.props.autocomplete }),
-	        ' ',
+	        input,
 	        this.state.errorMessage ? _react2.default.createElement(
 	          'div',
 	          { className: 'label label-danger' },
@@ -23353,6 +23364,9 @@
 	
 	  return InputField;
 	}(_react2.default.Component);
+	
+	exports.default = InputField;
+	
 	
 	InputField.defaultProps = {
 	  label: '',
@@ -23366,7 +23380,10 @@
 	  autocomplete: false,
 	  placeholder: null,
 	  errorMessage: '',
-	  disabled: false
+	  disabled: false,
+	  size: null,
+	  maxLength: null,
+	  wrap: null
 	};
 	
 	InputField.propTypes = {
@@ -23381,10 +23398,15 @@
 	  iid: _react2.default.PropTypes.string,
 	  autocomplete: _react2.default.PropTypes.bool,
 	  required: _react2.default.PropTypes.bool,
-	  disabled: _react2.default.PropTypes.bool
+	  disabled: _react2.default.PropTypes.bool,
+	  size: _react2.default.PropTypes.number,
+	  maxLength: _react2.default.PropTypes.number,
+	  wrap: _react2.default.PropTypes.func
 	};
 	
-	exports.default = InputField;
+	var RequiredIcon = exports.RequiredIcon = function RequiredIcon() {
+	  return _react2.default.createElement('i', { className: 'fa fa-asterisk required' });
+	};
 
 /***/ },
 /* 178 */
@@ -23661,14 +23683,14 @@
 /***/ },
 /* 181 */
 /*!**************************************!*\
-  !*** ./javascript/Mixin/Loading.jsx ***!
+  !*** ./javascript/Mixin/Waiting.jsx ***!
   \**************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -23685,37 +23707,41 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Loading = function (_React$Component) {
-	    _inherits(Loading, _React$Component);
+	var Waiting = function (_React$Component) {
+	  _inherits(Waiting, _React$Component);
 	
-	    function Loading() {
-	        _classCallCheck(this, Loading);
+	  function Waiting() {
+	    _classCallCheck(this, Waiting);
 	
-	        return _possibleConstructorReturn(this, (Loading.__proto__ || Object.getPrototypeOf(Loading)).apply(this, arguments));
+	    return _possibleConstructorReturn(this, (Waiting.__proto__ || Object.getPrototypeOf(Waiting)).apply(this, arguments));
+	  }
+	
+	  _createClass(Waiting, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "div",
+	        { className: "lead text-center" },
+	        _react2.default.createElement("i", { className: "fa fa-cog fa-spin fa-lg" }),
+	        "\xA0 Loading ",
+	        this.props.label,
+	        "..."
+	      );
 	    }
+	  }]);
 	
-	    _createClass(Loading, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2.default.createElement(
-	                'div',
-	                { style: { margin: '0 auto', textAlign: 'center' } },
-	                _react2.default.createElement(
-	                    'h2',
-	                    null,
-	                    _react2.default.createElement('i', { className: 'fa fa-cog fa-spin' }),
-	                    '\xA0Loading ',
-	                    this.props.label,
-	                    '...'
-	                )
-	            );
-	        }
-	    }]);
-	
-	    return Loading;
+	  return Waiting;
 	}(_react2.default.Component);
 	
-	exports.default = Loading;
+	Waiting.defaultProps = {
+	  label: ''
+	};
+	
+	Waiting.propTypes = {
+	  label: _react2.default.PropTypes.string
+	};
+	
+	exports.default = Waiting;
 
 /***/ }
 /******/ ]);
