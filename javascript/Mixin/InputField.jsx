@@ -1,7 +1,7 @@
 'use strict'
 import React from 'react'
 
-class InputField extends React.Component {
+export default class InputField extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -16,7 +16,7 @@ class InputField extends React.Component {
   }
 
   componentWillUpdate(props, state) {
-    if (props.errorMessage !== state.errorMessage) {
+    if (props.errorMessage !== null && props.errorMessage.length > 0 && props.errorMessage !== state.errorMessage) {
       this.setState({errorMessage: props.errorMessage})
     }
   }
@@ -39,30 +39,41 @@ class InputField extends React.Component {
   }
 
   render() {
-    let inputClass = 'form-control'
-    inputClass += this.state.errorMessage !== null && this.state.errorMessage.length > 0
-      ? ' error-highlight'
-      : ''
-
+    let inputClass
+    if (this.state.errorMessage !== null && this.state.errorMessage.length > 0) {
+      inputClass = 'form-control error-highlight'
+    } else {
+      inputClass = 'form-control'
+    }
     let required = this.props.required
-      ? <i className="fa fa-asterisk required"></i>
+      ? <RequiredIcon/>
       : null
+
+    let input = (<input
+      id={this.props.iid}
+      type={this.props.type}
+      name={this.props.name}
+      value={this.props.value}
+      className={inputClass}
+      onChange={this.props.change}
+      onBlur={this.handleBlur}
+      disabled={this.props.disabled}
+      size={this.props.size}
+      maxLength={this.props.maxLength}
+      placeholder={this.state.placeholder}
+      autoComplete={this.props.autocomplete}/>)
+
+    if (this.props.wrap) {
+      input = this.props.wrap(input)
+    }
 
     return (
       <div className="form-group">
-        {this.props.label.length > 0 ?
-        <label htmlFor={this.props.name}>{this.props.label} {required}</label> : undefined}
-        <input
-          id={this.props.iid}
-          type={this.props.type}
-          name={this.props.name}
-          value={this.props.value}
-          className={inputClass}
-          onChange={this.props.change}
-          onBlur={this.handleBlur}
-          disabled={this.props.disabled}
-          placeholder={this.state.placeholder}
-          autoComplete={this.props.autocomplete}/> {this.state.errorMessage
+        {this.props.label.length > 0
+          ? <label htmlFor={this.props.iid}>{this.props.label} {required}</label>
+          : undefined}
+        {input}
+        {this.state.errorMessage
           ? <div className="label label-danger">{this.state.errorMessage}</div>
           : null}
       </div>
@@ -82,7 +93,10 @@ InputField.defaultProps = {
   autocomplete: false,
   placeholder: null,
   errorMessage: '',
-  disabled: false
+  disabled: false,
+  size: null,
+  maxLength: null,
+  wrap: null
 }
 
 InputField.propTypes = {
@@ -97,7 +111,12 @@ InputField.propTypes = {
   iid: React.PropTypes.string,
   autocomplete: React.PropTypes.bool,
   required: React.PropTypes.bool,
-  disabled: React.PropTypes.bool
+  disabled: React.PropTypes.bool,
+  size: React.PropTypes.number,
+  maxLength: React.PropTypes.number,
+  wrap: React.PropTypes.func
 }
 
-export default InputField
+export const RequiredIcon = () => {
+  return <i className="fa fa-asterisk required"></i>
+}
