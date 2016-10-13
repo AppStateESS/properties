@@ -21,7 +21,7 @@ class BooleanButton extends React.Component {
   positiveIcon() {
     if (this.props.icon === true) {
       return 'fa fa-check'
-    } else if(this.props.icon !== null && typeof this.props.icon === 'object') {
+    } else if (this.props.icon !== null && typeof this.props.icon === 'object') {
       return this.props.icon[0]
     } else {
       return null
@@ -31,7 +31,7 @@ class BooleanButton extends React.Component {
   negativeIcon() {
     if (this.props.icon === true) {
       return 'fa fa-times'
-    } else if(this.props.icon !== null && typeof this.props.icon === 'object') {
+    } else if (this.props.icon !== null && typeof this.props.icon === 'object') {
       return this.props.icon[1]
     } else {
       return null
@@ -80,7 +80,7 @@ class Positive extends React.Component {
       label = <span>
         <i className={this.props.icon}></i>&nbsp;{label}</span>
     }
-    return <button className="btn btn-success" onClick={this.props.flip}>{label}</button>
+    return <button type="button" className="btn btn-success" onClick={this.props.flip}>{label}</button>
   }
 }
 
@@ -101,7 +101,7 @@ class Negative extends React.Component {
       label = <span>
         <i className={this.props.icon}></i>&nbsp;{label}</span>
     }
-    return <button className="btn btn-danger" onClick={this.props.flip}>{label}</button>
+    return <button type="button" className="btn btn-danger" onClick={this.props.flip}>{label}</button>
   }
 }
 
