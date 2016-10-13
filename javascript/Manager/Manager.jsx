@@ -3,7 +3,7 @@ import React from 'react'
 import ListManagers from './ListManagers.jsx'
 import ManagerForm from './ManagerForm.jsx'
 import Message from '../Mixin/Message.jsx'
-import Loading from '../Mixin/Loading.jsx'
+import Waiting from '../Mixin/Waiting.jsx'
 
 /* global $ */
 
@@ -109,7 +109,7 @@ class Manager extends React.Component {
       managerForm = <ManagerForm manager={this.state.currentManager} reload={this.load} message={this.setMessage}/>
     }
     if (this.state.managers === null) {
-      return (<Loading label="managers"/>)
+      return (<Waiting label="managers"/>)
     } else {
       return (
         <div>
