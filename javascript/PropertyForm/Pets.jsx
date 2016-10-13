@@ -2,7 +2,7 @@
 import React from 'react'
 import InputField from '../Mixin/InputField.jsx'
 
-class PetForm extends React.Component {
+export default class Pets extends React.Component {
   constructor(props) {
     super(props)
   }
@@ -10,7 +10,7 @@ class PetForm extends React.Component {
   render() {
     return (
       <div>
-        <div className="row marginBottom">
+        <div className="row">
           <div className="col-sm-6">
             <label>Deposit</label>
             (Refundable)
@@ -56,10 +56,8 @@ class PetForm extends React.Component {
   }
 }
 
-PetForm.propTypes = {
+Pets.propTypes = {
   property: React.PropTypes.object,
   setValue: React.PropTypes.func,
   show: React.PropTypes.bool
 }
-
-export default PetForm
