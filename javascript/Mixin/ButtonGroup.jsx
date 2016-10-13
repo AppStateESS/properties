@@ -20,6 +20,7 @@ class ButtonGroup extends React.Component {
       }
       return (
         <button
+          type="button"
           key={key}
           className={cn}
           value={value.value}
@@ -28,8 +29,9 @@ class ButtonGroup extends React.Component {
         </button>
       )
     }.bind(this))
+    const buttonClass = this.props.vertical === true ? 'btn-group-vertical' : 'btn-group'
     return (
-      <div className="btn-group" role="group" aria-label="lease type">
+      <div className={buttonClass} role="group" aria-label="lease type">
         {buttons}
       </div>
     )
@@ -40,7 +42,8 @@ ButtonGroup.propTypes = {
   buttons: React.PropTypes.array.isRequired,
   handle: React.PropTypes.func.isRequired,
   activeColor: React.PropTypes.string,
-  match: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number, React.PropTypes.array])
+  match: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number, React.PropTypes.array]),
+  vertical: React.PropTypes.bool
 }
 
 ButtonGroup.defaultProp = {
