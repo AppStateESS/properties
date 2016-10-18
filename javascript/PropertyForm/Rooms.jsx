@@ -47,7 +47,7 @@ export default class Rooms extends React.Component {
       ? 'btn-success'
       : 'btn-default')
     return (
-      <div className="row bg-info">
+      <div className="row">
         <div className="col-sm-6">
           <label>Bedrooms</label>
           <input
@@ -59,6 +59,7 @@ export default class Rooms extends React.Component {
             className="single-input"/><br/>
           <ButtonGroup
             buttons={bedrooms}
+            name="bedroom_no"
             match={property.bedroom_no}
             handle={this.updateBedroom}
             activeColor="success"/>
@@ -76,6 +77,7 @@ export default class Rooms extends React.Component {
           </div>
           <ButtonGroup
             buttons={bathrooms}
+            name="bathroom_no"
             match={property.bathroom_no}
             handle={this.updateBathroom}
             activeColor="success"/>
