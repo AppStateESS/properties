@@ -8,6 +8,7 @@ class BooleanButton extends React.Component {
       status: this.props.current
     }
     this.flip = this.flip.bind(this)
+    this.getHidden = this.getHidden.bind(this)
   }
 
   flip() {
@@ -15,6 +16,14 @@ class BooleanButton extends React.Component {
     this.setState({status: status})
     if (this.props.handleClick) {
       this.props.handleClick(status)
+    }
+  }
+
+  getHidden() {
+    if (this.props.name !== null && this.props.name.length > 0) {
+      return <input type="hidden" name={this.props.name} value={this.state.status}/>
+    } else {
+      return null
     }
   }
 
@@ -38,18 +47,35 @@ class BooleanButton extends React.Component {
     }
   }
 
+  getIcon() {
+    return this.state.status ? this.positiveIcon() : this.negativeIcon()
+  }
+
+  getLabel() {
+    return this.state.status ? this.props.label[0] : this.props.label[1]
+  }
+
   render() {
-    if (this.state.status === true) {
-      return <Positive
-        label={this.props.label[0]}
-        icon={this.positiveIcon()}
-        flip={this.flip}/>
-    } else {
-      return <Negative
-        label={this.props.label[1]}
-        icon={this.negativeIcon()}
-        flip={this.flip}/>
+    let label = this.getLabel()
+    if (this.props.icon) {
+      label = <span>
+        <i className={this.getIcon()}></i>&nbsp;{label}</span>
     }
+    let className = this.state.status
+      ? 'btn btn-success'
+      : 'btn btn-danger'
+
+    return (
+      <span>
+        <button
+          type="button"
+          name={this.props.name}
+          value={this.state.status}
+          className={className}
+          onClick={this.flip}>{label}</button>
+        {this.getHidden()}
+      </span>
+    )
   }
 }
 
@@ -64,49 +90,12 @@ BooleanButton.propTypes = {
   label: React.PropTypes.array,
   icon: React.PropTypes.oneOfType([React.PropTypes.array, React.PropTypes.bool]),
   handleClick: React.PropTypes.func,
-  current: React.PropTypes.bool
+  current: React.PropTypes.bool,
+  name: React.PropTypes.string
+}
+
+BooleanButton.defaultProps = {
+  name: null
 }
 
 export default BooleanButton
-
-class Positive extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-  render() {
-    let label = this.props.label
-    if (this.props.icon) {
-      label = <span>
-        <i className={this.props.icon}></i>&nbsp;{label}</span>
-    }
-    return <button type="button" className="btn btn-success" onClick={this.props.flip}>{label}</button>
-  }
-}
-
-Positive.propTypes = {
-  label: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]),
-  flip: React.PropTypes.func,
-  icon: React.PropTypes.string
-}
-
-class Negative extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-  render() {
-    let label = this.props.label
-    if (this.props.icon) {
-      label = <span>
-        <i className={this.props.icon}></i>&nbsp;{label}</span>
-    }
-    return <button type="button" className="btn btn-danger" onClick={this.props.flip}>{label}</button>
-  }
-}
-
-Negative.propTypes = {
-  label: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]),
-  flip: React.PropTypes.func,
-  icon: React.PropTypes.string
-}
