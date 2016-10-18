@@ -91,7 +91,7 @@ class Property extends Base
         $this->clubhouse = new Variable\Bool(false, 'clubhouse');
         $this->contact_id = new Variable\Integer(0, 'contact_id');
         $this->contract_length = new Variable\Integer(0, 'contract_length');
-        $this->created = new Variable\Integer(0, 'created');
+        $this->created = new Variable\DateTime(null, 'created');
         $this->description = new Variable\String(null, 'description');
         $this->dishwasher = new Variable\Bool(false, 'dishwasher');
         $this->efficiency = new Variable\Bool(false, 'efficiency');
@@ -127,7 +127,7 @@ class Property extends Base
         $this->timeout = new Variable\Integer(0, 'timeout');
         $this->trash_type = new Variable\Integer(0, 'trash_type');
         $this->trash_type->setRange(0, 10);
-        $this->updated = new Variable\Integer(0, 'updated');
+        $this->updated = new Variable\DateTime(0, 'updated');
         $this->util_water = new Variable\Bool(false, 'util_water');
         $this->util_trash = new Variable\Bool(false, 'util_trash');
         $this->util_power = new Variable\Bool(false, 'util_power');
