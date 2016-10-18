@@ -116,6 +116,7 @@ abstract class BaseController extends \phpws2\Http\Controller
 
     protected function reactView($view_name)
     {
+        $script[] = $this->getScript('vendor');
         $script[] = $this->getScript($view_name);
         $react = implode("\n", $script);
         $content = <<<EOF

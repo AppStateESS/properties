@@ -8,6 +8,9 @@ module.exports = {
     path: setup.path.join(setup.APP_DIR, "dev"),
     filename: "[name].js"
   },
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin("vendor","vendor.js")
+  ],
   module: {
     preLoaders: [{
       test: /\.jsx?$/,
