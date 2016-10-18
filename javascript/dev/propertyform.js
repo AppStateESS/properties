@@ -443,15 +443,9 @@ webpackJsonp([2],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _moment = __webpack_require__(/*! moment */ 186);
-	
-	var _moment2 = _interopRequireDefault(_moment);
-	
 	var _Bind = __webpack_require__(/*! ../Mixin/Bind.js */ 293);
 	
 	var _Bind2 = _interopRequireDefault(_Bind);
-	
-	var _reactDatePicker = __webpack_require__(/*! react-date-picker */ 294);
 	
 	var _DecodeUrl = __webpack_require__(/*! ../Mixin/DecodeUrl.js */ 183);
 	
@@ -461,29 +455,21 @@ webpackJsonp([2],[
 	
 	var _PropertyObject2 = _interopRequireDefault(_PropertyObject);
 	
-	var _InputField = __webpack_require__(/*! ../Mixin/InputField.jsx */ 177);
-	
-	var _InputField2 = _interopRequireDefault(_InputField);
-	
 	var _ErrorPage = __webpack_require__(/*! ../Mixin/ErrorPage.jsx */ 365);
 	
 	var _ErrorPage2 = _interopRequireDefault(_ErrorPage);
 	
-	var _ButtonGroup = __webpack_require__(/*! ../Mixin/ButtonGroup.jsx */ 366);
-	
-	var _ButtonGroup2 = _interopRequireDefault(_ButtonGroup);
-	
-	var _BooleanButton = __webpack_require__(/*! ../Mixin/BooleanButton.jsx */ 368);
-	
-	var _BooleanButton2 = _interopRequireDefault(_BooleanButton);
-	
-	var _Range = __webpack_require__(/*! ../Mixin/Range.js */ 369);
-	
-	var _Range2 = _interopRequireDefault(_Range);
-	
 	var _Dollarize = __webpack_require__(/*! ../Mixin/Dollarize.jsx */ 370);
 	
 	var _Dollarize2 = _interopRequireDefault(_Dollarize);
+	
+	var _Nav = __webpack_require__(/*! ../Mixin/Nav.jsx */ 381);
+	
+	var _Nav2 = _interopRequireDefault(_Nav);
+	
+	var _Basic = __webpack_require__(/*! ./Basic.jsx */ 382);
+	
+	var _Basic2 = _interopRequireDefault(_Basic);
 	
 	var _Pets = __webpack_require__(/*! ./Pets.jsx */ 371);
 	
@@ -492,10 +478,6 @@ webpackJsonp([2],[
 	var _Fees = __webpack_require__(/*! ./Fees.jsx */ 372);
 	
 	var _Fees2 = _interopRequireDefault(_Fees);
-	
-	var _Rooms = __webpack_require__(/*! ./Rooms.jsx */ 373);
-	
-	var _Rooms2 = _interopRequireDefault(_Rooms);
 	
 	var _Features = __webpack_require__(/*! ./Features.jsx */ 374);
 	
@@ -535,13 +517,9 @@ webpackJsonp([2],[
 	      property: _PropertyObject2.default,
 	      manager: {},
 	      petForm: _PropertyObject2.default.pets_allowed,
-	      errors: {
-	        name: false,
-	        address: false,
-	        monthly_rent: false
-	      }
+	      activeTab: 0
 	    };
-	    var methods = ['half', 'setValue', 'setIntegerValue', 'setMoveIn', 'updateParking', 'updateRent', 'checkForm'];
+	    var methods = ['half', 'setValue', 'setTab', 'setIntegerValue', 'checkForm'];
 	    (0, _Bind2.default)(methods, _this);
 	    return _this;
 	  }
@@ -583,38 +561,6 @@ webpackJsonp([2],[
 	      }
 	    }
 	  }, {
-	    key: 'studentType',
-	    value: function studentType() {
-	      var types = [{
-	        value: 0,
-	        label: 'No preference'
-	      }, {
-	        value: 1,
-	        label: 'Undergraduate'
-	      }, {
-	        value: 2,
-	        label: 'Graduate'
-	      }];
-	      return types;
-	    }
-	  }, {
-	    key: 'campusDistance',
-	    value: function campusDistance() {
-	      return [{
-	        value: 0,
-	        label: '0 to 5'
-	      }, {
-	        value: 5,
-	        label: '5 to 10'
-	      }, {
-	        value: 10,
-	        label: '10 to 25'
-	      }, {
-	        value: 25,
-	        label: 'More than 25'
-	      }];
-	    }
-	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      $.getJSON('./properties/Manager/' + this.managerId, {}).done(function (data) {
@@ -635,59 +581,6 @@ webpackJsonp([2],[
 	    key: 'setIntegerValue',
 	    value: function setIntegerValue(varname, value) {
 	      this.setValue(varname, parseInt(value));
-	    }
-	  }, {
-	    key: 'setMoveIn',
-	    value: function setMoveIn(a) {
-	      this.setValue('move_in_date', a);
-	    }
-	  }, {
-	    key: 'getMoveInDate',
-	    value: function getMoveInDate() {
-	      if (this.state.property.move_in_date === 0) {
-	        return (0, _moment2.default)().format('YYYY-MM-DD');
-	      } else {
-	        return (0, _moment2.default)(this.state.property.move_in_date * 1000).format('YYYY-MM-DD');
-	      }
-	    }
-	  }, {
-	    key: 'updateParking',
-	    value: function updateParking(parking) {
-	      if ((typeof parking === 'undefined' ? 'undefined' : _typeof(parking)) === 'object') {
-	        parking = Number(parking.target.value);
-	      } else {
-	        parking = Number(parking);
-	      }
-	      if (parking >= 1 && parking <= 6) {
-	        this.setValue('parking_per_unit', parking);
-	      }
-	    }
-	  }, {
-	    key: 'getLeaseType',
-	    value: function getLeaseType() {
-	      return [{
-	        value: 0,
-	        label: _react2.default.createElement(
-	          'span',
-	          null,
-	          _react2.default.createElement('i', { className: 'fa fa-user' }),
-	          '\xA0 Per unit'
-	        )
-	      }, {
-	        value: 1,
-	        label: _react2.default.createElement(
-	          'span',
-	          null,
-	          _react2.default.createElement('i', { className: 'fa fa-users' }),
-	          '\xA0 Per tenant'
-	        )
-	      }];
-	    }
-	  }, {
-	    key: 'updateRent',
-	    value: function updateRent(e) {
-	      var rent = e.target.value;
-	      this.setValue('monthly_rent', rent.replace(/[^\d]/g, ''));
 	    }
 	  }, {
 	    key: 'select',
@@ -711,13 +604,31 @@ webpackJsonp([2],[
 	      );
 	    }
 	  }, {
+	    key: 'setTab',
+	    value: function setTab(tab) {
+	      this.setState({ activeTab: tab });
+	    }
+	  }, {
+	    key: 'navButtons',
+	    value: function navButtons() {
+	      return ['Basic', 'Utilities', 'Amenities', 'Pets', 'Deposits and Fees'];
+	    }
+	  }, {
+	    key: 'visability',
+	    value: function visability() {
+	      this.refs.basic.style = { visability: 'hidden' };
+	      this.refs.utilities.style = { visability: 'hidden' };
+	      this.refs.amen.style = { visability: 'hidden' };
+	      this.refs.pets.style = { visability: 'hidden' };
+	      this.refs.fees.style = { visability: 'hidden' };
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      if (this.managerId === undefined || this.managerId === 0) {
 	        return _react2.default.createElement(_ErrorPage2.default, { message: 'I can\'t go for that' });
 	      }
 	      var property = this.state.property;
-	      var parking = (0, _Range2.default)(property.parking_per_unit);
 	
 	      return _react2.default.createElement(
 	        'form',
@@ -732,268 +643,38 @@ webpackJsonp([2],[
 	          'Property for ',
 	          this.state.manager.company_name
 	        ),
+	        _react2.default.createElement(_Nav2.default, {
+	          buttons: this.navButtons(),
+	          active: this.state.activeTab,
+	          click: this.setTab }),
+	        _react2.default.createElement(_Basic2.default, { property: property, setValue: this.setValue, setIntegerValue: this.setIntegerValue }),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'row bg-info' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-12 ' },
-	            _react2.default.createElement(_InputField2.default, {
-	              name: 'name',
-	              label: 'Title',
-	              value: property.name,
-	              errorMessage: this.state.errors.name ? 'Title may not be empty' : null,
-	              change: this.setValue.bind(this, 'name'),
-	              required: true })
-	          )
+	          { ref: 'utilities' },
+	          _react2.default.createElement(_Utilities2.default, {
+	            property: property,
+	            setValue: this.setValue,
+	            setIntegerValue: this.setIntegerValue }),
+	          _react2.default.createElement(_UtilityImbursement2.default, { property: property, setValue: this.setValue })
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-12' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Description'
-	            ),
-	            _react2.default.createElement('textarea', {
-	              className: 'form-control',
-	              name: 'description',
-	              value: property.description,
-	              onChange: this.setValue.bind(this, 'description') })
-	          )
+	          { ref: 'amen' },
+	          _react2.default.createElement(_Features2.default, { property: property, setValue: this.setValue })
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'row bg-info' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-12' },
-	            _react2.default.createElement(_InputField2.default, {
-	              name: 'address',
-	              label: 'Address',
-	              type: 'text',
-	              placeholder: 'Street, City, State, Zip code',
-	              errorMessage: this.state.errors.address ? 'Address may not be empty' : null,
-	              value: property.address,
-	              change: this.setValue.bind(this, 'address'),
-	              required: true })
-	          )
+	          { ref: 'pets' },
+	          _react2.default.createElement(_Pets2.default, {
+	            property: this.state.property,
+	            setValue: this.setValue,
+	            show: this.state.petForm })
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-5' },
-	            _react2.default.createElement(_InputField2.default, {
-	              name: 'monthly_rent',
-	              type: 'type',
-	              label: 'Monthly rent',
-	              wrap: this.dollarize,
-	              errorMessage: this.state.errors.monthly_rent ? 'Rent amount may not be empty' : null,
-	              value: property.monthly_rent,
-	              change: this.updateRent,
-	              required: true })
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-7' },
-	            _react2.default.createElement(
-	              'div',
-	              { style: {
-	                  marginBottom: '.5em'
-	                } },
-	              _react2.default.createElement(_ButtonGroup2.default, {
-	                name: 'lease_type',
-	                buttons: this.getLeaseType(),
-	                match: property.lease_type,
-	                handle: this.setIntegerValue.bind(this, 'lease_type'),
-	                activeColor: 'success' })
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              null,
-	              _react2.default.createElement(_BooleanButton2.default, {
-	                name: 'efficiency',
-	                current: property.efficiency,
-	                label: ['Efficiency', 'Not an efficiency'],
-	                icon: true,
-	                handleClick: this.setValue.bind(this, 'efficiency') })
-	            )
-	          )
+	          { ref: 'fees' },
+	          _react2.default.createElement(_Fees2.default, { property: property, setValue: this.setValue })
 	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row bg-info' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-6 form-inline' },
-	            _react2.default.createElement(
-	              'label',
-	              { htmlFor: 'contract-length' },
-	              'Contract length'
-	            ),
-	            _react2.default.createElement(
-	              'select',
-	              {
-	                name: 'contract_length',
-	                id: 'contract-length',
-	                value: property.contract_length,
-	                className: 'form-control',
-	                onChange: this.setIntegerValue.bind(this, 'contract_length') },
-	              _react2.default.createElement(
-	                'option',
-	                { value: '1' },
-	                'Monthly'
-	              ),
-	              _react2.default.createElement(
-	                'option',
-	                { value: '8' },
-	                'Five months'
-	              ),
-	              _react2.default.createElement(
-	                'option',
-	                { value: '2' },
-	                'Six months'
-	              ),
-	              _react2.default.createElement(
-	                'option',
-	                { value: '7' },
-	                'Ten months'
-	              ),
-	              _react2.default.createElement(
-	                'option',
-	                { value: '3' },
-	                'Twelve months'
-	              ),
-	              _react2.default.createElement(
-	                'option',
-	                { value: '4' },
-	                'Summer only'
-	              ),
-	              _react2.default.createElement(
-	                'option',
-	                { value: '5' },
-	                'per Semester'
-	              ),
-	              _react2.default.createElement(
-	                'option',
-	                { value: '6' },
-	                'School year (two semesters)'
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { style: {
-	                  marginTop: '.5em'
-	                } },
-	              _react2.default.createElement(_BooleanButton2.default, {
-	                name: 'sublease',
-	                current: property.sublease,
-	                label: ['Tenant may sublease', 'Tenant may not sublease'],
-	                icon: true,
-	                handleClick: this.setValue.bind(this, 'sublease') })
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-6' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Move-in date'
-	            ),
-	            _react2.default.createElement(_reactDatePicker.DateField, {
-	              dateFormat: 'YYYY-MM-DD',
-	              onChange: this.setMoveIn,
-	              value: this.getMoveInDate() })
-	          )
-	        ),
-	        _react2.default.createElement(_Rooms2.default, { property: property, setValue: this.setValue }),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row bg-info' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-6' },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'pull-left' },
-	              _react2.default.createElement(
-	                'label',
-	                null,
-	                'Parking spaces per unit'
-	              ),
-	              _react2.default.createElement('input', {
-	                name: 'parking_per_unit',
-	                type: 'text',
-	                size: '2',
-	                onChange: this.updateParking,
-	                onClick: this.select,
-	                value: property.parking_per_unit,
-	                className: 'single-input' })
-	            ),
-	            _react2.default.createElement(_ButtonGroup2.default, {
-	              buttons: parking,
-	              match: property.parking_per_unit,
-	              handle: this.updateParking,
-	              activeColor: 'success' })
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-12' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Student preference'
-	            ),
-	            _react2.default.createElement(_ButtonGroup2.default, {
-	              name: 'student_type',
-	              buttons: this.studentType(),
-	              match: property.student_type,
-	              handle: this.setIntegerValue.bind(this, 'student_type'),
-	              activeColor: 'success' })
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row bg-info' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-12' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Miles from campus'
-	            ),
-	            _react2.default.createElement(_ButtonGroup2.default, {
-	              name: 'campus_distance',
-	              buttons: this.campusDistance(),
-	              match: property.campus_distance,
-	              handle: this.setIntegerValue.bind(this, 'campus_distance'),
-	              activeColor: 'success' })
-	          )
-	        ),
-	        _react2.default.createElement(SubmitForm, { check: this.checkForm }),
-	        _react2.default.createElement(_Utilities2.default, {
-	          property: property,
-	          setValue: this.setValue,
-	          setIntegerValue: this.setIntegerValue }),
-	        _react2.default.createElement(_Features2.default, { property: property, setValue: this.setValue }),
-	        _react2.default.createElement(SubmitForm, { check: this.checkForm }),
-	        _react2.default.createElement(_Pets2.default, {
-	          property: this.state.property,
-	          setValue: this.setValue,
-	          show: this.state.petForm }),
-	        _react2.default.createElement(_Fees2.default, { property: property, setValue: this.setValue }),
-	        _react2.default.createElement(_UtilityImbursement2.default, { property: property, setValue: this.setValue }),
 	        _react2.default.createElement(SubmitForm, { check: this.checkForm })
 	      );
 	    }
@@ -30917,6 +30598,529 @@ webpackJsonp([2],[
 			URL.revokeObjectURL(oldSrc);
 	}
 
+
+/***/ },
+/* 381 */
+/*!**********************************!*\
+  !*** ./javascript/Mixin/Nav.jsx ***!
+  \**********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Nav = function (_React$Component) {
+	  _inherits(Nav, _React$Component);
+	
+	  function Nav(props) {
+	    _classCallCheck(this, Nav);
+	
+	    var _this = _possibleConstructorReturn(this, (Nav.__proto__ || Object.getPrototypeOf(Nav)).call(this, props));
+	
+	    _this.state = {};
+	    return _this;
+	  }
+	
+	  _createClass(Nav, [{
+	    key: 'render',
+	    value: function render() {
+	      var tabs = this.props.buttons.map(function (value, key) {
+	        return _react2.default.createElement(
+	          'li',
+	          {
+	            role: 'presentation',
+	            key: key,
+	            className: this.props.active === key ? 'active' : null,
+	            onClick: this.props.click.bind(null, key) },
+	          _react2.default.createElement(
+	            'a',
+	            { className: 'pointer' },
+	            value
+	          )
+	        );
+	      }.bind(this));
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'form-section' },
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'nav nav-pills' },
+	          tabs
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Nav;
+	}(_react2.default.Component);
+	
+	exports.default = Nav;
+	
+	
+	Nav.propTypes = {
+	  active: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
+	  buttons: _react2.default.PropTypes.array,
+	  click: _react2.default.PropTypes.func
+	};
+
+/***/ },
+/* 382 */
+/*!*******************************************!*\
+  !*** ./javascript/PropertyForm/Basic.jsx ***!
+  \*******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDatePicker = __webpack_require__(/*! react-date-picker */ 294);
+	
+	var _Bind = __webpack_require__(/*! ../Mixin/Bind.js */ 293);
+	
+	var _Bind2 = _interopRequireDefault(_Bind);
+	
+	var _Rooms = __webpack_require__(/*! ./Rooms.jsx */ 373);
+	
+	var _Rooms2 = _interopRequireDefault(_Rooms);
+	
+	var _InputField = __webpack_require__(/*! ../Mixin/InputField.jsx */ 177);
+	
+	var _InputField2 = _interopRequireDefault(_InputField);
+	
+	var _ButtonGroup = __webpack_require__(/*! ../Mixin/ButtonGroup.jsx */ 366);
+	
+	var _ButtonGroup2 = _interopRequireDefault(_ButtonGroup);
+	
+	var _BooleanButton = __webpack_require__(/*! ../Mixin/BooleanButton.jsx */ 368);
+	
+	var _BooleanButton2 = _interopRequireDefault(_BooleanButton);
+	
+	var _Range = __webpack_require__(/*! ../Mixin/Range.js */ 369);
+	
+	var _Range2 = _interopRequireDefault(_Range);
+	
+	var _moment = __webpack_require__(/*! moment */ 186);
+	
+	var _moment2 = _interopRequireDefault(_moment);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Basic = function (_React$Component) {
+	  _inherits(Basic, _React$Component);
+	
+	  function Basic(props) {
+	    _classCallCheck(this, Basic);
+	
+	    var _this = _possibleConstructorReturn(this, (Basic.__proto__ || Object.getPrototypeOf(Basic)).call(this, props));
+	
+	    _this.state = {
+	      errors: {
+	        name: false,
+	        address: false,
+	        monthly_rent: false
+	      }
+	    };
+	    var methods = ['setMoveIn', 'updateParking', 'updateRent'];
+	    (0, _Bind2.default)(methods, _this);
+	    return _this;
+	  }
+	
+	  _createClass(Basic, [{
+	    key: 'getMoveInDate',
+	    value: function getMoveInDate() {
+	      var date = void 0;
+	      if (this.props.property.move_in_date === 0) {
+	        date = (0, _moment2.default)().format('YYYY-MM-DD');
+	      } else {
+	        date = (0, _moment2.default)(this.props.property.move_in_date * 1000).format('YYYY-MM-DD');
+	      }
+	      return date;
+	    }
+	  }, {
+	    key: 'getLeaseType',
+	    value: function getLeaseType() {
+	      return [{
+	        value: 0,
+	        label: _react2.default.createElement(
+	          'span',
+	          null,
+	          _react2.default.createElement('i', { className: 'fa fa-user' }),
+	          '\xA0 Per unit'
+	        )
+	      }, {
+	        value: 1,
+	        label: _react2.default.createElement(
+	          'span',
+	          null,
+	          _react2.default.createElement('i', { className: 'fa fa-users' }),
+	          '\xA0 Per tenant'
+	        )
+	      }];
+	    }
+	  }, {
+	    key: 'updateParking',
+	    value: function updateParking(parking) {
+	      if ((typeof parking === 'undefined' ? 'undefined' : _typeof(parking)) === 'object') {
+	        parking = Number(parking.target.value);
+	      } else {
+	        parking = Number(parking);
+	      }
+	      if (parking >= 1 && parking <= 6) {
+	        this.props.setValue('parking_per_unit', parking);
+	      }
+	    }
+	  }, {
+	    key: 'setMoveIn',
+	    value: function setMoveIn(a) {
+	      var date = (0, _moment2.default)(a).format('X');
+	      this.props.setValue('move_in_date', date);
+	    }
+	  }, {
+	    key: 'updateRent',
+	    value: function updateRent(e) {
+	      var rent = e.target.value;
+	      this.props.setValue('monthly_rent', rent.replace(/[^\d]/g, ''));
+	    }
+	  }, {
+	    key: 'studentType',
+	    value: function studentType() {
+	      var types = [{
+	        value: 0,
+	        label: 'No preference'
+	      }, {
+	        value: 1,
+	        label: 'Undergraduate'
+	      }, {
+	        value: 2,
+	        label: 'Graduate'
+	      }];
+	      return types;
+	    }
+	  }, {
+	    key: 'campusDistance',
+	    value: function campusDistance() {
+	      return [{
+	        value: 0,
+	        label: '0 to 5'
+	      }, {
+	        value: 5,
+	        label: '5 to 10'
+	      }, {
+	        value: 10,
+	        label: '10 to 25'
+	      }, {
+	        value: 25,
+	        label: 'More than 25'
+	      }];
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var property = this.props.property;
+	
+	      var parking = (0, _Range2.default)(property.parking_per_unit);
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row bg-info' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-12 ' },
+	            _react2.default.createElement(_InputField2.default, {
+	              name: 'name',
+	              label: 'Title',
+	              value: property.name,
+	              errorMessage: this.state.errors.name ? 'Title may not be empty' : null,
+	              change: this.props.setValue.bind(null, 'name'),
+	              required: true })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-12' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Description'
+	            ),
+	            _react2.default.createElement('textarea', {
+	              className: 'form-control',
+	              name: 'description',
+	              value: property.description,
+	              onChange: this.props.setValue.bind(null, 'description') })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row bg-info' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-12' },
+	            _react2.default.createElement(_InputField2.default, {
+	              name: 'address',
+	              label: 'Address',
+	              type: 'text',
+	              placeholder: 'Street, City, State, Zip code',
+	              errorMessage: this.state.errors.address ? 'Address may not be empty' : null,
+	              value: property.address,
+	              change: this.props.setValue.bind(null, 'address'),
+	              required: true })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-5' },
+	            _react2.default.createElement(_InputField2.default, {
+	              name: 'monthly_rent',
+	              type: 'type',
+	              label: 'Monthly rent',
+	              wrap: this.dollarize,
+	              errorMessage: this.state.errors.monthly_rent ? 'Rent amount may not be empty' : null,
+	              value: property.monthly_rent,
+	              change: this.updateRent,
+	              required: true })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-7' },
+	            _react2.default.createElement(
+	              'div',
+	              { style: {
+	                  marginBottom: '.5em'
+	                } },
+	              _react2.default.createElement(_ButtonGroup2.default, {
+	                name: 'lease_type',
+	                buttons: this.getLeaseType(),
+	                match: property.lease_type,
+	                handle: this.props.setIntegerValue.bind(null, 'lease_type'),
+	                activeColor: 'success' })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement(_BooleanButton2.default, {
+	                name: 'efficiency',
+	                current: property.efficiency,
+	                label: ['Efficiency', 'Not an efficiency'],
+	                icon: true,
+	                handleClick: this.props.setValue.bind(null, 'efficiency') })
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row bg-info' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-6 form-inline' },
+	            _react2.default.createElement(
+	              'label',
+	              { htmlFor: 'contract-length' },
+	              'Contract length'
+	            ),
+	            _react2.default.createElement(
+	              'select',
+	              {
+	                name: 'contract_length',
+	                id: 'contract-length',
+	                value: property.contract_length,
+	                className: 'form-control',
+	                onChange: this.props.setIntegerValue.bind(null, 'contract_length') },
+	              _react2.default.createElement(
+	                'option',
+	                { value: '1' },
+	                'Monthly'
+	              ),
+	              _react2.default.createElement(
+	                'option',
+	                { value: '8' },
+	                'Five months'
+	              ),
+	              _react2.default.createElement(
+	                'option',
+	                { value: '2' },
+	                'Six months'
+	              ),
+	              _react2.default.createElement(
+	                'option',
+	                { value: '7' },
+	                'Ten months'
+	              ),
+	              _react2.default.createElement(
+	                'option',
+	                { value: '3' },
+	                'Twelve months'
+	              ),
+	              _react2.default.createElement(
+	                'option',
+	                { value: '4' },
+	                'Summer only'
+	              ),
+	              _react2.default.createElement(
+	                'option',
+	                { value: '5' },
+	                'per Semester'
+	              ),
+	              _react2.default.createElement(
+	                'option',
+	                { value: '6' },
+	                'School year (two semesters)'
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { style: {
+	                  marginTop: '.5em'
+	                } },
+	              _react2.default.createElement(_BooleanButton2.default, {
+	                name: 'sublease',
+	                current: property.sublease,
+	                label: ['Tenant may sublease', 'Tenant may not sublease'],
+	                icon: true,
+	                handleClick: this.props.setValue.bind(null, 'sublease') })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-6' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Move-in date'
+	            ),
+	            _react2.default.createElement(_reactDatePicker.DateField, {
+	              dateFormat: 'YYYY-MM-DD',
+	              onChange: this.setMoveIn,
+	              value: this.getMoveInDate() })
+	          )
+	        ),
+	        _react2.default.createElement(_Rooms2.default, { property: property, setValue: this.props.setValue }),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row bg-info' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-6' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'pull-left' },
+	              _react2.default.createElement(
+	                'label',
+	                null,
+	                'Parking spaces per unit'
+	              ),
+	              _react2.default.createElement('input', {
+	                name: 'parking_per_unit',
+	                type: 'text',
+	                size: '2',
+	                onChange: this.updateParking,
+	                onClick: this.select,
+	                value: property.parking_per_unit,
+	                className: 'single-input' })
+	            ),
+	            _react2.default.createElement(_ButtonGroup2.default, {
+	              buttons: parking,
+	              match: property.parking_per_unit,
+	              handle: this.updateParking,
+	              activeColor: 'success' })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-12' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Student preference'
+	            ),
+	            _react2.default.createElement(_ButtonGroup2.default, {
+	              name: 'student_type',
+	              buttons: this.studentType(),
+	              match: property.student_type,
+	              handle: this.props.setIntegerValue.bind(this, 'student_type'),
+	              activeColor: 'success' })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row bg-info' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-12' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Miles from campus'
+	            ),
+	            _react2.default.createElement(_ButtonGroup2.default, {
+	              name: 'campus_distance',
+	              buttons: this.campusDistance(),
+	              match: property.campus_distance,
+	              handle: this.props.setIntegerValue.bind(this, 'campus_distance'),
+	              activeColor: 'success' })
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Basic;
+	}(_react2.default.Component);
+	
+	exports.default = Basic;
+	
+	
+	Basic.propTypes = {
+	  property: _react2.default.PropTypes.object,
+	  setValue: _react2.default.PropTypes.func,
+	  setIntegerValue: _react2.default.PropTypes.func
+	};
 
 /***/ }
 ]);
