@@ -17,6 +17,7 @@ export default class Features extends React.Component {
           <div className="col-sm-6">
             <p>
               <BooleanButton
+                name="utilities_inc"
                 current={property.utilities_inc}
                 label={['Utilities included', 'Utilities not included']}
                 icon={true}
@@ -24,6 +25,7 @@ export default class Features extends React.Component {
             </p>
             <p>
               <BooleanButton
+                name="furnished"
                 current={property.furnished}
                 label={['Furnished', 'Not furnished']}
                 icon={true}
@@ -31,6 +33,7 @@ export default class Features extends React.Component {
             </p>
             <p>
               <BooleanButton
+                name="dishwasher"
                 current={property.dishwasher}
                 label={['Dishwasher included', 'No dishwasher']}
                 icon={true}
@@ -38,6 +41,7 @@ export default class Features extends React.Component {
             </p>
             <p>
               <BooleanButton
+                name="airconditioning"
                 current={property.airconditioning}
                 icon={true}
                 label={['Air conditioning', 'No air conditioning']}
@@ -47,6 +51,7 @@ export default class Features extends React.Component {
           <div className="col-sm-6">
             <p>
               <BooleanButton
+                name="appalcart"
                 current={property.appalcart}
                 icon={true}
                 label={['On Appalcart route', 'Not on Appalcart route']}
@@ -54,6 +59,7 @@ export default class Features extends React.Component {
             </p>
             <p>
               <BooleanButton
+                name="clubhouse"
                 current={property.clubhouse}
                 icon={true}
                 label={['Club house available', 'No club house']}
@@ -62,6 +68,7 @@ export default class Features extends React.Component {
             <p>
               <BooleanButton
                 current={property.workout_room}
+                name="workout_room"
                 icon={true}
                 label={['Workout room', 'No workout room']}
                 handleClick={this.props.setValue.bind(this, 'workout_room')}/>
