@@ -15,9 +15,10 @@ export default class Fees extends React.Component {
       <div>
         <h3>Deposits and Fees</h3>
         <div className="row">
-          <div className="col-sm-6">
+          <div className="col-xs-6 col-sm-4">
             <label>Security deposit</label>
             <BooleanButton
+              name="security_refund"
               current={property.security_refund}
               label={['Deposit refunded', 'Nonrefundable']}/>
             <div className="input-group">
@@ -31,9 +32,10 @@ export default class Fees extends React.Component {
               <span className="input-group-addon">.00</span>
             </div>
           </div>
-          <div className="col-sm-6">
+          <div className="col-xs-6 col-sm-4">
             <label>Administrative Fee</label>
             <BooleanButton
+              name="admin_fee_refund"
               current={property.admin_fee_refund}
               label={['Admin fee refunded', 'Nonrefundable']}/>
             <div className="input-group">
@@ -47,11 +49,10 @@ export default class Fees extends React.Component {
               <span className="input-group-addon">.00</span>
             </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-6">
+          <div className="col-xs-6 col-sm-4">
             <label>Cleaning fee</label>
             <BooleanButton
+              name="clean_fee_refund"
               current={property.clean_fee_refund}
               label={['Deposit refunded', 'Nonrefundable']}/>
             <div className="input-group">
@@ -65,7 +66,7 @@ export default class Fees extends React.Component {
               <span className="input-group-addon">.00</span>
             </div>
           </div>
-          <div className="col-sm-6">
+          <div className="col-xs-6 col-sm-4">
             <label>Parking Fee</label>
             <div className="input-group">
               <span className="input-group-addon">$</span>
@@ -85,7 +86,8 @@ export default class Fees extends React.Component {
             <textarea
               className="form-control"
               value={property.other_fees}
-              name="other_fees"></textarea>
+              onChange={this.props.setValue.bind(this, 'other_fees')}
+              name="other_fees"/>
           </div>
         </div>
       </div>
