@@ -6,7 +6,7 @@ import bindMethods from '../Mixin/Bind.js'
 import {DateField} from 'react-date-picker'
 import DecodeUrl from '../Mixin/DecodeUrl.js'
 import PropertyObject from '../Mixin/PropertyObject.js'
-import InputField, {RequiredIcon} from '../Mixin/InputField.jsx'
+import InputField from '../Mixin/InputField.jsx'
 import ErrorPage from '../Mixin/ErrorPage.jsx'
 import ButtonGroup from '../Mixin/ButtonGroup.jsx'
 import BooleanButton from '../Mixin/BooleanButton.jsx'
@@ -18,6 +18,7 @@ import Fees from './Fees.jsx'
 import Rooms from './Rooms.jsx'
 import Features from './Features.jsx'
 import Utilities from './Utilities.jsx'
+import UtilityImbursement from './UtilityImbursement.jsx'
 
 import 'react-date-picker/index.css'
 
@@ -32,14 +33,19 @@ export default class PropertyForm extends React.Component {
       property: PropertyObject,
       manager: {},
       petForm: PropertyObject.pets_allowed,
-      errors : { name : false, address: false, monthly_rent: false}
+      errors: {
+        name: false,
+        address: false,
+        monthly_rent: false
+      }
     }
     const methods = [
       'half',
       'setValue',
+      'setIntegerValue',
       'setMoveIn',
-      'togglePets',
-      'updateHeatType',
+      'updateParking',
+      'updateRent',
       'checkForm'
     ]
     bindMethods(methods, this)
@@ -58,17 +64,60 @@ export default class PropertyForm extends React.Component {
       errors.name = false
     }
 
-    if (property.address.length === 0){
+    if (property.address.length === 0) {
       errors.address = true
       errorFound = true
     } else {
       errors.address = false
     }
 
-    if (errorFound) {
-      this.setState({errors : errors})
-      this.refs.PropertyForm.scrollIntoView()
+    if (property.monthly_rent.length === 0) {
+      errors.monthly_rent = true
+      errorFound = true
+    } else {
+      errors.monthly_rent = false
     }
+
+    if (errorFound) {
+      this.setState({errors: errors})
+      this.refs.PropertyForm.scrollIntoView()
+    } else {
+      this.refs.PropertyForm.submit()
+    }
+  }
+
+  studentType() {
+    let types = [
+      {
+        value: 0,
+        label: 'No preference'
+      }, {
+        value: 1,
+        label: 'Undergraduate'
+      }, {
+        value: 2,
+        label: 'Graduate'
+      }
+    ]
+    return types
+  }
+
+  campusDistance() {
+    return [
+      {
+        value: 0,
+        label: '0 to 5'
+      }, {
+        value: 5,
+        label: '5 to 10'
+      }, {
+        value: 10,
+        label: '10 to 25'
+      }, {
+        value: 25,
+        label: 'More than 25'
+      }
+    ]
   }
 
   componentDidMount() {
@@ -86,98 +135,12 @@ export default class PropertyForm extends React.Component {
     this.setState({property})
   }
 
-  togglePets(allowed) {
-    this.setValue('pets_allowed', allowed)
-    this.setState({petForm: allowed})
+  setIntegerValue(varname, value) {
+    this.setValue(varname, parseInt(value))
   }
 
   setMoveIn(a) {
     this.setValue('move_in_date', a)
-  }
-
-  getLeaseType() {
-    return [
-      {
-        value: 0,
-        label: <span>
-            <i className="fa fa-user"></i>&nbsp; Per unit</span>
-      }, {
-        value: 1,
-        label: <span>
-            <i className="fa fa-users"></i>&nbsp; Per tenant</span>
-      }
-    ]
-  }
-
-  heatingTypes() {
-    return [
-      {
-        value: 1,
-        label: 'Heat pump'
-      }, {
-        value: 2,
-        label: 'Oil'
-      }, {
-        value: 3,
-        label: 'Propane'
-      }, {
-        value: 4,
-        label: 'Electric baseboard'
-      }, {
-        value: 5,
-        label: 'Kerosene'
-      }, {
-        value: 6,
-        label: 'Woodstove/Fireplace'
-      }, {
-        value: 7,
-        label: 'Natural gas'
-      }
-    ]
-  }
-
-  laundryTypes() {
-    return [
-      {
-        value: 0,
-        label: 'No laundry'
-      }, {
-        value: 1,
-        label: 'Washer/Dryer in unit'
-      }, {
-        value: 2,
-        label: 'Laundry room on premises'
-      }, {
-        value: 3,
-        label: 'Washer/Dryer hook ups in unit'
-      }
-    ]
-  }
-
-  trashTypes() {
-    return [
-      {
-        value: 0,
-        label: 'No pickup or bins'
-      }, {
-        value: 1,
-        label: 'Curbside pickup'
-      }, {
-        value: 2,
-        label: 'Trash only, no recycling bins'
-      }, {
-        value: 3,
-        label: 'Both bins on site'
-      }
-    ]
-  }
-
-  obscurePetForm() {
-    if (this.state.petForm) {
-      return {opacity: '1'}
-    } else {
-      return {opacity: '.4'}
-    }
   }
 
   getMoveInDate() {
@@ -199,59 +162,23 @@ export default class PropertyForm extends React.Component {
     }
   }
 
-  internetTypes() {
+  getLeaseType() {
     return [
       {
-        value: 1,
-        label: 'Dial up'
-      }, {
-        value: 2,
-        label: 'DSL'
-      }, {
-        value: 3,
-        label: 'Wireless'
-      }, {
-        value: 4,
-        label: 'Satellite'
-      }, {
-        value: 5,
-        label: 'Cable'
-      }, {
-        value: 6,
-        label: 'DSL/Cable'
-      }, {
-        value: 7,
-        label: 'Fiber'
-      }
-    ]
-  }
-
-  updateHeatType(type) {
-    let heatType = this.state.property.heat_type
-
-    const index = heatType.indexOf(type)
-    if (index === -1) {
-      heatType.push(type)
-    } else {
-      heatType.splice(index, 1)
-    }
-    this.setValue('heat_type', heatType)
-  }
-
-  studentType() {
-    let types = [
-      {
         value: 0,
-        label: 'No preference'
+        label: <span>
+            <i className="fa fa-user"></i>&nbsp; Per unit</span>
       }, {
         value: 1,
-        label: 'Undergraduate'
-      }, {
-        value: 2,
-        label: 'Graduate'
+        label: <span>
+            <i className="fa fa-users"></i>&nbsp; Per tenant</span>
       }
     ]
-    return types
+  }
+
+  updateRent(e) {
+    const rent = e.target.value
+    this.setValue('monthly_rent', rent.replace(/[^\d]/g, ''))
   }
 
   select(e) {
@@ -276,7 +203,11 @@ export default class PropertyForm extends React.Component {
     let parking = Range(property.parking_per_unit)
 
     return (
-      <form ref="PropertyForm" className="property-form" method="post" action="./properties/Property">
+      <form
+        ref="PropertyForm"
+        className="property-form"
+        method="post"
+        action="./properties/Property">
         <h2>Property for {this.state.manager.company_name}</h2>
         <div className="row bg-info">
           <div className="col-sm-12 ">
@@ -284,44 +215,66 @@ export default class PropertyForm extends React.Component {
               name="name"
               label="Title"
               value={property.name}
-              errorMessage={this.state.errors.name ? 'Title may not be empty': null}
+              errorMessage={this.state.errors.name
+              ? 'Title may not be empty'
+              : null}
               change={this.setValue.bind(this, 'name')}
               required={true}/>
           </div>
         </div>
         <div className="row">
           <div className="col-sm-12">
+            <label>Description</label>
+            <textarea
+              className="form-control"
+              name="description"
+              value={property.description}
+              onChange={this.setValue.bind(this, 'description')}/>
+          </div>
+        </div>
+        <div className="row bg-info">
+          <div className="col-sm-12">
             <InputField
               name="address"
               label="Address"
               type="text"
-              errorMessage={this.state.errors.address ? 'Address may not be empty': null}
+              placeholder="Street, City, State, Zip code"
+              errorMessage={this.state.errors.address
+              ? 'Address may not be empty'
+              : null}
               value={property.address}
               change={this.setValue.bind(this, 'address')}
               required={true}/>
           </div>
         </div>
-        <div className="row bg-info">
+        <div className="row">
           <div className="col-sm-5">
-            <label>Monthly rent<RequiredIcon/></label>
-              <InputField
-                name="monthly_rent"
-                type="type"
-                wrap={this.dollarize}
-                value={property.monthly_rent}
-                change={this.setValue.bind(this, 'monthly_rent')}
-                required={true}/>
+            <InputField
+              name="monthly_rent"
+              type="type"
+              label="Monthly rent"
+              wrap={this.dollarize}
+              errorMessage={this.state.errors.monthly_rent
+              ? 'Rent amount may not be empty'
+              : null}
+              value={property.monthly_rent}
+              change={this.updateRent}
+              required={true}/>
           </div>
           <div className="col-sm-7">
-            <div style={{marginBottom:'.5em'}}>
+            <div style={{
+              marginBottom: '.5em'
+            }}>
               <ButtonGroup
+                name="lease_type"
                 buttons={this.getLeaseType()}
                 match={property.lease_type}
-                handle={this.setValue.bind(this, 'lease_type')}
+                handle={this.setIntegerValue.bind(this, 'lease_type')}
                 activeColor="success"/>
             </div>
             <div>
               <BooleanButton
+                name="efficiency"
                 current={property.efficiency}
                 label={['Efficiency', 'Not an efficiency']}
                 icon={true}
@@ -329,14 +282,15 @@ export default class PropertyForm extends React.Component {
             </div>
           </div>
         </div>
-        <div className="row">
+        <div className="row bg-info">
           <div className="col-sm-6 form-inline">
             <label htmlFor="contract-length">Contract length</label>
             <select
               name="contract_length"
               id="contract-length"
               value={property.contract_length}
-              className="form-control">
+              className="form-control"
+              onChange={this.setIntegerValue.bind(this, 'contract_length')}>
               <option value="1">Monthly</option>
               <option value="8">Five months</option>
               <option value="2">Six months</option>
@@ -350,6 +304,7 @@ export default class PropertyForm extends React.Component {
               marginTop: '.5em'
             }}>
               <BooleanButton
+                name="sublease"
                 current={property.sublease}
                 label={['Tenant may sublease', 'Tenant may not sublease']}
                 icon={true}
@@ -365,11 +320,12 @@ export default class PropertyForm extends React.Component {
           </div>
         </div>
         <Rooms property={property} setValue={this.setValue}/>
-        <div className="row">
+        <div className="row bg-info">
           <div className="col-sm-6">
             <div className="pull-left">
               <label>Parking spaces per unit</label>
               <input
+                name="parking_per_unit"
                 type="text"
                 size="2"
                 onChange={this.updateParking}
@@ -384,78 +340,41 @@ export default class PropertyForm extends React.Component {
               activeColor="success"/>
           </div>
         </div>
-        <SubmitForm check={this.checkForm}/>
-        <div className="row bg-info">
-          <div className="col-sm-12">
-            <label>Heating</label>
-            <small>(Click all that apply)</small>
-            <ButtonGroup
-              buttons={this.heatingTypes()}
-              match={property.heat_type}
-              handle={this.updateHeatType}
-              activeColor="success"/>
-          </div>
-        </div>
         <div className="row">
-          <div className="col-sm-12">
-            <label>Internet</label>
-            <ButtonGroup
-              buttons={this.internetTypes()}
-              match={property.internet_type}
-              handle={this.setValue.bind(this, 'internet_type')}
-              activeColor="success"/>
-          </div>
-        </div>
-        <div className="row bg-info">
-          <div className="col-sm-12">
-            <label>Laundry</label>
-            <ButtonGroup
-              buttons={this.laundryTypes()}
-              match={property.laundry_type}
-              handle={this.setValue.bind(this, 'laundry_type')}
-              activeColor="success"/>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-12">
-            <label>Trash and Recycling</label>
-            <ButtonGroup
-              buttons={this.trashTypes()}
-              match={property.trash_type}
-              handle={this.setValue.bind(this, 'trash_type')}
-              activeColor="success"/>
-          </div>
-        </div>
-        <div className="row bg-info">
           <div className="col-sm-12">
             <label>Student preference</label>
             <ButtonGroup
+              name="student_type"
               buttons={this.studentType()}
               match={property.student_type}
-              handle={this.setValue.bind(this, 'student_type')}
+              handle={this.setIntegerValue.bind(this, 'student_type')}
               activeColor="success"/>
           </div>
         </div>
-        <Features property={property} setValue={this.setValue}/>
-        <SubmitForm check={this.checkForm}/>
-        <div className="row">
+        <div className="row bg-info">
           <div className="col-sm-12">
-            <h3>Pets</h3>
-            <BooleanButton
-              label={['Pets allowed', 'Pets not allowed']}
-              icon={['fa fa-check', 'fa fa-times']}
-              current={property.pets_allowed}
-              handleClick={this.togglePets.bind(this, !property.pets_allowed)}/>
-            <div style={this.obscurePetForm()}>
-              <Pets
-                property={this.state.property}
-                setValue={this.setValue}
-                show={this.state.petForm}/>
-            </div>
+            <label>Miles from campus</label>
+            <ButtonGroup
+              name="campus_distance"
+              buttons={this.campusDistance()}
+              match={property.campus_distance}
+              handle={this.setIntegerValue.bind(this, 'campus_distance')}
+              activeColor="success"/>
           </div>
         </div>
+        <SubmitForm check={this.checkForm}/>
+        <Utilities
+          property={property}
+          setValue={this.setValue}
+          setIntegerValue={this.setIntegerValue}/>
+        <Features property={property} setValue={this.setValue}/>
+        <SubmitForm check={this.checkForm}/>
+        <Pets
+          property={this.state.property}
+          setValue={this.setValue}
+          show={this.state.petForm}/>
         <Fees property={property} setValue={this.setValue}/>
-        <Utilities property={property} setValue={this.setValue}/>
+        <UtilityImbursement property={property} setValue={this.setValue}/>
         <SubmitForm check={this.checkForm}/>
       </form>
     )
