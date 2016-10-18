@@ -1,54 +1,81 @@
 'use strict'
 import React from 'react'
 import InputField from '../Mixin/InputField.jsx'
+import BooleanButton from '../Mixin/BooleanButton.jsx'
 
 export default class Pets extends React.Component {
   constructor(props) {
     super(props)
+    this.state = {
+      petForm: false
+    }
+  }
+
+  obscurePetForm() {
+    if (this.state.petForm) {
+      return {opacity: '1'}
+    } else {
+      return {opacity: '.4'}
+    }
+  }
+
+  togglePets(allowed) {
+    this.props.setValue('pets_allowed', allowed)
+    this.setState({petForm: allowed})
   }
 
   render() {
+    const {property} = this.props
     return (
       <div>
-        <div className="row">
-          <div className="col-sm-6">
-            <label>Deposit</label>
-            (Refundable)
-            <div className="input-group">
-              <span className="input-group-addon">$</span>
-              <InputField
-                name="pet_deposit"
-                type="text"
-                value={this.props.property.pet_deposit}
-                disabled={!this.props.show}
-                change={this.props.setValue.bind(this, 'pet_deposit')}/>
-              <span className="input-group-addon">.00</span>
+        <h3>Pets</h3>
+        <BooleanButton
+          name="pets_allowed"
+          label={['Pets allowed', 'Pets not allowed']}
+          icon={['fa fa-check', 'fa fa-times']}
+          handleClick={this.togglePets.bind(this, !property.pets_allowed)}
+          current={property.pets_allowed}/>
+        <div style={this.obscurePetForm()}>
+          <div className="row">
+            <div className="col-sm-6">
+              <label>Deposit</label>
+              (Refundable)
+              <div className="input-group">
+                <span className="input-group-addon">$</span>
+                <InputField
+                  name="pet_deposit"
+                  type="text"
+                  value={property.pet_deposit}
+                  disabled={!this.state.petForm}
+                  change={this.props.setValue.bind(this, 'pet_deposit')}/>
+                <span className="input-group-addon">.00</span>
+              </div>
+            </div>
+            <div className="col-sm-6">
+              <label>Fee</label>
+              (Non-refundable)
+              <div className="input-group">
+                <span className="input-group-addon">$</span>
+                <InputField
+                  name="pet_fee"
+                  type="text"
+                  disabled={!this.state.petForm}
+                  value={property.pet_fee}
+                  change={this.props.setValue.bind(this, 'pet_fee')}/>
+                <span className="input-group-addon">.00</span>
+              </div>
             </div>
           </div>
-          <div className="col-sm-6">
-            <label>Fee</label>
-            (Non-refundable)
-            <div className="input-group">
-              <span className="input-group-addon">$</span>
-              <InputField
-                name="pet_fee"
-                type="text"
-                disabled={!this.props.show}
-                value={this.props.property.pet_fee}
-                change={this.props.setValue.bind(this, 'pet_fee')}/>
-              <span className="input-group-addon">.00</span>
+          <div className="row">
+            <div className="col-sm-12">
+              <label htmlFor="pet-type">Allowed pet types (i.e. cats, dogs)</label>
+              <textarea
+                disabled={!this.state.petForm}
+                className="form-control"
+                id="pet-type"
+                value={property.pet_type}
+                onChange={this.props.setValue.bind(this, 'pet_type')}></textarea>
             </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-12">
-            <label htmlFor="pet-type">Allowed pet types (i.e. cats, dogs)</label>
-            <textarea
-              disabled={!this.props.show}
-              className="form-control"
-              id="pet-type"
-              value={this.props.property.pet_type}
-              onChange={this.props.setValue.bind(this, 'pet_type')}></textarea>
           </div>
         </div>
       </div>
