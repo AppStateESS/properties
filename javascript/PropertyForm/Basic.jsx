@@ -12,13 +12,7 @@ import moment from 'moment'
 export default class Basic extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      errors: {
-        name: false,
-        address: false,
-        monthly_rent: false
-      }
-    }
+
     const methods = ['setMoveIn', 'updateParking', 'updateRent']
     bindMethods(methods, this)
   }
@@ -114,7 +108,7 @@ export default class Basic extends React.Component {
               name="name"
               label="Title"
               value={property.name}
-              errorMessage={this.state.errors.name
+              errorMessage={this.props.errors.name
               ? 'Title may not be empty'
               : null}
               change={this.props.setValue.bind(null, 'name')}
@@ -138,7 +132,7 @@ export default class Basic extends React.Component {
               label="Address"
               type="text"
               placeholder="Street, City, State, Zip code"
-              errorMessage={this.state.errors.address
+              errorMessage={this.props.errors.address
               ? 'Address may not be empty'
               : null}
               value={property.address}
@@ -153,7 +147,7 @@ export default class Basic extends React.Component {
               type="type"
               label="Monthly rent"
               wrap={this.dollarize}
-              errorMessage={this.state.errors.monthly_rent
+              errorMessage={this.props.errors.monthly_rent
               ? 'Rent amount may not be empty'
               : null}
               value={property.monthly_rent}
@@ -241,26 +235,25 @@ export default class Basic extends React.Component {
               handle={this.updateParking}
               activeColor="success"/>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-12">
-            <label>Student preference</label>
-            <ButtonGroup
-              name="student_type"
-              buttons={this.studentType()}
-              match={property.student_type}
-              handle={this.props.setIntegerValue.bind(this, 'student_type')}
-              activeColor="success"/>
-          </div>
-        </div>
-        <div className="row bg-info">
-          <div className="col-sm-12">
-            <label>Miles from campus</label>
+          <div className="col-sm-6">
+            <label>Miles from campus</label><br />
             <ButtonGroup
               name="campus_distance"
               buttons={this.campusDistance()}
               match={property.campus_distance}
               handle={this.props.setIntegerValue.bind(this, 'campus_distance')}
+              activeColor="success"/>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-12">
+            <label>Student preference</label>
+            <br />
+            <ButtonGroup
+              name="student_type"
+              buttons={this.studentType()}
+              match={property.student_type}
+              handle={this.props.setIntegerValue.bind(this, 'student_type')}
               activeColor="success"/>
           </div>
         </div>
@@ -272,5 +265,6 @@ export default class Basic extends React.Component {
 Basic.propTypes = {
   property: React.PropTypes.object,
   setValue: React.PropTypes.func,
-  setIntegerValue: React.PropTypes.func
+  setIntegerValue: React.PropTypes.func,
+  errors: React.PropTypes.object
 }
