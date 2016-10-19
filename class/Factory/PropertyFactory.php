@@ -89,4 +89,16 @@ class PropertyFactory extends BaseFactory
         return $result;
     }
 
+    public function post(\Request $request)
+    {
+        $errors = array();
+        $r = new Resource;
+        try {
+            $r->loadPostByType($request, array('active', 'approved'));
+            return array('success'=>true);
+        } catch (\Exception $e) {
+            throw new \properties\Exception\PropertySaveFailure($e->getMessage());
+        }
+    }
+
 }
