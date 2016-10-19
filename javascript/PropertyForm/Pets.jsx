@@ -6,13 +6,10 @@ import BooleanButton from '../Mixin/BooleanButton.jsx'
 export default class Pets extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      petForm: false
-    }
   }
 
   obscurePetForm() {
-    if (this.state.petForm) {
+    if (this.props.property.pets_allowed) {
       return {opacity: '1'}
     } else {
       return {opacity: '.4'}
@@ -21,7 +18,6 @@ export default class Pets extends React.Component {
 
   togglePets(allowed) {
     this.props.setValue('pets_allowed', allowed)
-    this.setState({petForm: allowed})
   }
 
   render() {
@@ -46,7 +42,7 @@ export default class Pets extends React.Component {
                   name="pet_deposit"
                   type="text"
                   value={property.pet_deposit}
-                  disabled={!this.state.petForm}
+                  disabled={!property.pets_allowed}
                   change={this.props.setValue.bind(this, 'pet_deposit')}/>
                 <span className="input-group-addon">.00</span>
               </div>
@@ -59,7 +55,7 @@ export default class Pets extends React.Component {
                 <InputField
                   name="pet_fee"
                   type="text"
-                  disabled={!this.state.petForm}
+                  disabled={!property.pets_allowed}
                   value={property.pet_fee}
                   change={this.props.setValue.bind(this, 'pet_fee')}/>
                 <span className="input-group-addon">.00</span>
@@ -70,7 +66,7 @@ export default class Pets extends React.Component {
             <div className="col-sm-12">
               <label htmlFor="pet-type">Allowed pet types (i.e. cats, dogs)</label>
               <textarea
-                disabled={!this.state.petForm}
+                disabled={!property.pets_allowed}
                 className="form-control"
                 id="pet-type"
                 value={property.pet_type}
