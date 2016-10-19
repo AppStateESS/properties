@@ -2,6 +2,7 @@
 import React from 'react'
 import bindMethods from '../Mixin/Bind.js'
 import ButtonGroup from '../Mixin/ButtonGroup.jsx'
+import UtilityImbursement from './UtilityImbursement.jsx'
 
 export default class Utilities extends React.Component {
   constructor(props) {
@@ -193,6 +194,7 @@ export default class Utilities extends React.Component {
               activeColor="success"/>
           </div>
         </div>
+        <UtilityImbursement property={this.props.property} setValue={this.props.setValue}/>
       </div>
     )
   }
