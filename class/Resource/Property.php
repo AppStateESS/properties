@@ -90,6 +90,7 @@ class Property extends Base
         $this->clean_fee_refund = new Variable\Bool(0, 'clean_fee_refund');
         $this->clubhouse = new Variable\Bool(false, 'clubhouse');
         $this->contact_id = new Variable\Integer(0, 'contact_id');
+        $this->contact_id->setRange(1);
         $this->contract_length = new Variable\Integer(0, 'contract_length');
         $this->created = new Variable\DateTime(null, 'created');
         $this->description = new Variable\String(null, 'description');
