@@ -1757,7 +1757,7 @@ webpackJsonp([0],{
 	          'button',
 	          {
 	            type: 'button',
-	            onClick: this.clearMessage,
+	            onClick: this.props.onClose,
 	            className: 'close',
 	            'data-dismiss': 'alert',
 	            'aria-label': 'Close' },
@@ -1779,7 +1779,8 @@ webpackJsonp([0],{
 	
 	Message.propTypes = {
 	  type: _react2.default.PropTypes.string,
-	  message: _react2.default.PropTypes.string
+	  message: _react2.default.PropTypes.string,
+	  onClose: _react2.default.PropTypes.func
 	};
 	
 	Message.defaultProps = {
