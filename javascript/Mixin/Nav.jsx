@@ -1,5 +1,6 @@
 'use strict'
 import React from 'react'
+import classnames from 'classnames'
 
 export default class Nav extends React.Component {
   constructor(props) {
@@ -8,14 +9,26 @@ export default class Nav extends React.Component {
   }
 
   render() {
+    let disabled = []
+    if (this.props.disable !== undefined && this.props.disable !== null) {
+      if (this.props.disable.constructor === Array) {
+        disabled = this.props.disable
+      } else {
+        disabled.push(this.props.disable)
+      }
+    }
+    let cn
     let tabs = this.props.buttons.map(function (value, key) {
+      cn = classnames({
+        active: this.props.active === key,
+        disabled: disabled.indexOf(key) !== -1
+      })
+
       return (
         <li
           role="presentation"
           key={key}
-          className={this.props.active === key
-          ? 'active'
-          : null}
+          className={cn}
           onClick={this.props.click.bind(null, key)}>
           <a className="pointer">{value}</a>
         </li>
@@ -32,5 +45,10 @@ export default class Nav extends React.Component {
 Nav.propTypes = {
   active: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.string]),
   buttons: React.PropTypes.array,
-  click: React.PropTypes.func
+  click: React.PropTypes.func,
+  disable: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.array])
+}
+
+Nav.defaultProp = {
+  disable: null
 }
