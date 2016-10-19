@@ -30,7 +30,7 @@ class Message extends React.Component {
       <div className={messageType} role="alert">
         <button
           type="button"
-          onClick={this.clearMessage}
+          onClick={this.props.onClose}
           className="close"
           data-dismiss="alert"
           aria-label="Close">
@@ -45,7 +45,8 @@ class Message extends React.Component {
 
 Message.propTypes = {
   type: React.PropTypes.string,
-  message: React.PropTypes.string
+  message: React.PropTypes.string,
+  onClose: React.PropTypes.func
 }
 
 Message.defaultProps = {
