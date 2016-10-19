@@ -18,6 +18,7 @@ use properties\Factory\ManagerFactory;
  */
 class PropertyController extends BaseController
 {
+
     private $factory;
 
     public function __construct($module)
@@ -92,4 +93,25 @@ class PropertyController extends BaseController
 
         return $view;
     }
+
+    public function post(\Request $request)
+    {
+        $this->role->setController('property');
+        if (!$this->role->allow()) {
+            throw new \properties\Exception\PrivilegeMissing;
+        }
+        try {
+            $result = $this->factory->post($request);
+        } catch (\properties\Exception\PropertySaveFailure $e) {
+            $result = array('error'=>$e->getMessage());
+        }
+        if($request->isAjax()) {
+            $view = new \View\JsonView($result);
+        } else {
+            $view = new \View\HtmlView($result);
+        }
+        $response = new \Response($view);
+        return $response;
+    }
+
 }
