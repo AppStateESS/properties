@@ -40,12 +40,13 @@ class Module extends \Module
         return $controller;
     }
 
+    public function afterRun(\Request $request, \Response $response)
+    {
+        \properties\Factory\NavBar::view();
+    }
+    
     public function runTime(\Request $request)
     {
-        if (\Current_User::allow('properties')) {
-            \properties\Factory\View::navbar();
-        }
-
         if (\phpws\PHPWS_Core::atHome()) {
             \Layout::add($this->home(), 'properties');
         }
