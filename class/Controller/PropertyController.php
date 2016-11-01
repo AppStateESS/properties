@@ -9,7 +9,10 @@
 namespace properties\Controller;
 
 use properties\Factory\PropertyFactory as Factory;
+use properties\Factory\PhotoFactory as Photo;
+use properties\Resource\Property as Resource;
 use properties\Factory\ManagerFactory;
+use properties\Factory\NavBar;
 
 /**
  * Description of Property.
@@ -18,25 +21,35 @@ use properties\Factory\ManagerFactory;
  */
 class PropertyController extends BaseController
 {
-
-    private $factory;
-
+    /**
+     *
+     * @var \properties\Factory\PropertyFactory
+     */
+    protected $factory;
+    
+    /**
+     *
+     * @var \properties\Resource\Property
+     */
+    protected $resource;
+    
     public function __construct($module)
     {
-        parent::__construct($module);
         $this->factory = new Factory();
+        $this->resource = $this->factory->build();
+        parent::__construct($module);
     }
 
     public function getHtmlView($data, \Request $request)
     {
-        $this->role->setController('property');
         \Layout::addStyle('properties');
-        $command = $this->checkCommand($request, 'list');
-        if (is_numeric($command)) {
-            $propertyId = (int) $command;
-            $command = 'view';
-        } else {
-            $propertyId = $request->pullGetInteger('propertyId', true);
+
+        try {
+            $command = $this->checkCommand($request, 'list');
+        } catch (\properties\Exception\ResourceNotFound $e) {
+            return $this->errorPage($e);
+        } catch (\properties\Exception\BadCommand $e) {
+            return $this->errorPage($e);
         }
         $managerId = $request->pullGetInteger('managerId', true);
         switch ($command) {
@@ -45,13 +58,17 @@ class PropertyController extends BaseController
                 break;
 
             case 'create';
-                $content = $this->reactView('propertyform');
+                $content = $this->editView($managerId);
                 break;
 
             case 'view':
-                $content = 'property view';
+                $content = $this->view();
                 break;
 
+            case 'edit':
+                $content = $this->editView();
+                break;
+            
             default:
                 throw new \properties\Exception\BadCommand;
         }
@@ -60,9 +77,40 @@ class PropertyController extends BaseController
         return $view;
     }
 
+    private function view() {
+        $tpl = array();
+        $tpl['property'] = $this->factory->viewHtml($this->resource);
+        $tpl['id'] = $this->resource->id;
+        $tpl['update'] = $this->factory->role->allow('edit');
+        $tpl['photo'] = $this->reactView('photo');
+        $tpl['photoupdate'] = $this->factory->role->allow('edit') ? $this->reactView('propertyimage') : null;
+        $template = new \phpws2\Template($tpl);
+        $template->setModuleTemplate('properties', 'property_view.html');
+        return $template->get();
+    }
+    
+    private function editView($managerId=null)
+    {
+        if ($this->resource->getId()) {
+            $property = json_encode($this->resource->getVariablesAsValue());
+        } else {
+            $this->resource->contact_id = $managerId;
+            $managerFactory = new ManagerFactory;
+            $manager = $managerFactory->load($this->resource->contact_id);
+            $this->resource->company_name = $manager->company_name;
+            
+            $property = json_encode($this->resource->getVariablesAsValue(true, array('approved','active')));
+        }
+        
+        $content[] = <<<EOF
+<script type="text/javascript">const property = $property</script>
+EOF;
+        $content[] = $this->reactView('propertyform');
+        return implode('', $content);
+    }
+    
     public function getJsonView($data, \Request $request)
     {
-        $this->role->setController('property');
         $command = $this->checkCommand($request, 'list');
         if (is_numeric($command)) {
             $propertyId = (int) $command;
@@ -85,6 +133,10 @@ class PropertyController extends BaseController
                     $json['manager'] = null;
                 }
                 break;
+                
+            case 'view':
+                //$json['property'] = $this->factory->
+                break;
 
             default:
                 throw new \phpws2\Http\MethodNotAllowedException();
@@ -96,16 +148,15 @@ class PropertyController extends BaseController
 
     public function post(\Request $request)
     {
-        $this->role->setController('property');
-        if (!$this->role->allow()) {
+        if (!$this->factory->role->allow()) {
             throw new \properties\Exception\PrivilegeMissing;
         }
         try {
             $result = $this->factory->post($request);
         } catch (\properties\Exception\PropertySaveFailure $e) {
-            $result = array('error'=>$e->getMessage());
+            $result = array('error' => $e->getMessage());
         }
-        if($request->isAjax()) {
+        if ($request->isAjax()) {
             $view = new \View\JsonView($result);
         } else {
             $view = new \View\HtmlView($result);
@@ -113,5 +164,7 @@ class PropertyController extends BaseController
         $response = new \Response($view);
         return $response;
     }
+    
+
 
 }
