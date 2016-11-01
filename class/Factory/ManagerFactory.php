@@ -20,12 +20,22 @@ use properties\Exception\PrivilegeMissing;
  */
 class ManagerFactory extends BaseFactory
 {
-    protected function build()
+
+    public function __construct()
+    {
+        parent::__construct('manager');
+    }
+
+    /**
+     * 
+     * @return properties\Resource\Manager
+     */
+    public function build()
     {
         return new Resource;
     }
 
-    public function listing($role, $limit = 100, $search = null)
+    public function listing($limit = 100, $search = null)
     {
         $db = Database::getDB();
         $tbl = $db->addTable('prop_contacts');
@@ -67,7 +77,7 @@ class ManagerFactory extends BaseFactory
             $conditional = $db->createConditional($sf1, $sf2, 'or');
             $db->addConditional($conditional);
         }
-        if (!$role->isAdmin()) {
+        if (!$this->role->isAdmin()) {
             $tbl->addFieldConditional('active', 1);
         }
         $db->setGroupBy($tbl->getField('id'));
@@ -75,13 +85,13 @@ class ManagerFactory extends BaseFactory
         if (empty($result)) {
             return array();
         }
-        
-        
-        if ($role->isUser() || $role->isLogged()) {
+
+
+        if ($this->role->isUser() || $this->role->isLogged()) {
             $hide = array('private', 'username', 'first_name', 'last_name', 'last_log', 'active', 'approved');
         }
         $hide[] = 'password';
-        
+
         $resourceArray = \phpws2\ResourceFactory::makeResourceStringArray($result,
                         '\properties\Resource\Manager', $hide);
         $final = array_map(function($row) {
@@ -94,7 +104,7 @@ class ManagerFactory extends BaseFactory
     /**
      * 
      * @param integer $id
-     * @return properties\Resource\Manager
+     * @return \properties\Resource\Manager
      */
     public function load($id)
     {
@@ -196,11 +206,15 @@ class ManagerFactory extends BaseFactory
                 return $json;
             }
 
-            $r->company_address = $request->pullPostString('company_address',
+            $company_address = $request->pullPostString('company_address', true);
+            $r->company_address = $company_address === false ? null : $company_address;
+
+            $company_url = $request->pullPostString('company_url', true);
+            $r->company_url = $company_url === false ? null : $company_url;
+            
+            $times_available = $request->pullPostString('times_available',
                     true);
-            $r->company_url = $request->pullPostString('company_url', true);
-            $r->times_available = $request->pullPostString('times_available',
-                    true);
+            $r->times_available = $times_available === false ? null : $times_available;
 
             $this->saveResource($r);
             $json = array('status' => 'success');
@@ -353,7 +367,7 @@ class ManagerFactory extends BaseFactory
         static $allowed_params = array('username', 'passwddord', 'first_name',
             'last_name', 'phone', 'email_address', 'company_name', 'company_address',
             'company_url', 'times_available', 'active', 'approved');
-        
+
         if (!in_array($param, $allowed_params)) {
             throw new \Exception('Parameter may not be patched');
         }
@@ -362,5 +376,5 @@ class ManagerFactory extends BaseFactory
         $this->saveResource($manager);
         return true;
     }
-    
+
 }
