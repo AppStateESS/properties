@@ -9,6 +9,7 @@
 namespace properties\Controller;
 
 use properties\Factory\ManagerFactory as Factory;
+use properties\Factory\NavBar;
 
 /**
  * Description of Manager
@@ -18,21 +19,19 @@ use properties\Factory\ManagerFactory as Factory;
 class ManagerController extends BaseController
 {
 
-    private $factory;
+    protected $factory;
 
     public function __construct($module)
     {
         parent::__construct($module);
-        $this->factory = new Factory;
+        $this->factory = new Factory();
     }
 
     public function getHtmlView($data, \Request $request)
     {
-        $this->role->setController('manager');
-
         $command = $this->checkCommand($request, 'list');
 
-        if (is_numeric($command) && $this->role->allow('view')) {
+        if (is_numeric($command) && $this->factory->role->allow('view')) {
             $managerId = (int) $command;
             $command = 'view';
         } else {
@@ -42,7 +41,7 @@ class ManagerController extends BaseController
         \Layout::addStyle('properties');
         switch ($command) {
             case 'list':
-                $content = $this->reactView('manager');
+                $content = $this->listing();
                 break;
 
             case 'view':
@@ -56,9 +55,13 @@ class ManagerController extends BaseController
         return $view;
     }
 
+    private function listing()
+    {
+        return $this->reactView('manager');
+    }
+
     public function getJsonView($data, \Request $request)
     {
-        $this->role->setController('manager');
         $command = $this->checkCommand($request, 'list');
 
         if (is_numeric($command)) {
@@ -71,10 +74,9 @@ class ManagerController extends BaseController
         switch ($command) {
             case 'list':
                 $json = array();
-                $json['addManager'] = $this->role->allow('post');
-                $json['managerList'] = $this->factory->listing($this->role,
-                        $request->pullGetVarIfSet('limit', true),
-                        $request->pullGetString('search', true));
+                $json['addManager'] = $this->factory->role->allow('post');
+                $json['managerList'] = $this->factory->listing($request->pullGetVarIfSet('limit',
+                                true), $request->pullGetString('search', true));
                 return new \View\JsonView($json);
                 break;
 
@@ -104,8 +106,7 @@ class ManagerController extends BaseController
 
     public function delete(\Request $request)
     {
-        $this->role->setController('manager');
-        if (!$this->role->allow()) {
+        if (!$this->factory->role->allow()) {
             throw new \properties\Exception\PrivilegeMissing;
         }
         $id = $request->pullGetInteger('managerId');
@@ -120,8 +121,7 @@ class ManagerController extends BaseController
 
     public function post(\Request $request)
     {
-        $this->role->setController('manager');
-        if (!$this->role->allow()) {
+        if (!$this->factory->role->allow()) {
             throw new \properties\Exception\PrivilegeMissing;
         }
         $json = $this->factory->post($request);
@@ -132,8 +132,7 @@ class ManagerController extends BaseController
 
     public function patch(\Request $request)
     {
-        $this->role->setController('manager');
-        if (!$this->role->allow()) {
+        if (!$this->factory->role->allow()) {
             throw new \properties\Exception\PrivilegeMissing;
         }
         $param = $request->pullPatchString('param');
