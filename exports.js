@@ -5,5 +5,7 @@ exports.entry = {
   manager: exports.APP_DIR + '/Manager/index.jsx',
   property: exports.APP_DIR + '/Property/index.jsx',
   propertyform: exports.APP_DIR + '/PropertyForm/index.jsx',
+  propertyimage: exports.APP_DIR + '/PropertyImage/index.jsx',
+  photo: exports.APP_DIR + '/Photo/index.jsx',
   vendor: ['react', 'react-dom']
 }
