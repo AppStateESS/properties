@@ -6,6 +6,7 @@ import Rooms from './Rooms.jsx'
 import InputField from '../Mixin/InputField.jsx'
 import ButtonGroup from '../Mixin/ButtonGroup.jsx'
 import BooleanButton from '../Mixin/BooleanButton.jsx'
+import Dollarize from '../Mixin/Dollarize.jsx'
 import Range from '../Mixin/Range.js'
 import moment from 'moment'
 
@@ -27,14 +28,18 @@ export default class Basic extends React.Component {
     return date
   }
 
+  dollarize(input) {
+    return <Dollarize>{input}</Dollarize>
+  }
+
   getLeaseType() {
     return [
       {
-        value: 0,
+        value: '0',
         label: <span>
             <i className="fa fa-user"></i>&nbsp; Per unit</span>
       }, {
-        value: 1,
+        value: '1',
         label: <span>
             <i className="fa fa-users"></i>&nbsp; Per tenant</span>
       }
@@ -65,13 +70,13 @@ export default class Basic extends React.Component {
   studentType() {
     let types = [
       {
-        value: 0,
+        value: '0',
         label: 'No preference'
       }, {
-        value: 1,
+        value: '1',
         label: 'Undergraduate'
       }, {
-        value: 2,
+        value: '2',
         label: 'Graduate'
       }
     ]
@@ -81,16 +86,16 @@ export default class Basic extends React.Component {
   campusDistance() {
     return [
       {
-        value: 0,
+        value: '0',
         label: '0 to 5'
       }, {
-        value: 5,
+        value: '5',
         label: '5 to 10'
       }, {
-        value: 10,
+        value: '10',
         label: '10 to 25'
       }, {
-        value: 25,
+        value: '25',
         label: 'More than 25'
       }
     ]
@@ -142,17 +147,17 @@ export default class Basic extends React.Component {
         </div>
         <div className="row">
           <div className="col-sm-5">
-            <InputField
-              name="monthly_rent"
-              type="type"
-              label="Monthly rent"
-              wrap={this.dollarize}
-              errorMessage={this.props.errors.monthly_rent
-              ? 'Rent amount may not be empty'
-              : null}
-              value={property.monthly_rent}
-              change={this.updateRent}
-              required={true}/>
+              <InputField
+                name="monthly_rent"
+                type="type"
+                label="Monthly rent"
+                wrap={this.dollarize}
+                errorMessage={this.props.errors.monthly_rent
+                ? 'Rent amount may not be empty'
+                : null}
+                value={property.monthly_rent}
+                change={this.updateRent}
+                required={true}/>
           </div>
           <div className="col-sm-7">
             <div style={{
@@ -236,7 +241,7 @@ export default class Basic extends React.Component {
               activeColor="success"/>
           </div>
           <div className="col-sm-6">
-            <label>Miles from campus</label><br />
+            <label>Miles from campus</label><br/>
             <ButtonGroup
               name="campus_distance"
               buttons={this.campusDistance()}
@@ -248,7 +253,7 @@ export default class Basic extends React.Component {
         <div className="row">
           <div className="col-sm-12">
             <label>Student preference</label>
-            <br />
+            <br/>
             <ButtonGroup
               name="student_type"
               buttons={this.studentType()}
