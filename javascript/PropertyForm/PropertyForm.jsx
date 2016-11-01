@@ -1,10 +1,8 @@
 'use strict'
 import React from 'react'
 import bindMethods from '../Mixin/Bind.js'
+import empty from '../Mixin/Empty.js'
 
-import DecodeUrl from '../Mixin/DecodeUrl.js'
-import PropertyObject from '../Mixin/PropertyObject.js'
-import ErrorPage from '../Mixin/ErrorPage.jsx'
 import Dollarize from '../Mixin/Dollarize.jsx'
 import Message from '../Mixin/Message.jsx'
 import Nav from '../Mixin/Nav.jsx'
@@ -16,29 +14,28 @@ import Utilities from './Utilities.jsx'
 
 import 'react-date-picker/index.css'
 
-/* global $ */
+/* global $, property */
 
 export default class PropertyForm extends React.Component {
   constructor() {
     super()
-    const url = new DecodeUrl
-    this.managerId = url.values['managerId']
+
     this.state = {
       message: null,
-      property: PropertyObject,
-      manager: {},
-      petForm: PropertyObject.pets_allowed,
+      property: property,
       errors: {},
-      activeTab: 0
+      activeTab: 0,
+      saving: false
     }
-    const methods = ['half', 'setValue', 'setTab', 'setIntegerValue', 'checkForm', 'unsetMessage']
+    const methods = [
+      'half',
+      'setValue',
+      'setTab',
+      'setIntegerValue',
+      'checkForm',
+      'unsetMessage'
+    ]
     bindMethods(methods, this)
-  }
-
-  componentDidMount() {
-    $.getJSON('./properties/Manager/' + this.managerId, {}).done(function (data) {
-      this.setState({manager: data})
-    }.bind(this))
   }
 
   setValue(varname, value) {
@@ -51,6 +48,9 @@ export default class PropertyForm extends React.Component {
   }
 
   setIntegerValue(varname, value) {
+    if (typeof value === 'object' && value.target !== undefined) {
+      value = value.target.value
+    }
     this.setValue(varname, parseInt(value))
   }
 
@@ -122,16 +122,23 @@ export default class PropertyForm extends React.Component {
       this.setState({errors: errors, activeTab: 0})
       this.scrollUp()
     } else {
-      let property = this.readyPost()
-      $.post('./properties/Property', property, null, 'json').done(function (data) {
-        if (data.error !== undefined) {
-          this.setMessage(data.error, 'danger')
-        }
-      }.bind(this)).fail(function (data) {
-        this.setMessage(data.responseText, 'danger')
-      })
+      this.save()
     }
-    //this.refs.PropertyForm.submit()
+  }
+
+  save() {
+    let property = this.readyPost()
+    this.setState({saving: true})
+    $.post('./properties/Property', property, null, 'json').done(function (data) {
+      if (data.error !== undefined) {
+        this.setMessage(data.error, 'danger')
+      } else {
+        window.location.href = './properties/Property/' + property.id
+      }
+    }.bind(this)).fail(function (data) {
+      this.setMessage(data.responseText, 'danger')
+    }.bind(this))
+
   }
 
   scrollUp() {
@@ -147,13 +154,10 @@ export default class PropertyForm extends React.Component {
   }
 
   basicComplete() {
-    return (this.state.property.name.length > 0 && this.state.property.address.length > 0 && this.state.property.monthly_rent.length > 0)
+    return (!empty(this.state.property.name) && !empty(this.state.property.address) && !empty(this.state.property.monthly_rent))
   }
 
   render() {
-    if (this.managerId === undefined || this.managerId === 0) {
-      return <ErrorPage message="I can't go for that"/>
-    }
     const property = this.state.property
 
     let section
@@ -178,10 +182,7 @@ export default class PropertyForm extends React.Component {
         break
 
       case 3:
-        section = <Pets
-          property={this.state.property}
-          setValue={this.setValue}
-          show={this.state.petForm}/>
+        section = <Pets property={this.state.property} setValue={this.setValue}/>
         break
 
       case 4:
@@ -190,7 +191,10 @@ export default class PropertyForm extends React.Component {
     }
     let message
     if (this.state.message !== null) {
-      message = <Message message={this.state.message.text} type={this.state.message.type} onClose={this.unsetMessage} />
+      message = <Message
+        message={this.state.message.text}
+        type={this.state.message.type}
+        onClose={this.unsetMessage}/>
     }
     return (
       <div ref="PageTop">
@@ -200,7 +204,7 @@ export default class PropertyForm extends React.Component {
           className="property-form"
           method="post"
           action="./properties/Property">
-          <h2>Property for {this.state.manager.company_name}</h2>
+          <h2>Property for {this.state.property.company_name}</h2>
           <Nav
             buttons={this.navButtons()}
             active={this.state.activeTab}
@@ -208,7 +212,7 @@ export default class PropertyForm extends React.Component {
             ? null
             : [1, 2, 3, 4]}
             click={this.setTab}/> {section}
-          <SubmitForm check={this.checkForm}/>
+          <SubmitForm check={this.checkForm} saving={this.state.saving}/>
         </form>
       </div>
     )
@@ -218,15 +222,25 @@ PropertyForm.propTypes = {
   address: React.PropTypes.string
 }
 
-const SubmitForm = ({check}) => {
-  return (
-    <div className="submit-form">
-      <button type="submit" className="btn btn-primary btn-lg" onClick={check}>
-        <i className="fa fa-save"></i>&nbsp;Save property</button>
-    </div>
-  )
+const SubmitForm = ({check, saving}) => {
+  if (saving) {
+    return (
+      <div className="submit-form">
+        <button type="button" className="btn btn-primary btn-lg">
+          <i className="fa fa-cog fa-spin fa-lg"></i>&nbsp;Saving...</button>
+      </div>
+    )
+  } else {
+    return (
+      <div className="submit-form">
+        <button type="button" className="btn btn-primary btn-lg" onClick={check}>
+          <i className="fa fa-save"></i>&nbsp;Save property</button>
+      </div>
+    )
+  }
 }
 
 SubmitForm.propTypes = {
-  check: React.PropTypes.func
+  check: React.PropTypes.func,
+  saving: React.PropTypes.bool
 }
