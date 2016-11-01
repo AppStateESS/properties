@@ -1,18 +1,19 @@
 'use strict'
 import React from 'react'
 import DecodeUrl from '../Mixin/DecodeUrl.js'
-import PropertyRow from './PropertyRow.jsx'
 import Waiting from '../Mixin/Waiting.jsx'
+import PropertyListing from './PropertyListing.jsx'
 
 /* global $ */
 
-class Property extends React.Component {
+export default class Property extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       properties: null,
       manager: null
     }
+    this.search = ''
     this.managerId = 0
     this.bindMethods()
   }
@@ -36,8 +37,14 @@ class Property extends React.Component {
   }
 
   load() {
-    $.getJSON('./properties/Property', {managerId: this.managerId}).done(function (data) {
+    $.getJSON('./properties/Property', {
+      managerId: this.managerId,
+      search: this.search
+    }).done(function (data) {
       this.setState({properties: data.properties, manager: data.manager})
+    }.bind(this)).fail(function () {
+      this.setState({managers: null, loading: false})
+      this.setMessage('Error: failure pulling properties')
     }.bind(this))
   }
 
@@ -55,29 +62,3 @@ class Property extends React.Component {
     )
   }
 }
-
-class PropertyListing extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-  render() {
-    const list = this.props.list
-
-    if (list === null) {
-      return <Waiting label="properties"/>
-    } else if (list.length === 0) {
-      return <div className="lead">No properties found.</div>
-    } else {
-      return this.state.properties.map(function (value, key) {
-        return <PropertyRow {...value} key={key}/>
-      })
-    }
-  }
-}
-
-PropertyListing.propTypes = {
-  list : React.PropTypes.array
-}
-
-export default Property
