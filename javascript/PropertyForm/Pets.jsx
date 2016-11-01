@@ -81,6 +81,5 @@ export default class Pets extends React.Component {
 
 Pets.propTypes = {
   property: React.PropTypes.object,
-  setValue: React.PropTypes.func,
-  show: React.PropTypes.bool
+  setValue: React.PropTypes.func
 }
