@@ -1,4 +1,4 @@
-let PropertyObject = {
+const PropertyObject = {
   address: '',
   active: false,
   admin_fee_amt: 0,
@@ -12,14 +12,14 @@ let PropertyObject = {
   clean_fee_refund: false,
   clubhouse: false,
   contact_id: 0,
-  contract_length: 0,
+  contract_length: 3,
   created: 0,
   description: '',
   dishwasher: false,
   efficiency: false,
   furnished: false,
   heat_type: [],
-  internet_type: 0,
+  internet_type: 1,
   lease_type: 0,
   laundry_type: 0,
   monthly_rent: '',
