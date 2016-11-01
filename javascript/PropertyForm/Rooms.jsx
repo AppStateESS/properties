@@ -19,22 +19,18 @@ export default class Rooms extends React.Component {
 
   updateBedroom(bedrooms) {
     if (typeof bedrooms === 'object') {
-      bedrooms = Number(bedrooms.target.value)
-    } else {
-      bedrooms = Number(bedrooms)
+      bedrooms = bedrooms.target.value
     }
-    if (bedrooms >= 1 && bedrooms <= 6) {
+    if (bedrooms >= '1' && bedrooms <= '6') {
       this.props.setValue('bedroom_no', bedrooms)
     }
   }
 
   updateBathroom(bathrooms) {
     if (typeof bathrooms === 'object') {
-      bathrooms = Number(bathrooms.target.value)
-    } else {
-      bathrooms = Number(bathrooms)
+      bathrooms = bathrooms.target.value
     }
-    if (bathrooms >= 1 && bathrooms <= 7) {
+    if (bathrooms >= '1' && bathrooms <= '7') {
       this.props.setValue('bathroom_no', bathrooms)
     }
   }
