@@ -35,24 +35,15 @@ abstract class BaseController extends \phpws2\Http\Controller
      * @var array
      */
     protected $userPermissions;
-    protected $role;
+    protected $factory;
 
-    protected function loadRole($controller, $method)
-    {
-        if (\Current_User::allow('properties')) {
-            $this->role = new \properties\Role\AdminRole($controller, $method);
-        } elseif ((bool) isset($_SESSION['Contact_Manager']) && $_SESSION['Contact_Manager']->id) {
-            $this->role = new \properties\Role\ManagerRole($controller, $method);
-        } elseif (\Current_User::isLogged()) {
-            $this->role = new \properties\Role\LoggedRole($controller, $method);
-        } else {
-            $this->role = new \properties\Role\UserRole($controller, $method);
-        }
-    }
+    /**
+     * @var \properties\Resource\Property
+     */
+    protected $resource;
 
     public function get(\Request $request)
     {
-        $this->loadRole(null, 'GET');
         try {
             $data = array();
             $view = $this->getView($data, $request);
@@ -62,13 +53,12 @@ abstract class BaseController extends \phpws2\Http\Controller
         $response = new \Response($view);
         return $response;
     }
-    
-    public function execute(\Request $request)
-    {
-        $this->loadRole(null, $request->getMethod());
-        return parent::execute($request);
-    }
 
+    /**
+     * 
+     * @param \Exception $e
+     * @return \phpws2\View\HtmlView
+     */
     protected function errorPage(\Exception $e)
     {
         $content = $e->getMessage();
@@ -78,7 +68,7 @@ abstract class BaseController extends \phpws2\Http\Controller
         return $view;
     }
 
-    protected function checkCommand($request, $defaultCommand = null)
+    protected function checkCommand(\Request $request, $defaultCommand = 'list')
     {
         $command = $request->shiftCommand();
         if (empty($command)) {
@@ -88,18 +78,34 @@ abstract class BaseController extends \phpws2\Http\Controller
         if (!empty($command)) {
             // this a view of a specific item
             if (is_numeric($command)) {
-                if (!$this->role->allow('view')) {
-                    throw new \properties\Exception\PrivilegeMissing;
+                $subcommand = $this->defaultNumericCommand($request);
+                $this->resource = $this->factory->load($command);
+
+                if (!$this->factory->role->allow($subcommand)) {
+                    throw new \properties\Exception\BadCommand;
                 } else {
-                    return $command;
+                    return $subcommand;
                 }
-            } else {
-                if (!$this->role->allow($command)) {
-                    throw new \properties\Exception\PrivilegeMissing;
-                }
+            } elseif (!$this->factory->role->allow($command)) {
+                throw new \properties\Exception\PrivilegeMissing;
             }
+            return $command;
         }
-        return $command;
+    }
+
+    private function defaultNumericCommand(\Request $request)
+    {
+        // If numeric, post fails automatically because you don't
+        // POST with a specific id
+        if ($request->isPost()) {
+            throw new \properties\Exception\BadCommand();
+        } elseif ($request->isGet()) {
+            // Get will return the default view on an empty command
+            $command = $request->shiftCommand();
+            return empty($command) ? 'view' : $command;
+        } else {
+            return strtolower($request->getMethod());
+        }
     }
 
     protected function getScript($filename)
@@ -116,7 +122,11 @@ abstract class BaseController extends \phpws2\Http\Controller
 
     protected function reactView($view_name)
     {
-        $script[] = $this->getScript('vendor');
+        static $vendor_included = false;
+        if (!$vendor_included) {
+            $script[] = $this->getScript('vendor');
+            $vendor_included = true;
+        }
         $script[] = $this->getScript($view_name);
         $react = implode("\n", $script);
         $content = <<<EOF
