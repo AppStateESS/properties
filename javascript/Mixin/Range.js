@@ -4,7 +4,7 @@ export default function Range(current, deci = false) {
     ? 1.5
     : 1
   for (let i = start; i < 7; i++) {
-    range.push({value: i, label: i})
+    range.push({value: i.toString(), label: i.toString()})
   }
   return range
 }
