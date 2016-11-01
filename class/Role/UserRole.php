@@ -22,7 +22,7 @@ class UserRole extends BaseRole
 {
     public function __construct($controller, $method = null)
     {
-        $this->getCommands = array('manager'=>array('view', 'list'));
+        $this->getCommands = array('manager'=>array('view', 'list'), 'property'=>array('view', 'list'), 'photo'=>array('view'));
         parent::__construct($controller, $method);
     }
     
