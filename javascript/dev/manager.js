@@ -127,9 +127,9 @@ webpackJsonp([0],{
 	    value: function load() {
 	      $.getJSON('properties/Manager', { search: this.search }).done(function (data) {
 	        this.addManager = data.addManager;
-	        this.setState({ managers: data['managerList'], loading: false });
+	        this.setState({ managers: data['managerList'] });
 	      }.bind(this)).fail(function () {
-	        this.setState({ managers: null, loading: false });
+	        this.setState({ managers: null });
 	        this.setMessage('Error: failure pulling managers');
 	      }.bind(this));
 	    }
@@ -602,6 +602,8 @@ webpackJsonp([0],{
 	    value: function render() {
 	      if (this.props.url.length > 0) {
 	        return _react2.default.createElement(LinkToButton, { url: this.props.url, label: this.props.url, icon: 'fa-link' });
+	      } else {
+	        return null;
 	      }
 	    }
 	  }]);

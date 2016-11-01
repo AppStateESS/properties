@@ -1,4 +1,4 @@
-webpackJsonp([1],{
+webpackJsonp([2],{
 
 /***/ 0:
 /*!***************************************!*\
@@ -16,7 +16,7 @@ webpackJsonp([1],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _Property = __webpack_require__(/*! ./Property.jsx */ 182);
+	var _Property = __webpack_require__(/*! ./Property.jsx */ 187);
 	
 	var _Property2 = _interopRequireDefault(_Property);
 	
@@ -90,7 +90,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 182:
+/***/ 187:
 /*!******************************************!*\
   !*** ./javascript/Property/Property.jsx ***!
   \******************************************/
@@ -102,25 +102,23 @@ webpackJsonp([1],{
 	  value: true
 	});
 	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(/*! react */ 1);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _DecodeUrl = __webpack_require__(/*! ../Mixin/DecodeUrl.js */ 183);
+	var _DecodeUrl = __webpack_require__(/*! ../Mixin/DecodeUrl.js */ 188);
 	
 	var _DecodeUrl2 = _interopRequireDefault(_DecodeUrl);
-	
-	var _PropertyRow = __webpack_require__(/*! ./PropertyRow.jsx */ 184);
-	
-	var _PropertyRow2 = _interopRequireDefault(_PropertyRow);
 	
 	var _Waiting = __webpack_require__(/*! ../Mixin/Waiting.jsx */ 181);
 	
 	var _Waiting2 = _interopRequireDefault(_Waiting);
+	
+	var _PropertyListing = __webpack_require__(/*! ./PropertyListing.jsx */ 189);
+	
+	var _PropertyListing2 = _interopRequireDefault(_PropertyListing);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -144,6 +142,7 @@ webpackJsonp([1],{
 	      properties: null,
 	      manager: null
 	    };
+	    _this.search = '';
 	    _this.managerId = 0;
 	    _this.bindMethods();
 	    return _this;
@@ -173,8 +172,14 @@ webpackJsonp([1],{
 	  }, {
 	    key: 'load',
 	    value: function load() {
-	      $.getJSON('./properties/Property', { managerId: this.managerId }).done(function (data) {
+	      $.getJSON('./properties/Property', {
+	        managerId: this.managerId,
+	        search: this.search
+	      }).done(function (data) {
 	        this.setState({ properties: data.properties, manager: data.manager });
+	      }.bind(this)).fail(function () {
+	        this.setState({ managers: null, loading: false });
+	        this.setMessage('Error: failure pulling properties');
 	      }.bind(this));
 	    }
 	  }, {
@@ -197,7 +202,7 @@ webpackJsonp([1],{
 	        _react2.default.createElement(
 	          'div',
 	          null,
-	          _react2.default.createElement(PropertyListing, { list: this.state.properties })
+	          _react2.default.createElement(_PropertyListing2.default, { list: this.state.properties })
 	        )
 	      );
 	    }
@@ -206,48 +211,11 @@ webpackJsonp([1],{
 	  return Property;
 	}(_react2.default.Component);
 	
-	var PropertyListing = function (_React$Component2) {
-	  _inherits(PropertyListing, _React$Component2);
-	
-	  function PropertyListing(props) {
-	    _classCallCheck(this, PropertyListing);
-	
-	    return _possibleConstructorReturn(this, (PropertyListing.__proto__ || Object.getPrototypeOf(PropertyListing)).call(this, props));
-	  }
-	
-	  _createClass(PropertyListing, [{
-	    key: 'render',
-	    value: function render() {
-	      var list = this.props.list;
-	
-	      if (list === null) {
-	        return _react2.default.createElement(_Waiting2.default, { label: 'properties' });
-	      } else if (list.length === 0) {
-	        return _react2.default.createElement(
-	          'div',
-	          { className: 'lead' },
-	          'No properties found.'
-	        );
-	      } else {
-	        return this.state.properties.map(function (value, key) {
-	          return _react2.default.createElement(_PropertyRow2.default, _extends({}, value, { key: key }));
-	        });
-	      }
-	    }
-	  }]);
-	
-	  return PropertyListing;
-	}(_react2.default.Component);
-	
-	PropertyListing.propTypes = {
-	  list: _react2.default.PropTypes.array
-	};
-	
 	exports.default = Property;
 
 /***/ },
 
-/***/ 183:
+/***/ 188:
 /*!***************************************!*\
   !*** ./javascript/Mixin/DecodeUrl.js ***!
   \***************************************/
@@ -296,7 +264,88 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 184:
+/***/ 189:
+/*!*************************************************!*\
+  !*** ./javascript/Property/PropertyListing.jsx ***!
+  \*************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _PropertyRow = __webpack_require__(/*! ./PropertyRow.jsx */ 190);
+	
+	var _PropertyRow2 = _interopRequireDefault(_PropertyRow);
+	
+	var _Waiting = __webpack_require__(/*! ../Mixin/Waiting.jsx */ 181);
+	
+	var _Waiting2 = _interopRequireDefault(_Waiting);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var PropertyListing = function (_React$Component) {
+	  _inherits(PropertyListing, _React$Component);
+	
+	  function PropertyListing(props) {
+	    _classCallCheck(this, PropertyListing);
+	
+	    return _possibleConstructorReturn(this, (PropertyListing.__proto__ || Object.getPrototypeOf(PropertyListing)).call(this, props));
+	  }
+	
+	  _createClass(PropertyListing, [{
+	    key: 'render',
+	    value: function render() {
+	      var list = this.props.list;
+	      if (list === null) {
+	        return _react2.default.createElement(_Waiting2.default, { label: 'properties' });
+	      } else if (list.length === 0) {
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'lead' },
+	          'No properties found.'
+	        );
+	      } else {
+	        var rows = void 0;
+	        rows = list.map(function (value, key) {
+	          return _react2.default.createElement(_PropertyRow2.default, { property: value, key: key });
+	        }.bind(this));
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          rows
+	        );
+	      }
+	    }
+	  }]);
+	
+	  return PropertyListing;
+	}(_react2.default.Component);
+	
+	exports.default = PropertyListing;
+	
+	
+	PropertyListing.propTypes = {
+	  list: _react2.default.PropTypes.array
+	};
+
+/***/ },
+
+/***/ 190:
 /*!*********************************************!*\
   !*** ./javascript/Property/PropertyRow.jsx ***!
   \*********************************************/
@@ -314,6 +363,10 @@ webpackJsonp([1],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _Pluralize = __webpack_require__(/*! ../Mixin/Pluralize.js */ 191);
+	
+	var _Pluralize2 = _interopRequireDefault(_Pluralize);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -325,22 +378,89 @@ webpackJsonp([1],{
 	var PropertyRow = function (_React$Component) {
 	  _inherits(PropertyRow, _React$Component);
 	
-	  function PropertyRow() {
+	  function PropertyRow(props) {
 	    _classCallCheck(this, PropertyRow);
 	
-	    var _this = _possibleConstructorReturn(this, (PropertyRow.__proto__ || Object.getPrototypeOf(PropertyRow)).call(this));
-	
-	    _this.state = {};
-	    return _this;
+	    return _possibleConstructorReturn(this, (PropertyRow.__proto__ || Object.getPrototypeOf(PropertyRow)).call(this, props));
 	  }
 	
 	  _createClass(PropertyRow, [{
+	    key: 'getRent',
+	    value: function getRent() {
+	      var rent = '$' + this.props.property.monthly_rent;
+	      if (this.props.property.lease_type === '1') {
+	        return rent.concat(' per renter');
+	      } else {
+	        return rent;
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var property = this.props.property;
+	
+	      var link = './properties/Property/' + property.id;
+	      var company = property.company_name;
+	
 	      return _react2.default.createElement(
 	        'div',
-	        null,
-	        'hi!'
+	        { className: 'row panel panel-default' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-2' },
+	          'picture'
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-10' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'panel-body property-row' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'title' },
+	              property.name
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'row' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-sm-6' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'rent' },
+	                  this.getRent()
+	                ),
+	                _react2.default.createElement(
+	                  'div',
+	                  null,
+	                  property.bedroom_no,
+	                  '\xA0 ',
+	                  (0, _Pluralize2.default)('bed', property.bedroom_no),
+	                  '\xA0\u2022 \xA0',
+	                  property.bathroom_no,
+	                  '\xA0',
+	                  (0, _Pluralize2.default)('bath', property.bathroom_no)
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-sm-6' },
+	                company
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement(
+	                'a',
+	                { className: 'btn btn-default', href: link },
+	                'Read more'
+	              )
+	            )
+	          )
+	        )
 	      );
 	    }
 	  }]);
@@ -349,6 +469,27 @@ webpackJsonp([1],{
 	}(_react2.default.Component);
 	
 	exports.default = PropertyRow;
+	
+	
+	PropertyRow.propTypes;
+
+/***/ },
+
+/***/ 191:
+/*!***************************************!*\
+  !*** ./javascript/Mixin/Pluralize.js ***!
+  \***************************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = pluralize;
+	function pluralize(text, number) {
+	  return number > 1 ? text + 's' : text;
+	}
 
 /***/ }
 
