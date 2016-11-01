@@ -188,6 +188,8 @@ class Website extends React.Component {
   render() {
     if (this.props.url.length > 0) {
       return (<LinkToButton url={this.props.url} label={this.props.url} icon="fa-link"/>)
+    } else {
+      return null
     }
   }
 }

@@ -61,9 +61,9 @@ class Manager extends React.Component {
   load() {
     $.getJSON('properties/Manager', {search: this.search}).done(function (data) {
       this.addManager = data.addManager
-      this.setState({managers: data['managerList'], loading: false})
+      this.setState({managers: data['managerList']})
     }.bind(this)).fail(function () {
-      this.setState({managers: null, loading: false})
+      this.setState({managers: null})
       this.setMessage('Error: failure pulling managers')
     }.bind(this))
   }
