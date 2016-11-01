@@ -152,7 +152,7 @@ export default class Utilities extends React.Component {
         </div>
         <div className="row">
           <div className="col-sm-12">
-            <label>Internet</label>
+            <label>Internet</label><br />
             <ButtonGroup
               name="internet_type"
               buttons={this.internetTypes()}
@@ -185,7 +185,7 @@ export default class Utilities extends React.Component {
         </div>
         <div className="row bg-info">
           <div className="col-sm-12">
-            <label>Television</label>
+            <label>Television</label><br />
             <ButtonGroup
               name="tv_type"
               buttons={this.televisionTypes()}
