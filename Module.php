@@ -12,6 +12,7 @@
 namespace properties;
 
 require_once PHPWS_SOURCE_DIR . 'src/Module.php';
+require_once PHPWS_SOURCE_DIR . 'mod/properties/conf/system_defines.php';
 require_once PHPWS_SOURCE_DIR . 'mod/properties/conf/defines.php';
 
 class Module extends \Module
