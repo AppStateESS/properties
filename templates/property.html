@@ -1,0 +1,163 @@
+<div>
+    <h2><?php echo $name ?></h2>
+    <div>
+        Description:
+        <?php echo $description ?>
+    </div>
+    <div class="">
+        address
+        <?php echo $address ?>
+    </div>
+
+    <div class="">
+        admin fee
+        <?php echo '$' . $admin_fee_amt ?>
+        <?php echo $admin_fee_refund ?>
+    </div>
+
+    <div class="">
+        <?php echo $furnished === '1' ? 'Furnished' : 'Unfurnished'?>
+    </div>
+
+    <?php if ($efficiency === '1'):?>
+    <div>
+        Efficiency
+    </div>
+    <?php endif; ?>
+
+    <?php if ($appalcart === '1'):?>
+    <div>
+        On appalcart route
+    </div>
+    <?php endif; ?>
+
+    <div>
+        Bedrooms:
+        <?php echo $bedroom_no ?>
+    </div>
+    <div>
+        Bathrooms:
+        <?php echo $bathroom_no ?>
+    </div>
+
+    <div>
+        Distance from campus:
+        <?php echo $campus_distance ?>
+    </div>
+
+    <div>
+        Contract length
+        <?php echo $contract_length ?>
+    </div>
+    <div>
+        Internet
+        <?php echo $internet_type ?>
+    </div>
+
+    <?php if ($clean_fee_amt > 0):?>
+    <div>Cleaning fee
+        <?php echo $clean_fee_amt?><br />
+        <?php echo $clean_fee_refund === '1' ? 'Refunded' : 'No refund'?>
+    </div>
+    <?php endif;?>
+
+    <?php if ($airconditioning === '1'):?>
+    <div>
+        Air Conditioning
+    </div>
+    <?php endif; ?>
+
+    <?php if ($dishwasher === '1'):?>
+    <div>
+        Dishwasher
+    </div>
+    <?php endif; ?>
+
+    <?php if ($clubhouse === '1'):?>
+    <div>
+        Clubhouse
+    </div>
+    <?php endif; ?>
+
+    <div>
+        Rent
+        <?php echo '$', $monthly_rent, ' ', $lease_type ?>
+    </div>
+
+    <div>
+        Laundry type
+        <?php echo $laundry_type?>
+    </div>
+
+    <div>
+        <?php echo $move_in_date ?>
+    </div>
+
+    <?php if (!empty($other_fees)): ?>
+    <div>
+        Other fees
+        <?php echo $other_fees ?>
+    </div>
+    <?php endif;?>
+
+    <?php if (!empty($parking_fee)): ?>
+    <div>
+        Parking fee
+        $<?php echo $parking_fee ?>
+    </div>
+    <?php endif;?>
+
+
+    <div>Parking per unit: <?php echo $parking_per_unit ?></div>
+
+    <?php if ($pets_allowed === '1'): ?>
+    <div>
+        <?php if ($pet_fee) {echo 'Fee: ' . $pet_fee;}?>
+        Deposit:
+        <?php echo $pet_deposit ?>
+        <?php echo $pet_dep_refund ?>
+        Allowed pet types:
+        <?php echo $pet_type ?>
+    </div>
+    <?php endif; ?>
+
+    <div>
+        Security fee: <?php echo $security_amt?>
+        <?php echo $security_refund ?>
+    </div>
+
+    <div>
+        Student type <?php echo $student_type ?>
+    </div>
+
+    <div>
+        <?php echo $sublease === '0' ? 'May not sublease' : '' ?>
+    </div>
+
+    <div>
+        Trash: <?php echo $trash_type ?>
+    </div>
+
+    <div>
+        <p>Utility help</p>
+        <p>Water: <?php echo $util_water ?></p>
+        <p>Trash: <?php echo $util_trash ?></p>
+        <p>Power: <?php echo $util_power ?></p>
+    </div>
+
+    <div>
+        Television type: <?php echo $tv_type ?>
+    </div>
+
+    <?php if ($utilities_inc):?>
+    <div>
+        Utilities included
+    </div>
+    <?php endif;?>
+
+    <?php if ($workout_room):?>
+    <div>
+        Workout room
+    </div>
+    <?php endif;?>
+</div>
