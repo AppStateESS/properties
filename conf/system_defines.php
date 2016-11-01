@@ -32,11 +32,8 @@ define('HT_WOODSTOVE', 6);
 define('HT_GAS', 7);
 
 
-define('PROPERTIES_MAX_WIDTH', 640);
-define('PROPERTIES_MAX_HEIGHT', 480);
-
-define('PROP_THUMBNAIL_WIDTH', 150);
-define('PROP_THUMBNAIL_HEIGHT', 113);
+define('PROP_THUMBNAIL_WIDTH', 200);
+define('PROP_THUMBNAIL_HEIGHT', 200);
 
 define('TV_NONE',      0);
 define('TV_CABLE',     1);
@@ -67,5 +64,5 @@ define('GRAD_STUDENT', 2);
 define('NONSMOKER', 1);
 define('SMOKER', 2);
 
-define('PROP_MAX_IMAGE_WIDTH', 1920);
-define('PROP_MAX_IMAGE_HEIGHT', 1080);
+define('PROP_MAX_IMAGE_WIDTH', 1600);
+define('PROP_MAX_IMAGE_HEIGHT', 1200);
