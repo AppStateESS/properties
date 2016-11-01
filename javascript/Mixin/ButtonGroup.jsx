@@ -14,10 +14,11 @@ class ButtonGroup extends React.Component {
       if (this.props.match !== null) {
         if (this.props.match.constructor === Array && this.props.match.indexOf(value.value) !== -1) {
           cn = classnames('btn', 'active', activeColor)
-        } else if (this.props.match === value.value) {
+        } else if (this.props.match == value.value) {
           cn = classnames('btn', 'active', activeColor)
         }
       }
+
       return (
         <button
           type="button"
