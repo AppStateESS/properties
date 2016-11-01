@@ -9,6 +9,8 @@
 namespace properties\Factory;
 
 use \properties\Resource\Property as Resource;
+use \properties\Factory\Photo as PhotoFactory;
+use \properties\Controller\Property as Controller;
 use \phpws2\Database;
 use \properties\Exception\MissingInput;
 
@@ -20,9 +22,35 @@ use \properties\Exception\MissingInput;
 class PropertyFactory extends BaseFactory
 {
 
-    protected function build()
+    public function __construct()
+    {
+        parent::__construct('property');
+    }
+
+    /**
+     * 
+     * @return \properties\Resource\Property
+     */
+    public function build()
     {
         return new Resource;
+    }
+
+    public function load($id)
+    {
+        $db = Database::getDB();
+        $tbl = $db->addTable('properties');
+        $tbl2 = $db->addTable('prop_contacts');
+        $tbl2->addField('company_name');
+        $tbl->addFieldConditional('id', $id);
+        $tbl->addFieldConditional('contact_id', $tbl2->getField('id'));
+        $row = $db->selectOneRow();
+        if (empty($row)) {
+            throw new \properties\Exception\ResourceNotFound;
+        }
+        $property = $this->build();
+        $property->setVars($row);
+        return $property;
     }
 
     public function delete($id)
@@ -34,41 +62,19 @@ class PropertyFactory extends BaseFactory
         $tbl = $db->addTable('properties');
         $tbl->addFieldConditional('id', $id);
         $db->delete();
-        $this->removePhotos($id);
+        $photo = new PhotoFactory;
+        $photo->removePhotos($id);
     }
 
-    public function removePhotos($id)
-    {
-        if (empty($id) || !is_numeric($id)) {
-            throw new \Exception('Property id invalid');
-        }
-        $photo_list = $this->getPhotos($id, true);
-        if (empty($photo_list)) {
-            return true;
-        }
 
-        $photoFactory = new PhotoFactory;
-        foreach ($photo_list as $photo) {
-            $photoFactory->delete($photo);
-        }
-    }
-
-    public function getPhotos($id, $as_resource = false)
-    {
-        if (empty($id) || !is_numeric($id)) {
-            throw new \Exception('Property id invalid');
-        }
-        $db = Database::getDB();
-        $img_tbl = $db->addTable('prop_photo');
-        $img_tbl->addFieldConditional('pid', $id);
-        $result = $db->selectAsResources('\properties\Resource\Photo');
-        return $result;
-    }
-
-    public function listing($manager_id = 0, $search = null, $limit = 100)
+    public function listing($manager_id = 0, $view = false, $search = null,
+            $limit = 100)
     {
         $db = Database::getDB();
         $tbl = $db->addTable('properties');
+        $tbl2 = $db->addTable('prop_contacts');
+        $tbl2->addField('company_name');
+
         if ((int) $limit <= 0) {
             $limit = 100;
         }
@@ -85,8 +91,17 @@ class PropertyFactory extends BaseFactory
         if ($manager_id) {
             $tbl->addFieldConditional('contact_id', $manager_id);
         }
-        $result = $db->select();
-        return $result;
+        $tbl->addFieldConditional('contact_id', $tbl2->getField('id'));
+        if ($view) {
+            $result = $db->selectAsResources('\properties\Resource\Property');
+            foreach ($result as $prop) {
+                $listing[] = $prop->view();
+            }
+            return $listing;
+        } else {
+            $result = $db->select();
+            return $result;
+        }
     }
 
     public function post(\Request $request)
@@ -94,11 +109,27 @@ class PropertyFactory extends BaseFactory
         $errors = array();
         $r = new Resource;
         try {
-            $r->loadPostByType($request, array('active', 'approved'));
-            return array('success'=>true);
+            $r->loadPostByType($request,
+                    array('active', 'approved', 'company_name', 'heat_type', 'created', 'updated'));
+            $r->heat_type = json_encode($request->pullPostVar('heat_type'));
+            $r->active = true;
+            $r->approved = true;
+            $r->created = time();
+            $r->updated = time();
+            self::saveResource($r);
+            return array('id' => $r->id);
         } catch (\Exception $e) {
             throw new \properties\Exception\PropertySaveFailure($e->getMessage());
         }
+    }
+
+    public function viewHtml($resource)
+    {
+        $data = $resource->view();
+        $tpl = new \phpws2\Template($data);
+        $tpl->setModuleTemplate('properties', 'property.html');
+
+        return $tpl->get();
     }
 
 }
