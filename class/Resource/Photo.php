@@ -18,7 +18,7 @@
 
 namespace properties\Resource;
 
-class Photo extends \phpws2\Resource
+class Photo extends Base
 {
     /**
      * Contact id
@@ -43,9 +43,9 @@ class Photo extends \phpws2\Resource
         parent::__construct();
         $this->cid = new \phpws2\Variable\Integer(0, 'cid');
         $this->width = new \phpws2\Variable\Integer(0, 'width');
-        $this->width->setRange(5, 1920);
+        $this->width->setRange(5, PROP_MAX_IMAGE_WIDTH);
         $this->height = new \phpws2\Variable\Integer(0, 'height');
-        $this->height->setRange(5, 1080);
+        $this->height->setRange(5, PROP_MAX_IMAGE_HEIGHT);
         $this->pid = new \phpws2\Variable\Integer(0, 'pid');
         $this->path = new \phpws2\Variable\File(null, 'path');
         $this->path->setLimit(255);
@@ -54,4 +54,5 @@ class Photo extends \phpws2\Resource
         $this->main_pic = new \phpws2\Variable\Bool(false, 'main_pic');
         
     }
+    
 }
