@@ -87,3 +87,15 @@ label, input {
     font-size : 1.2em;
     color: #337AB7;
 }
+
+.property-row .title, .property-row .rent {
+    font-size : 1.1em;
+    font-weight:bold;
+}
+
+.dropzone {
+    border-style: dashed;
+    border-radius: 6px;
+    height: 200px;
+}
+
