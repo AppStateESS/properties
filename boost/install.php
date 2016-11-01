@@ -31,6 +31,7 @@ function properties_install(&$content)
         $photo_index->add();
         
     } catch (\Exception $e) {
+        \phpws2\Error::log($e);
         $db->buildTable($manager->getTable())->drop(true);
         $db->buildTable($property->getTable())->drop(true);
         $db->buildTable($photo->getTable())->drop(true);
