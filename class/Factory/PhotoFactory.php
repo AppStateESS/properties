@@ -72,7 +72,7 @@ class PhotoFactory extends BaseFactory
     {
         return preg_replace('/\.(jpg|jpeg|gif|png)$/i', '_tn.\\1', $url);
     }
-    
+
     public function thumbs($property_id)
     {
         $rows = array();
@@ -87,14 +87,14 @@ class PhotoFactory extends BaseFactory
         }
         $tbl->addField('path');
         /*
-        while ($col = $db->selectColumn()) {
-            $rows[] = $this->thumbnailed($col);
-        }
+          while ($col = $db->selectColumn()) {
+          $rows[] = $this->thumbnailed($col);
+          }
          * 
          */
         while ($col = $db->selectColumn()) {
-            $rows[] = array('original'=> $col, 
-                'thumbnail'=> $this->thumbnailed($col));
+            $rows[] = array('original' => $col,
+                'thumbnail' => $this->thumbnailed($col));
         }
         return $rows;
     }
@@ -165,7 +165,8 @@ class PhotoFactory extends BaseFactory
 
     private function resize($file)
     {
-        return \phpws\PHPWS_File::scaleImage($file, $file, 1400, 1200);
+        return \phpws\PHPWS_File::scaleImage($file, $file, PROP_MAX_IMAGE_WIDTH,
+                        PROP_MAX_IMAGE_HEIGHT);
     }
 
     public function moveImage($pic, $contact_id)
@@ -191,7 +192,8 @@ class PhotoFactory extends BaseFactory
         if (!move_uploaded_file($pic['tmp_name'], $path)) {
             throw new properties\Exception\FileSaveFailure($path);
         }
-        \PHPWS_File::makeThumbnail($file_name, $dest, $dest, 200, 200);
+        \PHPWS_File::makeThumbnail($file_name, $dest, $dest,
+                PROP_THUMBNAIL_WIDTH, PROP_THUMBNAIL_HEIGHT);
         return $path;
     }
 
