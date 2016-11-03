@@ -170,28 +170,28 @@ class Property extends Base
     public function getContractLength()
     {
         switch ($this->contract_length->get()) {
-            case '1':
+            case C_MONTHLY:
                 return 'Monthly';
 
-            case '2':
+            case C_SIX_MONTH:
                 return 'Every six months';
 
-            case '3':
+            case C_YEARLY:
                 return 'Yearly (12 months)';
 
-            case '4':
+            case C_SUMMER:
                 return 'Summer only';
 
-            case '5':
+            case C_SEMESTER:
                 return 'Per semester';
 
-            case '6':
+            case C_TWO_SEMESTER:
                 return 'Two semesters, no summer';
 
-            case '7':
+            case C_TEN_MONTH:
                 return '10 months';
 
-            case '8':
+            case C_FIVE_MONTH:
                 return '5 months';
 
             default:
@@ -202,19 +202,19 @@ class Property extends Base
     public function getInternetType()
     {
         switch ($this->internet_type->get()) {
-            case '1':
+            case NET_DIALUP:
                 return 'Dial up only';
-            case '2':
+            case NET_DSL:
                 return 'DSL';
-            case '3':
+            case NET_WIRELESS:
                 return 'Wireless';
-            case '4':
+            case NET_SATELLITE:
                 return 'Satellite';
-            case '5':
+            case NET_CABLE:
                 return 'Cable';
-            case '6':
+            case NET_BOTH:
                 return 'DSL/Cable';
-            case '7':
+            case NET_FIBER:
                 return 'Fiber';
         }
     }
@@ -222,13 +222,13 @@ class Property extends Base
     public function getLaundryType()
     {
         switch ($this->laundry_type->get()) {
-            case '0':
+            case LAUNDRY_NONE:
                 return 'No laundry';
-            case '1':
+            case LAUNDRY_IN_UNIT:
                 return 'Washer/Dryer in unit';
-            case '2':
+            case LAUNDRY_ON_PREMISES:
                 return 'Laundry room on premises';
-            case '3':
+            case LAUNDRY_HOOKUP:
                 return 'Washer/Dryer hook ups in unit';
         }
         return false;
@@ -242,41 +242,41 @@ class Property extends Base
     public function getStudentType()
     {
         switch ($this->student_type->get()) {
-            case '0':
+            case NO_STUDENT_PREFERENCE:
                 return 'No preference';
 
-            case '1':
+            case UNDERGRAD:
                 return 'Undergraduate';
 
-            case '2':
+            case GRAD_STUDENT:
                 return 'Graduate';
         }
     }
 
     public function getTrashType()
     {
-        switch ($this->trash_type) {
-            case '0':
+        switch ($this->trash_type->get()) {
+            case TRASH_ON_YOUR_OWN:
                 return 'No pickup or bins';
-            case '1':
+            case TRASH_PICKUP:
                 return 'Curbside pickup';
-            case '2':
+            case TRASH_ON_PREMISES_NO_RECYCLE:
                 return 'Trash only, no recycling bins';
-            case '3':
+            case TRASH_ON_PREMISES_WITH_RECYCLE:
                 return 'Both bins on site';
         }
     }
 
     public function getTvType()
     {
-        switch ($this->tv_type) {
-            case '0':
+        switch ($this->tv_type->get()) {
+            case TV_NONE:
                 return 'Antenna';
-            case '1':
+            case TV_CABLE:
                 return 'Cable';
-            case '2':
+            case TV_SATELLITE:
                 return 'Satellite';
-            case '3':
+            case TV_FIBER:
                 return 'Fiber';
         }
     }
@@ -296,6 +296,7 @@ class Property extends Base
         $view['security_refund'] = $this->security_refund->get() ? 'Refundable' : 'Non-refundable';
         $view['student_type'] = $this->getStudentType();
         $view['tv_type'] = $this->getTvType();
+        $view['property_map_address'] = $this->googleMapUrl($this->address);
 
         return $view;
     }
