@@ -62,4 +62,12 @@ class Manager extends Base
         $this->property_count->setIsTableColumn(false);
     }
 
+    public function view()
+    {
+        $view = $this->getStringVars(null,
+                array('username', 'password', 'last_log', 'active', 'private', 'approved'));
+        $view['company_map_address'] = $this->googleMapUrl($this->company_address);
+        return $view;
+    }
+
 }
