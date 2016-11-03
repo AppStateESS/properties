@@ -43,7 +43,9 @@ class Module extends \Module
 
     public function afterRun(\Request $request, \Response $response)
     {
-        \properties\Factory\NavBar::view();
+        if ($request->isGet() && !$request->isAjax()) {
+            \properties\Factory\NavBar::view();
+        }
     }
     
     public function runTime(\Request $request)
