@@ -4,7 +4,7 @@ require('react-image-gallery/styles/css/image-gallery.css')
 import ImageGallery from 'react-image-gallery'
 import Waiting from '../Mixin/Waiting.jsx'
 
-/* global $, require, propertyId */
+/* global $, require, propertyId, loadPhotos */
 
 export default class Photo extends React.Component {
   constructor() {
@@ -13,7 +13,12 @@ export default class Photo extends React.Component {
       photos: null,
       thumbnail: true
     }
+    this.toggleScreen = this.toggleScreen.bind(this)
     this.load()
+  }
+
+  componentDidMount() {
+    loadPhotos.callback = this.load.bind(this)
   }
 
   load() {
@@ -28,6 +33,10 @@ export default class Photo extends React.Component {
     })
   }
 
+  imageRender() {
+    return null
+  }
+
   render() {
     let images
     if (this.state.photos === null) {
@@ -37,15 +46,13 @@ export default class Photo extends React.Component {
         ref={i => this._imageGallery = i}
         items={this.state.photos}
         onScreenChange={this.toggleScreen}
-        lazyLoad={false}
         infinite={true}
-        showBullets={true}
         showFullscreenButton={true}
         showPlayButton={true}
         showThumbnails={this.state.thumbnail}
         showIndex={true}
         showNav={true}
-        slideInterval={2000}
+        slideInterval={4000}
         slideOnThumbnailHover={true}/>)
     } else {
       images = <div>No photos for this property</div>
