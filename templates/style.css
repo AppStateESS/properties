@@ -99,3 +99,54 @@ label, input {
     height: 200px;
 }
 
+h2.property-title, h3.property-address {
+    margin : 0px 0px 5px 0px;
+}
+
+h3.property-address {
+    border-bottom : 1px solid black;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+}
+
+.contact-info.bg-primary {
+    padding: 4px 14px;
+    border: 2px solid #337AB7;
+    border-radius : 6px;
+    color : white;
+}
+
+.contact-info.bg-primary a {
+    color : white;
+    font-size : 16px;
+}
+
+.contact-info.bg-primary a:hover {
+    text-decoration: none;
+}
+
+.contact-info h4 {
+    font-size : 22px;
+    margin:0px 0px 5px 0px;
+}
+
+.room-rent {
+    font-size : 20px;
+    font-weight: bold;
+}
+
+.contact-link {
+    border : 2px solid #337AB7;
+    border-radius: 4px;
+    padding : 2px;
+}
+
+.contact-link:hover {
+    background-color : #6DB3F0;
+    border : 2px solid #6DB3F0;
+    cursor:pointer;
+}
+
+.contact-link a {
+    cursor:pointer;
+}
