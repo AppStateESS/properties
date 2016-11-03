@@ -21,18 +21,19 @@ use properties\Factory\NavBar;
  */
 class PropertyController extends BaseController
 {
+
     /**
      *
      * @var \properties\Factory\PropertyFactory
      */
     protected $factory;
-    
+
     /**
      *
      * @var \properties\Resource\Property
      */
     protected $resource;
-    
+
     public function __construct($module)
     {
         $this->factory = new Factory();
@@ -68,7 +69,7 @@ class PropertyController extends BaseController
             case 'edit':
                 $content = $this->editView();
                 break;
-            
+
             default:
                 throw new \properties\Exception\BadCommand;
         }
@@ -77,38 +78,66 @@ class PropertyController extends BaseController
         return $view;
     }
 
-    private function view() {
+    private function updateButton($property_id)
+    {
+        return <<<EOF
+<button class="btn btn-default btn-sm navbar-btn" onclick="window.location.href='./properties/Property/$property_id/edit'"><i class="fa fa-pencil"></i>&nbsp;Edit property</button>
+EOF;
+    }
+
+    private function deleteButton($property_id)
+    {
+        return <<<EOF
+<button class="btn btn-danger btn-sm navbar-btn" data-property-id="$property_id" title="Delete property" onClick="deleteProperty.callback()"><i class="fa fa-trash-o"></i>&nbsp;Delete property</button>
+EOF;
+    }
+
+    private function photoButton($property_id)
+    {
+        return <<<EOF
+<button class="btn btn-default btn-sm navbar-btn" data-property-id="$property_id" title="Update photos" onClick="editPhotos.callback()"><i class="fa fa-camera"></i>&nbsp;Edit photos</button>
+EOF;
+    }
+
+    private function view()
+    {
         $tpl = array();
         $tpl['property'] = $this->factory->viewHtml($this->resource);
         $tpl['id'] = $this->resource->id;
-        $tpl['update'] = $this->factory->role->allow('edit');
         $tpl['photo'] = $this->reactView('photo');
-        $tpl['photoupdate'] = $this->factory->role->allow('edit') ? $this->reactView('propertyimage') : null;
+        $tpl['photoupdate'] = null;
+        if ($this->factory->role->allow('edit')) {
+            Navbar::addButton($this->updateButton($this->resource->id));
+            Navbar::addButton($this->photoButton($this->resource->id));
+            $tpl['photoupdate'] = $this->reactView('propertyimage');
+        }
         $template = new \phpws2\Template($tpl);
         $template->setModuleTemplate('properties', 'property_view.html');
         return $template->get();
     }
-    
-    private function editView($managerId=null)
+
+    private function editView($managerId = null)
     {
         if ($this->resource->getId()) {
+            Navbar::addButton($this->deleteButton($this->resource->id));
             $property = json_encode($this->resource->getVariablesAsValue());
         } else {
             $this->resource->contact_id = $managerId;
             $managerFactory = new ManagerFactory;
             $manager = $managerFactory->load($this->resource->contact_id);
             $this->resource->company_name = $manager->company_name;
-            
-            $property = json_encode($this->resource->getVariablesAsValue(true, array('approved','active')));
+
+            $property = json_encode($this->resource->getVariablesAsValue(true,
+                            array('approved', 'active')));
         }
-        
+
         $content[] = <<<EOF
-<script type="text/javascript">const property = $property</script>
+<script type="text/javascript">const property = $property;let deleteProperty = () => {}</script>
 EOF;
         $content[] = $this->reactView('propertyform');
         return implode('', $content);
     }
-    
+
     public function getJsonView($data, \Request $request)
     {
         $command = $this->checkCommand($request, 'list');
@@ -133,7 +162,7 @@ EOF;
                     $json['manager'] = null;
                 }
                 break;
-                
+
             case 'view':
                 //$json['property'] = $this->factory->
                 break;
@@ -165,6 +194,20 @@ EOF;
         return $response;
     }
     
-
+    public function delete(\Request $request)
+    {
+        if (!$this->factory->role->allow()) {
+            throw new \properties\Exception\PrivilegeMissing;
+        }
+        $id = $request->shiftCommand();
+        $this->factory->delete($id);
+        if ($request->isAjax()) {
+            $view = new \View\JsonView(array('success'=>true));
+            $response = new \Response($view);
+            return $response;
+        } else {
+            \Server::forward('./properties/Property/');
+        }
+    }
 
 }
