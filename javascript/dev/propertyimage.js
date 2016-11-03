@@ -16,7 +16,7 @@ webpackJsonp([4],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _PropertyImage = __webpack_require__(/*! ./PropertyImage.jsx */ 387);
+	var _PropertyImage = __webpack_require__(/*! ./PropertyImage.jsx */ 389);
 	
 	var _PropertyImage2 = _interopRequireDefault(_PropertyImage);
 	
@@ -26,7 +26,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 193:
+/***/ 195:
 /*!**********************************!*\
   !*** ./javascript/Mixin/Bind.js ***!
   \**********************************/
@@ -49,7 +49,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 387:
+/***/ 389:
 /*!****************************************************!*\
   !*** ./javascript/PropertyImage/PropertyImage.jsx ***!
   \****************************************************/
@@ -67,11 +67,11 @@ webpackJsonp([4],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _ImageOverlay = __webpack_require__(/*! ./ImageOverlay.jsx */ 388);
+	var _ImageOverlay = __webpack_require__(/*! ./ImageOverlay.jsx */ 390);
 	
 	var _ImageOverlay2 = _interopRequireDefault(_ImageOverlay);
 	
-	var _Bind = __webpack_require__(/*! ../Mixin/Bind.js */ 193);
+	var _Bind = __webpack_require__(/*! ../Mixin/Bind.js */ 195);
 	
 	var _Bind2 = _interopRequireDefault(_Bind);
 	
@@ -83,7 +83,7 @@ webpackJsonp([4],{
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	/* global $, propertyId */
+	/* global $, propertyId, loadPhotos, editPhotos */
 	
 	var PropertyImage = function (_React$Component) {
 	  _inherits(PropertyImage, _React$Component);
@@ -104,6 +104,11 @@ webpackJsonp([4],{
 	  }
 	
 	  _createClass(PropertyImage, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      editPhotos.callback = this.overlayOn;
+	    }
+	  }, {
 	    key: 'addPhotos',
 	    value: function addPhotos(photos) {
 	      var status = this.state.status;
@@ -124,6 +129,7 @@ webpackJsonp([4],{
 	          success: function (data) {
 	            status[key] = data;
 	            this.setState({ status: status });
+	            loadPhotos.callback();
 	          }.bind(this)
 	        });
 	      }.bind(this));
@@ -152,16 +158,7 @@ webpackJsonp([4],{
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        overlay,
-	        _react2.default.createElement(
-	          'span',
-	          null,
-	          _react2.default.createElement(
-	            'button',
-	            { type: 'button', className: 'btn btn-default', onClick: this.overlayOn },
-	            'Update images'
-	          )
-	        )
+	        overlay
 	      );
 	    }
 	  }]);
@@ -176,7 +173,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 388:
+/***/ 390:
 /*!***************************************************!*\
   !*** ./javascript/PropertyImage/ImageOverlay.jsx ***!
   \***************************************************/
@@ -194,11 +191,11 @@ webpackJsonp([4],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Overlay = __webpack_require__(/*! ../Mixin/Overlay.jsx */ 389);
+	var _Overlay = __webpack_require__(/*! ../Mixin/Overlay.jsx */ 391);
 	
 	var _Overlay2 = _interopRequireDefault(_Overlay);
 	
-	var _reactDropzone = __webpack_require__(/*! react-dropzone */ 390);
+	var _reactDropzone = __webpack_require__(/*! react-dropzone */ 392);
 	
 	var _reactDropzone2 = _interopRequireDefault(_reactDropzone);
 	
@@ -386,7 +383,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 389:
+/***/ 391:
 /*!**************************************!*\
   !*** ./javascript/Mixin/Overlay.jsx ***!
   \**************************************/
@@ -512,7 +509,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 390:
+/***/ 392:
 /*!****************************************!*\
   !*** ./~/react-dropzone/dist/index.js ***!
   \****************************************/
