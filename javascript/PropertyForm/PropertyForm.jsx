@@ -11,10 +11,11 @@ import Pets from './Pets.jsx'
 import Fees from './Fees.jsx'
 import Features from './Features.jsx'
 import Utilities from './Utilities.jsx'
+import Overlay from '../Mixin/Overlay.jsx'
 
 import 'react-date-picker/index.css'
 
-/* global $, property */
+/* global $, property, deleteProperty */
 
 export default class PropertyForm extends React.Component {
   constructor() {
@@ -25,17 +26,33 @@ export default class PropertyForm extends React.Component {
       property: property,
       errors: {},
       activeTab: 0,
-      saving: false
+      saving: false,
+      deleteOverlay: false
     }
     const methods = [
       'half',
-      'setValue',
+      'delete',
       'setTab',
-      'setIntegerValue',
+      'setValue',
       'checkForm',
-      'unsetMessage'
+      'openDelete',
+      'closeDelete',
+      'unsetMessage',
+      'setIntegerValue'
     ]
     bindMethods(methods, this)
+  }
+
+  componentDidMount() {
+    deleteProperty.callback = this.openDelete
+  }
+
+  openDelete() {
+    this.setState({deleteOverlay: true})
+  }
+
+  closeDelete() {
+    this.setState({deleteOverlay: false})
   }
 
   setValue(varname, value) {
@@ -126,6 +143,21 @@ export default class PropertyForm extends React.Component {
     }
   }
 
+  delete() {
+    $.ajax({
+      url: './properties/Property/' + this.state.property.id,
+      dataType: 'json',
+      method: 'DELETE',
+      success: function () {
+        window.location.href = './properties/Property/'
+      }.bind(this),
+      error: function () {
+        this.setMessage('Sorry, something went wrong and the property was not deleted.', 'danger')
+        this.closeDelete()
+      }.bind(this)
+    })
+  }
+
   save() {
     let property = this.readyPost()
     this.setState({saving: true})
@@ -159,6 +191,10 @@ export default class PropertyForm extends React.Component {
 
   render() {
     const property = this.state.property
+    let deleteForm
+    if (this.state.deleteOverlay === true) {
+      deleteForm = <Overlay close={this.closeDelete} title="Delete this property"><DeleteQuestion close={this.closeDelete} delete={this.delete}/></Overlay>
+    }
 
     let section
     switch (this.state.activeTab) {
@@ -198,6 +234,7 @@ export default class PropertyForm extends React.Component {
     }
     return (
       <div ref="PageTop">
+        {deleteForm}
         {message}
         <form
           ref="PropertyForm"
@@ -243,4 +280,36 @@ const SubmitForm = ({check, saving}) => {
 SubmitForm.propTypes = {
   check: React.PropTypes.func,
   saving: React.PropTypes.bool
+}
+
+class DeleteQuestion extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
+  render() {
+    return (
+      <div>
+        <h2>Are you sure you want to delete this property?</h2>
+        <p>All images associated with this property will also be deleted.</p>
+        <div style={{
+          marginBottom: '1em'
+        }}>
+          <button
+            className="btn btn-default btn-lg btn-danger"
+            onClick={this.props.delete}>Yes, delete this property and all associated images.</button>
+        </div>
+        <div>
+          <button
+            className="btn btn-default btn-lg btn-default"
+            onClick={this.props.close}>No, I changed my mind</button>
+        </div>
+      </div>
+    )
+  }
+}
+
+DeleteQuestion.propTypes = {
+  close: React.PropTypes.func,
+  delete: React.PropTypes.func
 }
