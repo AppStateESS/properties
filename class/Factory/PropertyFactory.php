@@ -9,7 +9,8 @@
 namespace properties\Factory;
 
 use \properties\Resource\Property as Resource;
-use \properties\Factory\Photo as PhotoFactory;
+use \properties\Factory\PhotoFactory;
+use \properties\Factory\ManagerFactory;
 use \properties\Controller\Property as Controller;
 use \phpws2\Database;
 use \properties\Exception\MissingInput;
@@ -58,12 +59,12 @@ class PropertyFactory extends BaseFactory
         if (empty($id) || !is_numeric($id)) {
             throw new \Exception('Property id invalid');
         }
+        $photo = new PhotoFactory;
+        $photo->removePhotos($id);
         $db = Database::getDB();
         $tbl = $db->addTable('properties');
         $tbl->addFieldConditional('id', $id);
         $db->delete();
-        $photo = new PhotoFactory;
-        $photo->removePhotos($id);
     }
 
 
@@ -125,10 +126,13 @@ class PropertyFactory extends BaseFactory
 
     public function viewHtml($resource)
     {
-        $data = $resource->view();
-        $tpl = new \phpws2\Template($data);
+        $propertyTpl = $resource->view();
+        $managerFactory = new ManagerFactory;
+        $manager = $managerFactory->load($resource->contact_id);
+        $managerTpl = $manager->view();
+        $view = array_merge($propertyTpl, $managerTpl);
+        $tpl = new \phpws2\Template($view);
         $tpl->setModuleTemplate('properties', 'property.html');
-
         return $tpl->get();
     }
 
