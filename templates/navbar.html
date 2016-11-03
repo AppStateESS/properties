@@ -11,30 +11,46 @@
 <div class="collapse navbar-collapse">
     <ul class="nav navbar-nav navbar-left">
         <li>
-            <a href="<?php echo $home ?>"><i class="fa fa-home"></i> Home</a>
+            <a href="<?=$home?>"><i class="fa fa-home"></i> Home</a>
         </li>
         <li>
-            <a href="<?php echo $home ?>properties/"><i class="fa fa-building"></i> Properties</a>
+            <a href="<?=$home?>properties/"><i class="fa fa-building"></i> Properties</a>
         </li>
         <li>
-            <a href="<?php echo $home ?>properties/Manager/"><i class="fa fa-group"></i> Managers</a>
+            <a href="<?=$home?>properties/Manager/"><i class="fa fa-group"></i> Managers</a>
         </li>
         <?php if ($buttons !== null):?>
-        <li>
-            <?php echo $buttons ?>
+        <li class="navbar-text">|
         </li>
-        <?php endif; ?>
+        <li>
+            <?=$buttons?>
+        </li>
+        <?php endif;?>
+        <?php if ($options !== null):?>
+        <li class="navbar-text">|
+        </li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-gear"></i>&nbsp;Administrate<span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <?=$options?>
+                </li>
+            </ul>
+        </li>
+        <?php endif;?>
     </ul>
     <ul class="nav navbar-nav navbar-right">
         <?php if (isset($is_manager)):?>
         <li>
             <a href="./properties/Manager/Properties"><i class="fa fa-list"></i> My properties</a>
         </li>
-        <?php endif; ?>
+        <?php endif;?>
 
         <?php if ($logged):?>
         <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $username ?><span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?=$username ?><span class="caret"></span></a>
             <ul class="dropdown-menu">
                 <li>
                     <?php if ($admin): ?><a href="index.php?module=controlpanel"><i class="fa fa-gear"></i> Control panel</a><?php endif; ?>
