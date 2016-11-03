@@ -20,14 +20,16 @@ namespace properties\Role;
 
 class UserRole extends BaseRole
 {
+
     public function __construct($controller, $method = null)
     {
-        $this->getCommands = array('manager'=>array('view', 'list'), 'property'=>array('view', 'list'), 'photo'=>array('view'));
+        $this->getCommands = array('manager' => array('view', 'list'), 'property' => array('view', 'list'), 'photo' => array('view', 'list'));
         parent::__construct($controller, $method);
     }
-    
+
     public function isUser()
     {
         return true;
     }
+
 }
