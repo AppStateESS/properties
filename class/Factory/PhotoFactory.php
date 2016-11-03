@@ -197,4 +197,22 @@ class PhotoFactory extends BaseFactory
         return $path;
     }
 
+    public function removePhotos($property_id)
+    {
+        $db = Database::getDB();
+        $tbl = $db->addTable('prop_photo');
+        $tbl->addFieldConditional('pid', $property_id);
+        $tbl->addField('path');
+        while ($path = $db->selectColumn()) {
+            $files[] = $path;
+            $files[] = $this->thumbnailed($path);
+        }
+        $db->delete();
+        if (!empty($files)) {
+            foreach ($files as $path) {
+                unlink(PHPWS_HOME_DIR . $path);
+            }
+        }
+    }
+
 }
