@@ -22,6 +22,7 @@ class NavBar
 {
 
     public static $buttons;
+    public static $options;
 
     public static function view()
     {
@@ -31,8 +32,13 @@ class NavBar
         $vars['admin'] = \Current_User::allow('properties');
 
         $vars['buttons'] = null;
+        $vars['options'] = null;
         if (!empty(self::$buttons)) {
-            $vars['buttons'] = implode('', self::$buttons);
+            $vars['buttons'] = implode('&nbsp;', self::$buttons);
+        }
+        
+        if (!empty(self::$options)) {
+            $vars['options'] = implode('</li><li>', self::$options);
         }
 
         $vars['is_deity'] = \Current_User::isDeity();
@@ -49,6 +55,11 @@ class NavBar
     public static function addButton($button)
     {
         self::$buttons[] = $button;
+    }
+
+    public static function addOption($option)
+    {
+        self::$options[] = $option;
     }
 
 }
