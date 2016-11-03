@@ -3,7 +3,7 @@ import React from 'react'
 import ImageOverlay from './ImageOverlay.jsx'
 import bindMethods from '../Mixin/Bind.js'
 
-/* global $, propertyId */
+/* global $, propertyId, loadPhotos, editPhotos */
 
 export default class PropertyImage extends React.Component {
   constructor(props) {
@@ -15,6 +15,10 @@ export default class PropertyImage extends React.Component {
     }
     const methods = ['overlayOn', 'overlayOff', 'addPhotos']
     bindMethods(methods, this)
+  }
+
+  componentDidMount(){
+    editPhotos.callback = this.overlayOn
   }
 
   addPhotos(photos) {
@@ -36,6 +40,7 @@ export default class PropertyImage extends React.Component {
         success: function (data) {
           status[key] = data
           this.setState({status: status})
+          loadPhotos.callback()
         }.bind(this)
       })
     }.bind(this))
@@ -61,9 +66,6 @@ export default class PropertyImage extends React.Component {
     return (
       <div>
         {overlay}
-        <span>
-          <button type="button" className="btn btn-default" onClick={this.overlayOn}>Update images</button>
-        </span>
       </div>
     )
   }
