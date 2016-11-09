@@ -154,6 +154,30 @@ EOF;
 + Fixed: New managers could log in before approved.
 </pre>
 EOF;
+            
+        case (version_compare($currentVersion, '2.0.0', '<')):
+            try {
+                $db = \phpws2\Database::getDB();
+                $db->begin();
+                $tbl = $db->addTable('properties');
+                $dt = $tbl->addDataType('proptype', 'smallint');
+                $dt->setDefault(0);
+                $dt->add();
+                
+                $tbl->addValue('proptype', 1);
+                $tbl->addFieldConditional('efficiency', 1);
+                $db->update();
+                $db->commit();
+            } catch (Exception $ex) {
+                $db->rollback();
+                $content[] = 'Update failed: ' . $ex->getMessage();
+                return false;
+            }
+            $content[] = <<<EOF
+<pre>
++ Rewrite!
+</pre>
+EOF;
     }
     return true;
 }
