@@ -101,10 +101,36 @@ export default class Basic extends React.Component {
     ]
   }
 
+  propertyType() {
+    return [
+      {
+        value: '0',
+        label: 'Apartment'
+      }, {
+        value: '1',
+        label: 'Efficiency'
+      }, {
+        value: '2',
+        label: 'House'
+      }, {
+        value: '3',
+        label: 'Condo'
+      }, {
+        value: '4',
+        label: 'Townhouse'
+      }, {
+        value: '5',
+        label: 'Duplex'
+      }
+    ]
+  }
+
   render() {
     const {property} = this.props
     let parking = Range(property.parking_per_unit)
-
+    const buttonspace = {
+      paddingTop: '43px'
+    }
     return (
       <div>
         <div className="row bg-info">
@@ -125,6 +151,7 @@ export default class Basic extends React.Component {
             <label>Description</label>
             <textarea
               className="form-control"
+              placeholder="Description is not searchable. Be sure to use other settings as well."
               name="description"
               value={property.description}
               onChange={this.props.setValue.bind(null, 'description')}/>
@@ -146,41 +173,29 @@ export default class Basic extends React.Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-5">
-              <InputField
-                name="monthly_rent"
-                type="type"
-                label="Monthly rent"
-                wrap={this.dollarize}
-                errorMessage={this.props.errors.monthly_rent
-                ? 'Rent amount may not be empty'
-                : null}
-                value={property.monthly_rent}
-                change={this.updateRent}
-                required={true}/>
+          <div className="col-sm-5 col-xs-7">
+            <InputField
+              ref="monthlyRent"
+              name="monthly_rent"
+              type="type"
+              label="Monthly rent"
+              wrap={this.dollarize}
+              errorMessage={this.props.errors.monthly_rent
+              ? 'Rent amount may not be empty'
+              : null}
+              value={property.monthly_rent}
+              change={this.updateRent}
+              required={true}/>
           </div>
-          <div className="col-sm-7">
-            <div style={{
-              marginBottom: '.5em'
-            }}>
-              <ButtonGroup
-                name="lease_type"
-                buttons={this.getLeaseType()}
-                match={property.lease_type}
-                handle={this.props.setIntegerValue.bind(null, 'lease_type')}
-                activeColor="success"/>
-            </div>
-            <div>
-              <BooleanButton
-                name="efficiency"
-                current={property.efficiency}
-                label={['Efficiency', 'Not an efficiency']}
-                icon={true}
-                handleClick={this.props.setValue.bind(null, 'efficiency')}/>
-            </div>
+          <div className="col-sm-7 col-xs-5" style={buttonspace}>
+            <ButtonGroup
+              name="lease_type"
+              buttons={this.getLeaseType()}
+              match={property.lease_type}
+              handle={this.props.setValue.bind(null, 'lease_type')}
+              activeColor="success"/>
           </div>
         </div>
-
         <div className="row bg-info">
           <div className="col-sm-6 form-inline">
             <label htmlFor="contract-length">Contract length</label>
@@ -211,7 +226,7 @@ export default class Basic extends React.Component {
             </div>
           </div>
           <div className="col-sm-6">
-            <label>Move-in date</label>
+            <label>Move-in date</label><br/>
             <DateField
               dateFormat="YYYY-MM-DD"
               onChange={this.setMoveIn}
@@ -246,19 +261,30 @@ export default class Basic extends React.Component {
               name="campus_distance"
               buttons={this.campusDistance()}
               match={property.campus_distance}
-              handle={this.props.setIntegerValue.bind(this, 'campus_distance')}
+              handle={this.props.setValue.bind(this, 'campus_distance')}
               activeColor="success"/>
           </div>
         </div>
         <div className="row">
           <div className="col-sm-12">
+            <label>Property type</label><br/>
+            <ButtonGroup
+              name="proptype"
+              buttons={this.propertyType()}
+              match={property.proptype}
+              handle={this.props.setValue.bind(this, 'proptype')}
+              activeColor="success"/>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-12 bg-info">
             <label>Student preference</label>
             <br/>
             <ButtonGroup
               name="student_type"
               buttons={this.studentType()}
               match={property.student_type}
-              handle={this.props.setIntegerValue.bind(this, 'student_type')}
+              handle={this.props.setValue.bind(this, 'student_type')}
               activeColor="success"/>
           </div>
         </div>
@@ -266,7 +292,6 @@ export default class Basic extends React.Component {
     )
   }
 }
-
 Basic.propTypes = {
   property: React.PropTypes.object,
   setValue: React.PropTypes.func,
