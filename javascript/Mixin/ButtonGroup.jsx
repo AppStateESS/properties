@@ -12,7 +12,7 @@ class ButtonGroup extends React.Component {
       const activeColor = 'btn-' + this.props.activeColor
       let cn = classnames('btn', 'btn-default')
       if (this.props.match !== null) {
-        if (this.props.match.constructor === Array && this.props.match.indexOf(value.value) !== -1) {
+        if (this.props.match.constructor === Array && (this.props.match.indexOf(value.value) !== -1)) {
           cn = classnames('btn', 'active', activeColor)
         } else if (this.props.match == value.value) {
           cn = classnames('btn', 'active', activeColor)
@@ -36,7 +36,7 @@ class ButtonGroup extends React.Component {
       : 'btn-group'
 
     let hidden
-    if (this.props.match.constructor === Array) {
+    if (this.props.match && this.props.match.constructor === Array) {
       hidden = this.props.match.map(function (value, key) {
         let name = this.props.name + '[]'
         return <input type="hidden" name={name} value={value} key={key}/>
