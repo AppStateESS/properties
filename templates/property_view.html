@@ -2,13 +2,12 @@
     const propertyId = <?=$id?>;
     let loadPhotos = () => {}
     let editPhotos = () => {}
+    let currentPhotos = <?=$current_photos?>
 </script>
+
 <div class="row">
     <div class="col-sm-12">
         <?=$property?>
     </div>
 </div>
-<div style="max-height: 500px; overflow: auto">
-    <?=$photo?>
-</div>
-    <?=$photoupdate?>
+<?=$photoupdate?>
