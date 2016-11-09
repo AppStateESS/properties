@@ -32,8 +32,8 @@ define('HT_WOODSTOVE', 6);
 define('HT_GAS', 7);
 
 
-define('PROP_THUMBNAIL_WIDTH', 200);
-define('PROP_THUMBNAIL_HEIGHT', 200);
+define('PROP_THUMBNAIL_WIDTH', 180);
+define('PROP_THUMBNAIL_HEIGHT', 180);
 
 define('TV_NONE',      0);
 define('TV_CABLE',     1);
@@ -47,6 +47,13 @@ define('NET_SATELLITE', 4);
 define('NET_CABLE',     5);
 define('NET_BOTH',      6);
 define('NET_FIBER',     7);
+
+define('PROP_TYPE_APARTMENT', 0);
+define('PROP_TYPE_EFFICIENCY', 1);
+define('PROP_TYPE_HOUSE', 2);
+define('PROP_TYPE_CONDO', 3);
+define('PROP_TYPE_TOWNHOUSE', 4);
+define('PROP_TYPE_DUPLEX', 5);
 
 define('PANEL_WIDTH', 400);
 define('PANEL_HEIGHT', 300);
@@ -64,5 +71,5 @@ define('GRAD_STUDENT', 2);
 define('NONSMOKER', 1);
 define('SMOKER', 2);
 
-define('PROP_MAX_IMAGE_WIDTH', 1600);
-define('PROP_MAX_IMAGE_HEIGHT', 1200);
+define('PROP_MAX_IMAGE_WIDTH', 1200);
+define('PROP_MAX_IMAGE_HEIGHT', 1000);
