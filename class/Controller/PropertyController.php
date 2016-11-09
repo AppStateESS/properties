@@ -101,10 +101,12 @@ EOF;
 
     private function view()
     {
+        $photoFactory = new Photo;
         $tpl = array();
-        $tpl['property'] = $this->factory->viewHtml($this->resource);
-        $tpl['id'] = $this->resource->id;
+        $tpl['current_photos'] = json_encode($photoFactory->thumbs($this->resource->id));
         $tpl['photo'] = $this->reactView('photo');
+        $tpl['property'] = $this->factory->viewHtml($this->resource, $tpl);
+        $tpl['id'] = $this->resource->id;
         $tpl['photoupdate'] = null;
         if ($this->factory->role->allow('edit')) {
             Navbar::addButton($this->updateButton($this->resource->id));
