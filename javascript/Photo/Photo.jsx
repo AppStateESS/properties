@@ -4,37 +4,34 @@ require('react-image-gallery/styles/css/image-gallery.css')
 import ImageGallery from 'react-image-gallery'
 import Waiting from '../Mixin/Waiting.jsx'
 
-/* global $, require, propertyId, loadPhotos */
+/* global $, require, propertyId, loadPhotos, currentPhotos */
 
 export default class Photo extends React.Component {
   constructor() {
     super()
     this.state = {
       photos: null,
-      thumbnail: true
+      fullscreen: false
     }
     this.toggleScreen = this.toggleScreen.bind(this)
-    this.load()
   }
 
   componentDidMount() {
+    this.setState({photos: currentPhotos})
     loadPhotos.callback = this.load.bind(this)
   }
 
   load() {
     $.getJSON('./properties/Photo/list', {propertyId: propertyId}).done(function (data) {
+      currentPhotos = data
       this.setState({photos: data})
     }.bind(this))
   }
 
   toggleScreen() {
     this.setState({
-      thumbnail: !this.state.thumbnail
+      fullscreen: !this.state.fullscreen
     })
-  }
-
-  imageRender() {
-    return null
   }
 
   render() {
@@ -49,13 +46,13 @@ export default class Photo extends React.Component {
         infinite={true}
         showFullscreenButton={true}
         showPlayButton={true}
-        showThumbnails={this.state.thumbnail}
+        showThumbnails={!this.state.fullscreen}
         showIndex={true}
         showNav={true}
         slideInterval={4000}
         slideOnThumbnailHover={true}/>)
     } else {
-      images = <div>No photos for this property</div>
+      images = <div className="well text-center text-muted"><i className="fa fa-camera fa-5x"></i><br />No photos</div>
     }
     return (
       <div>{images}</div>
