@@ -126,7 +126,7 @@ webpackJsonp([1],{
 	
 	__webpack_require__(/*! react-image-gallery/styles/css/image-gallery.css */ 185);
 	
-	/* global $, require, propertyId, loadPhotos */
+	/* global $, require, propertyId, loadPhotos, currentPhotos */
 	
 	var Photo = function (_React$Component) {
 	  _inherits(Photo, _React$Component);
@@ -138,22 +138,23 @@ webpackJsonp([1],{
 	
 	    _this.state = {
 	      photos: null,
-	      thumbnail: true
+	      fullscreen: false
 	    };
 	    _this.toggleScreen = _this.toggleScreen.bind(_this);
-	    _this.load();
 	    return _this;
 	  }
 	
 	  _createClass(Photo, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
+	      this.setState({ photos: currentPhotos });
 	      loadPhotos.callback = this.load.bind(this);
 	    }
 	  }, {
 	    key: 'load',
 	    value: function load() {
 	      $.getJSON('./properties/Photo/list', { propertyId: propertyId }).done(function (data) {
+	        currentPhotos = data;
 	        this.setState({ photos: data });
 	      }.bind(this));
 	    }
@@ -161,13 +162,8 @@ webpackJsonp([1],{
 	    key: 'toggleScreen',
 	    value: function toggleScreen() {
 	      this.setState({
-	        thumbnail: !this.state.thumbnail
+	        fullscreen: !this.state.fullscreen
 	      });
-	    }
-	  }, {
-	    key: 'imageRender',
-	    value: function imageRender() {
-	      return null;
 	    }
 	  }, {
 	    key: 'render',
@@ -187,7 +183,7 @@ webpackJsonp([1],{
 	          infinite: true,
 	          showFullscreenButton: true,
 	          showPlayButton: true,
-	          showThumbnails: this.state.thumbnail,
+	          showThumbnails: !this.state.fullscreen,
 	          showIndex: true,
 	          showNav: true,
 	          slideInterval: 4000,
@@ -195,8 +191,10 @@ webpackJsonp([1],{
 	      } else {
 	        images = _react2.default.createElement(
 	          'div',
-	          null,
-	          'No photos for this property'
+	          { className: 'well text-center text-muted' },
+	          _react2.default.createElement('i', { className: 'fa fa-camera fa-5x' }),
+	          _react2.default.createElement('br', null),
+	          'No photos'
 	        );
 	      }
 	      return _react2.default.createElement(

@@ -1421,6 +1421,11 @@ webpackJsonp([0],{
 	      }
 	    }
 	  }, {
+	    key: 'select',
+	    value: function select(event) {
+	      event.target.select();
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var inputClass = void 0;
@@ -1439,6 +1444,7 @@ webpackJsonp([0],{
 	        className: inputClass,
 	        onChange: this.props.change,
 	        onBlur: this.handleBlur,
+	        onClick: this.props.selectOnClick === true ? this.select : null,
 	        disabled: this.props.disabled,
 	        size: this.props.size,
 	        maxLength: this.props.maxLength,
@@ -1490,6 +1496,7 @@ webpackJsonp([0],{
 	  disabled: false,
 	  size: null,
 	  maxLength: null,
+	  selectOnClick: true,
 	  wrap: null
 	};
 	
@@ -1508,7 +1515,8 @@ webpackJsonp([0],{
 	  disabled: _react2.default.PropTypes.bool,
 	  size: _react2.default.PropTypes.number,
 	  maxLength: _react2.default.PropTypes.number,
-	  wrap: _react2.default.PropTypes.func
+	  wrap: _react2.default.PropTypes.func,
+	  selectOnClick: _react2.default.PropTypes.bool
 	};
 	
 	var RequiredIcon = exports.RequiredIcon = function RequiredIcon() {
