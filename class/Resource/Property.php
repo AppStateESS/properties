@@ -53,6 +53,7 @@ class Property extends Base
     protected $pets_allowed;
     protected $pet_fee;
     protected $pet_type;
+    protected $proptype;
     protected $security_amt;
     protected $security_refund;
     protected $student_type;
@@ -102,9 +103,9 @@ class Property extends Base
         $this->dishwasher = new Variable\Bool(false, 'dishwasher');
         $this->efficiency = new Variable\Bool(false, 'efficiency');
         $this->furnished = new Variable\Bool(false, 'furnished');
-        $this->heat_type = new Variable\String('', 'heat_type');
-        $this->heat_type->setLimit(100);
-        $this->internet_type = new Variable\Integer(0, 'internet_type');
+        $this->heat_type = new Variable\Arr(null, 'heat_type');
+        $this->heat_type->allowNull(true);
+        $this->internet_type = new Variable\Integer(1, 'internet_type');
         $this->internet_type->setRange(0, 20);
 
         $this->lease_type = new Variable\Integer(0, 'lease_type');
@@ -119,13 +120,15 @@ class Property extends Base
         $this->name->setLimit(100);
 
         $this->other_fees = new Variable\String('', 'other_fees');
-        $this->parking_fee = new Variable\Integer(1, 'parking_fee');
-        $this->parking_per_unit = new Variable\Integer(0, 'parking_per_unit');
+        $this->parking_fee = new Variable\Integer(0, 'parking_fee');
+        $this->parking_per_unit = new Variable\Integer(1, 'parking_per_unit');
         $this->pet_deposit = new Variable\Integer(0, 'pet_deposit');
         $this->pet_dep_refund = new Variable\Bool(false, 'pet_dep_refund');
         $this->pets_allowed = new Variable\Bool(false, 'pets_allowed');
         $this->pet_fee = new Variable\Integer(0, 'pet_fee');
         $this->pet_type = new Variable\String('', 'pet_type');
+        $this->proptype = new Variable\Integer(0, 'proptype');
+        $this->proptype->setRange(0, 20);
         $this->security_amt = new Variable\Integer(0, 'security_amt');
         $this->security_refund = new Variable\Bool(false, 'security_refund');
         $this->student_type = new Variable\Integer(0, 'student_type');
@@ -148,13 +151,14 @@ class Property extends Base
         $this->workout_room = new Variable\Bool(false, 'workout_room');
 
         $this->company_name = new Variable\String('', 'company_name');
+        $this->addHiddenVariable('company_name');
     }
 
     public function getCampusDistance()
     {
         switch ($this->campus_distance->get()) {
             case '0':
-                return 'Five miles or less';
+                return 'Less than five miles';
             case '5':
                 return 'Between five and ten miles';
             case '10':
@@ -219,11 +223,25 @@ class Property extends Base
         }
     }
 
+    public function isHighSpeed()
+    {
+        switch ($this->internet_type->get()) {
+            case NET_DSL:
+            case NET_CABLE:
+            case NET_BOTH:
+            case NET_FIBER:
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
     public function getLaundryType()
     {
         switch ($this->laundry_type->get()) {
             case LAUNDRY_NONE:
-                return 'No laundry';
+                return 'No laundry facilities';
             case LAUNDRY_IN_UNIT:
                 return 'Washer/Dryer in unit';
             case LAUNDRY_ON_PREMISES:
@@ -243,7 +261,7 @@ class Property extends Base
     {
         switch ($this->student_type->get()) {
             case NO_STUDENT_PREFERENCE:
-                return 'No preference';
+                return 'None';
 
             case UNDERGRAD:
                 return 'Undergraduate';
@@ -281,22 +299,97 @@ class Property extends Base
         }
     }
 
+    public function getHeatTypes()
+    {
+        $heat_types = $this->heat_type->get();
+        if (empty($heat_types)) {
+            return 'None';
+        } else {
+            foreach ($heat_types as $t) {
+                switch ($t) {
+                    case HT_HVAC:
+                        $type = 'Heat pump';
+                        break;
+                    case HT_OIL:
+                        $type = 'Oil';
+                        break;
+                    case HT_PROPANE:
+                        $type = 'Propane';
+                        break;
+                    case HT_ELEC_BASE:
+                        $type = 'Electric baseboard';
+                        break;
+                    case HT_KEROSENE:
+                        $type = 'Kerosene';
+                        break;
+                    case HT_WOODSTOVE:
+                        $type = 'Woodstove/Fireplace';
+                        break;
+                    case HT_GAS:
+                        $type = 'Natural gas';
+                        break;
+                }
+                $types[] = $type;
+            }
+        }
+        return implode(', ', $types);
+    }
+
+    public function getPropType()
+    {
+        switch ($this->proptype) {
+            case PROP_TYPE_APARTMENT:
+                return 'Apartment';
+                break;
+            
+            case PROP_TYPE_EFFICIENCY:
+                return 'Efficiency';
+                break;
+            
+            case PROP_TYPE_HOUSE:
+                return 'House';
+                break;
+            
+            case PROP_TYPE_CONDO:
+                return 'Condo';
+                break;
+            
+            case PROP_TYPE_TOWNHOUSE:
+                return 'Townhouse';
+                break;
+
+            case PROP_TYPE_DUPLEX:
+                return 'Duplex';
+                break;
+        }
+    }
+
     public function view()
     {
         $view = $this->getStringVars();
         $view['campus_distance'] = $this->getCampusDistance();
         $view['contract_length'] = $this->getContractLength();
         $view['internet_type'] = $this->getInternetType();
-        $view['lease_type'] = $this->lease_type === '0' ? 'per unit' : 'per renter';
+        $view['lease_type'] = $this->lease_type === '0' ? 'per unit' : 'per tenant';
         $view['laundry_type'] = $this->getLaundryType();
-        $view['move_in_date'] = $this->getMoveInDate();
+
+        if ($this->move_in_date->get() < time()) {
+            $view['move_in_date'] = 'Move in today!';
+        } else {
+            $view['move_in_date'] = $this->getMoveInDate();
+        }
+
         $view['trash_type'] = $this->getTrashType();
         $view['admin_fee_refund'] = $this->admin_fee_refund->get() ? 'Refundable' : 'Non-refundable';
+        $view['clean_fee_refund'] = $this->clean_fee_refund->get() ? 'Refundable' : 'Non-refundable';
         $view['pet_dep_refund'] = $this->pet_dep_refund->get() ? 'Refundable' : 'Non-refundable';
         $view['security_refund'] = $this->security_refund->get() ? 'Refundable' : 'Non-refundable';
         $view['student_type'] = $this->getStudentType();
         $view['tv_type'] = $this->getTvType();
         $view['property_map_address'] = $this->googleMapUrl($this->address);
+        $view['furnished'] = $this->furnished->get() ? 'Furnished' : 'Unfurnished';
+        $view['high_speed'] = $this->isHighSpeed();
+        $view['heat_type'] = $this->getHeatTypes();
 
         return $view;
     }
