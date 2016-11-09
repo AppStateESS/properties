@@ -60,13 +60,12 @@ class PropertyFactory extends BaseFactory
             throw new \Exception('Property id invalid');
         }
         $photo = new PhotoFactory;
-        $photo->removePhotos($id);
+        $photo->removeByProperty($id);
         $db = Database::getDB();
         $tbl = $db->addTable('properties');
         $tbl->addFieldConditional('id', $id);
         $db->delete();
     }
-
 
     public function listing($manager_id = 0, $view = false, $search = null,
             $limit = 100)
@@ -112,7 +111,11 @@ class PropertyFactory extends BaseFactory
         try {
             $r->loadPostByType($request,
                     array('active', 'approved', 'company_name', 'heat_type', 'created', 'updated'));
-            $r->heat_type = json_encode($request->pullPostVar('heat_type'));
+            $heat_type = $request->pullPostVar('heat_type');
+            if (empty($heat_type)) {
+                $heat_type = array();
+            }
+            $r->heat_type = $heat_type;
             $r->active = true;
             $r->approved = true;
             $r->created = time();
@@ -124,16 +127,17 @@ class PropertyFactory extends BaseFactory
         }
     }
 
-    public function viewHtml($resource)
+    public function viewHtml($resource, array $tpl)
     {
         $propertyTpl = $resource->view();
         $managerFactory = new ManagerFactory;
         $manager = $managerFactory->load($resource->contact_id);
         $managerTpl = $manager->view();
         $view = array_merge($propertyTpl, $managerTpl);
-        $tpl = new \phpws2\Template($view);
-        $tpl->setModuleTemplate('properties', 'property.html');
-        return $tpl->get();
+        $view = array_merge($tpl, $view);
+        $template = new \phpws2\Template($view);
+        $template->setModuleTemplate('properties', 'property.html');
+        return $template->get();
     }
 
 }
