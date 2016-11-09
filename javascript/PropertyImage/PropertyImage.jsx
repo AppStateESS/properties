@@ -3,28 +3,37 @@ import React from 'react'
 import ImageOverlay from './ImageOverlay.jsx'
 import bindMethods from '../Mixin/Bind.js'
 
-/* global $, propertyId, loadPhotos, editPhotos */
+/* global $, propertyId, loadPhotos, editPhotos, currentPhotos */
 
 export default class PropertyImage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       show: false,
-      photos: [],
+      newPhotos: [],
+      currentPhotos: [],
       status: []
     }
-    const methods = ['overlayOn', 'overlayOff', 'addPhotos']
+    const methods = ['overlayOn', 'overlayOff', 'addPhotos', 'clearNewPhotos', 'delete']
     bindMethods(methods, this)
   }
 
-  componentDidMount(){
+  componentDidMount() {
     editPhotos.callback = this.overlayOn
+    if (currentPhotos.length > 0) {
+      this.setState({currentPhotos: currentPhotos})
+    }
+  }
+
+  clearNewPhotos() {
+    this.setState({newPhotos : []})
   }
 
   addPhotos(photos) {
     let status = this.state.status
-
-    this.setState({photos: photos})
+    let newPhotos = []
+    let currentPhotos = []
+    this.clearNewPhotos()
     $.each(photos, function (key, value) {
       let formData = new FormData()
       formData.append('propertyId', propertyId)
@@ -38,9 +47,18 @@ export default class PropertyImage extends React.Component {
         processData: false,
         contentType: false,
         success: function (data) {
-          status[key] = data
-          this.setState({status: status})
-          loadPhotos.callback()
+          currentPhotos = this.state.currentPhotos
+          if (data.success === true) {
+            currentPhotos.push(data.photo)
+          }
+          newPhotos.push(data.photo)
+          status[key] = data.success
+          this.setState({status: status, currentPhotos: currentPhotos, newPhotos: newPhotos})
+        }.bind(this),
+        failure: function(data) {
+          newPhotos.push(data.photo)
+          status[key] = false
+          this.setState({status: status, newPhotos: newPhotos})
         }.bind(this)
       })
     }.bind(this))
@@ -51,16 +69,38 @@ export default class PropertyImage extends React.Component {
   }
 
   overlayOff() {
-    this.setState({show: false, photos: []})
+    this.setState({show: false, newPhotos: []})
+    loadPhotos.callback()
   }
+
+  delete(id, key) {
+    $.ajax({
+      url: './properties/Photo/' + id,
+      dataType: 'json',
+      method: 'DELETE',
+      success: function (data) {
+        let photos = this.state.currentPhotos
+        if (data.success === true) {
+          photos.splice(key, 1)
+        }
+        this.setState({currentPhotos: photos})
+      }.bind(this),
+      error: function () {
+      }.bind(this)
+    })
+  }
+
 
   render() {
     let overlay
     if (this.state.show) {
       overlay = (<ImageOverlay
+        delete={this.delete}
         close={this.overlayOff}
+        clear={this.clearNewPhotos}
         update={this.addPhotos}
-        photos={this.state.photos}
+        newPhotos={this.state.newPhotos}
+        currentPhotos={this.state.currentPhotos}
         status={this.state.status}/>)
     }
     return (
@@ -71,4 +111,6 @@ export default class PropertyImage extends React.Component {
   }
 }
 
-PropertyImage.propTypes = {}
+PropertyImage.propTypes = {
+  current: React.PropTypes.array
+}
