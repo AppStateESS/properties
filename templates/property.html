@@ -1,13 +1,14 @@
-<div>
+<div class="property-view">
     <div class="row">
-        <div class="col-sm-8">
+        <div class="col-sm-8 header">
             <h2 class="property-title"><?=$name?></h2>
             <h3 class="property-address"><a href="<?=$property_map_address?>" target="_blank"><?=$address?>&nbsp;<i class="fa fa-map"></i></a></h3>
-            <p class="room-rent"><?=$bedroom_no?> bed<?=$bedroom_no>1?'s':null?>, <?=$bathroom_no?> bath<?=$bathroom_no>1?'s':null?> - <?= '$', $monthly_rent, ' ', $lease_type?></p>
+            <div><?=$bedroom_no?> bed<?=$bedroom_no>1?'s':null?>, <?=$bathroom_no?> bath<?=$bathroom_no>1?'s':null?> - <?= '$', $monthly_rent, ' ', $lease_type?></div>
+            <div>Availability: <?=$move_in_date?></div>
         </div>
         <div class="col-sm-4">
             <div class="contact-info bg-primary">
-                <h4>Contact Us!</h4>
+                <h4><?=$company_name?></h4>
                 <div class="contact-link"><a href="tel:$phone" target="_blank"><i class="fa fa-phone"></i>&nbsp;<?=$phone?></a></div>
                 <div class="contact-link"><a href="mailto:<?=$email_address?>" target="_blank"><i class="fa fa-envelope"></i>&nbsp;Email</a></div>
                 <?php if (!empty($company_address)):?>
@@ -16,150 +17,178 @@
             </div>
         </div>
     </div>
+    <?php if (!empty($description)):?>
+    <div class="description panel panel-primary">
+        <div class="panel-body">
+            <?=$description?>
+        </div>
+    </div>
     <hr />
-    <div class="well-small">
-        <?=$description?>
-    </div>
-
-    <h2>Fees</h2>
-    <div class="fee">
-        Administrative <?= '$' . $admin_fee_amt?> <?=$admin_fee_refund?>
-    </div>
-
-    <?php if ($clean_fee_amt > 0):?>
-    <div>Cleaning fee
-        <?=$clean_fee_amt?><br />
-        <?=$clean_fee_refund === '1' ? 'Refunded' : 'No refund'?>
-    </div>
-    <?php endif;?>
-    <div class="">
-        <?=$furnished === '1' ? 'Furnished' : 'Unfurnished'?>
-    </div>
-
-    <?php if ($efficiency === '1'):?>
-    <div>
-        Efficiency
-    </div>
     <?php endif; ?>
+    <div class="row">
+        <div class="col-sm-7">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h4>
+                        <span class="fa-stack">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-diamond fa-stack-1x fa-inverse"></i>
+                        </span>
+                        Amenities</h4>
+                    <ul>
+                        <li><?=$furnished?></li>
+                        <?php if ($airconditioning === '1'):?>
+                        <li>Air Conditioning</li>
+                        <?php endif; ?>
+                        <?php if ($high_speed):?>
+                        <li>High speed Internet</li>
+                        <?php endif;?>
+                        <?php if ($dishwasher === '1'):?>
+                        <li>Dishwasher</li>
+                        <?php endif; ?>
+                        <?php if ($utilities_inc):?>
+                        <li>Utilities included</li>
+                        <?php endif;?>
+                        <?php if ($clubhouse === '1'):?>
+                        <li>Clubhouse</li>
+                        <?php endif; ?>
+                        <?php if ($workout_room):?>
+                        <li>Workout room</li>
+                        <?php endif;?>
+                        <?php if ($efficiency === '1'):?>
+                        <li>
+                            Efficiency
+                        </li>
+                        <?php endif; ?>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h4><span class="fa-stack">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-check fa-stack-1x fa-inverse"></i>
+                        </span> Other information</h4>
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Contract length</th>
+                            <td><?=$contract_length?></td>
+                        </tr>
+                        <tr>
+                            <th>Parking per unit</th>
+                            <td><?=$parking_per_unit?></td>
+                        </tr>
+                        <tr>
+                            <th>Student preference</th>
+                            <td><?=$student_type?></td>
+                        </tr>
+                        <tr>
+                            <th></th>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
 
-    <?php if ($appalcart === '1'):?>
-    <div>
-        On appalcart route
+            </div>
+            <?php if ($admin_fee_amt > 0 || $security_amt > 0 || $clean_fee_amt > 0 || $parking_fee > 0 || $other_fees > 0): ?>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h4><span class="fa-stack">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-money fa-stack-1x fa-inverse"></i>
+                        </span> Expenses</h4>
+                    <table class="table table-striped">
+                        <?php if ($admin_fee_amt > 0):?>
+                        <tr>
+                            <td style="width: 10%" class="text-right">$<?=$admin_fee_amt?></td>
+                            <td>Administrative <small class="text-muted">(<?=$admin_fee_refund?>)</small></td>
+                        </tr>
+                        <?php endif; ?>
+
+                        <?php if ($security_amt > 0):?>
+                        <tr>
+                            <td class="text-right">$<?=$security_amt?></td>
+                            <td>Security fee <small class="text-muted">(<?=$security_refund?>)</small></td>
+                        </tr>
+                        <?php endif; ?>
+                        <?php if ($clean_fee_amt > 0):?>
+                        <tr>
+                            <td class="text-right">$<?=$clean_fee_amt?></td>
+                            <td>Cleaning fee <small class="text-muted">(<?=$clean_fee_refund?>)</small></td>
+                        </tr>
+                        <?php endif;?>
+                        <?php if ($parking_fee > 0): ?>
+                        <tr>
+                            <td class="text-right">$<?=$parking_fee?></td>
+                            <td>Parking fee</td>
+                        </tr>
+                        <?php endif;?>
+                        <?php if (!empty($other_fees)): ?>
+                        <tr>
+                            <td class="text-right">Other</td>
+                            <td><?=$other_fees?></td>
+                        </tr>
+                        <?php endif;?>
+                    </table>
+                </div>
+            </div>
+            <?php endif; ?>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h4>
+                        <span class="fa-stack">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-plug fa-stack-1x fa-inverse"></i>
+                        </span>
+                        Utilities</h4>
+                    <table class="table table-striped">
+                        <tr>
+                            <th>Laundry</th>
+                            <td><?=$laundry_type?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Internet</th>
+                            <td><?=$internet_type?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Trash</th>
+                            <td><?=$trash_type?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Television</th>
+                            <td><?=$tv_type?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Heat Type</th>
+                            <td><?=$heat_type?>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <?php if ($util_water > 0 || $util_trash > 0 || $util_power > 0):?>
+
+                    <p class="lead">Utility imbursement</p>
+                    <table class="table table-striped">
+                        <?php if ($util_water > 0):?>
+                        <tr><th style="width:15%">Water</th><td>$<?=$util_water?></td></tr>
+                        <?php endif; ?>
+                        <?php if ($util_trash > 0):?>
+                        <tr><th>Trash</th><td>$<?=$util_trash?></td></tr>
+                        <?php endif; ?>
+                        <?php if ($util_power > 0):?>
+                        <tr><th>Power</th><td>$<?=$util_power?></td></tr>
+                        <?php endif; ?>
+                    </table>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-5">
+            <?=$photo?>
+        </div>
     </div>
-    <?php endif; ?>
 
-    <div>
-        Distance from campus:
-        <?=$campus_distance?>
-    </div>
-
-    <div>
-        Contract length
-        <?=$contract_length?>
-    </div>
-    <div>
-        Internet
-        <?=$internet_type?>
-    </div>
-
-
-    <?php if ($airconditioning === '1'):?>
-    <div>
-        Air Conditioning
-    </div>
-    <?php endif; ?>
-
-    <?php if ($dishwasher === '1'):?>
-    <div>
-        Dishwasher
-    </div>
-    <?php endif; ?>
-
-    <?php if ($clubhouse === '1'):?>
-    <div>
-        Clubhouse
-    </div>
-    <?php endif; ?>
-
-    <div>
-        Rent
-        
-    </div>
-
-    <div>
-        Laundry type
-        <?=$laundry_type?>
-    </div>
-
-    <div>
-        <?=$move_in_date?>
-    </div>
-
-    <?php if (!empty($other_fees)): ?>
-    <div>
-        Other fees
-        <?=$other_fees?>
-    </div>
-    <?php endif;?>
-
-    <?php if (!empty($parking_fee)): ?>
-    <div>
-        Parking fee
-        $<?=$parking_fee?>
-    </div>
-    <?php endif;?>
-
-
-    <div>Parking per unit: <?=$parking_per_unit?></div>
-
-    <?php if ($pets_allowed === '1'): ?>
-    <div>
-        <?php if ($pet_fee) {echo 'Fee: ' . $pet_fee;}?>
-        Deposit:
-        <?=$pet_deposit?>
-        <?=$pet_dep_refund?>
-        Allowed pet types:
-        <?=$pet_type?>
-    </div>
-    <?php endif; ?>
-
-    <div>
-        Security fee: <?=$security_amt?>
-        <?=$security_refund?>
-    </div>
-
-    <div>
-        Student type <?=$student_type?>
-    </div>
-
-    <div>
-        <?=$sublease === '0' ? 'May not sublease' : '' ?>
-    </div>
-
-    <div>
-        Trash: <?=$trash_type?>
-    </div>
-
-    <div>
-        <p>Utility help</p>
-        <p>Water: <?=$util_water?></p>
-        <p>Trash: <?=$util_trash?></p>
-        <p>Power: <?=$util_power?></p>
-    </div>
-
-    <div>
-        Television type: <?=$tv_type?>
-    </div>
-
-    <?php if ($utilities_inc):?>
-    <div>
-        Utilities included
-    </div>
-    <?php endif;?>
-
-    <?php if ($workout_room):?>
-    <div>
-        Workout room
-    </div>
-    <?php endif;?>
-</div>
