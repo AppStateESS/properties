@@ -1,4 +1,5 @@
 import React from 'react'
+/* global $ */
 
 export default class Overlay extends React.Component {
   constructor(props) {
@@ -6,26 +7,20 @@ export default class Overlay extends React.Component {
     this.state = {}
     this.lighten = this.lighten.bind(this)
     this.normal = this.normal.bind(this)
+    this.unlockBody = this.unlockBody.bind(this)
+    this.close = this.close.bind(this)
   }
 
-  overlayStyle() {
-    return {
-      width: '100%',
-      height: '100%',
-      position: 'fixed',
-      top: '0px',
-      left: '0px',
-      backgroundColor: 'white',
-      'zIndex': '100',
-    }
+  componentDidMount(){
+    this.lockBody()
   }
 
-  closeButtonStyle() {
-    return {padding: '5px', float: 'right'}
+  lockBody() {
+    $('body').css('overflow', 'hidden')
   }
 
-  headerStyle() {
-    return {backgroundColor: '#F2F2F2', border : '1px solid #D9D9D9', marginBottom: '1em'}
+  unlockBody() {
+    $('body').css('overflow', 'inherit')
   }
 
   normal() {
@@ -36,18 +31,61 @@ export default class Overlay extends React.Component {
     this.refs.closebutton.style.backgroundColor = '#e3e3e3'
   }
 
+  close() {
+    this.unlockBody()
+    this.props.close()
+  }
+
   render() {
-    const close = {position: 'absolute', bottom: '5px', textAlign: 'center', width: '100%'}
+    const overlayStyle = {
+      width: '100%',
+      position: 'fixed',
+      top: '0px',
+      bottom: '0px',
+      left: '0px',
+      backgroundColor: 'white',
+      zIndex: '100',
+      overflowY: 'scroll',
+      overflowX: 'hidden',
+      padding: '10px'
+    }
+
+    const headerStyle = {
+      backgroundColor: '#F2F2F2',
+      border: '1px solid #D9D9D9',
+      marginBottom: '1em',
+      height: '40px'
+    }
+
+    const titleStyle = {
+      padding: '9px',
+      fontSize: '14px',
+      fontWeight: 'bold'
+    }
+
+    const closeButton = {
+      padding: '5px',
+      float: 'right'
+    }
+
+    const childrenStyle = {
+      paddingBottom : '50px'
+    }
     return (
-      <div style={this.overlayStyle()}>
-        <div style={this.headerStyle()}>
-          <div ref="closebutton" style={this.closeButtonStyle()} onMouseEnter={this.lighten} onMouseLeave={this.normal}><i className=" fa fa-2x fa-times pointer" onClick={this.props.close}></i></div>
-          <div style={{padding: '9px', fontSize: '14px', fontWeight: 'bold'}}>{this.props.title}</div>
+      <div style={overlayStyle}>
+        <div style={headerStyle}>
+          <div
+            ref="closebutton"
+            style={closeButton}
+            onMouseEnter={this.lighten}
+            onMouseLeave={this.normal}>
+            <i className=" fa fa-2x fa-times pointer" onClick={this.close}></i>
+          </div>
+          <div style={titleStyle}>{this.props.title}</div>
         </div>
-        <div style={{clear:'both', padding: '2em'}}>
+        <div style={childrenStyle}>
           {this.props.children}
         </div>
-        <div style={close}><button type="button" className="btn btn-danger btn-lg" onClick={this.props.close}>Cancel</button></div>
       </div>
     )
   }
