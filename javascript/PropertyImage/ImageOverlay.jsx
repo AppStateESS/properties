@@ -2,8 +2,8 @@
 import React from 'react'
 import Overlay from '../Mixin/Overlay.jsx'
 import Dropzone from 'react-dropzone'
-
-/* global $ */
+import Thumb from './Thumb.jsx'
+import ImageFrame from './ImageFrame.jsx'
 
 export default class ImageOverlay extends React.Component {
   constructor(props) {
@@ -11,9 +11,16 @@ export default class ImageOverlay extends React.Component {
   }
 
   render() {
-    let photos
-    if (this.props.photos.length > 0) {
-      photos = this.props.photos.map(function (value, key) {
+    let photos = (
+      <div style={{
+        paddingTop: '2%'
+      }}>
+      <i className="fa fa-camera fa-5x"></i><br/>
+      <h4>Click to browse<br/>- or -<br/>drag image(s) here</h4>
+      </div>
+    )
+    if (this.props.newPhotos.length > 0) {
+      photos = this.props.newPhotos.map(function (value, key) {
         let status
         if (this.props.status[key] !== undefined) {
           status = this.props.status[key]
@@ -22,9 +29,11 @@ export default class ImageOverlay extends React.Component {
       }.bind(this))
     }
 
-    const photoListStyle = {
-      marginBottom: '1em',
-      overflow: 'auto'
+    let currentImages
+    if (this.props.currentPhotos.length > 0) {
+      currentImages = this.props.currentPhotos.map(function (value, key) {
+        return <Thumb {...value} key={key} delete={this.props.delete.bind(null, value.id, key)}/>
+      }.bind(this))
     }
 
     return (
@@ -34,17 +43,15 @@ export default class ImageOverlay extends React.Component {
             ref="dropzone"
             onDrop={this.props.update}
             className="dropzone text-center pointer">
-            <div style={{
-              paddingTop: '2%'
-            }}>
-              <i className="fa fa-camera fa-5x"></i><br/>
-              <h4>Click to browse<br/>- or -<br/>drag image(s) here</h4>
-            </div>
-          </Dropzone>
-          <hr/>
-          <div style={photoListStyle}>
             {photos}
-          </div>
+          </Dropzone>
+          <div><button className="btn btn-default" onClick={this.props.clear}>Clear</button></div>
+          <hr/>
+            <div style={{clear:'both'}}></div>
+            <div>
+            <h4>Current</h4>
+              {currentImages}
+            </div>
         </div>
       </Overlay>
     )
@@ -54,70 +61,9 @@ export default class ImageOverlay extends React.Component {
 ImageOverlay.propTypes = {
   close: React.PropTypes.func,
   update: React.PropTypes.func,
-  photos: React.PropTypes.array,
+  delete: React.PropTypes.func,
+  clear: React.PropTypes.func,
+  newPhotos: React.PropTypes.array,
+  currentPhotos: React.PropTypes.array,
   status: React.PropTypes.array
-}
-
-class ImageFrame extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-  componentDidUpdate() {
-    if (this.props.status.success === false) {
-      $('.tool').tooltip()
-    }
-  }
-
-  render() {
-    const divStyle = {
-      width: '152px',
-      textAlign: 'center',
-      height: '152px',
-      backgroundColor: '#B9B9B9',
-      marginBottom: '4px',
-      border: '1px solid black'
-    }
-    const imageStyle = {
-      maxHeight: '150px',
-      maxWidth: '150px'
-    }
-
-    let flag = (
-      <div>
-        <i className="fa fa-spinner fa-spin fa-2x fa-fw"></i>
-        <span>Uploading...</span>
-      </div>
-    )
-    if (this.props.status) {
-      if (this.props.status.success === true) {
-        flag = <div style={imageStyle}><i className="fa fa-check text-success fa-2x"></i> Success!</div>
-      } else {
-        flag = <div className="tool" style={imageStyle} data-toggle="tooltip" data-placement="bottom" title={this.props.status.error}><i className="fa fa-times text-danger fa-2x"></i> Failure</div>
-      }
-    }
-
-    const outerStyle = {
-      float: 'left',
-      marginRight: '6px',
-      textAlign: 'center'
-    }
-    return (
-      <div style={outerStyle}>
-        <div style={divStyle}>
-          <img src={this.props.image.preview} style={imageStyle}/>
-        </div>
-        {flag}
-      </div>
-    )
-  }
-}
-
-ImageFrame.propTypes = {
-  image: React.PropTypes.object,
-  status: React.PropTypes.object
-}
-
-ImageFrame.defaultProps = {
-  status : {}
 }
