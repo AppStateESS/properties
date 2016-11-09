@@ -128,7 +128,7 @@ export default class PropertyForm extends React.Component {
       errors.address = false
     }
 
-    if (property.monthly_rent.length === 0) {
+    if (property.monthly_rent.length === 0 || property.monthly_rent === '0') {
       errors.monthly_rent = true
       errorFound = true
     } else {
@@ -165,7 +165,7 @@ export default class PropertyForm extends React.Component {
       if (data.error !== undefined) {
         this.setMessage(data.error, 'danger')
       } else {
-        window.location.href = './properties/Property/' + property.id
+        window.location.href = './properties/Property/' + data.id
       }
     }.bind(this)).fail(function (data) {
       this.setMessage(data.responseText, 'danger')
