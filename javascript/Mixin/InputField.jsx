@@ -38,6 +38,10 @@ export default class InputField extends React.Component {
     }
   }
 
+  select(event) {
+    event.target.select()
+  }
+
   render() {
     let inputClass
     if (this.state.errorMessage !== null && this.state.errorMessage.length > 0) {
@@ -57,6 +61,7 @@ export default class InputField extends React.Component {
       className={inputClass}
       onChange={this.props.change}
       onBlur={this.handleBlur}
+      onClick={this.props.selectOnClick === true ? this.select:null}
       disabled={this.props.disabled}
       size={this.props.size}
       maxLength={this.props.maxLength}
@@ -96,6 +101,7 @@ InputField.defaultProps = {
   disabled: false,
   size: null,
   maxLength: null,
+  selectOnClick: true,
   wrap: null
 }
 
@@ -114,7 +120,8 @@ InputField.propTypes = {
   disabled: React.PropTypes.bool,
   size: React.PropTypes.number,
   maxLength: React.PropTypes.number,
-  wrap: React.PropTypes.func
+  wrap: React.PropTypes.func,
+  selectOnClick: React.PropTypes.bool
 }
 
 export const RequiredIcon = () => {
