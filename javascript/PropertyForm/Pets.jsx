@@ -48,8 +48,7 @@ export default class Pets extends React.Component {
               </div>
             </div>
             <div className="col-sm-6">
-              <label>Fee</label>
-              (Non-refundable)
+              <label>Monthly fee</label>
               <div className="input-group">
                 <span className="input-group-addon">$</span>
                 <InputField
