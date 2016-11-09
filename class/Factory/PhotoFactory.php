@@ -48,17 +48,21 @@ class PhotoFactory extends BaseFactory
         return $photo;
     }
 
-    public function delete(Resource $photo)
+    public function delete($photo)
     {
-        
+        if (!is_a($photo, 'properties\Resource\Photo')) {
+            if (is_numeric($photo) && !empty($photo)) {
+                $photo = $this->load($photo);
+            } else {
+                throw \Exception('Empty photo id');
+            }
+        }
+        $photo->delete();
     }
 
-    public function remove($propertyId)
+    public function removeByProperty($propertyId)
     {
-        if (empty($propertyId) || !is_numeric($propertyId)) {
-            throw new \Exception('Property id invalid');
-        }
-        $photo_list = $this->getPhotos($propertyId, null, true);
+        $photo_list = $this->listing($propertyId, null, true);
         if (empty($photo_list)) {
             return true;
         }
@@ -85,16 +89,12 @@ class PhotoFactory extends BaseFactory
         } else {
             throw new \Exception('Property not specified.');
         }
+        $tbl->addField('id');
         $tbl->addField('path');
-        /*
-          while ($col = $db->selectColumn()) {
-          $rows[] = $this->thumbnailed($col);
-          }
-         * 
-         */
-        while ($col = $db->selectColumn()) {
-            $rows[] = array('original' => $col,
-                'thumbnail' => $this->thumbnailed($col));
+        $db->loadSelectStatement();
+        while ($row = $db->fetch()) {
+            $rows[] = array('id' => $row['id'], 'original' => $row['path'],
+                'thumbnail' => $this->thumbnailed($row['path']));
         }
         return $rows;
     }
@@ -102,6 +102,9 @@ class PhotoFactory extends BaseFactory
     public function listing($property_id = null, $manager_id = null,
             $as_resource = false)
     {
+        if (empty($property_id) || !is_numeric($property_id)) {
+            throw new \Exception('Property id invalid');
+        }
         $db = Database::getDB();
         $tbl = $db->addTable('prop_photo');
         if (!empty($property_id)) {
@@ -134,32 +137,32 @@ class PhotoFactory extends BaseFactory
 
         $propertyFactory = new \properties\Factory\PropertyFactory;
         $property = $propertyFactory->load($propertyId);
-        foreach ($_FILES as $pic) {
-            try {
-                $this->resize($pic['tmp_name']);
-                $title = $this->createTitleFromFileName($pic['tmp_name']);
-                $size = getimagesize($pic['tmp_name']);
-                $photo = $this->build();
-                $photo->cid = $property->contact_id;
-                $photo->width = $size[0];
-                $photo->height = $size[1];
-                $photo->pid = $property->id;
-                $photo->title = $title;
-                $photo->main_pic = false;
-                $photo->path = $this->moveImage($pic, $property->contact_id);
-                self::saveResource($photo);
-                $result['success'] = true;
-            } catch (properties\Exception\FileSaveFailure $e) {
-                $result['success'] = false;
-                $result['error'] = $e->getMessage();
-            } catch (properties\Exception\WrongImageType $e) {
-                $result['success'] = false;
-                $result['error'] = $e->getMessage();
-            } catch (\Exception $e) {
-                $result['success'] = false;
-                $result['error'] = $e->getMessage();
-            }
+        $pic = $_FILES['photo'];
+        try {
+            $this->resize($pic['tmp_name']);
+            $title = $this->createTitleFromFileName($pic['tmp_name']);
+            $size = getimagesize($pic['tmp_name']);
+            $photo = $this->build();
+            $photo->cid = $property->contact_id;
+            $photo->width = $size[0];
+            $photo->height = $size[1];
+            $photo->pid = $property->id;
+            $photo->title = $title;
+            $photo->main_pic = false;
+            $photo->path = $this->moveImage($pic, $property->contact_id);
+            self::saveResource($photo);
+            $result['photo'] = array('original' => $photo->path, 'thumbnail' => $photo->getThumbnail(), 'id' => $photo->getId());
+        } catch (properties\Exception\FileSaveFailure $e) {
+            $result['success'] = false;
+            $result['error'] = $e->getMessage();
+        } catch (properties\Exception\WrongImageType $e) {
+            $result['success'] = false;
+            $result['error'] = $e->getMessage();
+        } catch (\Exception $e) {
+            $result['success'] = false;
+            $result['error'] = $e->getMessage();
         }
+        $result['success'] = true;
         return $result;
     }
 
