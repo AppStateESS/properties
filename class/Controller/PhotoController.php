@@ -75,7 +75,7 @@ class PhotoController extends BaseController
             case 'list':
                 $json = $this->factory->thumbs($propertyId, null, false, true);
                 break;
-            
+
             case 'view':
                 $json = array();
                 break;
@@ -83,6 +83,22 @@ class PhotoController extends BaseController
         $view = new \View\JsonView($json);
 
         return $view;
+    }
+
+    public function delete(\Request $request)
+    {
+        if (!$this->factory->role->allow()) {
+            throw new \properties\Exception\PrivilegeMissing;
+        }
+        $id = $request->shiftCommand();
+        $this->factory->delete($id);
+        if ($request->isAjax()) {
+            $view = new \View\JsonView(array('success' => true));
+            $response = new \Response($view);
+            return $response;
+        } else {
+            \Server::forward('./properties/Property/');
+        }
     }
 
 }
