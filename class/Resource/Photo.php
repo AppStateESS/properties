@@ -43,9 +43,9 @@ class Photo extends Base
         parent::__construct();
         $this->cid = new \phpws2\Variable\Integer(0, 'cid');
         $this->width = new \phpws2\Variable\Integer(0, 'width');
-        $this->width->setRange(5, PROP_MAX_IMAGE_WIDTH);
+        $this->width->setRange(5);
         $this->height = new \phpws2\Variable\Integer(0, 'height');
-        $this->height->setRange(5, PROP_MAX_IMAGE_HEIGHT);
+        $this->height->setRange(5);
         $this->pid = new \phpws2\Variable\Integer(0, 'pid');
         $this->path = new \phpws2\Variable\File(null, 'path');
         $this->path->setLimit(255);
@@ -55,4 +55,15 @@ class Photo extends Base
         
     }
     
+    public function delete()
+    {
+        unlink($this->path);
+        unlink($this->getThumbnail());
+        parent::delete();
+    }
+    
+    public function getThumbnail()
+    {
+        return preg_replace('/\.(jpg|jpeg|gif|png)$/i', '_tn.\\1', $this->path);
+    }
 }
