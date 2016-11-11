@@ -1,0 +1,79 @@
+.contact-info.bg-primary {
+    padding: 4px 14px;
+    border: 2px solid #337AB7;
+    border-radius : 6px;
+    color : white;
+}
+
+.contact-info.bg-primary a {
+    color : white;
+    font-size : 16px;
+}
+
+.contact-info.bg-primary a:hover {
+    text-decoration: none;
+}
+
+.contact-link {
+    border : 2px solid #337AB7;
+    border-radius: 4px;
+    padding : 2px;
+}
+
+.contact-link:hover {
+    background-color : #6DB3F0;
+    border : 2px solid #6DB3F0;
+    cursor:pointer;
+}
+
+.contact-link a {
+    cursor:pointer;
+}
+
+.property-view .contact-info h4 {
+    font-size : 22px;
+    color : white;
+    margin:0px;
+    border: none;
+}
+
+.property-view .header {
+    font-size : 20px;
+}
+
+.property-view {
+    font-size : 16px;
+}
+
+.property-view h4 {
+    margin-top : 1em;
+    padding-bottom : 6px;
+    border-bottom : 1px solid #337AB7;
+    color : #337AB7;
+}
+
+.property-view .description {
+    margin-top : 1em;
+}
+
+h3.property-address {
+    border-bottom : 1px solid #337AB7;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+}
+
+h2.property-title, h3.property-address {
+    margin : 0px 0px 5px 0px;
+}
+
+#photo .image-gallery-fullscreen-button, #photo .image-gallery-play-button {
+    z-index : 5;
+}
+
+.dropzone {
+    border-style: dashed;
+    border-radius: 6px;
+    min-height: 220px;
+    max-height : 440px;
+    overflow: auto;
+}

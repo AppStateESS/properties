@@ -1,0 +1,13 @@
+.property-row {
+    margin-bottom : 1em;
+}
+.property-row .title, .property-row .rent {
+    font-size : 1.6em;
+}
+
+.property-row .title {
+}
+
+.room-bath {
+    font-size : 1.3em;
+}

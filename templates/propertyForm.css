@@ -1,0 +1,35 @@
+#propertyform .row {
+    border : 1px solid #e3e3e3;
+}
+
+#propertyform .row > div {
+    padding : 1em;
+}
+
+#propertyform .form-group {
+    margin: 0;
+}
+
+#propertyform label {
+    font-size : 1.2em;
+}
+
+.form-group {
+    margin-bottom : 2em;
+}
+
+.single-input {
+    font-size : 1.5em;
+    text-align: center;
+    border : 1px solid #e3e3e3;
+    border-radius : 5px;
+}
+
+.submit-form {
+    padding: 1em;
+    text-align : center;
+}
+.current-images {
+    border : 1px solid #bbb;
+    overflow: auto;
+}
