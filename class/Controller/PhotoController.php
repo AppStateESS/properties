@@ -87,11 +87,12 @@ class PhotoController extends BaseController
 
     public function delete(\Request $request)
     {
-        if (!$this->factory->role->allow()) {
-            throw new \properties\Exception\PrivilegeMissing;
+        $this->checkCommand($request);
+        if ($this->resource->id == 0) {
+            throw new \Exception('Cannot delete empty object');
         }
-        $id = $request->shiftCommand();
-        $this->factory->delete($id);
+        
+        $this->factory->delete($this->resource);
         if ($request->isAjax()) {
             $view = new \View\JsonView(array('success' => true));
             $response = new \Response($view);
@@ -99,6 +100,26 @@ class PhotoController extends BaseController
         } else {
             \Server::forward('./properties/Property/');
         }
+    }
+
+    public function patch(\Request $request)
+    {
+        $this->checkCommand($request);
+        
+        if ($this->resource->id == 0) {
+            throw new \Exception('Cannot patch empty object');
+        }
+
+        $variableName = $request->pullPatchString('varname');
+        switch ($variableName) {
+            case 'main_pic':
+                $this->factory->removeMain($this->resource);
+                $this->factory->patch($this->resource, 'main_pic', 1);
+                break;
+        }
+        $view = new \View\JsonView(array('success' => true));
+        $response = new \Response($view);
+        return $response;
     }
 
 }
