@@ -42,37 +42,7 @@ label, input {
 .marginLeft {
     margin-left : 2em;
 }
-.form-group {
-    margin-bottom : 2em;
-}
 
-.single-input {
-    font-size : 1.5em;
-    text-align: center;
-    border : 1px solid #e3e3e3;
-    border-radius : 5px;
-}
-
-.property-form .row {
-    border : 1px solid #e3e3e3;
-}
-
-.property-form .row > div {
-    padding : 1em;
-}
-
-.property-form .form-group {
-    margin: 0;
-}
-
-.property-form label {
-    font-size : 1.2em;
-}
-
-.submit-form {
-    padding: 1em;
-    text-align : center;
-}
 .pointer {
     cursor:pointer;
 }
@@ -86,89 +56,4 @@ label, input {
 .form-section a {
     font-size : 1.2em;
     color: #337AB7;
-}
-
-.property-row .title, .property-row .rent {
-    font-size : 1.1em;
-    font-weight:bold;
-}
-
-.dropzone {
-    border-style: dashed;
-    border-radius: 6px;
-    min-height: 220px;
-    max-height : 440px;
-    overflow: auto;
-}
-
-h2.property-title, h3.property-address {
-    margin : 0px 0px 5px 0px;
-}
-
-h3.property-address {
-    border-bottom : 1px solid #337AB7;
-    padding-bottom: 8px;
-    margin-bottom: 12px;
-}
-
-.contact-info.bg-primary {
-    padding: 4px 14px;
-    border: 2px solid #337AB7;
-    border-radius : 6px;
-    color : white;
-}
-
-.contact-info.bg-primary a {
-    color : white;
-    font-size : 16px;
-}
-
-.contact-info.bg-primary a:hover {
-    text-decoration: none;
-}
-
-.property-view .contact-info h4 {
-    font-size : 22px;
-    color : white;
-    margin:0px;
-    border: none;
-}
-
-.contact-link {
-    border : 2px solid #337AB7;
-    border-radius: 4px;
-    padding : 2px;
-}
-
-.contact-link:hover {
-    background-color : #6DB3F0;
-    border : 2px solid #6DB3F0;
-    cursor:pointer;
-}
-
-.contact-link a {
-    cursor:pointer;
-}
-
-.property-view .header {
-    font-size : 20px;
-}
-
-.property-view {
-    font-size : 16px;
-}
-
-.property-view h4 {
-    padding-bottom : 6px;
-    border-bottom : 1px solid #337AB7;
-    color : #337AB7;
-}
-
-.property-view .description {
-    margin-top : 1em;
-}
-
-.current-images {
-    border : 1px solid #bbb;
-    overflow: auto;
 }
