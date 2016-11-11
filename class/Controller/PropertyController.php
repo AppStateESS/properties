@@ -44,7 +44,6 @@ class PropertyController extends BaseController
     public function getHtmlView($data, \Request $request)
     {
         \Layout::addStyle('properties');
-
         try {
             $command = $this->checkCommand($request, 'list');
         } catch (\properties\Exception\ResourceNotFound $e) {
@@ -55,18 +54,22 @@ class PropertyController extends BaseController
         $managerId = $request->pullGetInteger('managerId', true);
         switch ($command) {
             case 'list':
+                \Layout::addStyle('properties', 'propertyListing.css');
                 $content = $this->reactView('property');
                 break;
 
             case 'create';
+                \Layout::addStyle('properties', 'propertyForm.css');
                 $content = $this->editView($managerId);
                 break;
 
             case 'view':
+                \Layout::addStyle('properties', 'propertyView.css');
                 $content = $this->view();
                 break;
 
             case 'edit':
+                \Layout::addStyle('properties', 'propertyForm.css');
                 $content = $this->editView();
                 break;
 
@@ -122,7 +125,8 @@ EOF;
     {
         if ($this->resource->getId()) {
             Navbar::addButton($this->deleteButton($this->resource->id));
-            $property = json_encode($this->resource->getVariablesAsValue());
+            $property = json_encode($this->resource->getVariablesAsValue(true,
+                            array('approved', 'active')));
         } else {
             $this->resource->contact_id = $managerId;
             $managerFactory = new ManagerFactory;
@@ -153,7 +157,7 @@ EOF;
         switch ($command) {
             case 'list':
                 $manager_id = $request->pullGetInteger('managerId', true);
-                $json['properties'] = $this->factory->listing($manager_id,
+                $json['properties'] = $this->factory->listing($manager_id, true,
                         $request->pullGetString('search', true),
                         $request->pullGetInteger('limit', true));
                 if ($manager_id) {
@@ -179,9 +183,7 @@ EOF;
 
     public function post(\Request $request)
     {
-        if (!$this->factory->role->allow()) {
-            throw new \properties\Exception\PrivilegeMissing;
-        }
+        $this->checkCommand($request);
         try {
             $result = $this->factory->post($request);
         } catch (\properties\Exception\PropertySaveFailure $e) {
@@ -198,11 +200,9 @@ EOF;
     
     public function delete(\Request $request)
     {
-        if (!$this->factory->role->allow()) {
-            throw new \properties\Exception\PrivilegeMissing;
-        }
-        $id = $request->shiftCommand();
-        $this->factory->delete($id);
+        $id = $this->checkCommand($request);
+
+        $this->factory->delete($this->resource);
         if ($request->isAjax()) {
             $view = new \View\JsonView(array('success'=>true));
             $response = new \Response($view);
