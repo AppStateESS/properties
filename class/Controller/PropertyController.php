@@ -51,6 +51,7 @@ class PropertyController extends BaseController
         } catch (\properties\Exception\BadCommand $e) {
             return $this->errorPage($e);
         }
+        
         $managerId = $request->pullGetInteger('managerId', true);
         switch ($command) {
             case 'list':
@@ -63,18 +64,16 @@ class PropertyController extends BaseController
                 $content = $this->editView($managerId);
                 break;
 
-            case 'view':
-                \Layout::addStyle('properties', 'propertyView.css');
-                $content = $this->view();
-                break;
-
             case 'edit':
                 \Layout::addStyle('properties', 'propertyForm.css');
                 $content = $this->editView();
                 break;
 
+            case 'view':
             default:
-                throw new \properties\Exception\BadCommand;
+                \Layout::addStyle('properties', 'propertyView.css');
+                $content = $this->view();
+                break;
         }
         $view = new \phpws2\View\HtmlView($content);
 
@@ -156,10 +155,8 @@ EOF;
 
         switch ($command) {
             case 'list':
+                $json['properties'] = $this->factory->listing($request, true);
                 $manager_id = $request->pullGetInteger('managerId', true);
-                $json['properties'] = $this->factory->listing($manager_id, true,
-                        $request->pullGetString('search', true),
-                        $request->pullGetInteger('limit', true));
                 if ($manager_id) {
                     $managerFactory = new ManagerFactory();
                     $manager = $managerFactory->load($manager_id);
@@ -167,10 +164,6 @@ EOF;
                 } else {
                     $json['manager'] = null;
                 }
-                break;
-
-            case 'view':
-                //$json['property'] = $this->factory->
                 break;
 
             default:
