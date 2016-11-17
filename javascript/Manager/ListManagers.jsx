@@ -25,9 +25,19 @@ class ListManagers extends React.Component {
       }.bind(this))
     }
     return (
-      <div>
-        {listRows}
-      </div>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Manager</th>
+            <th>Properties</th>
+            <th>Contact</th>
+            {this.props.admin === true ? <th>Options</th>:null}
+          </tr>
+        </thead>
+        <tbody>
+          {listRows}
+        </tbody>
+      </table>
     )
   }
 }
