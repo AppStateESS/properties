@@ -16,7 +16,7 @@ webpackJsonp([4],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _PropertyImage = __webpack_require__(/*! ./PropertyImage.jsx */ 390);
+	var _PropertyImage = __webpack_require__(/*! ./PropertyImage.jsx */ 392);
 	
 	var _PropertyImage2 = _interopRequireDefault(_PropertyImage);
 	
@@ -26,7 +26,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 195:
+/***/ 182:
 /*!**********************************!*\
   !*** ./javascript/Mixin/Bind.js ***!
   \**********************************/
@@ -49,7 +49,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 387:
+/***/ 389:
 /*!**************************************!*\
   !*** ./javascript/Mixin/Overlay.jsx ***!
   \**************************************/
@@ -205,7 +205,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 390:
+/***/ 392:
 /*!****************************************************!*\
   !*** ./javascript/PropertyImage/PropertyImage.jsx ***!
   \****************************************************/
@@ -223,11 +223,11 @@ webpackJsonp([4],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _ImageOverlay = __webpack_require__(/*! ./ImageOverlay.jsx */ 391);
+	var _ImageOverlay = __webpack_require__(/*! ./ImageOverlay.jsx */ 393);
 	
 	var _ImageOverlay2 = _interopRequireDefault(_ImageOverlay);
 	
-	var _Bind = __webpack_require__(/*! ../Mixin/Bind.js */ 195);
+	var _Bind = __webpack_require__(/*! ../Mixin/Bind.js */ 182);
 	
 	var _Bind2 = _interopRequireDefault(_Bind);
 	
@@ -255,7 +255,7 @@ webpackJsonp([4],{
 	      currentPhotos: [],
 	      status: []
 	    };
-	    var methods = ['overlayOn', 'overlayOff', 'addPhotos', 'clearNewPhotos', 'delete'];
+	    var methods = ['overlayOn', 'overlayOff', 'addPhotos', 'clearNewPhotos', 'delete', 'setMain'];
 	    (0, _Bind2.default)(methods, _this);
 	    return _this;
 	  }
@@ -338,6 +338,25 @@ webpackJsonp([4],{
 	      });
 	    }
 	  }, {
+	    key: 'setMain',
+	    value: function setMain(id) {
+	      $.ajax({
+	        url: './properties/Photo/' + id,
+	        data: {
+	          varname: 'main_pic'
+	        },
+	        method: 'PATCH',
+	        success: function () {
+	          var photos = this.state.currentPhotos;
+	          photos.forEach(function (value, idx, photos) {
+	            photos[idx].main_pic = value.id == id ? '1' : '0';
+	          });
+	          this.setState({ currentPhotos: photos });
+	        }.bind(this),
+	        error: function () {}.bind(this)
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var overlay = void 0;
@@ -349,6 +368,7 @@ webpackJsonp([4],{
 	          update: this.addPhotos,
 	          newPhotos: this.state.newPhotos,
 	          currentPhotos: this.state.currentPhotos,
+	          setMain: this.setMain,
 	          status: this.state.status });
 	      }
 	      return _react2.default.createElement(
@@ -371,7 +391,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 391:
+/***/ 393:
 /*!***************************************************!*\
   !*** ./javascript/PropertyImage/ImageOverlay.jsx ***!
   \***************************************************/
@@ -391,19 +411,19 @@ webpackJsonp([4],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Overlay = __webpack_require__(/*! ../Mixin/Overlay.jsx */ 387);
+	var _Overlay = __webpack_require__(/*! ../Mixin/Overlay.jsx */ 389);
 	
 	var _Overlay2 = _interopRequireDefault(_Overlay);
 	
-	var _reactDropzone = __webpack_require__(/*! react-dropzone */ 392);
+	var _reactDropzone = __webpack_require__(/*! react-dropzone */ 394);
 	
 	var _reactDropzone2 = _interopRequireDefault(_reactDropzone);
 	
-	var _Thumb = __webpack_require__(/*! ./Thumb.jsx */ 393);
+	var _Thumb = __webpack_require__(/*! ./Thumb.jsx */ 395);
 	
 	var _Thumb2 = _interopRequireDefault(_Thumb);
 	
-	var _ImageFrame = __webpack_require__(/*! ./ImageFrame.jsx */ 394);
+	var _ImageFrame = __webpack_require__(/*! ./ImageFrame.jsx */ 396);
 	
 	var _ImageFrame2 = _interopRequireDefault(_ImageFrame);
 	
@@ -457,7 +477,10 @@ webpackJsonp([4],{
 	      var currentImages = void 0;
 	      if (this.props.currentPhotos.length > 0) {
 	        currentImages = this.props.currentPhotos.map(function (value, key) {
-	          return _react2.default.createElement(_Thumb2.default, _extends({}, value, { key: key, 'delete': this.props.delete.bind(null, value.id, key) }));
+	          return _react2.default.createElement(_Thumb2.default, _extends({}, value, {
+	            key: key,
+	            'delete': this.props.delete.bind(null, value.id, key),
+	            setMain: this.props.setMain.bind(this, value.id) }));
 	        }.bind(this));
 	      }
 	
@@ -485,7 +508,9 @@ webpackJsonp([4],{
 	            )
 	          ),
 	          _react2.default.createElement('hr', null),
-	          _react2.default.createElement('div', { style: { clear: 'both' } }),
+	          _react2.default.createElement('div', { style: {
+	              clear: 'both'
+	            } }),
 	          _react2.default.createElement(
 	            'div',
 	            null,
@@ -514,12 +539,13 @@ webpackJsonp([4],{
 	  clear: _react2.default.PropTypes.func,
 	  newPhotos: _react2.default.PropTypes.array,
 	  currentPhotos: _react2.default.PropTypes.array,
-	  status: _react2.default.PropTypes.array
+	  status: _react2.default.PropTypes.array,
+	  setMain: _react2.default.PropTypes.func
 	};
 
 /***/ },
 
-/***/ 392:
+/***/ 394:
 /*!****************************************!*\
   !*** ./~/react-dropzone/dist/index.js ***!
   \****************************************/
@@ -935,7 +961,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 393:
+/***/ 395:
 /*!********************************************!*\
   !*** ./javascript/PropertyImage/Thumb.jsx ***!
   \********************************************/
@@ -967,20 +993,31 @@ webpackJsonp([4],{
 	  function Thumb(props) {
 	    _classCallCheck(this, Thumb);
 	
-	    return _possibleConstructorReturn(this, (Thumb.__proto__ || Object.getPrototypeOf(Thumb)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (Thumb.__proto__ || Object.getPrototypeOf(Thumb)).call(this, props));
+	
+	    _this.delete = _this.delete.bind(_this);
+	    return _this;
 	  }
 	
 	  _createClass(Thumb, [{
+	    key: 'delete',
+	    value: function _delete(e) {
+	      e.preventDefault();
+	      this.props.delete();
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var outer = {
-	        width: '180px',
-	        height: '180px',
+	        width: '184px',
+	        height: '184px',
 	        float: 'left',
 	        margin: '0px 8px 8px 0',
 	        textAlign: 'center',
 	        backgroundColor: '#e3e3e3',
-	        border: '1px solid #bbb',
+	        borderWidth: '2px',
+	        borderStyle: 'solid',
+	        borderColor: this.props.main_pic === '1' ? 'blue' : '#bbb',
 	        position: 'relative'
 	      };
 	
@@ -988,16 +1025,29 @@ webpackJsonp([4],{
 	        position: 'absolute',
 	        display: 'block',
 	        bottom: '0px',
-	        left: '82px',
+	        left: '72px',
 	        cursor: 'pointer'
+	      };
+	
+	      var main = {
+	        position: 'absolute',
+	        top: '0px',
+	        width: '100%',
+	        backgroundColor: 'rgba(0,0,255,0.4)',
+	        color: 'white'
 	      };
 	      return _react2.default.createElement(
 	        'div',
-	        { style: outer },
+	        { style: outer, onClick: this.props.setMain },
+	        this.props.main_pic === '1' ? _react2.default.createElement(
+	          'div',
+	          { style: main },
+	          'Main photo'
+	        ) : null,
 	        _react2.default.createElement('img', { src: this.props.thumbnail }),
 	        _react2.default.createElement(
 	          'span',
-	          { className: 'fa-stack fa-lg', style: inner, onClick: this.props.delete },
+	          { className: 'fa-stack fa-lg', style: inner, onClick: this.delete },
 	          _react2.default.createElement('i', { className: 'text-danger fa fa-circle fa-stack-2x' }),
 	          _react2.default.createElement('i', { className: 'text-danger fa fa-trash-o fa-stack-1x fa-inverse' })
 	        )
@@ -1013,13 +1063,19 @@ webpackJsonp([4],{
 	
 	Thumb.propTypes = {
 	  thumbnail: _react2.default.PropTypes.string,
+	  main_pic: _react2.default.PropTypes.string,
 	  id: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
-	  delete: _react2.default.PropTypes.func
+	  delete: _react2.default.PropTypes.func,
+	  setMain: _react2.default.PropTypes.func
+	};
+	
+	Thumb.defaultProps = {
+	  main: false
 	};
 
 /***/ },
 
-/***/ 394:
+/***/ 396:
 /*!*************************************************!*\
   !*** ./javascript/PropertyImage/ImageFrame.jsx ***!
   \*************************************************/

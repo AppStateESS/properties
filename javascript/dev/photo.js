@@ -16,7 +16,7 @@ webpackJsonp([1],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _Photo = __webpack_require__(/*! ./Photo.jsx */ 182);
+	var _Photo = __webpack_require__(/*! ./Photo.jsx */ 183);
 	
 	var _Photo2 = _interopRequireDefault(_Photo);
 	
@@ -90,7 +90,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 182:
+/***/ 183:
 /*!************************************!*\
   !*** ./javascript/Photo/Photo.jsx ***!
   \************************************/
@@ -108,7 +108,7 @@ webpackJsonp([1],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactImageGallery = __webpack_require__(/*! react-image-gallery */ 183);
+	var _reactImageGallery = __webpack_require__(/*! react-image-gallery */ 184);
 	
 	var _reactImageGallery2 = _interopRequireDefault(_reactImageGallery);
 	
@@ -124,7 +124,7 @@ webpackJsonp([1],{
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	__webpack_require__(/*! react-image-gallery/styles/css/image-gallery.css */ 185);
+	__webpack_require__(/*! react-image-gallery/styles/css/image-gallery.css */ 186);
 	
 	/* global $, require, propertyId, loadPhotos, currentPhotos */
 	
@@ -183,11 +183,10 @@ webpackJsonp([1],{
 	          infinite: true,
 	          showFullscreenButton: true,
 	          showPlayButton: true,
-	          showThumbnails: !this.state.fullscreen,
+	          showThumbnails: true,
 	          showIndex: true,
 	          showNav: true,
-	          slideInterval: 4000,
-	          slideOnThumbnailHover: true });
+	          slideInterval: 4000 });
 	      } else {
 	        images = _react2.default.createElement(
 	          'div',
@@ -212,7 +211,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 183:
+/***/ 184:
 /*!******************************************************!*\
   !*** ./~/react-image-gallery/build/image-gallery.js ***!
   \******************************************************/
@@ -232,7 +231,7 @@ webpackJsonp([1],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactSwipeable = __webpack_require__(/*! react-swipeable */ 184);
+	var _reactSwipeable = __webpack_require__(/*! react-swipeable */ 185);
 	
 	var _reactSwipeable2 = _interopRequireDefault(_reactSwipeable);
 	
@@ -1148,7 +1147,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 184:
+/***/ 185:
 /*!********************************************!*\
   !*** ./~/react-swipeable/lib/Swipeable.js ***!
   \********************************************/
@@ -1365,7 +1364,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 185:
+/***/ 186:
 /*!************************************************************!*\
   !*** ./~/react-image-gallery/styles/css/image-gallery.css ***!
   \************************************************************/
@@ -1374,10 +1373,10 @@ webpackJsonp([1],{
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../css-loader!./image-gallery.css */ 186);
+	var content = __webpack_require__(/*! !./../../../css-loader!./image-gallery.css */ 187);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../../style-loader/addStyles.js */ 188)(content, {});
+	var update = __webpack_require__(/*! ./../../../style-loader/addStyles.js */ 189)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -1395,13 +1394,13 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 186:
+/***/ 187:
 /*!***************************************************************************!*\
   !*** ./~/css-loader!./~/react-image-gallery/styles/css/image-gallery.css ***!
   \***************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../../css-loader/lib/css-base.js */ 187)();
+	exports = module.exports = __webpack_require__(/*! ./../../../css-loader/lib/css-base.js */ 188)();
 	// imports
 	
 	
@@ -1413,7 +1412,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 187:
+/***/ 188:
 /*!**************************************!*\
   !*** ./~/css-loader/lib/css-base.js ***!
   \**************************************/
@@ -1473,7 +1472,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 188:
+/***/ 189:
 /*!*************************************!*\
   !*** ./~/style-loader/addStyles.js ***!
   \*************************************/

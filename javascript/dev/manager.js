@@ -60,6 +60,10 @@ webpackJsonp([0],{
 	
 	var _Waiting2 = _interopRequireDefault(_Waiting);
 	
+	var _Bind = __webpack_require__(/*! ../Mixin/Bind.js */ 182);
+	
+	var _Bind2 = _interopRequireDefault(_Bind);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -88,9 +92,7 @@ webpackJsonp([0],{
 	    _this.search = '';
 	    var bindable = ['clearSearch', 'dropManager', 'getMessage', 'load', 'fillForm', 'searchManager', 'setMessage', 'updateManager'];
 	
-	    bindable.map(function (v) {
-	      this[v] = this[v].bind(this);
-	    }.bind(_this));
+	    (0, _Bind2.default)(bindable, _this);
 	    return _this;
 	  }
 	
@@ -312,9 +314,41 @@ webpackJsonp([0],{
 	        }.bind(this));
 	      }
 	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        listRows
+	        'table',
+	        { className: 'table' },
+	        _react2.default.createElement(
+	          'thead',
+	          null,
+	          _react2.default.createElement(
+	            'tr',
+	            null,
+	            _react2.default.createElement(
+	              'th',
+	              null,
+	              'Manager'
+	            ),
+	            _react2.default.createElement(
+	              'th',
+	              null,
+	              'Properties'
+	            ),
+	            _react2.default.createElement(
+	              'th',
+	              null,
+	              'Contact'
+	            ),
+	            this.props.admin === true ? _react2.default.createElement(
+	              'th',
+	              null,
+	              'Options'
+	            ) : null
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'tbody',
+	          null,
+	          listRows
+	        )
 	      );
 	    }
 	  }]);
@@ -432,14 +466,12 @@ webpackJsonp([0],{
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      //let lastLog = 'Never'
+	      var lastLog = void 0;
 	
-	      /*
-	      if (this.props.last_log > 0) {
-	        let lastDate = new Date(this.props.last_log * 1000)
-	        lastLog = lastDate.toDateString()
+	      if (this.props.last_log !== null) {
+	        var lastDate = new Date(this.props.last_log * 1000);
+	        lastLog = lastDate.toDateString();
 	      }
-	      */
 	
 	      var alabel = null;
 	      var aicon = null;
@@ -489,14 +521,14 @@ webpackJsonp([0],{
 	        _react2.default.createElement(
 	          'em',
 	          null,
-	          'No properties'
+	          'None'
 	        )
 	      );
 	      if (this.props.property_count > 0) {
 	        properties = _react2.default.createElement(
 	          'a',
 	          {
-	            href: './properties/Property/?managerId={this.props.id}',
+	            href: './properties/Property/?managerId=' + this.props.id,
 	            className: 'btn btn-default' },
 	          'View Properties'
 	        );
@@ -505,7 +537,7 @@ webpackJsonp([0],{
 	      var co = null;
 	      if (this.props.first_name.length > 0) {
 	        co = _react2.default.createElement(
-	          'span',
+	          'small',
 	          null,
 	          '(c/o ',
 	          this.props.first_name,
@@ -518,12 +550,11 @@ webpackJsonp([0],{
 	      var phone = 'tel:+1' + this.props.phone.replace(/[^\d]/g, '');
 	
 	      return _react2.default.createElement(
-	        'div',
-	        {
-	          className: this.props.active === '0' ? 'bg-danger row manager-row' : 'row manager-row' },
+	        'tr',
+	        { className: this.props.active === '0' ? 'bg-danger' : '' },
 	        _react2.default.createElement(
-	          'div',
-	          { className: 'col-sm-3' },
+	          'td',
+	          null,
 	          _react2.default.createElement(
 	            'span',
 	            { className: 'company-name' },
@@ -533,13 +564,13 @@ webpackJsonp([0],{
 	          co
 	        ),
 	        _react2.default.createElement(
-	          'div',
-	          { className: 'col-sm-3' },
+	          'td',
+	          null,
 	          properties
 	        ),
 	        _react2.default.createElement(
-	          'div',
-	          { className: 'col-sm-4' },
+	          'td',
+	          null,
 	          _react2.default.createElement(LinkToButton, { url: phone, icon: 'fa-phone', label: this.props.phone }),
 	          _react2.default.createElement(Website, { url: this.props.company_url }),
 	          _react2.default.createElement(LinkToButton, {
@@ -547,9 +578,9 @@ webpackJsonp([0],{
 	            icon: 'fa-envelope-o',
 	            label: this.props.email_address })
 	        ),
-	        this.props.admin ? _react2.default.createElement(
-	          'div',
-	          { className: 'col-sm-2' },
+	        this.props.admin === true ? _react2.default.createElement(
+	          'td',
+	          null,
 	          optionList
 	        ) : null
 	      );
@@ -562,7 +593,7 @@ webpackJsonp([0],{
 	ManagerRow.defaultProps = {
 	  phone: '',
 	  email_address: '',
-	  last_log: 0,
+	  last_log: null,
 	  company_url: '',
 	  first_name: '',
 	  last_name: '',
@@ -570,22 +601,22 @@ webpackJsonp([0],{
 	};
 	
 	ManagerRow.propTypes = {
-	  id: _react2.default.PropTypes.string,
-	  phone: _react2.default.PropTypes.string,
+	  property_count: _react2.default.PropTypes.string,
 	  email_address: _react2.default.PropTypes.string,
 	  company_name: _react2.default.PropTypes.string,
+	  showProperties: _react2.default.PropTypes.func,
 	  company_url: _react2.default.PropTypes.string,
 	  first_name: _react2.default.PropTypes.string,
 	  last_name: _react2.default.PropTypes.string,
 	  last_log: _react2.default.PropTypes.string,
-	  property_count: _react2.default.PropTypes.string,
-	  active: _react2.default.PropTypes.string,
 	  fillForm: _react2.default.PropTypes.func,
+	  active: _react2.default.PropTypes.string,
+	  message: _react2.default.PropTypes.func,
+	  phone: _react2.default.PropTypes.string,
 	  remove: _react2.default.PropTypes.func,
 	  reload: _react2.default.PropTypes.func,
-	  showProperties: _react2.default.PropTypes.func,
-	  message: _react2.default.PropTypes.func,
-	  admin: _react2.default.PropTypes.bool
+	  admin: _react2.default.PropTypes.bool,
+	  id: _react2.default.PropTypes.string
 	};
 	
 	var Website = function (_React$Component2) {
@@ -601,7 +632,7 @@ webpackJsonp([0],{
 	    key: 'render',
 	    value: function render() {
 	      if (this.props.url.length > 0) {
-	        return _react2.default.createElement(LinkToButton, { url: this.props.url, label: this.props.url, icon: 'fa-link' });
+	        return _react2.default.createElement(LinkToButton, { url: this.props.url, label: 'Website', icon: 'fa-link' });
 	      } else {
 	        return null;
 	      }
@@ -634,12 +665,18 @@ webpackJsonp([0],{
 	        null,
 	        _react2.default.createElement(
 	          'a',
-	          { href: this.props.url, className: 'link-button visible-xs-inline-block btn btn-primary' },
+	          {
+	            href: this.props.url,
+	            target: '_blank',
+	            className: 'link-button visible-xs-inline-block btn btn-primary' },
 	          _react2.default.createElement('i', { className: bigIconClass })
 	        ),
 	        _react2.default.createElement(
 	          'a',
-	          { href: this.props.url, className: 'visible-sm visible-md visible-lg' },
+	          {
+	            href: this.props.url,
+	            className: 'visible-sm visible-md visible-lg',
+	            target: '_blank' },
 	          _react2.default.createElement('i', { className: smallIconClass }),
 	          '\xA0',
 	          this.props.label
@@ -759,9 +796,7 @@ webpackJsonp([0],{
 	
 	Dropdown.propTypes = {
 	  label: _react2.default.PropTypes.string,
-	  icon: _react2.default.PropTypes.element,
-	  options: _react2.default.PropTypes.array,
-	  handleClick: _react2.default.PropTypes.func
+	  options: _react2.default.PropTypes.array
 	};
 	
 	exports.default = Dropdown;
@@ -1862,6 +1897,29 @@ webpackJsonp([0],{
 	};
 	
 	exports.default = Waiting;
+
+/***/ },
+
+/***/ 182:
+/*!**********************************!*\
+  !*** ./javascript/Mixin/Bind.js ***!
+  \**********************************/
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = bindMethods;
+	function bindMethods(bindable, object) {
+	  bindable.map(function (v) {
+	    if (object[v] === undefined) {
+	      throw new Error("Cannot bind undefined method: " + v);
+	    }
+	    object[v] = this[v].bind(object);
+	  }.bind(object));
+	}
 
 /***/ }
 
