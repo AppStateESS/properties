@@ -74,6 +74,7 @@ class Property extends Base
     protected $workout_room;
     protected $table = 'properties';
     protected $company_name;
+    protected $thumbnail;
 
     public function __construct()
     {
@@ -115,7 +116,7 @@ class Property extends Base
         $this->laundry_type->setRange(0, 10);
 
         $this->monthly_rent = new Variable\Integer(0, 'monthly_rent');
-        $this->move_in_date = new Variable\Date(0, 'move_in_date');
+        $this->move_in_date = new Variable\Date(time(), 'move_in_date');
         $this->name = new Variable\String('', 'name');
         $this->name->setLimit(100);
 
@@ -138,12 +139,19 @@ class Property extends Base
         $this->trash_type->setRange(0, 10);
         $this->updated = new Variable\DateTime(time(), 'updated');
         $this->util_water = new Variable\Integer(0, 'util_water');
+        $this->util_water->setRange(-1, 2000);
         $this->util_trash = new Variable\Integer(0, 'util_trash');
+        $this->util_trash->setRange(-1, 2000);
         $this->util_power = new Variable\Integer(0, 'util_power');
+        $this->util_power->setRange(-1, 2000);
         $this->util_cable = new Variable\Integer(0, 'util_cable');
+        $this->util_cable->setRange(-1, 2000);
         $this->util_fuel = new Variable\Integer(0, 'util_fuel');
+        $this->util_fuel->setRange(-1, 2000);
         $this->util_internet = new Variable\Integer(0, 'util_internet');
+        $this->util_internet->setRange(-1, 2000);
         $this->util_phone = new Variable\Integer(0, 'util_phone');
+        $this->util_phone->setRange(-1, 2000);
         $this->utilities_inc = new Variable\Bool(false, 'utilities_inc');
         $this->tv_type = new Variable\Integer(0, 'tv_type');
         $this->tv_type->setRange(0, 10);
@@ -151,7 +159,10 @@ class Property extends Base
         $this->workout_room = new Variable\Bool(false, 'workout_room');
 
         $this->company_name = new Variable\String('', 'company_name');
-        $this->addHiddenVariable('company_name');
+        $this->thumbnail = new Variable\String('', 'thumbnail');
+        $this->doNotSave(array('company_name', 'thumbnail'));
+        //$this->addHiddenVariable('company_name');
+        //$this->addHiddenVariable('thumbnail');
     }
 
     public function getCampusDistance()
@@ -337,23 +348,23 @@ class Property extends Base
 
     public function getPropType()
     {
-        switch ($this->proptype) {
+        switch ($this->proptype->get()) {
             case PROP_TYPE_APARTMENT:
                 return 'Apartment';
                 break;
-            
+
             case PROP_TYPE_EFFICIENCY:
                 return 'Efficiency';
                 break;
-            
+
             case PROP_TYPE_HOUSE:
                 return 'House';
                 break;
-            
+
             case PROP_TYPE_CONDO:
                 return 'Condo';
                 break;
-            
+
             case PROP_TYPE_TOWNHOUSE:
                 return 'Townhouse';
                 break;
@@ -387,9 +398,19 @@ class Property extends Base
         $view['student_type'] = $this->getStudentType();
         $view['tv_type'] = $this->getTvType();
         $view['property_map_address'] = $this->googleMapUrl($this->address);
-        $view['furnished'] = $this->furnished->get() ? 'Furnished' : 'Unfurnished';
         $view['high_speed'] = $this->isHighSpeed();
         $view['heat_type'] = $this->getHeatTypes();
+        $view['proptype'] = $this->getPropType();
+
+        if ($this->furnished->get() || $this->airconditioning->get() || 
+                $this->isHighSpeed() || $this->dishwasher->get() || 
+                $this->utilities_inc->get() || $this->clubhouse->get() || 
+                $this->appalcart->get() || $this->workout_room->get() ||
+                $this->pets_allowed->get()) {
+            $view['has_amenities'] = true;
+        } else {
+            $view['has_amenities'] = false;
+        }
 
         return $view;
     }
