@@ -15,8 +15,8 @@ export default class ImageOverlay extends React.Component {
       <div style={{
         paddingTop: '2%'
       }}>
-      <i className="fa fa-camera fa-5x"></i><br/>
-      <h4>Click to browse<br/>- or -<br/>drag image(s) here</h4>
+        <i className="fa fa-camera fa-5x"></i><br/>
+        <h4>Click to browse<br/>- or -<br/>drag image(s) here</h4>
       </div>
     )
     if (this.props.newPhotos.length > 0) {
@@ -32,7 +32,11 @@ export default class ImageOverlay extends React.Component {
     let currentImages
     if (this.props.currentPhotos.length > 0) {
       currentImages = this.props.currentPhotos.map(function (value, key) {
-        return <Thumb {...value} key={key} delete={this.props.delete.bind(null, value.id, key)}/>
+        return <Thumb
+          {...value}
+          key={key}
+          delete={this.props.delete.bind(null, value.id, key)}
+          setMain={this.props.setMain.bind(this, value.id)}/>
       }.bind(this))
     }
 
@@ -45,13 +49,17 @@ export default class ImageOverlay extends React.Component {
             className="dropzone text-center pointer">
             {photos}
           </Dropzone>
-          <div><button className="btn btn-default" onClick={this.props.clear}>Clear</button></div>
+          <div>
+            <button className="btn btn-default" onClick={this.props.clear}>Clear</button>
+          </div>
           <hr/>
-            <div style={{clear:'both'}}></div>
-            <div>
+          <div style={{
+            clear: 'both'
+          }}></div>
+          <div>
             <h4>Current</h4>
-              {currentImages}
-            </div>
+            {currentImages}
+          </div>
         </div>
       </Overlay>
     )
@@ -65,5 +73,6 @@ ImageOverlay.propTypes = {
   clear: React.PropTypes.func,
   newPhotos: React.PropTypes.array,
   currentPhotos: React.PropTypes.array,
-  status: React.PropTypes.array
+  status: React.PropTypes.array,
+  setMain: React.PropTypes.func
 }
