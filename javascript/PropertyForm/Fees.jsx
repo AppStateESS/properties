@@ -54,7 +54,7 @@ export default class Fees extends React.Component {
             <BooleanButton
               name="clean_fee_refund"
               current={property.clean_fee_refund}
-              label={['Deposit refunded', 'Nonrefundable']}/>
+              label={['Fee refunded', 'Nonrefundable']}/>
             <div className="input-group">
               <span className="input-group-addon">$</span>
               <InputField
