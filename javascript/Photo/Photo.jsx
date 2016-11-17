@@ -46,11 +46,10 @@ export default class Photo extends React.Component {
         infinite={true}
         showFullscreenButton={true}
         showPlayButton={true}
-        showThumbnails={!this.state.fullscreen}
+        showThumbnails={true}
         showIndex={true}
         showNav={true}
-        slideInterval={4000}
-        slideOnThumbnailHover={true}/>)
+        slideInterval={4000}/>)
     } else {
       images = <div className="well text-center text-muted"><i className="fa fa-camera fa-5x"></i><br />No photos</div>
     }
