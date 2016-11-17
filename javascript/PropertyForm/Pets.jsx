@@ -20,6 +20,10 @@ export default class Pets extends React.Component {
     this.props.setValue('pets_allowed', allowed)
   }
 
+  togglePetDep(refund) {
+    this.props.setValue('pet_dep_refund', refund)
+  }
+
   render() {
     const {property} = this.props
     return (
@@ -35,7 +39,11 @@ export default class Pets extends React.Component {
           <div className="row">
             <div className="col-sm-6">
               <label>Deposit</label>
-              (Refundable)
+              <BooleanButton
+                name="pet_dep_refund"
+                current={property.pet_dep_refund}
+                handleClick={this.togglePetDep.bind(this, !property.pet_dep_refund)}
+                label={['Deposit refunded', 'Nonrefundable']}/>
               <div className="input-group">
                 <span className="input-group-addon">$</span>
                 <InputField
