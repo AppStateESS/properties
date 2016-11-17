@@ -9,6 +9,7 @@ import BooleanButton from '../Mixin/BooleanButton.jsx'
 import Dollarize from '../Mixin/Dollarize.jsx'
 import Range from '../Mixin/Range.js'
 import moment from 'moment'
+import empty from '../Mixin/Empty.js'
 
 export default class Basic extends React.Component {
   constructor(props) {
@@ -16,16 +17,18 @@ export default class Basic extends React.Component {
 
     const methods = ['setMoveIn', 'updateParking', 'updateRent']
     bindMethods(methods, this)
+    /*
+    if (empty(this.props.property.move_in_date)) {
+      date = moment().format('YYYY-MM-DD')
+      this.props.setValue('move_in_date', moment(date, 'x'))
+    }
+    */
   }
 
+
+
   getMoveInDate() {
-    let date
-    if (this.props.property.move_in_date === 0) {
-      date = moment().format('YYYY-MM-DD')
-    } else {
-      date = moment(this.props.property.move_in_date * 1000).format('YYYY-MM-DD')
-    }
-    return date
+    return String(moment(this.props.property.move_in_date * 1000).format('YYYY-MM-DD'))
   }
 
   dollarize(input) {
@@ -37,11 +40,11 @@ export default class Basic extends React.Component {
       {
         value: '0',
         label: <span>
-            <i className="fa fa-user"></i>&nbsp; Per unit</span>
+            <i className="fa fa-users"></i>&nbsp; Per unit</span>
       }, {
         value: '1',
         label: <span>
-            <i className="fa fa-users"></i>&nbsp; Per tenant</span>
+            <i className="fa fa-user"></i>&nbsp; Per tenant</span>
       }
     ]
   }
@@ -58,7 +61,7 @@ export default class Basic extends React.Component {
   }
 
   setMoveIn(a) {
-    let date = moment(a).format('X')
+    let date = String(moment(a).format('X'))
     this.props.setValue('move_in_date', date)
   }
 
@@ -125,6 +128,10 @@ export default class Basic extends React.Component {
     ]
   }
 
+  googleize(address) {
+    return 'http://maps.google.com/maps?q=' + address.replace(/[\W]/g, '+').replace(/\+{2,}/g, '+')
+  }
+
   render() {
     const {property} = this.props
     let parking = Range(property.parking_per_unit)
@@ -170,6 +177,7 @@ export default class Basic extends React.Component {
               value={property.address}
               change={this.props.setValue.bind(null, 'address')}
               required={true}/>
+              {(property.address.length > 10) ? <small><a href={this.googleize(property.address)} target="_blank">View on Google Maps</a></small> : null}
           </div>
         </div>
         <div className="row">
