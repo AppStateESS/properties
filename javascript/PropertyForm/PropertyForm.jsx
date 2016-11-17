@@ -30,7 +30,6 @@ export default class PropertyForm extends React.Component {
       deleteOverlay: false
     }
     const methods = [
-      'half',
       'delete',
       'setTab',
       'setValue',
@@ -75,12 +74,6 @@ export default class PropertyForm extends React.Component {
     e.target.select()
   }
 
-  half() {
-    this.setState({
-      half: !this.state.half
-    })
-  }
-
   dollarize(input) {
     return <Dollarize>{input}</Dollarize>
   }
@@ -110,7 +103,6 @@ export default class PropertyForm extends React.Component {
 
   checkForm(e) {
     e.preventDefault()
-
     const property = this.state.property
     let errors = this.state.errors
     let errorFound = false
@@ -128,7 +120,7 @@ export default class PropertyForm extends React.Component {
       errors.address = false
     }
 
-    if (property.monthly_rent.length === 0 || property.monthly_rent === '0') {
+    if (empty(property.monthly_rent)) {
       errors.monthly_rent = true
       errorFound = true
     } else {
@@ -236,21 +228,15 @@ export default class PropertyForm extends React.Component {
       <div ref="PageTop">
         {deleteForm}
         {message}
-        <form
-          ref="PropertyForm"
-          className="property-form"
-          method="post"
-          action="./properties/Property">
-          <h2>Property for {this.state.property.company_name}</h2>
-          <Nav
-            buttons={this.navButtons()}
-            active={this.state.activeTab}
-            disable={this.basicComplete()
-            ? null
-            : [1, 2, 3, 4]}
-            click={this.setTab}/> {section}
-          <SubmitForm check={this.checkForm} saving={this.state.saving}/>
-        </form>
+        <h2>Property for {this.state.property.company_name}</h2>
+        <Nav
+          buttons={this.navButtons()}
+          active={this.state.activeTab}
+          disable={this.basicComplete()
+          ? null
+          : [1, 2, 3, 4]}
+          click={this.setTab}/> {section}
+        <SubmitForm check={this.checkForm} saving={this.state.saving}/>
       </div>
     )
   }
