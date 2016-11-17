@@ -11,3 +11,13 @@
 .room-bath {
     font-size : 1.3em;
 }
+
+.dropdown-item {
+    padding : 3px 20px;
+}
+
+.dropdown-item label {
+    font-weight: normal;
+    margin: 0px;
+    cursor: pointer;
+}
