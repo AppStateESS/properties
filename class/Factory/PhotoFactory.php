@@ -91,10 +91,11 @@ class PhotoFactory extends BaseFactory
         }
         $tbl->addField('id');
         $tbl->addField('path');
+        $tbl->addField('main_pic');
         $db->loadSelectStatement();
         while ($row = $db->fetch()) {
             $rows[] = array('id' => $row['id'], 'original' => $row['path'],
-                'thumbnail' => $this->thumbnailed($row['path']));
+                'thumbnail' => $this->thumbnailed($row['path']), 'main_pic'=>$row['main_pic']);
         }
         return $rows;
     }
@@ -148,7 +149,7 @@ class PhotoFactory extends BaseFactory
             $photo->height = $size[1];
             $photo->pid = $property->id;
             $photo->title = $title;
-            $photo->main_pic = false;
+            $photo->main_pic = !$this->mainPropertyPicExists($propertyId);
             $photo->path = $this->moveImage($pic, $property->contact_id);
             self::saveResource($photo);
             $result['photo'] = array('original' => $photo->path, 'thumbnail' => $photo->getThumbnail(), 'id' => $photo->getId());
@@ -166,6 +167,16 @@ class PhotoFactory extends BaseFactory
         return $result;
     }
 
+    private function mainPropertyPicExists($property_id)
+    {
+        $db = Database::getDB();
+        $tbl = $db->addTable('prop_photo');
+        $tbl->addFieldConditional('pid', $property_id);
+        $tbl->addFieldConditional('main_pic', 1);
+        $result = $db->selectOneRow();
+        return (bool)$result;
+    }
+    
     private function resize($file)
     {
         return \phpws\PHPWS_File::scaleImage($file, $file, PROP_MAX_IMAGE_WIDTH,
@@ -216,6 +227,21 @@ class PhotoFactory extends BaseFactory
                 unlink(PHPWS_HOME_DIR . $path);
             }
         }
+    }
+    
+    public function removeMain(Resource $photo)
+    {
+        $db = Database::getDB();
+        $tbl = $db->addTable('prop_photo');
+        $tbl->addFieldConditional('id', $photo->id, '!=');
+        $tbl->addFieldConditional('pid', $photo->pid, '=');
+        $tbl->addValue('main_pic', 0);
+        return $db->update();
+    }
+    
+    public function patch(Resource $photo, $varname, $value) {
+        $photo->$varname = $value;
+        self::saveResource($photo);
     }
 
 }
