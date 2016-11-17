@@ -13,7 +13,13 @@ export default class PropertyListing extends React.Component {
     if (list === null) {
       return <Waiting label="properties"/>
     } else if (list.length === 0) {
-      return <div className="lead">No properties found.</div>
+      if (this.props.search === true) {
+        return (
+          <div className="lead">No properties found. Try a different search?</div>
+        )
+      } else {
+        return <div className="lead">No properties found.</div>
+      }
     } else {
       let rows
       rows = list.map(function (value, key) {
@@ -27,5 +33,6 @@ export default class PropertyListing extends React.Component {
 }
 
 PropertyListing.propTypes = {
-  list: React.PropTypes.array
+  list: React.PropTypes.array,
+  search: React.PropTypes.bool
 }
