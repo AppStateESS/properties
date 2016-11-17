@@ -21,7 +21,8 @@ export default class Nav extends React.Component {
     let tabs = this.props.buttons.map(function (value, key) {
       cn = classnames({
         active: this.props.active === key,
-        disabled: disabled.indexOf(key) !== -1
+        disabled: disabled.indexOf(key) !== -1,
+        pointer: true
       })
 
       return (
@@ -30,7 +31,7 @@ export default class Nav extends React.Component {
           key={key}
           className={cn}
           onClick={this.props.click.bind(null, key)}>
-          <a className="pointer">{value}</a>
+          <a>{value}</a>
         </li>
       )
     }.bind(this))
