@@ -14,7 +14,14 @@ export default class PropertyImage extends React.Component {
       currentPhotos: [],
       status: []
     }
-    const methods = ['overlayOn', 'overlayOff', 'addPhotos', 'clearNewPhotos', 'delete']
+    const methods = [
+      'overlayOn',
+      'overlayOff',
+      'addPhotos',
+      'clearNewPhotos',
+      'delete',
+      'setMain'
+    ]
     bindMethods(methods, this)
   }
 
@@ -26,7 +33,7 @@ export default class PropertyImage extends React.Component {
   }
 
   clearNewPhotos() {
-    this.setState({newPhotos : []})
+    this.setState({newPhotos: []})
   }
 
   addPhotos(photos) {
@@ -55,7 +62,7 @@ export default class PropertyImage extends React.Component {
           status[key] = data.success
           this.setState({status: status, currentPhotos: currentPhotos, newPhotos: newPhotos})
         }.bind(this),
-        failure: function(data) {
+        failure: function (data) {
           newPhotos.push(data.photo)
           status[key] = false
           this.setState({status: status, newPhotos: newPhotos})
@@ -85,11 +92,27 @@ export default class PropertyImage extends React.Component {
         }
         this.setState({currentPhotos: photos})
       }.bind(this),
-      error: function () {
-      }.bind(this)
+      error: function () {}.bind(this)
     })
   }
 
+  setMain(id) {
+    $.ajax({
+      url: './properties/Photo/' + id,
+      data: {
+        varname: 'main_pic'
+      },
+      method: 'PATCH',
+      success: function () {
+        let photos = this.state.currentPhotos
+        photos.forEach(function(value, idx, photos){
+          photos[idx].main_pic = value.id == id ? '1' : '0'
+        })
+        this.setState({currentPhotos : photos})
+      }.bind(this),
+      error: function () {}.bind(this)
+    })
+  }
 
   render() {
     let overlay
@@ -101,6 +124,7 @@ export default class PropertyImage extends React.Component {
         update={this.addPhotos}
         newPhotos={this.state.newPhotos}
         currentPhotos={this.state.currentPhotos}
+        setMain={this.setMain}
         status={this.state.status}/>)
     }
     return (
