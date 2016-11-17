@@ -54,54 +54,17 @@ class PropertyFactory extends BaseFactory
         return $property;
     }
 
-    public function delete($id)
+    public function delete(Resource $property)
     {
-        if (empty($id) || !is_numeric($id)) {
-            throw new \Exception('Property id invalid');
-        }
         $photo = new PhotoFactory;
-        $photo->removeByProperty($id);
-        $db = Database::getDB();
-        $tbl = $db->addTable('properties');
-        $tbl->addFieldConditional('id', $id);
-        $db->delete();
+        $photo->removeByProperty($property->id);
+        $property->delete();
     }
 
-    public function listing($manager_id = 0, $view = false, $search = null,
-            $limit = 100)
-    {
-        $db = Database::getDB();
-        $tbl = $db->addTable('properties');
-        $tbl2 = $db->addTable('prop_contacts');
-        $tbl2->addField('company_name');
-
-        if ((int) $limit <= 0) {
-            $limit = 100;
-        }
-        $db->setLimit($limit);
-        if (!empty($search)) {
-            $search_string = "%$search%";
-            $s1 = $db->createConditional($tbl->getField('name'), $search_string,
-                    'like');
-            $s2 = $db->createConditional($tbl->getField('address'),
-                    $search_string, 'like');
-            $conditional = $db->createConditional($s1, $s2, 'or');
-            $db->addConditional($conditional);
-        }
-        if ($manager_id) {
-            $tbl->addFieldConditional('contact_id', $manager_id);
-        }
-        $tbl->addFieldConditional('contact_id', $tbl2->getField('id'));
-        if ($view) {
-            $result = $db->selectAsResources('\properties\Resource\Property');
-            foreach ($result as $prop) {
-                $listing[] = $prop->view();
-            }
-            return $listing;
-        } else {
-            $result = $db->select();
-            return $result;
-        }
+    
+    public function listing(\Request $request, $view=false) {
+        $listing = new Property\Listing($request);
+        return $listing->get($view);
     }
 
     public function post(\Request $request)
@@ -110,7 +73,7 @@ class PropertyFactory extends BaseFactory
         $r = new Resource;
         try {
             $r->loadPostByType($request,
-                    array('active', 'approved', 'company_name', 'heat_type', 'created', 'updated'));
+                    array('active', 'approved', 'company_name', 'heat_type', 'created', 'updated', 'thumbnail'));
             $heat_type = $request->pullPostVar('heat_type');
             if (empty($heat_type)) {
                 $heat_type = array();
