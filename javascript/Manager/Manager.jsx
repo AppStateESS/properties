@@ -4,6 +4,7 @@ import ListManagers from './ListManagers.jsx'
 import ManagerForm from './ManagerForm.jsx'
 import Message from '../Mixin/Message.jsx'
 import Waiting from '../Mixin/Waiting.jsx'
+import bindMethods from '../Mixin/Bind.js'
 
 /* global $ */
 
@@ -18,7 +19,7 @@ class Manager extends React.Component {
       currentManager: {}
     }
     this.search = ''
-    let bindable = [
+    const bindable = [
       'clearSearch',
       'dropManager',
       'getMessage',
@@ -29,9 +30,7 @@ class Manager extends React.Component {
       'updateManager'
     ]
 
-    bindable.map(function (v) {
-      this[v] = this[v].bind(this)
-    }.bind(this))
+    bindMethods(bindable, this)
   }
 
   componentDidMount() {
