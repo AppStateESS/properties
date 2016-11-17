@@ -12,9 +12,15 @@ export default class Rooms extends React.Component {
       half: false
     }
     bindMethods([
-      'updateBathroom', 'updateBedroom'
+      'updateBathroom', 'updateBedroom', 'half'
     ], this)
 
+  }
+
+  half() {
+    this.setState({
+      half: !this.state.half
+    })
   }
 
   updateBedroom(bedrooms) {
