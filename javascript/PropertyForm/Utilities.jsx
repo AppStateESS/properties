@@ -162,7 +162,7 @@ export default class Utilities extends React.Component {
         </div>
         <div className="row bg-info">
           <div className="col-sm-12">
-            <label>Laundry</label>
+            <label>Laundry</label><br />
             <ButtonGroup
               name="laundry_type"
               buttons={this.laundryTypes()}
@@ -173,7 +173,7 @@ export default class Utilities extends React.Component {
         </div>
         <div className="row">
           <div className="col-sm-12">
-            <label>Trash and Recycling</label>
+            <label>Trash and Recycling</label><br />
             <ButtonGroup
               name="trash_type"
               buttons={this.trashTypes()}
