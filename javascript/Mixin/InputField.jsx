@@ -16,19 +16,30 @@ export default class InputField extends React.Component {
   }
 
   componentWillUpdate(props, state) {
-    if (props.errorMessage !== null && props.errorMessage.length > 0 && props.errorMessage !== state.errorMessage) {
-      this.setState({errorMessage: props.errorMessage})
+    if (props.errorMessage !== state.errorMessage) {
+      if (props.errorMessage !== null && props.errorMessage.length > 0) {
+        this.setState({errorMessage: props.errorMessage})
+      } else if (props.errorMessage === null && this.props.value.length > 0) {
+        this.setState({errorMessage: null})
+      }
+    }
+  }
+
+  flagEmpty() {
+    if (this.props.label.length > 0) {
+      this.setState({
+        errorMessage: this.props.label + ' may not be empty'
+      })
+    } else {
+      this.setState({errorMessage: 'Field may not be empty'})
     }
   }
 
   handleBlur(e) {
-    if (e.target.value.length === 0 && this.props.required) {
-      if (this.props.label.length > 0) {
-        this.setState({
-          errorMessage: this.props.label + ' may not be empty'
-        })
-      } else {
-        this.setState({errorMessage: 'Field may not be empty'})
+    if (this.props.flagEmpty && e.target.value.length === 0 && this.props.required) {
+      this.flagEmpty()
+      if (this.props.onEmpty) {
+        this.props.onEmpty()
       }
     } else {
       this.setState({errorMessage: this.props.errorMessage})
@@ -61,7 +72,9 @@ export default class InputField extends React.Component {
       className={inputClass}
       onChange={this.props.change}
       onBlur={this.handleBlur}
-      onClick={this.props.selectOnClick === true ? this.select:null}
+      onClick={this.props.selectOnClick === true
+      ? this.select
+      : null}
       disabled={this.props.disabled}
       size={this.props.size}
       maxLength={this.props.maxLength}
@@ -102,7 +115,9 @@ InputField.defaultProps = {
   size: null,
   maxLength: null,
   selectOnClick: true,
-  wrap: null
+  wrap: null,
+  onEmpty: null,
+  flagEmpty: true
 }
 
 InputField.propTypes = {
@@ -121,7 +136,9 @@ InputField.propTypes = {
   size: React.PropTypes.number,
   maxLength: React.PropTypes.number,
   wrap: React.PropTypes.func,
-  selectOnClick: React.PropTypes.bool
+  selectOnClick: React.PropTypes.bool,
+  onEmpty: React.PropTypes.func,
+  flagEmpty: React.PropTypes.bool
 }
 
 export const RequiredIcon = () => {
