@@ -29,7 +29,13 @@ class ManagerController extends BaseController
 
     public function getHtmlView($data, \Request $request)
     {
-        $command = $this->checkCommand($request, 'list');
+        try {
+            $command = $this->checkCommand($request, 'list');
+        } catch (\properties\Exception\ResourceNotFound $e) {
+            return $this->errorPage($e);
+        } catch (\properties\Exception\BadCommand $e) {
+            return $this->errorPage($e);
+        }
 
         if (is_numeric($command) && $this->factory->role->allow('view')) {
             $managerId = (int) $command;
@@ -48,6 +54,10 @@ class ManagerController extends BaseController
                 $content = 'html view';
                 break;
 
+            case 'signin':
+                $content = $this->signin();
+                break;
+
             default:
                 throw new \properties\Exception\BadCommand;
         }
@@ -58,6 +68,13 @@ class ManagerController extends BaseController
     private function listing()
     {
         return $this->reactView('manager');
+    }
+
+    private function signin()
+    {
+        $template = new \phpws2\Template;
+        $template->setModuleTemplate('properties', 'manager/signin.html');
+        return $template->get();
     }
 
     public function getJsonView($data, \Request $request)
@@ -124,7 +141,8 @@ class ManagerController extends BaseController
         if (!$this->factory->role->allow()) {
             throw new \properties\Exception\PrivilegeMissing;
         }
-        $json = $this->factory->post($request);
+        $json = $this->factory->adminPost($request);
+        
         $view = new \View\JsonView($json);
         $response = new \Response($view);
         return $response;
