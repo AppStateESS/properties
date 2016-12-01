@@ -137,7 +137,11 @@ abstract class BaseRole
             } else if (!isset($command_list[$this->controller])) {
                 return false;
             }
-            return in_array($command, $command_list[$this->controller]);
+            if (is_bool($command_list[$this->controller])) {
+                return $command_list[$this->controller];
+            } else {
+                return in_array($command, $command_list[$this->controller]);
+            }
         }
     }
 
