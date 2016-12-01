@@ -31,8 +31,33 @@ export default class Property extends React.Component {
     this.loadAmenities()
     this.managerId = 0
     bindMethods([
-      'load', 'updateSearchVars', 'clearSearch', 'updateSearchString', 'toggle'
+      'load',
+      'updateSearchVars',
+      'clearSearch',
+      'updateSearchString',
+      'clearAmenities',
+      'toggle'
     ], this)
+  }
+
+  clearAmenities() {
+    this.searchVars.furnished = null
+    this.searchVars.ac = null
+    this.searchVars.pets = null
+    this.searchVars.utils = null
+    this.searchVars.appalcart = null
+    this.searchVars.campus = null
+    this.searchVars.dishwasher = null
+    this.searchVars.laundry = null
+    this.searchVars.clubhouse = null
+    this.searchVars.efficiency = null
+    this.searchVars.apartment = null
+    this.searchVars.house = null
+    this.searchVars.condo = null
+    this.searchVars.townhouse = null
+    this.searchVars.duplex = null
+    this.load()
+    this.updateLink()
   }
 
   loadAmenities() {
@@ -77,14 +102,6 @@ export default class Property extends React.Component {
 
   clearSearch() {
     this.search = ''
-    /*
-    this.beds = '1'
-    this.searchVars.baths = '1'
-    this.furnished = 0
-    this.ac = 0
-    this.pets = 0
-    this.utils = 0
-    */
     this.load()
   }
 
@@ -118,7 +135,7 @@ export default class Property extends React.Component {
   }
 
   load() {
-    this.setState({properties : null})
+    this.setState({properties: null})
     const sendData = this.searchVars
     sendData.managerId = this.managerId
     sendData.search = this.search
@@ -161,6 +178,7 @@ export default class Property extends React.Component {
           clear={this.clearSearch}
           updateSearchVars={this.updateSearchVars}
           searchVars={this.searchVars}
+          clearAmenities={this.clearAmenities}
           toggle={this.toggle}/>
         <PropertyListing list={this.state.properties} search={!empty(this.search)}/>
       </div>
