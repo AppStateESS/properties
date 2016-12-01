@@ -48,7 +48,11 @@ abstract class BaseController extends \phpws2\Http\Controller
             $data = array();
             $view = $this->getView($data, $request);
         } catch (\properties\Exception\PrivilegeMissing $e) {
-            $view = $this->errorPage($e);
+            if ($request->isAjax()) {
+                $view = new \phpws2\View\JsonView(array('error' => 'Not privileged for this action'));
+            } else {
+                $view = $this->errorPage($e);
+            }
         }
         $response = new \Response($view);
         return $response;
@@ -82,7 +86,11 @@ abstract class BaseController extends \phpws2\Http\Controller
                 $this->resource = $this->factory->load($command);
 
                 if (!$this->factory->role->allow($subcommand)) {
-                    throw new \properties\Exception\BadCommand;
+                    if ($request->getMethod() === 'GET') {
+                        return 'view';
+                    } else {
+                        throw \properties\Exception\BadCommand;
+                    }
                 } else {
                     return $subcommand;
                 }
