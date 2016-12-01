@@ -141,6 +141,21 @@ export default class PropertyRow extends React.Component {
     }
   }
 
+  washer() {
+    if (this.props.property.washer === true) {
+      return (
+        <span
+          className="fa-stack fa-lg text-success"
+          data-toggle="tooltip"
+          data-placement="top"
+          title="Washer/Dryer in unit">
+          <i className="fa fa-square fa-stack-2x"></i>
+          <i className="fa fa-archive fa-stack-1x fa-inverse"></i>
+        </span>
+      )
+    }
+  }
+
   urlTitle(title) {
     return title.replace(/[^\w]/g, '-').substring(0, 20).toLowerCase()
   }
@@ -187,6 +202,7 @@ export default class PropertyRow extends React.Component {
               {this.workout()}
               {this.clubhouse()}
               {this.appalcart()}
+              {this.washer()}
             </div>
           </div>
         </div>
