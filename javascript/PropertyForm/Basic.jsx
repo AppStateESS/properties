@@ -17,15 +17,7 @@ export default class Basic extends React.Component {
 
     const methods = ['setMoveIn', 'updateParking', 'updateRent']
     bindMethods(methods, this)
-    /*
-    if (empty(this.props.property.move_in_date)) {
-      date = moment().format('YYYY-MM-DD')
-      this.props.setValue('move_in_date', moment(date, 'x'))
-    }
-    */
   }
-
-
 
   getMoveInDate() {
     return String(moment(this.props.property.move_in_date * 1000).format('YYYY-MM-DD'))
@@ -222,16 +214,6 @@ export default class Basic extends React.Component {
               <option value="5">per Semester</option>
               <option value="6">School year (two semesters)</option>
             </select>
-            <div style={{
-              marginTop: '.5em'
-            }}>
-              <BooleanButton
-                name="sublease"
-                current={property.sublease}
-                label={['Tenant may sublease', 'Tenant may not sublease']}
-                icon={true}
-                handleClick={this.props.setValue.bind(null, 'sublease')}/>
-            </div>
           </div>
           <div className="col-sm-6">
             <label>Move-in date</label><br/>
