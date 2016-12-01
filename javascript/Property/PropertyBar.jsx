@@ -2,14 +2,16 @@
 import React from 'react'
 import Dropdown from '../Mixin/Dropdown.jsx'
 import Amenities from './Amenities.jsx'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 export default class PropertyBar extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      fullSize: true
+      fullSize: false
     }
     this.clearSearch = this.clearSearch.bind(this)
+    this.togglePanel = this.togglePanel.bind(this)
   }
 
   componentDidUpdate() {
@@ -24,6 +26,12 @@ export default class PropertyBar extends React.Component {
   clearSearch() {
     this.refs.propertySearch.value = ''
     this.props.clear()
+  }
+
+  togglePanel() {
+    this.setState({
+      fullSize: !this.state.fullSize
+    })
   }
 
   render() {
@@ -123,13 +131,21 @@ export default class PropertyBar extends React.Component {
 
     const bedLabel = `${this.props.searchVars.beds}+ beds`
     const bathLabel = `${this.props.searchVars.baths}+ baths`
-    const minpriceLabel = this.props.searchVars.minprice === '0' ? 'Min. price' : `$${this.props.searchVars.minprice}`
-    const maxpriceLabel = this.props.searchVars.maxprice === '0' ? 'Max. price' :`$${this.props.searchVars.maxprice}`
+    const minpriceLabel = this.props.searchVars.minprice === '0'
+      ? 'Min. price'
+      : `$${this.props.searchVars.minprice}`
+    const maxpriceLabel = this.props.searchVars.maxprice === '0'
+      ? 'Max. price'
+      : `$${this.props.searchVars.maxprice}`
+
+    const panelButton = this.state.fullSize
+      ? <span>Show less <i className="fa fa-caret-up"></i></span>
+      : <span>Show more <i className="fa fa-caret-down"></i></span>
 
     return (
       <div className="panel panel-default marginBottom">
         <div className="panel-body">
-          <div className="row">
+          <div className="row top-header">
             <div className="col-sm-4">
               <div className="input-group">
                 <input
@@ -147,15 +163,28 @@ export default class PropertyBar extends React.Component {
               </div>
             </div>
             <div className="col-sm-8">
-              <div className="pull-left"><Dropdown label={bedLabel} options={beds}/></div>
-              <div className="pull-left"><Dropdown label={bathLabel} options={baths}/></div>
-              <div className="pull-left"><Dropdown label={minpriceLabel} options={minprice}/></div>
-              <div className="pull-left"><Dropdown label={maxpriceLabel} options={maxprice}/></div>
+              <div className="pull-left"><Dropdown small={true} label={bedLabel} options={beds}/></div>
+              <div className="pull-left"><Dropdown small={true} label={bathLabel} options={baths}/></div>
+              <div className="pull-left"><Dropdown small={true} label={minpriceLabel} options={minprice}/></div>
+              <div className="pull-left"><Dropdown small={true} label={maxpriceLabel} options={maxprice}/></div>
+              <button className="btn btn-default btn-sm" onClick={this.togglePanel}>{panelButton}</button>
             </div>
           </div>
-          {this.state.fullSize === true
-            ? <Amenities toggle={this.props.toggle} searchVars={this.props.searchVars}/>
-            : null}
+          <ReactCSSTransitionGroup
+            transitionName="trans"
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={300}>
+            {this.state.fullSize === true
+              ? (
+                <div>
+                  <Amenities toggle={this.props.toggle} searchVars={this.props.searchVars}/>
+                  <div className="text-center">
+                    <button className="btn btn-success" onClick={this.props.clearAmenities}>Clear all</button>
+                  </div>
+                </div>
+              )
+              : null}
+          </ReactCSSTransitionGroup>
         </div>
       </div>
     )
@@ -167,5 +196,6 @@ PropertyBar.propTypes = {
   clear: React.PropTypes.func,
   updateSearchVars: React.PropTypes.func,
   searchVars: React.PropTypes.object,
-  toggle: React.PropTypes.func
+  toggle: React.PropTypes.func,
+  clearAmenities: React.PropTypes.func
 }
