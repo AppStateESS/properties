@@ -44,11 +44,12 @@ class Listing
     public $condo = 0;
     public $townhouse = 0;
     public $duplex = 0;
-    
+
     /**
      * @var \phpws2\Database\DB
      */
     private $db;
+
     /**
      * @var \phpws2\Database\Table
      */
@@ -70,20 +71,21 @@ class Listing
         $this->photo_table = $this->db->addTable('prop_photo');
         $this->contact_table->addField('company_name');
         $this->photo_table->addField('path', 'thumbnail');
-        
+
         $this->manager_id = $request->pullGetInteger('managerId', true);
         $this->search_string = $request->pullGetString('search', true);
         $this->limit = $request->pullGetInteger('limit', true);
         $this->beds = $request->pullGetInteger('beds', true);
         $this->baths = $request->pullGetInteger('baths', true);
-        $this->minprice = (int)$request->pullGetInteger('minprice', true);
-        $this->maxprice = (int)$request->pullGetInteger('maxprice', true);
+        $this->minprice = (int) $request->pullGetInteger('minprice', true);
+        $this->maxprice = (int) $request->pullGetInteger('maxprice', true);
         $this->furnished = $request->pullGetBoolean('furnished', true);
         $this->pets = $request->pullGetBoolean('pets', true);
         $this->appalcart = $request->pullGetBoolean('appalcart', true);
         $this->campus = $request->pullGetBoolean('campus', true);
         $this->utils = $request->pullGetBoolean('utils', true);
-        $this->airconditioning = $request->pullGetBoolean('airconditioning', true);
+        $this->airconditioning = $request->pullGetBoolean('airconditioning',
+                true);
         $this->dishwasher = $request->pullGetBoolean('dishwasher', true);
         $this->laundry = $request->pullGetBoolean('laundry', true);
         $this->clubhouse = $request->pullGetBoolean('clubhouse', true);
@@ -96,7 +98,7 @@ class Listing
         $this->duplex = $request->pullGetBoolean('duplex', true);
     }
 
-    public function get($view=false)
+    public function get($view = false)
     {
         if ((int) $this->limit <= 0) {
             $this->limit = 100;
@@ -108,6 +110,10 @@ class Listing
         if ($this->manager_id) {
             $this->property_table->addFieldConditional('contact_id',
                     $this->manager_id);
+            $this->property_table->addOrderBy('updated', 'desc');
+        } else {
+            // Properties are random if manager not specified
+            $this->property_table->randomOrder(true);
         }
 
         $c1 = $this->db->createConditional($this->property_table->getField('id'),
@@ -214,12 +220,13 @@ class Listing
                 $prop_cond[] = $this->db->createConditional($this->property_table->getField('proptype'),
                         PROP_TYPE_DUPLEX);
             }
-            
+
             foreach ($prop_cond as $cond) {
                 if (empty($final_cond)) {
                     $final_cond = $cond;
                 } else {
-                    $final_cond = $this->db->createConditional($final_cond, $cond, 'or');
+                    $final_cond = $this->db->createConditional($final_cond,
+                            $cond, 'or');
                 }
             }
             $this->db->addConditional($final_cond);
