@@ -83,7 +83,7 @@ class PropertyController extends BaseController
     private function updateButton($property_id)
     {
         return <<<EOF
-<button class="btn btn-default btn-sm navbar-btn" onclick="window.location.href='./properties/Property/$property_id/edit'"><i class="fa fa-pencil"></i>&nbsp;Edit property</button>
+<button class="btn btn-primary btn-sm navbar-btn" onclick="window.location.href='./properties/Property/$property_id/edit'"><i class="fa fa-pencil"></i>&nbsp;Edit property</button>
 EOF;
     }
 
@@ -97,23 +97,30 @@ EOF;
     private function photoButton($property_id)
     {
         return <<<EOF
-<button class="btn btn-default btn-sm navbar-btn" data-property-id="$property_id" title="Update photos" onClick="editPhotos.callback()"><i class="fa fa-camera"></i>&nbsp;Edit photos</button>
+<button class="btn btn-primary btn-sm navbar-btn" data-property-id="$property_id" title="Update photos" onClick="editPhotos.callback()"><i class="fa fa-camera"></i>&nbsp;Edit photos</button>
 EOF;
     }
 
     private function view()
     {
         $photoFactory = new Photo;
-        $tpl = array();
+        
+        $tpl = $this->resource->view();
+        $managerFactory = new ManagerFactory;
+        $manager = $managerFactory->load($this->resource->contact_id);
+        $managerTpl = $manager->view();
+        $tpl = array_merge($tpl, $managerTpl);
+        
         $tpl['current_photos'] = json_encode($photoFactory->thumbs($this->resource->id));
         $tpl['photo'] = $this->reactView('photo');
-        $tpl['property'] = $this->factory->viewHtml($this->resource, $tpl);
         $tpl['id'] = $this->resource->id;
         $tpl['photoupdate'] = null;
+        $tpl['photo_edit_button'] = null;
+        $tpl['property_edit_button'] = null;
         if ($this->factory->role->allow('edit')) {
-            Navbar::addButton($this->updateButton($this->resource->id));
-            Navbar::addButton($this->photoButton($this->resource->id));
             $tpl['photoupdate'] = $this->reactView('propertyimage');
+            $tpl['photo_edit_button'] = $this->photoButton($this->resource->id);
+            $tpl['property_edit_button'] = $this->updateButton($this->resource->id);
         }
         $template = new \phpws2\Template($tpl);
         $template->setModuleTemplate('properties', 'property_view.html');
@@ -123,7 +130,6 @@ EOF;
     private function editView($managerId = null)
     {
         if ($this->resource->getId()) {
-            Navbar::addButton($this->deleteButton($this->resource->id));
             $property = json_encode($this->resource->getVariablesAsValue(true,
                             array('approved', 'active')));
         } else {
