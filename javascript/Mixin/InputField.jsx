@@ -4,48 +4,35 @@ import React from 'react'
 export default class InputField extends React.Component {
   constructor(props) {
     super(props)
+
     this.state = {
-      placeholder: null,
-      errorMessage: null
+      empty: false
     }
+
     this.handleBlur = this.handleBlur.bind(this)
-  }
-
-  componentDidMount() {
-    this.setState({placeholder: this.props.placeholder, errorMessage: this.props.errorMessage})
-  }
-
-  componentWillUpdate(props, state) {
-    if (props.errorMessage !== state.errorMessage) {
-      if (props.errorMessage !== null && props.errorMessage.length > 0) {
-        this.setState({errorMessage: props.errorMessage})
-      } else if (props.errorMessage === null && this.props.value.length > 0) {
-        this.setState({errorMessage: null})
-      }
-    }
-  }
-
-  flagEmpty() {
-    if (this.props.label.length > 0) {
-      this.setState({
-        errorMessage: this.props.label + ' may not be empty'
-      })
-    } else {
-      this.setState({errorMessage: 'Field may not be empty'})
-    }
+    this.handleChange = this.handleChange.bind(this)
   }
 
   handleBlur(e) {
-    if (this.props.flagEmpty && e.target.value.length === 0 && this.props.required) {
-      this.flagEmpty()
+    const value = e.target.value
+    if (value.length === 0) {
+      this.setState({empty: true})
       if (this.props.onEmpty) {
         this.props.onEmpty()
       }
     } else {
-      this.setState({errorMessage: this.props.errorMessage})
-      if (this.props.blur) {
-        this.props.blur()
-      }
+      this.setState({empty: false})
+    }
+    if (this.props.blur) {
+      this.props.blur()
+    }
+  }
+
+  emptyMessage() {
+    if (this.props.label.length > 0) {
+      return this.props.label + ' may not be empty'
+    } else {
+      return 'Field may not be empty'
     }
   }
 
@@ -53,9 +40,17 @@ export default class InputField extends React.Component {
     event.target.select()
   }
 
+  handleChange(e) {
+    const value = e.target.value
+    if (this.props.required && value.length > 0) {
+      this.setState({empty: false})
+    }
+    this.props.change(e)
+  }
+
   render() {
     let inputClass
-    if (this.state.errorMessage !== null && this.state.errorMessage.length > 0) {
+    if ((this.props.errorMessage !== null && this.props.errorMessage !== '') || (this.state.empty && this.props.required)) {
       inputClass = 'form-control error-highlight'
     } else {
       inputClass = 'form-control'
@@ -70,7 +65,7 @@ export default class InputField extends React.Component {
       name={this.props.name}
       value={this.props.value}
       className={inputClass}
-      onChange={this.props.change}
+      onChange={this.handleChange}
       onBlur={this.handleBlur}
       onClick={this.props.selectOnClick === true
       ? this.select
@@ -85,14 +80,21 @@ export default class InputField extends React.Component {
       input = this.props.wrap(input)
     }
 
+    let errorMessage
+    if (this.props.errorMessage) {
+      errorMessage = this.props.errorMessage
+    } else if (this.state.empty && this.props.required) {
+      errorMessage = this.emptyMessage()
+    }
+
     return (
       <div className="form-group">
         {this.props.label.length > 0
           ? <label htmlFor={this.props.iid}>{this.props.label} {required}</label>
           : undefined}
         {input}
-        {this.state.errorMessage
-          ? <div className="label label-danger">{this.state.errorMessage}</div>
+        {errorMessage
+          ? <div className="label label-danger">{errorMessage}</div>
           : null}
       </div>
     )
