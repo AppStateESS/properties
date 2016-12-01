@@ -771,13 +771,17 @@ webpackJsonp([0],{
 	      } else {
 	        optionList = null;
 	      }
+	      var buttonClass = 'btn btn-default dropdown-toggle';
+	      if (this.props.small) {
+	        buttonClass = buttonClass.concat(' btn-sm');
+	      }
 	      return _react2.default.createElement(
 	        "div",
 	        { className: "dropdown" },
 	        _react2.default.createElement(
 	          "button",
 	          {
-	            className: "btn btn-default dropdown-toggle",
+	            className: buttonClass,
 	            type: "button",
 	            "data-toggle": "dropdown",
 	            "aria-haspopup": "true",
@@ -796,7 +800,12 @@ webpackJsonp([0],{
 	
 	Dropdown.propTypes = {
 	  label: _react2.default.PropTypes.string,
-	  options: _react2.default.PropTypes.array
+	  options: _react2.default.PropTypes.array,
+	  small: _react2.default.PropTypes.bool
+	};
+	
+	Dropdown.defaultProps = {
+	  small: false
 	};
 	
 	exports.default = Dropdown;
@@ -1418,41 +1427,37 @@ webpackJsonp([0],{
 	    var _this = _possibleConstructorReturn(this, (InputField.__proto__ || Object.getPrototypeOf(InputField)).call(this, props));
 	
 	    _this.state = {
-	      placeholder: null,
-	      errorMessage: null
+	      empty: false
 	    };
+	
 	    _this.handleBlur = _this.handleBlur.bind(_this);
+	    _this.handleChange = _this.handleChange.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(InputField, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.setState({ placeholder: this.props.placeholder, errorMessage: this.props.errorMessage });
-	    }
-	  }, {
-	    key: 'componentWillUpdate',
-	    value: function componentWillUpdate(props, state) {
-	      if (props.errorMessage !== null && props.errorMessage.length > 0 && props.errorMessage !== state.errorMessage) {
-	        this.setState({ errorMessage: props.errorMessage });
+	    key: 'handleBlur',
+	    value: function handleBlur(e) {
+	      var value = e.target.value;
+	      if (value.length === 0) {
+	        this.setState({ empty: true });
+	        if (this.props.onEmpty) {
+	          this.props.onEmpty();
+	        }
+	      } else {
+	        this.setState({ empty: false });
+	      }
+	      if (this.props.blur) {
+	        this.props.blur();
 	      }
 	    }
 	  }, {
-	    key: 'handleBlur',
-	    value: function handleBlur(e) {
-	      if (e.target.value.length === 0 && this.props.required) {
-	        if (this.props.label.length > 0) {
-	          this.setState({
-	            errorMessage: this.props.label + ' may not be empty'
-	          });
-	        } else {
-	          this.setState({ errorMessage: 'Field may not be empty' });
-	        }
+	    key: 'emptyMessage',
+	    value: function emptyMessage() {
+	      if (this.props.label.length > 0) {
+	        return this.props.label + ' may not be empty';
 	      } else {
-	        this.setState({ errorMessage: this.props.errorMessage });
-	        if (this.props.blur) {
-	          this.props.blur();
-	        }
+	        return 'Field may not be empty';
 	      }
 	    }
 	  }, {
@@ -1461,10 +1466,19 @@ webpackJsonp([0],{
 	      event.target.select();
 	    }
 	  }, {
+	    key: 'handleChange',
+	    value: function handleChange(e) {
+	      var value = e.target.value;
+	      if (this.props.required && value.length > 0) {
+	        this.setState({ empty: false });
+	      }
+	      this.props.change(e);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var inputClass = void 0;
-	      if (this.state.errorMessage !== null && this.state.errorMessage.length > 0) {
+	      if (this.props.errorMessage !== null && this.props.errorMessage !== '' || this.state.empty && this.props.required) {
 	        inputClass = 'form-control error-highlight';
 	      } else {
 	        inputClass = 'form-control';
@@ -1477,7 +1491,7 @@ webpackJsonp([0],{
 	        name: this.props.name,
 	        value: this.props.value,
 	        className: inputClass,
-	        onChange: this.props.change,
+	        onChange: this.handleChange,
 	        onBlur: this.handleBlur,
 	        onClick: this.props.selectOnClick === true ? this.select : null,
 	        disabled: this.props.disabled,
@@ -1488,6 +1502,13 @@ webpackJsonp([0],{
 	
 	      if (this.props.wrap) {
 	        input = this.props.wrap(input);
+	      }
+	
+	      var errorMessage = void 0;
+	      if (this.props.errorMessage) {
+	        errorMessage = this.props.errorMessage;
+	      } else if (this.state.empty && this.props.required) {
+	        errorMessage = this.emptyMessage();
 	      }
 	
 	      return _react2.default.createElement(
@@ -1501,10 +1522,10 @@ webpackJsonp([0],{
 	          required
 	        ) : undefined,
 	        input,
-	        this.state.errorMessage ? _react2.default.createElement(
+	        errorMessage ? _react2.default.createElement(
 	          'div',
 	          { className: 'label label-danger' },
-	          this.state.errorMessage
+	          errorMessage
 	        ) : null
 	      );
 	    }
@@ -1532,7 +1553,9 @@ webpackJsonp([0],{
 	  size: null,
 	  maxLength: null,
 	  selectOnClick: true,
-	  wrap: null
+	  wrap: null,
+	  onEmpty: null,
+	  flagEmpty: true
 	};
 	
 	InputField.propTypes = {
@@ -1551,7 +1574,9 @@ webpackJsonp([0],{
 	  size: _react2.default.PropTypes.number,
 	  maxLength: _react2.default.PropTypes.number,
 	  wrap: _react2.default.PropTypes.func,
-	  selectOnClick: _react2.default.PropTypes.bool
+	  selectOnClick: _react2.default.PropTypes.bool,
+	  onEmpty: _react2.default.PropTypes.func,
+	  flagEmpty: _react2.default.PropTypes.bool
 	};
 	
 	var RequiredIcon = exports.RequiredIcon = function RequiredIcon() {
@@ -1696,7 +1721,7 @@ webpackJsonp([0],{
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
-	    value: true
+	  value: true
 	});
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -1704,33 +1729,33 @@ webpackJsonp([0],{
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	var CheckValues = function () {
-	    function CheckValues() {
-	        _classCallCheck(this, CheckValues);
+	  function CheckValues() {
+	    _classCallCheck(this, CheckValues);
+	  }
+	
+	  _createClass(CheckValues, null, [{
+	    key: 'isEmpty',
+	    value: function isEmpty(value) {
+	      return value === '' || value === null;
 	    }
+	  }, {
+	    key: 'isEmail',
+	    value: function isEmail(value) {
+	      return value.match(/^[\w.%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/i);
+	    }
+	  }, {
+	    key: 'isPhone',
+	    value: function isPhone(value) {
+	      return value.replace(/[^\d]/g, '').length == 10;
+	    }
+	  }, {
+	    key: 'randomId',
+	    value: function randomId() {
+	      return (Math.random().toString(36) + '00000000000000000').slice(2, 10);
+	    }
+	  }]);
 	
-	    _createClass(CheckValues, null, [{
-	        key: 'isEmpty',
-	        value: function isEmpty(value) {
-	            return value === '' || value === null;
-	        }
-	    }, {
-	        key: 'isEmail',
-	        value: function isEmail(value) {
-	            return value.match(/^[\w.%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/i);
-	        }
-	    }, {
-	        key: 'isPhone',
-	        value: function isPhone(value) {
-	            return value.replace(/[^\d]/, '').length >= 7;
-	        }
-	    }, {
-	        key: 'randomId',
-	        value: function randomId() {
-	            return (Math.random().toString(36) + '00000000000000000').slice(2, 10);
-	        }
-	    }]);
-	
-	    return CheckValues;
+	  return CheckValues;
 	}();
 	
 	exports.default = CheckValues;
