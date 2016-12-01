@@ -161,8 +161,6 @@ class Property extends Base
         $this->company_name = new Variable\String('', 'company_name');
         $this->thumbnail = new Variable\String('', 'thumbnail');
         $this->doNotSave(array('company_name', 'thumbnail'));
-        //$this->addHiddenVariable('company_name');
-        //$this->addHiddenVariable('thumbnail');
     }
 
     public function getCampusDistance()
@@ -383,6 +381,7 @@ class Property extends Base
         $view['internet_type'] = $this->getInternetType();
         $view['lease_type'] = $this->lease_type === '0' ? 'per unit' : 'per tenant';
         $view['laundry_type'] = $this->getLaundryType();
+        $view['washer'] = ($this->laundry_type->get() == LAUNDRY_IN_UNIT);
 
         if ($this->move_in_date->get() < time()) {
             $view['move_in_date'] = 'Move in today!';
