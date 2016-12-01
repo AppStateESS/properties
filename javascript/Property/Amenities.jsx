@@ -22,16 +22,10 @@ export default class Amenities extends React.Component {
   }
 
   render() {
-    /*
-    const dropped = (this.state.drop === true)
-      ? 'btn-group open'
-      : 'btn-group'
-      */
     const {searchVars} = this.props
     return (
-      <div style={{
-        clear: 'both'
-      }}>
+      <div>
+        <hr />
         <div className="row">
           <div className="col-sm-4">
             <h4>Features</h4>
