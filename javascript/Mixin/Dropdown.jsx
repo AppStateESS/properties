@@ -22,10 +22,14 @@ class Dropdown extends React.Component {
     } else {
       optionList = null
     }
+    let buttonClass = 'btn btn-default dropdown-toggle'
+    if (this.props.small) {
+      buttonClass = buttonClass.concat(' btn-sm')
+    }
     return (
       <div className="dropdown">
         <button
-          className="btn btn-default dropdown-toggle"
+          className={buttonClass}
           type="button"
           data-toggle="dropdown"
           aria-haspopup="true"
@@ -40,7 +44,12 @@ class Dropdown extends React.Component {
 }
 Dropdown.propTypes = {
   label: React.PropTypes.string,
-  options: React.PropTypes.array
+  options: React.PropTypes.array,
+  small: React.PropTypes.bool
+}
+
+Dropdown.defaultProps = {
+  small : false
 }
 
 export default Dropdown
