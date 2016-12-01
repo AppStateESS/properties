@@ -89,18 +89,4 @@ class PropertyFactory extends BaseFactory
             throw new \properties\Exception\PropertySaveFailure($e->getMessage());
         }
     }
-
-    public function viewHtml($resource, array $tpl)
-    {
-        $propertyTpl = $resource->view();
-        $managerFactory = new ManagerFactory;
-        $manager = $managerFactory->load($resource->contact_id);
-        $managerTpl = $manager->view();
-        $view = array_merge($propertyTpl, $managerTpl);
-        $view = array_merge($tpl, $view);
-        $template = new \phpws2\Template($view);
-        $template->setModuleTemplate('properties', 'property.html');
-        return $template->get();
-    }
-
 }
