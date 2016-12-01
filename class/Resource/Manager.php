@@ -55,9 +55,9 @@ class Manager extends Base
         $this->times_available = new Variable\TextOnly(null, 'times_available');
         $this->times_available->allowNull(true);
         $this->last_log = new Variable\Integer(time(), 'last_log');
-        $this->active = new Variable\Bool(1, 'active');
+        $this->active = new Variable\Bool(0, 'active');
         $this->private = new Variable\Bool(0, 'private');
-        $this->approved = new Variable\Bool(1, 'approved');
+        $this->approved = new Variable\Bool(0, 'approved');
         $this->property_count = new Variable\Integer(0, 'properties_count');
         $this->property_count->setIsTableColumn(false);
     }
