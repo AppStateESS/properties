@@ -228,7 +228,9 @@ export default class PropertyForm extends React.Component {
       <div ref="PageTop">
         {deleteForm}
         {message}
-        <h2>Property for {this.state.property.company_name}</h2>
+        <h2>Property for {this.state.property.company_name}&nbsp;<button className="btn btn-danger" onClick={this.openDelete}>
+            <i className="fa fa-trash-o"></i>&nbsp;Delete property</button>
+        </h2>
         <Nav
           buttons={this.navButtons()}
           active={this.state.activeTab}
