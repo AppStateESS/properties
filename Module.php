@@ -22,7 +22,7 @@ class Module extends \Module
     {
         parent::__construct();
         $this->setTitle('properties');
-        $this->setProperName('Counseling Center Check-In');
+        $this->setProperName('Properties');
         $namespace = __NAMESPACE__;
         spl_autoload_register('\properties\Module::autoloader');
     }
