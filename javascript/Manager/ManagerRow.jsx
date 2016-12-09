@@ -123,7 +123,6 @@ class ManagerRow extends React.Component {
       co = <small>(c/o {this.props.first_name}&nbsp;{this.props.last_name})</small>
     }
     const email = 'mailto:' + this.props.email_address
-    const phone = 'tel:+1' + this.props.phone.replace(/[^\d]/g, '')
 
     return (
       <tr className={this.props.active === '0'
@@ -136,7 +135,7 @@ class ManagerRow extends React.Component {
           {properties}
         </td>
         <td>
-          <LinkToButton url={phone} icon="fa-phone" label={this.props.phone}/>
+          <LinkToButton url={this.props.phone_tel} icon="fa-phone" label={this.props.phone}/>
           <Website url={this.props.company_url}/>
           <LinkToButton
             url={email}
@@ -153,6 +152,7 @@ class ManagerRow extends React.Component {
 
 ManagerRow.defaultProps = {
   phone: '',
+  phone_tel: '',
   email_address: '',
   last_log: null,
   company_url: '',
@@ -169,6 +169,7 @@ ManagerRow.propTypes = {
   company_url: React.PropTypes.string,
   first_name: React.PropTypes.string,
   last_name: React.PropTypes.string,
+  phone_tel: React.PropTypes.string,
   last_log: React.PropTypes.string,
   fillForm: React.PropTypes.func,
   active: React.PropTypes.string,
