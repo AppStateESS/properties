@@ -21,7 +21,7 @@ namespace properties\Factory;
 class NavBar
 {
 
-    public static $buttons;
+    public static $items;
     public static $options;
 
     public static function view()
@@ -31,10 +31,10 @@ class NavBar
         $vars['logged'] = \Current_User::isLogged();
         $vars['admin'] = \Current_User::allow('properties');
 
-        $vars['buttons'] = null;
+        $vars['items'] = null;
         $vars['options'] = null;
-        if (!empty(self::$buttons)) {
-            $vars['buttons'] = implode('&nbsp;', self::$buttons);
+        if (!empty(self::$items)) {
+            $vars['items'] = implode('&nbsp;', self::$items);
         }
         
         if (!empty(self::$options)) {
@@ -52,14 +52,13 @@ class NavBar
         \Layout::plug($content, 'NAV_LINKS');
     }
 
-    public static function addButton($button)
+    public static function addItem($item)
     {
-        self::$buttons[] = $button;
+        self::$items[] = $item;
     }
 
     public static function addOption($option)
     {
         self::$options[] = $option;
     }
-
 }
