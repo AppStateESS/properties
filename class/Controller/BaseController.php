@@ -82,7 +82,10 @@ abstract class BaseController extends \phpws2\Http\Controller
         if (!empty($command)) {
             // this a view of a specific item
             if (is_numeric($command)) {
-                $subcommand = $this->defaultNumericCommand($request);
+                $subcommand = $request->shiftCommand();
+                if (empty($subcommand)) {
+                    $subcommand = $this->defaultNumericCommand($request);
+                }
                 $this->resource = $this->factory->load($command);
 
                 if (!$this->factory->role->allow($subcommand)) {
@@ -108,11 +111,11 @@ abstract class BaseController extends \phpws2\Http\Controller
         if ($request->isPost()) {
             throw new \properties\Exception\BadCommand();
         } elseif ($request->isGet()) {
-            // Get will return the default view on an empty command
+            // Get will return the default 'view' on an empty command
             $command = $request->shiftCommand();
             return empty($command) ? 'view' : $command;
         } else {
-            return strtolower($request->getMethod());
+            return null;
         }
     }
 
