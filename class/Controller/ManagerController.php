@@ -19,12 +19,10 @@ use properties\Factory\NavBar;
 class ManagerController extends BaseController
 {
 
-    protected $factory;
-
     public function __construct($module)
     {
         parent::__construct($module);
-        $this->factory = new Factory();
+        $this->factory = new Factory('manager');
     }
 
     public function getHtmlView($data, \Request $request)
@@ -51,7 +49,7 @@ class ManagerController extends BaseController
                 break;
 
             case 'view':
-                $content = 'html view';
+                $content = 'html view ' . $managerId;
                 break;
 
             case 'signin':
@@ -65,8 +63,22 @@ class ManagerController extends BaseController
         return $view;
     }
 
+    private function addApprovalLink()
+    {
+        $needApproval = $this->factory->needApproval();
+        if ($needApproval == 0) {
+            return;
+        }
+        $label = ($needApproval == 1) ? "$needApproval manager needs approval" : "$needApproval managers need approval";
+        $link = "<button onClick=\"window.location.href='./properties/ManagerApproval'\" class=\"btn btn-default navbar-btn\">$label</button>";
+        NavBar::addItem($link);
+    }
+
     private function listing()
     {
+        if ($this->factory->role->isAdmin()) {
+            $this->addApprovalLink();
+        }
         return $this->reactView('manager');
     }
 
@@ -80,19 +92,16 @@ class ManagerController extends BaseController
     public function getJsonView($data, \Request $request)
     {
         $command = $this->checkCommand($request, 'list');
-
-        if (is_numeric($command)) {
-            $managerId = (int) $command;
-            $command = 'view';
-        } else {
-            $managerId = $request->pullGetInteger('managerId', true);
-        }
-
+        /*
+          if (is_numeric($command)) {
+          $command = 'view';
+          }
+         */
         switch ($command) {
             case 'list':
                 $json = array();
-                $json['addManager'] = $this->factory->role->allow('post');
-                $json['managerList'] = $this->factory->listing($request->pullGetVarIfSet('limit',
+                $json['admin'] = $this->factory->role->isAdmin();
+                $json['managerList'] = $this->factory->approvedListing($request->pullGetVarIfSet('limit',
                                 true), $request->pullGetString('search', true));
                 return new \View\JsonView($json);
                 break;
@@ -116,6 +125,9 @@ class ManagerController extends BaseController
                 $manager = $this->factory->load($managerId);
                 $json = $manager->getStringVars(null, 'password');
                 break;
+
+            default:
+                throw new \properties\Exception\BadCommand;
         }
         $view = new \View\JsonView($json);
         return $view;
@@ -142,7 +154,25 @@ class ManagerController extends BaseController
             throw new \properties\Exception\PrivilegeMissing;
         }
         $json = $this->factory->adminPost($request);
-        
+
+        $view = new \View\JsonView($json);
+        $response = new \Response($view);
+        return $response;
+    }
+
+    public function put(\Request $request)
+    {
+        $command = $this->checkCommand($request);
+        switch ($command) {
+            case 'refuse':
+                $this->factory->refuse($this->resource, $request->pullPutString('reason'));
+                break;
+            
+            default:
+                throw new \properties\Exception\BadCommand;
+        }
+
+        $json['success'] = true;
         $view = new \View\JsonView($json);
         $response = new \Response($view);
         return $response;
@@ -150,7 +180,7 @@ class ManagerController extends BaseController
 
     public function patch(\Request $request)
     {
-        if (!$this->factory->role->allow()) {
+        if (!$this->factory->role->isAdmin()) {
             throw new \properties\Exception\PrivilegeMissing;
         }
         $param = $request->pullPatchString('param');
