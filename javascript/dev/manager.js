@@ -83,7 +83,7 @@ webpackJsonp([0],{
 	    var _this = _possibleConstructorReturn(this, (Manager.__proto__ || Object.getPrototypeOf(Manager)).call(this, props));
 	
 	    _this.delay;
-	    _this.addManager = false;
+	    _this.admin = false;
 	    _this.state = {
 	      managers: null,
 	      message: null,
@@ -128,7 +128,7 @@ webpackJsonp([0],{
 	    key: 'load',
 	    value: function load() {
 	      $.getJSON('properties/Manager', { search: this.search }).done(function (data) {
-	        this.addManager = data.addManager;
+	        this.admin = data.admin;
 	        this.setState({ managers: data['managerList'] });
 	      }.bind(this)).fail(function () {
 	        this.setState({ managers: null });
@@ -178,7 +178,7 @@ webpackJsonp([0],{
 	      var managerForm = null;
 	      var message = this.getMessage();
 	
-	      if (this.addManager) {
+	      if (this.admin) {
 	        managerForm = _react2.default.createElement(_ManagerForm2.default, { manager: this.state.currentManager, reload: this.load, message: this.setMessage });
 	      }
 	      if (this.state.managers === null) {
@@ -218,7 +218,7 @@ webpackJsonp([0],{
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'col-sm-2' },
-	              this.addManager ? _react2.default.createElement(
+	              this.admin ? _react2.default.createElement(
 	                'button',
 	                {
 	                  className: 'btn btn-success',
@@ -236,7 +236,7 @@ webpackJsonp([0],{
 	            reload: this.updateManager,
 	            remove: this.dropManager,
 	            message: this.setMessage,
-	            admin: this.addManager })
+	            admin: this.admin })
 	        );
 	      }
 	    }
@@ -547,7 +547,6 @@ webpackJsonp([0],{
 	        );
 	      }
 	      var email = 'mailto:' + this.props.email_address;
-	      var phone = 'tel:+1' + this.props.phone.replace(/[^\d]/g, '');
 	
 	      return _react2.default.createElement(
 	        'tr',
@@ -571,7 +570,7 @@ webpackJsonp([0],{
 	        _react2.default.createElement(
 	          'td',
 	          null,
-	          _react2.default.createElement(LinkToButton, { url: phone, icon: 'fa-phone', label: this.props.phone }),
+	          _react2.default.createElement(LinkToButton, { url: this.props.phone_tel, icon: 'fa-phone', label: this.props.phone }),
 	          _react2.default.createElement(Website, { url: this.props.company_url }),
 	          _react2.default.createElement(LinkToButton, {
 	            url: email,
@@ -592,6 +591,7 @@ webpackJsonp([0],{
 	
 	ManagerRow.defaultProps = {
 	  phone: '',
+	  phone_tel: '',
 	  email_address: '',
 	  last_log: null,
 	  company_url: '',
@@ -608,6 +608,7 @@ webpackJsonp([0],{
 	  company_url: _react2.default.PropTypes.string,
 	  first_name: _react2.default.PropTypes.string,
 	  last_name: _react2.default.PropTypes.string,
+	  phone_tel: _react2.default.PropTypes.string,
 	  last_log: _react2.default.PropTypes.string,
 	  fillForm: _react2.default.PropTypes.func,
 	  active: _react2.default.PropTypes.string,
@@ -724,6 +725,21 @@ webpackJsonp([0],{
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	/**
+	props.label = 'Pick option below'
+	props.small = false
+	props.options = [
+	{
+	  link : 'http://address', // default: null
+	  icon : <i className="fa fa-check"></i>, // default: null
+	  label : 'Click here',
+	  handleClick : functionName,
+	},
+	{
+	  divider: true
+	}
+	]
+	*/
 	var Dropdown = function (_React$Component) {
 	  _inherits(Dropdown, _React$Component);
 	
@@ -741,6 +757,9 @@ webpackJsonp([0],{
 	      var optionList = null;
 	      if (this.props.options !== null) {
 	        options = this.props.options.map(function (value, key) {
+	          if (value.divider !== undefined && value.divider === true) {
+	            return _react2.default.createElement("hr", { key: key });
+	          }
 	          if (value.link !== null) {
 	            label = _react2.default.createElement(
 	              "a",
@@ -1849,7 +1868,7 @@ webpackJsonp([0],{
 	
 	Message.propTypes = {
 	  type: _react2.default.PropTypes.string,
-	  message: _react2.default.PropTypes.string,
+	  message: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.element]),
 	  onClose: _react2.default.PropTypes.func
 	};
 	

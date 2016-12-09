@@ -1,4 +1,4 @@
-webpackJsonp([3],{
+webpackJsonp([4],{
 
 /***/ 0:
 /*!***************************************!*\
@@ -16,7 +16,7 @@ webpackJsonp([3],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _Property = __webpack_require__(/*! ./Property.jsx */ 192);
+	var _Property = __webpack_require__(/*! ./Property.jsx */ 194);
 	
 	var _Property2 = _interopRequireDefault(_Property);
 	
@@ -52,6 +52,21 @@ webpackJsonp([3],{
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	/**
+	props.label = 'Pick option below'
+	props.small = false
+	props.options = [
+	{
+	  link : 'http://address', // default: null
+	  icon : <i className="fa fa-check"></i>, // default: null
+	  label : 'Click here',
+	  handleClick : functionName,
+	},
+	{
+	  divider: true
+	}
+	]
+	*/
 	var Dropdown = function (_React$Component) {
 	  _inherits(Dropdown, _React$Component);
 	
@@ -69,6 +84,9 @@ webpackJsonp([3],{
 	      var optionList = null;
 	      if (this.props.options !== null) {
 	        options = this.props.options.map(function (value, key) {
+	          if (value.divider !== undefined && value.divider === true) {
+	            return _react2.default.createElement("hr", { key: key });
+	          }
 	          if (value.link !== null) {
 	            label = _react2.default.createElement(
 	              "a",
@@ -227,7 +245,7 @@ webpackJsonp([3],{
 	
 	Message.propTypes = {
 	  type: _react2.default.PropTypes.string,
-	  message: _react2.default.PropTypes.string,
+	  message: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.element]),
 	  onClose: _react2.default.PropTypes.func
 	};
 	
@@ -344,7 +362,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 192:
+/***/ 194:
 /*!******************************************!*\
   !*** ./javascript/Property/Property.jsx ***!
   \******************************************/
@@ -362,11 +380,11 @@ webpackJsonp([3],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _DecodeUrl = __webpack_require__(/*! ../Mixin/DecodeUrl.js */ 193);
+	var _DecodeUrl = __webpack_require__(/*! ../Mixin/DecodeUrl.js */ 195);
 	
 	var _DecodeUrl2 = _interopRequireDefault(_DecodeUrl);
 	
-	var _PropertyListing = __webpack_require__(/*! ./PropertyListing.jsx */ 194);
+	var _PropertyListing = __webpack_require__(/*! ./PropertyListing.jsx */ 196);
 	
 	var _PropertyListing2 = _interopRequireDefault(_PropertyListing);
 	
@@ -378,7 +396,7 @@ webpackJsonp([3],{
 	
 	var _Empty2 = _interopRequireDefault(_Empty);
 	
-	var _PropertyBar = __webpack_require__(/*! ./PropertyBar.jsx */ 196);
+	var _PropertyBar = __webpack_require__(/*! ./PropertyBar.jsx */ 198);
 	
 	var _PropertyBar2 = _interopRequireDefault(_PropertyBar);
 	
@@ -386,7 +404,7 @@ webpackJsonp([3],{
 	
 	var _Message2 = _interopRequireDefault(_Message);
 	
-	var _setIfDefined = __webpack_require__(/*! ../Mixin/setIfDefined.js */ 205);
+	var _setIfDefined = __webpack_require__(/*! ../Mixin/setIfDefined.js */ 207);
 	
 	var _setIfDefined2 = _interopRequireDefault(_setIfDefined);
 	
@@ -598,7 +616,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 193:
+/***/ 195:
 /*!***************************************!*\
   !*** ./javascript/Mixin/DecodeUrl.js ***!
   \***************************************/
@@ -647,7 +665,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 194:
+/***/ 196:
 /*!*************************************************!*\
   !*** ./javascript/Property/PropertyListing.jsx ***!
   \*************************************************/
@@ -665,7 +683,7 @@ webpackJsonp([3],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _PropertyRow = __webpack_require__(/*! ./PropertyRow.jsx */ 195);
+	var _PropertyRow = __webpack_require__(/*! ./PropertyRow.jsx */ 197);
 	
 	var _PropertyRow2 = _interopRequireDefault(_PropertyRow);
 	
@@ -737,7 +755,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 195:
+/***/ 197:
 /*!*********************************************!*\
   !*** ./javascript/Property/PropertyRow.jsx ***!
   \*********************************************/
@@ -1038,7 +1056,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 196:
+/***/ 198:
 /*!*********************************************!*\
   !*** ./javascript/Property/PropertyBar.jsx ***!
   \*********************************************/
@@ -1060,11 +1078,11 @@ webpackJsonp([3],{
 	
 	var _Dropdown2 = _interopRequireDefault(_Dropdown);
 	
-	var _Amenities = __webpack_require__(/*! ./Amenities.jsx */ 197);
+	var _Amenities = __webpack_require__(/*! ./Amenities.jsx */ 199);
 	
 	var _Amenities2 = _interopRequireDefault(_Amenities);
 	
-	var _reactAddonsCssTransitionGroup = __webpack_require__(/*! react-addons-css-transition-group */ 198);
+	var _reactAddonsCssTransitionGroup = __webpack_require__(/*! react-addons-css-transition-group */ 200);
 	
 	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 	
@@ -1329,7 +1347,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 197:
+/***/ 199:
 /*!*******************************************!*\
   !*** ./javascript/Property/Amenities.jsx ***!
   \*******************************************/
@@ -1629,17 +1647,17 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 198:
+/***/ 200:
 /*!******************************************************!*\
   !*** ./~/react-addons-css-transition-group/index.js ***!
   \******************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(/*! react/lib/ReactCSSTransitionGroup */ 199);
+	module.exports = __webpack_require__(/*! react/lib/ReactCSSTransitionGroup */ 201);
 
 /***/ },
 
-/***/ 199:
+/***/ 201:
 /*!************************************************!*\
   !*** ./~/react/lib/ReactCSSTransitionGroup.js ***!
   \************************************************/
@@ -1662,8 +1680,8 @@ webpackJsonp([3],{
 	
 	var React = __webpack_require__(/*! ./React */ 2);
 	
-	var ReactTransitionGroup = __webpack_require__(/*! ./ReactTransitionGroup */ 200);
-	var ReactCSSTransitionGroupChild = __webpack_require__(/*! ./ReactCSSTransitionGroupChild */ 202);
+	var ReactTransitionGroup = __webpack_require__(/*! ./ReactTransitionGroup */ 202);
+	var ReactCSSTransitionGroupChild = __webpack_require__(/*! ./ReactCSSTransitionGroupChild */ 204);
 	
 	function createTransitionTimeoutPropValidator(transitionType) {
 	  var timeoutPropName = 'transition' + transitionType + 'Timeout';
@@ -1735,7 +1753,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 200:
+/***/ 202:
 /*!*********************************************!*\
   !*** ./~/react/lib/ReactTransitionGroup.js ***!
   \*********************************************/
@@ -1758,7 +1776,7 @@ webpackJsonp([3],{
 	
 	var React = __webpack_require__(/*! ./React */ 2);
 	var ReactInstanceMap = __webpack_require__(/*! ./ReactInstanceMap */ 119);
-	var ReactTransitionChildMapping = __webpack_require__(/*! ./ReactTransitionChildMapping */ 201);
+	var ReactTransitionChildMapping = __webpack_require__(/*! ./ReactTransitionChildMapping */ 203);
 	
 	var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 12);
 	
@@ -1991,7 +2009,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 201:
+/***/ 203:
 /*!****************************************************!*\
   !*** ./~/react/lib/ReactTransitionChildMapping.js ***!
   \****************************************************/
@@ -2104,7 +2122,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 202:
+/***/ 204:
 /*!*****************************************************!*\
   !*** ./~/react/lib/ReactCSSTransitionGroupChild.js ***!
   \*****************************************************/
@@ -2126,8 +2144,8 @@ webpackJsonp([3],{
 	var React = __webpack_require__(/*! ./React */ 2);
 	var ReactDOM = __webpack_require__(/*! ./ReactDOM */ 35);
 	
-	var CSSCore = __webpack_require__(/*! fbjs/lib/CSSCore */ 203);
-	var ReactTransitionEvents = __webpack_require__(/*! ./ReactTransitionEvents */ 204);
+	var CSSCore = __webpack_require__(/*! fbjs/lib/CSSCore */ 205);
+	var ReactTransitionEvents = __webpack_require__(/*! ./ReactTransitionEvents */ 206);
 	
 	var onlyChild = __webpack_require__(/*! ./onlyChild */ 33);
 	
@@ -2280,7 +2298,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 203:
+/***/ 205:
 /*!*******************************!*\
   !*** ./~/fbjs/lib/CSSCore.js ***!
   \*******************************/
@@ -2411,7 +2429,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 204:
+/***/ 206:
 /*!**********************************************!*\
   !*** ./~/react/lib/ReactTransitionEvents.js ***!
   \**********************************************/
@@ -2493,7 +2511,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 205:
+/***/ 207:
 /*!******************************************!*\
   !*** ./javascript/Mixin/setIfDefined.js ***!
   \******************************************/

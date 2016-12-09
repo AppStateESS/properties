@@ -1,4 +1,4 @@
-webpackJsonp([1],{
+webpackJsonp([2],{
 
 /***/ 0:
 /*!********************************************!*\
@@ -16,7 +16,7 @@ webpackJsonp([1],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _ManagerSignup = __webpack_require__(/*! ./ManagerSignup.jsx */ 183);
+	var _ManagerSignup = __webpack_require__(/*! ./ManagerSignup.jsx */ 186);
 	
 	var _ManagerSignup2 = _interopRequireDefault(_ManagerSignup);
 	
@@ -357,7 +357,7 @@ webpackJsonp([1],{
 	
 	Message.propTypes = {
 	  type: _react2.default.PropTypes.string,
-	  message: _react2.default.PropTypes.string,
+	  message: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.element]),
 	  onClose: _react2.default.PropTypes.func
 	};
 	
@@ -392,7 +392,25 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 183:
+/***/ 184:
+/*!***********************************!*\
+  !*** ./javascript/Mixin/Empty.js ***!
+  \***********************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = empty;
+	function empty(value) {
+	  return value === undefined || value === null || value === 0 || value === '0' || value.length === 0;
+	}
+
+/***/ },
+
+/***/ 186:
 /*!****************************************************!*\
   !*** ./javascript/ManagerSignup/ManagerSignup.jsx ***!
   \****************************************************/
@@ -698,9 +716,11 @@ webpackJsonp([1],{
 	        dataType: 'json',
 	        data: values,
 	        success: function (data) {
-	          window.location.href = './properties/ManagerSignup/success';
+	          if (data.status) {
+	            window.location.href = './properties/ManagerSignup/success';
+	          }
 	        }.bind(this),
-	        failure: function failure(data) {
+	        failure: function failure() {
 	          this.setState({ message: 'Error: there was a problem with your application. Please contact us.' });
 	        }
 	      });
@@ -887,24 +907,6 @@ webpackJsonp([1],{
 	exports.default = ManagerSignin;
 	
 	ManagerSignin.propTypes = {};
-
-/***/ },
-
-/***/ 184:
-/*!***********************************!*\
-  !*** ./javascript/Mixin/Empty.js ***!
-  \***********************************/
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = empty;
-	function empty(value) {
-	  return value === undefined || value === null || value === 0 || value === '0' || value.length === 0;
-	}
 
 /***/ }
 
