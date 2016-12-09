@@ -45,7 +45,7 @@ class Message extends React.Component {
 
 Message.propTypes = {
   type: React.PropTypes.string,
-  message: React.PropTypes.string,
+  message: React.PropTypes.oneOfType([React.PropTypes.string,React.PropTypes.element]),
   onClose: React.PropTypes.func
 }
 
