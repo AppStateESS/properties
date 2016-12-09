@@ -12,7 +12,7 @@ class Manager extends React.Component {
   constructor(props) {
     super(props)
     this.delay
-    this.addManager = false
+    this.admin = false
     this.state = {
       managers: null,
       message: null,
@@ -59,7 +59,7 @@ class Manager extends React.Component {
 
   load() {
     $.getJSON('properties/Manager', {search: this.search}).done(function (data) {
-      this.addManager = data.addManager
+      this.admin = data.admin
       this.setState({managers: data['managerList']})
     }.bind(this)).fail(function () {
       this.setState({managers: null})
@@ -104,7 +104,7 @@ class Manager extends React.Component {
     let managerForm = null
     let message = this.getMessage()
 
-    if (this.addManager) {
+    if (this.admin) {
       managerForm = <ManagerForm manager={this.state.currentManager} reload={this.load} message={this.setMessage}/>
     }
     if (this.state.managers === null) {
@@ -129,7 +129,7 @@ class Manager extends React.Component {
               </div>
             </div>
             <div className="col-sm-2">
-              {this.addManager
+              {this.admin
                 ? (
                   <button
                     className="btn btn-success"
@@ -147,7 +147,7 @@ class Manager extends React.Component {
             reload={this.updateManager}
             remove={this.dropManager}
             message={this.setMessage}
-            admin={this.addManager}/>
+            admin={this.admin}/>
         </div>
       )
     }
