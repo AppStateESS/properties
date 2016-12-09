@@ -15,6 +15,7 @@
  *
  * @license http://opensource.org/licenses/lgpl-3.0.html
  */
+
 namespace properties\Factory;
 
 use phpws2\Database;
@@ -141,7 +142,15 @@ abstract class ManagerFactoryAbstract extends BaseFactory
             $r->company_address = $company_address === false ? null : $company_address;
 
             $company_url = $request->pullPostString('company_url', true);
-            $r->company_url = $company_url === false ? null : $company_url;
+            if (empty($company_url)) {
+                $r->company_url = null;
+            } else {
+                if (preg_match('@^(https?:\/\/)@', $company_url)) {
+                    $r->company_url = $company_url;
+                } else {
+                    $r->company_url = 'http://' . $company_url;
+                }
+            }
 
             $times_available = $request->pullPostString('times_available', true);
             $r->times_available = $times_available === false ? null : $times_available;
