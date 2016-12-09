@@ -134,7 +134,6 @@ export default class ManagerSignin extends React.Component {
     }
   }
 
-
   checkPassword() {
     const status = this.state.password.length >= 10
     this.setError('password', status
@@ -255,10 +254,12 @@ export default class ManagerSignin extends React.Component {
       dataType: 'json',
       data: values,
       success: function (data) {
-        window.location.href = './properties/ManagerSignup/success'
+        if (data.status) {
+          window.location.href = './properties/ManagerSignup/success'
+        }
       }.bind(this),
-      failure: function(data) {
-          this.setState({message: 'Error: there was a problem with your application. Please contact us.'})
+      failure: function () {
+        this.setState({message: 'Error: there was a problem with your application. Please contact us.'})
       }
     })
   }
