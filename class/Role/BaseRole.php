@@ -115,6 +115,14 @@ abstract class BaseRole
         return $this->check($command, $this->patchCommands);
     }
 
+    protected function allowPut($command)
+    {
+        if ($command === null) {
+            return $this->putCommands === true;
+        }
+        return $this->check($command, $this->putCommands);
+    }
+
     protected function allowDelete($command)
     {
         if ($command === null) {
