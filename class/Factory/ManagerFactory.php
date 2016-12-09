@@ -19,75 +19,45 @@ use properties\Exception\PrivilegeMissing;
 class ManagerFactory extends ManagerFactoryAbstract
 {
 
-    public function __construct()
+    public function __construct($controller = 'manager')
     {
-        parent::__construct('manager');
+        parent::__construct($controller);
     }
 
-    public function listing($limit = 100, $search = null)
+    public function approvedListing($limit = 100, $search = null)
     {
-        $db = Database::getDB();
-        $tbl = $db->addTable('prop_contacts');
-        $tbl2 = $db->addTable('properties');
-        $tbl2->addField('id', 'property_count')->showCount();
-        if ((int) $limit <= 0) {
-            $db->setLimit(100);
-        }
-        $tbl->addField('id');
-        $tbl->addField('username');
-        $tbl->addField('first_name');
-        $tbl->addField('last_name');
-        $tbl->addField('phone');
-        $tbl->addField('email_address');
-        $tbl->addField('company_name');
-        $tbl->addField('company_address');
-        $tbl->addField('company_url');
-        $tbl->addField('times_available');
-        $tbl->addField('last_log');
-        $tbl->addField('active');
-        $tbl->addField('approved');
-
-        $join_conditional = $db->createConditional($tbl->getField('id'),
-                $tbl2->getField('contact_id'));
-        $db->joinResources($tbl, $tbl2, $join_conditional, 'left');
-
-        $search_string = "%$search%";
-        if (!empty($search)) {
-            $s1 = $db->createConditional($tbl->getField('username'),
-                    $search_string, 'like');
-            $s2 = $db->createConditional($tbl->getField('first_name'),
-                    $search_string, 'like');
-            $s3 = $db->createConditional($tbl->getField('last_name'),
-                    $search_string, 'like');
-            $s4 = $db->createConditional($tbl->getField('company_name'),
-                    $search_string, 'like');
-            $sf1 = $db->createConditional($s1, $s2, 'or');
-            $sf2 = $db->createConditional($s3, $s4, 'or');
-            $conditional = $db->createConditional($sf1, $sf2, 'or');
-            $db->addConditional($conditional);
-        }
-        if (!$this->role->isAdmin()) {
-            $tbl->addFieldConditional('active', 1);
-        }
-        $db->setGroupBy($tbl->getField('id'));
-        $result = $db->select();
+        $listing = new Manager\Listing;
+        $listing->limit = $limit;
+        $listing->search = $search;
+        $listing->active = null;
+        $listing->view = true;
+        $listing->restricted = $this->role->isUser() || $this->role->isLogged();
+        $result = $listing->get(true, true);
         if (empty($result)) {
             return array();
         }
+        return $result;
+    }
 
-
-        if ($this->role->isUser() || $this->role->isLogged()) {
-            $hide = array('private', 'username', 'first_name', 'last_name', 'last_log', 'active', 'approved');
+    public function unapprovedListing($limit = 100, $search = null)
+    {
+        if (!$this->role->isAdmin()) {
+            throw new PrivilegeMissing;
         }
-        $hide[] = 'password';
-
-        $resourceArray = \phpws2\ResourceFactory::makeResourceStringArray($result,
-                        '\properties\Resource\Manager', $hide);
-        $final = array_map(function($row) {
-            unset($row['password']);
-            return $row;
-        }, $resourceArray);
-        return $final;
+        $listing = new Manager\Listing;
+        $listing->limit = $limit;
+        $listing->active = null;
+        $listing->approved = 0;
+        $listing->include_property_count = false;
+        $listing->orderby = 'last_log';
+        $listing->orderby_dir = 'desc';
+        $listing->view = true;
+        $listing->restricted = false;
+        $result = $listing->get();
+        if (empty($result)) {
+            return array();
+        }
+        return $result;
     }
 
     /**
@@ -166,7 +136,7 @@ class ManagerFactory extends ManagerFactoryAbstract
 
     public function patch($id, $param, $value)
     {
-        static $allowed_params = array('username', 'passwddord', 'first_name',
+        static $allowed_params = array('username', 'password', 'first_name',
             'last_name', 'phone', 'email_address', 'company_name', 'company_address',
             'company_url', 'times_available', 'active', 'approved');
 
@@ -177,6 +147,73 @@ class ManagerFactory extends ManagerFactoryAbstract
         $manager->$param = $value;
         $this->saveResource($manager);
         return true;
+    }
+
+    public function needApproval()
+    {
+        $db = Database::getDB();
+        $tbl = $db->addTable('prop_contacts');
+        $tbl->addFieldConditional('approved', 0);
+        $tbl->addField('id')->showCount();
+        return $db->selectColumn();
+    }
+
+    /**
+     * 
+     * @param Resource $manager
+     * @param type $reason
+     * @throws \Exception
+     */
+    private function emailRefusal($manager, $reason)
+    {
+        switch ($reason) {
+            case 'duplicate':
+                $refusalLetter = 'duplicate.html';
+                break;
+            
+            case 'bad_data':
+                $refusalLetter = 'bad_data.html';
+                break;
+
+            case 'no_response':
+                $refusalLetter = 'no_response.html';
+                break;
+
+            default:
+                throw new \Exception('Bad reason variable sent to refusal');
+        }
+        
+        
+        $vars = $manager->view();
+        $vars = array_merge($this->contactInformation(), $vars);
+        $template = new \phpws2\Template($vars);
+        $template->setModuleTemplate('properties', "emails/$refusalLetter");
+        $content = $template->get();
+
+        $contact_info = $this->contactInformation();
+        
+        $email_address = $manager->email_address;
+        $transport = \Swift_MailTransport::newInstance();
+        //$transport = \Swift_SendmailTransport::newInstance();
+
+        $message = \Swift_Message::newInstance();
+        $message->setSubject('Manager request denied');
+        $message->setFrom($contact_info['our_email']);
+        $message->setTo($email_address);
+        $message->setBody($content, 'text/html');
+
+        $mailer = \Swift_Mailer::newInstance($transport);
+        $mailer->send($message);
+    }
+
+    /**
+     * Refuses a manager request
+     * @param Resource $manager
+     */
+    public function refuse(Resource $manager, $reason)
+    {
+        $this->emailRefusal($manager, $reason);
+        //$this->delete($manager->id);
     }
 
 }
