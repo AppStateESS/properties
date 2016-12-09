@@ -11,7 +11,7 @@ class ErrorPage extends React.Component {
     return <div>
       <h2>Uh oh</h2>
       <p>Something went wrong</p>
-      <p>{this.props.message}</p>
+      <pre>{this.props.message}</pre>
     </div>
   }
 }
