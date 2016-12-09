@@ -168,14 +168,32 @@ EOF;
                 $tbl->addFieldConditional('efficiency', 1);
                 $db->update();
                 $db->commit();
-            } catch (Exception $ex) {
+            } catch (\Exception $ex) {
                 $db->rollback();
                 $content[] = 'Update failed: ' . $ex->getMessage();
                 return false;
             }
             $content[] = <<<EOF
 <pre>
-+ Rewrite!
++ Rewrite of original properties modules.
+</pre>
+EOF;
+        case (version_compare($currentVersion, '2.0.1', '<')):
+            try {
+                $db = \phpws2\Database::getDB();
+                $db->begin();
+                $tbl = $db->addTable('prop_contacts');
+                $dt = $tbl->addDataType('inquiry_date', 'int');
+                $dt->setDefault(0);
+                $dt->add();
+            } catch (\Exception $ex) {
+                $db->rollback();
+                $content[] = 'Update failed: ' . $ex->getMessage();
+                return false;
+            }
+                        $content[] = <<<EOF
+<pre>
++ Inquiry feature added.
 </pre>
 EOF;
     }
