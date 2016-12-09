@@ -1,5 +1,20 @@
 import React from 'react'
 
+/**
+props.label = 'Pick option below'
+props.small = false
+props.options = [
+{
+  link : 'http://address', // default: null
+  icon : <i className="fa fa-check"></i>, // default: null
+  label : 'Click here',
+  handleClick : functionName,
+},
+{
+  divider: true
+}
+]
+*/
 class Dropdown extends React.Component {
   constructor(props) {
     super(props)
@@ -11,6 +26,9 @@ class Dropdown extends React.Component {
     let optionList = null
     if (this.props.options !== null) {
       options = this.props.options.map(function(value, key){
+        if (value.divider !== undefined && value.divider === true) {
+          return <hr key={key}/>
+        }
         if (value.link !== null) {
           label = <a href={value.link}>{value.icon} {value.label}</a>
         } else {
