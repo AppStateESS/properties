@@ -26,7 +26,7 @@ class ManagerSignupController extends BaseController
     public function __construct($module)
     {
         parent::__construct($module);
-        $this->factory = new Factory();
+        $this->factory = new Factory('managersignup');
     }
 
     public function getHtmlView($data, \Request $request)
