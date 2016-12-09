@@ -63,5 +63,14 @@ abstract class BaseFactory extends \phpws2\ResourceFactory
             return ucfirst($name);
         }
     }
+    
+    public function contactInformation()
+    {
+        $vars['our_email'] = 'somewebsite@appstate.edu';
+        $vars['our_phone'] = '(123) 123-1234';
+        $vars['our_contact_name'] = 'Chuck Charles';
+        $vars['our_website'] = \Server::getSiteUrl();
+        return $vars;
+    }
 
 }
