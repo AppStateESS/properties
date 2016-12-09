@@ -5,11 +5,9 @@ import bindMethods from '../Mixin/Bind.js'
 import Rooms from './Rooms.jsx'
 import InputField from '../Mixin/InputField.jsx'
 import ButtonGroup from '../Mixin/ButtonGroup.jsx'
-import BooleanButton from '../Mixin/BooleanButton.jsx'
 import Dollarize from '../Mixin/Dollarize.jsx'
 import Range from '../Mixin/Range.js'
 import moment from 'moment'
-import empty from '../Mixin/Empty.js'
 
 export default class Basic extends React.Component {
   constructor(props) {
