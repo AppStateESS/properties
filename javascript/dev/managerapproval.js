@@ -274,9 +274,13 @@ webpackJsonp([1],{
 	
 	var _Message2 = _interopRequireDefault(_Message);
 	
-	var _Modal = __webpack_require__(/*! ../Mixin/Modal.jsx */ 178);
+	var _RefuseModal = __webpack_require__(/*! ./RefuseModal.jsx */ 407);
 	
-	var _Modal2 = _interopRequireDefault(_Modal);
+	var _RefuseModal2 = _interopRequireDefault(_RefuseModal);
+	
+	var _InquiryModal = __webpack_require__(/*! ./InquiryModal.jsx */ 408);
+	
+	var _InquiryModal2 = _interopRequireDefault(_InquiryModal);
 	
 	var _Empty = __webpack_require__(/*! ../Mixin/Empty.js */ 184);
 	
@@ -311,14 +315,13 @@ webpackJsonp([1],{
 	      message: null,
 	      messageType: 'danger',
 	      modal: false,
+	      modalType: '',
 	      errorPage: null
 	    };
-	    _this.currentManager = {
-	      managerId: 0,
-	      inquiryDate: 0,
-	      key: null
-	    };
+	    _this.currentManager = {};
+	    _this.currentKey = null;
 	    _this.refuseReason = _this.refuseReason.bind(_this);
+	    _this.inquiryType = _this.inquiryType.bind(_this);
 	    return _this;
 	  }
 	
@@ -339,7 +342,7 @@ webpackJsonp([1],{
 	    value: function openModal() {
 	      $('#reactModal').modal('show');
 	      $('#reactModal').on('hidden.bs.modal', function () {
-	        this.setState({ modal: false });
+	        this.setState({ modal: false, modalType: '' });
 	      }.bind(this));
 	      this.setState({ modal: true });
 	    }
@@ -347,7 +350,7 @@ webpackJsonp([1],{
 	    key: 'closeModal',
 	    value: function closeModal() {
 	      $('#reactModal').modal('hide');
-	      this.setState({ modal: false });
+	      this.setState({ modal: false, modalType: '' });
 	    }
 	  }, {
 	    key: 'load',
@@ -409,20 +412,42 @@ webpackJsonp([1],{
 	    }
 	  }, {
 	    key: 'refuse',
-	    value: function refuse(managerId, inquiryDate, key) {
-	      this.setState({ modal: true });
-	      this.currentManager = {
-	        managerId: managerId,
-	        inquiryDate: inquiryDate,
-	        key: key
-	      };
+	    value: function refuse(manager, key) {
+	      this.setState({ modal: true, modalType: 'refuse' });
+	      this.currentManager = manager;
+	      this.currentKey = key;
+	    }
+	  }, {
+	    key: 'inquiry',
+	    value: function inquiry(manager, key) {
+	      this.setState({ modal: true, modalType: 'inquiry' });
+	      this.currentManager = manager;
+	      this.currentKey = key;
+	    }
+	  }, {
+	    key: 'inquiryType',
+	    value: function inquiryType(e) {
+	      var type = e.target.dataset.inquiryType;
+	      $.ajax({
+	        url: './properties/Manager/' + this.currentManager.id + '/inquiry/',
+	        data: {
+	          inquiryType: type
+	        },
+	        dataType: 'json',
+	        type: 'put'
+	      }).done(function () {
+	        this.load();
+	      }.bind(this)).error(function (data) {
+	        this.closeModal();
+	        this.setState({ 'errorPage': data.responseText });
+	      }.bind(this));
 	    }
 	  }, {
 	    key: 'refuseReason',
 	    value: function refuseReason(e) {
 	      var reason = e.target.dataset.reason;
 	      $.ajax({
-	        url: './properties/Manager/' + this.currentManager.managerId + '/refuse/',
+	        url: './properties/Manager/' + this.currentManager.id + '/refuse/',
 	        data: {
 	          reason: reason
 	        },
@@ -433,22 +458,19 @@ webpackJsonp([1],{
 	        if (this.state.managers.length === 1) {
 	          window.location.href = './properties/Manager/';
 	        } else {
-	          this.removeManager(this.currentManager.key);
+	          this.removeManager(this.currentKey);
 	          this.resetCurrentManager();
 	        }
 	      }.bind(this)).error(function (data) {
 	        this.closeModal();
 	        this.setState({ 'errorPage': data.responseText });
-	      }.bind(this)).complete(function () {});
+	      }.bind(this));
 	    }
 	  }, {
 	    key: 'resetCurrentManager',
 	    value: function resetCurrentManager() {
-	      this.currentManager = {
-	        managerId: 0,
-	        inquiryDate: 0,
-	        key: null
-	      };
+	      this.currentManager = {};
+	      this.currentKey = null;
 	    }
 	  }, {
 	    key: 'cancelReason',
@@ -456,14 +478,8 @@ webpackJsonp([1],{
 	      this.resetCurrentManager();
 	    }
 	  }, {
-	    key: 'inquiry',
-	    value: function inquiry() {}
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      if (this.state.errorPage !== null) {
-	        return _react2.default.createElement(_ErrorPage2.default, { message: this.state.errorPage });
-	      }
+	    key: 'listing',
+	    value: function listing() {
 	      var listing = _react2.default.createElement(
 	        'p',
 	        null,
@@ -471,13 +487,6 @@ webpackJsonp([1],{
 	      );
 	      var companyAddress = void 0;
 	      var websiteAddress = void 0;
-	      var message = this.getMessage();
-	      var modal = void 0;
-	      if (this.state.modal) {
-	        modal = _react2.default.createElement(RefuseModal, {
-	          reason: this.refuseReason,
-	          inquiryDate: this.currentManager.inquiryDate });
-	      }
 	
 	      if (this.state.managers !== null) {
 	        listing = this.state.managers.map(function (value, key) {
@@ -550,7 +559,7 @@ webpackJsonp([1],{
 	                    'button',
 	                    {
 	                      className: 'btn btn-info',
-	                      onClick: this.inquiry.bind(this, value.id, key) },
+	                      onClick: this.inquiry.bind(this, value, key) },
 	                    _react2.default.createElement('i', { className: 'fa fa-question' }),
 	                    '\xA0Inquiry'
 	                  ),
@@ -560,7 +569,7 @@ webpackJsonp([1],{
 	                  'button',
 	                  {
 	                    className: 'btn btn-danger',
-	                    onClick: this.refuse.bind(this, value.id, value.last_inquiry_date, key) },
+	                    onClick: this.refuse.bind(this, value, key) },
 	                  _react2.default.createElement('i', { className: 'fa fa-ban' }),
 	                  '\xA0Refuse'
 	                )
@@ -661,12 +670,31 @@ webpackJsonp([1],{
 	          );
 	        }.bind(this));
 	      }
+	      return listing;
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      if (this.state.errorPage !== null) {
+	        return _react2.default.createElement(_ErrorPage2.default, { message: this.state.errorPage });
+	      }
+	      var message = this.getMessage();
+	      var modal = void 0;
+	      if (this.state.modal) {
+	        if (this.state.modalType === 'refuse') {
+	          modal = _react2.default.createElement(_RefuseModal2.default, {
+	            reason: this.refuseReason,
+	            manager: this.currentManager });
+	        } else if (this.state.modalType === 'inquiry') {
+	          modal = _react2.default.createElement(_InquiryModal2.default, { inquiry: this.inquiryType, manager: this.currentManager });
+	        }
+	      }
 	      return _react2.default.createElement(
 	        'div',
 	        null,
 	        modal,
 	        message,
-	        listing
+	        this.listing()
 	      );
 	    }
 	  }]);
@@ -675,67 +703,6 @@ webpackJsonp([1],{
 	}(_react2.default.Component);
 	
 	exports.default = ManagerApproval;
-	
-	var RefuseModal = function (_React$Component2) {
-	  _inherits(RefuseModal, _React$Component2);
-	
-	  function RefuseModal(props) {
-	    _classCallCheck(this, RefuseModal);
-	
-	    return _possibleConstructorReturn(this, (RefuseModal.__proto__ || Object.getPrototypeOf(RefuseModal)).call(this, props));
-	  }
-	
-	  _createClass(RefuseModal, [{
-	    key: 'render',
-	    value: function render() {
-	      var spacing = {
-	        marginBottom: '10px',
-	        display: 'block'
-	      };
-	      var header = 'Refusal reason';
-	      var body = _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'button',
-	          {
-	            style: spacing,
-	            className: 'btn btn-info',
-	            onClick: this.props.reason,
-	            'data-reason': 'duplicate' },
-	          'Using duplicate company name'
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          {
-	            style: spacing,
-	            className: 'btn btn-info',
-	            onClick: this.props.reason,
-	            'data-reason': 'bad_data' },
-	          'Improper information'
-	        ),
-	        this.props.inquiryDate !== null ? _react2.default.createElement(
-	          'button',
-	          {
-	            style: spacing,
-	            className: 'btn btn-info',
-	            onClick: this.props.reason,
-	            'data-reason': 'no_response' },
-	          'No response to inquiry since ',
-	          this.props.inquiryDate
-	        ) : null
-	      );
-	      return _react2.default.createElement(_Modal2.default, { body: body, header: header });
-	    }
-	  }]);
-	
-	  return RefuseModal;
-	}(_react2.default.Component);
-	
-	RefuseModal.propTypes = {
-	  reason: _react2.default.PropTypes.func,
-	  inquiryDate: _react2.default.PropTypes.string
-	};
 
 /***/ },
 
@@ -828,6 +795,188 @@ webpackJsonp([1],{
 	};
 	
 	exports.default = ErrorPage;
+
+/***/ },
+
+/***/ 407:
+/*!****************************************************!*\
+  !*** ./javascript/ManagerApproval/RefuseModal.jsx ***!
+  \****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Modal = __webpack_require__(/*! ../Mixin/Modal.jsx */ 178);
+	
+	var _Modal2 = _interopRequireDefault(_Modal);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var RefuseModal = function (_React$Component) {
+	  _inherits(RefuseModal, _React$Component);
+	
+	  function RefuseModal(props) {
+	    _classCallCheck(this, RefuseModal);
+	
+	    return _possibleConstructorReturn(this, (RefuseModal.__proto__ || Object.getPrototypeOf(RefuseModal)).call(this, props));
+	  }
+	
+	  _createClass(RefuseModal, [{
+	    key: 'render',
+	    value: function render() {
+	      var spacing = {
+	        marginBottom: '10px',
+	        display: 'block'
+	      };
+	      var header = 'Refuse manager request for: ' + this.props.manager.company_name;
+	      var body = _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'button',
+	          {
+	            style: spacing,
+	            className: 'btn btn-primary',
+	            onClick: this.props.reason,
+	            'data-reason': 'duplicate' },
+	          'Using duplicate company name'
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          {
+	            style: spacing,
+	            className: 'btn btn-primary',
+	            onClick: this.props.reason,
+	            'data-reason': 'bad_data' },
+	          'Improper information'
+	        ),
+	        this.props.manager.last_inquiry_date !== null ? _react2.default.createElement(
+	          'button',
+	          {
+	            style: spacing,
+	            className: 'btn btn-primary',
+	            onClick: this.props.reason,
+	            'data-reason': 'no_response' },
+	          'No response to inquiry since ',
+	          this.props.manager.last_inquiry_date
+	        ) : null
+	      );
+	      return _react2.default.createElement(_Modal2.default, { body: body, header: header });
+	    }
+	  }]);
+	
+	  return RefuseModal;
+	}(_react2.default.Component);
+	
+	exports.default = RefuseModal;
+	
+	
+	RefuseModal.propTypes = {
+	  reason: _react2.default.PropTypes.func,
+	  manager: _react2.default.PropTypes.object
+	};
+
+/***/ },
+
+/***/ 408:
+/*!*****************************************************!*\
+  !*** ./javascript/ManagerApproval/InquiryModal.jsx ***!
+  \*****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Modal = __webpack_require__(/*! ../Mixin/Modal.jsx */ 178);
+	
+	var _Modal2 = _interopRequireDefault(_Modal);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var InquiryModal = function (_React$Component) {
+	  _inherits(InquiryModal, _React$Component);
+	
+	  function InquiryModal(props) {
+	    _classCallCheck(this, InquiryModal);
+	
+	    return _possibleConstructorReturn(this, (InquiryModal.__proto__ || Object.getPrototypeOf(InquiryModal)).call(this, props));
+	  }
+	
+	  _createClass(InquiryModal, [{
+	    key: 'render',
+	    value: function render() {
+	      var spacing = {
+	        marginBottom: '10px',
+	        display: 'block'
+	      };
+	      var header = 'Send inquiry to ' + this.props.manager.company_name + ' c/o ' + this.props.manager.first_name + ' ' + this.props.manager.last_name;
+	      var body = _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'button',
+	          {
+	            style: spacing,
+	            className: 'btn btn-primary',
+	            onClick: this.props.inquiry,
+	            'data-inquiry-type': 'sublease' },
+	          'Appear to be sublease'
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          {
+	            style: spacing,
+	            className: 'btn btn-primary',
+	            onClick: this.props.inquiry,
+	            'data-inquiry-type': 'information' },
+	          'Property information'
+	        )
+	      );
+	      return _react2.default.createElement(_Modal2.default, { body: body, header: header });
+	    }
+	  }]);
+	
+	  return InquiryModal;
+	}(_react2.default.Component);
+	
+	exports.default = InquiryModal;
+	
+	
+	InquiryModal.propTypes = {
+	  inquiry: _react2.default.PropTypes.func,
+	  manager: _react2.default.PropTypes.object
+	};
 
 /***/ }
 

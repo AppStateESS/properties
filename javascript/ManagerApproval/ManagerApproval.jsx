@@ -1,7 +1,8 @@
 'use strict'
 import React from 'react'
 import Message from '../Mixin/Message.jsx'
-import Modal from '../Mixin/Modal.jsx'
+import RefuseModal from './RefuseModal.jsx'
+import InquiryModal from './InquiryModal.jsx'
 import empty from '../Mixin/Empty.js'
 import ErrorPage from '../Mixin/ErrorPage.jsx'
 //import bindMethods from '../Mixin/Bind.js'
@@ -16,14 +17,13 @@ export default class ManagerApproval extends React.Component {
       message: null,
       messageType: 'danger',
       modal: false,
+      modalType: '',
       errorPage: null
     }
-    this.currentManager = {
-      managerId: 0,
-      inquiryDate: 0,
-      key: null
-    }
+    this.currentManager = {}
+    this.currentKey = null
     this.refuseReason = this.refuseReason.bind(this)
+    this.inquiryType = this.inquiryType.bind(this)
   }
 
   componentDidMount() {
@@ -39,14 +39,14 @@ export default class ManagerApproval extends React.Component {
   openModal() {
     $('#reactModal').modal('show')
     $('#reactModal').on('hidden.bs.modal', function () {
-      this.setState({modal: false})
+      this.setState({modal: false, modalType: ''})
     }.bind(this))
     this.setState({modal: true})
   }
 
   closeModal() {
     $('#reactModal').modal('hide')
-    this.setState({modal: false})
+    this.setState({modal: false, modalType: ''})
   }
 
   load() {
@@ -103,19 +103,39 @@ export default class ManagerApproval extends React.Component {
     this.setState({managers: managers})
   }
 
-  refuse(managerId, inquiryDate, key) {
-    this.setState({modal: true})
-    this.currentManager = {
-      managerId: managerId,
-      inquiryDate: inquiryDate,
-      key: key
-    }
+  refuse(manager, key) {
+    this.setState({modal: true, modalType: 'refuse'})
+    this.currentManager = manager
+    this.currentKey = key
+  }
+
+  inquiry(manager, key) {
+    this.setState({modal: true, modalType: 'inquiry'})
+    this.currentManager = manager
+    this.currentKey = key
+  }
+
+  inquiryType(e) {
+    const type = e.target.dataset.inquiryType
+    $.ajax({
+      url: `./properties/Manager/${this.currentManager.id}/inquiry/`,
+      data: {
+        inquiryType: type
+      },
+      dataType: 'json',
+      type: 'put'
+    }).done(function () {
+      this.load()
+    }.bind(this)).error(function (data) {
+      this.closeModal()
+      this.setState({'errorPage': data.responseText})
+    }.bind(this))
   }
 
   refuseReason(e) {
     const reason = e.target.dataset.reason
     $.ajax({
-      url: `./properties/Manager/${this.currentManager.managerId}/refuse/`,
+      url: `./properties/Manager/${this.currentManager.id}/refuse/`,
       data: {
         reason: reason
       },
@@ -126,45 +146,29 @@ export default class ManagerApproval extends React.Component {
       if (this.state.managers.length === 1) {
         window.location.href = './properties/Manager/'
       } else {
-        this.removeManager(this.currentManager.key)
+        this.removeManager(this.currentKey)
         this.resetCurrentManager()
       }
     }.bind(this)).error(function (data) {
       this.closeModal()
       this.setState({'errorPage': data.responseText})
-    }.bind(this)).complete(function () {})
+    }.bind(this))
 
   }
 
   resetCurrentManager() {
-    this.currentManager = {
-      managerId: 0,
-      inquiryDate: 0,
-      key: null
-    }
+    this.currentManager = {}
+    this.currentKey = null
   }
 
   cancelReason() {
     this.resetCurrentManager()
-
   }
 
-  inquiry() {}
-
-  render() {
-    if (this.state.errorPage !== null) {
-      return <ErrorPage message={this.state.errorPage}/>
-    }
+  listing() {
     let listing = <p>No managers waiting for approval</p>
     let companyAddress
     let websiteAddress
-    const message = this.getMessage()
-    let modal
-    if (this.state.modal) {
-      modal = <RefuseModal
-        reason={this.refuseReason}
-        inquiryDate={this.currentManager.inquiryDate}/>
-    }
 
     if (this.state.managers !== null) {
       listing = this.state.managers.map(function (value, key) {
@@ -204,12 +208,13 @@ export default class ManagerApproval extends React.Component {
                     <span>
                       <button
                         className="btn btn-info"
-                        onClick={this.inquiry.bind(this, value.id, key)}>
-                        <i className="fa fa-question"></i>&nbsp;Inquiry</button>&nbsp;</span>
+                        onClick={this.inquiry.bind(this, value, key)}>
+                        <i className="fa fa-question"></i>&nbsp;Inquiry</button>&nbsp;
+                    </span>
                   )}
                 <button
                   className="btn btn-danger"
-                  onClick={this.refuse.bind(this, value.id, value.last_inquiry_date, key)}>
+                  onClick={this.refuse.bind(this, value, key)}>
                   <i className="fa fa-ban"></i>&nbsp;Refuse</button>
               </div>
             </div>
@@ -244,53 +249,30 @@ export default class ManagerApproval extends React.Component {
         )
       }.bind(this))
     }
+    return listing
+  }
+
+  render() {
+    if (this.state.errorPage !== null) {
+      return <ErrorPage message={this.state.errorPage}/>
+    }
+    const message = this.getMessage()
+    let modal
+    if (this.state.modal) {
+      if (this.state.modalType === 'refuse') {
+        modal = <RefuseModal
+          reason={this.refuseReason}
+          manager={this.currentManager}/>
+      } else if (this.state.modalType === 'inquiry') {
+        modal = <InquiryModal inquiry={this.inquiryType} manager={this.currentManager}/>
+      }
+    }
     return (
       <div>
         {modal}
         {message}
-        {listing}
+        {this.listing()}
       </div>
     )
   }
-}
-
-class RefuseModal extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-  render() {
-    const spacing = {
-      marginBottom: '10px',
-      display: 'block'
-    }
-    const header = 'Refusal reason'
-    const body = (
-      <div>
-        <button
-          style={spacing}
-          className="btn btn-info"
-          onClick={this.props.reason}
-          data-reason="duplicate">Using duplicate company name</button>
-        <button
-          style={spacing}
-          className="btn btn-info"
-          onClick={this.props.reason}
-          data-reason="bad_data">Improper information</button>
-        {this.props.inquiryDate !== null
-          ? <button
-              style={spacing}
-              className="btn btn-info"
-              onClick={this.props.reason}
-              data-reason="no_response">No response to inquiry since {this.props.inquiryDate}</button>
-          : null}
-      </div>
-    )
-    return (<Modal body={body} header={header}/>)
-  }
-}
-
-RefuseModal.propTypes = {
-  reason: React.PropTypes.func,
-  inquiryDate: React.PropTypes.string
 }
