@@ -168,6 +168,10 @@ class ManagerController extends BaseController
                 $this->factory->refuse($this->resource, $request->pullPutString('reason'));
                 break;
             
+            case 'inquiry':
+                $this->factory->inquiry($this->resource, $request->pullPutString('inquiryType'));
+                break;
+            
             default:
                 throw new \properties\Exception\BadCommand;
         }

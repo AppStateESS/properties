@@ -183,11 +183,51 @@ class ManagerFactory extends ManagerFactoryAbstract
                 throw new \Exception('Bad reason variable sent to refusal');
         }
         
+         $this->sendEmail($refusalLetter);
+    }
+
+    /**
+     * Refuses a manager request
+     * @param Resource $manager
+     */
+    public function refuse(Resource $manager, $reason)
+    {
+        $this->emailRefusal($manager, $reason);
+        //$this->delete($manager->id);
+    }
+    
+    
+    
+    /**
+     * Sends an email of inquiry to the manager request
+     * @param Resource $manager
+     * @param string $type
+     * @throws \Exception
+     */
+    private function emailInquiry($manager, $type)
+    {
+        switch ($reason) {
+            case 'sublease':
+                $inquiryLetter = 'sublease.html';
+                break;
+            
+            case 'information':
+                $inquiryLetter = 'more_information.html';
+                break;
+
+            default:
+                throw new \Exception('Bad reason variable sent to inquiry');
+        }
         
+        $this->sendEmail($inquiryLetter);
+    }
+    
+    private function sendEmail($email_template)
+    {
         $vars = $manager->view();
         $vars = array_merge($this->contactInformation(), $vars);
         $template = new \phpws2\Template($vars);
-        $template->setModuleTemplate('properties', "emails/$refusalLetter");
+        $template->setModuleTemplate('properties', "emails/$email_template");
         $content = $template->get();
 
         $contact_info = $this->contactInformation();
@@ -205,15 +245,10 @@ class ManagerFactory extends ManagerFactoryAbstract
         $mailer = \Swift_Mailer::newInstance($transport);
         $mailer->send($message);
     }
-
-    /**
-     * Refuses a manager request
-     * @param Resource $manager
-     */
-    public function refuse(Resource $manager, $reason)
+    
+    public function inquiry(Resource $manager, $inquiry_type)
     {
-        $this->emailRefusal($manager, $reason);
-        //$this->delete($manager->id);
+        $this->emailInquiry($manager, $inquiry_type);
     }
-
+    
 }
