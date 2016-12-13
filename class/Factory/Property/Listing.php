@@ -146,6 +146,7 @@ class Listing
 
     private function addConditionals()
     {
+        $this->contact_table->addFieldConditional('active', 1);
         if ($this->beds > 1) {
             $this->property_table->addFieldConditional('bedroom_no',
                     $this->beds, '>=');
