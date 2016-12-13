@@ -252,6 +252,70 @@ webpackJsonp([1],{
 
 /***/ },
 
+/***/ 181:
+/*!**************************************!*\
+  !*** ./javascript/Mixin/Waiting.jsx ***!
+  \**************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Waiting = function (_React$Component) {
+	  _inherits(Waiting, _React$Component);
+	
+	  function Waiting() {
+	    _classCallCheck(this, Waiting);
+	
+	    return _possibleConstructorReturn(this, (Waiting.__proto__ || Object.getPrototypeOf(Waiting)).apply(this, arguments));
+	  }
+	
+	  _createClass(Waiting, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "div",
+	        { className: "lead text-center" },
+	        _react2.default.createElement("i", { className: "fa fa-cog fa-spin fa-lg" }),
+	        "\xA0 Loading ",
+	        this.props.label,
+	        "..."
+	      );
+	    }
+	  }]);
+	
+	  return Waiting;
+	}(_react2.default.Component);
+	
+	Waiting.defaultProps = {
+	  label: ''
+	};
+	
+	Waiting.propTypes = {
+	  label: _react2.default.PropTypes.string
+	};
+	
+	exports.default = Waiting;
+
+/***/ },
+
 /***/ 183:
 /*!********************************************************!*\
   !*** ./javascript/ManagerApproval/ManagerApproval.jsx ***!
@@ -274,21 +338,25 @@ webpackJsonp([1],{
 	
 	var _Message2 = _interopRequireDefault(_Message);
 	
-	var _RefuseModal = __webpack_require__(/*! ./RefuseModal.jsx */ 407);
+	var _RefuseModal = __webpack_require__(/*! ./RefuseModal.jsx */ 184);
 	
 	var _RefuseModal2 = _interopRequireDefault(_RefuseModal);
 	
-	var _InquiryModal = __webpack_require__(/*! ./InquiryModal.jsx */ 408);
+	var _InquiryModal = __webpack_require__(/*! ./InquiryModal.jsx */ 185);
 	
 	var _InquiryModal2 = _interopRequireDefault(_InquiryModal);
 	
-	var _Empty = __webpack_require__(/*! ../Mixin/Empty.js */ 184);
+	var _Empty = __webpack_require__(/*! ../Mixin/Empty.js */ 186);
 	
 	var _Empty2 = _interopRequireDefault(_Empty);
 	
-	var _ErrorPage = __webpack_require__(/*! ../Mixin/ErrorPage.jsx */ 185);
+	var _ErrorPage = __webpack_require__(/*! ../Mixin/ErrorPage.jsx */ 187);
 	
 	var _ErrorPage2 = _interopRequireDefault(_ErrorPage);
+	
+	var _Waiting = __webpack_require__(/*! ../Mixin/Waiting.jsx */ 181);
+	
+	var _Waiting2 = _interopRequireDefault(_Waiting);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -382,16 +450,7 @@ webpackJsonp([1],{
 	  }, {
 	    key: 'approve',
 	    value: function approve(managerId, key) {
-	      $.ajax({
-	        url: './properties/Manager',
-	        data: {
-	          managerId: managerId,
-	          param: 'approved',
-	          approved: 1
-	        },
-	        dataType: 'json',
-	        type: 'patch'
-	      }).done(function (data) {
+	      $.ajax({ url: './properties/ManagerAdmin/' + managerId + '/approve', dataType: 'json', type: 'patch' }).done(function (data) {
 	        if (data.success) {
 	          this.removeManager(key);
 	          this.setMessage('Manager approved', 'success');
@@ -429,14 +488,16 @@ webpackJsonp([1],{
 	    value: function inquiryType(e) {
 	      var type = e.target.dataset.inquiryType;
 	      $.ajax({
-	        url: './properties/Manager/' + this.currentManager.id + '/inquiry/',
+	        url: './properties/ManagerAdmin/' + this.currentManager.id + '/inquiry/',
 	        data: {
 	          inquiryType: type
 	        },
 	        dataType: 'json',
 	        type: 'put'
 	      }).done(function () {
+	        this.closeModal();
 	        this.load();
+	        this.setMessage('Inquiry sent');
 	      }.bind(this)).error(function (data) {
 	        this.closeModal();
 	        this.setState({ 'errorPage': data.responseText });
@@ -447,7 +508,7 @@ webpackJsonp([1],{
 	    value: function refuseReason(e) {
 	      var reason = e.target.dataset.reason;
 	      $.ajax({
-	        url: './properties/Manager/' + this.currentManager.id + '/refuse/',
+	        url: './properties/ManagerAdmin/' + this.currentManager.id + '/refuse/',
 	        data: {
 	          reason: reason
 	        },
@@ -478,106 +539,121 @@ webpackJsonp([1],{
 	      this.resetCurrentManager();
 	    }
 	  }, {
+	    key: 'inquiryTypeOptions',
+	    value: function inquiryTypeOptions(manager) {
+	      switch (manager.inquiry_type) {
+	        case 'sublease':
+	          return 'Made sublease inquiry on';
+	
+	        case 'information':
+	          return 'Property information requested on';
+	      }
+	    }
+	  }, {
 	    key: 'listing',
 	    value: function listing() {
-	      var listing = _react2.default.createElement(
-	        'p',
-	        null,
-	        'No managers waiting for approval'
-	      );
+	      var listing = void 0;
 	      var companyAddress = void 0;
 	      var websiteAddress = void 0;
 	
-	      if (this.state.managers !== null) {
-	        listing = this.state.managers.map(function (value, key) {
-	          companyAddress = (0, _Empty2.default)(value.company_address) ? _react2.default.createElement(
+	      if (this.state.managers === null) {
+	        return _react2.default.createElement(_Waiting2.default, { label: 'Loading managers...' });
+	      } else if (this.state.managers.length === 0) {
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          'No managers need approving.'
+	        );
+	      }
+	
+	      listing = this.state.managers.map(function (value, key) {
+	        companyAddress = (0, _Empty2.default)(value.company_address) ? _react2.default.createElement(
+	          'em',
+	          null,
+	          'No physical address'
+	        ) : _react2.default.createElement(
+	          'span',
+	          null,
+	          value.company_address,
+	          '\xA0',
+	          _react2.default.createElement(
+	            'a',
+	            { href: value.company_map_address, target: '_index' },
+	            _react2.default.createElement('i', { className: 'fa fa-map' })
+	          )
+	        );
+	
+	        var searchLink = 'https://www.google.com/search?q=' + value.company_name.replace(/ /g, '+');
+	        websiteAddress = (0, _Empty2.default)(value.company_url) ? _react2.default.createElement(
+	          'span',
+	          null,
+	          _react2.default.createElement(
 	            'em',
 	            null,
-	            'No physical address'
-	          ) : _react2.default.createElement(
-	            'span',
-	            null,
-	            value.company_address,
-	            '\xA0',
-	            _react2.default.createElement(
-	              'a',
-	              { href: value.company_map_address, target: '_index' },
-	              _react2.default.createElement('i', { className: 'fa fa-map' })
-	            )
-	          );
-	
-	          var searchLink = 'https://www.google.com/search?q=' + value.company_name.replace(/ /g, '+');
-	          websiteAddress = (0, _Empty2.default)(value.company_url) ? _react2.default.createElement(
-	            'span',
-	            null,
-	            _react2.default.createElement(
-	              'em',
-	              null,
-	              'No website address'
-	            ),
-	            '\xA0',
-	            _react2.default.createElement(
-	              'a',
-	              { target: '_index', href: searchLink },
-	              _react2.default.createElement('i', { className: 'fa fa-search' })
-	            )
-	          ) : _react2.default.createElement(
+	            'No website address'
+	          ),
+	          '\xA0',
+	          _react2.default.createElement(
 	            'a',
-	            { href: value.company_url, target: '_index' },
-	            value.company_url
-	          );
-	          var email = 'mailto:' + value.email_address;
-	          return _react2.default.createElement(
+	            { target: '_index', href: searchLink },
+	            _react2.default.createElement('i', { className: 'fa fa-search' })
+	          )
+	        ) : _react2.default.createElement(
+	          'a',
+	          { href: value.company_url, target: '_index' },
+	          value.company_url
+	        );
+	        var email = 'mailto:' + value.email_address;
+	        return _react2.default.createElement(
+	          'div',
+	          { className: 'panel panel-info', key: key },
+	          _react2.default.createElement(
 	            'div',
-	            { className: 'panel panel-info', key: key },
+	            { className: 'panel-heading' },
+	            _react2.default.createElement(
+	              'span',
+	              { style: {
+	                  fontSize: '2em'
+	                } },
+	              value.company_name
+	            ),
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'panel-heading' },
+	              { className: 'pull-right' },
 	              _react2.default.createElement(
+	                'button',
+	                {
+	                  className: 'btn btn-success',
+	                  onClick: this.approve.bind(this, value.id, key) },
+	                _react2.default.createElement('i', { className: 'fa fa-check' }),
+	                '\xA0Accept'
+	              ),
+	              '\xA0',
+	              value.inquiry_date ? null : _react2.default.createElement(
 	                'span',
-	                { style: {
-	                    fontSize: '2em'
-	                  } },
-	                value.company_name
+	                null,
+	                _react2.default.createElement(
+	                  'button',
+	                  { className: 'btn btn-info', onClick: this.inquiry.bind(this, value, key) },
+	                  _react2.default.createElement('i', { className: 'fa fa-question' }),
+	                  '\xA0Inquiry'
+	                ),
+	                '\xA0'
 	              ),
 	              _react2.default.createElement(
-	                'div',
-	                { className: 'pull-right' },
-	                _react2.default.createElement(
-	                  'button',
-	                  {
-	                    className: 'btn btn-success',
-	                    onClick: this.approve.bind(this, value.id, key) },
-	                  _react2.default.createElement('i', { className: 'fa fa-check' }),
-	                  '\xA0Accept'
-	                ),
-	                '\xA0 ',
-	                value.last_inquiry_date ? null : _react2.default.createElement(
-	                  'span',
-	                  null,
-	                  _react2.default.createElement(
-	                    'button',
-	                    {
-	                      className: 'btn btn-info',
-	                      onClick: this.inquiry.bind(this, value, key) },
-	                    _react2.default.createElement('i', { className: 'fa fa-question' }),
-	                    '\xA0Inquiry'
-	                  ),
-	                  '\xA0'
-	                ),
-	                _react2.default.createElement(
-	                  'button',
-	                  {
-	                    className: 'btn btn-danger',
-	                    onClick: this.refuse.bind(this, value, key) },
-	                  _react2.default.createElement('i', { className: 'fa fa-ban' }),
-	                  '\xA0Refuse'
-	                )
+	                'button',
+	                { className: 'btn btn-danger', onClick: this.refuse.bind(this, value, key) },
+	                _react2.default.createElement('i', { className: 'fa fa-ban' }),
+	                '\xA0Refuse'
 	              )
-	            ),
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'panel-body' },
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'row panel-body' },
+	              { className: 'row' },
 	              _react2.default.createElement(
 	                'div',
 	                { className: 'col-sm-4' },
@@ -650,26 +726,25 @@ webpackJsonp([1],{
 	                  null,
 	                  'Request date'
 	                ),
-	                value.last_log_date,
-	                value.last_inquiry_date ? _react2.default.createElement(
-	                  'div',
-	                  null,
-	                  _react2.default.createElement(
-	                    'h4',
-	                    null,
-	                    'Inquiry made'
-	                  ),
-	                  _react2.default.createElement(
-	                    'span',
-	                    null,
-	                    value.last_inquiry_date
-	                  )
-	                ) : null
+	                value.last_log_date
 	              )
 	            )
-	          );
-	        }.bind(this));
-	      }
+	          ),
+	          value.inquiry_date ? _react2.default.createElement(
+	            'div',
+	            { className: 'panel-footer' },
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              _react2.default.createElement('i', { className: 'fa fa-exclamation-circle' }),
+	              '\xA0 ',
+	              this.inquiryTypeOptions(value),
+	              '\xA0',
+	              value.inquiry_date
+	            )
+	          ) : null
+	        );
+	      }.bind(this));
 	      return listing;
 	    }
 	  }, {
@@ -682,9 +757,7 @@ webpackJsonp([1],{
 	      var modal = void 0;
 	      if (this.state.modal) {
 	        if (this.state.modalType === 'refuse') {
-	          modal = _react2.default.createElement(_RefuseModal2.default, {
-	            reason: this.refuseReason,
-	            manager: this.currentManager });
+	          modal = _react2.default.createElement(_RefuseModal2.default, { reason: this.refuseReason, manager: this.currentManager });
 	        } else if (this.state.modalType === 'inquiry') {
 	          modal = _react2.default.createElement(_InquiryModal2.default, { inquiry: this.inquiryType, manager: this.currentManager });
 	        }
@@ -692,6 +765,11 @@ webpackJsonp([1],{
 	      return _react2.default.createElement(
 	        'div',
 	        null,
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Manager Approval'
+	        ),
 	        modal,
 	        message,
 	        this.listing()
@@ -707,98 +785,6 @@ webpackJsonp([1],{
 /***/ },
 
 /***/ 184:
-/*!***********************************!*\
-  !*** ./javascript/Mixin/Empty.js ***!
-  \***********************************/
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = empty;
-	function empty(value) {
-	  return value === undefined || value === null || value === 0 || value === '0' || value.length === 0;
-	}
-
-/***/ },
-
-/***/ 185:
-/*!****************************************!*\
-  !*** ./javascript/Mixin/ErrorPage.jsx ***!
-  \****************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var ErrorPage = function (_React$Component) {
-	  _inherits(ErrorPage, _React$Component);
-	
-	  function ErrorPage(props) {
-	    _classCallCheck(this, ErrorPage);
-	
-	    var _this = _possibleConstructorReturn(this, (ErrorPage.__proto__ || Object.getPrototypeOf(ErrorPage)).call(this, props));
-	
-	    _this.state = {};
-	    return _this;
-	  }
-	
-	  _createClass(ErrorPage, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'h2',
-	          null,
-	          'Uh oh'
-	        ),
-	        _react2.default.createElement(
-	          'p',
-	          null,
-	          'Something went wrong'
-	        ),
-	        _react2.default.createElement(
-	          'pre',
-	          null,
-	          this.props.message
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return ErrorPage;
-	}(_react2.default.Component);
-	
-	ErrorPage.propTypes = {
-	  message: _react2.default.PropTypes.string
-	};
-	
-	exports.default = ErrorPage;
-
-/***/ },
-
-/***/ 407:
 /*!****************************************************!*\
   !*** ./javascript/ManagerApproval/RefuseModal.jsx ***!
   \****************************************************/
@@ -866,7 +852,7 @@ webpackJsonp([1],{
 	            'data-reason': 'bad_data' },
 	          'Improper information'
 	        ),
-	        this.props.manager.last_inquiry_date !== null ? _react2.default.createElement(
+	        this.props.manager.inquiry_date !== null ? _react2.default.createElement(
 	          'button',
 	          {
 	            style: spacing,
@@ -874,7 +860,7 @@ webpackJsonp([1],{
 	            onClick: this.props.reason,
 	            'data-reason': 'no_response' },
 	          'No response to inquiry since ',
-	          this.props.manager.last_inquiry_date
+	          this.props.manager.inquiry_date
 	        ) : null
 	      );
 	      return _react2.default.createElement(_Modal2.default, { body: body, header: header });
@@ -894,7 +880,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 408:
+/***/ 185:
 /*!*****************************************************!*\
   !*** ./javascript/ManagerApproval/InquiryModal.jsx ***!
   \*****************************************************/
@@ -977,6 +963,98 @@ webpackJsonp([1],{
 	  inquiry: _react2.default.PropTypes.func,
 	  manager: _react2.default.PropTypes.object
 	};
+
+/***/ },
+
+/***/ 186:
+/*!***********************************!*\
+  !*** ./javascript/Mixin/Empty.js ***!
+  \***********************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = empty;
+	function empty(value) {
+	  return value === undefined || value === null || value === 0 || value === '0' || value.length === 0;
+	}
+
+/***/ },
+
+/***/ 187:
+/*!****************************************!*\
+  !*** ./javascript/Mixin/ErrorPage.jsx ***!
+  \****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ErrorPage = function (_React$Component) {
+	  _inherits(ErrorPage, _React$Component);
+	
+	  function ErrorPage(props) {
+	    _classCallCheck(this, ErrorPage);
+	
+	    var _this = _possibleConstructorReturn(this, (ErrorPage.__proto__ || Object.getPrototypeOf(ErrorPage)).call(this, props));
+	
+	    _this.state = {};
+	    return _this;
+	  }
+	
+	  _createClass(ErrorPage, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Uh oh'
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'Something went wrong'
+	        ),
+	        _react2.default.createElement(
+	          'pre',
+	          null,
+	          this.props.message
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return ErrorPage;
+	}(_react2.default.Component);
+	
+	ErrorPage.propTypes = {
+	  message: _react2.default.PropTypes.string
+	};
+	
+	exports.default = ErrorPage;
 
 /***/ }
 

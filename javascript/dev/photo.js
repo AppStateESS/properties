@@ -16,7 +16,7 @@ webpackJsonp([3],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _Photo = __webpack_require__(/*! ./Photo.jsx */ 187);
+	var _Photo = __webpack_require__(/*! ./Photo.jsx */ 189);
 	
 	var _Photo2 = _interopRequireDefault(_Photo);
 	
@@ -90,7 +90,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 187:
+/***/ 189:
 /*!************************************!*\
   !*** ./javascript/Photo/Photo.jsx ***!
   \************************************/
@@ -108,7 +108,7 @@ webpackJsonp([3],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactImageGallery = __webpack_require__(/*! react-image-gallery */ 188);
+	var _reactImageGallery = __webpack_require__(/*! react-image-gallery */ 190);
 	
 	var _reactImageGallery2 = _interopRequireDefault(_reactImageGallery);
 	
@@ -124,7 +124,7 @@ webpackJsonp([3],{
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	__webpack_require__(/*! react-image-gallery/styles/css/image-gallery.css */ 190);
+	__webpack_require__(/*! react-image-gallery/styles/css/image-gallery.css */ 192);
 	
 	/* global $, require, propertyId, loadPhotos, currentPhotos */
 	
@@ -211,7 +211,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 188:
+/***/ 190:
 /*!******************************************************!*\
   !*** ./~/react-image-gallery/build/image-gallery.js ***!
   \******************************************************/
@@ -231,7 +231,7 @@ webpackJsonp([3],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactSwipeable = __webpack_require__(/*! react-swipeable */ 189);
+	var _reactSwipeable = __webpack_require__(/*! react-swipeable */ 191);
 	
 	var _reactSwipeable2 = _interopRequireDefault(_reactSwipeable);
 	
@@ -1147,7 +1147,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 189:
+/***/ 191:
 /*!********************************************!*\
   !*** ./~/react-swipeable/lib/Swipeable.js ***!
   \********************************************/
@@ -1364,7 +1364,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 190:
+/***/ 192:
 /*!************************************************************!*\
   !*** ./~/react-image-gallery/styles/css/image-gallery.css ***!
   \************************************************************/
@@ -1373,10 +1373,10 @@ webpackJsonp([3],{
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../../../css-loader!./image-gallery.css */ 191);
+	var content = __webpack_require__(/*! !./../../../css-loader!./image-gallery.css */ 193);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(/*! ./../../../style-loader/addStyles.js */ 193)(content, {});
+	var update = __webpack_require__(/*! ./../../../style-loader/addStyles.js */ 195)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -1394,13 +1394,13 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 191:
+/***/ 193:
 /*!***************************************************************************!*\
   !*** ./~/css-loader!./~/react-image-gallery/styles/css/image-gallery.css ***!
   \***************************************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(/*! ./../../../css-loader/lib/css-base.js */ 192)();
+	exports = module.exports = __webpack_require__(/*! ./../../../css-loader/lib/css-base.js */ 194)();
 	// imports
 	
 	
@@ -1412,7 +1412,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 192:
+/***/ 194:
 /*!**************************************!*\
   !*** ./~/css-loader/lib/css-base.js ***!
   \**************************************/
@@ -1472,7 +1472,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 193:
+/***/ 195:
 /*!*************************************!*\
   !*** ./~/style-loader/addStyles.js ***!
   \*************************************/
