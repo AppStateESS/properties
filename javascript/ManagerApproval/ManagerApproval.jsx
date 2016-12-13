@@ -5,6 +5,7 @@ import RefuseModal from './RefuseModal.jsx'
 import InquiryModal from './InquiryModal.jsx'
 import empty from '../Mixin/Empty.js'
 import ErrorPage from '../Mixin/ErrorPage.jsx'
+import Waiting from '../Mixin/Waiting.jsx'
 //import bindMethods from '../Mixin/Bind.js'
 
 /* global $ */
@@ -74,16 +75,7 @@ export default class ManagerApproval extends React.Component {
   }
 
   approve(managerId, key) {
-    $.ajax({
-      url: './properties/Manager',
-      data: {
-        managerId: managerId,
-        param: 'approved',
-        approved: 1
-      },
-      dataType: 'json',
-      type: 'patch'
-    }).done(function (data) {
+    $.ajax({url: `./properties/ManagerAdmin/${managerId}/approve`, dataType: 'json', type: 'patch'}).done(function (data) {
       if (data.success) {
         this.removeManager(key)
         this.setMessage('Manager approved', 'success')
@@ -118,14 +110,16 @@ export default class ManagerApproval extends React.Component {
   inquiryType(e) {
     const type = e.target.dataset.inquiryType
     $.ajax({
-      url: `./properties/Manager/${this.currentManager.id}/inquiry/`,
+      url: `./properties/ManagerAdmin/${this.currentManager.id}/inquiry/`,
       data: {
         inquiryType: type
       },
       dataType: 'json',
       type: 'put'
     }).done(function () {
+      this.closeModal()
       this.load()
+      this.setMessage('Inquiry sent')
     }.bind(this)).error(function (data) {
       this.closeModal()
       this.setState({'errorPage': data.responseText})
@@ -135,7 +129,7 @@ export default class ManagerApproval extends React.Component {
   refuseReason(e) {
     const reason = e.target.dataset.reason
     $.ajax({
-      url: `./properties/Manager/${this.currentManager.id}/refuse/`,
+      url: `./properties/ManagerAdmin/${this.currentManager.id}/refuse/`,
       data: {
         reason: reason
       },
@@ -165,60 +159,72 @@ export default class ManagerApproval extends React.Component {
     this.resetCurrentManager()
   }
 
+  inquiryTypeOptions(manager) {
+    switch (manager.inquiry_type) {
+      case 'sublease':
+        return 'Made sublease inquiry on'
+
+      case 'information':
+        return 'Property information requested on'
+    }
+  }
+
   listing() {
-    let listing = <p>No managers waiting for approval</p>
+    let listing
     let companyAddress
     let websiteAddress
 
-    if (this.state.managers !== null) {
-      listing = this.state.managers.map(function (value, key) {
-        companyAddress = empty(value.company_address)
-          ? <em>No physical address</em>
-          : (
-            <span>{value.company_address}&nbsp;
-              <a href={value.company_map_address} target="_index">
-                <i className="fa fa-map"></i>
-              </a>
-            </span>
-          )
+    if (this.state.managers === null) {
+      return <Waiting label="Loading managers..."/>
+    } else if (this.state.managers.length === 0) {
+      return <div>No managers need approving.</div>
+    }
 
-        const searchLink = `https://www.google.com/search?q=${value.company_name.replace(/ /g, '+')}`
-        websiteAddress = empty(value.company_url)
-          ? <span>
-              <em>No website address</em>&nbsp;
-              <a target="_index" href={searchLink}>
-                <i className="fa fa-search"></i>
-              </a>
-            </span>
-          : <a href={value.company_url} target="_index">{value.company_url}</a>
-        const email = `mailto:${value.email_address}`
-        return (
-          <div className="panel panel-info" key={key}>
-            <div className="panel-heading">
-              <span style={{
-                fontSize: '2em'
-              }}>{value.company_name}</span>
-              <div className="pull-right">
-                <button
-                  className="btn btn-success"
-                  onClick={this.approve.bind(this, value.id, key)}>
-                  <i className="fa fa-check"></i>&nbsp;Accept</button>&nbsp; {value.last_inquiry_date
-                  ? null
-                  : (
-                    <span>
-                      <button
-                        className="btn btn-info"
-                        onClick={this.inquiry.bind(this, value, key)}>
-                        <i className="fa fa-question"></i>&nbsp;Inquiry</button>&nbsp;
-                    </span>
-                  )}
-                <button
-                  className="btn btn-danger"
-                  onClick={this.refuse.bind(this, value, key)}>
-                  <i className="fa fa-ban"></i>&nbsp;Refuse</button>
-              </div>
+    listing = this.state.managers.map(function (value, key) {
+      companyAddress = empty(value.company_address)
+        ? <em>No physical address</em>
+        : (
+          <span>{value.company_address}&nbsp;
+            <a href={value.company_map_address} target="_index">
+              <i className="fa fa-map"></i>
+            </a>
+          </span>
+        )
+
+      const searchLink = `https://www.google.com/search?q=${value.company_name.replace(/ /g, '+')}`
+      websiteAddress = empty(value.company_url)
+        ? <span>
+            <em>No website address</em>&nbsp;
+            <a target="_index" href={searchLink}>
+              <i className="fa fa-search"></i>
+            </a>
+          </span>
+        : <a href={value.company_url} target="_index">{value.company_url}</a>
+      const email = `mailto:${value.email_address}`
+      return (
+        <div className="panel panel-info" key={key}>
+          <div className="panel-heading">
+            <span style={{
+              fontSize: '2em'
+            }}>{value.company_name}</span>
+            <div className="pull-right">
+              <button
+                className="btn btn-success"
+                onClick={this.approve.bind(this, value.id, key)}>
+                <i className="fa fa-check"></i>&nbsp;Accept</button>&nbsp;{value.inquiry_date
+                ? null
+                : (
+                  <span>
+                    <button className="btn btn-info" onClick={this.inquiry.bind(this, value, key)}>
+                      <i className="fa fa-question"></i>&nbsp;Inquiry</button>&nbsp;
+                  </span>
+                )}
+              <button className="btn btn-danger" onClick={this.refuse.bind(this, value, key)}>
+                <i className="fa fa-ban"></i>&nbsp;Refuse</button>
             </div>
-            <div className="row panel-body">
+          </div>
+          <div className="panel-body">
+            <div className="row">
               <div className="col-sm-4">
                 <h4>Company</h4>
                 {websiteAddress}
@@ -237,18 +243,19 @@ export default class ManagerApproval extends React.Component {
               <div className="col-sm-4">
                 <h4>Request date</h4>
                 {value.last_log_date}
-                {value.last_inquiry_date
-                  ? <div>
-                      <h4>Inquiry made</h4>
-                      <span>{value.last_inquiry_date}</span>
-                    </div>
-                  : null}
               </div>
             </div>
           </div>
-        )
-      }.bind(this))
-    }
+          {value.inquiry_date
+            ? <div className="panel-footer">
+                <strong>
+                  <i className="fa fa-exclamation-circle"></i>&nbsp; {this.inquiryTypeOptions(value)}&nbsp;{value.inquiry_date}
+                </strong>
+              </div>
+            : null}
+        </div>
+      )
+    }.bind(this))
     return listing
   }
 
@@ -260,15 +267,14 @@ export default class ManagerApproval extends React.Component {
     let modal
     if (this.state.modal) {
       if (this.state.modalType === 'refuse') {
-        modal = <RefuseModal
-          reason={this.refuseReason}
-          manager={this.currentManager}/>
+        modal = <RefuseModal reason={this.refuseReason} manager={this.currentManager}/>
       } else if (this.state.modalType === 'inquiry') {
         modal = <InquiryModal inquiry={this.inquiryType} manager={this.currentManager}/>
       }
     }
     return (
       <div>
+        <h2>Manager Approval</h2>
         {modal}
         {message}
         {this.listing()}
