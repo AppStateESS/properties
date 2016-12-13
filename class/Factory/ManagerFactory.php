@@ -53,6 +53,7 @@ class ManagerFactory extends ManagerFactoryAbstract
         $listing->orderby_dir = 'desc';
         $listing->view = true;
         $listing->restricted = false;
+        $listing->include_inquiry = true;
         $result = $listing->get();
         if (empty($result)) {
             return array();
@@ -83,6 +84,28 @@ class ManagerFactory extends ManagerFactoryAbstract
         return $json;
     }
 
+    public function getTable()
+    {
+        $db = Database::getDB();
+        return $db->addTable('prop_contacts');
+    }
+
+    public function approve($manager)
+    {
+        $this->approveManager($manager->id);
+        $this->deleteInquiry($manager->id);
+        $this->emailApproval($manager);
+    }
+
+    private function approveManager($id)
+    {
+        $tbl = $this->getTable();
+        $tbl->addFieldConditional('id', $id);
+        $tbl->addValue('approved', 1);
+        $tbl->addValue('active', 1);
+        $tbl->db->update();
+    }
+
     public function delete($id)
     {
         if (!$id) {
@@ -92,22 +115,13 @@ class ManagerFactory extends ManagerFactoryAbstract
         $db = \phpws2\Database::getDB();
         $db->begin();
         try {
+            $this->deleteProperties($id);
+            $this->deleteInquiry($id);
+            
             $tbl = $db->addTable('prop_contacts');
             $tbl->addFieldConditional('id', (int) $id);
             $db->delete();
 
-            $properties = $this->getProperties($id);
-
-            if (empty($properties)) {
-                $db->commit();
-                return true;
-            }
-
-            // Delete all their properties.
-            $propertyFactory = new PropertyFactory;
-            foreach ($properties as $property) {
-                $propertyFactory->delete($property['id']);
-            }
             $db->commit();
         } catch (\Exception $e) {
             $db->rollback();
@@ -116,6 +130,29 @@ class ManagerFactory extends ManagerFactoryAbstract
         // Delete the manager's image directory
         $this->deleteImageDirectory($id);
         return true;
+    }
+
+    public function deleteInquiry($id)
+    {
+        $db = Database::getDB();
+        $tbl = $db->addTable('prop_inquiry');
+        $tbl->addFieldConditional('contact_id', $id);
+        $db->delete();
+    }
+
+    public function deleteProperties($id)
+    {
+        $properties = $this->getProperties($id);
+
+        if (empty($properties)) {
+            return;
+        }
+
+        // Delete all their properties.
+        $propertyFactory = new PropertyFactory;
+        foreach ($properties as $property) {
+            $propertyFactory->delete($property);
+        }
     }
 
     public function deleteImageDirectory($id)
@@ -129,8 +166,6 @@ class ManagerFactory extends ManagerFactoryAbstract
             }
 
             rmdir($directory);
-        } else {
-            throw \Exception('Manager directory not found: ' . $directory);
         }
     }
 
@@ -170,7 +205,7 @@ class ManagerFactory extends ManagerFactoryAbstract
             case 'duplicate':
                 $refusalLetter = 'duplicate.html';
                 break;
-            
+
             case 'bad_data':
                 $refusalLetter = 'bad_data.html';
                 break;
@@ -182,8 +217,13 @@ class ManagerFactory extends ManagerFactoryAbstract
             default:
                 throw new \Exception('Bad reason variable sent to refusal');
         }
-        
-         $this->sendEmail($refusalLetter);
+
+        $this->sendEmail($manager, $refusalLetter);
+    }
+
+    private function emailApproval($manager)
+    {
+        $this->sendEmail($manager, 'approval.html');
     }
 
     /**
@@ -193,11 +233,9 @@ class ManagerFactory extends ManagerFactoryAbstract
     public function refuse(Resource $manager, $reason)
     {
         $this->emailRefusal($manager, $reason);
-        //$this->delete($manager->id);
+        $this->delete($manager->id);
     }
-    
-    
-    
+
     /**
      * Sends an email of inquiry to the manager request
      * @param Resource $manager
@@ -206,11 +244,11 @@ class ManagerFactory extends ManagerFactoryAbstract
      */
     private function emailInquiry($manager, $type)
     {
-        switch ($reason) {
+        switch ($type) {
             case 'sublease':
                 $inquiryLetter = 'sublease.html';
                 break;
-            
+
             case 'information':
                 $inquiryLetter = 'more_information.html';
                 break;
@@ -218,11 +256,11 @@ class ManagerFactory extends ManagerFactoryAbstract
             default:
                 throw new \Exception('Bad reason variable sent to inquiry');
         }
-        
-        $this->sendEmail($inquiryLetter);
+
+        $this->sendEmail($manager, $inquiryLetter);
     }
-    
-    private function sendEmail($email_template)
+
+    private function sendEmail($manager, $email_template)
     {
         $vars = $manager->view();
         $vars = array_merge($this->contactInformation(), $vars);
@@ -231,7 +269,7 @@ class ManagerFactory extends ManagerFactoryAbstract
         $content = $template->get();
 
         $contact_info = $this->contactInformation();
-        
+
         $email_address = $manager->email_address;
         $transport = \Swift_MailTransport::newInstance();
         //$transport = \Swift_SendmailTransport::newInstance();
@@ -241,14 +279,14 @@ class ManagerFactory extends ManagerFactoryAbstract
         $message->setFrom($contact_info['our_email']);
         $message->setTo($email_address);
         $message->setBody($content, 'text/html');
-
         $mailer = \Swift_Mailer::newInstance($transport);
         $mailer->send($message);
     }
-    
+
     public function inquiry(Resource $manager, $inquiry_type)
     {
         $this->emailInquiry($manager, $inquiry_type);
+        InquiryFactory::save($manager->id, $inquiry_type);
     }
-    
+
 }
