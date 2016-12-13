@@ -35,14 +35,21 @@ class Listing
     public $view = false;
     public $orderby = null;
     public $orderby_dir = 'asc';
+    public $include_inquiry = true;
 
     public function get()
     {
         $db = Database::getDB();
         $tbl = $db->addTable('prop_contacts');
+        
         if ($this->include_property_count) {
             $tbl2 = $db->addTable('properties');
             $tbl2->addField('id', 'property_count')->showCount();
+        }
+        if ($this->include_inquiry) {
+            $tbl3 = $db->addTable('prop_inquiry');
+            $tbl3->addField('inquiry_date');
+            $tbl3->addField('inquiry_type');
         }
 
         $db->setLimit($this->limit);
@@ -61,12 +68,16 @@ class Listing
         $tbl->addField('last_log');
         $tbl->addField('active');
         $tbl->addField('approved');
-        $tbl->addField('last_inquiry');
 
         if ($this->include_property_count) {
             $join_conditional = $db->createConditional($tbl->getField('id'),
                     $tbl2->getField('contact_id'));
             $db->joinResources($tbl, $tbl2, $join_conditional, 'left');
+        }
+        
+        if ($this->include_inquiry) {
+            $join_conditional2 = $db->createConditional($tbl->getField('id'), $tbl3->getField('contact_id'));
+            $db->joinResources($tbl, $tbl3, $join_conditional2, 'left');
         }
 
         if (!empty($this->search)) {
@@ -90,7 +101,7 @@ class Listing
             }
             foreach ($result as $manager) {
                 $listing[] = $manager->view($this->restricted);
-            }
+                }
             return $listing;
         } else {
             $result = $db->select();
