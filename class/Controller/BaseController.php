@@ -92,7 +92,7 @@ abstract class BaseController extends \phpws2\Http\Controller
                     if ($request->getMethod() === 'GET') {
                         return 'view';
                     } else {
-                        throw \properties\Exception\BadCommand;
+                        throw new \properties\Exception\PrivilegeMissing;
                     }
                 } else {
                     return $subcommand;
