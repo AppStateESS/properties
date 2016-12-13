@@ -43,12 +43,32 @@ abstract class ManagerFactoryAbstract extends BaseFactory
     public function load($id)
     {
         $manager = parent::load($id);
-        $db = Database::getDB();
-        $db->addTable('properties')->addField('id', 'count')->showCount();
-        $manager->property_count = $db->selectColumn();
+        $manager->property_count = $this->propertyCount($id);
+        $inquiry = $this->getInquiry($id);
+        if (!empty($inquiry)) {
+            $manager->inquiry_date = $inquiry['inquiry_date'];
+            $manager->inquiry_type = $inquiry['inquiry_type'];
+        }
         return $manager;
     }
+    
+    private function propertyCount($contact_id)
+    {
+        $db = Database::getDB();
+        $tbl = $db->addTable('properties');
+        $tbl->addFieldConditional('contact_id', $contact_id);
+        $tbl->addField('id', 'count')->showCount();
+        return $db->selectColumn();
+    }
 
+    private function getInquiry($contact_id)
+    {
+        $db = Database::getDB();
+        $tbl = $db->addTable('prop_inquiry');
+        $tbl->addFieldConditional('contact_id', $contact_id);
+        return $db->selectOneRow();
+    }
+    
     protected function loadResourceFromPost(\Request $request)
     {
         $errors = array();
@@ -246,7 +266,7 @@ abstract class ManagerFactoryAbstract extends BaseFactory
         $db = \phpws2\Database::getDB();
         $tbl = $db->addTable('properties');
         $tbl->addFieldConditional('contact_id', $contact_id);
-        return $db->select();
+        return $db->selectAsResources('properties\Resource\Property');
     }
 
 }
