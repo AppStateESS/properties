@@ -24,12 +24,12 @@ export default class RefuseModal extends React.Component {
           className="btn btn-primary"
           onClick={this.props.reason}
           data-reason="bad_data">Improper information</button>
-        {this.props.manager.last_inquiry_date !== null
+        {this.props.manager.inquiry_date !== null
           ? <button
               style={spacing}
               className="btn btn-primary"
               onClick={this.props.reason}
-              data-reason="no_response">No response to inquiry since {this.props.manager.last_inquiry_date}</button>
+              data-reason="no_response">No response to inquiry since {this.props.manager.inquiry_date}</button>
           : null}
       </div>
     )
