@@ -3,7 +3,6 @@
 /**
  * @author Matthew McNaney <mcnaneym at appstate dot edu>
  */
-
 function properties_install(&$content)
 {
     $db = \phpws2\Database::getDB();
@@ -14,7 +13,7 @@ function properties_install(&$content)
         $manager->createTable($db);
         $manager_tbl = $db->buildTable($manager->getTable());
         $manager_id = $manager_tbl->getDataType('id');
-        
+
         $property = new \properties\Resource\Property;
         $property->createTable($db);
         $property_tbl = $db->buildTable($property->getTable());
@@ -22,14 +21,20 @@ function properties_install(&$content)
         $cid = $property_tbl->getDataType('contact_id');
         $property_index = new \phpws2\Database\ForeignKey($cid, $manager_id);
         $property_index->add();
-        
+
         $photo = new \properties\Resource\Photo;
         $photo->createTable($db);
         $photo_tbl = $db->buildTable($photo->getTable());
         $pid = $photo_tbl->getDataType('pid');
         $photo_index = new \phpws2\Database\ForeignKey($pid, $property_id);
         $photo_index->add();
-        
+
+        $db = \phpws2\Database::getDB();
+        $tbl = $db->buildTable('prop_inquiry');
+        $tbl->addDataType('contact_id', 'int');
+        $tbl->addDataType('inquiry_date', 'int');
+        $tbl->addDataType('inquiry_type', 'varchar(255)');
+        $tbl->create();
     } catch (\Exception $e) {
         \phpws2\Error::log($e);
         $db->buildTable($manager->getTable())->drop(true);

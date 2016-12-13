@@ -11,7 +11,8 @@ function properties_update(&$content, $currentVersion)
     switch ($currentVersion) {
         case (version_compare($currentVersion, '1.1.0', '<')):
             $db = new PHPWS_DB('properties');
-            $result = $db->addTableColumn('efficiency', 'smallint not null default 0');
+            $result = $db->addTableColumn('efficiency',
+                    'smallint not null default 0');
             if (PHPWS_Error::isError($result)) {
                 PHPWS_Error::log($result);
                 $content[] = 'ERROR - could not add efficiency column';
@@ -70,7 +71,8 @@ function properties_update(&$content, $currentVersion)
             }
 
             $db->reset();
-            $result = $db->addTableColumn('airconditioning', 'smallint not null default 0');
+            $result = $db->addTableColumn('airconditioning',
+                    'smallint not null default 0');
             if (PHPWS_Error::isError($result)) {
                 PHPWS_Error::log($result);
                 $content[] = 'ERROR - could not add airconditioning column';
@@ -78,7 +80,8 @@ function properties_update(&$content, $currentVersion)
             }
 
             $db->reset();
-            $result = $db->addTableColumn('heat_type', 'varchar(255) default null');
+            $result = $db->addTableColumn('heat_type',
+                    'varchar(255) default null');
             if (PHPWS_Error::isError($result)) {
                 PHPWS_Error::log($result);
                 $content[] = 'ERROR - could not add heat_type column';
@@ -154,7 +157,7 @@ EOF;
 + Fixed: New managers could log in before approved.
 </pre>
 EOF;
-            
+
         case (version_compare($currentVersion, '2.0.0', '<')):
             try {
                 $db = \phpws2\Database::getDB();
@@ -163,7 +166,7 @@ EOF;
                 $dt = $tbl->addDataType('proptype', 'smallint');
                 $dt->setDefault(0);
                 $dt->add();
-                
+
                 $tbl->addValue('proptype', 1);
                 $tbl->addFieldConditional('efficiency', 1);
                 $db->update();
@@ -182,16 +185,17 @@ EOF;
             try {
                 $db = \phpws2\Database::getDB();
                 $db->begin();
-                $tbl = $db->addTable('prop_contacts');
-                $dt = $tbl->addDataType('inquiry_date', 'int');
-                $dt->setDefault(0);
-                $dt->add();
+                $tbl = $db->buildTable('prop_inquiry');
+                $tbl->addDataType('contact_id', 'int');
+                $tbl->addDataType('inquiry_date', 'int');
+                $tbl->addDataType('inquiry_type', 'varchar')->setSize(20);
+                $tbl->create();
             } catch (\Exception $ex) {
                 $db->rollback();
                 $content[] = 'Update failed: ' . $ex->getMessage();
                 return false;
             }
-                        $content[] = <<<EOF
+            $content[] = <<<EOF
 <pre>
 + Inquiry feature added.
 </pre>
@@ -199,4 +203,3 @@ EOF;
     }
     return true;
 }
-
