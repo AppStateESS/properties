@@ -133,66 +133,6 @@ class ManagerController extends BaseController
         return $view;
     }
 
-    public function delete(\Request $request)
-    {
-        if (!$this->factory->role->allow()) {
-            throw new \properties\Exception\PrivilegeMissing;
-        }
-        $id = $request->pullGetInteger('managerId');
-        if ($id === false) {
-            throw new \phpws2\Exception\ValueNotSet('Manager id not set');
-        }
-        $json = array('success' => $this->factory->delete($id));
-        $view = new \View\JsonView($json);
-        $response = new \Response($view);
-        return $response;
-    }
-
-    public function post(\Request $request)
-    {
-        if (!$this->factory->role->allow()) {
-            throw new \properties\Exception\PrivilegeMissing;
-        }
-        $json = $this->factory->adminPost($request);
-
-        $view = new \View\JsonView($json);
-        $response = new \Response($view);
-        return $response;
-    }
-
-    public function put(\Request $request)
-    {
-        $command = $this->checkCommand($request);
-        switch ($command) {
-            case 'refuse':
-                $this->factory->refuse($this->resource, $request->pullPutString('reason'));
-                break;
-            
-            case 'inquiry':
-                $this->factory->inquiry($this->resource, $request->pullPutString('inquiryType'));
-                break;
-            
-            default:
-                throw new \properties\Exception\BadCommand;
-        }
-
-        $json['success'] = true;
-        $view = new \View\JsonView($json);
-        $response = new \Response($view);
-        return $response;
-    }
-
-    public function patch(\Request $request)
-    {
-        if (!$this->factory->role->isAdmin()) {
-            throw new \properties\Exception\PrivilegeMissing;
-        }
-        $param = $request->pullPatchString('param');
-        $json = array('success' => $this->factory->patch($request->pullPatchInteger('managerId'),
-                    $param, $request->pullPatchVar($param)));
-        $view = new \View\JsonView($json);
-        $response = new \Response($view);
-        return $response;
-    }
+    
 
 }
