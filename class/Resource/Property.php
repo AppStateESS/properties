@@ -80,7 +80,7 @@ class Property extends Base
     {
         parent::__construct();
         $this->active = new Variable\Bool(false, 'active');
-        $this->address = new Variable\String('', 'address');
+        $this->address = new Variable\CanopyString('', 'address');
         $this->admin_fee_amt = new Variable\Integer(0, 'admin_fee_amt');
         $this->admin_fee_refund = new Variable\Bool(false, 'admin_fee_refund');
         $this->airconditioning = new Variable\Bool(false, 'airconditioning');
@@ -100,7 +100,7 @@ class Property extends Base
         $this->contact_id->setRange(1);
         $this->contract_length = new Variable\Integer(3, 'contract_length');
         $this->created = new Variable\DateTime(null, 'created');
-        $this->description = new Variable\String('', 'description');
+        $this->description = new Variable\CanopyString('', 'description');
         $this->dishwasher = new Variable\Bool(false, 'dishwasher');
         $this->efficiency = new Variable\Bool(false, 'efficiency');
         $this->furnished = new Variable\Bool(false, 'furnished');
@@ -117,17 +117,17 @@ class Property extends Base
 
         $this->monthly_rent = new Variable\Integer(0, 'monthly_rent');
         $this->move_in_date = new Variable\Date(time(), 'move_in_date');
-        $this->name = new Variable\String('', 'name');
+        $this->name = new Variable\CanopyString('', 'name');
         $this->name->setLimit(100);
 
-        $this->other_fees = new Variable\String('', 'other_fees');
+        $this->other_fees = new Variable\CanopyString('', 'other_fees');
         $this->parking_fee = new Variable\Integer(0, 'parking_fee');
         $this->parking_per_unit = new Variable\Integer(1, 'parking_per_unit');
         $this->pet_deposit = new Variable\Integer(0, 'pet_deposit');
         $this->pet_dep_refund = new Variable\Bool(false, 'pet_dep_refund');
         $this->pets_allowed = new Variable\Bool(false, 'pets_allowed');
         $this->pet_fee = new Variable\Integer(0, 'pet_fee');
-        $this->pet_type = new Variable\String('', 'pet_type');
+        $this->pet_type = new Variable\CanopyString('', 'pet_type');
         $this->proptype = new Variable\Integer(0, 'proptype');
         $this->proptype->setRange(0, 20);
         $this->security_amt = new Variable\Integer(0, 'security_amt');
@@ -158,8 +158,8 @@ class Property extends Base
         $this->window_number = new Variable\Bool(true, 'window_number');
         $this->workout_room = new Variable\Bool(false, 'workout_room');
 
-        $this->company_name = new Variable\String('', 'company_name');
-        $this->thumbnail = new Variable\String('', 'thumbnail');
+        $this->company_name = new Variable\CanopyString('', 'company_name');
+        $this->thumbnail = new Variable\CanopyString('', 'thumbnail');
         $this->doNotSave(array('company_name', 'thumbnail'));
     }
 
