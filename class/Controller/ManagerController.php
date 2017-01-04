@@ -52,10 +52,6 @@ class ManagerController extends BaseController
                 $content = 'html view ' . $managerId;
                 break;
 
-            case 'signin':
-                $content = $this->signin();
-                break;
-
             default:
                 throw new \properties\Exception\BadCommand;
         }
@@ -82,21 +78,10 @@ class ManagerController extends BaseController
         return $this->reactView('manager');
     }
 
-    private function signin()
-    {
-        $template = new \phpws2\Template;
-        $template->setModuleTemplate('properties', 'manager/signin.html');
-        return $template->get();
-    }
-
     public function getJsonView($data, \Request $request)
     {
         $command = $this->checkCommand($request, 'list');
-        /*
-          if (is_numeric($command)) {
-          $command = 'view';
-          }
-         */
+
         switch ($command) {
             case 'list':
                 $json = array();
@@ -122,8 +107,7 @@ class ManagerController extends BaseController
                 break;
 
             case 'view':
-                $manager = $this->factory->load($managerId);
-                $json = $manager->getStringVars(null, 'password');
+                $json = $this->resource->view(true);
                 break;
 
             default:
@@ -132,7 +116,5 @@ class ManagerController extends BaseController
         $view = new \View\JsonView($json);
         return $view;
     }
-
-    
 
 }
