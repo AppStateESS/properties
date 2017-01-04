@@ -39,6 +39,7 @@ class Manager extends Base
         $this->username->allowEmpty(false);
         $this->password = new Variable\Password(null, 'password');
         $this->password->allowEmpty(false);
+        $this->password->setSalt(PROPERTIES_MANAGER_SALT);
         $this->first_name = new Variable\TextOnly(null, 'first_name');
         $this->first_name->allowEmpty(false);
         $this->last_name = new Variable\TextOnly(null, 'last_name');
@@ -92,5 +93,5 @@ class Manager extends Base
         $view['phone_tel'] = 'tel:+1' . $this->phone->get();
         return $view;
     }
-
+    
 }
