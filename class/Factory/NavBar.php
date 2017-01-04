@@ -34,7 +34,7 @@ class NavBar
         $vars['items'] = null;
         $vars['options'] = null;
         if (!empty(self::$items)) {
-            $vars['items'] = implode('&nbsp;', self::$items);
+            $vars['items'] = self::$items;
         }
         
         if (!empty(self::$options)) {
