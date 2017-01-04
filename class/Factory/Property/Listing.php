@@ -63,7 +63,7 @@ class Listing
      */
     private $photo_table; //tbl3
 
-    public function __construct(\Request $request)
+    public function __construct()
     {
         $this->db = \phpws2\Database::getDB();
         $this->property_table = $this->db->addTable('properties');
@@ -71,7 +71,10 @@ class Listing
         $this->photo_table = $this->db->addTable('prop_photo');
         $this->contact_table->addField('company_name');
         $this->photo_table->addField('path', 'thumbnail');
+    }
 
+    public function pullVariables(\Request $request)
+    {
         $this->manager_id = $request->pullGetInteger('managerId', true);
         $this->search_string = $request->pullGetString('search', true);
         $this->limit = $request->pullGetInteger('limit', true);

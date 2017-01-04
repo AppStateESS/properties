@@ -63,7 +63,8 @@ class PropertyFactory extends BaseFactory
 
     
     public function listing(\Request $request, $view=false) {
-        $listing = new Property\Listing($request);
+        $listing = new Property\Listing();
+        $listing->pullVariables($request);
         return $listing->get($view);
     }
 
