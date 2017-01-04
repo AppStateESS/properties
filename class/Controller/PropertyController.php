@@ -51,7 +51,7 @@ class PropertyController extends BaseController
         } catch (\properties\Exception\BadCommand $e) {
             return $this->errorPage($e);
         }
-        
+
         $managerId = $request->pullGetInteger('managerId', true);
         switch ($command) {
             case 'list':
@@ -104,20 +104,20 @@ EOF;
     private function view()
     {
         $photoFactory = new Photo;
-        
+
         $tpl = $this->resource->view();
         $managerFactory = new ManagerFactory;
         $manager = $managerFactory->load($this->resource->contact_id);
         $managerTpl = $manager->view();
         $tpl = array_merge($tpl, $managerTpl);
-        
+
         $tpl['current_photos'] = json_encode($photoFactory->thumbs($this->resource->id));
         $tpl['photo'] = $this->reactView('photo');
         $tpl['id'] = $this->resource->id;
         $tpl['photoupdate'] = null;
         $tpl['photo_edit_button'] = null;
         $tpl['property_edit_button'] = null;
-        if ($this->factory->role->allow('edit')) {
+        if ($this->factory->role->isAdmin() || (int)$this->resource->contact_id === $this->factory->getCurrentLoggedManager()) {
             $tpl['photoupdate'] = $this->reactView('propertyimage');
             $tpl['photo_edit_button'] = $this->photoButton($this->resource->id);
             $tpl['property_edit_button'] = $this->updateButton($this->resource->id);
@@ -183,6 +183,19 @@ EOF;
     public function post(\Request $request)
     {
         $this->checkCommand($request);
+
+        // Managers post here as well. Make sure they are legit.
+        if ($this->factory->role->isManager()) {
+            $managerFactory = new ManagerFactory;
+            $current_logged_manager = $managerFactory->getCurrentLoggedManager();
+            $post_contact_id = $request->pullPostInteger('contact_id');
+            if (empty($current_logged_manager) || $current_logged_manager != $post_contact_id) {
+                $view = new \View\JsonView(array('error' => 'You do not have property posting privileges'));
+                $response = new \Response($view);
+                return $response;
+            }
+        }
+
         try {
             $result = $this->factory->post($request);
         } catch (\properties\Exception\PropertySaveFailure $e) {
@@ -196,14 +209,14 @@ EOF;
         $response = new \Response($view);
         return $response;
     }
-    
+
     public function delete(\Request $request)
     {
         $id = $this->checkCommand($request);
 
         $this->factory->delete($this->resource);
         if ($request->isAjax()) {
-            $view = new \View\JsonView(array('success'=>true));
+            $view = new \View\JsonView(array('success' => true));
             $response = new \Response($view);
             return $response;
         } else {
