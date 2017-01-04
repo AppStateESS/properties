@@ -45,7 +45,7 @@ class PhotoController extends BaseController
 
     public function post(\Request $request)
     {
-        if (!$this->factory->role->allow()) {
+        if (!$this->factory->role->allow('photo')) {
             throw new \properties\Exception\PrivilegeMissing;
         }
         try {
@@ -104,7 +104,7 @@ class PhotoController extends BaseController
 
     public function patch(\Request $request)
     {
-        $this->checkCommand($request);
+        $this->checkCommand($request, 'photo');
         
         if ($this->resource->id == 0) {
             throw new \Exception('Cannot patch empty object');
