@@ -18,7 +18,7 @@
 
 namespace properties\Role;
 
-class LoggedRole extends BaseRole
+class LoggedRole extends UserRole
 {
     public function isLogged()
     {
