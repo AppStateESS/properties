@@ -51,7 +51,7 @@ abstract class ManagerFactoryAbstract extends BaseFactory
         }
         return $manager;
     }
-    
+
     private function propertyCount($contact_id)
     {
         $db = Database::getDB();
@@ -68,7 +68,7 @@ abstract class ManagerFactoryAbstract extends BaseFactory
         $tbl->addFieldConditional('contact_id', $contact_id);
         return $db->selectOneRow();
     }
-    
+
     protected function loadResourceFromPost(\Request $request)
     {
         $errors = array();

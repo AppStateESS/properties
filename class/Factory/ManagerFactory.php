@@ -117,7 +117,7 @@ class ManagerFactory extends ManagerFactoryAbstract
         try {
             $this->deleteProperties($id);
             $this->deleteInquiry($id);
-            
+
             $tbl = $db->addTable('prop_contacts');
             $tbl->addFieldConditional('id', (int) $id);
             $db->delete();
