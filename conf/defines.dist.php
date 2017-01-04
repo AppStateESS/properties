@@ -11,3 +11,7 @@ define('SWIFT_MAIL_TRANSPORT_TYPE', 3);
 define('SWIFT_MAIL_TRANSPORT_PARAMETER', 'localhost');
 
 define('PROPERTIES_REACT_DEV', false);
+
+// Change this, but ONLY ONCE. If changed later, 
+// managers will not be able to log in.
+define('PROPERTIES_MANAGER_SALT', 'DzGdGuRQlX');
