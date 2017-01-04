@@ -29,7 +29,7 @@ abstract class BaseFactory extends \phpws2\ResourceFactory
     {
         if (\Current_User::allow('properties')) {
             $this->role = new \properties\Role\AdminRole($controller, $method);
-        } elseif ((bool) isset($_SESSION['Contact_Manager']) && $_SESSION['Contact_Manager']->id) {
+        } elseif ($this->getCurrentLoggedManager()) {
             $this->role = new \properties\Role\ManagerRole($controller, $method);
         } elseif (\Current_User::isLogged()) {
             $this->role = new \properties\Role\LoggedRole($controller, $method);
@@ -63,7 +63,7 @@ abstract class BaseFactory extends \phpws2\ResourceFactory
             return ucfirst($name);
         }
     }
-    
+
     public function contactInformation()
     {
         $vars['our_email'] = 'somewebsite@appstate.edu';
@@ -71,6 +71,24 @@ abstract class BaseFactory extends \phpws2\ResourceFactory
         $vars['our_contact_name'] = 'Chuck Charles';
         $vars['our_website'] = \Server::getSiteUrl();
         return $vars;
+    }
+
+    public function setCurrentLoggedManager($manager_id)
+    {
+        $session = \phpws2\Session::getInstance();
+        $session->property_manager_id = $manager_id;
+    }
+
+    public function getCurrentLoggedManager()
+    {
+        $session = \phpws2\Session::getInstance();
+        return isset($session->property_manager_id) ? (int)$session->property_manager_id : false;
+    }
+
+    public function clearCurrentLoggedManager()
+    {
+        $session = \phpws2\Session::getInstance();
+        unset($session->property_manager_id);
     }
 
 }
