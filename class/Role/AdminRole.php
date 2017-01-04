@@ -20,11 +20,25 @@ namespace properties\Role;
 
 class AdminRole extends BaseRole
 {
-
+    /**
+     * @var boolean
+     */
     protected $getCommands = true;
+    /**
+     * @var boolean
+     */
     protected $postCommands = true;
+    /**
+     * @var boolean
+     */
     protected $putCommands = true;
+    /**
+     * @var boolean
+     */
     protected $patchCommands = true;
+    /**
+     * @var boolean
+     */
     protected $deleteCommands = true;
 
     public function isAdmin()
