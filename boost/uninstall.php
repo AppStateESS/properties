@@ -23,12 +23,14 @@ function properties_uninstall(&$content)
 {
     PHPWS_DB::dropTable('prop_photo');
     PHPWS_DB::dropTable('properties');
+    PHPWS_DB::dropTable('prop_inquiry');
     PHPWS_DB::dropTable('prop_contacts');
+    /*
     PHPWS_DB::dropTable('prop_roommate');
     PHPWS_DB::dropTable('prop_report');
     PHPWS_DB::dropTable('prop_messages');
     PHPWS_DB::dropTable('prop_blocked');
-    
+    */
     $content[] = 'Properties tables removed.';
     return TRUE;
 }
