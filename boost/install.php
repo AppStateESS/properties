@@ -33,7 +33,7 @@ function properties_install(&$content)
         $tbl = $db->buildTable('prop_inquiry');
         $tbl->addDataType('contact_id', 'int');
         $tbl->addDataType('inquiry_date', 'int');
-        $tbl->addDataType('inquiry_type', 'varchar(255)');
+        $tbl->addDataType('inquiry_type', 'varchar')->setSize('20');
         $tbl->create();
     } catch (\Exception $e) {
         \phpws2\Error::log($e);
