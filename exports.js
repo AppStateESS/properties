@@ -9,5 +9,8 @@ exports.entry = {
   photo: exports.APP_DIR + '/Photo/index.jsx',
   managersignup: exports.APP_DIR + '/ManagerSignup/index.jsx',
   managerapproval: exports.APP_DIR + '/ManagerApproval/index.jsx',
+  managersignin: exports.APP_DIR + '/ManagerSignin/index.jsx',
+  managerdesktop: exports.APP_DIR + '/ManagerDesktop/index.jsx',
+  managerpropertyform: exports.APP_DIR + '/ManagerPropertyForm/index.jsx',
   vendor: ['react', 'react-dom']
 }
