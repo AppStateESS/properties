@@ -23,10 +23,45 @@ use properties\Factory\ManagerFactory as Factory;
 class ManagerAdminController extends BaseController
 {
 
+    /**
+     * @var properties\Factory\ManagerFactory
+     */
+    protected $factory;
+
     public function __construct($module)
     {
         parent::__construct($module);
         $this->factory = new Factory('manageradmin');
+    }
+
+    public function getHtmlView($data, \Request $request)
+    {
+        try {
+            $command = $this->checkCommand($request, 'list');
+        } catch (\properties\Exception\ResourceNotFound $e) {
+            return $this->errorPage($e);
+        } catch (\properties\Exception\BadCommand $e) {
+            return $this->errorPage($e);
+        }
+
+        \Layout::addStyle('properties');
+        switch ($command) {
+            case 'create';
+                \Layout::addStyle('properties', 'propertyForm.css');
+                $content = $this->editView(0,
+                        $request->pullGetInteger('managerId'));
+                break;
+
+            case 'edit':
+                \Layout::addStyle('properties', 'propertyForm.css');
+                $content = $this->editView($request->pullGetInteger('propertyId'));
+                break;
+
+            default:
+                throw new \properties\Exception\BadCommand;
+        }
+        $view = new \phpws2\View\HtmlView($content);
+        return $view;
     }
 
     public function delete(\Request $request)
@@ -95,6 +130,30 @@ class ManagerAdminController extends BaseController
         $view = new \View\JsonView($json);
         $response = new \Response($view);
         return $response;
+    }
+
+    protected function editView($property_id = 0, $manager_id = 0)
+    {
+        $propertyFactory = new \properties\Factory\PropertyFactory();
+        $property = $property_id ? $propertyFactory->load($property_id) : $propertyFactory->build();
+
+        if ($property->getId()) {
+            $propertyEncode = json_encode($property->getVariablesAsValue(true,
+                            array('approved', 'active')));
+        } else {
+            $manager = $this->factory->load($manager_id);
+            $property->contact_id = $manager_id;
+            $property->company_name = $manager->company_name;
+
+            $propertyEncode = json_encode($property->getVariablesAsValue(true,
+                            array('approved', 'active')));
+        }
+
+        $content[] = <<<EOF
+<script type="text/javascript">const property = $propertyEncode;let deleteProperty = () => {}</script>
+EOF;
+        $content[] = $this->reactView('propertyform');
+        return implode('', $content);
     }
 
 }
