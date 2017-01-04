@@ -18,11 +18,20 @@
 
 namespace properties\Role;
 
-class ManagerRole extends BaseRole
+class ManagerRole extends UserRole
 {
+
+    public function __construct($controller, $method) {
+        parent::__construct($controller, $method);
+        $this->getCommands['managercontact'] = array('desktop', 'signin', 'signout', 'create');
+        $this->postCommands['property'] = true;
+        $this->postCommands['photo'] = true;
+        $this->patchCommands['photo'] = true;
+    }
+    
     public function isManager()
     {
         return true;
     }
-
+    
 }
