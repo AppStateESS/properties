@@ -44,6 +44,9 @@ abstract class BaseController extends \phpws2\Http\Controller
 
     public function get(\Request $request)
     {
+        if ($this->factory->role->isManager()) {
+            $this->showManagerLinks();
+        }
         try {
             $data = array();
             $view = $this->getView($data, $request);
@@ -56,6 +59,18 @@ abstract class BaseController extends \phpws2\Http\Controller
         }
         $response = new \Response($view);
         return $response;
+    }
+
+    private function showManagerLinks()
+    {
+        $link = <<<EOF
+<a href="./properties/ManagerContact/desktop"><i class="fa fa-sign-out"></i>&nbsp;My properties</a>
+EOF;
+        \properties\Factory\NavBar::addItem($link);
+        $link = <<<EOF
+<a href="./properties/ManagerContact/signout"><i class="fa fa-sign-out"></i>&nbsp;Sign out</a>
+EOF;
+        \properties\Factory\NavBar::addItem($link);
     }
 
     /**
@@ -72,7 +87,7 @@ abstract class BaseController extends \phpws2\Http\Controller
         return $view;
     }
 
-    protected function checkCommand(\Request $request, $defaultCommand = 'list')
+    protected function checkCommand(\Request $request, $defaultCommand = null)
     {
         $command = $request->shiftCommand();
         if (empty($command)) {
@@ -84,7 +99,11 @@ abstract class BaseController extends \phpws2\Http\Controller
             if (is_numeric($command)) {
                 $subcommand = $request->shiftCommand();
                 if (empty($subcommand)) {
-                    $subcommand = $this->defaultNumericCommand($request);
+                    if (!empty($defaultCommand)) {
+                        $subcommand = $defaultCommand;
+                    } else {
+                        $subcommand = $this->defaultNumericCommand($request);
+                    }
                 }
                 $this->resource = $this->factory->load($command);
 
