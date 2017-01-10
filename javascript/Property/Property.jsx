@@ -1,11 +1,11 @@
 'use strict'
 import React from 'react'
+import empty from '../Mixin/Empty.js'
+import bindMethods from '../Mixin/Bind.js'
+import Message from '../Mixin/Message.jsx'
+import PropertyBar from './PropertyBar.jsx'
 import DecodeUrl from '../Mixin/DecodeUrl.js'
 import PropertyListing from './PropertyListing.jsx'
-import bindMethods from '../Mixin/Bind.js'
-import empty from '../Mixin/Empty.js'
-import PropertyBar from './PropertyBar.jsx'
-import Message from '../Mixin/Message.jsx'
 import setIfDefined from '../Mixin/setIfDefined.js'
 
 /* global $ */
