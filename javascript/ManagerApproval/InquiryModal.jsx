@@ -18,12 +18,12 @@ export default class InquiryModal extends React.Component {
           style={spacing}
           className="btn btn-primary"
           onClick={this.props.inquiry}
-          data-inquiry-type="sublease">Appear to be sublease</button>
+          data-inquiry-type="sublease">Appears to be a sublease</button>
         <button
           style={spacing}
           className="btn btn-primary"
           onClick={this.props.inquiry}
-          data-inquiry-type="information">Property information</button>
+          data-inquiry-type="information">Need more property information</button>
       </div>
     )
     return (<Modal body={body} header={header}/>)
