@@ -33,6 +33,7 @@ export default class PropertyForm extends React.Component {
       'delete',
       'setTab',
       'setValue',
+      'setError',
       'checkForm',
       'openDelete',
       'closeDelete',
@@ -61,6 +62,12 @@ export default class PropertyForm extends React.Component {
     let property = this.state.property
     property[varname] = value
     this.setState({property})
+  }
+
+  setError(varname, value) {
+    let errors = this.state.errors
+    errors[varname] = value
+    this.setState({errors})
   }
 
   setIntegerValue(varname, value) {
@@ -192,6 +199,7 @@ export default class PropertyForm extends React.Component {
     switch (this.state.activeTab) {
       case 0:
         section = <Basic
+          setError={this.setError}
           property={property}
           setValue={this.setValue}
           setIntegerValue={this.setIntegerValue}
@@ -224,12 +232,20 @@ export default class PropertyForm extends React.Component {
         type={this.state.message.type}
         onClose={this.unsetMessage}/>
     }
+
+    let deleteButton
+    if (property.id > 0) {
+      deleteButton = (
+        <button className="btn btn-danger" onClick={this.openDelete}>
+          <i className="fa fa-trash-o"></i>&nbsp;Delete property</button>
+      )
+    }
+
     return (
-      <div ref="PageTop">
+      <div ref="PageTop" className="property-form">
         {deleteForm}
         {message}
-        <h2>Property for {this.state.property.company_name}&nbsp;<button className="btn btn-danger" onClick={this.openDelete}>
-            <i className="fa fa-trash-o"></i>&nbsp;Delete property</button>
+        <h2>Property for {this.state.property.company_name}&nbsp;{deleteButton}
         </h2>
         <Nav
           buttons={this.navButtons()}
