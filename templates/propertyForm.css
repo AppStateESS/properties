@@ -1,16 +1,16 @@
-#propertyform .row {
+.property-form .row {
     border : 1px solid #e3e3e3;
 }
 
-#propertyform .row > div {
+.property-form .row > div {
     padding : 1em;
 }
 
-#propertyform .form-group {
+.property-form .form-group {
     margin: 0;
 }
 
-#propertyform label {
+.property-form label {
     font-size : 1.2em;
 }
 
