@@ -8,6 +8,7 @@ import ButtonGroup from '../Mixin/ButtonGroup.jsx'
 import Dollarize from '../Mixin/Dollarize.jsx'
 import Range from '../Mixin/Range.js'
 import moment from 'moment'
+import empty from '../Mixin/Empty.js'
 
 export default class Basic extends React.Component {
   constructor(props) {
@@ -56,8 +57,9 @@ export default class Basic extends React.Component {
   }
 
   updateRent(e) {
-    const rent = e.target.value
-    this.props.setValue('monthly_rent', rent.replace(/[^\d]/g, ''))
+    const rent = e.target.value.replace(/[^\d]/g, '')
+    this.props.setError('monthly_rent', empty(rent))
+    this.props.setValue('monthly_rent', rent)
   }
 
   studentType() {
@@ -166,8 +168,11 @@ export default class Basic extends React.Component {
               : null}
               value={property.address}
               change={this.props.setValue.bind(null, 'address')}
-              required={true}/>
-              {(property.address.length > 10) ? <small><a href={this.googleize(property.address)} target="_blank">View on Google Maps</a></small> : null}
+              required={true}/> {(property.address.length > 10)
+              ? <small>
+                  <a href={this.googleize(property.address)} target="_blank">View on Google Maps</a>
+                </small>
+              : null}
           </div>
         </div>
         <div className="row">
@@ -280,9 +285,11 @@ export default class Basic extends React.Component {
     )
   }
 }
+
 Basic.propTypes = {
   property: React.PropTypes.object,
   setValue: React.PropTypes.func,
+  setError: React.PropTypes.func,
   setIntegerValue: React.PropTypes.func,
   errors: React.PropTypes.object
 }
