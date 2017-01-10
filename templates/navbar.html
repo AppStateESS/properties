@@ -22,9 +22,11 @@
         <?php if ($items !== null):?>
         <li class="navbar-text">|
         </li>
+        <?php foreach($items as $item):?>
         <li>
-            <?=$items?>
+            <?=$item?>
         </li>
+        <?php endforeach;?>
         <?php endif;?>
         <?php if ($options !== null):?>
         <li class="navbar-text">|
