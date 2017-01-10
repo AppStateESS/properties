@@ -178,6 +178,7 @@ export default class ManagerSignin extends React.Component {
   }
 
   presubmitTest() {
+    this.resetMessage()
     let allowSubmit = true
     let empty = false
 
