@@ -1,15 +1,18 @@
 <div>
     <h2>Manager log-in</h2>
-    <div class="row">
-        <div class="col-sm-6">
-            <label for="username">Username:</label><br />
-            <input type="text" id="username" name="username" class="form-control"/>
+    <form method="post" action="./properties/ManagerContact/signin">
+        <div class="row">
+            <div class="col-sm-6">
+                <label for="username">Username:</label><br />
+                <input type="text" id="username" name="manager_username" class="form-control"/>
+            </div>
+            <div class="col-sm-6">
+                <label for="password">Password:</label><br />
+                <input type="password" id="password" name="manager_password" class="form-control"/>
+            </div>
         </div>
-        <div class="col-sm-6">
-            <label for="password">Password:</label><br />
-            <input type="password" id="password" name="password" class="form-control"/>
-        </div>
-    </div>
+        <button class="btn btn-lg btn-primary" style="margin-top:1em" type="submit">Log-in</button>
+    </form>
 </div>
-<p>Forgot password?</p>
+<p style="margin-top:1em"><a href="./properties/ManagerContact/forgot">Forgot password?</a></p>
 <p><a href="./properties/ManagerSignup">Request a manager account.</a></p>
