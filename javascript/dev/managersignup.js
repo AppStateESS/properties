@@ -1,4 +1,4 @@
-webpackJsonp([2],{
+webpackJsonp([5],{
 
 /***/ 0:
 /*!********************************************!*\
@@ -16,7 +16,7 @@ webpackJsonp([2],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _ManagerSignup = __webpack_require__(/*! ./ManagerSignup.jsx */ 188);
+	var _ManagerSignup = __webpack_require__(/*! ./ManagerSignup.jsx */ 390);
 	
 	var _ManagerSignup2 = _interopRequireDefault(_ManagerSignup);
 	
@@ -410,7 +410,7 @@ webpackJsonp([2],{
 
 /***/ },
 
-/***/ 188:
+/***/ 390:
 /*!****************************************************!*\
   !*** ./javascript/ManagerSignup/ManagerSignup.jsx ***!
   \****************************************************/
@@ -637,6 +637,7 @@ webpackJsonp([2],{
 	  }, {
 	    key: 'presubmitTest',
 	    value: function presubmitTest() {
+	      this.resetMessage();
 	      var allowSubmit = true;
 	      var empty = false;
 	

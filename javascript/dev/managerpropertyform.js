@@ -1,8 +1,8 @@
-webpackJsonp([8],[
+webpackJsonp([3],[
 /* 0 */
-/*!*******************************************!*\
-  !*** ./javascript/PropertyForm/index.jsx ***!
-  \*******************************************/
+/*!**************************************************!*\
+  !*** ./javascript/ManagerPropertyForm/index.jsx ***!
+  \**************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -15,13 +15,13 @@ webpackJsonp([8],[
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _PropertyForm = __webpack_require__(/*! ./PropertyForm.jsx */ 192);
+	var _ManagerPropertyForm = __webpack_require__(/*! ./ManagerPropertyForm.jsx */ 191);
 	
-	var _PropertyForm2 = _interopRequireDefault(_PropertyForm);
+	var _ManagerPropertyForm2 = _interopRequireDefault(_ManagerPropertyForm);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	_reactDom2.default.render(_react2.default.createElement(_PropertyForm2.default, null), document.getElementById('propertyform'));
+	_reactDom2.default.render(_react2.default.createElement(_ManagerPropertyForm2.default, null), document.getElementById('managerpropertyform'));
 
 /***/ },
 /* 1 */,
@@ -540,7 +540,73 @@ webpackJsonp([8],[
 /* 188 */,
 /* 189 */,
 /* 190 */,
-/* 191 */,
+/* 191 */
+/*!****************************************************************!*\
+  !*** ./javascript/ManagerPropertyForm/ManagerPropertyForm.jsx ***!
+  \****************************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _PropertyForm2 = __webpack_require__(/*! ../PropertyForm/PropertyForm.jsx */ 192);
+	
+	var _PropertyForm3 = _interopRequireDefault(_PropertyForm2);
+	
+	__webpack_require__(/*! react-date-picker/index.css */ 384);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	/* global $, property */
+	
+	var ManagerPropertyForm = function (_PropertyForm) {
+	  _inherits(ManagerPropertyForm, _PropertyForm);
+	
+	  function ManagerPropertyForm() {
+	    _classCallCheck(this, ManagerPropertyForm);
+	
+	    return _possibleConstructorReturn(this, (ManagerPropertyForm.__proto__ || Object.getPrototypeOf(ManagerPropertyForm)).apply(this, arguments));
+	  }
+	
+	  _createClass(ManagerPropertyForm, [{
+	    key: 'save',
+	    value: function save() {
+	      var property = this.readyPost();
+	      this.setState({ saving: true });
+	      $.post('./properties/ManagerContact/create', property, null, 'json').done(function (data) {
+	        if (data.error !== undefined) {
+	          this.setMessage(data.error, 'danger');
+	        } else {
+	          window.location.href = './properties/Property/' + data.id;
+	        }
+	      }.bind(this)).fail(function (data) {
+	        this.setMessage(data.responseText, 'danger');
+	      }.bind(this));
+	    }
+	  }]);
+	
+	  return ManagerPropertyForm;
+	}(_PropertyForm3.default);
+	
+	exports.default = ManagerPropertyForm;
+	
+	
+	ManagerPropertyForm.save = function () {};
+	
+	ManagerPropertyForm.propTypes = {};
+
+/***/ },
 /* 192 */
 /*!**************************************************!*\
   !*** ./javascript/PropertyForm/PropertyForm.jsx ***!
@@ -31476,4 +31542,4 @@ webpackJsonp([8],[
 
 /***/ }
 ]);
-//# sourceMappingURL=propertyform.js.map
+//# sourceMappingURL=managerpropertyform.js.map

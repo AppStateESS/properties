@@ -1,4 +1,4 @@
-webpackJsonp([4],{
+webpackJsonp([7],{
 
 /***/ 0:
 /*!***************************************!*\
@@ -16,7 +16,7 @@ webpackJsonp([4],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _Property = __webpack_require__(/*! ./Property.jsx */ 196);
+	var _Property = __webpack_require__(/*! ./Property.jsx */ 396);
 	
 	var _Property2 = _interopRequireDefault(_Property);
 	
@@ -362,400 +362,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 196:
-/*!******************************************!*\
-  !*** ./javascript/Property/Property.jsx ***!
-  \******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _DecodeUrl = __webpack_require__(/*! ../Mixin/DecodeUrl.js */ 197);
-	
-	var _DecodeUrl2 = _interopRequireDefault(_DecodeUrl);
-	
-	var _PropertyListing = __webpack_require__(/*! ./PropertyListing.jsx */ 198);
-	
-	var _PropertyListing2 = _interopRequireDefault(_PropertyListing);
-	
-	var _Bind = __webpack_require__(/*! ../Mixin/Bind.js */ 182);
-	
-	var _Bind2 = _interopRequireDefault(_Bind);
-	
-	var _Empty = __webpack_require__(/*! ../Mixin/Empty.js */ 186);
-	
-	var _Empty2 = _interopRequireDefault(_Empty);
-	
-	var _PropertyBar = __webpack_require__(/*! ./PropertyBar.jsx */ 200);
-	
-	var _PropertyBar2 = _interopRequireDefault(_PropertyBar);
-	
-	var _Message = __webpack_require__(/*! ../Mixin/Message.jsx */ 180);
-	
-	var _Message2 = _interopRequireDefault(_Message);
-	
-	var _setIfDefined = __webpack_require__(/*! ../Mixin/setIfDefined.js */ 209);
-	
-	var _setIfDefined2 = _interopRequireDefault(_setIfDefined);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	/* global $ */
-	
-	var Property = function (_React$Component) {
-	  _inherits(Property, _React$Component);
-	
-	  function Property(props) {
-	    _classCallCheck(this, Property);
-	
-	    var _this = _possibleConstructorReturn(this, (Property.__proto__ || Object.getPrototypeOf(Property)).call(this, props));
-	
-	    _this.state = {
-	      properties: null,
-	      manager: null,
-	      message: '',
-	      type: null
-	    };
-	
-	    _this.delay;
-	    _this.search;
-	    _this.searchVars = {
-	      beds: '1',
-	      baths: '1',
-	      minprice: '0',
-	      maxprice: '0'
-	    };
-	    _this.loadAmenities();
-	    _this.managerId = 0;
-	    (0, _Bind2.default)(['load', 'updateSearchVars', 'clearSearch', 'updateSearchString', 'clearAmenities', 'toggle'], _this);
-	    return _this;
-	  }
-	
-	  _createClass(Property, [{
-	    key: 'clearAmenities',
-	    value: function clearAmenities() {
-	      this.searchVars.furnished = null;
-	      this.searchVars.ac = null;
-	      this.searchVars.pets = null;
-	      this.searchVars.utils = null;
-	      this.searchVars.appalcart = null;
-	      this.searchVars.campus = null;
-	      this.searchVars.dishwasher = null;
-	      this.searchVars.laundry = null;
-	      this.searchVars.clubhouse = null;
-	      this.searchVars.efficiency = null;
-	      this.searchVars.apartment = null;
-	      this.searchVars.house = null;
-	      this.searchVars.condo = null;
-	      this.searchVars.townhouse = null;
-	      this.searchVars.duplex = null;
-	      this.load();
-	      this.updateLink();
-	    }
-	  }, {
-	    key: 'loadAmenities',
-	    value: function loadAmenities() {
-	      var url = new _DecodeUrl2.default();
-	
-	      this.searchVars = {
-	        beds: (0, _setIfDefined2.default)(url.values, 'beds', '1'),
-	        baths: (0, _setIfDefined2.default)(url.values, 'baths', '1'),
-	        furnished: (0, _setIfDefined2.default)(url.values, 'furnished'),
-	        ac: (0, _setIfDefined2.default)(url.values, 'ac'),
-	        pets: (0, _setIfDefined2.default)(url.values, 'pets'),
-	        utils: (0, _setIfDefined2.default)(url.values, 'utils'),
-	        minprice: (0, _setIfDefined2.default)(url.values, 'minprice', '0'),
-	        maxprice: (0, _setIfDefined2.default)(url.values, 'maxprice', '0'),
-	        appalcart: (0, _setIfDefined2.default)(url.values, 'appalcart', '0'),
-	        campus: (0, _setIfDefined2.default)(url.values, 'campus', '0'),
-	        dishwasher: (0, _setIfDefined2.default)(url.values, 'dishwasher', '0'),
-	        laundry: (0, _setIfDefined2.default)(url.values, 'laundry', '0'),
-	        clubhouse: (0, _setIfDefined2.default)(url.values, 'clubhouse', '0'),
-	        efficiency: (0, _setIfDefined2.default)(url.values, 'efficiency', '0'),
-	        apartment: (0, _setIfDefined2.default)(url.values, 'apartment', '0'),
-	        house: (0, _setIfDefined2.default)(url.values, 'house', '0'),
-	        condo: (0, _setIfDefined2.default)(url.values, 'condo', '0'),
-	        townhouse: (0, _setIfDefined2.default)(url.values, 'townhouse', '0'),
-	        duplex: (0, _setIfDefined2.default)(url.values, 'duplex', '0')
-	      };
-	    }
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var decode = new _DecodeUrl2.default();
-	      this.managerId = decode.values.managerId;
-	      this.load();
-	    }
-	  }, {
-	    key: 'setMessage',
-	    value: function setMessage(message, type) {
-	      this.setState({ message: message, type: type });
-	    }
-	  }, {
-	    key: 'setManagerId',
-	    value: function setManagerId(id) {
-	      this.managerId = id;
-	    }
-	  }, {
-	    key: 'clearSearch',
-	    value: function clearSearch() {
-	      this.search = '';
-	      this.load();
-	    }
-	  }, {
-	    key: 'updateLink',
-	    value: function updateLink() {
-	      var stateObj = {};
-	      var url = 'properties/?' + $.param(this.searchVars);
-	
-	      window.history.pushState(stateObj, "", url);
-	    }
-	  }, {
-	    key: 'updateSearchVars',
-	    value: function updateSearchVars(varname, value) {
-	      this.searchVars[varname] = value;
-	      this.load();
-	      this.updateLink();
-	    }
-	  }, {
-	    key: 'toggle',
-	    value: function toggle(type) {
-	      this.updateSearchVars(type, this.searchVars[type] === '1' ? undefined : '1');
-	    }
-	  }, {
-	    key: 'processAjaxData',
-	    value: function processAjaxData(response, urlPath) {
-	      document.getElementById("content").innerHTML = response.html;
-	      document.title = response.pageTitle;
-	      window.history.pushState({
-	        "html": response.html,
-	        "pageTitle": response.pageTitle
-	      }, "", urlPath);
-	    }
-	  }, {
-	    key: 'load',
-	    value: function load() {
-	      this.setState({ properties: null });
-	      var sendData = this.searchVars;
-	      sendData.managerId = this.managerId;
-	      sendData.search = this.search;
-	      $.getJSON('./properties/Property', sendData).done(function (data) {
-	        this.setState({ properties: data.properties, manager: data.manager });
-	      }.bind(this)).fail(function () {
-	        this.setState({ managers: null, loading: false });
-	        this.setMessage('Error: failure pulling properties');
-	      }.bind(this));
-	    }
-	  }, {
-	    key: 'updateSearchString',
-	    value: function updateSearchString(e) {
-	      clearTimeout(this.delay);
-	      var search = e.target.value;
-	      if (search.length < 4 && search.length > 0) {
-	        return;
-	      }
-	      this.delay = setTimeout(function () {
-	        this.search = search;
-	        this.load();
-	      }.bind(this, search), 500);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var manager = 'All managers';
-	      if (this.state.manager) {
-	        manager = this.state.manager.company_name;
-	      }
-	
-	      var message = void 0;
-	      if (this.state.message.length > 0) {
-	        message = _react2.default.createElement(_Message2.default, { message: this.state.message, type: this.state.type });
-	      }
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        message,
-	        _react2.default.createElement(
-	          'h3',
-	          null,
-	          'Properties: ',
-	          manager
-	        ),
-	        _react2.default.createElement(_PropertyBar2.default, {
-	          updateSearchString: this.updateSearchString,
-	          clear: this.clearSearch,
-	          updateSearchVars: this.updateSearchVars,
-	          searchVars: this.searchVars,
-	          clearAmenities: this.clearAmenities,
-	          toggle: this.toggle }),
-	        _react2.default.createElement(_PropertyListing2.default, { list: this.state.properties, search: !(0, _Empty2.default)(this.search) })
-	      );
-	    }
-	  }]);
-	
-	  return Property;
-	}(_react2.default.Component);
-	
-	exports.default = Property;
-
-/***/ },
-
-/***/ 197:
-/*!***************************************!*\
-  !*** ./javascript/Mixin/DecodeUrl.js ***!
-  \***************************************/
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	/**
-	 * Adapted from http://ideasandpixels.com/get-post-variables-with-javascript
-	 */
-	
-	var DecodeUrl = function () {
-	  function DecodeUrl() {
-	    _classCallCheck(this, DecodeUrl);
-	
-	    this.url = document.location.search;
-	    this.values = [];
-	    this.process();
-	  }
-	
-	  _createClass(DecodeUrl, [{
-	    key: "process",
-	    value: function process() {
-	      this.url.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
-	        function decode(s) {
-	          return decodeURIComponent(s.split("+").join(" "));
-	        }
-	
-	        this.values[decode(arguments[1])] = decode(arguments[2]);
-	      }.bind(this));
-	    }
-	  }]);
-	
-	  return DecodeUrl;
-	}();
-	
-	exports.default = DecodeUrl;
-
-/***/ },
-
-/***/ 198:
-/*!*************************************************!*\
-  !*** ./javascript/Property/PropertyListing.jsx ***!
-  \*************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _PropertyRow = __webpack_require__(/*! ./PropertyRow.jsx */ 199);
-	
-	var _PropertyRow2 = _interopRequireDefault(_PropertyRow);
-	
-	var _Waiting = __webpack_require__(/*! ../Mixin/Waiting.jsx */ 181);
-	
-	var _Waiting2 = _interopRequireDefault(_Waiting);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var PropertyListing = function (_React$Component) {
-	  _inherits(PropertyListing, _React$Component);
-	
-	  function PropertyListing(props) {
-	    _classCallCheck(this, PropertyListing);
-	
-	    return _possibleConstructorReturn(this, (PropertyListing.__proto__ || Object.getPrototypeOf(PropertyListing)).call(this, props));
-	  }
-	
-	  _createClass(PropertyListing, [{
-	    key: 'render',
-	    value: function render() {
-	      var list = this.props.list;
-	      if (list === null) {
-	        return _react2.default.createElement(_Waiting2.default, { label: 'properties' });
-	      } else if (list.length === 0) {
-	        if (this.props.search === true) {
-	          return _react2.default.createElement(
-	            'div',
-	            { className: 'lead' },
-	            'No properties found. Try a different search?'
-	          );
-	        } else {
-	          return _react2.default.createElement(
-	            'div',
-	            { className: 'lead' },
-	            'No properties found.'
-	          );
-	        }
-	      } else {
-	        var rows = void 0;
-	        rows = list.map(function (value, key) {
-	          return _react2.default.createElement(_PropertyRow2.default, { property: value, key: key });
-	        }.bind(this));
-	        return _react2.default.createElement(
-	          'div',
-	          null,
-	          rows
-	        );
-	      }
-	    }
-	  }]);
-	
-	  return PropertyListing;
-	}(_react2.default.Component);
-	
-	exports.default = PropertyListing;
-	
-	
-	PropertyListing.propTypes = {
-	  list: _react2.default.PropTypes.array,
-	  search: _react2.default.PropTypes.bool
-	};
-
-/***/ },
-
-/***/ 199:
+/***/ 190:
 /*!*********************************************!*\
   !*** ./javascript/Property/PropertyRow.jsx ***!
   \*********************************************/
@@ -1056,7 +663,310 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 200:
+/***/ 389:
+/*!***************************************!*\
+  !*** ./javascript/Mixin/DecodeUrl.js ***!
+  \***************************************/
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	/**
+	 * Adapted from http://ideasandpixels.com/get-post-variables-with-javascript
+	 */
+	
+	var DecodeUrl = function () {
+	  function DecodeUrl() {
+	    _classCallCheck(this, DecodeUrl);
+	
+	    this.url = document.location.search;
+	    this.values = [];
+	    this.process();
+	  }
+	
+	  _createClass(DecodeUrl, [{
+	    key: "process",
+	    value: function process() {
+	      this.url.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
+	        function decode(s) {
+	          return decodeURIComponent(s.split("+").join(" "));
+	        }
+	
+	        this.values[decode(arguments[1])] = decode(arguments[2]);
+	      }.bind(this));
+	    }
+	  }]);
+	
+	  return DecodeUrl;
+	}();
+	
+	exports.default = DecodeUrl;
+
+/***/ },
+
+/***/ 396:
+/*!******************************************!*\
+  !*** ./javascript/Property/Property.jsx ***!
+  \******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Empty = __webpack_require__(/*! ../Mixin/Empty.js */ 186);
+	
+	var _Empty2 = _interopRequireDefault(_Empty);
+	
+	var _Bind = __webpack_require__(/*! ../Mixin/Bind.js */ 182);
+	
+	var _Bind2 = _interopRequireDefault(_Bind);
+	
+	var _Message = __webpack_require__(/*! ../Mixin/Message.jsx */ 180);
+	
+	var _Message2 = _interopRequireDefault(_Message);
+	
+	var _PropertyBar = __webpack_require__(/*! ./PropertyBar.jsx */ 397);
+	
+	var _PropertyBar2 = _interopRequireDefault(_PropertyBar);
+	
+	var _DecodeUrl = __webpack_require__(/*! ../Mixin/DecodeUrl.js */ 389);
+	
+	var _DecodeUrl2 = _interopRequireDefault(_DecodeUrl);
+	
+	var _PropertyListing = __webpack_require__(/*! ./PropertyListing.jsx */ 406);
+	
+	var _PropertyListing2 = _interopRequireDefault(_PropertyListing);
+	
+	var _setIfDefined = __webpack_require__(/*! ../Mixin/setIfDefined.js */ 407);
+	
+	var _setIfDefined2 = _interopRequireDefault(_setIfDefined);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	/* global $ */
+	
+	var Property = function (_React$Component) {
+	  _inherits(Property, _React$Component);
+	
+	  function Property(props) {
+	    _classCallCheck(this, Property);
+	
+	    var _this = _possibleConstructorReturn(this, (Property.__proto__ || Object.getPrototypeOf(Property)).call(this, props));
+	
+	    _this.state = {
+	      properties: null,
+	      manager: null,
+	      message: '',
+	      type: null
+	    };
+	
+	    _this.delay;
+	    _this.search;
+	    _this.searchVars = {
+	      beds: '1',
+	      baths: '1',
+	      minprice: '0',
+	      maxprice: '0'
+	    };
+	    _this.loadAmenities();
+	    _this.managerId = 0;
+	    (0, _Bind2.default)(['load', 'updateSearchVars', 'clearSearch', 'updateSearchString', 'clearAmenities', 'toggle'], _this);
+	    return _this;
+	  }
+	
+	  _createClass(Property, [{
+	    key: 'clearAmenities',
+	    value: function clearAmenities() {
+	      this.searchVars.furnished = null;
+	      this.searchVars.ac = null;
+	      this.searchVars.pets = null;
+	      this.searchVars.utils = null;
+	      this.searchVars.appalcart = null;
+	      this.searchVars.campus = null;
+	      this.searchVars.dishwasher = null;
+	      this.searchVars.laundry = null;
+	      this.searchVars.clubhouse = null;
+	      this.searchVars.efficiency = null;
+	      this.searchVars.apartment = null;
+	      this.searchVars.house = null;
+	      this.searchVars.condo = null;
+	      this.searchVars.townhouse = null;
+	      this.searchVars.duplex = null;
+	      this.load();
+	      this.updateLink();
+	    }
+	  }, {
+	    key: 'loadAmenities',
+	    value: function loadAmenities() {
+	      var url = new _DecodeUrl2.default();
+	
+	      this.searchVars = {
+	        beds: (0, _setIfDefined2.default)(url.values, 'beds', '1'),
+	        baths: (0, _setIfDefined2.default)(url.values, 'baths', '1'),
+	        furnished: (0, _setIfDefined2.default)(url.values, 'furnished'),
+	        ac: (0, _setIfDefined2.default)(url.values, 'ac'),
+	        pets: (0, _setIfDefined2.default)(url.values, 'pets'),
+	        utils: (0, _setIfDefined2.default)(url.values, 'utils'),
+	        minprice: (0, _setIfDefined2.default)(url.values, 'minprice', '0'),
+	        maxprice: (0, _setIfDefined2.default)(url.values, 'maxprice', '0'),
+	        appalcart: (0, _setIfDefined2.default)(url.values, 'appalcart', '0'),
+	        campus: (0, _setIfDefined2.default)(url.values, 'campus', '0'),
+	        dishwasher: (0, _setIfDefined2.default)(url.values, 'dishwasher', '0'),
+	        laundry: (0, _setIfDefined2.default)(url.values, 'laundry', '0'),
+	        clubhouse: (0, _setIfDefined2.default)(url.values, 'clubhouse', '0'),
+	        efficiency: (0, _setIfDefined2.default)(url.values, 'efficiency', '0'),
+	        apartment: (0, _setIfDefined2.default)(url.values, 'apartment', '0'),
+	        house: (0, _setIfDefined2.default)(url.values, 'house', '0'),
+	        condo: (0, _setIfDefined2.default)(url.values, 'condo', '0'),
+	        townhouse: (0, _setIfDefined2.default)(url.values, 'townhouse', '0'),
+	        duplex: (0, _setIfDefined2.default)(url.values, 'duplex', '0')
+	      };
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var decode = new _DecodeUrl2.default();
+	      this.managerId = decode.values.managerId;
+	      this.load();
+	    }
+	  }, {
+	    key: 'setMessage',
+	    value: function setMessage(message, type) {
+	      this.setState({ message: message, type: type });
+	    }
+	  }, {
+	    key: 'setManagerId',
+	    value: function setManagerId(id) {
+	      this.managerId = id;
+	    }
+	  }, {
+	    key: 'clearSearch',
+	    value: function clearSearch() {
+	      this.search = '';
+	      this.load();
+	    }
+	  }, {
+	    key: 'updateLink',
+	    value: function updateLink() {
+	      var stateObj = {};
+	      var url = 'properties/?' + $.param(this.searchVars);
+	
+	      window.history.pushState(stateObj, "", url);
+	    }
+	  }, {
+	    key: 'updateSearchVars',
+	    value: function updateSearchVars(varname, value) {
+	      this.searchVars[varname] = value;
+	      this.load();
+	      this.updateLink();
+	    }
+	  }, {
+	    key: 'toggle',
+	    value: function toggle(type) {
+	      this.updateSearchVars(type, this.searchVars[type] === '1' ? undefined : '1');
+	    }
+	  }, {
+	    key: 'processAjaxData',
+	    value: function processAjaxData(response, urlPath) {
+	      document.getElementById("content").innerHTML = response.html;
+	      document.title = response.pageTitle;
+	      window.history.pushState({
+	        "html": response.html,
+	        "pageTitle": response.pageTitle
+	      }, "", urlPath);
+	    }
+	  }, {
+	    key: 'load',
+	    value: function load() {
+	      this.setState({ properties: null });
+	      var sendData = this.searchVars;
+	      sendData.managerId = this.managerId;
+	      sendData.search = this.search;
+	      $.getJSON('./properties/Property', sendData).done(function (data) {
+	        this.setState({ properties: data.properties, manager: data.manager });
+	      }.bind(this)).fail(function () {
+	        this.setState({ managers: null, loading: false });
+	        this.setMessage('Error: failure pulling properties');
+	      }.bind(this));
+	    }
+	  }, {
+	    key: 'updateSearchString',
+	    value: function updateSearchString(e) {
+	      clearTimeout(this.delay);
+	      var search = e.target.value;
+	      if (search.length < 4 && search.length > 0) {
+	        return;
+	      }
+	      this.delay = setTimeout(function () {
+	        this.search = search;
+	        this.load();
+	      }.bind(this, search), 500);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var manager = 'All managers';
+	      if (this.state.manager) {
+	        manager = this.state.manager.company_name;
+	      }
+	
+	      var message = void 0;
+	      if (this.state.message.length > 0) {
+	        message = _react2.default.createElement(_Message2.default, { message: this.state.message, type: this.state.type });
+	      }
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        message,
+	        _react2.default.createElement(
+	          'h3',
+	          null,
+	          'Properties: ',
+	          manager
+	        ),
+	        _react2.default.createElement(_PropertyBar2.default, {
+	          updateSearchString: this.updateSearchString,
+	          clear: this.clearSearch,
+	          updateSearchVars: this.updateSearchVars,
+	          searchVars: this.searchVars,
+	          clearAmenities: this.clearAmenities,
+	          toggle: this.toggle }),
+	        _react2.default.createElement(_PropertyListing2.default, { list: this.state.properties, search: !(0, _Empty2.default)(this.search) })
+	      );
+	    }
+	  }]);
+	
+	  return Property;
+	}(_react2.default.Component);
+	
+	exports.default = Property;
+
+/***/ },
+
+/***/ 397:
 /*!*********************************************!*\
   !*** ./javascript/Property/PropertyBar.jsx ***!
   \*********************************************/
@@ -1078,11 +988,11 @@ webpackJsonp([4],{
 	
 	var _Dropdown2 = _interopRequireDefault(_Dropdown);
 	
-	var _Amenities = __webpack_require__(/*! ./Amenities.jsx */ 201);
+	var _Amenities = __webpack_require__(/*! ./Amenities.jsx */ 398);
 	
 	var _Amenities2 = _interopRequireDefault(_Amenities);
 	
-	var _reactAddonsCssTransitionGroup = __webpack_require__(/*! react-addons-css-transition-group */ 202);
+	var _reactAddonsCssTransitionGroup = __webpack_require__(/*! react-addons-css-transition-group */ 399);
 	
 	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 	
@@ -1347,7 +1257,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 201:
+/***/ 398:
 /*!*******************************************!*\
   !*** ./javascript/Property/Amenities.jsx ***!
   \*******************************************/
@@ -1647,17 +1557,17 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 202:
+/***/ 399:
 /*!******************************************************!*\
   !*** ./~/react-addons-css-transition-group/index.js ***!
   \******************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(/*! react/lib/ReactCSSTransitionGroup */ 203);
+	module.exports = __webpack_require__(/*! react/lib/ReactCSSTransitionGroup */ 400);
 
 /***/ },
 
-/***/ 203:
+/***/ 400:
 /*!************************************************!*\
   !*** ./~/react/lib/ReactCSSTransitionGroup.js ***!
   \************************************************/
@@ -1680,8 +1590,8 @@ webpackJsonp([4],{
 	
 	var React = __webpack_require__(/*! ./React */ 2);
 	
-	var ReactTransitionGroup = __webpack_require__(/*! ./ReactTransitionGroup */ 204);
-	var ReactCSSTransitionGroupChild = __webpack_require__(/*! ./ReactCSSTransitionGroupChild */ 206);
+	var ReactTransitionGroup = __webpack_require__(/*! ./ReactTransitionGroup */ 401);
+	var ReactCSSTransitionGroupChild = __webpack_require__(/*! ./ReactCSSTransitionGroupChild */ 403);
 	
 	function createTransitionTimeoutPropValidator(transitionType) {
 	  var timeoutPropName = 'transition' + transitionType + 'Timeout';
@@ -1753,7 +1663,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 204:
+/***/ 401:
 /*!*********************************************!*\
   !*** ./~/react/lib/ReactTransitionGroup.js ***!
   \*********************************************/
@@ -1776,7 +1686,7 @@ webpackJsonp([4],{
 	
 	var React = __webpack_require__(/*! ./React */ 2);
 	var ReactInstanceMap = __webpack_require__(/*! ./ReactInstanceMap */ 119);
-	var ReactTransitionChildMapping = __webpack_require__(/*! ./ReactTransitionChildMapping */ 205);
+	var ReactTransitionChildMapping = __webpack_require__(/*! ./ReactTransitionChildMapping */ 402);
 	
 	var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 12);
 	
@@ -2009,7 +1919,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 205:
+/***/ 402:
 /*!****************************************************!*\
   !*** ./~/react/lib/ReactTransitionChildMapping.js ***!
   \****************************************************/
@@ -2122,7 +2032,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 206:
+/***/ 403:
 /*!*****************************************************!*\
   !*** ./~/react/lib/ReactCSSTransitionGroupChild.js ***!
   \*****************************************************/
@@ -2144,8 +2054,8 @@ webpackJsonp([4],{
 	var React = __webpack_require__(/*! ./React */ 2);
 	var ReactDOM = __webpack_require__(/*! ./ReactDOM */ 35);
 	
-	var CSSCore = __webpack_require__(/*! fbjs/lib/CSSCore */ 207);
-	var ReactTransitionEvents = __webpack_require__(/*! ./ReactTransitionEvents */ 208);
+	var CSSCore = __webpack_require__(/*! fbjs/lib/CSSCore */ 404);
+	var ReactTransitionEvents = __webpack_require__(/*! ./ReactTransitionEvents */ 405);
 	
 	var onlyChild = __webpack_require__(/*! ./onlyChild */ 33);
 	
@@ -2298,7 +2208,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 207:
+/***/ 404:
 /*!*******************************!*\
   !*** ./~/fbjs/lib/CSSCore.js ***!
   \*******************************/
@@ -2429,7 +2339,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 208:
+/***/ 405:
 /*!**********************************************!*\
   !*** ./~/react/lib/ReactTransitionEvents.js ***!
   \**********************************************/
@@ -2511,7 +2421,97 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 209:
+/***/ 406:
+/*!*************************************************!*\
+  !*** ./javascript/Property/PropertyListing.jsx ***!
+  \*************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _PropertyRow = __webpack_require__(/*! ./PropertyRow.jsx */ 190);
+	
+	var _PropertyRow2 = _interopRequireDefault(_PropertyRow);
+	
+	var _Waiting = __webpack_require__(/*! ../Mixin/Waiting.jsx */ 181);
+	
+	var _Waiting2 = _interopRequireDefault(_Waiting);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var PropertyListing = function (_React$Component) {
+	  _inherits(PropertyListing, _React$Component);
+	
+	  function PropertyListing(props) {
+	    _classCallCheck(this, PropertyListing);
+	
+	    return _possibleConstructorReturn(this, (PropertyListing.__proto__ || Object.getPrototypeOf(PropertyListing)).call(this, props));
+	  }
+	
+	  _createClass(PropertyListing, [{
+	    key: 'render',
+	    value: function render() {
+	      var list = this.props.list;
+	      if (list === null) {
+	        return _react2.default.createElement(_Waiting2.default, { label: 'properties' });
+	      } else if (list.length === 0) {
+	        if (this.props.search === true) {
+	          return _react2.default.createElement(
+	            'div',
+	            { className: 'lead' },
+	            'No properties found. Try a different search?'
+	          );
+	        } else {
+	          return _react2.default.createElement(
+	            'div',
+	            { className: 'lead' },
+	            'No properties found.'
+	          );
+	        }
+	      } else {
+	        var rows = void 0;
+	        rows = list.map(function (value, key) {
+	          return _react2.default.createElement(_PropertyRow2.default, { property: value, key: key });
+	        }.bind(this));
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          rows
+	        );
+	      }
+	    }
+	  }]);
+	
+	  return PropertyListing;
+	}(_react2.default.Component);
+	
+	exports.default = PropertyListing;
+	
+	
+	PropertyListing.propTypes = {
+	  list: _react2.default.PropTypes.array,
+	  search: _react2.default.PropTypes.bool
+	};
+
+/***/ },
+
+/***/ 407:
 /*!******************************************!*\
   !*** ./javascript/Mixin/setIfDefined.js ***!
   \******************************************/

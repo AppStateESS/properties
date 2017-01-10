@@ -937,7 +937,7 @@ webpackJsonp([1],{
 	            className: 'btn btn-primary',
 	            onClick: this.props.inquiry,
 	            'data-inquiry-type': 'sublease' },
-	          'Appear to be sublease'
+	          'Appears to be a sublease'
 	        ),
 	        _react2.default.createElement(
 	          'button',
@@ -946,7 +946,7 @@ webpackJsonp([1],{
 	            className: 'btn btn-primary',
 	            onClick: this.props.inquiry,
 	            'data-inquiry-type': 'information' },
-	          'Property information'
+	          'Need more property information'
 	        )
 	      );
 	      return _react2.default.createElement(_Modal2.default, { body: body, header: header });

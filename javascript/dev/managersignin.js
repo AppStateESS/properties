@@ -1,4 +1,4 @@
-webpackJsonp([1],{
+webpackJsonp([4],{
 
 /***/ 0:
 /*!********************************************!*\
@@ -16,7 +16,7 @@ webpackJsonp([1],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _ManagerSignin = __webpack_require__(/*! ./ManagerSignin.jsx */ 183);
+	var _ManagerSignin = __webpack_require__(/*! ./ManagerSignin.jsx */ 388);
 	
 	var _ManagerSignin2 = _interopRequireDefault(_ManagerSignin);
 	
@@ -62,41 +62,37 @@ webpackJsonp([1],{
 	    var _this = _possibleConstructorReturn(this, (InputField.__proto__ || Object.getPrototypeOf(InputField)).call(this, props));
 	
 	    _this.state = {
-	      placeholder: null,
-	      errorMessage: null
+	      empty: false
 	    };
+	
 	    _this.handleBlur = _this.handleBlur.bind(_this);
+	    _this.handleChange = _this.handleChange.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(InputField, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.setState({ placeholder: this.props.placeholder, errorMessage: this.props.errorMessage });
-	    }
-	  }, {
-	    key: 'componentWillUpdate',
-	    value: function componentWillUpdate(props, state) {
-	      if (props.errorMessage !== null && props.errorMessage.length > 0 && props.errorMessage !== state.errorMessage) {
-	        this.setState({ errorMessage: props.errorMessage });
+	    key: 'handleBlur',
+	    value: function handleBlur(e) {
+	      var value = e.target.value;
+	      if (value.length === 0) {
+	        this.setState({ empty: true });
+	        if (this.props.onEmpty) {
+	          this.props.onEmpty();
+	        }
+	      } else {
+	        this.setState({ empty: false });
+	      }
+	      if (this.props.blur) {
+	        this.props.blur();
 	      }
 	    }
 	  }, {
-	    key: 'handleBlur',
-	    value: function handleBlur(e) {
-	      if (e.target.value.length === 0 && this.props.required) {
-	        if (this.props.label.length > 0) {
-	          this.setState({
-	            errorMessage: this.props.label + ' may not be empty'
-	          });
-	        } else {
-	          this.setState({ errorMessage: 'Field may not be empty' });
-	        }
+	    key: 'emptyMessage',
+	    value: function emptyMessage() {
+	      if (this.props.label.length > 0) {
+	        return this.props.label + ' may not be empty';
 	      } else {
-	        this.setState({ errorMessage: this.props.errorMessage });
-	        if (this.props.blur) {
-	          this.props.blur();
-	        }
+	        return 'Field may not be empty';
 	      }
 	    }
 	  }, {
@@ -105,10 +101,19 @@ webpackJsonp([1],{
 	      event.target.select();
 	    }
 	  }, {
+	    key: 'handleChange',
+	    value: function handleChange(e) {
+	      var value = e.target.value;
+	      if (this.props.required && value.length > 0) {
+	        this.setState({ empty: false });
+	      }
+	      this.props.change(e);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var inputClass = void 0;
-	      if (this.state.errorMessage !== null && this.state.errorMessage.length > 0) {
+	      if (this.props.errorMessage !== null && this.props.errorMessage !== '' || this.state.empty && this.props.required) {
 	        inputClass = 'form-control error-highlight';
 	      } else {
 	        inputClass = 'form-control';
@@ -121,7 +126,7 @@ webpackJsonp([1],{
 	        name: this.props.name,
 	        value: this.props.value,
 	        className: inputClass,
-	        onChange: this.props.change,
+	        onChange: this.handleChange,
 	        onBlur: this.handleBlur,
 	        onClick: this.props.selectOnClick === true ? this.select : null,
 	        disabled: this.props.disabled,
@@ -132,6 +137,13 @@ webpackJsonp([1],{
 	
 	      if (this.props.wrap) {
 	        input = this.props.wrap(input);
+	      }
+	
+	      var errorMessage = void 0;
+	      if (this.props.errorMessage) {
+	        errorMessage = this.props.errorMessage;
+	      } else if (this.state.empty && this.props.required) {
+	        errorMessage = this.emptyMessage();
 	      }
 	
 	      return _react2.default.createElement(
@@ -145,10 +157,10 @@ webpackJsonp([1],{
 	          required
 	        ) : undefined,
 	        input,
-	        this.state.errorMessage ? _react2.default.createElement(
+	        errorMessage ? _react2.default.createElement(
 	          'div',
 	          { className: 'label label-danger' },
-	          this.state.errorMessage
+	          errorMessage
 	        ) : null
 	      );
 	    }
@@ -176,7 +188,9 @@ webpackJsonp([1],{
 	  size: null,
 	  maxLength: null,
 	  selectOnClick: true,
-	  wrap: null
+	  wrap: null,
+	  onEmpty: null,
+	  flagEmpty: true
 	};
 	
 	InputField.propTypes = {
@@ -195,7 +209,9 @@ webpackJsonp([1],{
 	  size: _react2.default.PropTypes.number,
 	  maxLength: _react2.default.PropTypes.number,
 	  wrap: _react2.default.PropTypes.func,
-	  selectOnClick: _react2.default.PropTypes.bool
+	  selectOnClick: _react2.default.PropTypes.bool,
+	  onEmpty: _react2.default.PropTypes.func,
+	  flagEmpty: _react2.default.PropTypes.bool
 	};
 	
 	var RequiredIcon = exports.RequiredIcon = function RequiredIcon() {
@@ -204,7 +220,25 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 183:
+/***/ 186:
+/*!***********************************!*\
+  !*** ./javascript/Mixin/Empty.js ***!
+  \***********************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = empty;
+	function empty(value) {
+	  return value === undefined || value === null || value === 0 || value === '0' || value.length === 0;
+	}
+
+/***/ },
+
+/***/ 388:
 /*!****************************************************!*\
   !*** ./javascript/ManagerSignin/ManagerSignin.jsx ***!
   \****************************************************/
@@ -226,6 +260,14 @@ webpackJsonp([1],{
 	
 	var _InputField2 = _interopRequireDefault(_InputField);
 	
+	var _Empty = __webpack_require__(/*! ../Mixin/Empty.js */ 186);
+	
+	var _Empty2 = _interopRequireDefault(_Empty);
+	
+	var _DecodeUrl = __webpack_require__(/*! ../Mixin/DecodeUrl.js */ 389);
+	
+	var _DecodeUrl2 = _interopRequireDefault(_DecodeUrl);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -246,20 +288,117 @@ webpackJsonp([1],{
 	      username: '',
 	      password: ''
 	    };
+	    _this.updateUsername = _this.updateUsername.bind(_this);
+	    _this.updatePassword = _this.updatePassword.bind(_this);
+	    _this.submit = _this.submit.bind(_this);
+	    _this.url = new _DecodeUrl2.default();
 	    return _this;
 	  }
 	
 	  _createClass(ManagerSignin, [{
-	    key: 'updateState',
-	    value: function updateState(varname, e) {}
+	    key: 'updateUsername',
+	    value: function updateUsername(e) {
+	      this.setState({ username: e.target.value });
+	    }
+	  }, {
+	    key: 'updatePassword',
+	    value: function updatePassword(e) {
+	      this.setState({ password: e.target.value });
+	    }
+	  }, {
+	    key: 'submit',
+	    value: function submit(e) {
+	      if (this.state.username.length === 0 || this.state.password.length === 0) {
+	        e.preventDefault();
+	      }
+	    }
+	  }, {
+	    key: 'checkError',
+	    value: function checkError() {
+	      if (this.url.values.error === undefined) {
+	        return;
+	      }
+	      switch (this.url.values.error) {
+	        case 'not_found':
+	          return _react2.default.createElement(
+	            'div',
+	            { className: 'alert alert-warning' },
+	            'Could not log-in account.\xA0',
+	            _react2.default.createElement(
+	              'a',
+	              { href: './properties/ManagerContact/forgot' },
+	              'Did you forget your password?'
+	            )
+	          );
+	      }
+	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var disabled = (0, _Empty2.default)(this.state.username) || (0, _Empty2.default)(this.state.password);
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_InputField2.default, { label: 'Username', change: this.updateState('username'), value: this.state.username }),
-	        _react2.default.createElement(_InputField2.default, { type: 'Password', label: 'Password', value: this.state.password })
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Manager log-in'
+	        ),
+	        this.checkError(),
+	        _react2.default.createElement(
+	          'form',
+	          { action: './properties/ManagerContact/signin', method: 'post' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'row' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-sm-6' },
+	              _react2.default.createElement(_InputField2.default, {
+	                name: 'manager_username',
+	                label: 'Username',
+	                value: this.state.username,
+	                change: this.updateUsername,
+	                autocomplete: false,
+	                required: true })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-sm-6' },
+	              _react2.default.createElement(_InputField2.default, {
+	                name: 'manager_password',
+	                type: 'password',
+	                label: 'Password',
+	                value: this.state.password,
+	                change: this.updatePassword,
+	                autocomplete: false,
+	                required: true })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'btn btn-primary', disabled: disabled, onClick: this.submit },
+	            'Log in'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          { className: 'marginTop' },
+	          _react2.default.createElement(
+	            'a',
+	            { href: './properties/ManagerContact/forgot' },
+	            'Forgot password?'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          _react2.default.createElement(
+	            'a',
+	            { href: './properties/ManagerSignup' },
+	            'Request a manager account.'
+	          )
+	        )
 	      );
 	    }
 	  }]);
@@ -271,6 +410,55 @@ webpackJsonp([1],{
 	
 	
 	ManagerSignin.propTypes = {};
+
+/***/ },
+
+/***/ 389:
+/*!***************************************!*\
+  !*** ./javascript/Mixin/DecodeUrl.js ***!
+  \***************************************/
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	/**
+	 * Adapted from http://ideasandpixels.com/get-post-variables-with-javascript
+	 */
+	
+	var DecodeUrl = function () {
+	  function DecodeUrl() {
+	    _classCallCheck(this, DecodeUrl);
+	
+	    this.url = document.location.search;
+	    this.values = [];
+	    this.process();
+	  }
+	
+	  _createClass(DecodeUrl, [{
+	    key: "process",
+	    value: function process() {
+	      this.url.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
+	        function decode(s) {
+	          return decodeURIComponent(s.split("+").join(" "));
+	        }
+	
+	        this.values[decode(arguments[1])] = decode(arguments[2]);
+	      }.bind(this));
+	    }
+	  }]);
+	
+	  return DecodeUrl;
+	}();
+	
+	exports.default = DecodeUrl;
 
 /***/ }
 
