@@ -144,5 +144,5 @@ InputField.propTypes = {
 }
 
 export const RequiredIcon = () => {
-  return <i className="fa fa-asterisk required"></i>
+  return <i className="fa fa-asterisk" style={{color: 'red'}}></i>
 }
