@@ -21,21 +21,19 @@ namespace properties\Factory;
 use \properties\Resource\Photo as Resource;
 use \phpws2\Database;
 
-class PhotoFactory extends BaseFactory
+class Photo extends Base
 {
-
-    public function __construct()
-    {
-        parent::__construct('photo');
-    }
-
     public function build()
     {
         return new Resource;
     }
 
+    /*
     public function load($id)
     {
+        if (empty($id)) {
+            throw new \properties\Exception\ResourceNotFound;
+        }
         $db = Database::getDB();
         $tbl = $db->addTable('prop_photo');
         $tbl->addFieldConditional('id', $id);
@@ -47,6 +45,8 @@ class PhotoFactory extends BaseFactory
         $photo->setVars($row);
         return $photo;
     }
+     * 
+     */
 
     public function delete($photo)
     {
@@ -136,7 +136,7 @@ class PhotoFactory extends BaseFactory
 
         $propertyId = $request->pullPostInteger('propertyId');
 
-        $propertyFactory = new \properties\Factory\PropertyFactory;
+        $propertyFactory = new \properties\Factory\Property;
         $property = $propertyFactory->load($propertyId);
         $pic = $_FILES['photo'];
         try {
