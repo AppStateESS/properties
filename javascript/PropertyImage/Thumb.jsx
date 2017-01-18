@@ -9,6 +9,7 @@ export default class Thumb extends React.Component {
 
   delete(e) {
     e.preventDefault()
+    e.stopPropagation()
     this.props.delete()
   }
 
