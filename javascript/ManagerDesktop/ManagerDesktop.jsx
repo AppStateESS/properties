@@ -21,7 +21,7 @@ export default class ManagerDesktop extends React.Component {
   }
 
   load() {
-    $.getJSON('./properties/ManagerContact/desktop', {managerId: this.managerId}).done(function (data) {
+    $.getJSON('./properties/Manager/mylist').done(function (data) {
       if (data.properties !== undefined) {
         this.setState({properties: data.properties, manager: data.manager})
       } else if (data.error) {
@@ -46,7 +46,7 @@ export default class ManagerDesktop extends React.Component {
       propertyList = <PropertyListing list={this.state.properties}/>
     } else {
       propertyList = <p className="text-center">
-        No properties found. <a href="./properties/ManagerContact/create">Click here to create a new property.</a>
+        No properties found. <a href="./properties/Manager/create">Click here to create a new property.</a>
       </p>
     }
 
