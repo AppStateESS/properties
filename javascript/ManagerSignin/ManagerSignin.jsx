@@ -39,7 +39,7 @@ export default class ManagerSignin extends React.Component {
       case 'not_found':
         return (
           <div className="alert alert-warning">Could not log-in account.&nbsp;
-            <a href="./properties/ManagerContact/forgot">Did you forget your password?</a>
+            <a href="./properties/Manager/forgot">Did you forget your password?</a>
           </div>
         )
     }
@@ -51,7 +51,7 @@ export default class ManagerSignin extends React.Component {
       <div>
         <h2>Manager log-in</h2>
         {this.checkError()}
-        <form action="./properties/ManagerContact/signin" method="post">
+        <form action="./properties/Manager/signin" method="post">
           <div className="row">
             <div className="col-sm-6">
               <InputField
@@ -76,7 +76,7 @@ export default class ManagerSignin extends React.Component {
           <button className="btn btn-primary" disabled={disabled} onClick={this.submit}>Log in</button>
         </form>
         <p className="marginTop">
-          <a href="./properties/ManagerContact/forgot">Forgot password?</a>
+          <a href="./properties/Manager/forgot">Forgot password?</a>
         </p>
         <p>
           <a href="./properties/ManagerSignup">Request a manager account.</a>
