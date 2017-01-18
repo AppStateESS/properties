@@ -103,7 +103,6 @@ class Manager extends React.Component {
   render() {
     let managerForm = null
     let message = this.getMessage()
-
     if (this.admin) {
       managerForm = <ManagerForm manager={this.state.currentManager} reload={this.load} message={this.setMessage}/>
     }

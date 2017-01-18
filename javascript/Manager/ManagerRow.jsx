@@ -123,13 +123,13 @@ class ManagerRow extends React.Component {
       co = <small>(c/o {this.props.first_name}&nbsp;{this.props.last_name})</small>
     }
     const email = 'mailto:' + this.props.email_address
-
+    const viewLink = `./properties/Manager/${this.props.id}/view`
     return (
       <tr className={this.props.active === '0'
         ? 'bg-danger'
         : ''}>
         <td>
-          <span className="company-name">{this.props.company_name}</span><br/>{co}
+          <span className="company-name"><a href={viewLink}>{this.props.company_name}</a></span><br/>{co}
         </td>
         <td>
           {properties}
@@ -184,7 +184,7 @@ ManagerRow.propTypes = {
 class Website extends React.Component {
   render() {
     if (this.props.url.length > 0) {
-      return (<LinkToButton url={this.props.url} label="Website" icon="fa-link"/>)
+      return (<LinkToButton url={this.props.url} label={this.props.url} icon="fa-link"/>)
     } else {
       return null
     }

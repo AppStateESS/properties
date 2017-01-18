@@ -188,7 +188,7 @@ export default class PropertyRow extends React.Component {
           <div className="row">
             <div className="col-sm-7 col-md-8">
               <div className="rent">{this.getRent()}</div>
-              <div className="room-bath">{property.proptype}
+              <div className="room-bath">{property.proptype}&nbsp;
                 - {property.bedroom_no}&nbsp;Bed, {property.bathroom_no}&nbsp;Bath
               </div>
               <div className="availability">Availability: {property.move_in_date}</div>

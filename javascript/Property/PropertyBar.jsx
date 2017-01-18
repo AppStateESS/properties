@@ -139,8 +139,8 @@ export default class PropertyBar extends React.Component {
       : `$${this.props.searchVars.maxprice}`
 
     const panelButton = this.state.fullSize
-      ? <span>Show less <i className="fa fa-caret-up"></i></span>
-      : <span>Show more <i className="fa fa-caret-down"></i></span>
+      ? <span>Less search options <i className="fa fa-caret-up"></i></span>
+      : <span>More search options <i className="fa fa-caret-down"></i></span>
 
     return (
       <div className="panel panel-default marginBottom">
@@ -167,6 +167,11 @@ export default class PropertyBar extends React.Component {
               <div className="pull-left"><Dropdown small={true} label={bathLabel} options={baths}/></div>
               <div className="pull-left"><Dropdown small={true} label={minpriceLabel} options={minprice}/></div>
               <div className="pull-left"><Dropdown small={true} label={maxpriceLabel} options={maxprice}/></div>
+              <div className="pull-left"><button className="btn btn-success btn-sm" onClick={this.props.resetConditions}>Reset</button></div>
+            </div>
+          </div>
+          <div className="row" style={{marginTop:'1em'}}>
+            <div className="col-sm-12 text-center">
               <button className="btn btn-default btn-sm" onClick={this.togglePanel}>{panelButton}</button>
             </div>
           </div>
@@ -179,7 +184,7 @@ export default class PropertyBar extends React.Component {
                 <div>
                   <Amenities toggle={this.props.toggle} searchVars={this.props.searchVars}/>
                   <div className="text-center">
-                    <button className="btn btn-success" onClick={this.props.clearAmenities}>Clear all</button>
+                    <button className="btn btn-success" onClick={this.props.clearAmenities}>Uncheck above</button>
                   </div>
                 </div>
               )
@@ -197,5 +202,6 @@ PropertyBar.propTypes = {
   updateSearchVars: React.PropTypes.func,
   searchVars: React.PropTypes.object,
   toggle: React.PropTypes.func,
-  clearAmenities: React.PropTypes.func
+  clearAmenities: React.PropTypes.func,
+  resetConditions: React.PropTypes.func
 }
