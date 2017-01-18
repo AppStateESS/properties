@@ -94,7 +94,13 @@ class Controller extends Base
 
     public function get(\Request $request)
     {
-        return $request->isAjax() ? $this->controller->getJson($request) : $this->controller->getHtml($request);
+        if ($request->isAjax()) {
+            $result = $this->controller->getJson($request);
+        } else {
+            \Layout::addStyle('properties');
+            $result = $this->controller->getHtml($request);
+        }
+        return $result;
     }
     
 }
