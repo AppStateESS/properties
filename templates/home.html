@@ -12,28 +12,36 @@
         min-height: 68px;
     }
 
-    a.option-block.left {
+    a.option-block.rent {
         background-color: #0c4767;
     }
 
-    a.option-block.left:hover {
+    a.option-block.rent:hover {
         background-color: #1C5D80;
     }
 
-    a.option-block.middle {
+    a.option-block.need-sub {
         background-color: #fa7921;
     }
 
-    a.option-block.middle:hover {
+    a.option-block.need-sub:hover {
         background-color: #FF8F42;
     }
 
-    a.option-block.right {
+    a.option-block.sub-place {
         background-color: #566e3d;
     }
 
-    a.option-block.right:hover {
+    a.option-block.sub-place:hover {
         background-color: #708758;
+    }
+
+    a.option-block.roommate {
+        background-color: #DC4057;
+    }
+
+    a.option-block.roommate:hover {
+        background-color: #DC5C6F;
     }
 
     .prop-icon {
@@ -47,19 +55,19 @@
     }
 
     @media screen and (min-width: 768px) {
-        a.option-block.right {
-            font-size : 18px;
+        a.option-block.sub-place {
+            font-size : 20px;
         }
         
         .prop-icon {
             display: block;
             float:none;
-            font-size: 100px;
+            font-size: 110px;
             margin: 0px 0px 10px 0px;
         }
         a.option-block {
             text-align: center;
-            width: 29%;
+            width: 45%;
             min-height: 245px;
             float: left;
             margin: 2%;
@@ -68,16 +76,19 @@
     }
 </style>
 <div class="property-intro">
-    <a class="option-block left" href="./properties/Property/list">
+    <a class="option-block rent" href="./properties/Property/list">
         <span class="prop-icon"><i class="prop-icon fa fa-building-o"></i></span> <span class="option-text">I'm looking for a place to rent</span>
     </a>
-    <a class="option-block middle" href="./properties/Sublease">
+    <a class="option-block roommate" href="./properties/Roommate">
+        <span class="prop-icon"><i class="prop-icon fa fa-comments-o"></i></span> <span class="option-text">I am looking for a roommate</span>
+    </a>
+    <a class="option-block need-sub" href="./properties/Sublease">
         <span class="prop-icon"><i class="prop-icon fa fa-suitcase"></i></span> <span class="option-text">I need a short-term sublease</span>
     </a>
-    <a class="option-block right" href="./properties/Sublease/create">
+    <a class="option-block sub-place" href="./properties/Sublease/create">
         <span class="prop-icon"><i class="prop-icon fa fa-truck"></i></span> <span class="option-text">I'm moving and need to sublease my place</span>
     </a>
 </div>
-<div>
+<div style="clear:both">
     <p><a href="properties/Manager/signin">Are you a manager? Sign in!</a></p>
 </div>
