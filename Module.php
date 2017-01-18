@@ -9,6 +9,7 @@
 /**
  * @author Matthew McNaney <mcnaneym at appstate dot edu>
  */
+
 namespace properties;
 
 require_once PHPWS_SOURCE_DIR . 'src/Module.php';
@@ -29,16 +30,21 @@ class Module extends \Module
 
     public function getController(\Request $request)
     {
-        $command = filter_var($request->shiftCommand(), FILTER_SANITIZE_STRING);
-        if (empty($command)) {
-            $command = 'Property';
+        try {
+            $controller = new Controller\Controller($this, $request);
+            return $controller;
+        } catch (\Exception $e) {
+            if (PROPERTIES_FRIENDLY_ERRORS && $request->isGet() && !$request->isAjax()) {
+                return $this->friendlyController();
+            }
+            throw $e;
         }
-        $class_name = '\properties\Controller\\' . $command . 'Controller';
-        if (!class_exists($class_name)) {
-            throw new \phpws2\Http\NotAcceptableException;
-        }
-        $controller = new $class_name($this);
-        return $controller;
+    }
+
+    private function friendlyController()
+    {
+        $error_controller = new Controller\FriendlyError($this);
+        return $error_controller;
     }
 
     public function afterRun(\Request $request, \Response $response)
@@ -47,11 +53,11 @@ class Module extends \Module
             \properties\Factory\NavBar::view();
         }
     }
-    
+
     public function runTime(\Request $request)
     {
         if (\phpws\PHPWS_Core::atHome()) {
-            \Layout::add($this->home(), 'properties');
+            \Layout::add($this->home());
         }
     }
 
@@ -76,7 +82,7 @@ class Module extends \Module
         }
     }
 
-    private function home()
+    public function home()
     {
         $template = new \phpws2\Template();
         $template->setModuleTemplate('properties', 'home.html');
