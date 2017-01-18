@@ -32,11 +32,12 @@ export default class Property extends React.Component {
     this.managerId = 0
     bindMethods([
       'load',
-      'updateSearchVars',
+      'toggle',
       'clearSearch',
-      'updateSearchString',
       'clearAmenities',
-      'toggle'
+      'resetConditions',
+      'updateSearchVars',
+      'updateSearchString',
     ], this)
   }
 
@@ -86,6 +87,17 @@ export default class Property extends React.Component {
     }
   }
 
+  resetConditions() {
+    this.searchVars = {
+      beds: '1',
+      baths: '1',
+      minprice: '0',
+      maxprice: '0'
+    }
+    this.load()
+    this.updateLink()
+  }
+
   componentDidMount() {
     const decode = new DecodeUrl
     this.managerId = decode.values.managerId
@@ -107,7 +119,7 @@ export default class Property extends React.Component {
 
   updateLink() {
     const stateObj = {}
-    const url = 'properties/?' + $.param(this.searchVars)
+    const url = 'properties/Property/list/?' + $.param(this.searchVars)
 
     window.history.pushState(stateObj, "", url)
   }
@@ -162,7 +174,8 @@ export default class Property extends React.Component {
   render() {
     let manager = 'All managers'
     if (this.state.manager) {
-      manager = this.state.manager.company_name
+      const managerLink = `./properties/Manager/${this.state.manager.id}/view`
+      manager = <span><a href={managerLink}>{this.state.manager.company_name}</a></span>
     }
 
     let message
@@ -179,6 +192,7 @@ export default class Property extends React.Component {
           updateSearchVars={this.updateSearchVars}
           searchVars={this.searchVars}
           clearAmenities={this.clearAmenities}
+          resetConditions={this.resetConditions}
           toggle={this.toggle}/>
         <PropertyListing list={this.state.properties} search={!empty(this.search)}/>
       </div>
