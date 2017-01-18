@@ -159,17 +159,29 @@ export default class PropertyForm extends React.Component {
 
   save() {
     let property = this.readyPost()
+    let methodName = 'POST'
     this.setState({saving: true})
-    $.post('./properties/Property', property, null, 'json').done(function (data) {
-      if (data.error !== undefined) {
-        this.setMessage(data.error, 'danger')
-      } else {
-        window.location.href = './properties/Property/' + data.id
-      }
-    }.bind(this)).fail(function (data) {
-      this.setMessage(data.responseText, 'danger')
-    }.bind(this))
-
+    if (property.id > 0) {
+      methodName = 'PUT'
+    }
+    if (property.id) {
+      $.ajax({
+        url: './properties/Property/' + this.state.property.id,
+        data: property,
+        dataType: 'json',
+        method: methodName,
+        success: function (data) {
+          if (data.error !== undefined) {
+            this.setMessage(data.error, 'danger')
+          } else {
+            window.location.href = './properties/Property/' + data.id
+          }
+        }.bind(this),
+        error: function () {
+          this.setMessage('A server error prevented this property from saving.', 'danger')
+        }.bind(this)
+      })
+    }
   }
 
   scrollUp() {
