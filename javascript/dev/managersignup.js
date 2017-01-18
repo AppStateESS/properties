@@ -1,4 +1,4 @@
-webpackJsonp([5],{
+webpackJsonp([4],{
 
 /***/ 0:
 /*!********************************************!*\
@@ -16,7 +16,7 @@ webpackJsonp([5],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _ManagerSignup = __webpack_require__(/*! ./ManagerSignup.jsx */ 390);
+	var _ManagerSignup = __webpack_require__(/*! ./ManagerSignup.jsx */ 193);
 	
 	var _ManagerSignup2 = _interopRequireDefault(_ManagerSignup);
 	
@@ -215,7 +215,7 @@ webpackJsonp([5],{
 	};
 	
 	var RequiredIcon = exports.RequiredIcon = function RequiredIcon() {
-	  return _react2.default.createElement('i', { className: 'fa fa-asterisk required' });
+	  return _react2.default.createElement('i', { className: 'fa fa-asterisk', style: { color: 'red' } });
 	};
 
 /***/ },
@@ -410,7 +410,7 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 390:
+/***/ 193:
 /*!****************************************************!*\
   !*** ./javascript/ManagerSignup/ManagerSignup.jsx ***!
   \****************************************************/

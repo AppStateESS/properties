@@ -177,7 +177,6 @@ webpackJsonp([0],{
 	    value: function render() {
 	      var managerForm = null;
 	      var message = this.getMessage();
-	
 	      if (this.admin) {
 	        managerForm = _react2.default.createElement(_ManagerForm2.default, { manager: this.state.currentManager, reload: this.load, message: this.setMessage });
 	      }
@@ -547,7 +546,7 @@ webpackJsonp([0],{
 	        );
 	      }
 	      var email = 'mailto:' + this.props.email_address;
-	
+	      var viewLink = './properties/Manager/' + this.props.id + '/view';
 	      return _react2.default.createElement(
 	        'tr',
 	        { className: this.props.active === '0' ? 'bg-danger' : '' },
@@ -557,7 +556,11 @@ webpackJsonp([0],{
 	          _react2.default.createElement(
 	            'span',
 	            { className: 'company-name' },
-	            this.props.company_name
+	            _react2.default.createElement(
+	              'a',
+	              { href: viewLink },
+	              this.props.company_name
+	            )
 	          ),
 	          _react2.default.createElement('br', null),
 	          co
@@ -633,7 +636,7 @@ webpackJsonp([0],{
 	    key: 'render',
 	    value: function render() {
 	      if (this.props.url.length > 0) {
-	        return _react2.default.createElement(LinkToButton, { url: this.props.url, label: 'Website', icon: 'fa-link' });
+	        return _react2.default.createElement(LinkToButton, { url: this.props.url, label: this.props.url, icon: 'fa-link' });
 	      } else {
 	        return null;
 	      }
@@ -1599,7 +1602,7 @@ webpackJsonp([0],{
 	};
 	
 	var RequiredIcon = exports.RequiredIcon = function RequiredIcon() {
-	  return _react2.default.createElement('i', { className: 'fa fa-asterisk required' });
+	  return _react2.default.createElement('i', { className: 'fa fa-asterisk', style: { color: 'red' } });
 	};
 
 /***/ },

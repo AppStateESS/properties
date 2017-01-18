@@ -584,7 +584,7 @@ webpackJsonp([3],[
 	    value: function save() {
 	      var property = this.readyPost();
 	      this.setState({ saving: true });
-	      $.post('./properties/ManagerContact/create', property, null, 'json').done(function (data) {
+	      $.post('./properties/Manager/create', property, null, 'json').done(function (data) {
 	        if (data.error !== undefined) {
 	          this.setMessage(data.error, 'danger');
 	        } else {

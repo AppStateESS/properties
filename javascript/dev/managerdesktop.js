@@ -273,7 +273,7 @@ webpackJsonp([2],{
 	  _createClass(ManagerDesktop, [{
 	    key: 'load',
 	    value: function load() {
-	      $.getJSON('./properties/ManagerContact/desktop', { managerId: this.managerId }).done(function (data) {
+	      $.getJSON('./properties/Manager/mylist').done(function (data) {
 	        if (data.properties !== undefined) {
 	          this.setState({ properties: data.properties, manager: data.manager });
 	        } else if (data.error) {
@@ -305,7 +305,7 @@ webpackJsonp([2],{
 	          'No properties found. ',
 	          _react2.default.createElement(
 	            'a',
-	            { href: './properties/ManagerContact/create' },
+	            { href: './properties/Manager/create' },
 	            'Click here to create a new property.'
 	          )
 	        );
@@ -680,7 +680,7 @@ webpackJsonp([2],{
 	                'div',
 	                { className: 'room-bath' },
 	                property.proptype,
-	                '- ',
+	                '\xA0 - ',
 	                property.bedroom_no,
 	                '\xA0Bed, ',
 	                property.bathroom_no,

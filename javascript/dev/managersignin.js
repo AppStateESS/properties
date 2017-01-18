@@ -1,4 +1,4 @@
-webpackJsonp([4],{
+webpackJsonp([3],{
 
 /***/ 0:
 /*!********************************************!*\
@@ -16,7 +16,7 @@ webpackJsonp([4],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _ManagerSignin = __webpack_require__(/*! ./ManagerSignin.jsx */ 388);
+	var _ManagerSignin = __webpack_require__(/*! ./ManagerSignin.jsx */ 191);
 	
 	var _ManagerSignin2 = _interopRequireDefault(_ManagerSignin);
 	
@@ -215,7 +215,7 @@ webpackJsonp([4],{
 	};
 	
 	var RequiredIcon = exports.RequiredIcon = function RequiredIcon() {
-	  return _react2.default.createElement('i', { className: 'fa fa-asterisk required' });
+	  return _react2.default.createElement('i', { className: 'fa fa-asterisk', style: { color: 'red' } });
 	};
 
 /***/ },
@@ -238,7 +238,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 388:
+/***/ 191:
 /*!****************************************************!*\
   !*** ./javascript/ManagerSignin/ManagerSignin.jsx ***!
   \****************************************************/
@@ -264,7 +264,7 @@ webpackJsonp([4],{
 	
 	var _Empty2 = _interopRequireDefault(_Empty);
 	
-	var _DecodeUrl = __webpack_require__(/*! ../Mixin/DecodeUrl.js */ 389);
+	var _DecodeUrl = __webpack_require__(/*! ../Mixin/DecodeUrl.js */ 192);
 	
 	var _DecodeUrl2 = _interopRequireDefault(_DecodeUrl);
 	
@@ -326,7 +326,7 @@ webpackJsonp([4],{
 	            'Could not log-in account.\xA0',
 	            _react2.default.createElement(
 	              'a',
-	              { href: './properties/ManagerContact/forgot' },
+	              { href: './properties/Manager/forgot' },
 	              'Did you forget your password?'
 	            )
 	          );
@@ -347,7 +347,7 @@ webpackJsonp([4],{
 	        this.checkError(),
 	        _react2.default.createElement(
 	          'form',
-	          { action: './properties/ManagerContact/signin', method: 'post' },
+	          { action: './properties/Manager/signin', method: 'post' },
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'row' },
@@ -386,7 +386,7 @@ webpackJsonp([4],{
 	          { className: 'marginTop' },
 	          _react2.default.createElement(
 	            'a',
-	            { href: './properties/ManagerContact/forgot' },
+	            { href: './properties/Manager/forgot' },
 	            'Forgot password?'
 	          )
 	        ),
@@ -413,7 +413,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 389:
+/***/ 192:
 /*!***************************************!*\
   !*** ./javascript/Mixin/DecodeUrl.js ***!
   \***************************************/
