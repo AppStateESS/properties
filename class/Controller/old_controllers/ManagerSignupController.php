@@ -18,22 +18,21 @@
 
 namespace properties\Controller;
 
-use properties\Factory\ManagerFactory as Factory;
-use properties\Factory\NavBar;
+use properties\Factory\ManagerSignupFactory as Factory;
 
-class ManagerApprovalController extends BaseController
+class ManagerSignupController extends BaseController
 {
 
     public function __construct($module)
     {
         parent::__construct($module);
-        $this->factory = new Factory('managerapproval');
+        $this->factory = new Factory('managersignup');
     }
 
     public function getHtmlView($data, \Request $request)
     {
         try {
-            $command = $this->checkCommand($request, 'list');
+            $command = $this->checkCommand($request, 'signup');
         } catch (\properties\Exception\ResourceNotFound $e) {
             return $this->errorPage($e);
         } catch (\properties\Exception\BadCommand $e) {
@@ -42,9 +41,16 @@ class ManagerApprovalController extends BaseController
 
         \Layout::addStyle('properties');
         switch ($command) {
-            case 'list':
-                $content = $this->reactView('managerapproval');
+            case 'signup':
+                $content = $this->reactView('managersignup');
                 break;
+            
+            case 'success':
+                $content = $this->success();
+                break;
+            
+            case 'error':
+                $content = '';
 
             default:
                 throw new \properties\Exception\BadCommand;
@@ -53,9 +59,21 @@ class ManagerApprovalController extends BaseController
         return $view;
     }
 
+    public function post(\Request $request)
+    {
+        if (!$this->factory->role->allow('signup')) {
+            throw new \properties\Exception\PrivilegeMissing;
+        }
+        $json = $this->factory->signup($request);
+        $view = new \View\JsonView($json);
+        $response = new \Response($view);
+        return $response;
+    }
+
     public function getJsonView($data, \Request $request)
     {
         $command = $this->checkCommand($request, 'list');
+
         if (is_numeric($command)) {
             $managerId = (int) $command;
             $command = 'view';
@@ -64,21 +82,30 @@ class ManagerApprovalController extends BaseController
         }
 
         switch ($command) {
-            case 'list':
-                $json = array();
-                $json['admin'] = $this->factory->role->isAdmin();
-                $json['managerList'] = $this->factory->unapprovedListing($request->pullGetVarIfSet('limit',
-                                true), $request->pullGetString('search', true));
-                return new \View\JsonView($json);
+            case 'checkUsername':
+                $json = array('duplicate' => $this->factory->checkUsername($request->pullGetString('username',
+                                    true), $request->pullGetInteger('id', true)));
                 break;
 
-            case 'view':
-                $manager = $this->factory->load($managerId);
-                $json = $manager->getStringVars(null, 'password');
+            case 'checkEmail':
+                $json = array('duplicate' => $this->factory->checkEmail($request->pullGetString('email',
+                                    true), $request->pullGetInteger('id', true)));
+                break;
+
+            case 'checkCompanyName':
+                $json = array('duplicate' => $this->factory->checkCompanyName($request->pullGetString('company_name',
+                                    true), $request->pullGetInteger('id', true)));
                 break;
         }
         $view = new \View\JsonView($json);
         return $view;
+    }
+    
+    public function success()
+    {
+        $template = new \phpws2\Template();
+        $template->setModuleTemplate('properties', 'manager/success_signup.html');
+        return $template->get();
     }
 
 }

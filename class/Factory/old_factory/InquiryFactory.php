@@ -16,22 +16,21 @@
  * @license http://opensource.org/licenses/lgpl-3.0.html
  */
 
-namespace properties\Role;
+namespace properties\Factory;
 
-class ManagerRole extends UserRole
+use phpws2\Database;
+
+class InquiryFactory
 {
 
-    public function __construct($controller, $method) {
-        parent::__construct($controller, $method);
-        $this->getCommands['managercontact'] = array('desktop', 'signin', 'signout', 'create');
-        $this->postCommands['property'] = true;
-        $this->postCommands['photo'] = true;
-        $this->patchCommands['photo'] = true;
-    }
-    
-    public function isManager()
+    public static function save($manager_id, $type)
     {
-        return true;
+        $db = Database::getDB();
+        $tbl = $db->addTable('prop_inquiry');
+        $tbl->addValue('contact_id', $manager_id);
+        $tbl->addValue('inquiry_date', time());
+        $tbl->addValue('inquiry_type', $type);
+        $db->insert();
     }
-    
+
 }
