@@ -59,14 +59,14 @@ class Controller extends Base
 
         // Only students will be able to log in. Admins
         // will meet first conditional.
-        $current_user = \Current_User::isLogged();
+        $user_id = \Current_User::getId();
 
         if (\Current_User::allow('properties')) {
-            $this->role = new \properties\Role\Admin($current_user);
+            $this->role = new \properties\Role\Admin($user_id);
         } elseif ($current_manager) {
             $this->role = new \properties\Role\Manager($current_manager);
-        } elseif ($current_user) {
-            $this->role = new \properties\Role\Logged($current_user);
+        } elseif ($user_id) {
+            $this->role = new \properties\Role\Logged($user_id);
         } else {
             $this->role = new \properties\Role\User;
         }
