@@ -69,7 +69,12 @@ class Manager extends Base
         $this->doNotSave(array('inquiry_date', 'inquiry_type'));
     }
 
-    public function view($restricted = false)
+    /**
+     * 
+     * @param bool $restricted
+     * @return array
+     */
+    public function view($restricted = true)
     {
         $hide = array();
         if ($restricted) {
@@ -93,5 +98,5 @@ class Manager extends Base
         $view['phone_tel'] = 'tel:+1' . $this->phone->get();
         return $view;
     }
-    
+
 }
