@@ -200,6 +200,30 @@ EOF;
 + Inquiry feature added.
 </pre>
 EOF;
+        case (version_compare($currentVersion, '2.0.2', '<')):
+            try {
+                $db = \phpws2\Database::getDB();
+                $db->begin();
+                $tbl = $db->addTable('properties');
+                $dt = $tbl->addDataType('smoking_allowed', 'smallint');
+                $dt->setDefault(0);
+                $dt->add();
+                $db->clearTables();
+
+                $sublease = new \properties\Resource\Sublease;
+                $sublease->createTable($db);
+                $sub_table = $db->buildTable($sublease->getTable());
+                
+            } catch (\Exception $ex) {
+                $db->rollback();
+                $content[] = 'Update failed: ' . $ex->getMessage();
+                return false;
+            }
+            $content[] = <<<EOF
+<pre>
++ Added smoking note.
+</pre>
+EOF;
     }
     return true;
 }
