@@ -29,6 +29,10 @@ function properties_install(&$content)
         $photo_index = new \phpws2\Database\ForeignKey($pid, $property_id);
         $photo_index->add();
 
+        $sublease = new \properties\Resource\Sublease;
+        $sublease->createTable($db);
+        $sub_table = $db->buildTable($sublease->getTable());
+        
         $db = \phpws2\Database::getDB();
         $tbl = $db->buildTable('prop_inquiry');
         $tbl->addDataType('contact_id', 'int');
