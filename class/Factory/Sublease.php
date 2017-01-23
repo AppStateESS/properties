@@ -19,6 +19,7 @@
 namespace properties\Factory;
 
 use properties\Resource\Sublease as Resource;
+use \phpws2\Database;
 
 class Sublease extends Base
 {
@@ -26,4 +27,27 @@ class Sublease extends Base
     {
         return new Resource;
     }
+    
+    public function listing()
+    {
+        return array();
+    }
+    
+    public function getSubleaseByUser($user_id)
+    {
+        if (empty($user_id)) {
+            throw new \properties\Exception\ResourceNotFound;
+        }
+        $db = Database::getDB();
+        $tbl = $db->addTable('prop_sublease');
+        $tbl->addFieldConditional('user_id', $user_id);
+        $row = $db->selectOneRow();
+        if (empty($row)) {
+            return null;
+        }
+        $sublease = $this->build();
+        $sublease->setVars($row);
+        return $sublease;
+    }
+    
 }
