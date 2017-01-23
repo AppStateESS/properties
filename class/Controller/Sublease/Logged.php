@@ -21,4 +21,24 @@ namespace properties\Controller\Sublease;
 class Logged extends User
 {
 
+    /**
+     * @param \Request $request
+     */
+    public function createHtmlCommand(\Request $request)
+    {
+        \Layout::addStyle('properties', 'sublease/form.css');
+        return $this->factory->reactView('subleaseform');
+    }
+
+    public function ownerJsonCommand()
+    {
+        $sublease = $this->factory->getSubleaseByUser($this->role->getId());
+        if (empty($sublease)) {
+            $json['sublease'] = null;
+        } else {
+            $json['sublease'] = $sublease->view();
+        }
+        return $json;
+    }
+
 }

@@ -18,7 +18,7 @@
 
 namespace properties\Controller\Sublease;
 
-class Manager
+class Manager extends User
 {
     
 }

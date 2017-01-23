@@ -17,6 +17,7 @@
  */
 
 namespace properties\Controller\Sublease;
+use properties\Resource\Sublease as Resource;
 
 class User extends \properties\Controller\SubController
 {
@@ -28,17 +29,38 @@ class User extends \properties\Controller\SubController
 
     public function loadFactory()
     {
-        $this->factory = new \properties\Factory\Sublease;
+        $factory = new \properties\Factory\Sublease;
+        return $factory;
     }
 
+    /**
+     * @param \Request $request
+     */
     public function createHtmlCommand(\Request $request)
     {
-        return 'what';
+        \Current_User::requireLogin();
     }
 
     public function listHtmlCommand(\Request $request)
     {
-        return 'listing';
+        $this->createButton();
+        $sublease = new Resource;
+        \Layout::addStyle('properties', 'sublease/list.css');
+        return $this->factory->reactView('sublease');
+    }
+    
+    public function listJsonCommand(\Request $request)
+    {
+        $json['subleases'] = $this->factory->listing($request);
+        return $json;
+    }
+    
+    private function createButton()
+    {
+        $button = <<<EOF
+<button onClick="window.location.href='./properties/Sublease/create'" class="btn btn-primary btn-sm navbar-btn">Create my sublease</button>
+EOF;
+        \properties\Factory\NavBar::addItem($button);
     }
 
 }
