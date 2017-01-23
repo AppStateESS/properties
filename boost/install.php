@@ -44,6 +44,7 @@ function properties_install(&$content)
         $db->buildTable($manager->getTable())->drop(true);
         $db->buildTable($property->getTable())->drop(true);
         $db->buildTable($photo->getTable())->drop(true);
+        $db->buildTable($sublease->getTable())->drop(true);
 
         $db->rollback();
         throw $e;
