@@ -25,6 +25,7 @@ function properties_uninstall(&$content)
     PHPWS_DB::dropTable('properties');
     PHPWS_DB::dropTable('prop_inquiry');
     PHPWS_DB::dropTable('prop_contacts');
+    PHPWS_DB::dropTable('prop_sublease');
     /*
     PHPWS_DB::dropTable('prop_roommate');
     PHPWS_DB::dropTable('prop_report');
