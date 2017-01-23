@@ -18,14 +18,23 @@
 
 namespace properties\Controller;
 
+define('PROPERTIES_FRIENDLY_MESSAGE', 'Server error. Could not complete action');
+
 class FriendlyError extends \phpws2\Http\Controller
 {
-
+    public function execute(\Request $request)
+    {
+        if ($request->isAjax()) {
+            throw new \Exception(PROPERTIES_FRIENDLY_MESSAGE);
+        }
+        parent::execute($request);
+    }
+    
     public function get(\Request $request)
     {
         $template = new \phpws2\Template();
         $template->setModuleTemplate('properties', 'error.html');
-        $template->add('message', 'Server error');
+        $template->add('message', PROPERTIES_FRIENDLY_MESSAGE);
         $view = new \phpws2\View\HtmlView($template->get());
         $response = new \Response($view);
         return $response;
