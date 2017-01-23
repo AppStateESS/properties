@@ -35,7 +35,7 @@ class Controller extends Base
     {
         $major_controller = filter_var($request->shiftCommand(),
                 FILTER_SANITIZE_STRING);
-        
+
         if (empty($major_controller)) {
             \Server::forward('./properties/Property/list/');
         }
@@ -60,7 +60,6 @@ class Controller extends Base
         // Only students will be able to log in. Admins
         // will meet first conditional.
         $user_id = \Current_User::getId();
-
         if (\Current_User::allow('properties')) {
             $this->role = new \properties\Role\Admin($user_id);
         } elseif ($current_manager) {
@@ -69,6 +68,27 @@ class Controller extends Base
             $this->role = new \properties\Role\Logged($user_id);
         } else {
             $this->role = new \properties\Role\User;
+        }
+    }
+
+    public function execute(\Request $request)
+    {
+        try {
+            return parent::execute($request);
+        } catch (\properties\Exception\PrivilegeMissing $e) {
+            throw $e;
+        } catch (\properties\Exception\PropertySaveFailure $e) {
+            throw $e;
+        } catch (\properties\Exception\ResourceNotFound $e) {
+            throw $e;
+        } catch (\properties\Exception\WrongImageType $e) {
+            throw $e;
+        } catch (\Exception $e) {
+            if (PROPERTIES_FRIENDLY_ERRORS) {
+                return $this->friendlyError($request);
+            } else {
+                throw $e;
+            }
         }
     }
 
@@ -102,5 +122,14 @@ class Controller extends Base
         }
         return $result;
     }
-    
+
+    public function friendlyError(\Request $request, $message = null)
+    {
+        $fe = new FriendlyError($this->getModule());
+        if ($message) {
+            $fe->setMessage($message);
+        }
+        return $fe->execute($request);
+    }
+
 }
