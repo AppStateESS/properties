@@ -34,6 +34,12 @@ class Admin extends User
         \Layout::addStyle('properties', 'property/form.css');
         return $this->factory->edit($this->id);
     }
+    
+    protected function createHtmlCommand(\Request $request)
+    {
+        \Layout::addStyle('properties', 'property/form.css');
+        return $this->factory->edit(0, $request->pullGetInteger('managerId'));
+    }
 
     protected function savePostCommand(\Request $request)
     {
