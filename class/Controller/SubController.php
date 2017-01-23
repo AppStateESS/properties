@@ -113,10 +113,10 @@ abstract class SubController extends Base
 
         $method_name = $command . 'HtmlCommand';
         if (!method_exists($this, $method_name)) {
-            if (!method_exists($this, 'viewHtmlCommand')) {
-                throw new BadCommand($method_name);
-            } else {
+            if ($this->id && method_exists($this, 'viewHtmlCommand')) {
                 $method_name = 'viewHtmlCommand';
+            } else {
+                throw new BadCommand($method_name);
             }
         }
 
@@ -181,20 +181,6 @@ abstract class SubController extends Base
     public function getResponse($content, \Request $request)
     {
         return $request->isAjax() ? $this->jsonResponse($content) : $this->htmlResponse($content);
-    }
-
-    public function htmlResponse($content)
-    {
-        $view = new \phpws2\View\HtmlView($content);
-        $response = new \Response($view);
-        return $response;
-    }
-
-    public function jsonResponse($json)
-    {
-        $view = new \phpws2\View\JsonView($json);
-        $response = new \Response($view);
-        return $response;
     }
 
     protected function managerButtons()
