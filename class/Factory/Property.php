@@ -178,10 +178,10 @@ EOF;
             $property = $this->build();
             $property->contact_id = $manager_id;
             $managerFactory = new Manager;
-            $manager = $managerFactory->load($this->resource->contact_id);
-            $this->resource->company_name = $manager->company_name;
+            $manager = $managerFactory->load($manager_id);
+            $property->company_name = $manager->company_name;
 
-            $property_json = json_encode($this->resource->getVariablesAsValue(true,
+            $property_json = json_encode($property->getVariablesAsValue(true,
                             array('approved', 'active')));
         } else {
             throw new \properties\Exception\ResourceNotFound;
