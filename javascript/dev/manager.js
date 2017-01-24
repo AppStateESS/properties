@@ -1519,7 +1519,7 @@ webpackJsonp([0],{
 	        disabled: this.props.disabled,
 	        size: this.props.size,
 	        maxLength: this.props.maxLength,
-	        placeholder: this.state.placeholder,
+	        placeholder: this.props.placeholder,
 	        autoComplete: this.props.autocomplete });
 	
 	      if (this.props.wrap) {
@@ -1921,13 +1921,24 @@ webpackJsonp([0],{
 	  _createClass(Waiting, [{
 	    key: "render",
 	    value: function render() {
+	      var message = void 0;
+	      if (this.props.message.length === 0) {
+	        message = _react2.default.createElement(
+	          "span",
+	          null,
+	          "Loading ",
+	          this.props.label,
+	          "..."
+	        );
+	      } else {
+	        message = this.props.message;
+	      }
 	      return _react2.default.createElement(
 	        "div",
 	        { className: "lead text-center" },
 	        _react2.default.createElement("i", { className: "fa fa-cog fa-spin fa-lg" }),
-	        "\xA0 Loading ",
-	        this.props.label,
-	        "..."
+	        "\xA0",
+	        message
 	      );
 	    }
 	  }]);
@@ -1940,7 +1951,13 @@ webpackJsonp([0],{
 	};
 	
 	Waiting.propTypes = {
-	  label: _react2.default.PropTypes.string
+	  label: _react2.default.PropTypes.string,
+	  message: _react2.default.PropTypes.string
+	};
+	
+	Waiting.defaultProps = {
+	  message: '',
+	  label: 'data'
 	};
 	
 	exports.default = Waiting;

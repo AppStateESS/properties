@@ -1,7 +1,7 @@
-webpackJsonp([7],[
+webpackJsonp([10],[
 /* 0 */
 /*!*******************************************!*\
-  !*** ./javascript/PropertyForm/index.jsx ***!
+  !*** ./javascript/SubleaseForm/index.jsx ***!
   \*******************************************/
 /***/ function(module, exports, __webpack_require__) {
 
@@ -15,13 +15,13 @@ webpackJsonp([7],[
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _PropertyForm = __webpack_require__(/*! ./PropertyForm.jsx */ 213);
+	var _SubleaseForm = __webpack_require__(/*! ./SubleaseForm.jsx */ 416);
 	
-	var _PropertyForm2 = _interopRequireDefault(_PropertyForm);
+	var _SubleaseForm2 = _interopRequireDefault(_SubleaseForm);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	_reactDom2.default.render(_react2.default.createElement(_PropertyForm2.default, null), document.getElementById('propertyform'));
+	_reactDom2.default.render(_react2.default.createElement(_SubleaseForm2.default, null), document.getElementById('subleaseform'));
 
 /***/ },
 /* 1 */,
@@ -394,7 +394,55 @@ webpackJsonp([7],[
 
 /***/ },
 /* 178 */,
-/* 179 */,
+/* 179 */
+/*!*****************************************!*\
+  !*** ./javascript/Mixin/CheckValues.js ***!
+  \*****************************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var CheckValues = function () {
+	  function CheckValues() {
+	    _classCallCheck(this, CheckValues);
+	  }
+	
+	  _createClass(CheckValues, null, [{
+	    key: 'isEmpty',
+	    value: function isEmpty(value) {
+	      return value === '' || value === null;
+	    }
+	  }, {
+	    key: 'isEmail',
+	    value: function isEmail(value) {
+	      return value.match(/^[\w.%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/i);
+	    }
+	  }, {
+	    key: 'isPhone',
+	    value: function isPhone(value) {
+	      return value.replace(/[^\d]/g, '').length == 10;
+	    }
+	  }, {
+	    key: 'randomId',
+	    value: function randomId() {
+	      return (Math.random().toString(36) + '00000000000000000').slice(2, 10);
+	    }
+	  }]);
+	
+	  return CheckValues;
+	}();
+	
+	exports.default = CheckValues;
+
+/***/ },
 /* 180 */
 /*!**************************************!*\
   !*** ./javascript/Mixin/Message.jsx ***!
@@ -493,7 +541,86 @@ webpackJsonp([7],[
 	exports.default = Message;
 
 /***/ },
-/* 181 */,
+/* 181 */
+/*!**************************************!*\
+  !*** ./javascript/Mixin/Waiting.jsx ***!
+  \**************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Waiting = function (_React$Component) {
+	  _inherits(Waiting, _React$Component);
+	
+	  function Waiting() {
+	    _classCallCheck(this, Waiting);
+	
+	    return _possibleConstructorReturn(this, (Waiting.__proto__ || Object.getPrototypeOf(Waiting)).apply(this, arguments));
+	  }
+	
+	  _createClass(Waiting, [{
+	    key: "render",
+	    value: function render() {
+	      var message = void 0;
+	      if (this.props.message.length === 0) {
+	        message = _react2.default.createElement(
+	          "span",
+	          null,
+	          "Loading ",
+	          this.props.label,
+	          "..."
+	        );
+	      } else {
+	        message = this.props.message;
+	      }
+	      return _react2.default.createElement(
+	        "div",
+	        { className: "lead text-center" },
+	        _react2.default.createElement("i", { className: "fa fa-cog fa-spin fa-lg" }),
+	        "\xA0",
+	        message
+	      );
+	    }
+	  }]);
+	
+	  return Waiting;
+	}(_react2.default.Component);
+	
+	Waiting.defaultProps = {
+	  label: ''
+	};
+	
+	Waiting.propTypes = {
+	  label: _react2.default.PropTypes.string,
+	  message: _react2.default.PropTypes.string
+	};
+	
+	Waiting.defaultProps = {
+	  message: '',
+	  label: 'data'
+	};
+	
+	exports.default = Waiting;
+
+/***/ },
 /* 182 */
 /*!**********************************!*\
   !*** ./javascript/Mixin/Bind.js ***!
@@ -874,444 +1001,7 @@ webpackJsonp([7],[
 /* 210 */,
 /* 211 */,
 /* 212 */,
-/* 213 */
-/*!**************************************************!*\
-  !*** ./javascript/PropertyForm/PropertyForm.jsx ***!
-  \**************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _Bind = __webpack_require__(/*! ../Mixin/Bind.js */ 182);
-	
-	var _Bind2 = _interopRequireDefault(_Bind);
-	
-	var _Empty = __webpack_require__(/*! ../Mixin/Empty.js */ 186);
-	
-	var _Empty2 = _interopRequireDefault(_Empty);
-	
-	var _Dollarize = __webpack_require__(/*! ../Mixin/Dollarize.jsx */ 214);
-	
-	var _Dollarize2 = _interopRequireDefault(_Dollarize);
-	
-	var _Message = __webpack_require__(/*! ../Mixin/Message.jsx */ 180);
-	
-	var _Message2 = _interopRequireDefault(_Message);
-	
-	var _Nav = __webpack_require__(/*! ../Mixin/Nav.jsx */ 215);
-	
-	var _Nav2 = _interopRequireDefault(_Nav);
-	
-	var _Basic = __webpack_require__(/*! ./Basic.jsx */ 217);
-	
-	var _Basic2 = _interopRequireDefault(_Basic);
-	
-	var _Pets = __webpack_require__(/*! ./Pets.jsx */ 399);
-	
-	var _Pets2 = _interopRequireDefault(_Pets);
-	
-	var _Fees = __webpack_require__(/*! ./Fees.jsx */ 401);
-	
-	var _Fees2 = _interopRequireDefault(_Fees);
-	
-	var _Features = __webpack_require__(/*! ./Features.jsx */ 402);
-	
-	var _Features2 = _interopRequireDefault(_Features);
-	
-	var _Utilities = __webpack_require__(/*! ./Utilities.jsx */ 403);
-	
-	var _Utilities2 = _interopRequireDefault(_Utilities);
-	
-	var _Overlay = __webpack_require__(/*! ../Mixin/Overlay.jsx */ 406);
-	
-	var _Overlay2 = _interopRequireDefault(_Overlay);
-	
-	var _SubmitForm = __webpack_require__(/*! ../Mixin/SubmitForm.jsx */ 420);
-	
-	var _SubmitForm2 = _interopRequireDefault(_SubmitForm);
-	
-	__webpack_require__(/*! react-date-picker/index.css */ 407);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	/* global $, property, deleteProperty */
-	
-	var PropertyForm = function (_React$Component) {
-	  _inherits(PropertyForm, _React$Component);
-	
-	  function PropertyForm() {
-	    _classCallCheck(this, PropertyForm);
-	
-	    var _this = _possibleConstructorReturn(this, (PropertyForm.__proto__ || Object.getPrototypeOf(PropertyForm)).call(this));
-	
-	    _this.state = {
-	      message: null,
-	      property: property,
-	      errors: {},
-	      activeTab: 0,
-	      saving: false,
-	      deleteOverlay: false
-	    };
-	    var methods = ['delete', 'setTab', 'setValue', 'setError', 'checkForm', 'openDelete', 'closeDelete', 'unsetMessage', 'setIntegerValue'];
-	    (0, _Bind2.default)(methods, _this);
-	    return _this;
-	  }
-	
-	  _createClass(PropertyForm, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      deleteProperty.callback = this.openDelete;
-	    }
-	  }, {
-	    key: 'openDelete',
-	    value: function openDelete() {
-	      this.setState({ deleteOverlay: true });
-	    }
-	  }, {
-	    key: 'closeDelete',
-	    value: function closeDelete() {
-	      this.setState({ deleteOverlay: false });
-	    }
-	  }, {
-	    key: 'setValue',
-	    value: function setValue(varname, value) {
-	      if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object' && value.target !== undefined) {
-	        value = value.target.value;
-	      }
-	      var property = this.state.property;
-	      property[varname] = value;
-	      this.setState({ property: property });
-	    }
-	  }, {
-	    key: 'setError',
-	    value: function setError(varname, value) {
-	      var errors = this.state.errors;
-	      errors[varname] = value;
-	      this.setState({ errors: errors });
-	    }
-	  }, {
-	    key: 'setIntegerValue',
-	    value: function setIntegerValue(varname, value) {
-	      if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object' && value.target !== undefined) {
-	        value = value.target.value;
-	      }
-	      this.setValue(varname, parseInt(value));
-	    }
-	  }, {
-	    key: 'select',
-	    value: function select(e) {
-	      e.target.select();
-	    }
-	  }, {
-	    key: 'dollarize',
-	    value: function dollarize(input) {
-	      return _react2.default.createElement(
-	        _Dollarize2.default,
-	        null,
-	        input
-	      );
-	    }
-	  }, {
-	    key: 'setTab',
-	    value: function setTab(tab) {
-	      if (this.basicComplete()) {
-	        this.setState({ activeTab: tab });
-	      }
-	    }
-	  }, {
-	    key: 'setMessage',
-	    value: function setMessage(text, type) {
-	      var message = {
-	        text: text,
-	        type: type
-	      };
-	      this.setState({ message: message });
-	      this.scrollUp();
-	    }
-	  }, {
-	    key: 'unsetMessage',
-	    value: function unsetMessage() {
-	      this.setState({ message: null });
-	    }
-	  }, {
-	    key: 'navButtons',
-	    value: function navButtons() {
-	      return ['Basic', 'Utilities', 'Features', 'Pets', 'Deposits and Fees'];
-	    }
-	  }, {
-	    key: 'checkForm',
-	    value: function checkForm(e) {
-	      e.preventDefault();
-	      var property = this.state.property;
-	      var errors = this.state.errors;
-	      var errorFound = false;
-	      if (property.name.length === 0) {
-	        errors.name = true;
-	        errorFound = true;
-	      } else {
-	        errors.name = false;
-	      }
-	
-	      if (property.address.length === 0) {
-	        errors.address = true;
-	        errorFound = true;
-	      } else {
-	        errors.address = false;
-	      }
-	
-	      if ((0, _Empty2.default)(property.monthly_rent)) {
-	        errors.monthly_rent = true;
-	        errorFound = true;
-	      } else {
-	        errors.monthly_rent = false;
-	      }
-	
-	      if (errorFound) {
-	        this.setState({ errors: errors, activeTab: 0 });
-	        this.scrollUp();
-	      } else {
-	        this.save();
-	      }
-	    }
-	  }, {
-	    key: 'delete',
-	    value: function _delete() {
-	      $.ajax({
-	        url: './properties/Property/' + this.state.property.id,
-	        dataType: 'json',
-	        method: 'DELETE',
-	        success: function () {
-	          window.location.href = './properties/Property/';
-	        }.bind(this),
-	        error: function () {
-	          this.setMessage('Sorry, something went wrong and the property was not deleted.', 'danger');
-	          this.closeDelete();
-	        }.bind(this)
-	      });
-	    }
-	  }, {
-	    key: 'save',
-	    value: function save() {
-	      var property = this.readyPost();
-	      var methodName = 'POST';
-	      this.setState({ saving: true });
-	      var url = './properties/Property';
-	      if (property.id > 0) {
-	        methodName = 'PUT';
-	        url = url + '/' + +this.state.property.id;
-	      }
-	
-	      $.ajax({
-	        url: url,
-	        data: property,
-	        dataType: 'json',
-	        method: methodName,
-	        success: function (data) {
-	          if (data.error !== undefined) {
-	            this.setMessage(data.error, 'danger');
-	          } else {
-	            window.location.href = './properties/Property/' + data.id;
-	          }
-	        }.bind(this),
-	        error: function () {
-	          this.setMessage('A server error prevented this property from saving.', 'danger');
-	        }.bind(this)
-	      });
-	    }
-	  }, {
-	    key: 'scrollUp',
-	    value: function scrollUp() {
-	      this.refs.PageTop.scrollIntoView();
-	    }
-	  }, {
-	    key: 'readyPost',
-	    value: function readyPost() {
-	      var property = this.state.property;
-	      if (property.heat_type.length === 0) {
-	        property.heat_type = '';
-	      }
-	      return property;
-	    }
-	  }, {
-	    key: 'basicComplete',
-	    value: function basicComplete() {
-	      return !(0, _Empty2.default)(this.state.property.name) && !(0, _Empty2.default)(this.state.property.address) && !(0, _Empty2.default)(this.state.property.monthly_rent);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var property = this.state.property;
-	      var deleteForm = void 0;
-	      if (this.state.deleteOverlay === true) {
-	        deleteForm = _react2.default.createElement(
-	          _Overlay2.default,
-	          { close: this.closeDelete, title: 'Delete this property' },
-	          _react2.default.createElement(DeleteQuestion, { close: this.closeDelete, 'delete': this.delete })
-	        );
-	      }
-	
-	      var section = void 0;
-	      switch (this.state.activeTab) {
-	        case 0:
-	          section = _react2.default.createElement(_Basic2.default, {
-	            setError: this.setError,
-	            property: property,
-	            setValue: this.setValue,
-	            setIntegerValue: this.setIntegerValue,
-	            errors: this.state.errors });
-	          break;
-	
-	        case 1:
-	          section = _react2.default.createElement(_Utilities2.default, {
-	            property: property,
-	            setValue: this.setValue,
-	            setIntegerValue: this.setIntegerValue });
-	          break;
-	
-	        case 2:
-	          section = _react2.default.createElement(_Features2.default, { property: property, setValue: this.setValue });
-	          break;
-	
-	        case 3:
-	          section = _react2.default.createElement(_Pets2.default, { property: this.state.property, setValue: this.setValue });
-	          break;
-	
-	        case 4:
-	          section = _react2.default.createElement(_Fees2.default, { property: property, setValue: this.setValue });
-	          break;
-	      }
-	      var message = void 0;
-	      if (this.state.message !== null) {
-	        message = _react2.default.createElement(_Message2.default, {
-	          message: this.state.message.text,
-	          type: this.state.message.type,
-	          onClose: this.unsetMessage });
-	      }
-	
-	      var deleteButton = void 0;
-	      if (property.id > 0) {
-	        deleteButton = _react2.default.createElement(
-	          'button',
-	          { className: 'btn btn-danger', onClick: this.openDelete },
-	          _react2.default.createElement('i', { className: 'fa fa-trash-o' }),
-	          '\xA0Delete property'
-	        );
-	      }
-	
-	      return _react2.default.createElement(
-	        'div',
-	        { ref: 'PageTop', className: 'property-form' },
-	        deleteForm,
-	        message,
-	        _react2.default.createElement(
-	          'h2',
-	          null,
-	          'Property for ',
-	          this.state.property.company_name,
-	          '\xA0',
-	          deleteButton
-	        ),
-	        _react2.default.createElement(_Nav2.default, {
-	          buttons: this.navButtons(),
-	          active: this.state.activeTab,
-	          disable: this.basicComplete() ? null : [1, 2, 3, 4],
-	          click: this.setTab }),
-	        ' ',
-	        section,
-	        _react2.default.createElement(_SubmitForm2.default, { check: this.checkForm, saving: this.state.saving, label: 'Property' })
-	      );
-	    }
-	  }]);
-	
-	  return PropertyForm;
-	}(_react2.default.Component);
-	
-	exports.default = PropertyForm;
-	
-	PropertyForm.propTypes = {
-	  address: _react2.default.PropTypes.string
-	};
-	
-	var DeleteQuestion = function (_React$Component2) {
-	  _inherits(DeleteQuestion, _React$Component2);
-	
-	  function DeleteQuestion(props) {
-	    _classCallCheck(this, DeleteQuestion);
-	
-	    return _possibleConstructorReturn(this, (DeleteQuestion.__proto__ || Object.getPrototypeOf(DeleteQuestion)).call(this, props));
-	  }
-	
-	  _createClass(DeleteQuestion, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'h2',
-	          null,
-	          'Are you sure you want to delete this property?'
-	        ),
-	        _react2.default.createElement(
-	          'p',
-	          null,
-	          'All images associated with this property will also be deleted.'
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { style: {
-	              marginBottom: '1em'
-	            } },
-	          _react2.default.createElement(
-	            'button',
-	            {
-	              className: 'btn btn-default btn-lg btn-danger',
-	              onClick: this.props.delete },
-	            'Yes, delete this property and all associated images.'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(
-	            'button',
-	            {
-	              className: 'btn btn-default btn-lg btn-default',
-	              onClick: this.props.close },
-	            'No, I changed my mind'
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return DeleteQuestion;
-	}(_react2.default.Component);
-	
-	DeleteQuestion.propTypes = {
-	  close: _react2.default.PropTypes.func,
-	  delete: _react2.default.PropTypes.func
-	};
-
-/***/ },
+/* 213 */,
 /* 214 */
 /*!****************************************!*\
   !*** ./javascript/Mixin/Dollarize.jsx ***!
@@ -1357,111 +1047,7 @@ webpackJsonp([7],[
 	exports.default = Dollarize;
 
 /***/ },
-/* 215 */
-/*!**********************************!*\
-  !*** ./javascript/Mixin/Nav.jsx ***!
-  \**********************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _classnames = __webpack_require__(/*! classnames */ 216);
-	
-	var _classnames2 = _interopRequireDefault(_classnames);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Nav = function (_React$Component) {
-	  _inherits(Nav, _React$Component);
-	
-	  function Nav(props) {
-	    _classCallCheck(this, Nav);
-	
-	    var _this = _possibleConstructorReturn(this, (Nav.__proto__ || Object.getPrototypeOf(Nav)).call(this, props));
-	
-	    _this.state = {};
-	    return _this;
-	  }
-	
-	  _createClass(Nav, [{
-	    key: 'render',
-	    value: function render() {
-	      var disabled = [];
-	      if (this.props.disable !== undefined && this.props.disable !== null) {
-	        if (this.props.disable.constructor === Array) {
-	          disabled = this.props.disable;
-	        } else {
-	          disabled.push(this.props.disable);
-	        }
-	      }
-	      var cn = void 0;
-	      var tabs = this.props.buttons.map(function (value, key) {
-	        cn = (0, _classnames2.default)({
-	          active: this.props.active === key,
-	          disabled: disabled.indexOf(key) !== -1,
-	          pointer: true
-	        });
-	
-	        return _react2.default.createElement(
-	          'li',
-	          {
-	            role: 'presentation',
-	            key: key,
-	            className: cn,
-	            onClick: this.props.click.bind(null, key) },
-	          _react2.default.createElement(
-	            'a',
-	            null,
-	            value
-	          )
-	        );
-	      }.bind(this));
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'form-section' },
-	        _react2.default.createElement(
-	          'ul',
-	          { className: 'nav nav-pills' },
-	          tabs
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return Nav;
-	}(_react2.default.Component);
-	
-	exports.default = Nav;
-	
-	
-	Nav.propTypes = {
-	  active: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
-	  buttons: _react2.default.PropTypes.array,
-	  click: _react2.default.PropTypes.func,
-	  disable: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.array])
-	};
-	
-	Nav.defaultProp = {
-	  disable: null
-	};
-
-/***/ },
+/* 215 */,
 /* 216 */
 /*!*******************************!*\
   !*** ./~/classnames/index.js ***!
@@ -1519,425 +1105,7 @@ webpackJsonp([7],[
 
 
 /***/ },
-/* 217 */
-/*!*******************************************!*\
-  !*** ./javascript/PropertyForm/Basic.jsx ***!
-  \*******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactDatePicker = __webpack_require__(/*! react-date-picker */ 218);
-	
-	var _Bind = __webpack_require__(/*! ../Mixin/Bind.js */ 182);
-	
-	var _Bind2 = _interopRequireDefault(_Bind);
-	
-	var _Rooms = __webpack_require__(/*! ../Mixin/Rooms.jsx */ 395);
-	
-	var _Rooms2 = _interopRequireDefault(_Rooms);
-	
-	var _InputField = __webpack_require__(/*! ../Mixin/InputField.jsx */ 177);
-	
-	var _InputField2 = _interopRequireDefault(_InputField);
-	
-	var _ButtonGroup = __webpack_require__(/*! ../Mixin/ButtonGroup.jsx */ 396);
-	
-	var _ButtonGroup2 = _interopRequireDefault(_ButtonGroup);
-	
-	var _Place2 = __webpack_require__(/*! ../Mixin/Place.jsx */ 398);
-	
-	var _Place3 = _interopRequireDefault(_Place2);
-	
-	var _Range = __webpack_require__(/*! ../Mixin/Range.js */ 397);
-	
-	var _Range2 = _interopRequireDefault(_Range);
-	
-	var _moment = __webpack_require__(/*! moment */ 221);
-	
-	var _moment2 = _interopRequireDefault(_moment);
-	
-	var _Empty = __webpack_require__(/*! ../Mixin/Empty.js */ 186);
-	
-	var _Empty2 = _interopRequireDefault(_Empty);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Basic = function (_Place) {
-	  _inherits(Basic, _Place);
-	
-	  function Basic(props) {
-	    _classCallCheck(this, Basic);
-	
-	    var _this = _possibleConstructorReturn(this, (Basic.__proto__ || Object.getPrototypeOf(Basic)).call(this, props));
-	
-	    var methods = ['setMoveIn', 'updateParking', 'updateRent'];
-	    (0, _Bind2.default)(methods, _this);
-	    return _this;
-	  }
-	
-	  _createClass(Basic, [{
-	    key: 'updateParking',
-	    value: function updateParking(parking) {
-	      if ((typeof parking === 'undefined' ? 'undefined' : _typeof(parking)) === 'object') {
-	        parking = Number(parking.target.value);
-	      } else {
-	        parking = Number(parking);
-	      }
-	      if (parking >= 1 && parking <= 6) {
-	        this.props.setValue('parking_per_unit', parking);
-	      }
-	    }
-	  }, {
-	    key: 'setMoveIn',
-	    value: function setMoveIn(a) {
-	      var date = String((0, _moment2.default)(a).format('X'));
-	      this.props.setValue('move_in_date', date);
-	    }
-	  }, {
-	    key: 'updateRent',
-	    value: function updateRent(e) {
-	      var rent = e.target.value.replace(/[^\d]/g, '');
-	      this.props.setError('monthly_rent', (0, _Empty2.default)(rent));
-	      this.props.setValue('monthly_rent', rent);
-	    }
-	  }, {
-	    key: 'getLeaseType',
-	    value: function getLeaseType() {
-	      return [{
-	        value: '0',
-	        label: _react2.default.createElement(
-	          'span',
-	          null,
-	          _react2.default.createElement('i', { className: 'fa fa-users' }),
-	          '\xA0 Per unit'
-	        )
-	      }, {
-	        value: '1',
-	        label: _react2.default.createElement(
-	          'span',
-	          null,
-	          _react2.default.createElement('i', { className: 'fa fa-user' }),
-	          '\xA0 Per tenant'
-	        )
-	      }];
-	    }
-	  }, {
-	    key: 'studentType',
-	    value: function studentType() {
-	      var types = [{
-	        value: '0',
-	        label: 'No preference'
-	      }, {
-	        value: '1',
-	        label: 'Undergraduate'
-	      }, {
-	        value: '2',
-	        label: 'Graduate'
-	      }];
-	      return types;
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var property = this.props.property;
-	
-	      var parking = (0, _Range2.default)(property.parking_per_unit);
-	      var buttonspace = {
-	        paddingTop: '43px'
-	      };
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-12 ' },
-	            _react2.default.createElement(_InputField2.default, {
-	              name: 'name',
-	              label: 'Title',
-	              value: property.name,
-	              errorMessage: this.props.errors.name ? 'Title may not be empty' : null,
-	              change: this.props.setValue.bind(null, 'name'),
-	              required: true })
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-12' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Description'
-	            ),
-	            _react2.default.createElement('textarea', {
-	              className: 'form-control',
-	              placeholder: 'Description is not searchable. Be sure to use other settings as well.',
-	              name: 'description',
-	              value: property.description,
-	              onChange: this.props.setValue.bind(null, 'description') })
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-12' },
-	            _react2.default.createElement(_InputField2.default, {
-	              name: 'address',
-	              label: 'Address',
-	              type: 'text',
-	              placeholder: 'Street, City, State, Zip code',
-	              errorMessage: this.props.errors.address ? 'Address may not be empty' : null,
-	              value: property.address,
-	              change: this.props.setValue.bind(null, 'address'),
-	              required: true }),
-	            ' ',
-	            property.address.length > 10 ? _react2.default.createElement(
-	              'small',
-	              null,
-	              _react2.default.createElement(
-	                'a',
-	                { href: this.googleize(property.address), target: '_blank' },
-	                'View on Google Maps'
-	              )
-	            ) : null
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-5 col-xs-7' },
-	            _react2.default.createElement(_InputField2.default, {
-	              ref: 'monthlyRent',
-	              name: 'monthly_rent',
-	              type: 'type',
-	              label: 'Monthly rent',
-	              wrap: this.dollarize,
-	              errorMessage: this.props.errors.monthly_rent ? 'Rent amount may not be empty' : null,
-	              value: property.monthly_rent,
-	              change: this.updateRent,
-	              required: true })
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-7 col-xs-5', style: buttonspace },
-	            _react2.default.createElement(_ButtonGroup2.default, {
-	              name: 'lease_type',
-	              buttons: this.getLeaseType(),
-	              match: property.lease_type,
-	              handle: this.props.setValue.bind(null, 'lease_type'),
-	              activeColor: 'success' })
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-6 form-inline' },
-	            _react2.default.createElement(
-	              'label',
-	              { htmlFor: 'contract-length' },
-	              'Contract length'
-	            ),
-	            _react2.default.createElement(
-	              'select',
-	              {
-	                name: 'contract_length',
-	                id: 'contract-length',
-	                value: property.contract_length,
-	                className: 'form-control',
-	                onChange: this.props.setIntegerValue.bind(null, 'contract_length') },
-	              _react2.default.createElement(
-	                'option',
-	                { value: '1' },
-	                'Monthly'
-	              ),
-	              _react2.default.createElement(
-	                'option',
-	                { value: '8' },
-	                'Five months'
-	              ),
-	              _react2.default.createElement(
-	                'option',
-	                { value: '2' },
-	                'Six months'
-	              ),
-	              _react2.default.createElement(
-	                'option',
-	                { value: '7' },
-	                'Ten months'
-	              ),
-	              _react2.default.createElement(
-	                'option',
-	                { value: '3' },
-	                'Twelve months'
-	              ),
-	              _react2.default.createElement(
-	                'option',
-	                { value: '4' },
-	                'Summer only'
-	              ),
-	              _react2.default.createElement(
-	                'option',
-	                { value: '5' },
-	                'per Semester'
-	              ),
-	              _react2.default.createElement(
-	                'option',
-	                { value: '6' },
-	                'School year (two semesters)'
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-6' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Move-in date'
-	            ),
-	            _react2.default.createElement('br', null),
-	            _react2.default.createElement(_reactDatePicker.DateField, {
-	              dateFormat: 'YYYY-MM-DD',
-	              onChange: this.setMoveIn,
-	              value: this.formatDate(property.move_in_date) })
-	          )
-	        ),
-	        _react2.default.createElement(_Rooms2.default, { property: property, setValue: this.props.setValue }),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-6' },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'pull-left' },
-	              _react2.default.createElement(
-	                'label',
-	                null,
-	                'Parking spaces per unit'
-	              ),
-	              _react2.default.createElement('input', {
-	                name: 'parking_per_unit',
-	                type: 'text',
-	                size: '2',
-	                onChange: this.updateParking,
-	                onClick: this.select,
-	                value: property.parking_per_unit,
-	                className: 'single-input' })
-	            ),
-	            _react2.default.createElement(_ButtonGroup2.default, {
-	              buttons: parking,
-	              match: property.parking_per_unit,
-	              handle: this.updateParking,
-	              activeColor: 'success' })
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-6' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Miles from campus'
-	            ),
-	            _react2.default.createElement('br', null),
-	            _react2.default.createElement(_ButtonGroup2.default, {
-	              name: 'campus_distance',
-	              buttons: this.campusDistance(),
-	              match: property.campus_distance,
-	              handle: this.props.setValue.bind(this, 'campus_distance'),
-	              activeColor: 'success' })
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-12' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Property type'
-	            ),
-	            _react2.default.createElement('br', null),
-	            _react2.default.createElement(_ButtonGroup2.default, {
-	              name: 'proptype',
-	              buttons: this.propertyType(),
-	              match: property.proptype,
-	              handle: this.props.setValue.bind(this, 'proptype'),
-	              activeColor: 'success' })
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-12' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Student preference'
-	            ),
-	            _react2.default.createElement('br', null),
-	            _react2.default.createElement(_ButtonGroup2.default, {
-	              name: 'student_type',
-	              buttons: this.studentType(),
-	              match: property.student_type,
-	              handle: this.props.setValue.bind(this, 'student_type'),
-	              activeColor: 'success' })
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return Basic;
-	}(_Place3.default);
-	
-	exports.default = Basic;
-	
-	
-	Basic.propTypes = {
-	  property: _react2.default.PropTypes.object,
-	  setValue: _react2.default.PropTypes.func,
-	  setError: _react2.default.PropTypes.func,
-	  setIntegerValue: _react2.default.PropTypes.func,
-	  errors: _react2.default.PropTypes.object
-	};
-
-/***/ },
+/* 217 */,
 /* 218 */
 /*!******************************************!*\
   !*** ./~/react-date-picker/lib/index.js ***!
@@ -30112,1160 +29280,12 @@ webpackJsonp([7],[
 	exports.default = Place;
 
 /***/ },
-/* 399 */
-/*!******************************************!*\
-  !*** ./javascript/PropertyForm/Pets.jsx ***!
-  \******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _InputField = __webpack_require__(/*! ../Mixin/InputField.jsx */ 177);
-	
-	var _InputField2 = _interopRequireDefault(_InputField);
-	
-	var _BooleanButton = __webpack_require__(/*! ../Mixin/BooleanButton.jsx */ 400);
-	
-	var _BooleanButton2 = _interopRequireDefault(_BooleanButton);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Pets = function (_React$Component) {
-	  _inherits(Pets, _React$Component);
-	
-	  function Pets(props) {
-	    _classCallCheck(this, Pets);
-	
-	    return _possibleConstructorReturn(this, (Pets.__proto__ || Object.getPrototypeOf(Pets)).call(this, props));
-	  }
-	
-	  _createClass(Pets, [{
-	    key: 'obscurePetForm',
-	    value: function obscurePetForm() {
-	      if (this.props.property.pets_allowed) {
-	        return { opacity: '1' };
-	      } else {
-	        return { opacity: '.4' };
-	      }
-	    }
-	  }, {
-	    key: 'togglePets',
-	    value: function togglePets(allowed) {
-	      this.props.setValue('pets_allowed', allowed);
-	    }
-	  }, {
-	    key: 'togglePetDep',
-	    value: function togglePetDep(refund) {
-	      this.props.setValue('pet_dep_refund', refund);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var property = this.props.property;
-	
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'h3',
-	          null,
-	          'Pets'
-	        ),
-	        _react2.default.createElement(_BooleanButton2.default, {
-	          name: 'pets_allowed',
-	          label: ['Pets allowed', 'Pets not allowed'],
-	          icon: ['fa fa-check', 'fa fa-times'],
-	          handleClick: this.togglePets.bind(this, !property.pets_allowed),
-	          current: property.pets_allowed }),
-	        _react2.default.createElement(
-	          'div',
-	          { style: this.obscurePetForm() },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'row' },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'col-sm-6' },
-	              _react2.default.createElement(
-	                'label',
-	                null,
-	                'Deposit'
-	              ),
-	              _react2.default.createElement(_BooleanButton2.default, {
-	                name: 'pet_dep_refund',
-	                current: property.pet_dep_refund,
-	                handleClick: this.togglePetDep.bind(this, !property.pet_dep_refund),
-	                label: ['Deposit refunded', 'Nonrefundable'] }),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'input-group' },
-	                _react2.default.createElement(
-	                  'span',
-	                  { className: 'input-group-addon' },
-	                  '$'
-	                ),
-	                _react2.default.createElement(_InputField2.default, {
-	                  name: 'pet_deposit',
-	                  type: 'text',
-	                  value: property.pet_deposit,
-	                  disabled: !property.pets_allowed,
-	                  change: this.props.setValue.bind(this, 'pet_deposit') }),
-	                _react2.default.createElement(
-	                  'span',
-	                  { className: 'input-group-addon' },
-	                  '.00'
-	                )
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'col-sm-6' },
-	              _react2.default.createElement(
-	                'label',
-	                null,
-	                'Monthly fee'
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'input-group' },
-	                _react2.default.createElement(
-	                  'span',
-	                  { className: 'input-group-addon' },
-	                  '$'
-	                ),
-	                _react2.default.createElement(_InputField2.default, {
-	                  name: 'pet_fee',
-	                  type: 'text',
-	                  disabled: !property.pets_allowed,
-	                  value: property.pet_fee,
-	                  change: this.props.setValue.bind(this, 'pet_fee') }),
-	                _react2.default.createElement(
-	                  'span',
-	                  { className: 'input-group-addon' },
-	                  '.00'
-	                )
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'row' },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'col-sm-12' },
-	              _react2.default.createElement(
-	                'label',
-	                { htmlFor: 'pet-type' },
-	                'Allowed pet types (i.e. cats, dogs)'
-	              ),
-	              _react2.default.createElement('textarea', {
-	                disabled: !property.pets_allowed,
-	                className: 'form-control',
-	                id: 'pet-type',
-	                value: property.pet_type,
-	                onChange: this.props.setValue.bind(this, 'pet_type') })
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return Pets;
-	}(_react2.default.Component);
-	
-	exports.default = Pets;
-	
-	
-	Pets.propTypes = {
-	  property: _react2.default.PropTypes.object,
-	  setValue: _react2.default.PropTypes.func
-	};
-
-/***/ },
-/* 400 */
-/*!********************************************!*\
-  !*** ./javascript/Mixin/BooleanButton.jsx ***!
-  \********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var BooleanButton = function (_React$Component) {
-	  _inherits(BooleanButton, _React$Component);
-	
-	  function BooleanButton(props) {
-	    _classCallCheck(this, BooleanButton);
-	
-	    var _this = _possibleConstructorReturn(this, (BooleanButton.__proto__ || Object.getPrototypeOf(BooleanButton)).call(this, props));
-	
-	    _this.state = {
-	      status: _this.props.current
-	    };
-	    _this.flip = _this.flip.bind(_this);
-	    _this.getHidden = _this.getHidden.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(BooleanButton, [{
-	    key: 'flip',
-	    value: function flip() {
-	      var status = !this.state.status;
-	      this.setState({ status: status });
-	      if (this.props.handleClick) {
-	        this.props.handleClick(status);
-	      }
-	    }
-	  }, {
-	    key: 'getHidden',
-	    value: function getHidden() {
-	      if (this.props.name !== null && this.props.name.length > 0) {
-	        return _react2.default.createElement('input', { type: 'hidden', name: this.props.name, value: this.state.status });
-	      } else {
-	        return null;
-	      }
-	    }
-	  }, {
-	    key: 'positiveIcon',
-	    value: function positiveIcon() {
-	      if (this.props.icon === true) {
-	        return 'fa fa-check';
-	      } else if (this.props.icon !== null && _typeof(this.props.icon) === 'object') {
-	        return this.props.icon[0];
-	      } else {
-	        return null;
-	      }
-	    }
-	  }, {
-	    key: 'negativeIcon',
-	    value: function negativeIcon() {
-	      if (this.props.icon === true) {
-	        return 'fa fa-times';
-	      } else if (this.props.icon !== null && _typeof(this.props.icon) === 'object') {
-	        return this.props.icon[1];
-	      } else {
-	        return null;
-	      }
-	    }
-	  }, {
-	    key: 'getIcon',
-	    value: function getIcon() {
-	      return this.state.status ? this.positiveIcon() : this.negativeIcon();
-	    }
-	  }, {
-	    key: 'getLabel',
-	    value: function getLabel() {
-	      return this.state.status ? this.props.label[0] : this.props.label[1];
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var label = this.getLabel();
-	      if (this.props.icon) {
-	        label = _react2.default.createElement(
-	          'span',
-	          null,
-	          _react2.default.createElement('i', { className: this.getIcon() }),
-	          '\xA0',
-	          label
-	        );
-	      }
-	      var className = this.state.status ? 'btn btn-success' : 'btn btn-danger';
-	
-	      return _react2.default.createElement(
-	        'span',
-	        null,
-	        _react2.default.createElement(
-	          'button',
-	          {
-	            type: 'button',
-	            name: this.props.name,
-	            value: this.state.status,
-	            className: className,
-	            onClick: this.flip },
-	          label
-	        ),
-	        this.getHidden()
-	      );
-	    }
-	  }]);
-	
-	  return BooleanButton;
-	}(_react2.default.Component);
-	
-	BooleanButton.defaultProps = {
-	  label: ['Yes', 'No'],
-	  icon: null
-	};
-	
-	BooleanButton.propTypes = {
-	  label: _react2.default.PropTypes.array,
-	  icon: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.array, _react2.default.PropTypes.bool]),
-	  handleClick: _react2.default.PropTypes.func,
-	  current: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.bool, _react2.default.PropTypes.string]),
-	  name: _react2.default.PropTypes.string
-	};
-	
-	BooleanButton.defaultProps = {
-	  name: null
-	};
-	
-	exports.default = BooleanButton;
-
-/***/ },
-/* 401 */
-/*!******************************************!*\
-  !*** ./javascript/PropertyForm/Fees.jsx ***!
-  \******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _InputField = __webpack_require__(/*! ../Mixin/InputField.jsx */ 177);
-	
-	var _InputField2 = _interopRequireDefault(_InputField);
-	
-	var _BooleanButton = __webpack_require__(/*! ../Mixin/BooleanButton.jsx */ 400);
-	
-	var _BooleanButton2 = _interopRequireDefault(_BooleanButton);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Fees = function (_React$Component) {
-	  _inherits(Fees, _React$Component);
-	
-	  function Fees(props) {
-	    _classCallCheck(this, Fees);
-	
-	    var _this = _possibleConstructorReturn(this, (Fees.__proto__ || Object.getPrototypeOf(Fees)).call(this, props));
-	
-	    _this.state = {};
-	    return _this;
-	  }
-	
-	  _createClass(Fees, [{
-	    key: 'render',
-	    value: function render() {
-	      var property = this.props.property;
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'h3',
-	          null,
-	          'Deposits and Fees'
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-xs-6 col-sm-4' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Security deposit'
-	            ),
-	            _react2.default.createElement(_BooleanButton2.default, {
-	              name: 'security_refund',
-	              current: property.security_refund,
-	              label: ['Deposit refunded', 'Nonrefundable'] }),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'input-group' },
-	              _react2.default.createElement(
-	                'span',
-	                { className: 'input-group-addon' },
-	                '$'
-	              ),
-	              _react2.default.createElement(_InputField2.default, {
-	                name: 'security_amt',
-	                type: 'text',
-	                maxLength: 6,
-	                value: property.security_amt,
-	                change: this.props.setValue.bind(this, 'security_amt') }),
-	              _react2.default.createElement(
-	                'span',
-	                { className: 'input-group-addon' },
-	                '.00'
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-xs-6 col-sm-4' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Administrative Fee'
-	            ),
-	            _react2.default.createElement(_BooleanButton2.default, {
-	              name: 'admin_fee_refund',
-	              current: property.admin_fee_refund,
-	              label: ['Admin fee refunded', 'Nonrefundable'] }),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'input-group' },
-	              _react2.default.createElement(
-	                'span',
-	                { className: 'input-group-addon' },
-	                '$'
-	              ),
-	              _react2.default.createElement(_InputField2.default, {
-	                name: 'admin_fee_amt',
-	                maxLength: 6,
-	                type: 'text',
-	                value: property.admin_fee_amt,
-	                change: this.props.setValue.bind(this, 'admin_fee_amt') }),
-	              _react2.default.createElement(
-	                'span',
-	                { className: 'input-group-addon' },
-	                '.00'
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-xs-6 col-sm-4' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Cleaning fee'
-	            ),
-	            _react2.default.createElement(_BooleanButton2.default, {
-	              name: 'clean_fee_refund',
-	              current: property.clean_fee_refund,
-	              label: ['Fee refunded', 'Nonrefundable'] }),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'input-group' },
-	              _react2.default.createElement(
-	                'span',
-	                { className: 'input-group-addon' },
-	                '$'
-	              ),
-	              _react2.default.createElement(_InputField2.default, {
-	                name: 'clean_fee_amt',
-	                type: 'text',
-	                maxLength: 6,
-	                value: property.clean_fee_amt,
-	                change: this.props.setValue.bind(this, 'clean_fee_amt') }),
-	              _react2.default.createElement(
-	                'span',
-	                { className: 'input-group-addon' },
-	                '.00'
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-xs-6 col-sm-4' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Parking Fee'
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'input-group' },
-	              _react2.default.createElement(
-	                'span',
-	                { className: 'input-group-addon' },
-	                '$'
-	              ),
-	              _react2.default.createElement(_InputField2.default, {
-	                name: 'parking_fee',
-	                maxLength: 6,
-	                type: 'text',
-	                value: property.parking_fee,
-	                change: this.props.setValue.bind(this, 'parking_fee') }),
-	              _react2.default.createElement(
-	                'span',
-	                { className: 'input-group-addon' },
-	                '.00'
-	              )
-	            )
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-12' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Other fees'
-	            ),
-	            _react2.default.createElement('textarea', {
-	              className: 'form-control',
-	              value: property.other_fees,
-	              onChange: this.props.setValue.bind(this, 'other_fees'),
-	              name: 'other_fees' })
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return Fees;
-	}(_react2.default.Component);
-	
-	exports.default = Fees;
-	
-	
-	Fees.propTypes = {
-	  property: _react2.default.PropTypes.object,
-	  setValue: _react2.default.PropTypes.func
-	};
-
-/***/ },
-/* 402 */
-/*!**********************************************!*\
-  !*** ./javascript/PropertyForm/Features.jsx ***!
-  \**********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _BooleanButton = __webpack_require__(/*! ../Mixin/BooleanButton.jsx */ 400);
-	
-	var _BooleanButton2 = _interopRequireDefault(_BooleanButton);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Features = function (_React$Component) {
-	  _inherits(Features, _React$Component);
-	
-	  function Features(props) {
-	    _classCallCheck(this, Features);
-	
-	    var _this = _possibleConstructorReturn(this, (Features.__proto__ || Object.getPrototypeOf(Features)).call(this, props));
-	
-	    _this.state = {};
-	    return _this;
-	  }
-	
-	  _createClass(Features, [{
-	    key: 'render',
-	    value: function render() {
-	      var property = this.props.property;
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'h3',
-	          null,
-	          'Amenities'
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-6' },
-	            _react2.default.createElement(
-	              'p',
-	              null,
-	              _react2.default.createElement(_BooleanButton2.default, {
-	                name: 'utilities_inc',
-	                current: property.utilities_inc,
-	                label: ['Utilities included', 'Utilities not included'],
-	                icon: true,
-	                handleClick: this.props.setValue.bind(this, 'utilities_inc') })
-	            ),
-	            _react2.default.createElement(
-	              'p',
-	              null,
-	              _react2.default.createElement(_BooleanButton2.default, {
-	                name: 'furnished',
-	                current: property.furnished,
-	                label: ['Furnished', 'Not furnished'],
-	                icon: true,
-	                handleClick: this.props.setValue.bind(this, 'furnished') })
-	            ),
-	            _react2.default.createElement(
-	              'p',
-	              null,
-	              _react2.default.createElement(_BooleanButton2.default, {
-	                name: 'dishwasher',
-	                current: property.dishwasher,
-	                label: ['Dishwasher included', 'No dishwasher'],
-	                icon: true,
-	                handleClick: this.props.setValue.bind(this, 'dishwasher') })
-	            ),
-	            _react2.default.createElement(
-	              'p',
-	              null,
-	              _react2.default.createElement(_BooleanButton2.default, {
-	                name: 'airconditioning',
-	                current: property.airconditioning,
-	                icon: true,
-	                label: ['Air conditioning', 'No air conditioning'],
-	                handleClick: this.props.setValue.bind(this, 'airconditioning') })
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-6' },
-	            _react2.default.createElement(
-	              'p',
-	              null,
-	              _react2.default.createElement(_BooleanButton2.default, {
-	                name: 'appalcart',
-	                current: property.appalcart,
-	                icon: true,
-	                label: ['On Appalcart route', 'Not on Appalcart route'],
-	                handleClick: this.props.setValue.bind(this, 'appalcart') })
-	            ),
-	            _react2.default.createElement(
-	              'p',
-	              null,
-	              _react2.default.createElement(_BooleanButton2.default, {
-	                name: 'clubhouse',
-	                current: property.clubhouse,
-	                icon: true,
-	                label: ['Club house available', 'No club house'],
-	                handleClick: this.props.setValue.bind(this, 'clubhouse') })
-	            ),
-	            _react2.default.createElement(
-	              'p',
-	              null,
-	              _react2.default.createElement(_BooleanButton2.default, {
-	                current: property.workout_room,
-	                name: 'workout_room',
-	                icon: true,
-	                label: ['Workout room', 'No workout room'],
-	                handleClick: this.props.setValue.bind(this, 'workout_room') })
-	            ),
-	            _react2.default.createElement(
-	              'p',
-	              null,
-	              _react2.default.createElement(_BooleanButton2.default, {
-	                name: 'smoking_allowed',
-	                label: ['Smoking allowed', 'No smoking allowed'],
-	                current: property.utilities_inc,
-	                icon: true,
-	                handleClick: this.props.setValue.bind(this, 'smoking_allowed') })
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return Features;
-	}(_react2.default.Component);
-	
-	exports.default = Features;
-	
-	
-	Features.propTypes = {
-	  property: _react2.default.PropTypes.object,
-	  setValue: _react2.default.PropTypes.func
-	};
-
-/***/ },
-/* 403 */
-/*!***********************************************!*\
-  !*** ./javascript/PropertyForm/Utilities.jsx ***!
-  \***********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _Bind = __webpack_require__(/*! ../Mixin/Bind.js */ 182);
-	
-	var _Bind2 = _interopRequireDefault(_Bind);
-	
-	var _ButtonGroup = __webpack_require__(/*! ../Mixin/ButtonGroup.jsx */ 396);
-	
-	var _ButtonGroup2 = _interopRequireDefault(_ButtonGroup);
-	
-	var _UtilityImbursement = __webpack_require__(/*! ./UtilityImbursement.jsx */ 404);
-	
-	var _UtilityImbursement2 = _interopRequireDefault(_UtilityImbursement);
-	
-	var _UtilityFunctions = __webpack_require__(/*! ../Mixin/UtilityFunctions.js */ 405);
-	
-	var _UtilityFunctions2 = _interopRequireDefault(_UtilityFunctions);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Utilities = function (_React$Component) {
-	  _inherits(Utilities, _React$Component);
-	
-	  function Utilities(props) {
-	    _classCallCheck(this, Utilities);
-	
-	    var _this = _possibleConstructorReturn(this, (Utilities.__proto__ || Object.getPrototypeOf(Utilities)).call(this, props));
-	
-	    _this.state = {};
-	    var methods = ['updateHeatType'];
-	    (0, _Bind2.default)(methods, _this);
-	    return _this;
-	  }
-	
-	  _createClass(Utilities, [{
-	    key: 'heatingTypes',
-	    value: function heatingTypes() {
-	      return [{
-	        value: '1',
-	        label: 'Heat pump'
-	      }, {
-	        value: '2',
-	        label: 'Oil'
-	      }, {
-	        value: '3',
-	        label: 'Propane'
-	      }, {
-	        value: '4',
-	        label: 'Electric baseboard'
-	      }, {
-	        value: '5',
-	        label: 'Kerosene'
-	      }, {
-	        value: '6',
-	        label: 'Woodstove/Fireplace'
-	      }, {
-	        value: '7',
-	        label: 'Natural gas'
-	      }];
-	    }
-	  }, {
-	    key: 'updateHeatType',
-	    value: function updateHeatType(type) {
-	      var heatType = this.props.property.heat_type;
-	      var index = heatType.indexOf(type);
-	      if (index === -1) {
-	        heatType.push(type);
-	      } else {
-	        heatType.splice(index, 1);
-	      }
-	      this.props.setValue('heat_type', heatType);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var property = this.props.property;
-	
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'h3',
-	          null,
-	          'Utilities'
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-12' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Heating'
-	            ),
-	            _react2.default.createElement(
-	              'small',
-	              null,
-	              '(Click all that apply)'
-	            ),
-	            _react2.default.createElement(_ButtonGroup2.default, {
-	              name: 'heat_type',
-	              multiple: true,
-	              buttons: this.heatingTypes(),
-	              match: property.heat_type,
-	              handle: this.updateHeatType,
-	              activeColor: 'success' })
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-12' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Internet'
-	            ),
-	            _react2.default.createElement('br', null),
-	            _react2.default.createElement(_ButtonGroup2.default, {
-	              name: 'internet_type',
-	              buttons: _UtilityFunctions2.default.internetTypes(),
-	              match: property.internet_type,
-	              handle: this.props.setIntegerValue.bind(this, 'internet_type'),
-	              activeColor: 'success' })
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-12' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Laundry'
-	            ),
-	            _react2.default.createElement('br', null),
-	            _react2.default.createElement(_ButtonGroup2.default, {
-	              name: 'laundry_type',
-	              buttons: _UtilityFunctions2.default.laundryTypes(),
-	              match: property.laundry_type,
-	              handle: this.props.setIntegerValue.bind(this, 'laundry_type'),
-	              activeColor: 'success' })
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-12' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Trash and Recycling'
-	            ),
-	            _react2.default.createElement('br', null),
-	            _react2.default.createElement(_ButtonGroup2.default, {
-	              name: 'trash_type',
-	              buttons: _UtilityFunctions2.default.trashTypes(),
-	              match: property.trash_type,
-	              handle: this.props.setIntegerValue.bind(this, 'trash_type'),
-	              activeColor: 'success' })
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-12' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Television'
-	            ),
-	            _react2.default.createElement('br', null),
-	            _react2.default.createElement(_ButtonGroup2.default, {
-	              name: 'tv_type',
-	              buttons: _UtilityFunctions2.default.televisionTypes(),
-	              match: property.tv_type,
-	              handle: this.props.setIntegerValue.bind(this, 'tv_type'),
-	              activeColor: 'success' })
-	          )
-	        ),
-	        _react2.default.createElement(_UtilityImbursement2.default, { property: this.props.property, setValue: this.props.setValue })
-	      );
-	    }
-	  }]);
-	
-	  return Utilities;
-	}(_react2.default.Component);
-	
-	exports.default = Utilities;
-	
-	
-	Utilities.propTypes = {
-	  property: _react2.default.PropTypes.object,
-	  setIntegerValue: _react2.default.PropTypes.func,
-	  setValue: _react2.default.PropTypes.func
-	};
-
-/***/ },
-/* 404 */
-/*!********************************************************!*\
-  !*** ./javascript/PropertyForm/UtilityImbursement.jsx ***!
-  \********************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _InputField = __webpack_require__(/*! ../Mixin/InputField.jsx */ 177);
-	
-	var _InputField2 = _interopRequireDefault(_InputField);
-	
-	var _Dollarize = __webpack_require__(/*! ../Mixin/Dollarize.jsx */ 214);
-	
-	var _Dollarize2 = _interopRequireDefault(_Dollarize);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var UtilityImbursement = function (_React$Component) {
-	  _inherits(UtilityImbursement, _React$Component);
-	
-	  function UtilityImbursement(props) {
-	    _classCallCheck(this, UtilityImbursement);
-	
-	    var _this = _possibleConstructorReturn(this, (UtilityImbursement.__proto__ || Object.getPrototypeOf(UtilityImbursement)).call(this, props));
-	
-	    _this.state = {};
-	    return _this;
-	  }
-	
-	  _createClass(UtilityImbursement, [{
-	    key: 'render',
-	    value: function render() {
-	      var property = this.props.property;
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'h3',
-	          null,
-	          'Utility imbursement'
-	        ),
-	        _react2.default.createElement(
-	          'p',
-	          null,
-	          'If you pay a portion of utilities, please enter that amount below.'
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-xs-6 col-sm-4 col-md-3' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Cable'
-	            ),
-	            _react2.default.createElement(
-	              _Dollarize2.default,
-	              null,
-	              _react2.default.createElement(_InputField2.default, {
-	                name: 'util_cable',
-	                value: property.util_cable,
-	                change: this.props.setValue.bind(this, 'util_cable') })
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-xs-6 col-sm-4 col-md-3' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Fuel/Gas'
-	            ),
-	            _react2.default.createElement(
-	              _Dollarize2.default,
-	              null,
-	              _react2.default.createElement(_InputField2.default, {
-	                name: 'util_fuel',
-	                value: property.util_fuel,
-	                change: this.props.setValue.bind(this, 'util_fuel') })
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-xs-6 col-sm-4 col-md-3' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Internet'
-	            ),
-	            _react2.default.createElement(
-	              _Dollarize2.default,
-	              null,
-	              _react2.default.createElement(_InputField2.default, {
-	                name: 'util_internet',
-	                value: property.util_internet,
-	                change: this.props.setValue.bind(this, 'util_internet') })
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-xs-6 col-sm-4 col-md-3' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Phone'
-	            ),
-	            _react2.default.createElement(
-	              _Dollarize2.default,
-	              null,
-	              _react2.default.createElement(_InputField2.default, {
-	                name: 'util_phone',
-	                value: property.util_phone,
-	                change: this.props.setValue.bind(this, 'util_phone') })
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-xs-6 col-sm-4 col-md-3' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Power'
-	            ),
-	            _react2.default.createElement(
-	              _Dollarize2.default,
-	              null,
-	              _react2.default.createElement(_InputField2.default, {
-	                name: 'util_power',
-	                value: property.util_power,
-	                change: this.props.setValue.bind(this, 'util_power') })
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-xs-6 col-sm-4 col-md-3' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Trash'
-	            ),
-	            _react2.default.createElement(
-	              _Dollarize2.default,
-	              null,
-	              _react2.default.createElement(_InputField2.default, {
-	                name: 'util_trash',
-	                value: property.util_trash,
-	                change: this.props.setValue.bind(this, 'util_trash') })
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-xs-6 col-sm-4 col-md-3' },
-	            _react2.default.createElement(
-	              'label',
-	              null,
-	              'Water'
-	            ),
-	            _react2.default.createElement(
-	              _Dollarize2.default,
-	              null,
-	              _react2.default.createElement(_InputField2.default, {
-	                name: 'util_water',
-	                value: property.util_water,
-	                change: this.props.setValue.bind(this, 'util_water') })
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return UtilityImbursement;
-	}(_react2.default.Component);
-	
-	exports.default = UtilityImbursement;
-	
-	UtilityImbursement.propTypes = {
-	  property: _react2.default.PropTypes.object,
-	  setValue: _react2.default.PropTypes.func
-	};
-
-/***/ },
+/* 399 */,
+/* 400 */,
+/* 401 */,
+/* 402 */,
+/* 403 */,
+/* 404 */,
 /* 405 */
 /*!**********************************************!*\
   !*** ./javascript/Mixin/UtilityFunctions.js ***!
@@ -31372,161 +29392,7 @@ webpackJsonp([7],[
 	exports.default = UtilityFunctions;
 
 /***/ },
-/* 406 */
-/*!**************************************!*\
-  !*** ./javascript/Mixin/Overlay.jsx ***!
-  \**************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	/* global $ */
-	
-	var Overlay = function (_React$Component) {
-	  _inherits(Overlay, _React$Component);
-	
-	  function Overlay(props) {
-	    _classCallCheck(this, Overlay);
-	
-	    var _this = _possibleConstructorReturn(this, (Overlay.__proto__ || Object.getPrototypeOf(Overlay)).call(this, props));
-	
-	    _this.state = {};
-	    _this.lighten = _this.lighten.bind(_this);
-	    _this.normal = _this.normal.bind(_this);
-	    _this.unlockBody = _this.unlockBody.bind(_this);
-	    _this.close = _this.close.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(Overlay, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.lockBody();
-	    }
-	  }, {
-	    key: 'lockBody',
-	    value: function lockBody() {
-	      $('body').css('overflow', 'hidden');
-	    }
-	  }, {
-	    key: 'unlockBody',
-	    value: function unlockBody() {
-	      $('body').css('overflow', 'inherit');
-	    }
-	  }, {
-	    key: 'normal',
-	    value: function normal() {
-	      this.refs.closebutton.style.backgroundColor = 'inherit';
-	    }
-	  }, {
-	    key: 'lighten',
-	    value: function lighten() {
-	      this.refs.closebutton.style.backgroundColor = '#e3e3e3';
-	    }
-	  }, {
-	    key: 'close',
-	    value: function close() {
-	      this.unlockBody();
-	      this.props.close();
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var overlayStyle = {
-	        width: '100%',
-	        position: 'fixed',
-	        top: '0px',
-	        bottom: '0px',
-	        left: '0px',
-	        backgroundColor: 'white',
-	        zIndex: '100',
-	        overflowY: 'scroll',
-	        overflowX: 'hidden',
-	        padding: '10px'
-	      };
-	
-	      var headerStyle = {
-	        backgroundColor: '#F2F2F2',
-	        border: '1px solid #D9D9D9',
-	        marginBottom: '1em',
-	        height: '40px'
-	      };
-	
-	      var titleStyle = {
-	        padding: '9px',
-	        fontSize: '14px',
-	        fontWeight: 'bold'
-	      };
-	
-	      var closeButton = {
-	        padding: '5px',
-	        float: 'right'
-	      };
-	
-	      var childrenStyle = {
-	        paddingBottom: '50px'
-	      };
-	      return _react2.default.createElement(
-	        'div',
-	        { style: overlayStyle },
-	        _react2.default.createElement(
-	          'div',
-	          { style: headerStyle },
-	          _react2.default.createElement(
-	            'div',
-	            {
-	              ref: 'closebutton',
-	              style: closeButton,
-	              onMouseEnter: this.lighten,
-	              onMouseLeave: this.normal },
-	            _react2.default.createElement('i', { className: ' fa fa-2x fa-times pointer', onClick: this.close })
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { style: titleStyle },
-	            this.props.title
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { style: childrenStyle },
-	          this.props.children
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return Overlay;
-	}(_react2.default.Component);
-	
-	exports.default = Overlay;
-	
-	
-	Overlay.propTypes = {
-	  children: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.element]),
-	  close: _react2.default.PropTypes.func,
-	  title: _react2.default.PropTypes.string
-	};
-
-/***/ },
+/* 406 */,
 /* 407 */
 /*!***************************************!*\
   !*** ./~/react-date-picker/index.css ***!
@@ -31580,10 +29446,1035 @@ webpackJsonp([7],[
 /* 413 */,
 /* 414 */,
 /* 415 */,
-/* 416 */,
-/* 417 */,
-/* 418 */,
-/* 419 */,
+/* 416 */
+/*!**************************************************!*\
+  !*** ./javascript/SubleaseForm/SubleaseForm.jsx ***!
+  \**************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _SubleaseObject = __webpack_require__(/*! ../Mixin/SubleaseObject.js */ 417);
+	
+	var _SubleaseObject2 = _interopRequireDefault(_SubleaseObject);
+	
+	var _Empty = __webpack_require__(/*! ../Mixin/Empty.js */ 186);
+	
+	var _Empty2 = _interopRequireDefault(_Empty);
+	
+	var _Waiting = __webpack_require__(/*! ../Mixin/Waiting.jsx */ 181);
+	
+	var _Waiting2 = _interopRequireDefault(_Waiting);
+	
+	var _InputField = __webpack_require__(/*! ../Mixin/InputField.jsx */ 177);
+	
+	var _InputField2 = _interopRequireDefault(_InputField);
+	
+	var _ButtonGroup = __webpack_require__(/*! ../Mixin/ButtonGroup.jsx */ 396);
+	
+	var _ButtonGroup2 = _interopRequireDefault(_ButtonGroup);
+	
+	var _Rooms = __webpack_require__(/*! ../Mixin/Rooms.jsx */ 395);
+	
+	var _Rooms2 = _interopRequireDefault(_Rooms);
+	
+	var _Bind = __webpack_require__(/*! ../Mixin/Bind.js */ 182);
+	
+	var _Bind2 = _interopRequireDefault(_Bind);
+	
+	var _reactDatePicker = __webpack_require__(/*! react-date-picker */ 218);
+	
+	var _Range = __webpack_require__(/*! ../Mixin/Range.js */ 397);
+	
+	var _Range2 = _interopRequireDefault(_Range);
+	
+	var _Place2 = __webpack_require__(/*! ../Mixin/Place.jsx */ 398);
+	
+	var _Place3 = _interopRequireDefault(_Place2);
+	
+	var _BigCheckbox = __webpack_require__(/*! ../Mixin/BigCheckbox.jsx */ 418);
+	
+	var _BigCheckbox2 = _interopRequireDefault(_BigCheckbox);
+	
+	var _Message = __webpack_require__(/*! ../Mixin/Message.jsx */ 180);
+	
+	var _Message2 = _interopRequireDefault(_Message);
+	
+	var _SubmitForm = __webpack_require__(/*! ../Mixin/SubmitForm.jsx */ 420);
+	
+	var _SubmitForm2 = _interopRequireDefault(_SubmitForm);
+	
+	var _CheckValues = __webpack_require__(/*! ../Mixin/CheckValues.js */ 179);
+	
+	var _CheckValues2 = _interopRequireDefault(_CheckValues);
+	
+	var _moment = __webpack_require__(/*! moment */ 221);
+	
+	var _moment2 = _interopRequireDefault(_moment);
+	
+	var _Help = __webpack_require__(/*! ../Mixin/Help.jsx */ 419);
+	
+	var _Help2 = _interopRequireDefault(_Help);
+	
+	var _UtilityFunctions = __webpack_require__(/*! ../Mixin/UtilityFunctions.js */ 405);
+	
+	var _UtilityFunctions2 = _interopRequireDefault(_UtilityFunctions);
+	
+	__webpack_require__(/*! react-date-picker/index.css */ 407);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	/* global $ */
+	
+	var SubleaseForm = function (_Place) {
+	  _inherits(SubleaseForm, _Place);
+	
+	  function SubleaseForm(props) {
+	    _classCallCheck(this, SubleaseForm);
+	
+	    var _this = _possibleConstructorReturn(this, (SubleaseForm.__proto__ || Object.getPrototypeOf(SubleaseForm)).call(this, props));
+	
+	    _this.state = {
+	      sublease: null,
+	      errors: {},
+	      message: null,
+	      saving: false
+	    };
+	    var methods = ['setValue', 'setIntegerValue', 'checkForm', 'checkPhone', 'updateRent', 'setMoveIn', 'setMoveOut'];
+	    (0, _Bind2.default)(methods, _this);
+	    return _this;
+	  }
+	
+	  _createClass(SubleaseForm, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.loadCurrent();
+	    }
+	  }, {
+	    key: 'setMessage',
+	    value: function setMessage(text, type) {
+	      var message = {
+	        text: text,
+	        type: type
+	      };
+	      this.setState({ message: message });
+	      this.scrollUp();
+	    }
+	  }, {
+	    key: 'unsetMessage',
+	    value: function unsetMessage() {
+	      this.setState({ message: null });
+	    }
+	  }, {
+	    key: 'checkForm',
+	    value: function checkForm(e) {
+	      e.preventDefault();
+	      var sublease = this.state.sublease;
+	      var errors = this.state.errors;
+	      var errorFound = false;
+	      if (sublease.name.length === 0) {
+	        errors.name = true;
+	        errorFound = true;
+	      } else {
+	        errors.name = false;
+	      }
+	
+	      if (sublease.address.length === 0) {
+	        errors.address = true;
+	        errorFound = true;
+	      } else {
+	        errors.address = false;
+	      }
+	
+	      if ((0, _Empty2.default)(sublease.monthly_rent)) {
+	        errors.monthly_rent = true;
+	        errorFound = true;
+	      } else {
+	        errors.monthly_rent = false;
+	      }
+	
+	      if ((0, _Empty2.default)(sublease.contact_phone)) {
+	        errors.contact_phone = true;
+	        errorFound = true;
+	      } else {
+	        errors.contact_phone = false;
+	      }
+	
+	      if ((0, _Empty2.default)(sublease.contact_email)) {
+	        errors.contact_email = true;
+	        errorFound = true;
+	      } else {
+	        errors.contact_email = false;
+	      }
+	
+	      if ((0, _Empty2.default)(sublease.landlord_perm)) {
+	        errors.landlord_perm = true;
+	        errorFound = true;
+	      } else {
+	        errors.landlord_perm = false;
+	      }
+	
+	      if (!this.checkMoveOutDate(sublease.move_out_date, sublease.move_in_date)) {
+	        errorFound = true;
+	      }
+	
+	      if (errorFound) {
+	        this.setMessage('Check below for errors before saving', 'danger');
+	        this.setState({ errors: errors, activeTab: 0 });
+	        this.scrollUp();
+	      } else {
+	        this.save();
+	      }
+	    }
+	  }, {
+	    key: 'checkPhone',
+	    value: function checkPhone() {
+	      this.setError('contact_phone', !_CheckValues2.default.isPhone(this.state.sublease.contact_phone));
+	    }
+	  }, {
+	    key: 'readyPost',
+	    value: function readyPost() {
+	      var sublease = this.state.sublease;
+	      if (sublease.heat_type.length === 0) {
+	        sublease.heat_type = '';
+	      }
+	      return sublease;
+	    }
+	  }, {
+	    key: 'save',
+	    value: function save() {
+	      var sublease = this.readyPost();
+	      var methodName = 'POST';
+	      this.setState({ saving: true });
+	      var url = './properties/Sublease';
+	      if (sublease.id > 0) {
+	        methodName = 'PUT';
+	        url = url + '/' + +this.state.sublease.id;
+	      }
+	
+	      $.ajax({
+	        url: url,
+	        data: sublease,
+	        dataType: 'json',
+	        method: methodName,
+	        success: function (data) {
+	          if (data.error !== undefined) {
+	            this.setMessage(data.error, 'danger');
+	          } else {
+	            window.location.href = './propesrties/Sublease/' + data.id;
+	          }
+	        }.bind(this),
+	        error: function () {
+	          this.setMessage('A server error prevented this sublease from saving.', 'danger');
+	        }.bind(this)
+	      });
+	    }
+	  }, {
+	    key: 'scrollUp',
+	    value: function scrollUp() {
+	      this.refs.PageTop.scrollIntoView();
+	    }
+	  }, {
+	    key: 'loadCurrent',
+	    value: function loadCurrent() {
+	      $.getJSON('./properties/Sublease/owner').done(function (data) {
+	        if (!(0, _Empty2.default)(data.sublease)) {
+	          this.setState({ sublease: data.sublease });
+	        } else {
+	          var sublease = _SubleaseObject2.default;
+	          sublease.move_in_date = String((0, _moment2.default)().format('X'));
+	          sublease.move_out_date = String((0, _moment2.default)().add(1, 'years').format('X'));
+	          sublease.contact_email = data['email'];
+	          this.setState({ sublease: sublease });
+	        }
+	      }.bind(this));
+	    }
+	  }, {
+	    key: 'setValue',
+	    value: function setValue(varname, value) {
+	      if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object' && value.target !== undefined) {
+	        value = value.target.value;
+	      }
+	      var sublease = this.state.sublease;
+	      sublease[varname] = value;
+	      this.setState({ sublease: sublease });
+	    }
+	  }, {
+	    key: 'setError',
+	    value: function setError(varname, value) {
+	      var errors = this.state.errors;
+	      errors[varname] = value;
+	      this.setState({ errors: errors });
+	    }
+	  }, {
+	    key: 'setIntegerValue',
+	    value: function setIntegerValue(varname, value) {
+	      if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object' && value.target !== undefined) {
+	        value = value.target.value;
+	      } else if (typeof value === 'boolean') {
+	        value = value ? 1 : 0;
+	      }
+	      value = parseInt(value);
+	      this.setValue(varname, value);
+	    }
+	  }, {
+	    key: 'setMoveIn',
+	    value: function setMoveIn(a) {
+	      var date = String((0, _moment2.default)(a).format('X'));
+	      this.setValue('move_in_date', date);
+	    }
+	  }, {
+	    key: 'checkMoveOutDate',
+	    value: function checkMoveOutDate(out_date, in_date) {
+	      if ((0, _moment2.default)(out_date).unix() < (0, _moment2.default)().unix() || (0, _moment2.default)(out_date).unix() < (0, _moment2.default)(in_date).unix()) {
+	        this.setError('move_out_date', true);
+	        return false;
+	      } else {
+	        this.setError('move_out_date', false);
+	        return true;
+	      }
+	    }
+	  }, {
+	    key: 'setMoveOut',
+	    value: function setMoveOut(a) {
+	      var date = String((0, _moment2.default)(a).format('X'));
+	      this.checkMoveOutDate(a, this.state.move_in_date);
+	      this.setValue('move_out_date', date);
+	    }
+	  }, {
+	    key: 'updateParking',
+	    value: function updateParking(parking) {
+	      if ((typeof parking === 'undefined' ? 'undefined' : _typeof(parking)) === 'object') {
+	        parking = Number(parking.target.value);
+	      } else {
+	        parking = Number(parking);
+	      }
+	      if (parking >= 1 && parking <= 6) {
+	        this.setValue('parking_per_unit', parking);
+	      }
+	    }
+	  }, {
+	    key: 'getLeaseType',
+	    value: function getLeaseType() {
+	      return [{
+	        value: '0',
+	        label: _react2.default.createElement(
+	          'span',
+	          null,
+	          _react2.default.createElement('i', { className: 'fa fa-user' }),
+	          '\xA0 Tenant'
+	        )
+	      }, {
+	        value: '1',
+	        label: _react2.default.createElement(
+	          'span',
+	          null,
+	          _react2.default.createElement('i', { className: 'fa fa-building' }),
+	          '\xA0 Unit'
+	        )
+	      }];
+	    }
+	  }, {
+	    key: 'updateRent',
+	    value: function updateRent(e) {
+	      var rent = e.target.value.replace(/[^\d]/g, '');
+	      this.setError('monthly_rent', (0, _Empty2.default)(rent));
+	      this.setValue('monthly_rent', rent);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      if (this.state.sublease === null) {
+	        return _react2.default.createElement(_Waiting2.default, { message: 'Checking for previous sublease...' });
+	      }
+	      var sublease = this.state.sublease;
+	
+	      var parking = (0, _Range2.default)(sublease.parking_per_unit);
+	      var red = {
+	        color: 'red'
+	      };
+	
+	      var message = void 0;
+	      if (this.state.message !== null) {
+	        message = _react2.default.createElement(_Message2.default, {
+	          message: this.state.message.text,
+	          type: this.state.message.type,
+	          onClose: this.unsetMessage });
+	      }
+	
+	      var landlordWarning = void 0;
+	      if (this.state.errors.landlord_perm === true) {
+	        landlordWarning = _react2.default.createElement(
+	          'div',
+	          { className: 'alert alert-danger' },
+	          _react2.default.createElement('i', { className: 'fa fa-exclamation-triangle' }),
+	          '\xA0You should not sublease without notifying your landlord'
+	        );
+	      }
+	
+	      var moveOutError = void 0;
+	      console.log(this.state.errors);
+	      if (this.state.errors.move_out_date) {
+	        moveOutError = _react2.default.createElement(
+	          'span',
+	          { className: 'label label-danger' },
+	          'Move out date must be after move in date and the current date.'
+	        );
+	      }
+	
+	      return _react2.default.createElement(
+	        'div',
+	        { ref: 'PageTop', className: 'sublease-form' },
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Update my sublease'
+	        ),
+	        message,
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-6' },
+	            _react2.default.createElement(_InputField2.default, {
+	              name: 'name',
+	              label: 'Title',
+	              value: sublease.name,
+	              errorMessage: this.state.errors.name ? 'Title may not be empty' : null,
+	              change: this.setValue.bind(this, 'name'),
+	              required: true })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-6' },
+	            _react2.default.createElement(_InputField2.default, {
+	              name: 'address',
+	              label: 'Address',
+	              type: 'text',
+	              placeholder: 'Street, City, State, Zip code',
+	              errorMessage: this.state.errors.address ? 'Address may not be empty' : null,
+	              value: sublease.address,
+	              change: this.setValue.bind(this, 'address'),
+	              required: true }),
+	            ' ',
+	            sublease.address.length > 10 ? _react2.default.createElement(
+	              'small',
+	              null,
+	              _react2.default.createElement(
+	                'a',
+	                { href: this.googleize(sublease.address), target: '_blank' },
+	                'View on Google Maps'
+	              ),
+	              '\xA0',
+	              _react2.default.createElement(_Help2.default, {
+	                title: 'If Google Maps can\'t find the location, you may want to refine the address' })
+	            ) : null
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-12' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Description'
+	            ),
+	            _react2.default.createElement('textarea', {
+	              className: 'form-control',
+	              placeholder: 'Description is not searchable. Be sure to use other settings as well.',
+	              name: 'description',
+	              value: sublease.description,
+	              onChange: this.setValue.bind(this, 'description') })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-6' },
+	            _react2.default.createElement(_InputField2.default, {
+	              name: 'contact_phone',
+	              label: 'Contact phone number',
+	              value: sublease.contact_phone,
+	              errorMessage: this.state.errors.contact_phone ? 'Phone number must be 10 digits' : null,
+	              change: this.setValue.bind(this, 'contact_phone'),
+	              placeholder: '###-###-####',
+	              blur: this.checkPhone,
+	              required: true })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-6' },
+	            _react2.default.createElement(_InputField2.default, {
+	              name: 'contact_email',
+	              label: 'Contact email address',
+	              value: sublease.contact_email,
+	              change: this.setValue.bind(this, 'contact_email'),
+	              required: true })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-4' },
+	            _react2.default.createElement(
+	              'div',
+	              { style: {
+	                  maxWidth: '200px'
+	                } },
+	              _react2.default.createElement(
+	                'label',
+	                null,
+	                'Monthly rent'
+	              ),
+	              _react2.default.createElement('i', { className: 'fa fa-asterisk', style: red }),
+	              '\xA0',
+	              _react2.default.createElement(_Help2.default, {
+	                title: 'Enter the total amount the subleaser will pay per month, not the rent for the whole unit' }),
+	              _react2.default.createElement(_InputField2.default, {
+	                ref: 'monthlyRent',
+	                name: 'monthly_rent',
+	                type: 'type',
+	                wrap: this.dollarize,
+	                errorMessage: this.state.errors.monthly_rent ? 'Rent amount may not be empty' : null,
+	                value: sublease.monthly_rent,
+	                change: this.updateRent,
+	                required: true })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-4' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Subleasing tenant or unit'
+	            ),
+	            _react2.default.createElement(_Help2.default, { title: 'Are you subleasing a tenant\'s portion or the entire unit?' }),
+	            _react2.default.createElement(_ButtonGroup2.default, {
+	              name: 'lease_type',
+	              buttons: this.getLeaseType(),
+	              match: sublease.lease_type,
+	              handle: this.setValue.bind(this, 'lease_type'),
+	              activeColor: 'success' })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-4' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Additional fees'
+	            ),
+	            _react2.default.createElement('textarea', {
+	              className: 'form-control',
+	              placeholder: 'List any required subleaser fees or deposits',
+	              name: 'additional_fees',
+	              value: sublease.additional_fees,
+	              onChange: this.setValue.bind(this, 'additional_fees') })
+	          )
+	        ),
+	        _react2.default.createElement(_Rooms2.default, { property: sublease, setValue: this.setValue, bg: true }),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-6' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Move-in date'
+	            ),
+	            _react2.default.createElement('br', null),
+	            _react2.default.createElement(_reactDatePicker.DateField, {
+	              dateFormat: 'YYYY-MM-DD',
+	              onChange: this.setMoveIn,
+	              value: this.formatDate(sublease.move_in_date) })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-6' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Sublease end date'
+	            ),
+	            _react2.default.createElement('br', null),
+	            _react2.default.createElement(_reactDatePicker.DateField, {
+	              dateFormat: 'YYYY-MM-DD',
+	              onChange: this.setMoveOut,
+	              value: this.formatDate(sublease.move_out_date) }),
+	            ' ',
+	            moveOutError
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-6' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'pull-left' },
+	              _react2.default.createElement(
+	                'label',
+	                null,
+	                'Parking spaces per unit'
+	              ),
+	              _react2.default.createElement('input', {
+	                name: 'parking_per_unit',
+	                type: 'text',
+	                size: '2',
+	                onChange: this.updateParking,
+	                onClick: this.select,
+	                value: sublease.parking_per_unit,
+	                className: 'single-input' })
+	            ),
+	            _react2.default.createElement(_ButtonGroup2.default, {
+	              buttons: parking,
+	              match: sublease.parking_per_unit,
+	              handle: this.updateParking,
+	              activeColor: 'success' })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-6' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Miles from campus'
+	            ),
+	            _react2.default.createElement(_ButtonGroup2.default, {
+	              name: 'campus_distance',
+	              buttons: this.campusDistance(),
+	              match: sublease.campus_distance,
+	              handle: this.setValue.bind(this, 'campus_distance'),
+	              activeColor: 'success' }),
+	            _react2.default.createElement(_BigCheckbox2.default, {
+	              handle: this.setIntegerValue.bind(this, 'appalcart'),
+	              checked: !(0, _Empty2.default)(sublease.appalcart),
+	              label: 'On AppalCart route' })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-12' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Property type'
+	            ),
+	            _react2.default.createElement('br', null),
+	            _react2.default.createElement(_ButtonGroup2.default, {
+	              name: 'proptype',
+	              buttons: this.propertyType(),
+	              match: sublease.proptype,
+	              handle: this.setValue.bind(this, 'proptype'),
+	              activeColor: 'success' })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-4' },
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement(_BigCheckbox2.default, {
+	                handle: this.setIntegerValue.bind(this, 'smoking_allowed'),
+	                checked: !(0, _Empty2.default)(sublease.smoking_allowed),
+	                label: 'Smoking allowed' }),
+	              '\xA0',
+	              _react2.default.createElement(_Help2.default, {
+	                title: 'Regardless of landlord\'s allowance, the other tenant\'s wishes should be respected.' })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement(_BigCheckbox2.default, {
+	                handle: this.setIntegerValue.bind(this, 'pets_allowed'),
+	                checked: !(0, _Empty2.default)(sublease.pets_allowed),
+	                label: 'Pets allowed' }),
+	              '\xA0',
+	              _react2.default.createElement(_Help2.default, { title: 'You may put pet details in the description' })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-4' },
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement(_BigCheckbox2.default, {
+	                handle: this.setIntegerValue.bind(this, 'dishwasher'),
+	                checked: !(0, _Empty2.default)(sublease.dishwasher),
+	                label: 'Dishwasher' })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement(_BigCheckbox2.default, {
+	                handle: this.setIntegerValue.bind(this, 'furnished'),
+	                checked: !(0, _Empty2.default)(sublease.furnished),
+	                label: 'Furnished' })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-4' },
+	            _react2.default.createElement(_BigCheckbox2.default, {
+	              handle: this.setIntegerValue.bind(this, 'utilities_inc'),
+	              checked: !(0, _Empty2.default)(sublease.utilities_inc),
+	              label: 'Utilities included' }),
+	            '\xA0',
+	            _react2.default.createElement(_Help2.default, { title: 'Check this box if the unit\'s utilities are included in the rent.' })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-6' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Internet'
+	            ),
+	            _react2.default.createElement('br', null),
+	            _react2.default.createElement(_ButtonGroup2.default, {
+	              name: 'internet_type',
+	              buttons: _UtilityFunctions2.default.internetTypes(),
+	              match: sublease.internet_type,
+	              handle: this.setIntegerValue.bind(this, 'internet_type'),
+	              activeColor: 'success' })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-6' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Television'
+	            ),
+	            _react2.default.createElement('br', null),
+	            _react2.default.createElement(_ButtonGroup2.default, {
+	              name: 'tv_type',
+	              buttons: _UtilityFunctions2.default.televisionTypes(),
+	              match: sublease.tv_type,
+	              handle: this.setIntegerValue.bind(this, 'tv_type'),
+	              activeColor: 'success' })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-12' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Laundry'
+	            ),
+	            _react2.default.createElement('br', null),
+	            _react2.default.createElement(_ButtonGroup2.default, {
+	              name: 'laundry_type',
+	              buttons: _UtilityFunctions2.default.laundryTypes(),
+	              match: sublease.laundry_type,
+	              handle: this.setIntegerValue.bind(this, 'laundry_type'),
+	              activeColor: 'success' })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-12' },
+	            _react2.default.createElement(
+	              'label',
+	              null,
+	              'Trash and Recycling'
+	            ),
+	            _react2.default.createElement('br', null),
+	            _react2.default.createElement(_ButtonGroup2.default, {
+	              name: 'trash_type',
+	              buttons: _UtilityFunctions2.default.trashTypes(),
+	              match: sublease.trash_type,
+	              handle: this.setIntegerValue.bind(this, 'trash_type'),
+	              activeColor: 'success' })
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-6' },
+	            _react2.default.createElement(_BigCheckbox2.default, {
+	              checked: !(0, _Empty2.default)(sublease.landlord_perm),
+	              handle: this.setIntegerValue.bind(this, 'landlord_perm'),
+	              label: 'My landlord is aware I am subleasing' })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-6' },
+	            landlordWarning
+	          )
+	        ),
+	        _react2.default.createElement(_SubmitForm2.default, { check: this.checkForm, saving: this.state.saving, label: 'Sublease' })
+	      );
+	    }
+	  }]);
+	
+	  return SubleaseForm;
+	}(_Place3.default);
+	
+	exports.default = SubleaseForm;
+	
+	
+	SubleaseForm.propTypes = {};
+
+/***/ },
+/* 417 */
+/*!********************************************!*\
+  !*** ./javascript/Mixin/SubleaseObject.js ***!
+  \********************************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var SubleaseObject = {
+	  additional_fees: '',
+	  address: '',
+	  appalcart: '0',
+	  bathroom_no: '1',
+	  bedroom_no: '1',
+	  campus_distance: '0',
+	  contact_info: '0',
+	  description: '',
+	  dishwasher: '0',
+	  furnished: '0',
+	  internet_type: '1',
+	  landlord_perm: '0',
+	  laundry_type: '0',
+	  lease_type: '0',
+	  monthly_rent: '0',
+	  move_in_date: 0,
+	  move_out_date: 0,
+	  name: '',
+	  parking_per_unit: '1',
+	  pets_allowed: '0',
+	  proptype: '0',
+	  smoking_allowed: '0',
+	  trash_type: '0',
+	  tv_type: '0',
+	  utilities_inc: '0'
+	};
+	
+	exports.default = SubleaseObject;
+
+/***/ },
+/* 418 */
+/*!******************************************!*\
+  !*** ./javascript/Mixin/BigCheckbox.jsx ***!
+  \******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var BigCheckbox = function (_React$Component) {
+	  _inherits(BigCheckbox, _React$Component);
+	
+	  function BigCheckbox(props) {
+	    _classCallCheck(this, BigCheckbox);
+	
+	    var _this = _possibleConstructorReturn(this, (BigCheckbox.__proto__ || Object.getPrototypeOf(BigCheckbox)).call(this, props));
+	
+	    _this.handle = _this.handle.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(BigCheckbox, [{
+	    key: 'handle',
+	    value: function handle() {
+	      this.props.handle(!this.props.checked);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var mute = {
+	        color: '#666'
+	      };
+	      var point = {
+	        cursor: 'pointer',
+	        display: 'inline-block'
+	      };
+	      var labelText = {
+	        fontSize: '20px',
+	        display: 'inline-block',
+	        marginTop: '4px'
+	      };
+	
+	      return _react2.default.createElement(
+	        'div',
+	        { onClick: this.handle, style: point },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'fa-stack fa-lg pull-left' },
+	          _react2.default.createElement('i', { className: 'fa fa-square-o fa-stack-2x', style: mute }),
+	          this.props.checked ? _react2.default.createElement('i', { className: 'fa fa-check text-success fa-stack-2x' }) : null
+	        ),
+	        '\xA0',
+	        _react2.default.createElement(
+	          'div',
+	          { style: labelText, className: this.props.checked ? 'text-success' : 'text-muted' },
+	          this.props.label
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return BigCheckbox;
+	}(_react2.default.Component);
+	
+	exports.default = BigCheckbox;
+	
+	
+	BigCheckbox.propTypes = {
+	  label: _react2.default.PropTypes.string,
+	  checked: _react2.default.PropTypes.bool,
+	  handle: _react2.default.PropTypes.func.isRequired
+	};
+	
+	BigCheckbox.defaultProps = {
+	  checked: false
+	};
+
+/***/ },
+/* 419 */
+/*!***********************************!*\
+  !*** ./javascript/Mixin/Help.jsx ***!
+  \***********************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	/* global $ */
+	
+	var Help = function (_React$Component) {
+	  _inherits(Help, _React$Component);
+	
+	  function Help(props) {
+	    _classCallCheck(this, Help);
+	
+	    return _possibleConstructorReturn(this, (Help.__proto__ || Object.getPrototypeOf(Help)).call(this, props));
+	  }
+	
+	  _createClass(Help, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      $('.help').tooltip();
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement('i', {
+	        className: 'fa fa-question-circle text-primary help pointer',
+	        'data-toggle': 'tooltip',
+	        'data-placement': this.props.placement,
+	        title: this.props.title });
+	    }
+	  }]);
+	
+	  return Help;
+	}(_react2.default.Component);
+	
+	exports.default = Help;
+	
+	
+	Help.propTypes = {
+	  placement: _react2.default.PropTypes.string,
+	  title: _react2.default.PropTypes.string.isRequired
+	};
+	
+	Help.defaultProps = {
+	  placement: 'right'
+	};
+
+/***/ },
 /* 420 */
 /*!*****************************************!*\
   !*** ./javascript/Mixin/SubmitForm.jsx ***!
@@ -31642,4 +30533,4 @@ webpackJsonp([7],[
 
 /***/ }
 ]);
-//# sourceMappingURL=propertyform.js.map
+//# sourceMappingURL=subleaseform.js.map
