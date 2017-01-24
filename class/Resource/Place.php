@@ -29,7 +29,6 @@ abstract class Place extends Base
     protected $bathroom_no;
     protected $bedroom_no;
     protected $campus_distance;
-    protected $contract_length;
     protected $created;
     protected $description;
     protected $dishwasher;
@@ -41,8 +40,8 @@ abstract class Place extends Base
     protected $name;
     protected $parking_per_unit;
     protected $pets_allowed;
-    protected $prop_type;
-    //protected $smoking_allowed;
+    protected $proptype;
+    protected $smoking_allowed;
     protected $trash_type;
     protected $tv_type;
     protected $table = 'prop_sublease';
@@ -56,29 +55,28 @@ abstract class Place extends Base
         $this->address = new Variable\CanopyString('', 'address');
         $this->appalcart = new Variable\Bool(false, 'appalcart');
         $this->bathroom_no = new \phpws2\Variable\Decimal(1.0, 'bathroom_no');
-        $this->bedroom_no = new Variable\Integer(1, 'bedroom_no');
+        $this->bedroom_no = new Variable\SmallInteger(1, 'bedroom_no');
         $this->bedroom_no->setRange(1, 10);
-        $this->campus_distance = new Variable\Integer(0, 'campus_distance');
+        $this->campus_distance = new Variable\SmallInteger(0, 'campus_distance');
         $this->campus_distance->setRange(0, 100);
-        $this->contract_length = new Variable\Integer(3, 'contract_length');
         $this->created = new Variable\DateTime(null, 'created');
         $this->description = new Variable\CanopyString('', 'description');
         $this->dishwasher = new Variable\Bool(false, 'dishwasher');
         $this->furnished = new Variable\Bool(false, 'furnished');
-        $this->internet_type = new Variable\Integer(1, 'internet_type');
+        $this->internet_type = new Variable\SmallInteger(1, 'internet_type');
         $this->internet_type->setRange(0, 20);
-        $this->laundry_type = new Variable\Integer(0, 'laundry_type');
+        $this->laundry_type = new Variable\SmallInteger(0, 'laundry_type');
         $this->laundry_type->setRange(0, 10);
-        $this->monthly_rent = new Variable\Integer(0, 'monthly_rent');
+        $this->monthly_rent = new Variable\SmallInteger(0, 'monthly_rent');
         $this->move_in_date = new Variable\Date(time(), 'move_in_date');
         $this->name = new Variable\CanopyString('', 'name');
         $this->name->setLimit(100);
-        $this->parking_per_unit = new Variable\Integer(1, 'parking_per_unit');
+        $this->parking_per_unit = new Variable\SmallInteger(1, 'parking_per_unit');
         $this->pets_allowed = new Variable\Bool(false, 'pets_allowed');
-        $this->proptype = new Variable\Integer(0, 'proptype');
+        $this->proptype = new Variable\SmallInteger(0, 'proptype');
         $this->proptype->setRange(0, 20);
-        //$this->smoking_allowed = new Variable\Bool(false, 'smoking_allowed');
-        $this->tv_type = new Variable\Integer(0, 'tv_type');
+        $this->smoking_allowed = new Variable\Bool(false, 'smoking_allowed');
+        $this->tv_type = new Variable\SmallInteger(0, 'tv_type');
         $this->tv_type->setRange(0, 10);
         $this->updated = new Variable\DateTime(time(), 'updated');
         $this->utilities_inc = new Variable\Bool(false, 'utilities_inc');
@@ -95,38 +93,6 @@ abstract class Place extends Base
                 return 'Between 10 and 25 miles';
             case '25':
                 return '25 miles or more';
-
-            default:
-                return false;
-        }
-    }
-
-    public function getContractLength()
-    {
-        switch ($this->contract_length->get()) {
-            case C_MONTHLY:
-                return 'Monthly';
-
-            case C_SIX_MONTH:
-                return 'Every six months';
-
-            case C_YEARLY:
-                return 'Yearly (12 months)';
-
-            case C_SUMMER:
-                return 'Summer only';
-
-            case C_SEMESTER:
-                return 'Per semester';
-
-            case C_TWO_SEMESTER:
-                return 'Two semesters, no summer';
-
-            case C_TEN_MONTH:
-                return '10 months';
-
-            case C_FIVE_MONTH:
-                return '5 months';
 
             default:
                 return false;
@@ -247,6 +213,7 @@ abstract class Place extends Base
         $view['property_map_address'] = $this->googleMapUrl($this->address);
         $view['high_speed'] = $this->isHighSpeed();
         $view['proptype'] = $this->getPropType();
+        $view['smoking_allowed'] = $this->getSmokingAllowed();
         return $view;
     }
 
