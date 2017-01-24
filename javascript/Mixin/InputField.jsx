@@ -73,7 +73,7 @@ export default class InputField extends React.Component {
       disabled={this.props.disabled}
       size={this.props.size}
       maxLength={this.props.maxLength}
-      placeholder={this.state.placeholder}
+      placeholder={this.props.placeholder}
       autoComplete={this.props.autocomplete}/>)
 
     if (this.props.wrap) {
