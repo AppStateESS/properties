@@ -73,6 +73,14 @@ export default class Features extends React.Component {
                 label={['Workout room', 'No workout room']}
                 handleClick={this.props.setValue.bind(this, 'workout_room')}/>
             </p>
+            <p>
+            <BooleanButton
+              name="smoking_allowed"
+              label={['Smoking allowed', 'No smoking allowed']}
+              current={property.utilities_inc}
+              icon={true}
+              handleClick={this.props.setValue.bind(this, 'smoking_allowed')}/>
+            </p>
           </div>
         </div>
       </div>
