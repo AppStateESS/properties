@@ -11,5 +11,7 @@ exports.entry = {
   managerapproval: exports.APP_DIR + '/ManagerApproval/index.jsx',
   managersignin: exports.APP_DIR + '/ManagerSignin/index.jsx',
   managerdesktop: exports.APP_DIR + '/ManagerDesktop/index.jsx',
+  sublease: exports.APP_DIR + '/Sublease/index.jsx',
+  subleaseform: exports.APP_DIR + '/SubleaseForm/index.jsx',
   vendor: ['react', 'react-dom']
 }
