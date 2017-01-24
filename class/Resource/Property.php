@@ -26,6 +26,7 @@ class Property extends Place
     protected $clean_fee_refund;
     protected $clubhouse;
     protected $contact_id;
+    protected $contract_length;
     protected $efficiency;
     protected $heat_type;
     protected $lease_type;
@@ -68,10 +69,11 @@ class Property extends Place
         $this->clubhouse = new Variable\Bool(false, 'clubhouse');
         $this->contact_id = new Variable\Integer(0, 'contact_id');
         $this->contact_id->setRange(1);
+        $this->contract_length = new Variable\SmallInteger(3, 'contract_length');
         $this->efficiency = new Variable\Bool(false, 'efficiency');
         $this->heat_type = new Variable\Arr(null, 'heat_type');
         $this->heat_type->allowNull(true);
-        $this->lease_type = new Variable\Integer(0, 'lease_type');
+        $this->lease_type = new Variable\SmallInteger(0, 'lease_type');
         $this->lease_type->setRange(0, 10);
         $this->other_fees = new Variable\CanopyString('', 'other_fees');
         $this->parking_fee = new Variable\Integer(0, 'parking_fee');
@@ -81,7 +83,7 @@ class Property extends Place
         $this->pet_type = new Variable\CanopyString('', 'pet_type');
         $this->security_amt = new Variable\Integer(0, 'security_amt');
         $this->security_refund = new Variable\Bool(false, 'security_refund');
-        $this->student_type = new Variable\Integer(0, 'student_type');
+        $this->student_type = new Variable\SmallInteger(0, 'student_type');
         $this->sublease = new Variable\Bool(false, 'sublease');
         $this->timeout = new Variable\Integer(0, 'timeout');
         $this->trash_type = new Variable\Integer(0, 'trash_type');
@@ -135,7 +137,6 @@ class Property extends Place
         }
     }
 
-
     public function getHeatTypes()
     {
         $heat_types = $this->heat_type->get();
@@ -172,10 +173,15 @@ class Property extends Place
         return implode(', ', $types);
     }
 
+    public function getSmokingAllowed()
+    {
+        return $this->smoking_allowed ? 'Smoking allowed' : 'Smoking not allowed';
+    }
+
     public function view()
     {
         $view = parent::view();
-        
+
         $view['lease_type'] = $this->lease_type === '0' ? 'per unit' : 'per tenant';
         $view['trash_type'] = $this->getTrashType();
         $view['admin_fee_refund'] = $this->admin_fee_refund->get() ? 'Refundable' : 'Non-refundable';
@@ -196,6 +202,38 @@ class Property extends Place
         }
 
         return $view;
+    }
+
+    public function getContractLength()
+    {
+        switch ($this->contract_length->get()) {
+            case C_MONTHLY:
+                return 'Monthly';
+
+            case C_SIX_MONTH:
+                return 'Every six months';
+
+            case C_YEARLY:
+                return 'Yearly (12 months)';
+
+            case C_SUMMER:
+                return 'Summer only';
+
+            case C_SEMESTER:
+                return 'Per semester';
+
+            case C_TWO_SEMESTER:
+                return 'Two semesters, no summer';
+
+            case C_TEN_MONTH:
+                return '10 months';
+
+            case C_FIVE_MONTH:
+                return '5 months';
+
+            default:
+                return false;
+        }
     }
 
 }
