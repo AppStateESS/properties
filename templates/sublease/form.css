@@ -1,16 +1,16 @@
-.property-form .row {
+.sublease-form .row {
     border : 1px solid #e3e3e3;
 }
 
-.property-form .row > div {
+.sublease-form .row > div {
     padding : 1em;
 }
 
-.property-form .form-group {
+.sublease-form .form-group {
     margin: 0;
 }
 
-.property-form label {
+.sublease-form label {
     font-size : 1.2em;
 }
 
@@ -38,6 +38,6 @@
     color : red;
 }
 
-.property-form div.row:nth-child(odd) {
+.sublease-form div.row:nth-child(odd) {
     background-color : #d9edf7;
 }
