@@ -90,7 +90,7 @@ BooleanButton.propTypes = {
   label: React.PropTypes.array,
   icon: React.PropTypes.oneOfType([React.PropTypes.array, React.PropTypes.bool]),
   handleClick: React.PropTypes.func,
-  current: React.PropTypes.bool,
+  current: React.PropTypes.oneOfType([React.PropTypes.bool, React.PropTypes.string]),
   name: React.PropTypes.string
 }
 
