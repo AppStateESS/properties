@@ -53,6 +53,6 @@ abstract class Base
     
     public function getId()
     {
-        return $id;
+        return $this->id;
     }
 }
