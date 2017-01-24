@@ -3,6 +3,7 @@ import React from 'react'
 import bindMethods from '../Mixin/Bind.js'
 import ButtonGroup from '../Mixin/ButtonGroup.jsx'
 import UtilityImbursement from './UtilityImbursement.jsx'
+import UtilityFunctions from '../Mixin/UtilityFunctions.js'
 
 export default class Utilities extends React.Component {
   constructor(props) {
@@ -39,87 +40,6 @@ export default class Utilities extends React.Component {
     ]
   }
 
-  laundryTypes() {
-    return [
-      {
-        value: '0',
-        label: 'No laundry'
-      }, {
-        value: '1',
-        label: 'Washer/Dryer in unit'
-      }, {
-        value: '2',
-        label: 'Laundry room on premises'
-      }, {
-        value: '3',
-        label: 'Washer/Dryer hook ups in unit'
-      }
-    ]
-  }
-
-  trashTypes() {
-    return [
-      {
-        value: '0',
-        label: 'No pickup or bins'
-      }, {
-        value: '1',
-        label: 'Curbside pickup'
-      }, {
-        value: '2',
-        label: 'Trash only, no recycling bins'
-      }, {
-        value: '3',
-        label: 'Both bins on site'
-      }
-    ]
-  }
-
-  televisionTypes() {
-    return [
-      {
-        value: '0',
-        label: 'Antenna'
-      }, {
-        value: '1',
-        label: 'Cable'
-      }, {
-        value: '2',
-        label: 'Satellite'
-      }, {
-        value: '3',
-        label: 'Fiber'
-      }
-    ]
-  }
-
-  internetTypes() {
-    return [
-      {
-        value: '1',
-        label: 'Dial up'
-      }, {
-        value: '2',
-        label: 'DSL'
-      }, {
-        value: '3',
-        label: 'Wireless'
-      }, {
-        value: '4',
-        label: 'Satellite'
-      }, {
-        value: '5',
-        label: 'Cable'
-      }, {
-        value: '6',
-        label: 'DSL/Cable'
-      }, {
-        value: '7',
-        label: 'Fiber'
-      }
-    ]
-  }
-
   updateHeatType(type) {
     let heatType = this.props.property.heat_type
     const index = heatType.indexOf(type)
@@ -136,7 +56,7 @@ export default class Utilities extends React.Component {
     return (
       <div>
         <h3>Utilities</h3>
-        <div className="row bg-info">
+        <div className="row">
           <div className="col-sm-12">
             <label>Heating</label>
             <small>(Click all that apply)</small>
@@ -154,18 +74,18 @@ export default class Utilities extends React.Component {
             <label>Internet</label><br />
             <ButtonGroup
               name="internet_type"
-              buttons={this.internetTypes()}
+              buttons={UtilityFunctions.internetTypes()}
               match={property.internet_type}
               handle={this.props.setIntegerValue.bind(this, 'internet_type')}
               activeColor="success"/>
           </div>
         </div>
-        <div className="row bg-info">
+        <div className="row">
           <div className="col-sm-12">
             <label>Laundry</label><br />
             <ButtonGroup
               name="laundry_type"
-              buttons={this.laundryTypes()}
+              buttons={UtilityFunctions.laundryTypes()}
               match={property.laundry_type}
               handle={this.props.setIntegerValue.bind(this, 'laundry_type')}
               activeColor="success"/>
@@ -176,18 +96,18 @@ export default class Utilities extends React.Component {
             <label>Trash and Recycling</label><br />
             <ButtonGroup
               name="trash_type"
-              buttons={this.trashTypes()}
+              buttons={UtilityFunctions.trashTypes()}
               match={property.trash_type}
               handle={this.props.setIntegerValue.bind(this, 'trash_type')}
               activeColor="success"/>
           </div>
         </div>
-        <div className="row bg-info">
+        <div className="row">
           <div className="col-sm-12">
             <label>Television</label><br />
             <ButtonGroup
               name="tv_type"
-              buttons={this.televisionTypes()}
+              buttons={UtilityFunctions.televisionTypes()}
               match={property.tv_type}
               handle={this.props.setIntegerValue.bind(this, 'tv_type')}
               activeColor="success"/>
