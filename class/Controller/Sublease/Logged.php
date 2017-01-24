@@ -38,6 +38,7 @@ class Logged extends User
         } else {
             $json['sublease'] = $sublease->view();
         }
+        $json['email'] = \Current_User::getEmail();
         return $json;
     }
 
