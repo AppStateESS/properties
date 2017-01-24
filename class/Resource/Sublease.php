@@ -17,16 +17,47 @@
  */
 
 namespace properties\Resource;
+
 use \phpws2\Variable;
+
 class Sublease extends Place
 {
-    protected $landlord_perm;
+
     protected $additional_fees;
+    protected $contact_phone;
+    protected $contact_email;
+    protected $landlord_perm;
+    protected $move_out_date;
+    protected $user_id;
     
+
     public function __construct()
     {
         parent::__construct();
+
+        $this->additional_fees = new Variable\TextOnly('', 'additional_fees');
+        $this->contact_phone = new Variable\PhoneNumber('', 'contact_phone');
+        $this->contact_email = new Variable\Email('', 'contact_email');
         $this->landlord_perm = new Variable\Bool(false, 'landlord_perm');
-        $this->additional_fees = new Variable\CanopyString(false, 'additional_fees');
+        $this->move_out_date = new Variable\Date(time(), 'move_out_date');
+        $this->user_id = new Variable\Integer(0, 'user_id');
     }
+
+    public function getSubleaseType()
+    {
+        switch ($this->sublease_type->get()) {
+            case 0:
+                return 'Tenant';
+
+            case 1:
+                return 'Unit';
+        }
+    }
+    
+    public function view()
+    {
+        $vars = $this->getStringVars(true, array('active'));
+        return $vars;
+    }
+
 }
