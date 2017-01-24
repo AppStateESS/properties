@@ -12,6 +12,7 @@ import Fees from './Fees.jsx'
 import Features from './Features.jsx'
 import Utilities from './Utilities.jsx'
 import Overlay from '../Mixin/Overlay.jsx'
+import SubmitForm from '../Mixin/SubmitForm.jsx'
 
 import 'react-date-picker/index.css'
 
@@ -105,7 +106,7 @@ export default class PropertyForm extends React.Component {
   }
 
   navButtons() {
-    return ['Basic', 'Utilities', 'Amenities', 'Pets', 'Deposits and Fees']
+    return ['Basic', 'Utilities', 'Features', 'Pets', 'Deposits and Fees']
   }
 
   checkForm(e) {
@@ -161,27 +162,28 @@ export default class PropertyForm extends React.Component {
     let property = this.readyPost()
     let methodName = 'POST'
     this.setState({saving: true})
+    let url = './properties/Property'
     if (property.id > 0) {
       methodName = 'PUT'
+      url = url + '/' + + this.state.property.id
     }
-    if (property.id) {
-      $.ajax({
-        url: './properties/Property/' + this.state.property.id,
-        data: property,
-        dataType: 'json',
-        method: methodName,
-        success: function (data) {
-          if (data.error !== undefined) {
-            this.setMessage(data.error, 'danger')
-          } else {
-            window.location.href = './properties/Property/' + data.id
-          }
-        }.bind(this),
-        error: function () {
-          this.setMessage('A server error prevented this property from saving.', 'danger')
-        }.bind(this)
-      })
-    }
+
+    $.ajax({
+      url: url,
+      data: property,
+      dataType: 'json',
+      method: methodName,
+      success: function (data) {
+        if (data.error !== undefined) {
+          this.setMessage(data.error, 'danger')
+        } else {
+          window.location.href = './properties/Property/' + data.id
+        }
+      }.bind(this),
+      error: function () {
+        this.setMessage('A server error prevented this property from saving.', 'danger')
+      }.bind(this)
+    })
   }
 
   scrollUp() {
@@ -266,36 +268,13 @@ export default class PropertyForm extends React.Component {
           ? null
           : [1, 2, 3, 4]}
           click={this.setTab}/> {section}
-        <SubmitForm check={this.checkForm} saving={this.state.saving}/>
+        <SubmitForm check={this.checkForm} saving={this.state.saving} label="Property"/>
       </div>
     )
   }
 }
 PropertyForm.propTypes = {
   address: React.PropTypes.string
-}
-
-const SubmitForm = ({check, saving}) => {
-  if (saving) {
-    return (
-      <div className="submit-form">
-        <button type="button" className="btn btn-primary btn-lg">
-          <i className="fa fa-cog fa-spin fa-lg"></i>&nbsp;Saving...</button>
-      </div>
-    )
-  } else {
-    return (
-      <div className="submit-form">
-        <button type="button" className="btn btn-primary btn-lg" onClick={check}>
-          <i className="fa fa-save"></i>&nbsp;Save property</button>
-      </div>
-    )
-  }
-}
-
-SubmitForm.propTypes = {
-  check: React.PropTypes.func,
-  saving: React.PropTypes.bool
 }
 
 class DeleteQuestion extends React.Component {
