@@ -2,42 +2,21 @@
 import React from 'react'
 import {DateField} from 'react-date-picker'
 import bindMethods from '../Mixin/Bind.js'
-import Rooms from './Rooms.jsx'
+import Rooms from '../Mixin/Rooms.jsx'
 import InputField from '../Mixin/InputField.jsx'
 import ButtonGroup from '../Mixin/ButtonGroup.jsx'
-import Dollarize from '../Mixin/Dollarize.jsx'
+import Place from '../Mixin/Place.jsx'
+
 import Range from '../Mixin/Range.js'
 import moment from 'moment'
 import empty from '../Mixin/Empty.js'
 
-export default class Basic extends React.Component {
+export default class Basic extends Place {
   constructor(props) {
     super(props)
 
     const methods = ['setMoveIn', 'updateParking', 'updateRent']
     bindMethods(methods, this)
-  }
-
-  getMoveInDate() {
-    return String(moment(this.props.property.move_in_date * 1000).format('YYYY-MM-DD'))
-  }
-
-  dollarize(input) {
-    return <Dollarize>{input}</Dollarize>
-  }
-
-  getLeaseType() {
-    return [
-      {
-        value: '0',
-        label: <span>
-            <i className="fa fa-users"></i>&nbsp; Per unit</span>
-      }, {
-        value: '1',
-        label: <span>
-            <i className="fa fa-user"></i>&nbsp; Per tenant</span>
-      }
-    ]
   }
 
   updateParking(parking) {
@@ -62,6 +41,20 @@ export default class Basic extends React.Component {
     this.props.setValue('monthly_rent', rent)
   }
 
+  getLeaseType() {
+    return [
+      {
+        value: '0',
+        label: <span>
+            <i className="fa fa-users"></i>&nbsp; Per unit</span>
+      }, {
+        value: '1',
+        label: <span>
+            <i className="fa fa-user"></i>&nbsp; Per tenant</span>
+      }
+    ]
+  }
+
   studentType() {
     let types = [
       {
@@ -78,52 +71,6 @@ export default class Basic extends React.Component {
     return types
   }
 
-  campusDistance() {
-    return [
-      {
-        value: '0',
-        label: '0 to 5'
-      }, {
-        value: '5',
-        label: '5 to 10'
-      }, {
-        value: '10',
-        label: '10 to 25'
-      }, {
-        value: '25',
-        label: 'More than 25'
-      }
-    ]
-  }
-
-  propertyType() {
-    return [
-      {
-        value: '0',
-        label: 'Apartment'
-      }, {
-        value: '1',
-        label: 'Efficiency'
-      }, {
-        value: '2',
-        label: 'House'
-      }, {
-        value: '3',
-        label: 'Condo'
-      }, {
-        value: '4',
-        label: 'Townhouse'
-      }, {
-        value: '5',
-        label: 'Duplex'
-      }
-    ]
-  }
-
-  googleize(address) {
-    return 'http://maps.google.com/maps?q=' + address.replace(/[\W]/g, '+').replace(/\+{2,}/g, '+')
-  }
-
   render() {
     const {property} = this.props
     let parking = Range(property.parking_per_unit)
@@ -132,7 +79,7 @@ export default class Basic extends React.Component {
     }
     return (
       <div>
-        <div className="row bg-info">
+        <div className="row">
           <div className="col-sm-12 ">
             <InputField
               name="name"
@@ -156,7 +103,7 @@ export default class Basic extends React.Component {
               onChange={this.props.setValue.bind(null, 'description')}/>
           </div>
         </div>
-        <div className="row bg-info">
+        <div className="row">
           <div className="col-sm-12">
             <InputField
               name="address"
@@ -199,7 +146,7 @@ export default class Basic extends React.Component {
               activeColor="success"/>
           </div>
         </div>
-        <div className="row bg-info">
+        <div className="row">
           <div className="col-sm-6 form-inline">
             <label htmlFor="contract-length">Contract length</label>
             <select
@@ -223,13 +170,13 @@ export default class Basic extends React.Component {
             <DateField
               dateFormat="YYYY-MM-DD"
               onChange={this.setMoveIn}
-              value={this.getMoveInDate()}/>
+              value={this.formatDate(property.move_in_date)}/>
           </div>
         </div>
 
         <Rooms property={property} setValue={this.props.setValue}/>
 
-        <div className="row bg-info">
+        <div className="row">
           <div className="col-sm-6">
             <div className="pull-left">
               <label>Parking spaces per unit</label>
@@ -270,7 +217,7 @@ export default class Basic extends React.Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-12 bg-info">
+          <div className="col-sm-12">
             <label>Student preference</label>
             <br/>
             <ButtonGroup
