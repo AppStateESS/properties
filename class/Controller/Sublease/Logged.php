@@ -30,16 +30,74 @@ class Logged extends User
         return $this->factory->reactView('subleaseform');
     }
 
+    /**
+     * @param \Request $request
+     */
+    public function editHtmlCommand(\Request $request)
+    {
+        \Layout::addStyle('properties', 'sublease/form.css');
+        return $this->factory->reactView('subleaseform');
+    }
+
+    public function listHtmlCommand(\Request $request)
+    {
+        $sublease = $this->factory->getSubleaseByUser($this->role->getId());
+        if ($sublease) {
+            $this->editButton();
+        } else {
+            $this->createButton();
+        }
+
+        \Layout::addStyle('properties', 'sublease/list.css');
+        return $this->factory->reactView('sublease');
+    }
+
     public function ownerJsonCommand()
     {
         $sublease = $this->factory->getSubleaseByUser($this->role->getId());
         if (empty($sublease)) {
             $json['sublease'] = null;
         } else {
-            $json['sublease'] = $sublease->view();
+            $json['sublease'] = $sublease->getVariablesAsValue(true,
+                    array('active'));
         }
         $json['email'] = \Current_User::getEmail();
         return $json;
+    }
+
+    public function savePostCommand(\Request $request)
+    {
+        try {
+            return $this->factory->post($request, $this->role->getId());
+        } catch (\properties\Exception\PropertySaveFailure $e) {
+            return array('error' => $e->getMessage());
+        }
+    }
+
+    public function updatePutCommand(\Request $request)
+    {
+        try {
+            return $this->factory->put($request, $this->role->getId());
+        } catch (\properties\Exception\PropertySaveFailure $e) {
+            return array('error' => $e->getMessage());
+        }
+    }
+
+    private function editButton()
+    {
+        $button = <<<EOF
+<button onClick="window.location.href='./properties/Sublease/edit'" class="btn btn-primary btn-sm navbar-btn">Update my sublease</button>
+EOF;
+        \properties\Factory\NavBar::addItem($button);
+    }
+
+    public function viewHtmlCommand(\Request $request)
+    {
+        if ($this->factory->loggedIsOwner($this->id, $this->role->getId())) {
+            $this->editButton();
+        }
+        \Layout::addStyle('properties', 'sublease/view.css');
+        return $this->factory->view($this->id);
     }
 
 }
