@@ -25,6 +25,7 @@ abstract class Place extends Base
 
     protected $active;
     protected $address;
+    protected $airconditioning;
     protected $appalcart;
     protected $bathroom_no;
     protected $bedroom_no;
@@ -35,6 +36,7 @@ abstract class Place extends Base
     protected $furnished;
     protected $internet_type;
     protected $laundry_type;
+    protected $lease_type;
     protected $monthly_rent;
     protected $move_in_date;
     protected $name;
@@ -44,7 +46,6 @@ abstract class Place extends Base
     protected $smoking_allowed;
     protected $trash_type;
     protected $tv_type;
-    protected $table = 'prop_sublease';
     protected $updated;
     protected $utilities_inc;
 
@@ -53,6 +54,7 @@ abstract class Place extends Base
         parent::__construct();
         $this->active = new Variable\Bool(false, 'active');
         $this->address = new Variable\CanopyString('', 'address');
+        $this->airconditioning = new Variable\Bool(false, 'airconditioning');
         $this->appalcart = new Variable\Bool(false, 'appalcart');
         $this->bathroom_no = new \phpws2\Variable\Decimal(1.0, 'bathroom_no');
         $this->bedroom_no = new Variable\SmallInteger(1, 'bedroom_no');
@@ -67,15 +69,19 @@ abstract class Place extends Base
         $this->internet_type->setRange(0, 20);
         $this->laundry_type = new Variable\SmallInteger(0, 'laundry_type');
         $this->laundry_type->setRange(0, 10);
+        $this->lease_type = new Variable\SmallInteger(0, 'lease_type');
+        $this->lease_type->setRange(0, 10);
         $this->monthly_rent = new Variable\SmallInteger(0, 'monthly_rent');
         $this->move_in_date = new Variable\Date(time(), 'move_in_date');
         $this->name = new Variable\CanopyString('', 'name');
         $this->name->setLimit(100);
-        $this->parking_per_unit = new Variable\SmallInteger(1, 'parking_per_unit');
+        $this->parking_per_unit = new Variable\SmallInteger(1,
+                'parking_per_unit');
         $this->pets_allowed = new Variable\Bool(false, 'pets_allowed');
         $this->proptype = new Variable\SmallInteger(0, 'proptype');
         $this->proptype->setRange(0, 20);
         $this->smoking_allowed = new Variable\Bool(false, 'smoking_allowed');
+        $this->trash_type = new Variable\SmallInteger(0, 'trash_type');
         $this->tv_type = new Variable\SmallInteger(0, 'tv_type');
         $this->tv_type->setRange(0, 10);
         $this->updated = new Variable\DateTime(time(), 'updated');
@@ -196,11 +202,30 @@ abstract class Place extends Base
         }
     }
 
+    public function getSmokingAllowed()
+    {
+        return $this->smoking_allowed ? 'Smoking allowed' : 'Smoking not allowed';
+    }
+
+    public function getTrashType()
+    {
+        switch ($this->trash_type->get()) {
+            case TRASH_ON_YOUR_OWN:
+                return 'No pickup or bins';
+            case TRASH_PICKUP:
+                return 'Curbside pickup';
+            case TRASH_ON_PREMISES_NO_RECYCLE:
+                return 'Trash only, no recycling bins';
+            case TRASH_ON_PREMISES_WITH_RECYCLE:
+                return 'Both bins on site';
+        }
+    }
+
     public function view()
     {
         $view = $this->getStringVars();
         $view['campus_distance'] = $this->getCampusDistance();
-        $view['contract_length'] = $this->getContractLength();
+        $view['trash_type'] = $this->getTrashType();
         $view['internet_type'] = $this->getInternetType();
         $view['laundry_type'] = $this->getLaundryType();
         if ($this->move_in_date->get() < time()) {
