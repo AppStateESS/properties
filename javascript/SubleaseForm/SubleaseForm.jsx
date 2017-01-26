@@ -36,7 +36,8 @@ export default class SubleaseForm extends Place {
       'checkPhone',
       'updateRent',
       'setMoveIn',
-      'setMoveOut'
+      'setMoveOut',
+      'updateParking'
     ]
     bindMethods(methods, this)
   }
@@ -122,16 +123,8 @@ export default class SubleaseForm extends Place {
     this.setError('contact_phone', !CheckValues.isPhone(this.state.sublease.contact_phone))
   }
 
-  readyPost() {
-    let sublease = this.state.sublease
-    if (sublease.heat_type.length === 0) {
-      sublease.heat_type = ''
-    }
-    return sublease
-  }
-
   save() {
-    let sublease = this.readyPost()
+    let sublease = this.state.sublease
     let methodName = 'POST'
     this.setState({saving: true})
     let url = './properties/Sublease'
@@ -139,7 +132,6 @@ export default class SubleaseForm extends Place {
       methodName = 'PUT'
       url = url + '/' + + this.state.sublease.id
     }
-
     $.ajax({
       url: url,
       data: sublease,
@@ -148,8 +140,9 @@ export default class SubleaseForm extends Place {
       success: function (data) {
         if (data.error !== undefined) {
           this.setMessage(data.error, 'danger')
+          this.setState({saving:false})
         } else {
-          window.location.href = './propesrties/Sublease/' + data.id
+          window.location.href = './properties/Sublease/' + data.id
         }
       }.bind(this),
       error: function () {
@@ -282,7 +275,6 @@ export default class SubleaseForm extends Place {
     }
 
     let moveOutError
-    console.log(this.state.errors)
     if (this.state.errors.move_out_date) {
       moveOutError = <span className="label label-danger">Move out date must be after move in date and the current date.</span>
     }
