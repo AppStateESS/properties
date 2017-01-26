@@ -32,6 +32,9 @@ function properties_install(&$content)
         $sublease = new \properties\Resource\Sublease;
         $sublease->createTable($db);
         $sub_table = $db->buildTable($sublease->getTable());
+        $user_id = $sub_table->getDataType('user_id');
+        $sublease_index = new \phpws2\Database\Unique($user_id);
+        $sublease_index->add();
         
         $db = \phpws2\Database::getDB();
         $tbl = $db->buildTable('prop_inquiry');
