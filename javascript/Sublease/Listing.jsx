@@ -1,6 +1,7 @@
 'use strict'
 import React from 'react'
 import Waiting from '../Mixin/Waiting.jsx'
+import SubleaseRow from './SubleaseRow.jsx'
 
 export default class Listing extends React.Component {
   constructor(props) {
@@ -22,8 +23,12 @@ export default class Listing extends React.Component {
         return <div className="lead">No subleases found.</div>
       }
     } else {
+      let rows
+      rows = list.map(function (value, key) {
+        return <SubleaseRow sublease={value} key={key}/>
+      }.bind(this))
       return (
-        <div>Found subleases</div>
+        <div>{rows}</div>
       )
     }
 
@@ -31,5 +36,6 @@ export default class Listing extends React.Component {
 }
 
 Listing.propTypes = {
-  subleases: React.PropTypes.array
+  subleases: React.PropTypes.array,
+  search: React.PropTypes.bool
 }
