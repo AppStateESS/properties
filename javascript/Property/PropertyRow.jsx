@@ -1,9 +1,10 @@
 'use strict'
 import React from 'react'
+import ViewRow from '../Mixin/ViewRow.jsx'
 
 /* global $ */
 
-export default class PropertyRow extends React.Component {
+export default class PropertyRow extends ViewRow {
   constructor(props) {
     super(props)
   }
@@ -18,81 +19,6 @@ export default class PropertyRow extends React.Component {
       return rent.concat(' per tenant')
     } else {
       return rent.concat(' per unit')
-    }
-  }
-
-  petsAllowed() {
-    if (this.props.property.pets_allowed === '1') {
-      return (
-        <span
-          className="fa-stack fa-lg text-success"
-          data-toggle="tooltip"
-          data-placement="top"
-          title="Pet friendly">
-          <i className="fa fa-square fa-stack-2x"></i>
-          <i className="fa fa-paw fa-stack-1x fa-inverse"></i>
-        </span>
-      )
-    }
-  }
-
-  furnished() {
-    if (this.props.property.furnished === '1') {
-      return (
-        <span
-          className="fa-stack fa-lg text-success"
-          data-toggle="tooltip"
-          data-placement="top"
-          title="Furnished">
-          <i className="fa fa-square fa-stack-2x"></i>
-          <i className="fa fa-bed fa-stack-1x fa-inverse"></i>
-        </span>
-      )
-    }
-  }
-
-  dishwasher() {
-    if (this.props.property.dishwasher === '1') {
-      return (
-        <span
-          className="fa-stack fa-lg text-success"
-          data-toggle="tooltip"
-          data-placement="top"
-          title="Dishwasher">
-          <i className="fa fa-square fa-stack-2x"></i>
-          <i className="fa fa-cutlery fa-stack-1x fa-inverse"></i>
-        </span>
-      )
-    }
-  }
-
-  utilities() {
-    if (this.props.property.utilities_inc === '1') {
-      return (
-        <span
-          className="fa-stack fa-lg text-success"
-          data-toggle="tooltip"
-          data-placement="top"
-          title="Utilities included in rent">
-          <i className="fa fa-square fa-stack-2x"></i>
-          <i className="fa fa-plug fa-stack-1x fa-inverse"></i>
-        </span>
-      )
-    }
-  }
-
-  airconditioner() {
-    if (this.props.property.airconditioning === '1') {
-      return (
-        <span
-          className="fa-stack fa-lg text-success"
-          data-toggle="tooltip"
-          data-placement="top"
-          title="Air conditioning in unit">
-          <i className="fa fa-square fa-stack-2x"></i>
-          <i className="fa fa-snowflake-o fa-stack-1x fa-inverse"></i>
-        </span>
-      )
     }
   }
 
@@ -111,21 +37,6 @@ export default class PropertyRow extends React.Component {
     }
   }
 
-  appalcart() {
-    if (this.props.property.appalcart === '1') {
-      return (
-        <span
-          className="fa-stack fa-lg text-success"
-          data-toggle="tooltip"
-          data-placement="top"
-          title="On AppalCART route">
-          <i className="fa fa-square fa-stack-2x"></i>
-          <i className="fa fa-bus fa-stack-1x fa-inverse"></i>
-        </span>
-      )
-    }
-  }
-
   clubhouse() {
     if (this.props.property.clubhouse === '1') {
       return (
@@ -139,25 +50,6 @@ export default class PropertyRow extends React.Component {
         </span>
       )
     }
-  }
-
-  washer() {
-    if (this.props.property.washer === true) {
-      return (
-        <span
-          className="fa-stack fa-lg text-success"
-          data-toggle="tooltip"
-          data-placement="top"
-          title="Washer/Dryer in unit">
-          <i className="fa fa-square fa-stack-2x"></i>
-          <i className="fa fa-archive fa-stack-1x fa-inverse"></i>
-        </span>
-      )
-    }
-  }
-
-  urlTitle(title) {
-    return title.replace(/[^\w]/g, '-').substring(0, 20).toLowerCase()
   }
 
   render() {
@@ -188,21 +80,20 @@ export default class PropertyRow extends React.Component {
           <div className="row">
             <div className="col-sm-7 col-md-8">
               <div className="rent">{this.getRent()}</div>
-              <div className="room-bath">{property.proptype}&nbsp;
-                - {property.bedroom_no}&nbsp;Bed, {property.bathroom_no}&nbsp;Bath
+              <div className="room-bath">{property.proptype}&nbsp; - {property.bedroom_no}&nbsp;Bed, {property.bathroom_no}&nbsp;Bath
               </div>
               <div className="availability">Availability: {property.move_in_date}</div>
             </div>
             <div className="col-sm-5 col-md-4">
-              {this.petsAllowed()}
-              {this.furnished()}
-              {this.airconditioner()}
-              {this.dishwasher()}
-              {this.utilities()}
+              {this.petsAllowed(property.pets_allowed)}
+              {this.furnished(property.furnished)}
+              {this.airconditioner(property.airconditioning)}
+              {this.dishwasher(property.dishwasher)}
+              {this.utilities(property.utilities_inc)}
               {this.workout()}
               {this.clubhouse()}
-              {this.appalcart()}
-              {this.washer()}
+              {this.appalcart(property.appalcart)}
+              {this.washer(property.washer)}
             </div>
           </div>
         </div>
@@ -211,4 +102,6 @@ export default class PropertyRow extends React.Component {
   }
 }
 
-PropertyRow.propTypes
+PropertyRow.propTypes = {
+  property: React.PropTypes.object
+}
