@@ -29,7 +29,7 @@ class Sublease extends Place
     protected $landlord_perm;
     protected $move_out_date;
     protected $user_id;
-    
+    protected $table = 'prop_sublease';
 
     public function __construct()
     {
@@ -37,27 +37,32 @@ class Sublease extends Place
 
         $this->additional_fees = new Variable\TextOnly('', 'additional_fees');
         $this->contact_phone = new Variable\PhoneNumber('', 'contact_phone');
+        $this->contact_phone->allowEmpty(false);
+        $this->contact_phone->formatNumber(true);
         $this->contact_email = new Variable\Email('', 'contact_email');
         $this->landlord_perm = new Variable\Bool(false, 'landlord_perm');
         $this->move_out_date = new Variable\Date(time(), 'move_out_date');
         $this->user_id = new Variable\Integer(0, 'user_id');
     }
 
-    public function getSubleaseType()
-    {
-        switch ($this->sublease_type->get()) {
-            case 0:
-                return 'Tenant';
-
-            case 1:
-                return 'Unit';
-        }
-    }
-    
     public function view()
     {
-        $vars = $this->getStringVars(true, array('active'));
-        return $vars;
+        $view = parent::view();
+
+        if ($this->furnished->get() || $this->airconditioning->get() ||
+                $this->isHighSpeed() || $this->dishwasher->get() ||
+                $this->utilities_inc->get() || $this->appalcart->get() ||
+                $this->pets_allowed->get()) {
+            $view['has_amenities'] = true;
+        } else {
+            $view['has_amenities'] = false;
+        }
+
+        $view['lease_type'] = $this->lease_type->get() == 1 ? 'for unit' : 'per tenant';
+        
+        $this->contact_phone->formatNumber(false);
+        $view['contact_phone_tel'] = 'tel:+1' . $this->contact_phone->get();
+        return $view;
     }
 
 }
