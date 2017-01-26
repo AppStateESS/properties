@@ -23,16 +23,19 @@ use \phpws2\Database;
 
 class Sublease extends Base
 {
+
     public function build()
     {
         return new Resource;
     }
-    
-    public function listing()
+
+    public function listing(\Request $request, $view = false)
     {
-        return array();
+        $listing = new Sublease\Listing();
+        $listing->pullVariables($request);
+        return $listing->get($view);
     }
-    
+
     public function getSubleaseByUser($user_id)
     {
         if (empty($user_id)) {
@@ -49,5 +52,65 @@ class Sublease extends Base
         $sublease->setVars($row);
         return $sublease;
     }
+
+    public function post(\Request $request, $user_id)
+    {
+        $r = new Resource;
+        $r->user_id = $user_id;
+        try {
+            $r->loadPostByType($request,
+                    array('active', 'created', 'updated', 'user_id', 'id'));
+            $r->active = true;
+            $r->created = time();
+            $r->updated = time();
+            self::saveResource($r);
+            return array('id' => $r->id);
+        } catch (\Exception $e) {
+            throw new \properties\Exception\PropertySaveFailure($e->getMessage());
+        }
+    }
+
+    public function view($sublease, $admin = false)
+    {
+        if (empty($sublease)) {
+            throw new \properties\Exception\ResourceNotFound($sublease);
+        }
+        if (is_numeric($sublease)) {
+            $sublease = $this->load($sublease);
+        } elseif (!is_a($sublease, 'properties\Resource\Sublease')) {
+            throw new \properties\Exception\ResourceNotFound;
+        }
+        $tpl = $sublease->view();
+
+        //$tpl['id'] = $sublease->id;
+        //$tpl['property_edit_button'] = null;
+
+        if ($admin) {
+            //NavBar::addItem($this->updateButton($property->id));
+        }
+        $template = new \phpws2\Template($tpl);
+        $template->setModuleTemplate('properties', 'sublease/view.html');
+        return $template->get();
+    }
+
+    public function put(\Request $request, $user_id)
+    {
+        $r = $this->getSubleaseByUser($user_id);
+        try {
+            $r->loadPutByType($request,
+                    array('active', 'created', 'updated', 'user_id', 'id'));
+            $r->updated = time();
+            self::saveResource($r);
+            return array('id' => $r->id);
+        } catch (\Exception $e) {
+            throw new \properties\Exception\PropertySaveFailure($e->getMessage());
+        }
+    }
     
+    public function loggedIsOwner($sublease_id, $user_id)
+    {
+        $sublease = $this->load($sublease_id);
+        return $sublease->user_id == $user_id;
+    }
+
 }
