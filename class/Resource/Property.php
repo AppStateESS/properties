@@ -20,7 +20,6 @@ class Property extends Place
 
     protected $admin_fee_amt;
     protected $admin_fee_refund;
-    protected $airconditioning;
     protected $approved;
     protected $clean_fee_amt;
     protected $clean_fee_refund;
@@ -29,7 +28,6 @@ class Property extends Place
     protected $contract_length;
     protected $efficiency;
     protected $heat_type;
-    protected $lease_type;
     protected $other_fees;
     protected $parking_fee;
     protected $pet_deposit;
@@ -62,7 +60,6 @@ class Property extends Place
 
         $this->admin_fee_amt = new Variable\Integer(0, 'admin_fee_amt');
         $this->admin_fee_refund = new Variable\Bool(false, 'admin_fee_refund');
-        $this->airconditioning = new Variable\Bool(false, 'airconditioning');
         $this->approved = new Variable\Bool(false, 'approved');
         $this->clean_fee_amt = new Variable\Integer(0, 'clean_fee_amt');
         $this->clean_fee_refund = new Variable\Bool(0, 'clean_fee_refund');
@@ -73,8 +70,6 @@ class Property extends Place
         $this->efficiency = new Variable\Bool(false, 'efficiency');
         $this->heat_type = new Variable\Arr(null, 'heat_type');
         $this->heat_type->allowNull(true);
-        $this->lease_type = new Variable\SmallInteger(0, 'lease_type');
-        $this->lease_type->setRange(0, 10);
         $this->other_fees = new Variable\CanopyString('', 'other_fees');
         $this->parking_fee = new Variable\Integer(0, 'parking_fee');
         $this->pet_deposit = new Variable\Integer(0, 'pet_deposit');
@@ -123,19 +118,6 @@ class Property extends Place
         }
     }
 
-    public function getTrashType()
-    {
-        switch ($this->trash_type->get()) {
-            case TRASH_ON_YOUR_OWN:
-                return 'No pickup or bins';
-            case TRASH_PICKUP:
-                return 'Curbside pickup';
-            case TRASH_ON_PREMISES_NO_RECYCLE:
-                return 'Trash only, no recycling bins';
-            case TRASH_ON_PREMISES_WITH_RECYCLE:
-                return 'Both bins on site';
-        }
-    }
 
     public function getHeatTypes()
     {
@@ -173,23 +155,19 @@ class Property extends Place
         return implode(', ', $types);
     }
 
-    public function getSmokingAllowed()
-    {
-        return $this->smoking_allowed ? 'Smoking allowed' : 'Smoking not allowed';
-    }
 
     public function view()
     {
         $view = parent::view();
 
         $view['lease_type'] = $this->lease_type === '0' ? 'per unit' : 'per tenant';
-        $view['trash_type'] = $this->getTrashType();
         $view['admin_fee_refund'] = $this->admin_fee_refund->get() ? 'Refundable' : 'Non-refundable';
         $view['clean_fee_refund'] = $this->clean_fee_refund->get() ? 'Refundable' : 'Non-refundable';
         $view['pet_dep_refund'] = $this->pet_dep_refund->get() ? 'Refundable' : 'Non-refundable';
         $view['security_refund'] = $this->security_refund->get() ? 'Refundable' : 'Non-refundable';
         $view['student_type'] = $this->getStudentType();
         $view['heat_type'] = $this->getHeatTypes();
+        $view['contract_length'] = $this->getContractLength();
 
         if ($this->furnished->get() || $this->airconditioning->get() ||
                 $this->isHighSpeed() || $this->dishwasher->get() ||
