@@ -456,6 +456,10 @@ webpackJsonp([2],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _ViewRow2 = __webpack_require__(/*! ../Mixin/ViewRow.jsx */ 191);
+	
+	var _ViewRow3 = _interopRequireDefault(_ViewRow2);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -466,8 +470,8 @@ webpackJsonp([2],{
 	
 	/* global $ */
 	
-	var PropertyRow = function (_React$Component) {
-	  _inherits(PropertyRow, _React$Component);
+	var PropertyRow = function (_ViewRow) {
+	  _inherits(PropertyRow, _ViewRow);
 	
 	  function PropertyRow(props) {
 	    _classCallCheck(this, PropertyRow);
@@ -491,86 +495,6 @@ webpackJsonp([2],{
 	      }
 	    }
 	  }, {
-	    key: 'petsAllowed',
-	    value: function petsAllowed() {
-	      if (this.props.property.pets_allowed === '1') {
-	        return _react2.default.createElement(
-	          'span',
-	          {
-	            className: 'fa-stack fa-lg text-success',
-	            'data-toggle': 'tooltip',
-	            'data-placement': 'top',
-	            title: 'Pet friendly' },
-	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
-	          _react2.default.createElement('i', { className: 'fa fa-paw fa-stack-1x fa-inverse' })
-	        );
-	      }
-	    }
-	  }, {
-	    key: 'furnished',
-	    value: function furnished() {
-	      if (this.props.property.furnished === '1') {
-	        return _react2.default.createElement(
-	          'span',
-	          {
-	            className: 'fa-stack fa-lg text-success',
-	            'data-toggle': 'tooltip',
-	            'data-placement': 'top',
-	            title: 'Furnished' },
-	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
-	          _react2.default.createElement('i', { className: 'fa fa-bed fa-stack-1x fa-inverse' })
-	        );
-	      }
-	    }
-	  }, {
-	    key: 'dishwasher',
-	    value: function dishwasher() {
-	      if (this.props.property.dishwasher === '1') {
-	        return _react2.default.createElement(
-	          'span',
-	          {
-	            className: 'fa-stack fa-lg text-success',
-	            'data-toggle': 'tooltip',
-	            'data-placement': 'top',
-	            title: 'Dishwasher' },
-	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
-	          _react2.default.createElement('i', { className: 'fa fa-cutlery fa-stack-1x fa-inverse' })
-	        );
-	      }
-	    }
-	  }, {
-	    key: 'utilities',
-	    value: function utilities() {
-	      if (this.props.property.utilities_inc === '1') {
-	        return _react2.default.createElement(
-	          'span',
-	          {
-	            className: 'fa-stack fa-lg text-success',
-	            'data-toggle': 'tooltip',
-	            'data-placement': 'top',
-	            title: 'Utilities included in rent' },
-	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
-	          _react2.default.createElement('i', { className: 'fa fa-plug fa-stack-1x fa-inverse' })
-	        );
-	      }
-	    }
-	  }, {
-	    key: 'airconditioner',
-	    value: function airconditioner() {
-	      if (this.props.property.airconditioning === '1') {
-	        return _react2.default.createElement(
-	          'span',
-	          {
-	            className: 'fa-stack fa-lg text-success',
-	            'data-toggle': 'tooltip',
-	            'data-placement': 'top',
-	            title: 'Air conditioning in unit' },
-	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
-	          _react2.default.createElement('i', { className: 'fa fa-snowflake-o fa-stack-1x fa-inverse' })
-	        );
-	      }
-	    }
-	  }, {
 	    key: 'workout',
 	    value: function workout() {
 	      if (this.props.property.workout_room === '1') {
@@ -583,22 +507,6 @@ webpackJsonp([2],{
 	            title: 'Workout room on premises' },
 	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
 	          _react2.default.createElement('i', { className: 'fa fa-heartbeat fa-stack-1x fa-inverse' })
-	        );
-	      }
-	    }
-	  }, {
-	    key: 'appalcart',
-	    value: function appalcart() {
-	      if (this.props.property.appalcart === '1') {
-	        return _react2.default.createElement(
-	          'span',
-	          {
-	            className: 'fa-stack fa-lg text-success',
-	            'data-toggle': 'tooltip',
-	            'data-placement': 'top',
-	            title: 'On AppalCART route' },
-	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
-	          _react2.default.createElement('i', { className: 'fa fa-bus fa-stack-1x fa-inverse' })
 	        );
 	      }
 	    }
@@ -617,27 +525,6 @@ webpackJsonp([2],{
 	          _react2.default.createElement('i', { className: 'fa fa-coffee fa-stack-1x fa-inverse' })
 	        );
 	      }
-	    }
-	  }, {
-	    key: 'washer',
-	    value: function washer() {
-	      if (this.props.property.washer === true) {
-	        return _react2.default.createElement(
-	          'span',
-	          {
-	            className: 'fa-stack fa-lg text-success',
-	            'data-toggle': 'tooltip',
-	            'data-placement': 'top',
-	            title: 'Washer/Dryer in unit' },
-	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
-	          _react2.default.createElement('i', { className: 'fa fa-archive fa-stack-1x fa-inverse' })
-	        );
-	      }
-	    }
-	  }, {
-	    key: 'urlTitle',
-	    value: function urlTitle(title) {
-	      return title.replace(/[^\w]/g, '-').substring(0, 20).toLowerCase();
 	    }
 	  }, {
 	    key: 'render',
@@ -713,15 +600,15 @@ webpackJsonp([2],{
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'col-sm-5 col-md-4' },
-	              this.petsAllowed(),
-	              this.furnished(),
-	              this.airconditioner(),
-	              this.dishwasher(),
-	              this.utilities(),
+	              this.petsAllowed(property.pets_allowed),
+	              this.furnished(property.furnished),
+	              this.airconditioner(property.airconditioning),
+	              this.dishwasher(property.dishwasher),
+	              this.utilities(property.utilities_inc),
 	              this.workout(),
 	              this.clubhouse(),
-	              this.appalcart(),
-	              this.washer()
+	              this.appalcart(property.appalcart),
+	              this.washer(property.washer)
 	            )
 	          )
 	        )
@@ -730,12 +617,175 @@ webpackJsonp([2],{
 	  }]);
 	
 	  return PropertyRow;
-	}(_react2.default.Component);
+	}(_ViewRow3.default);
 	
 	exports.default = PropertyRow;
 	
 	
-	PropertyRow.propTypes;
+	PropertyRow.propTypes = {
+	  property: _react2.default.PropTypes.object
+	};
+
+/***/ },
+
+/***/ 191:
+/*!**************************************!*\
+  !*** ./javascript/Mixin/ViewRow.jsx ***!
+  \**************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ViewRow = function (_React$Component) {
+	  _inherits(ViewRow, _React$Component);
+	
+	  function ViewRow(props) {
+	    _classCallCheck(this, ViewRow);
+	
+	    return _possibleConstructorReturn(this, (ViewRow.__proto__ || Object.getPrototypeOf(ViewRow)).call(this, props));
+	  }
+	
+	  _createClass(ViewRow, [{
+	    key: 'petsAllowed',
+	    value: function petsAllowed(_petsAllowed) {
+	      if (_petsAllowed === '1') {
+	        return _react2.default.createElement(
+	          'span',
+	          {
+	            className: 'fa-stack fa-lg text-success',
+	            'data-toggle': 'tooltip',
+	            'data-placement': 'top',
+	            title: 'Pet friendly' },
+	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
+	          _react2.default.createElement('i', { className: 'fa fa-paw fa-stack-1x fa-inverse' })
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'furnished',
+	    value: function furnished(_furnished) {
+	      if (_furnished === '1') {
+	        return _react2.default.createElement(
+	          'span',
+	          {
+	            className: 'fa-stack fa-lg text-success',
+	            'data-toggle': 'tooltip',
+	            'data-placement': 'top',
+	            title: 'Furnished' },
+	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
+	          _react2.default.createElement('i', { className: 'fa fa-bed fa-stack-1x fa-inverse' })
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'appalcart',
+	    value: function appalcart(_appalcart) {
+	      if (_appalcart === '1') {
+	        return _react2.default.createElement(
+	          'span',
+	          {
+	            className: 'fa-stack fa-lg text-success',
+	            'data-toggle': 'tooltip',
+	            'data-placement': 'top',
+	            title: 'On AppalCART route' },
+	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
+	          _react2.default.createElement('i', { className: 'fa fa-bus fa-stack-1x fa-inverse' })
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'dishwasher',
+	    value: function dishwasher(_dishwasher) {
+	      if (_dishwasher === '1') {
+	        return _react2.default.createElement(
+	          'span',
+	          {
+	            className: 'fa-stack fa-lg text-success',
+	            'data-toggle': 'tooltip',
+	            'data-placement': 'top',
+	            title: 'Dishwasher' },
+	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
+	          _react2.default.createElement('i', { className: 'fa fa-cutlery fa-stack-1x fa-inverse' })
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'washer',
+	    value: function washer(_washer) {
+	      if (_washer === true) {
+	        return _react2.default.createElement(
+	          'span',
+	          {
+	            className: 'fa-stack fa-lg text-success',
+	            'data-toggle': 'tooltip',
+	            'data-placement': 'top',
+	            title: 'Washer/Dryer in unit' },
+	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
+	          _react2.default.createElement('i', { className: 'fa fa-archive fa-stack-1x fa-inverse' })
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'utilities',
+	    value: function utilities(included) {
+	      if (included === '1') {
+	        return _react2.default.createElement(
+	          'span',
+	          {
+	            className: 'fa-stack fa-lg text-success',
+	            'data-toggle': 'tooltip',
+	            'data-placement': 'top',
+	            title: 'Utilities included in rent' },
+	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
+	          _react2.default.createElement('i', { className: 'fa fa-plug fa-stack-1x fa-inverse' })
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'airconditioner',
+	    value: function airconditioner(airconditioning) {
+	      if (airconditioning === '1') {
+	        return _react2.default.createElement(
+	          'span',
+	          {
+	            className: 'fa-stack fa-lg text-success',
+	            'data-toggle': 'tooltip',
+	            'data-placement': 'top',
+	            title: 'Air conditioning in unit' },
+	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
+	          _react2.default.createElement('i', { className: 'fa fa-snowflake-o fa-stack-1x fa-inverse' })
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'urlTitle',
+	    value: function urlTitle(title) {
+	      return title.replace(/[^\w]/g, '-').substring(0, 20).toLowerCase();
+	    }
+	  }]);
+	
+	  return ViewRow;
+	}(_react2.default.Component);
+	
+	exports.default = ViewRow;
 
 /***/ }
 

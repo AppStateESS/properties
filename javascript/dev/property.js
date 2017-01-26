@@ -16,7 +16,7 @@ webpackJsonp([6],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _Property = __webpack_require__(/*! ./Property.jsx */ 201);
+	var _Property = __webpack_require__(/*! ./Property.jsx */ 202);
 	
 	var _Property2 = _interopRequireDefault(_Property);
 	
@@ -397,6 +397,10 @@ webpackJsonp([6],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _ViewRow2 = __webpack_require__(/*! ../Mixin/ViewRow.jsx */ 191);
+	
+	var _ViewRow3 = _interopRequireDefault(_ViewRow2);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -407,8 +411,8 @@ webpackJsonp([6],{
 	
 	/* global $ */
 	
-	var PropertyRow = function (_React$Component) {
-	  _inherits(PropertyRow, _React$Component);
+	var PropertyRow = function (_ViewRow) {
+	  _inherits(PropertyRow, _ViewRow);
 	
 	  function PropertyRow(props) {
 	    _classCallCheck(this, PropertyRow);
@@ -432,86 +436,6 @@ webpackJsonp([6],{
 	      }
 	    }
 	  }, {
-	    key: 'petsAllowed',
-	    value: function petsAllowed() {
-	      if (this.props.property.pets_allowed === '1') {
-	        return _react2.default.createElement(
-	          'span',
-	          {
-	            className: 'fa-stack fa-lg text-success',
-	            'data-toggle': 'tooltip',
-	            'data-placement': 'top',
-	            title: 'Pet friendly' },
-	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
-	          _react2.default.createElement('i', { className: 'fa fa-paw fa-stack-1x fa-inverse' })
-	        );
-	      }
-	    }
-	  }, {
-	    key: 'furnished',
-	    value: function furnished() {
-	      if (this.props.property.furnished === '1') {
-	        return _react2.default.createElement(
-	          'span',
-	          {
-	            className: 'fa-stack fa-lg text-success',
-	            'data-toggle': 'tooltip',
-	            'data-placement': 'top',
-	            title: 'Furnished' },
-	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
-	          _react2.default.createElement('i', { className: 'fa fa-bed fa-stack-1x fa-inverse' })
-	        );
-	      }
-	    }
-	  }, {
-	    key: 'dishwasher',
-	    value: function dishwasher() {
-	      if (this.props.property.dishwasher === '1') {
-	        return _react2.default.createElement(
-	          'span',
-	          {
-	            className: 'fa-stack fa-lg text-success',
-	            'data-toggle': 'tooltip',
-	            'data-placement': 'top',
-	            title: 'Dishwasher' },
-	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
-	          _react2.default.createElement('i', { className: 'fa fa-cutlery fa-stack-1x fa-inverse' })
-	        );
-	      }
-	    }
-	  }, {
-	    key: 'utilities',
-	    value: function utilities() {
-	      if (this.props.property.utilities_inc === '1') {
-	        return _react2.default.createElement(
-	          'span',
-	          {
-	            className: 'fa-stack fa-lg text-success',
-	            'data-toggle': 'tooltip',
-	            'data-placement': 'top',
-	            title: 'Utilities included in rent' },
-	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
-	          _react2.default.createElement('i', { className: 'fa fa-plug fa-stack-1x fa-inverse' })
-	        );
-	      }
-	    }
-	  }, {
-	    key: 'airconditioner',
-	    value: function airconditioner() {
-	      if (this.props.property.airconditioning === '1') {
-	        return _react2.default.createElement(
-	          'span',
-	          {
-	            className: 'fa-stack fa-lg text-success',
-	            'data-toggle': 'tooltip',
-	            'data-placement': 'top',
-	            title: 'Air conditioning in unit' },
-	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
-	          _react2.default.createElement('i', { className: 'fa fa-snowflake-o fa-stack-1x fa-inverse' })
-	        );
-	      }
-	    }
-	  }, {
 	    key: 'workout',
 	    value: function workout() {
 	      if (this.props.property.workout_room === '1') {
@@ -524,22 +448,6 @@ webpackJsonp([6],{
 	            title: 'Workout room on premises' },
 	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
 	          _react2.default.createElement('i', { className: 'fa fa-heartbeat fa-stack-1x fa-inverse' })
-	        );
-	      }
-	    }
-	  }, {
-	    key: 'appalcart',
-	    value: function appalcart() {
-	      if (this.props.property.appalcart === '1') {
-	        return _react2.default.createElement(
-	          'span',
-	          {
-	            className: 'fa-stack fa-lg text-success',
-	            'data-toggle': 'tooltip',
-	            'data-placement': 'top',
-	            title: 'On AppalCART route' },
-	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
-	          _react2.default.createElement('i', { className: 'fa fa-bus fa-stack-1x fa-inverse' })
 	        );
 	      }
 	    }
@@ -558,27 +466,6 @@ webpackJsonp([6],{
 	          _react2.default.createElement('i', { className: 'fa fa-coffee fa-stack-1x fa-inverse' })
 	        );
 	      }
-	    }
-	  }, {
-	    key: 'washer',
-	    value: function washer() {
-	      if (this.props.property.washer === true) {
-	        return _react2.default.createElement(
-	          'span',
-	          {
-	            className: 'fa-stack fa-lg text-success',
-	            'data-toggle': 'tooltip',
-	            'data-placement': 'top',
-	            title: 'Washer/Dryer in unit' },
-	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
-	          _react2.default.createElement('i', { className: 'fa fa-archive fa-stack-1x fa-inverse' })
-	        );
-	      }
-	    }
-	  }, {
-	    key: 'urlTitle',
-	    value: function urlTitle(title) {
-	      return title.replace(/[^\w]/g, '-').substring(0, 20).toLowerCase();
 	    }
 	  }, {
 	    key: 'render',
@@ -654,15 +541,15 @@ webpackJsonp([6],{
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'col-sm-5 col-md-4' },
-	              this.petsAllowed(),
-	              this.furnished(),
-	              this.airconditioner(),
-	              this.dishwasher(),
-	              this.utilities(),
+	              this.petsAllowed(property.pets_allowed),
+	              this.furnished(property.furnished),
+	              this.airconditioner(property.airconditioning),
+	              this.dishwasher(property.dishwasher),
+	              this.utilities(property.utilities_inc),
 	              this.workout(),
 	              this.clubhouse(),
-	              this.appalcart(),
-	              this.washer()
+	              this.appalcart(property.appalcart),
+	              this.washer(property.washer)
 	            )
 	          )
 	        )
@@ -671,16 +558,179 @@ webpackJsonp([6],{
 	  }]);
 	
 	  return PropertyRow;
-	}(_react2.default.Component);
+	}(_ViewRow3.default);
 	
 	exports.default = PropertyRow;
 	
 	
-	PropertyRow.propTypes;
+	PropertyRow.propTypes = {
+	  property: _react2.default.PropTypes.object
+	};
 
 /***/ },
 
-/***/ 192:
+/***/ 191:
+/*!**************************************!*\
+  !*** ./javascript/Mixin/ViewRow.jsx ***!
+  \**************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ViewRow = function (_React$Component) {
+	  _inherits(ViewRow, _React$Component);
+	
+	  function ViewRow(props) {
+	    _classCallCheck(this, ViewRow);
+	
+	    return _possibleConstructorReturn(this, (ViewRow.__proto__ || Object.getPrototypeOf(ViewRow)).call(this, props));
+	  }
+	
+	  _createClass(ViewRow, [{
+	    key: 'petsAllowed',
+	    value: function petsAllowed(_petsAllowed) {
+	      if (_petsAllowed === '1') {
+	        return _react2.default.createElement(
+	          'span',
+	          {
+	            className: 'fa-stack fa-lg text-success',
+	            'data-toggle': 'tooltip',
+	            'data-placement': 'top',
+	            title: 'Pet friendly' },
+	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
+	          _react2.default.createElement('i', { className: 'fa fa-paw fa-stack-1x fa-inverse' })
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'furnished',
+	    value: function furnished(_furnished) {
+	      if (_furnished === '1') {
+	        return _react2.default.createElement(
+	          'span',
+	          {
+	            className: 'fa-stack fa-lg text-success',
+	            'data-toggle': 'tooltip',
+	            'data-placement': 'top',
+	            title: 'Furnished' },
+	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
+	          _react2.default.createElement('i', { className: 'fa fa-bed fa-stack-1x fa-inverse' })
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'appalcart',
+	    value: function appalcart(_appalcart) {
+	      if (_appalcart === '1') {
+	        return _react2.default.createElement(
+	          'span',
+	          {
+	            className: 'fa-stack fa-lg text-success',
+	            'data-toggle': 'tooltip',
+	            'data-placement': 'top',
+	            title: 'On AppalCART route' },
+	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
+	          _react2.default.createElement('i', { className: 'fa fa-bus fa-stack-1x fa-inverse' })
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'dishwasher',
+	    value: function dishwasher(_dishwasher) {
+	      if (_dishwasher === '1') {
+	        return _react2.default.createElement(
+	          'span',
+	          {
+	            className: 'fa-stack fa-lg text-success',
+	            'data-toggle': 'tooltip',
+	            'data-placement': 'top',
+	            title: 'Dishwasher' },
+	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
+	          _react2.default.createElement('i', { className: 'fa fa-cutlery fa-stack-1x fa-inverse' })
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'washer',
+	    value: function washer(_washer) {
+	      if (_washer === true) {
+	        return _react2.default.createElement(
+	          'span',
+	          {
+	            className: 'fa-stack fa-lg text-success',
+	            'data-toggle': 'tooltip',
+	            'data-placement': 'top',
+	            title: 'Washer/Dryer in unit' },
+	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
+	          _react2.default.createElement('i', { className: 'fa fa-archive fa-stack-1x fa-inverse' })
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'utilities',
+	    value: function utilities(included) {
+	      if (included === '1') {
+	        return _react2.default.createElement(
+	          'span',
+	          {
+	            className: 'fa-stack fa-lg text-success',
+	            'data-toggle': 'tooltip',
+	            'data-placement': 'top',
+	            title: 'Utilities included in rent' },
+	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
+	          _react2.default.createElement('i', { className: 'fa fa-plug fa-stack-1x fa-inverse' })
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'airconditioner',
+	    value: function airconditioner(airconditioning) {
+	      if (airconditioning === '1') {
+	        return _react2.default.createElement(
+	          'span',
+	          {
+	            className: 'fa-stack fa-lg text-success',
+	            'data-toggle': 'tooltip',
+	            'data-placement': 'top',
+	            title: 'Air conditioning in unit' },
+	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
+	          _react2.default.createElement('i', { className: 'fa fa-snowflake-o fa-stack-1x fa-inverse' })
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'urlTitle',
+	    value: function urlTitle(title) {
+	      return title.replace(/[^\w]/g, '-').substring(0, 20).toLowerCase();
+	    }
+	  }]);
+	
+	  return ViewRow;
+	}(_react2.default.Component);
+	
+	exports.default = ViewRow;
+
+/***/ },
+
+/***/ 193:
 /*!***************************************!*\
   !*** ./javascript/Mixin/DecodeUrl.js ***!
   \***************************************/
@@ -729,7 +779,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 201:
+/***/ 202:
 /*!******************************************!*\
   !*** ./javascript/Property/Property.jsx ***!
   \******************************************/
@@ -759,19 +809,19 @@ webpackJsonp([6],{
 	
 	var _Message2 = _interopRequireDefault(_Message);
 	
-	var _PropertyBar = __webpack_require__(/*! ./PropertyBar.jsx */ 202);
+	var _PropertyBar = __webpack_require__(/*! ./PropertyBar.jsx */ 203);
 	
 	var _PropertyBar2 = _interopRequireDefault(_PropertyBar);
 	
-	var _DecodeUrl = __webpack_require__(/*! ../Mixin/DecodeUrl.js */ 192);
+	var _DecodeUrl = __webpack_require__(/*! ../Mixin/DecodeUrl.js */ 193);
 	
 	var _DecodeUrl2 = _interopRequireDefault(_DecodeUrl);
 	
-	var _PropertyListing = __webpack_require__(/*! ./PropertyListing.jsx */ 211);
+	var _PropertyListing = __webpack_require__(/*! ./PropertyListing.jsx */ 212);
 	
 	var _PropertyListing2 = _interopRequireDefault(_PropertyListing);
 	
-	var _setIfDefined = __webpack_require__(/*! ../Mixin/setIfDefined.js */ 212);
+	var _setIfDefined = __webpack_require__(/*! ../Mixin/setIfDefined.js */ 213);
 	
 	var _setIfDefined2 = _interopRequireDefault(_setIfDefined);
 	
@@ -1005,7 +1055,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 202:
+/***/ 203:
 /*!*********************************************!*\
   !*** ./javascript/Property/PropertyBar.jsx ***!
   \*********************************************/
@@ -1027,11 +1077,11 @@ webpackJsonp([6],{
 	
 	var _Dropdown2 = _interopRequireDefault(_Dropdown);
 	
-	var _Amenities = __webpack_require__(/*! ./Amenities.jsx */ 203);
+	var _Amenities = __webpack_require__(/*! ./Amenities.jsx */ 204);
 	
 	var _Amenities2 = _interopRequireDefault(_Amenities);
 	
-	var _reactAddonsCssTransitionGroup = __webpack_require__(/*! react-addons-css-transition-group */ 204);
+	var _reactAddonsCssTransitionGroup = __webpack_require__(/*! react-addons-css-transition-group */ 205);
 	
 	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 	
@@ -1314,7 +1364,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 203:
+/***/ 204:
 /*!*******************************************!*\
   !*** ./javascript/Property/Amenities.jsx ***!
   \*******************************************/
@@ -1614,17 +1664,17 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 204:
+/***/ 205:
 /*!******************************************************!*\
   !*** ./~/react-addons-css-transition-group/index.js ***!
   \******************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(/*! react/lib/ReactCSSTransitionGroup */ 205);
+	module.exports = __webpack_require__(/*! react/lib/ReactCSSTransitionGroup */ 206);
 
 /***/ },
 
-/***/ 205:
+/***/ 206:
 /*!************************************************!*\
   !*** ./~/react/lib/ReactCSSTransitionGroup.js ***!
   \************************************************/
@@ -1647,8 +1697,8 @@ webpackJsonp([6],{
 	
 	var React = __webpack_require__(/*! ./React */ 2);
 	
-	var ReactTransitionGroup = __webpack_require__(/*! ./ReactTransitionGroup */ 206);
-	var ReactCSSTransitionGroupChild = __webpack_require__(/*! ./ReactCSSTransitionGroupChild */ 208);
+	var ReactTransitionGroup = __webpack_require__(/*! ./ReactTransitionGroup */ 207);
+	var ReactCSSTransitionGroupChild = __webpack_require__(/*! ./ReactCSSTransitionGroupChild */ 209);
 	
 	function createTransitionTimeoutPropValidator(transitionType) {
 	  var timeoutPropName = 'transition' + transitionType + 'Timeout';
@@ -1720,7 +1770,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 206:
+/***/ 207:
 /*!*********************************************!*\
   !*** ./~/react/lib/ReactTransitionGroup.js ***!
   \*********************************************/
@@ -1743,7 +1793,7 @@ webpackJsonp([6],{
 	
 	var React = __webpack_require__(/*! ./React */ 2);
 	var ReactInstanceMap = __webpack_require__(/*! ./ReactInstanceMap */ 119);
-	var ReactTransitionChildMapping = __webpack_require__(/*! ./ReactTransitionChildMapping */ 207);
+	var ReactTransitionChildMapping = __webpack_require__(/*! ./ReactTransitionChildMapping */ 208);
 	
 	var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 12);
 	
@@ -1976,7 +2026,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 207:
+/***/ 208:
 /*!****************************************************!*\
   !*** ./~/react/lib/ReactTransitionChildMapping.js ***!
   \****************************************************/
@@ -2089,7 +2139,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 208:
+/***/ 209:
 /*!*****************************************************!*\
   !*** ./~/react/lib/ReactCSSTransitionGroupChild.js ***!
   \*****************************************************/
@@ -2111,8 +2161,8 @@ webpackJsonp([6],{
 	var React = __webpack_require__(/*! ./React */ 2);
 	var ReactDOM = __webpack_require__(/*! ./ReactDOM */ 35);
 	
-	var CSSCore = __webpack_require__(/*! fbjs/lib/CSSCore */ 209);
-	var ReactTransitionEvents = __webpack_require__(/*! ./ReactTransitionEvents */ 210);
+	var CSSCore = __webpack_require__(/*! fbjs/lib/CSSCore */ 210);
+	var ReactTransitionEvents = __webpack_require__(/*! ./ReactTransitionEvents */ 211);
 	
 	var onlyChild = __webpack_require__(/*! ./onlyChild */ 33);
 	
@@ -2265,7 +2315,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 209:
+/***/ 210:
 /*!*******************************!*\
   !*** ./~/fbjs/lib/CSSCore.js ***!
   \*******************************/
@@ -2396,7 +2446,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 210:
+/***/ 211:
 /*!**********************************************!*\
   !*** ./~/react/lib/ReactTransitionEvents.js ***!
   \**********************************************/
@@ -2478,7 +2528,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 211:
+/***/ 212:
 /*!*************************************************!*\
   !*** ./javascript/Property/PropertyListing.jsx ***!
   \*************************************************/
@@ -2568,7 +2618,7 @@ webpackJsonp([6],{
 
 /***/ },
 
-/***/ 212:
+/***/ 213:
 /*!******************************************!*\
   !*** ./javascript/Mixin/setIfDefined.js ***!
   \******************************************/
