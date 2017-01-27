@@ -32,9 +32,17 @@ function properties_install(&$content)
         $sublease = new \properties\Resource\Sublease;
         $sublease->createTable($db);
         $sub_table = $db->buildTable($sublease->getTable());
+        $sublease_id = $sub_table->getDataType('id');
         $user_id = $sub_table->getDataType('user_id');
         $sublease_index = new \phpws2\Database\Unique($user_id);
         $sublease_index->add();
+        
+        $subphoto = new \properties\Resource\SubleasePhoto;
+        $subphoto->createTable($db);
+        $subphoto_tbl = $db->buildTable($subphoto->getTable());
+        $sid = $subphoto_tbl->getDataType('sid');
+        $photo_index = new \phpws2\Database\ForeignKey($sid, $sublease_id);
+        $photo_index->add();
         
         $db = \phpws2\Database::getDB();
         $tbl = $db->buildTable('prop_inquiry');
@@ -48,6 +56,7 @@ function properties_install(&$content)
         $db->buildTable($property->getTable())->drop(true);
         $db->buildTable($photo->getTable())->drop(true);
         $db->buildTable($sublease->getTable())->drop(true);
+        $db->buildTable($subphoto->getTable())->drop(true);
 
         $db->rollback();
         throw $e;
