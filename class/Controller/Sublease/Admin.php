@@ -20,5 +20,10 @@ namespace properties\Controller\Sublease;
 
 class Admin extends User
 {
-    
+
+    public function createHtmlCommand(\Request $request)
+    {
+        return '<p>Site admins may not create subleases.</p>';
+    }
+
 }
