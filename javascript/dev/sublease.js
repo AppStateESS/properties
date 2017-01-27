@@ -16,459 +16,13 @@ webpackJsonp([9],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _Sublease = __webpack_require__(/*! ./Sublease.jsx */ 416);
+	var _Sublease = __webpack_require__(/*! ./Sublease.jsx */ 417);
 	
 	var _Sublease2 = _interopRequireDefault(_Sublease);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	_reactDom2.default.render(_react2.default.createElement(_Sublease2.default, null), document.getElementById('sublease'));
-
-/***/ },
-
-/***/ 175:
-/*!***************************************!*\
-  !*** ./javascript/Mixin/Dropdown.jsx ***!
-  \***************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	/**
-	props.label = 'Pick option below'
-	props.small = false
-	props.options = [
-	{
-	  link : 'http://address', // default: null
-	  icon : <i className="fa fa-check"></i>, // default: null
-	  label : 'Click here',
-	  handleClick : functionName,
-	},
-	{
-	  divider: true
-	}
-	]
-	*/
-	var Dropdown = function (_React$Component) {
-	  _inherits(Dropdown, _React$Component);
-	
-	  function Dropdown(props) {
-	    _classCallCheck(this, Dropdown);
-	
-	    return _possibleConstructorReturn(this, (Dropdown.__proto__ || Object.getPrototypeOf(Dropdown)).call(this, props));
-	  }
-	
-	  _createClass(Dropdown, [{
-	    key: "render",
-	    value: function render() {
-	      var options = null;
-	      var label = null;
-	      var optionList = null;
-	      if (this.props.options !== null) {
-	        options = this.props.options.map(function (value, key) {
-	          if (value.divider !== undefined && value.divider === true) {
-	            return _react2.default.createElement("hr", { key: key });
-	          }
-	          if (value.link !== null) {
-	            label = _react2.default.createElement(
-	              "a",
-	              { href: value.link },
-	              value.icon,
-	              " ",
-	              value.label
-	            );
-	          } else {
-	            label = _react2.default.createElement(
-	              "a",
-	              null,
-	              value.icon,
-	              value.label
-	            );
-	          }
-	          return _react2.default.createElement(
-	            "li",
-	            { onClick: value.handleClick, key: key, role: "button" },
-	            label
-	          );
-	        });
-	        optionList = _react2.default.createElement(
-	          "ul",
-	          { className: "dropdown-menu" },
-	          options
-	        );
-	      } else {
-	        optionList = null;
-	      }
-	      var buttonClass = 'btn btn-default dropdown-toggle';
-	      if (this.props.small) {
-	        buttonClass = buttonClass.concat(' btn-sm');
-	      }
-	      return _react2.default.createElement(
-	        "div",
-	        { className: "dropdown" },
-	        _react2.default.createElement(
-	          "button",
-	          {
-	            className: buttonClass,
-	            type: "button",
-	            "data-toggle": "dropdown",
-	            "aria-haspopup": "true",
-	            "aria-expanded": "true" },
-	          this.props.label,
-	          "\xA0",
-	          _react2.default.createElement("span", { className: "caret" })
-	        ),
-	        optionList
-	      );
-	    }
-	  }]);
-	
-	  return Dropdown;
-	}(_react2.default.Component);
-	
-	Dropdown.propTypes = {
-	  label: _react2.default.PropTypes.string,
-	  options: _react2.default.PropTypes.array,
-	  small: _react2.default.PropTypes.bool
-	};
-	
-	Dropdown.defaultProps = {
-	  small: false
-	};
-	
-	exports.default = Dropdown;
-
-/***/ },
-
-/***/ 181:
-/*!**************************************!*\
-  !*** ./javascript/Mixin/Waiting.jsx ***!
-  \**************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Waiting = function (_React$Component) {
-	  _inherits(Waiting, _React$Component);
-	
-	  function Waiting() {
-	    _classCallCheck(this, Waiting);
-	
-	    return _possibleConstructorReturn(this, (Waiting.__proto__ || Object.getPrototypeOf(Waiting)).apply(this, arguments));
-	  }
-	
-	  _createClass(Waiting, [{
-	    key: "render",
-	    value: function render() {
-	      var message = void 0;
-	      if (this.props.message.length === 0) {
-	        message = _react2.default.createElement(
-	          "span",
-	          null,
-	          "Loading ",
-	          this.props.label,
-	          "..."
-	        );
-	      } else {
-	        message = this.props.message;
-	      }
-	      return _react2.default.createElement(
-	        "div",
-	        { className: "lead text-center" },
-	        _react2.default.createElement("i", { className: "fa fa-cog fa-spin fa-lg" }),
-	        "\xA0",
-	        message
-	      );
-	    }
-	  }]);
-	
-	  return Waiting;
-	}(_react2.default.Component);
-	
-	Waiting.defaultProps = {
-	  label: ''
-	};
-	
-	Waiting.propTypes = {
-	  label: _react2.default.PropTypes.string,
-	  message: _react2.default.PropTypes.string
-	};
-	
-	Waiting.defaultProps = {
-	  message: '',
-	  label: 'data'
-	};
-	
-	exports.default = Waiting;
-
-/***/ },
-
-/***/ 182:
-/*!**********************************!*\
-  !*** ./javascript/Mixin/Bind.js ***!
-  \**********************************/
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = bindMethods;
-	function bindMethods(bindable, object) {
-	  bindable.map(function (v) {
-	    if (object[v] === undefined) {
-	      throw new Error("Cannot bind undefined method: " + v);
-	    }
-	    object[v] = this[v].bind(object);
-	  }.bind(object));
-	}
-
-/***/ },
-
-/***/ 191:
-/*!**************************************!*\
-  !*** ./javascript/Mixin/ViewRow.jsx ***!
-  \**************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var ViewRow = function (_React$Component) {
-	  _inherits(ViewRow, _React$Component);
-	
-	  function ViewRow(props) {
-	    _classCallCheck(this, ViewRow);
-	
-	    return _possibleConstructorReturn(this, (ViewRow.__proto__ || Object.getPrototypeOf(ViewRow)).call(this, props));
-	  }
-	
-	  _createClass(ViewRow, [{
-	    key: 'petsAllowed',
-	    value: function petsAllowed(_petsAllowed) {
-	      if (_petsAllowed === '1') {
-	        return _react2.default.createElement(
-	          'span',
-	          {
-	            className: 'fa-stack fa-lg text-success',
-	            'data-toggle': 'tooltip',
-	            'data-placement': 'top',
-	            title: 'Pet friendly' },
-	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
-	          _react2.default.createElement('i', { className: 'fa fa-paw fa-stack-1x fa-inverse' })
-	        );
-	      }
-	    }
-	  }, {
-	    key: 'furnished',
-	    value: function furnished(_furnished) {
-	      if (_furnished === '1') {
-	        return _react2.default.createElement(
-	          'span',
-	          {
-	            className: 'fa-stack fa-lg text-success',
-	            'data-toggle': 'tooltip',
-	            'data-placement': 'top',
-	            title: 'Furnished' },
-	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
-	          _react2.default.createElement('i', { className: 'fa fa-bed fa-stack-1x fa-inverse' })
-	        );
-	      }
-	    }
-	  }, {
-	    key: 'appalcart',
-	    value: function appalcart(_appalcart) {
-	      if (_appalcart === '1') {
-	        return _react2.default.createElement(
-	          'span',
-	          {
-	            className: 'fa-stack fa-lg text-success',
-	            'data-toggle': 'tooltip',
-	            'data-placement': 'top',
-	            title: 'On AppalCART route' },
-	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
-	          _react2.default.createElement('i', { className: 'fa fa-bus fa-stack-1x fa-inverse' })
-	        );
-	      }
-	    }
-	  }, {
-	    key: 'dishwasher',
-	    value: function dishwasher(_dishwasher) {
-	      if (_dishwasher === '1') {
-	        return _react2.default.createElement(
-	          'span',
-	          {
-	            className: 'fa-stack fa-lg text-success',
-	            'data-toggle': 'tooltip',
-	            'data-placement': 'top',
-	            title: 'Dishwasher' },
-	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
-	          _react2.default.createElement('i', { className: 'fa fa-cutlery fa-stack-1x fa-inverse' })
-	        );
-	      }
-	    }
-	  }, {
-	    key: 'washer',
-	    value: function washer(_washer) {
-	      if (_washer === true) {
-	        return _react2.default.createElement(
-	          'span',
-	          {
-	            className: 'fa-stack fa-lg text-success',
-	            'data-toggle': 'tooltip',
-	            'data-placement': 'top',
-	            title: 'Washer/Dryer in unit' },
-	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
-	          _react2.default.createElement('i', { className: 'fa fa-archive fa-stack-1x fa-inverse' })
-	        );
-	      }
-	    }
-	  }, {
-	    key: 'utilities',
-	    value: function utilities(included) {
-	      if (included === '1') {
-	        return _react2.default.createElement(
-	          'span',
-	          {
-	            className: 'fa-stack fa-lg text-success',
-	            'data-toggle': 'tooltip',
-	            'data-placement': 'top',
-	            title: 'Utilities included in rent' },
-	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
-	          _react2.default.createElement('i', { className: 'fa fa-plug fa-stack-1x fa-inverse' })
-	        );
-	      }
-	    }
-	  }, {
-	    key: 'airconditioner',
-	    value: function airconditioner(airconditioning) {
-	      if (airconditioning === '1') {
-	        return _react2.default.createElement(
-	          'span',
-	          {
-	            className: 'fa-stack fa-lg text-success',
-	            'data-toggle': 'tooltip',
-	            'data-placement': 'top',
-	            title: 'Air conditioning in unit' },
-	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
-	          _react2.default.createElement('i', { className: 'fa fa-snowflake-o fa-stack-1x fa-inverse' })
-	        );
-	      }
-	    }
-	  }, {
-	    key: 'urlTitle',
-	    value: function urlTitle(title) {
-	      return title.replace(/[^\w]/g, '-').substring(0, 20).toLowerCase();
-	    }
-	  }]);
-	
-	  return ViewRow;
-	}(_react2.default.Component);
-	
-	exports.default = ViewRow;
-
-/***/ },
-
-/***/ 193:
-/*!***************************************!*\
-  !*** ./javascript/Mixin/DecodeUrl.js ***!
-  \***************************************/
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	/**
-	 * Adapted from http://ideasandpixels.com/get-post-variables-with-javascript
-	 */
-	
-	var DecodeUrl = function () {
-	  function DecodeUrl() {
-	    _classCallCheck(this, DecodeUrl);
-	
-	    this.url = document.location.search;
-	    this.values = [];
-	    this.process();
-	  }
-	
-	  _createClass(DecodeUrl, [{
-	    key: "process",
-	    value: function process() {
-	      this.url.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
-	        function decode(s) {
-	          return decodeURIComponent(s.split("+").join(" "));
-	        }
-	
-	        this.values[decode(arguments[1])] = decode(arguments[2]);
-	      }.bind(this));
-	    }
-	  }]);
-	
-	  return DecodeUrl;
-	}();
-	
-	exports.default = DecodeUrl;
 
 /***/ },
 
@@ -1336,40 +890,7 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 213:
-/*!******************************************!*\
-  !*** ./javascript/Mixin/setIfDefined.js ***!
-  \******************************************/
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = setIfDefined;
-	function setIfDefined(value, varname) {
-	  var defaultVar = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-	  var forceval = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
-	
-	  if (forceval !== null) {
-	    if (defaultVar !== null) {
-	      return value[varname] !== undefined ? forceval : defaultVar;
-	    } else {
-	      return value[varname] !== undefined ? forceval : undefined;
-	    }
-	  } else {
-	    if (defaultVar !== null) {
-	      return value[varname] !== undefined ? value[varname] : defaultVar;
-	    } else {
-	      return value[varname] !== undefined ? value[varname] : undefined;
-	    }
-	  }
-	}
-
-/***/ },
-
-/***/ 416:
+/***/ 417:
 /*!******************************************!*\
   !*** ./javascript/Sublease/Sublease.jsx ***!
   \******************************************/
@@ -1387,21 +908,21 @@ webpackJsonp([9],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Bind = __webpack_require__(/*! ../Mixin/Bind.js */ 182);
+	var _Bind = __webpack_require__(/*! ../Mixin/Helper/Bind.js */ 432);
 	
 	var _Bind2 = _interopRequireDefault(_Bind);
 	
-	var _Listing = __webpack_require__(/*! ./Listing.jsx */ 417);
+	var _Listing = __webpack_require__(/*! ./Listing.jsx */ 418);
 	
 	var _Listing2 = _interopRequireDefault(_Listing);
 	
-	var _SearchBar = __webpack_require__(/*! ../Mixin/Place/SearchBar.jsx */ 425);
+	var _SearchBar = __webpack_require__(/*! ../Mixin/List/SearchBar.jsx */ 449);
 	
 	var _SearchBar2 = _interopRequireDefault(_SearchBar);
 	
-	var _Place2 = __webpack_require__(/*! ../Mixin/Place/Place.jsx */ 426);
+	var _Base = __webpack_require__(/*! ../Mixin/List/Base.jsx */ 451);
 	
-	var _Place3 = _interopRequireDefault(_Place2);
+	var _Base2 = _interopRequireDefault(_Base);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -1478,13 +999,13 @@ webpackJsonp([9],{
 	  }]);
 	
 	  return Property;
-	}(_Place3.default);
+	}(_Base2.default);
 	
 	exports.default = Property;
 
 /***/ },
 
-/***/ 417:
+/***/ 418:
 /*!*****************************************!*\
   !*** ./javascript/Sublease/Listing.jsx ***!
   \*****************************************/
@@ -1502,11 +1023,11 @@ webpackJsonp([9],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Waiting = __webpack_require__(/*! ../Mixin/Waiting.jsx */ 181);
+	var _Waiting = __webpack_require__(/*! ../Mixin/Html/Waiting.jsx */ 427);
 	
 	var _Waiting2 = _interopRequireDefault(_Waiting);
 	
-	var _SubleaseRow = __webpack_require__(/*! ./SubleaseRow.jsx */ 418);
+	var _SubleaseRow = __webpack_require__(/*! ./SubleaseRow.jsx */ 419);
 	
 	var _SubleaseRow2 = _interopRequireDefault(_SubleaseRow);
 	
@@ -1578,7 +1099,7 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 418:
+/***/ 419:
 /*!*********************************************!*\
   !*** ./javascript/Sublease/SubleaseRow.jsx ***!
   \*********************************************/
@@ -1596,9 +1117,9 @@ webpackJsonp([9],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _ViewRow2 = __webpack_require__(/*! ../Mixin/ViewRow.jsx */ 191);
+	var _Row2 = __webpack_require__(/*! ../Mixin/List/Row.jsx */ 441);
 	
-	var _ViewRow3 = _interopRequireDefault(_ViewRow2);
+	var _Row3 = _interopRequireDefault(_Row2);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -1608,8 +1129,8 @@ webpackJsonp([9],{
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var SubleaseRow = function (_ViewRow) {
-	  _inherits(SubleaseRow, _ViewRow);
+	var SubleaseRow = function (_Row) {
+	  _inherits(SubleaseRow, _Row);
 	
 	  function SubleaseRow(props) {
 	    _classCallCheck(this, SubleaseRow);
@@ -1709,7 +1230,7 @@ webpackJsonp([9],{
 	  }]);
 	
 	  return SubleaseRow;
-	}(_ViewRow3.default);
+	}(Row);
 	
 	exports.default = SubleaseRow;
 	
@@ -1720,10 +1241,765 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 424:
+/***/ 427:
+/*!*******************************************!*\
+  !*** ./javascript/Mixin/Html/Waiting.jsx ***!
+  \*******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Waiting = function (_React$Component) {
+	  _inherits(Waiting, _React$Component);
+	
+	  function Waiting() {
+	    _classCallCheck(this, Waiting);
+	
+	    return _possibleConstructorReturn(this, (Waiting.__proto__ || Object.getPrototypeOf(Waiting)).apply(this, arguments));
+	  }
+	
+	  _createClass(Waiting, [{
+	    key: "render",
+	    value: function render() {
+	      var message = void 0;
+	      if (this.props.message.length === 0) {
+	        message = _react2.default.createElement(
+	          "span",
+	          null,
+	          "Loading ",
+	          this.props.label,
+	          "..."
+	        );
+	      } else {
+	        message = this.props.message;
+	      }
+	      return _react2.default.createElement(
+	        "div",
+	        { className: "lead text-center" },
+	        _react2.default.createElement("i", { className: "fa fa-cog fa-spin fa-lg" }),
+	        "\xA0",
+	        message
+	      );
+	    }
+	  }]);
+	
+	  return Waiting;
+	}(_react2.default.Component);
+	
+	Waiting.defaultProps = {
+	  label: ''
+	};
+	
+	Waiting.propTypes = {
+	  label: _react2.default.PropTypes.string,
+	  message: _react2.default.PropTypes.string
+	};
+	
+	Waiting.defaultProps = {
+	  message: '',
+	  label: 'data'
+	};
+	
+	exports.default = Waiting;
+
+/***/ },
+
+/***/ 432:
+/*!*****************************************!*\
+  !*** ./javascript/Mixin/Helper/Bind.js ***!
+  \*****************************************/
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = bindMethods;
+	function bindMethods(bindable, object) {
+	  bindable.map(function (v) {
+	    if (object[v] === undefined) {
+	      throw new Error("Cannot bind undefined method: " + v);
+	    }
+	    object[v] = this[v].bind(object);
+	  }.bind(object));
+	}
+
+/***/ },
+
+/***/ 441:
+/*!***************************************!*\
+  !*** ./javascript/Mixin/List/Row.jsx ***!
+  \***************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Row = function (_React$Component) {
+	  _inherits(Row, _React$Component);
+	
+	  function Row(props) {
+	    _classCallCheck(this, Row);
+	
+	    return _possibleConstructorReturn(this, (Row.__proto__ || Object.getPrototypeOf(Row)).call(this, props));
+	  }
+	
+	  _createClass(Row, [{
+	    key: 'petsAllowed',
+	    value: function petsAllowed(_petsAllowed) {
+	      if (_petsAllowed === '1') {
+	        return _react2.default.createElement(
+	          'span',
+	          {
+	            className: 'fa-stack fa-lg text-success',
+	            'data-toggle': 'tooltip',
+	            'data-placement': 'top',
+	            title: 'Pet friendly' },
+	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
+	          _react2.default.createElement('i', { className: 'fa fa-paw fa-stack-1x fa-inverse' })
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'furnished',
+	    value: function furnished(_furnished) {
+	      if (_furnished === '1') {
+	        return _react2.default.createElement(
+	          'span',
+	          {
+	            className: 'fa-stack fa-lg text-success',
+	            'data-toggle': 'tooltip',
+	            'data-placement': 'top',
+	            title: 'Furnished' },
+	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
+	          _react2.default.createElement('i', { className: 'fa fa-bed fa-stack-1x fa-inverse' })
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'appalcart',
+	    value: function appalcart(_appalcart) {
+	      if (_appalcart === '1') {
+	        return _react2.default.createElement(
+	          'span',
+	          {
+	            className: 'fa-stack fa-lg text-success',
+	            'data-toggle': 'tooltip',
+	            'data-placement': 'top',
+	            title: 'On AppalCART route' },
+	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
+	          _react2.default.createElement('i', { className: 'fa fa-bus fa-stack-1x fa-inverse' })
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'dishwasher',
+	    value: function dishwasher(_dishwasher) {
+	      if (_dishwasher === '1') {
+	        return _react2.default.createElement(
+	          'span',
+	          {
+	            className: 'fa-stack fa-lg text-success',
+	            'data-toggle': 'tooltip',
+	            'data-placement': 'top',
+	            title: 'Dishwasher' },
+	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
+	          _react2.default.createElement('i', { className: 'fa fa-cutlery fa-stack-1x fa-inverse' })
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'washer',
+	    value: function washer(_washer) {
+	      if (_washer === true) {
+	        return _react2.default.createElement(
+	          'span',
+	          {
+	            className: 'fa-stack fa-lg text-success',
+	            'data-toggle': 'tooltip',
+	            'data-placement': 'top',
+	            title: 'Washer/Dryer in unit' },
+	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
+	          _react2.default.createElement('i', { className: 'fa fa-archive fa-stack-1x fa-inverse' })
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'utilities',
+	    value: function utilities(included) {
+	      if (included === '1') {
+	        return _react2.default.createElement(
+	          'span',
+	          {
+	            className: 'fa-stack fa-lg text-success',
+	            'data-toggle': 'tooltip',
+	            'data-placement': 'top',
+	            title: 'Utilities included in rent' },
+	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
+	          _react2.default.createElement('i', { className: 'fa fa-plug fa-stack-1x fa-inverse' })
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'airconditioner',
+	    value: function airconditioner(airconditioning) {
+	      if (airconditioning === '1') {
+	        return _react2.default.createElement(
+	          'span',
+	          {
+	            className: 'fa-stack fa-lg text-success',
+	            'data-toggle': 'tooltip',
+	            'data-placement': 'top',
+	            title: 'Air conditioning in unit' },
+	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
+	          _react2.default.createElement('i', { className: 'fa fa-snowflake-o fa-stack-1x fa-inverse' })
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'urlTitle',
+	    value: function urlTitle(title) {
+	      return title.replace(/[^\w]/g, '-').substring(0, 20).toLowerCase();
+	    }
+	  }]);
+	
+	  return Row;
+	}(_react2.default.Component);
+	
+	exports.default = Row;
+
+/***/ },
+
+/***/ 442:
+/*!********************************************!*\
+  !*** ./javascript/Mixin/Form/Dropdown.jsx ***!
+  \********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	/**
+	props.label = 'Pick option below'
+	props.small = false
+	props.options = [
+	{
+	  link : 'http://address', // default: null
+	  icon : <i className="fa fa-check"></i>, // default: null
+	  label : 'Click here',
+	  handleClick : functionName,
+	},
+	{
+	  divider: true
+	}
+	]
+	*/
+	var Dropdown = function (_React$Component) {
+	  _inherits(Dropdown, _React$Component);
+	
+	  function Dropdown(props) {
+	    _classCallCheck(this, Dropdown);
+	
+	    return _possibleConstructorReturn(this, (Dropdown.__proto__ || Object.getPrototypeOf(Dropdown)).call(this, props));
+	  }
+	
+	  _createClass(Dropdown, [{
+	    key: "render",
+	    value: function render() {
+	      var options = null;
+	      var label = null;
+	      var optionList = null;
+	      if (this.props.options !== null) {
+	        options = this.props.options.map(function (value, key) {
+	          if (value.divider !== undefined && value.divider === true) {
+	            return _react2.default.createElement("hr", { key: key });
+	          }
+	          if (value.link !== null) {
+	            label = _react2.default.createElement(
+	              "a",
+	              { href: value.link },
+	              value.icon,
+	              " ",
+	              value.label
+	            );
+	          } else {
+	            label = _react2.default.createElement(
+	              "a",
+	              null,
+	              value.icon,
+	              value.label
+	            );
+	          }
+	          return _react2.default.createElement(
+	            "li",
+	            { onClick: value.handleClick, key: key, role: "button" },
+	            label
+	          );
+	        });
+	        optionList = _react2.default.createElement(
+	          "ul",
+	          { className: "dropdown-menu" },
+	          options
+	        );
+	      } else {
+	        optionList = null;
+	      }
+	      var buttonClass = 'btn btn-default dropdown-toggle';
+	      if (this.props.small) {
+	        buttonClass = buttonClass.concat(' btn-sm');
+	      }
+	      return _react2.default.createElement(
+	        "div",
+	        { className: "dropdown" },
+	        _react2.default.createElement(
+	          "button",
+	          {
+	            className: buttonClass,
+	            type: "button",
+	            "data-toggle": "dropdown",
+	            "aria-haspopup": "true",
+	            "aria-expanded": "true" },
+	          this.props.label,
+	          "\xA0",
+	          _react2.default.createElement("span", { className: "caret" })
+	        ),
+	        optionList
+	      );
+	    }
+	  }]);
+	
+	  return Dropdown;
+	}(_react2.default.Component);
+	
+	Dropdown.propTypes = {
+	  label: _react2.default.PropTypes.string,
+	  options: _react2.default.PropTypes.array,
+	  small: _react2.default.PropTypes.bool
+	};
+	
+	Dropdown.defaultProps = {
+	  small: false
+	};
+	
+	exports.default = Dropdown;
+
+/***/ },
+
+/***/ 446:
 /*!**********************************************!*\
-  !*** ./javascript/Mixin/Place/Amenities.jsx ***!
+  !*** ./javascript/Mixin/Helper/DecodeUrl.js ***!
   \**********************************************/
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	/**
+	 * Adapted from http://ideasandpixels.com/get-post-variables-with-javascript
+	 */
+	
+	var DecodeUrl = function () {
+	  function DecodeUrl() {
+	    _classCallCheck(this, DecodeUrl);
+	
+	    this.url = document.location.search;
+	    this.values = [];
+	    this.process();
+	  }
+	
+	  _createClass(DecodeUrl, [{
+	    key: "process",
+	    value: function process() {
+	      this.url.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
+	        function decode(s) {
+	          return decodeURIComponent(s.split("+").join(" "));
+	        }
+	
+	        this.values[decode(arguments[1])] = decode(arguments[2]);
+	      }.bind(this));
+	    }
+	  }]);
+	
+	  return DecodeUrl;
+	}();
+	
+	exports.default = DecodeUrl;
+
+/***/ },
+
+/***/ 449:
+/*!*********************************************!*\
+  !*** ./javascript/Mixin/List/SearchBar.jsx ***!
+  \*********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Dropdown = __webpack_require__(/*! ../Form/Dropdown.jsx */ 442);
+	
+	var _Dropdown2 = _interopRequireDefault(_Dropdown);
+	
+	var _Amenities = __webpack_require__(/*! ../Edit/Amenities.jsx */ 450);
+	
+	var _Amenities2 = _interopRequireDefault(_Amenities);
+	
+	var _reactAddonsCssTransitionGroup = __webpack_require__(/*! react-addons-css-transition-group */ 205);
+	
+	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var SearchBar = function (_React$Component) {
+	  _inherits(SearchBar, _React$Component);
+	
+	  function SearchBar(props) {
+	    _classCallCheck(this, SearchBar);
+	
+	    var _this = _possibleConstructorReturn(this, (SearchBar.__proto__ || Object.getPrototypeOf(SearchBar)).call(this, props));
+	
+	    _this.state = {
+	      fullSize: false
+	    };
+	    _this.clearSearch = _this.clearSearch.bind(_this);
+	    _this.togglePanel = _this.togglePanel.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(SearchBar, [{
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      var minprice = this.props.searchVars['minprice'];
+	      var maxprice = this.props.searchVars['maxprice'];
+	      if (maxprice !== '0' && minprice !== '0' && parseInt(maxprice) < parseInt(minprice)) {
+	        this.props.updateSearchVars('minprice', maxprice);
+	        this.props.updateSearchVars('maxprice', minprice);
+	      }
+	    }
+	  }, {
+	    key: 'clearSearch',
+	    value: function clearSearch() {
+	      this.refs.propertySearch.value = '';
+	      this.props.clear();
+	    }
+	  }, {
+	    key: 'togglePanel',
+	    value: function togglePanel() {
+	      this.setState({
+	        fullSize: !this.state.fullSize
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var beds = [{
+	        label: '1+ beds',
+	        handleClick: this.props.updateSearchVars.bind(null, 'beds', '1')
+	      }, {
+	        label: '2+ beds',
+	        handleClick: this.props.updateSearchVars.bind(null, 'beds', '2')
+	      }, {
+	        label: '3+ beds',
+	        handleClick: this.props.updateSearchVars.bind(null, 'beds', '3')
+	      }, {
+	        label: '4+ beds',
+	        handleClick: this.props.updateSearchVars.bind(null, 'beds', '4')
+	      }, {
+	        label: '5+ beds',
+	        handleClick: this.props.updateSearchVars.bind(null, 'beds', '5')
+	      }];
+	
+	      var baths = [{
+	        label: '1+ baths',
+	        handleClick: this.props.updateSearchVars.bind(null, 'baths', '1')
+	      }, {
+	        label: '2+ baths',
+	        handleClick: this.props.updateSearchVars.bind(null, 'baths', '2')
+	      }, {
+	        label: '3+ baths',
+	        handleClick: this.props.updateSearchVars.bind(null, 'baths', '3')
+	      }, {
+	        label: '4+ baths',
+	        handleClick: this.props.updateSearchVars.bind(null, 'baths', '4')
+	      }, {
+	        label: '5+ baths',
+	        handleClick: this.props.updateSearchVars.bind(null, 'baths', '5')
+	      }];
+	
+	      var minprice = [{
+	        label: 'Min. Price',
+	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '0')
+	      }, {
+	        label: '$100',
+	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '100')
+	      }, {
+	        label: '$200',
+	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '200')
+	      }, {
+	        label: '$300',
+	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '300')
+	      }, {
+	        label: '$400',
+	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '400')
+	      }, {
+	        label: '$500',
+	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '500')
+	      }, {
+	        label: '$750',
+	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '750')
+	      }, {
+	        label: '$1000',
+	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '1000')
+	      }];
+	
+	      var maxprice = [{
+	        label: 'Max price',
+	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '0')
+	      }, {
+	        label: '$200',
+	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '200')
+	      }, {
+	        label: '$300',
+	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '300')
+	      }, {
+	        label: '$400',
+	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '400')
+	      }, {
+	        label: '$500',
+	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '500')
+	      }, {
+	        label: '$750',
+	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '750')
+	      }, {
+	        label: '$1000',
+	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '1000')
+	      }, {
+	        label: '$2000',
+	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '2000')
+	      }];
+	
+	      var bedLabel = this.props.searchVars.beds + '+ beds';
+	      var bathLabel = this.props.searchVars.baths + '+ baths';
+	      var minpriceLabel = this.props.searchVars.minprice === '0' ? 'Min. price' : '$' + this.props.searchVars.minprice;
+	      var maxpriceLabel = this.props.searchVars.maxprice === '0' ? 'Max. price' : '$' + this.props.searchVars.maxprice;
+	
+	      var panelButton = this.state.fullSize ? _react2.default.createElement(
+	        'span',
+	        null,
+	        'Less search options ',
+	        _react2.default.createElement('i', { className: 'fa fa-caret-up' })
+	      ) : _react2.default.createElement(
+	        'span',
+	        null,
+	        'More search options ',
+	        _react2.default.createElement('i', { className: 'fa fa-caret-down' })
+	      );
+	
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'panel panel-default marginBottom' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'panel-body' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'row top-header' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-sm-4' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'input-group' },
+	                _react2.default.createElement('input', {
+	                  ref: 'propertySearch',
+	                  className: 'form-control input-sm',
+	                  type: 'text',
+	                  placeholder: 'Search...',
+	                  onChange: this.props.updateSearchString }),
+	                _react2.default.createElement(
+	                  'span',
+	                  { className: 'input-group-btn' },
+	                  _react2.default.createElement(
+	                    'button',
+	                    {
+	                      className: 'btn btn-default btn-sm',
+	                      type: 'button',
+	                      onClick: this.clearSearch },
+	                    'Clear'
+	                  )
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-sm-8' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'pull-left' },
+	                _react2.default.createElement(_Dropdown2.default, { small: true, label: bedLabel, options: beds })
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'pull-left' },
+	                _react2.default.createElement(_Dropdown2.default, { small: true, label: bathLabel, options: baths })
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'pull-left' },
+	                _react2.default.createElement(_Dropdown2.default, { small: true, label: minpriceLabel, options: minprice })
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'pull-left' },
+	                _react2.default.createElement(_Dropdown2.default, { small: true, label: maxpriceLabel, options: maxprice })
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'pull-left' },
+	                _react2.default.createElement(
+	                  'button',
+	                  { className: 'btn btn-success btn-sm', onClick: this.props.resetConditions },
+	                  'Reset'
+	                )
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'row', style: { marginTop: '1em' } },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-sm-12 text-center' },
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-default btn-sm', onClick: this.togglePanel },
+	                panelButton
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactAddonsCssTransitionGroup2.default,
+	            {
+	              transitionName: 'trans',
+	              transitionEnterTimeout: 500,
+	              transitionLeaveTimeout: 300 },
+	            this.state.fullSize === true ? _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement(_Amenities2.default, { toggle: this.props.toggle, searchVars: this.props.searchVars }),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'text-center' },
+	                _react2.default.createElement(
+	                  'button',
+	                  { className: 'btn btn-success', onClick: this.props.clearAmenities },
+	                  'Uncheck above'
+	                )
+	              )
+	            ) : null
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return SearchBar;
+	}(_react2.default.Component);
+	
+	exports.default = SearchBar;
+	
+	
+	SearchBar.propTypes = {
+	  updateSearchString: _react2.default.PropTypes.func,
+	  clear: _react2.default.PropTypes.func,
+	  updateSearchVars: _react2.default.PropTypes.func,
+	  searchVars: _react2.default.PropTypes.object,
+	  toggle: _react2.default.PropTypes.func,
+	  clearAmenities: _react2.default.PropTypes.func,
+	  resetConditions: _react2.default.PropTypes.func
+	};
+
+/***/ },
+
+/***/ 450:
+/*!*********************************************!*\
+  !*** ./javascript/Mixin/Edit/Amenities.jsx ***!
+  \*********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2020,10 +2296,10 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 425:
-/*!**********************************************!*\
-  !*** ./javascript/Mixin/Place/SearchBar.jsx ***!
-  \**********************************************/
+/***/ 451:
+/*!****************************************!*\
+  !*** ./javascript/Mixin/List/Base.jsx ***!
+  \****************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2038,324 +2314,15 @@ webpackJsonp([9],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Dropdown = __webpack_require__(/*! ../Dropdown.jsx */ 175);
-	
-	var _Dropdown2 = _interopRequireDefault(_Dropdown);
-	
-	var _Amenities = __webpack_require__(/*! ./Amenities.jsx */ 424);
-	
-	var _Amenities2 = _interopRequireDefault(_Amenities);
-	
-	var _reactAddonsCssTransitionGroup = __webpack_require__(/*! react-addons-css-transition-group */ 205);
-	
-	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var SearchBar = function (_React$Component) {
-	  _inherits(SearchBar, _React$Component);
-	
-	  function SearchBar(props) {
-	    _classCallCheck(this, SearchBar);
-	
-	    var _this = _possibleConstructorReturn(this, (SearchBar.__proto__ || Object.getPrototypeOf(SearchBar)).call(this, props));
-	
-	    _this.state = {
-	      fullSize: false
-	    };
-	    _this.clearSearch = _this.clearSearch.bind(_this);
-	    _this.togglePanel = _this.togglePanel.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(SearchBar, [{
-	    key: 'componentDidUpdate',
-	    value: function componentDidUpdate() {
-	      var minprice = this.props.searchVars['minprice'];
-	      var maxprice = this.props.searchVars['maxprice'];
-	      if (maxprice !== '0' && minprice !== '0' && parseInt(maxprice) < parseInt(minprice)) {
-	        this.props.updateSearchVars('minprice', maxprice);
-	        this.props.updateSearchVars('maxprice', minprice);
-	      }
-	    }
-	  }, {
-	    key: 'clearSearch',
-	    value: function clearSearch() {
-	      this.refs.propertySearch.value = '';
-	      this.props.clear();
-	    }
-	  }, {
-	    key: 'togglePanel',
-	    value: function togglePanel() {
-	      this.setState({
-	        fullSize: !this.state.fullSize
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var beds = [{
-	        label: '1+ beds',
-	        handleClick: this.props.updateSearchVars.bind(null, 'beds', '1')
-	      }, {
-	        label: '2+ beds',
-	        handleClick: this.props.updateSearchVars.bind(null, 'beds', '2')
-	      }, {
-	        label: '3+ beds',
-	        handleClick: this.props.updateSearchVars.bind(null, 'beds', '3')
-	      }, {
-	        label: '4+ beds',
-	        handleClick: this.props.updateSearchVars.bind(null, 'beds', '4')
-	      }, {
-	        label: '5+ beds',
-	        handleClick: this.props.updateSearchVars.bind(null, 'beds', '5')
-	      }];
-	
-	      var baths = [{
-	        label: '1+ baths',
-	        handleClick: this.props.updateSearchVars.bind(null, 'baths', '1')
-	      }, {
-	        label: '2+ baths',
-	        handleClick: this.props.updateSearchVars.bind(null, 'baths', '2')
-	      }, {
-	        label: '3+ baths',
-	        handleClick: this.props.updateSearchVars.bind(null, 'baths', '3')
-	      }, {
-	        label: '4+ baths',
-	        handleClick: this.props.updateSearchVars.bind(null, 'baths', '4')
-	      }, {
-	        label: '5+ baths',
-	        handleClick: this.props.updateSearchVars.bind(null, 'baths', '5')
-	      }];
-	
-	      var minprice = [{
-	        label: 'Min. Price',
-	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '0')
-	      }, {
-	        label: '$100',
-	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '100')
-	      }, {
-	        label: '$200',
-	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '200')
-	      }, {
-	        label: '$300',
-	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '300')
-	      }, {
-	        label: '$400',
-	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '400')
-	      }, {
-	        label: '$500',
-	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '500')
-	      }, {
-	        label: '$750',
-	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '750')
-	      }, {
-	        label: '$1000',
-	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '1000')
-	      }];
-	
-	      var maxprice = [{
-	        label: 'Max price',
-	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '0')
-	      }, {
-	        label: '$200',
-	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '200')
-	      }, {
-	        label: '$300',
-	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '300')
-	      }, {
-	        label: '$400',
-	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '400')
-	      }, {
-	        label: '$500',
-	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '500')
-	      }, {
-	        label: '$750',
-	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '750')
-	      }, {
-	        label: '$1000',
-	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '1000')
-	      }, {
-	        label: '$2000',
-	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '2000')
-	      }];
-	
-	      var bedLabel = this.props.searchVars.beds + '+ beds';
-	      var bathLabel = this.props.searchVars.baths + '+ baths';
-	      var minpriceLabel = this.props.searchVars.minprice === '0' ? 'Min. price' : '$' + this.props.searchVars.minprice;
-	      var maxpriceLabel = this.props.searchVars.maxprice === '0' ? 'Max. price' : '$' + this.props.searchVars.maxprice;
-	
-	      var panelButton = this.state.fullSize ? _react2.default.createElement(
-	        'span',
-	        null,
-	        'Less search options ',
-	        _react2.default.createElement('i', { className: 'fa fa-caret-up' })
-	      ) : _react2.default.createElement(
-	        'span',
-	        null,
-	        'More search options ',
-	        _react2.default.createElement('i', { className: 'fa fa-caret-down' })
-	      );
-	
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'panel panel-default marginBottom' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'panel-body' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'row top-header' },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'col-sm-4' },
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'input-group' },
-	                _react2.default.createElement('input', {
-	                  ref: 'propertySearch',
-	                  className: 'form-control input-sm',
-	                  type: 'text',
-	                  placeholder: 'Search...',
-	                  onChange: this.props.updateSearchString }),
-	                _react2.default.createElement(
-	                  'span',
-	                  { className: 'input-group-btn' },
-	                  _react2.default.createElement(
-	                    'button',
-	                    {
-	                      className: 'btn btn-default btn-sm',
-	                      type: 'button',
-	                      onClick: this.clearSearch },
-	                    'Clear'
-	                  )
-	                )
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'col-sm-8' },
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'pull-left' },
-	                _react2.default.createElement(_Dropdown2.default, { small: true, label: bedLabel, options: beds })
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'pull-left' },
-	                _react2.default.createElement(_Dropdown2.default, { small: true, label: bathLabel, options: baths })
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'pull-left' },
-	                _react2.default.createElement(_Dropdown2.default, { small: true, label: minpriceLabel, options: minprice })
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'pull-left' },
-	                _react2.default.createElement(_Dropdown2.default, { small: true, label: maxpriceLabel, options: maxprice })
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'pull-left' },
-	                _react2.default.createElement(
-	                  'button',
-	                  { className: 'btn btn-success btn-sm', onClick: this.props.resetConditions },
-	                  'Reset'
-	                )
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'row', style: { marginTop: '1em' } },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'col-sm-12 text-center' },
-	              _react2.default.createElement(
-	                'button',
-	                { className: 'btn btn-default btn-sm', onClick: this.togglePanel },
-	                panelButton
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            _reactAddonsCssTransitionGroup2.default,
-	            {
-	              transitionName: 'trans',
-	              transitionEnterTimeout: 500,
-	              transitionLeaveTimeout: 300 },
-	            this.state.fullSize === true ? _react2.default.createElement(
-	              'div',
-	              null,
-	              _react2.default.createElement(_Amenities2.default, { toggle: this.props.toggle, searchVars: this.props.searchVars }),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'text-center' },
-	                _react2.default.createElement(
-	                  'button',
-	                  { className: 'btn btn-success', onClick: this.props.clearAmenities },
-	                  'Uncheck above'
-	                )
-	              )
-	            ) : null
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return SearchBar;
-	}(_react2.default.Component);
-	
-	exports.default = SearchBar;
-	
-	
-	SearchBar.propTypes = {
-	  updateSearchString: _react2.default.PropTypes.func,
-	  clear: _react2.default.PropTypes.func,
-	  updateSearchVars: _react2.default.PropTypes.func,
-	  searchVars: _react2.default.PropTypes.object,
-	  toggle: _react2.default.PropTypes.func,
-	  clearAmenities: _react2.default.PropTypes.func,
-	  resetConditions: _react2.default.PropTypes.func
-	};
-
-/***/ },
-
-/***/ 426:
-/*!******************************************!*\
-  !*** ./javascript/Mixin/Place/Place.jsx ***!
-  \******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _Bind = __webpack_require__(/*! ../Bind.js */ 182);
+	var _Bind = __webpack_require__(/*! ../Helper/Bind.js */ 432);
 	
 	var _Bind2 = _interopRequireDefault(_Bind);
 	
-	var _DecodeUrl = __webpack_require__(/*! ../DecodeUrl.js */ 193);
+	var _DecodeUrl = __webpack_require__(/*! ../Helper/DecodeUrl.js */ 446);
 	
 	var _DecodeUrl2 = _interopRequireDefault(_DecodeUrl);
 	
-	var _setIfDefined = __webpack_require__(/*! ../setIfDefined.js */ 213);
+	var _setIfDefined = __webpack_require__(/*! ../Helper/setIfDefined.js */ 452);
 	
 	var _setIfDefined2 = _interopRequireDefault(_setIfDefined);
 	
@@ -2367,13 +2334,13 @@ webpackJsonp([9],{
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Place = function (_React$Component) {
-	  _inherits(Place, _React$Component);
+	var Base = function (_React$Component) {
+	  _inherits(Base, _React$Component);
 	
-	  function Place(props) {
-	    _classCallCheck(this, Place);
+	  function Base(props) {
+	    _classCallCheck(this, Base);
 	
-	    var _this = _possibleConstructorReturn(this, (Place.__proto__ || Object.getPrototypeOf(Place)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (Base.__proto__ || Object.getPrototypeOf(Base)).call(this, props));
 	
 	    _this.state = {};
 	
@@ -2391,7 +2358,7 @@ webpackJsonp([9],{
 	    return _this;
 	  }
 	
-	  _createClass(Place, [{
+	  _createClass(Base, [{
 	    key: 'clearSearch',
 	    value: function clearSearch() {
 	      this.search = '';
@@ -2490,13 +2457,46 @@ webpackJsonp([9],{
 	    }
 	  }]);
 	
-	  return Place;
+	  return Base;
 	}(_react2.default.Component);
 	
-	exports.default = Place;
+	exports.default = Base;
 	
 	
 	Place.propTypes = {};
+
+/***/ },
+
+/***/ 452:
+/*!*************************************************!*\
+  !*** ./javascript/Mixin/Helper/setIfDefined.js ***!
+  \*************************************************/
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = setIfDefined;
+	function setIfDefined(value, varname) {
+	  var defaultVar = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+	  var forceval = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
+	
+	  if (forceval !== null) {
+	    if (defaultVar !== null) {
+	      return value[varname] !== undefined ? forceval : defaultVar;
+	    } else {
+	      return value[varname] !== undefined ? forceval : undefined;
+	    }
+	  } else {
+	    if (defaultVar !== null) {
+	      return value[varname] !== undefined ? value[varname] : defaultVar;
+	    } else {
+	      return value[varname] !== undefined ? value[varname] : undefined;
+	    }
+	  }
+	}
 
 /***/ }
 

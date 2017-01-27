@@ -26,10 +26,203 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 177:
-/*!*****************************************!*\
-  !*** ./javascript/Mixin/InputField.jsx ***!
-  \*****************************************/
+/***/ 192:
+/*!****************************************************!*\
+  !*** ./javascript/ManagerSignin/ManagerSignin.jsx ***!
+  \****************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _InputField = __webpack_require__(/*! ../Mixin/Form/InputField.jsx */ 428);
+	
+	var _InputField2 = _interopRequireDefault(_InputField);
+	
+	var _Empty = __webpack_require__(/*! ../Mixin/Helper/Empty.js */ 426);
+	
+	var _Empty2 = _interopRequireDefault(_Empty);
+	
+	var _DecodeUrl = __webpack_require__(/*! ../Mixin/Helper/DecodeUrl.js */ 446);
+	
+	var _DecodeUrl2 = _interopRequireDefault(_DecodeUrl);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ManagerSignin = function (_React$Component) {
+	  _inherits(ManagerSignin, _React$Component);
+	
+	  function ManagerSignin(props) {
+	    _classCallCheck(this, ManagerSignin);
+	
+	    var _this = _possibleConstructorReturn(this, (ManagerSignin.__proto__ || Object.getPrototypeOf(ManagerSignin)).call(this, props));
+	
+	    _this.state = {
+	      username: '',
+	      password: ''
+	    };
+	    _this.updateUsername = _this.updateUsername.bind(_this);
+	    _this.updatePassword = _this.updatePassword.bind(_this);
+	    _this.submit = _this.submit.bind(_this);
+	    _this.url = new _DecodeUrl2.default();
+	    return _this;
+	  }
+	
+	  _createClass(ManagerSignin, [{
+	    key: 'updateUsername',
+	    value: function updateUsername(e) {
+	      this.setState({ username: e.target.value });
+	    }
+	  }, {
+	    key: 'updatePassword',
+	    value: function updatePassword(e) {
+	      this.setState({ password: e.target.value });
+	    }
+	  }, {
+	    key: 'submit',
+	    value: function submit(e) {
+	      if (this.state.username.length === 0 || this.state.password.length === 0) {
+	        e.preventDefault();
+	      }
+	    }
+	  }, {
+	    key: 'checkError',
+	    value: function checkError() {
+	      if (this.url.values.error === undefined) {
+	        return;
+	      }
+	      switch (this.url.values.error) {
+	        case 'not_found':
+	          return _react2.default.createElement(
+	            'div',
+	            { className: 'alert alert-warning' },
+	            'Could not log-in account.\xA0',
+	            _react2.default.createElement(
+	              'a',
+	              { href: './properties/Manager/forgot' },
+	              'Did you forget your password?'
+	            )
+	          );
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var disabled = (0, _Empty2.default)(this.state.username) || (0, _Empty2.default)(this.state.password);
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Manager log-in'
+	        ),
+	        this.checkError(),
+	        _react2.default.createElement(
+	          'form',
+	          { action: './properties/Manager/signin', method: 'post' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'row' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-sm-6' },
+	              _react2.default.createElement(_InputField2.default, {
+	                name: 'manager_username',
+	                label: 'Username',
+	                value: this.state.username,
+	                change: this.updateUsername,
+	                autocomplete: false,
+	                required: true })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-sm-6' },
+	              _react2.default.createElement(_InputField2.default, {
+	                name: 'manager_password',
+	                type: 'password',
+	                label: 'Password',
+	                value: this.state.password,
+	                change: this.updatePassword,
+	                autocomplete: false,
+	                required: true })
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'btn btn-primary', disabled: disabled, onClick: this.submit },
+	            'Log in'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          { className: 'marginTop' },
+	          _react2.default.createElement(
+	            'a',
+	            { href: './properties/Manager/forgot' },
+	            'Forgot password?'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          _react2.default.createElement(
+	            'a',
+	            { href: './properties/ManagerSignup' },
+	            'Request a manager account.'
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return ManagerSignin;
+	}(_react2.default.Component);
+	
+	exports.default = ManagerSignin;
+	
+	
+	ManagerSignin.propTypes = {};
+
+/***/ },
+
+/***/ 426:
+/*!******************************************!*\
+  !*** ./javascript/Mixin/Helper/Empty.js ***!
+  \******************************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = empty;
+	function empty(value) {
+	  return value === undefined || value === null || value === 0 || value === '0' || value.length === 0;
+	}
+
+/***/ },
+
+/***/ 428:
+/*!**********************************************!*\
+  !*** ./javascript/Mixin/Form/InputField.jsx ***!
+  \**********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -220,203 +413,10 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 186:
-/*!***********************************!*\
-  !*** ./javascript/Mixin/Empty.js ***!
-  \***********************************/
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = empty;
-	function empty(value) {
-	  return value === undefined || value === null || value === 0 || value === '0' || value.length === 0;
-	}
-
-/***/ },
-
-/***/ 192:
-/*!****************************************************!*\
-  !*** ./javascript/ManagerSignin/ManagerSignin.jsx ***!
-  \****************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _InputField = __webpack_require__(/*! ../Mixin/InputField.jsx */ 177);
-	
-	var _InputField2 = _interopRequireDefault(_InputField);
-	
-	var _Empty = __webpack_require__(/*! ../Mixin/Empty.js */ 186);
-	
-	var _Empty2 = _interopRequireDefault(_Empty);
-	
-	var _DecodeUrl = __webpack_require__(/*! ../Mixin/DecodeUrl.js */ 193);
-	
-	var _DecodeUrl2 = _interopRequireDefault(_DecodeUrl);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var ManagerSignin = function (_React$Component) {
-	  _inherits(ManagerSignin, _React$Component);
-	
-	  function ManagerSignin(props) {
-	    _classCallCheck(this, ManagerSignin);
-	
-	    var _this = _possibleConstructorReturn(this, (ManagerSignin.__proto__ || Object.getPrototypeOf(ManagerSignin)).call(this, props));
-	
-	    _this.state = {
-	      username: '',
-	      password: ''
-	    };
-	    _this.updateUsername = _this.updateUsername.bind(_this);
-	    _this.updatePassword = _this.updatePassword.bind(_this);
-	    _this.submit = _this.submit.bind(_this);
-	    _this.url = new _DecodeUrl2.default();
-	    return _this;
-	  }
-	
-	  _createClass(ManagerSignin, [{
-	    key: 'updateUsername',
-	    value: function updateUsername(e) {
-	      this.setState({ username: e.target.value });
-	    }
-	  }, {
-	    key: 'updatePassword',
-	    value: function updatePassword(e) {
-	      this.setState({ password: e.target.value });
-	    }
-	  }, {
-	    key: 'submit',
-	    value: function submit(e) {
-	      if (this.state.username.length === 0 || this.state.password.length === 0) {
-	        e.preventDefault();
-	      }
-	    }
-	  }, {
-	    key: 'checkError',
-	    value: function checkError() {
-	      if (this.url.values.error === undefined) {
-	        return;
-	      }
-	      switch (this.url.values.error) {
-	        case 'not_found':
-	          return _react2.default.createElement(
-	            'div',
-	            { className: 'alert alert-warning' },
-	            'Could not log-in account.\xA0',
-	            _react2.default.createElement(
-	              'a',
-	              { href: './properties/Manager/forgot' },
-	              'Did you forget your password?'
-	            )
-	          );
-	      }
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var disabled = (0, _Empty2.default)(this.state.username) || (0, _Empty2.default)(this.state.password);
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'h2',
-	          null,
-	          'Manager log-in'
-	        ),
-	        this.checkError(),
-	        _react2.default.createElement(
-	          'form',
-	          { action: './properties/Manager/signin', method: 'post' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'row' },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'col-sm-6' },
-	              _react2.default.createElement(_InputField2.default, {
-	                name: 'manager_username',
-	                label: 'Username',
-	                value: this.state.username,
-	                change: this.updateUsername,
-	                autocomplete: false,
-	                required: true })
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'col-sm-6' },
-	              _react2.default.createElement(_InputField2.default, {
-	                name: 'manager_password',
-	                type: 'password',
-	                label: 'Password',
-	                value: this.state.password,
-	                change: this.updatePassword,
-	                autocomplete: false,
-	                required: true })
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'button',
-	            { className: 'btn btn-primary', disabled: disabled, onClick: this.submit },
-	            'Log in'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'p',
-	          { className: 'marginTop' },
-	          _react2.default.createElement(
-	            'a',
-	            { href: './properties/Manager/forgot' },
-	            'Forgot password?'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'p',
-	          null,
-	          _react2.default.createElement(
-	            'a',
-	            { href: './properties/ManagerSignup' },
-	            'Request a manager account.'
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return ManagerSignin;
-	}(_react2.default.Component);
-	
-	exports.default = ManagerSignin;
-	
-	
-	ManagerSignin.propTypes = {};
-
-/***/ },
-
-/***/ 193:
-/*!***************************************!*\
-  !*** ./javascript/Mixin/DecodeUrl.js ***!
-  \***************************************/
+/***/ 446:
+/*!**********************************************!*\
+  !*** ./javascript/Mixin/Helper/DecodeUrl.js ***!
+  \**********************************************/
 /***/ function(module, exports) {
 
 	"use strict";

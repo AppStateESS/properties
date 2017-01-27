@@ -26,87 +26,6 @@ webpackJsonp([5],{
 
 /***/ },
 
-/***/ 181:
-/*!**************************************!*\
-  !*** ./javascript/Mixin/Waiting.jsx ***!
-  \**************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Waiting = function (_React$Component) {
-	  _inherits(Waiting, _React$Component);
-	
-	  function Waiting() {
-	    _classCallCheck(this, Waiting);
-	
-	    return _possibleConstructorReturn(this, (Waiting.__proto__ || Object.getPrototypeOf(Waiting)).apply(this, arguments));
-	  }
-	
-	  _createClass(Waiting, [{
-	    key: "render",
-	    value: function render() {
-	      var message = void 0;
-	      if (this.props.message.length === 0) {
-	        message = _react2.default.createElement(
-	          "span",
-	          null,
-	          "Loading ",
-	          this.props.label,
-	          "..."
-	        );
-	      } else {
-	        message = this.props.message;
-	      }
-	      return _react2.default.createElement(
-	        "div",
-	        { className: "lead text-center" },
-	        _react2.default.createElement("i", { className: "fa fa-cog fa-spin fa-lg" }),
-	        "\xA0",
-	        message
-	      );
-	    }
-	  }]);
-	
-	  return Waiting;
-	}(_react2.default.Component);
-	
-	Waiting.defaultProps = {
-	  label: ''
-	};
-	
-	Waiting.propTypes = {
-	  label: _react2.default.PropTypes.string,
-	  message: _react2.default.PropTypes.string
-	};
-	
-	Waiting.defaultProps = {
-	  message: '',
-	  label: 'data'
-	};
-	
-	exports.default = Waiting;
-
-/***/ },
-
 /***/ 195:
 /*!************************************!*\
   !*** ./javascript/Photo/Photo.jsx ***!
@@ -129,7 +48,7 @@ webpackJsonp([5],{
 	
 	var _reactImageGallery2 = _interopRequireDefault(_reactImageGallery);
 	
-	var _Waiting = __webpack_require__(/*! ../Mixin/Waiting.jsx */ 181);
+	var _Waiting = __webpack_require__(/*! ../Mixin/Html/Waiting.jsx */ 427);
 	
 	var _Waiting2 = _interopRequireDefault(_Waiting);
 	
@@ -1742,6 +1661,87 @@ webpackJsonp([5],{
 			URL.revokeObjectURL(oldSrc);
 	}
 
+
+/***/ },
+
+/***/ 427:
+/*!*******************************************!*\
+  !*** ./javascript/Mixin/Html/Waiting.jsx ***!
+  \*******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Waiting = function (_React$Component) {
+	  _inherits(Waiting, _React$Component);
+	
+	  function Waiting() {
+	    _classCallCheck(this, Waiting);
+	
+	    return _possibleConstructorReturn(this, (Waiting.__proto__ || Object.getPrototypeOf(Waiting)).apply(this, arguments));
+	  }
+	
+	  _createClass(Waiting, [{
+	    key: "render",
+	    value: function render() {
+	      var message = void 0;
+	      if (this.props.message.length === 0) {
+	        message = _react2.default.createElement(
+	          "span",
+	          null,
+	          "Loading ",
+	          this.props.label,
+	          "..."
+	        );
+	      } else {
+	        message = this.props.message;
+	      }
+	      return _react2.default.createElement(
+	        "div",
+	        { className: "lead text-center" },
+	        _react2.default.createElement("i", { className: "fa fa-cog fa-spin fa-lg" }),
+	        "\xA0",
+	        message
+	      );
+	    }
+	  }]);
+	
+	  return Waiting;
+	}(_react2.default.Component);
+	
+	Waiting.defaultProps = {
+	  label: ''
+	};
+	
+	Waiting.propTypes = {
+	  label: _react2.default.PropTypes.string,
+	  message: _react2.default.PropTypes.string
+	};
+	
+	Waiting.defaultProps = {
+	  message: '',
+	  label: 'data'
+	};
+	
+	exports.default = Waiting;
 
 /***/ }
 
