@@ -33,7 +33,7 @@ class Sublease extends Base
     {
         $listing = new Sublease\Listing();
         $listing->pullVariables($request);
-        return $listing->get($view);
+        return $listing->get(true);
     }
 
     public function getSubleaseByUser($user_id)
