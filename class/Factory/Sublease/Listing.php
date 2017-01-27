@@ -15,6 +15,7 @@
  *
  * @license http://opensource.org/licenses/lgpl-3.0.html
  */
+
 namespace properties\Factory\Sublease;
 
 class Listing
@@ -52,7 +53,6 @@ class Listing
      * @var \phpws2\Database\Table
      */
     private $sublease_table; //tbl
-
 
     public function __construct()
     {
@@ -94,7 +94,7 @@ class Listing
 
 
         $this->sublease_table->addOrderBy('updated', 'desc');
-
+        $this->addConditionals();
         if ($view) {
             $result = $this->db->selectAsResources('\properties\Resource\Sublease');
             if (empty($result)) {
@@ -112,7 +112,6 @@ class Listing
 
     private function addConditionals()
     {
-        $this->contact_table->addFieldConditional('active', 1);
         if ($this->beds > 1) {
             $this->sublease_table->addFieldConditional('bedroom_no',
                     $this->beds, '>=');
