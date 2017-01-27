@@ -2,9 +2,9 @@
 import React from 'react'
 import ListManagers from './ListManagers.jsx'
 import ManagerForm from './ManagerForm.jsx'
-import Message from '../Mixin/Message.jsx'
-import Waiting from '../Mixin/Waiting.jsx'
-import bindMethods from '../Mixin/Bind.js'
+import Message from '../Mixin/Html/Message.jsx'
+import Waiting from '../Mixin/Html/Waiting.jsx'
+import bindMethods from '../Mixin/Helper/Bind.js'
 
 /* global $ */
 

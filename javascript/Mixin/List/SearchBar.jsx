@@ -1,7 +1,7 @@
 'use strict'
 import React from 'react'
-import Dropdown from '../Dropdown.jsx'
-import Amenities from './Amenities.jsx'
+import Dropdown from '../Form/Dropdown.jsx'
+import Amenities from '../Edit/Amenities.jsx'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 export default class SearchBar extends React.Component {

@@ -1,10 +1,10 @@
 'use strict'
 import React from 'react'
-import ViewRow from '../Mixin/ViewRow.jsx'
+import ViewRow from '../Mixin/List/Row.jsx'
 
 /* global $ */
 
-export default class PropertyRow extends ViewRow {
+export default class PropertyRow extends Row {
   constructor(props) {
     super(props)
   }

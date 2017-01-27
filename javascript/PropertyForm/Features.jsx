@@ -1,6 +1,6 @@
 'use strict'
 import React from 'react'
-import BooleanButton from '../Mixin/BooleanButton.jsx'
+import BooleanButton from '../Mixin/Form/BooleanButton.jsx'
 
 export default class Features extends React.Component {
   constructor(props) {

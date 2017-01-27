@@ -1,8 +1,8 @@
 import React from 'react'
 import moment from 'moment'
-import Dollarize from './Dollarize.jsx'
+import Dollarize from '../Form/Dollarize.jsx'
 
-export default class Place extends React.Component {
+export default class Base extends React.Component {
 
   dollarize(input) {
     return <Dollarize>{input}</Dollarize>

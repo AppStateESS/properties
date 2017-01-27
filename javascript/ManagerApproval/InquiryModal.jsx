@@ -1,5 +1,5 @@
 import React from 'react'
-import Modal from '../Mixin/Modal.jsx'
+import Modal from '../Mixin/Html/Modal.jsx'
 
 export default class InquiryModal extends React.Component {
   constructor(props) {

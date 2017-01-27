@@ -1,9 +1,9 @@
 'use strict'
 import React from 'react'
-import ButtonGroup from './ButtonGroup.jsx'
-import Range from './Range.js'
+import ButtonGroup from '../Form/ButtonGroup.jsx'
+import Range from '../Helper/Range.js'
 import classnames from 'classnames'
-import bindMethods from './Bind.js'
+import bindMethods from '../Helper/Bind.js'
 
 export default class Rooms extends React.Component {
   constructor(props) {

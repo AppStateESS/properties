@@ -1,7 +1,7 @@
 'use strict'
 import React from 'react'
 import ImageOverlay from './ImageOverlay.jsx'
-import bindMethods from '../Mixin/Bind.js'
+import bindMethods from '../Mixin/Helper/Bind.js'
 
 /* global $, propertyId, loadPhotos, editPhotos, currentPhotos */
 

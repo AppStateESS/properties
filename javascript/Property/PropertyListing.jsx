@@ -1,7 +1,7 @@
 'use strict'
 import React from 'react'
 import PropertyRow from './PropertyRow.jsx'
-import Waiting from '../Mixin/Waiting.jsx'
+import Waiting from '../Mixin/Html/Waiting.jsx'
 
 export default class PropertyListing extends React.Component {
   constructor(props) {

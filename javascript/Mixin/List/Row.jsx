@@ -1,7 +1,7 @@
 'use strict'
 import React from 'react'
 
-export default class ViewRow extends React.Component {
+export default class Row extends React.Component {
   constructor(props) {
     super(props)
   }

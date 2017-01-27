@@ -1,17 +1,17 @@
 'use strict'
 import React from 'react'
 import {DateField} from 'react-date-picker'
-import bindMethods from '../Mixin/Bind.js'
-import Rooms from '../Mixin/Rooms.jsx'
-import InputField from '../Mixin/InputField.jsx'
-import ButtonGroup from '../Mixin/ButtonGroup.jsx'
-import Place from '../Mixin/Place.jsx'
+import bindMethods from '../Mixin/Helper/Bind.js'
+import Rooms from '../Mixin/Form/Rooms.jsx'
+import InputField from '../Mixin/Form/InputField.jsx'
+import ButtonGroup from '../Mixin/Form/ButtonGroup.jsx'
+import Base from '../Mixin/Edit/Base.jsx'
 
-import Range from '../Mixin/Range.js'
+import Range from '../Mixin/Helper/Range.js'
 import moment from 'moment'
-import empty from '../Mixin/Empty.js'
+import empty from '../Mixin/Helper/Empty.js'
 
-export default class Basic extends Place {
+export default class Basic extends Base {
   constructor(props) {
     super(props)
 

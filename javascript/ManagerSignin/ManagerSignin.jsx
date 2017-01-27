@@ -1,8 +1,8 @@
 'use strict'
 import React from 'react'
-import InputField from '../Mixin/InputField.jsx'
-import empty from '../Mixin/Empty.js'
-import DecodeUrl from '../Mixin/DecodeUrl.js'
+import InputField from '../Mixin/Form/InputField.jsx'
+import empty from '../Mixin/Helper/Empty.js'
+import DecodeUrl from '../Mixin/Helper/DecodeUrl.js'
 
 export default class ManagerSignin extends React.Component {
   constructor(props) {

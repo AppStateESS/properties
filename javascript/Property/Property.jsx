@@ -1,17 +1,17 @@
 'use strict'
 import React from 'react'
-import empty from '../Mixin/Empty.js'
-import bindMethods from '../Mixin/Bind.js'
-import Message from '../Mixin/Message.jsx'
-import SearchBar from '../Mixin/Place/SearchBar.jsx'
-import DecodeUrl from '../Mixin/DecodeUrl.js'
+import empty from '../Mixin/Helper/Empty.js'
+import bindMethods from '../Mixin/Helper/Bind.js'
+import Message from '../Mixin/Html/Message.jsx'
+import SearchBar from '../Mixin/List/SearchBar.jsx'
+import DecodeUrl from '../Mixin/Helper/DecodeUrl.js'
 import PropertyListing from './PropertyListing.jsx'
-import Place from '../Mixin/Place/Place.jsx'
+import Place from '../Mixin/Edit/Base.jsx'
 
 
 /* global $ */
 
-export default class Property extends Place {
+export default class Property extends Base {
   constructor(props) {
     super(props)
     this.state = {

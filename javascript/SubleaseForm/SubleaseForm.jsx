@@ -1,26 +1,26 @@
 'use strict'
 import React from 'react'
-import SubleaseObject from '../Mixin/SubleaseObject.js'
-import empty from '../Mixin/Empty.js'
-import Waiting from '../Mixin/Waiting.jsx'
-import InputField from '../Mixin/InputField.jsx'
-import ButtonGroup from '../Mixin/ButtonGroup.jsx'
-import Rooms from '../Mixin/Rooms.jsx'
-import bindMethods from '../Mixin/Bind.js'
+import SubleaseObject from '../Mixin/Objects/SubleaseObject.js'
+import empty from '../Mixin/Helper/Empty.js'
+import Waiting from '../Mixin/Html/Waiting.jsx'
+import InputField from '../Mixin/Form/InputField.jsx'
+import ButtonGroup from '../Mixin/Form/ButtonGroup.jsx'
+import Rooms from '../Mixin/Form/Rooms.jsx'
+import bindMethods from '../Mixin/Helper/Bind.js'
 import {DateField} from 'react-date-picker'
-import Range from '../Mixin/Range.js'
-import Place from '../Mixin/Place.jsx'
-import BigCheckbox from '../Mixin/BigCheckbox.jsx'
-import Message from '../Mixin/Message.jsx'
-import SubmitForm from '../Mixin/SubmitForm.jsx'
-import CheckValues from '../Mixin/CheckValues.js'
+import Range from '../Mixin/Helper/Range.js'
+import Base from '../Mixin/Edit/Base.jsx'
+import BigCheckbox from '../Mixin/Form/BigCheckbox.jsx'
+import Message from '../Mixin/Html/Message.jsx'
+import SubmitForm from '../Mixin/Form/SubmitForm.jsx'
+import CheckValues from '../Mixin/Helper/CheckValues.js'
 import moment from 'moment'
-import Help from '../Mixin/Help.jsx'
-import UtilityFunctions from '../Mixin/UtilityFunctions.js'
+import Help from '../Mixin/Html/Help.jsx'
+import UtilityFunctions from '../Mixin/Edit/UtilityFunctions.js'
 import 'react-date-picker/index.css'
 /* global $ */
 
-export default class SubleaseForm extends Place {
+export default class SubleaseForm extends Base {
   constructor(props) {
     super(props)
     this.state = {

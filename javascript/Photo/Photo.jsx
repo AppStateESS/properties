@@ -2,7 +2,7 @@
 import React from 'react'
 require('react-image-gallery/styles/css/image-gallery.css')
 import ImageGallery from 'react-image-gallery'
-import Waiting from '../Mixin/Waiting.jsx'
+import Waiting from '../Mixin/Html/Waiting.jsx'
 
 /* global $, require, propertyId, loadPhotos, currentPhotos */
 

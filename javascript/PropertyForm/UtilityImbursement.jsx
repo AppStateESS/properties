@@ -1,7 +1,7 @@
 'use strict'
 import React from 'react'
-import InputField from '../Mixin/InputField.jsx'
-import Dollarize from '../Mixin/Dollarize.jsx'
+import InputField from '../Mixin/Form/InputField.jsx'
+import Dollarize from '../Mixin/Form/Dollarize.jsx'
 
 export default class UtilityImbursement extends React.Component {
   constructor(props) {

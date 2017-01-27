@@ -1,6 +1,6 @@
 'use strict'
 import React from 'react'
-import Waiting from '../Mixin/Waiting.jsx'
+import Waiting from '../Mixin/Html/Waiting.jsx'
 import SubleaseRow from './SubleaseRow.jsx'
 
 export default class Listing extends React.Component {

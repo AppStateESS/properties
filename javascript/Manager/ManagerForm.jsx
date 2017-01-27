@@ -1,8 +1,8 @@
 'use strict'
 import React from 'react'
-import InputField from '../Mixin/InputField.jsx'
-import Modal from '../Mixin/Modal.jsx'
-import CheckValues from '../Mixin/CheckValues'
+import InputField from '../Mixin/Form/InputField.jsx'
+import Modal from '../Mixin/Html/Modal.jsx'
+import CheckValues from '../Mixin/Helper/CheckValues'
 
 /* global $ */
 

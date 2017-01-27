@@ -20,7 +20,8 @@ const SubmitForm = ({check, saving, label}) => {
 
 SubmitForm.propTypes = {
   check: React.PropTypes.func,
-  saving: React.PropTypes.bool
+  saving: React.PropTypes.bool,
+  label: React.PropTypes.string,
 }
 
 export default SubmitForm

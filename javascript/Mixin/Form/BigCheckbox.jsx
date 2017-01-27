@@ -1,6 +1,6 @@
 'use strict'
 import React from 'react'
-import empty from './Empty.js'
+import empty from '../Helper/Empty.js'
 
 export default class BigCheckbox extends React.Component {
   constructor(props) {
@@ -42,7 +42,7 @@ export default class BigCheckbox extends React.Component {
 
 BigCheckbox.propTypes = {
   label: React.PropTypes.string,
-  checked: React.PropTypes.bool,
+  checked: React.PropTypes.oneOfType([React.PropTypes.bool,React.PropTypes.string]),
   handle: React.PropTypes.func.isRequired
 }
 

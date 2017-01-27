@@ -1,12 +1,11 @@
 'use strict'
 import React from 'react'
-import Message from '../Mixin/Message.jsx'
 import RefuseModal from './RefuseModal.jsx'
 import InquiryModal from './InquiryModal.jsx'
-import empty from '../Mixin/Empty.js'
-import ErrorPage from '../Mixin/ErrorPage.jsx'
-import Waiting from '../Mixin/Waiting.jsx'
-//import bindMethods from '../Mixin/Bind.js'
+import empty from '../Mixin/Helper/Empty.js'
+import Message from '../Mixin/Html/Message.jsx'
+import ErrorPage from '../Mixin/Html/ErrorPage.jsx'
+import Waiting from '../Mixin/Html/Waiting.jsx'
 
 /* global $ */
 

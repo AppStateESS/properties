@@ -1,9 +1,9 @@
 'use strict'
 import React from 'react'
-import bindMethods from '../Mixin/Bind.js'
-import ButtonGroup from '../Mixin/ButtonGroup.jsx'
+import bindMethods from '../Mixin/Helper/Bind.js'
+import ButtonGroup from '../Mixin/Form/ButtonGroup.jsx'
 import UtilityImbursement from './UtilityImbursement.jsx'
-import UtilityFunctions from '../Mixin/UtilityFunctions.js'
+import UtilityFunctions from '../Mixin/Edit/UtilityFunctions.js'
 
 export default class Utilities extends React.Component {
   constructor(props) {

@@ -1,8 +1,8 @@
 'use strict'
 import React from 'react'
-import Waiting from '../Mixin/Waiting.jsx'
-import Message from '../Mixin/Message.jsx'
-import empty from '../Mixin/Empty.js'
+import Waiting from '../Mixin/Html/Waiting.jsx'
+import Message from '../Mixin/Html/Message.jsx'
+import empty from '../Mixin/Helper/Empty.js'
 import PropertyListing from './PropertyListing.jsx'
 
 /* global $ */

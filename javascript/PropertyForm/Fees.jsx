@@ -1,7 +1,7 @@
 'use strict'
 import React from 'react'
-import InputField from '../Mixin/InputField.jsx'
-import BooleanButton from '../Mixin/BooleanButton.jsx'
+import InputField from '../Mixin/Form/InputField.jsx'
+import BooleanButton from '../Mixin/Form/BooleanButton.jsx'
 
 export default class Fees extends React.Component {
   constructor(props) {

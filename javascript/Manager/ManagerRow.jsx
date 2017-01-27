@@ -1,6 +1,6 @@
 'use strict'
 import React from 'react'
-import Dropdown from '../Mixin/Dropdown.jsx'
+import Dropdown from '../Mixin/Form/Dropdown.jsx'
 
 /* global $ */
 

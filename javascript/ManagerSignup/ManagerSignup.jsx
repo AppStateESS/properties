@@ -1,10 +1,10 @@
 'use strict'
 import React from 'react'
-import InputField from '../Mixin/InputField.jsx'
-import bindMethods from '../Mixin/Bind.js'
-import empty from '../Mixin/Empty.js'
-import Message from '../Mixin/Message.jsx'
-import CheckValues from '../Mixin/CheckValues.js'
+import InputField from '../Mixin/Form/InputField.jsx'
+import bindMethods from '../Mixin/Helper/Bind.js'
+import empty from '../Mixin/Helper/Empty.js'
+import Message from '../Mixin/Html/Message.jsx'
+import CheckValues from '../Mixin/Helper/CheckValues.js'
 
 /* global $ */
 

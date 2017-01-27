@@ -1,12 +1,12 @@
 'use strict'
 import React from 'react'
 //import empty from '../Mixin/Empty.js'
-import bindMethods from '../Mixin/Bind.js'
+import bindMethods from '../Mixin/Helper/Bind.js'
 //import DecodeUrl from '../Mixin/DecodeUrl.js'
 //import setIfDefined from '../Mixin/setIfDefined.js'
 import Listing from './Listing.jsx'
-import SearchBar from '../Mixin/Place/SearchBar.jsx'
-import Place from '../Mixin/Place/Place.jsx'
+import SearchBar from '../Mixin/List/SearchBar.jsx'
+import Place from '../Mixin/List/Base.jsx'
 /* global $ */
 
 export default class Property extends Place {
