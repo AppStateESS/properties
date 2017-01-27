@@ -140,7 +140,7 @@ export default class SubleaseForm extends Place {
       success: function (data) {
         if (data.error !== undefined) {
           this.setMessage(data.error, 'danger')
-          this.setState({saving:false})
+          this.setState({saving: false})
         } else {
           window.location.href = './properties/Sublease/' + data.id
         }
@@ -455,7 +455,7 @@ export default class SubleaseForm extends Place {
             <div>
               <BigCheckbox
                 handle={this.setIntegerValue.bind(this, 'smoking_allowed')}
-                checked={!empty(sublease.smoking_allowed)}
+                checked={sublease.smoking_allowed}
                 label="Smoking allowed"/>
               &nbsp;
               <Help
@@ -464,7 +464,7 @@ export default class SubleaseForm extends Place {
             <div>
               <BigCheckbox
                 handle={this.setIntegerValue.bind(this, 'pets_allowed')}
-                checked={!empty(sublease.pets_allowed)}
+                checked={sublease.pets_allowed}
                 label="Pets allowed"/>&nbsp;
               <Help title="You may put pet details in the description"/>
             </div>
@@ -473,21 +473,29 @@ export default class SubleaseForm extends Place {
             <div>
               <BigCheckbox
                 handle={this.setIntegerValue.bind(this, 'dishwasher')}
-                checked={!empty(sublease.dishwasher)}
+                checked={sublease.dishwasher}
                 label="Dishwasher"/>
             </div>
             <div>
               <BigCheckbox
                 handle={this.setIntegerValue.bind(this, 'furnished')}
-                checked={!empty(sublease.furnished)}
+                checked={sublease.furnished}
                 label="Furnished"/>
             </div>
           </div>
           <div className="col-sm-4">
-            <BigCheckbox
-              handle={this.setIntegerValue.bind(this, 'utilities_inc')}
-              checked={!empty(sublease.utilities_inc)}
-              label="Utilities included"/>&nbsp;<Help title="Check this box if the unit's utilities are included in the rent."/>
+            <div>
+              <BigCheckbox
+                handle={this.setIntegerValue.bind(this, 'utilities_inc')}
+                checked={sublease.utilities_inc}
+                label="Utilities included"/>&nbsp;<Help title="Check this box if the unit's utilities are included in the rent."/>
+            </div>
+            <div>
+              <BigCheckbox
+                handle={this.setIntegerValue.bind(this, 'airconditioning')}
+                checked={sublease.airconditioning}
+                label="Airconditioning"/>
+            </div>
           </div>
         </div>
         <div className="row">
@@ -535,7 +543,7 @@ export default class SubleaseForm extends Place {
         <div className="row">
           <div className="col-sm-6">
             <BigCheckbox
-              checked={!empty(sublease.landlord_perm)}
+              checked={sublease.landlord_perm}
               handle={this.setIntegerValue.bind(this, 'landlord_perm')}
               label="My landlord is aware I am subleasing"/>
           </div>
