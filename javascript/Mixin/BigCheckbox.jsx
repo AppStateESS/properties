@@ -1,5 +1,6 @@
 'use strict'
 import React from 'react'
+import empty from './Empty.js'
 
 export default class BigCheckbox extends React.Component {
   constructor(props) {
@@ -33,7 +34,7 @@ export default class BigCheckbox extends React.Component {
           {this.props.checked ?
           <i className="fa fa-check text-success fa-stack-2x"></i> : null}
         </div>&nbsp;
-        <div style={labelText} className={this.props.checked ? 'text-success' : 'text-muted'}>{this.props.label}</div>
+        <div style={labelText} className={!empty(this.props.checked) ? 'text-success' : 'text-muted'}>{this.props.label}</div>
       </div>
     )
   }
