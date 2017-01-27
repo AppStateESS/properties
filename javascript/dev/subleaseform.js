@@ -30163,7 +30163,7 @@ webpackJsonp([10],[
 	              null,
 	              _react2.default.createElement(_BigCheckbox2.default, {
 	                handle: this.setIntegerValue.bind(this, 'smoking_allowed'),
-	                checked: !(0, _Empty2.default)(sublease.smoking_allowed),
+	                checked: sublease.smoking_allowed,
 	                label: 'Smoking allowed' }),
 	              '\xA0',
 	              _react2.default.createElement(_Help2.default, {
@@ -30174,7 +30174,7 @@ webpackJsonp([10],[
 	              null,
 	              _react2.default.createElement(_BigCheckbox2.default, {
 	                handle: this.setIntegerValue.bind(this, 'pets_allowed'),
-	                checked: !(0, _Empty2.default)(sublease.pets_allowed),
+	                checked: sublease.pets_allowed,
 	                label: 'Pets allowed' }),
 	              '\xA0',
 	              _react2.default.createElement(_Help2.default, { title: 'You may put pet details in the description' })
@@ -30188,7 +30188,7 @@ webpackJsonp([10],[
 	              null,
 	              _react2.default.createElement(_BigCheckbox2.default, {
 	                handle: this.setIntegerValue.bind(this, 'dishwasher'),
-	                checked: !(0, _Empty2.default)(sublease.dishwasher),
+	                checked: sublease.dishwasher,
 	                label: 'Dishwasher' })
 	            ),
 	            _react2.default.createElement(
@@ -30196,19 +30196,31 @@ webpackJsonp([10],[
 	              null,
 	              _react2.default.createElement(_BigCheckbox2.default, {
 	                handle: this.setIntegerValue.bind(this, 'furnished'),
-	                checked: !(0, _Empty2.default)(sublease.furnished),
+	                checked: sublease.furnished,
 	                label: 'Furnished' })
 	            )
 	          ),
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'col-sm-4' },
-	            _react2.default.createElement(_BigCheckbox2.default, {
-	              handle: this.setIntegerValue.bind(this, 'utilities_inc'),
-	              checked: !(0, _Empty2.default)(sublease.utilities_inc),
-	              label: 'Utilities included' }),
-	            '\xA0',
-	            _react2.default.createElement(_Help2.default, { title: 'Check this box if the unit\'s utilities are included in the rent.' })
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement(_BigCheckbox2.default, {
+	                handle: this.setIntegerValue.bind(this, 'utilities_inc'),
+	                checked: sublease.utilities_inc,
+	                label: 'Utilities included' }),
+	              '\xA0',
+	              _react2.default.createElement(_Help2.default, { title: 'Check this box if the unit\'s utilities are included in the rent.' })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement(_BigCheckbox2.default, {
+	                handle: this.setIntegerValue.bind(this, 'airconditioning'),
+	                checked: sublease.airconditioning,
+	                label: 'Airconditioning' })
+	            )
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -30294,7 +30306,7 @@ webpackJsonp([10],[
 	            'div',
 	            { className: 'col-sm-6' },
 	            _react2.default.createElement(_BigCheckbox2.default, {
-	              checked: !(0, _Empty2.default)(sublease.landlord_perm),
+	              checked: sublease.landlord_perm,
 	              handle: this.setIntegerValue.bind(this, 'landlord_perm'),
 	              label: 'My landlord is aware I am subleasing' })
 	          ),
@@ -30332,6 +30344,7 @@ webpackJsonp([10],[
 	var SubleaseObject = {
 	  additional_fees: '',
 	  address: '',
+	  airconditioning: '0',
 	  appalcart: '0',
 	  bathroom_no: '1',
 	  bedroom_no: '1',
@@ -30377,6 +30390,10 @@ webpackJsonp([10],[
 	var _react = __webpack_require__(/*! react */ 1);
 	
 	var _react2 = _interopRequireDefault(_react);
+	
+	var _Empty = __webpack_require__(/*! ./Empty.js */ 186);
+	
+	var _Empty2 = _interopRequireDefault(_Empty);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -30431,7 +30448,7 @@ webpackJsonp([10],[
 	        '\xA0',
 	        _react2.default.createElement(
 	          'div',
-	          { style: labelText, className: this.props.checked ? 'text-success' : 'text-muted' },
+	          { style: labelText, className: !(0, _Empty2.default)(this.props.checked) ? 'text-success' : 'text-muted' },
 	          this.props.label
 	        )
 	      );

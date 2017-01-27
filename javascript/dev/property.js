@@ -809,9 +809,9 @@ webpackJsonp([6],{
 	
 	var _Message2 = _interopRequireDefault(_Message);
 	
-	var _PropertyBar = __webpack_require__(/*! ./PropertyBar.jsx */ 203);
+	var _SearchBar = __webpack_require__(/*! ../Mixin/Place/SearchBar.jsx */ 425);
 	
-	var _PropertyBar2 = _interopRequireDefault(_PropertyBar);
+	var _SearchBar2 = _interopRequireDefault(_SearchBar);
 	
 	var _DecodeUrl = __webpack_require__(/*! ../Mixin/DecodeUrl.js */ 193);
 	
@@ -821,9 +821,9 @@ webpackJsonp([6],{
 	
 	var _PropertyListing2 = _interopRequireDefault(_PropertyListing);
 	
-	var _setIfDefined = __webpack_require__(/*! ../Mixin/setIfDefined.js */ 213);
+	var _Place2 = __webpack_require__(/*! ../Mixin/Place/Place.jsx */ 426);
 	
-	var _setIfDefined2 = _interopRequireDefault(_setIfDefined);
+	var _Place3 = _interopRequireDefault(_Place2);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -835,8 +835,8 @@ webpackJsonp([6],{
 	
 	/* global $ */
 	
-	var Property = function (_React$Component) {
-	  _inherits(Property, _React$Component);
+	var Property = function (_Place) {
+	  _inherits(Property, _Place);
 	
 	  function Property(props) {
 	    _classCallCheck(this, Property);
@@ -850,81 +850,12 @@ webpackJsonp([6],{
 	      type: null
 	    };
 	
-	    _this.delay;
-	    _this.search;
-	    _this.searchVars = {
-	      beds: '1',
-	      baths: '1',
-	      minprice: '0',
-	      maxprice: '0'
-	    };
-	    _this.loadAmenities();
 	    _this.managerId = 0;
-	    (0, _Bind2.default)(['load', 'toggle', 'clearSearch', 'clearAmenities', 'resetConditions', 'updateSearchVars', 'updateSearchString'], _this);
+	    (0, _Bind2.default)(['load', 'resetConditions'], _this);
 	    return _this;
 	  }
 	
 	  _createClass(Property, [{
-	    key: 'clearAmenities',
-	    value: function clearAmenities() {
-	      this.searchVars.furnished = null;
-	      this.searchVars.ac = null;
-	      this.searchVars.pets = null;
-	      this.searchVars.utils = null;
-	      this.searchVars.appalcart = null;
-	      this.searchVars.campus = null;
-	      this.searchVars.dishwasher = null;
-	      this.searchVars.laundry = null;
-	      this.searchVars.clubhouse = null;
-	      this.searchVars.efficiency = null;
-	      this.searchVars.apartment = null;
-	      this.searchVars.house = null;
-	      this.searchVars.condo = null;
-	      this.searchVars.townhouse = null;
-	      this.searchVars.duplex = null;
-	      this.load();
-	      this.updateLink();
-	    }
-	  }, {
-	    key: 'loadAmenities',
-	    value: function loadAmenities() {
-	      var url = new _DecodeUrl2.default();
-	
-	      this.searchVars = {
-	        beds: (0, _setIfDefined2.default)(url.values, 'beds', '1'),
-	        baths: (0, _setIfDefined2.default)(url.values, 'baths', '1'),
-	        furnished: (0, _setIfDefined2.default)(url.values, 'furnished'),
-	        ac: (0, _setIfDefined2.default)(url.values, 'ac'),
-	        pets: (0, _setIfDefined2.default)(url.values, 'pets'),
-	        utils: (0, _setIfDefined2.default)(url.values, 'utils'),
-	        minprice: (0, _setIfDefined2.default)(url.values, 'minprice', '0'),
-	        maxprice: (0, _setIfDefined2.default)(url.values, 'maxprice', '0'),
-	        appalcart: (0, _setIfDefined2.default)(url.values, 'appalcart', '0'),
-	        campus: (0, _setIfDefined2.default)(url.values, 'campus', '0'),
-	        dishwasher: (0, _setIfDefined2.default)(url.values, 'dishwasher', '0'),
-	        laundry: (0, _setIfDefined2.default)(url.values, 'laundry', '0'),
-	        clubhouse: (0, _setIfDefined2.default)(url.values, 'clubhouse', '0'),
-	        efficiency: (0, _setIfDefined2.default)(url.values, 'efficiency', '0'),
-	        apartment: (0, _setIfDefined2.default)(url.values, 'apartment', '0'),
-	        house: (0, _setIfDefined2.default)(url.values, 'house', '0'),
-	        condo: (0, _setIfDefined2.default)(url.values, 'condo', '0'),
-	        townhouse: (0, _setIfDefined2.default)(url.values, 'townhouse', '0'),
-	        duplex: (0, _setIfDefined2.default)(url.values, 'duplex', '0')
-	      };
-	    }
-	  }, {
-	    key: 'resetConditions',
-	    value: function resetConditions() {
-	      this.searchVars = {
-	        beds: '1',
-	        baths: '1',
-	        minprice: '0',
-	        maxprice: '0'
-	      };
-	      this.load();
-	      this.updateLink();
-	    }
-	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      var decode = new _DecodeUrl2.default();
@@ -942,30 +873,12 @@ webpackJsonp([6],{
 	      this.managerId = id;
 	    }
 	  }, {
-	    key: 'clearSearch',
-	    value: function clearSearch() {
-	      this.search = '';
-	      this.load();
-	    }
-	  }, {
 	    key: 'updateLink',
 	    value: function updateLink() {
 	      var stateObj = {};
 	      var url = 'properties/Property/list/?' + $.param(this.searchVars);
 	
 	      window.history.pushState(stateObj, "", url);
-	    }
-	  }, {
-	    key: 'updateSearchVars',
-	    value: function updateSearchVars(varname, value) {
-	      this.searchVars[varname] = value;
-	      this.load();
-	      this.updateLink();
-	    }
-	  }, {
-	    key: 'toggle',
-	    value: function toggle(type) {
-	      this.updateSearchVars(type, this.searchVars[type] === '1' ? undefined : '1');
 	    }
 	  }, {
 	    key: 'processAjaxData',
@@ -990,19 +903,6 @@ webpackJsonp([6],{
 	        this.setState({ managers: null, loading: false });
 	        this.setMessage('Error: failure pulling properties');
 	      }.bind(this));
-	    }
-	  }, {
-	    key: 'updateSearchString',
-	    value: function updateSearchString(e) {
-	      clearTimeout(this.delay);
-	      var search = e.target.value;
-	      if (search.length < 4 && search.length > 0) {
-	        return;
-	      }
-	      this.delay = setTimeout(function () {
-	        this.search = search;
-	        this.load();
-	      }.bind(this, search), 500);
 	    }
 	  }, {
 	    key: 'render',
@@ -1035,7 +935,7 @@ webpackJsonp([6],{
 	          'Properties: ',
 	          manager
 	        ),
-	        _react2.default.createElement(_PropertyBar2.default, {
+	        _react2.default.createElement(_SearchBar2.default, {
 	          updateSearchString: this.updateSearchString,
 	          clear: this.clearSearch,
 	          updateSearchVars: this.updateSearchVars,
@@ -1049,618 +949,9 @@ webpackJsonp([6],{
 	  }]);
 	
 	  return Property;
-	}(_react2.default.Component);
+	}(_Place3.default);
 	
 	exports.default = Property;
-
-/***/ },
-
-/***/ 203:
-/*!*********************************************!*\
-  !*** ./javascript/Property/PropertyBar.jsx ***!
-  \*********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _Dropdown = __webpack_require__(/*! ../Mixin/Dropdown.jsx */ 175);
-	
-	var _Dropdown2 = _interopRequireDefault(_Dropdown);
-	
-	var _Amenities = __webpack_require__(/*! ./Amenities.jsx */ 204);
-	
-	var _Amenities2 = _interopRequireDefault(_Amenities);
-	
-	var _reactAddonsCssTransitionGroup = __webpack_require__(/*! react-addons-css-transition-group */ 205);
-	
-	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var PropertyBar = function (_React$Component) {
-	  _inherits(PropertyBar, _React$Component);
-	
-	  function PropertyBar(props) {
-	    _classCallCheck(this, PropertyBar);
-	
-	    var _this = _possibleConstructorReturn(this, (PropertyBar.__proto__ || Object.getPrototypeOf(PropertyBar)).call(this, props));
-	
-	    _this.state = {
-	      fullSize: false
-	    };
-	    _this.clearSearch = _this.clearSearch.bind(_this);
-	    _this.togglePanel = _this.togglePanel.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(PropertyBar, [{
-	    key: 'componentDidUpdate',
-	    value: function componentDidUpdate() {
-	      var minprice = this.props.searchVars['minprice'];
-	      var maxprice = this.props.searchVars['maxprice'];
-	      if (maxprice !== '0' && minprice !== '0' && parseInt(maxprice) < parseInt(minprice)) {
-	        this.props.updateSearchVars('minprice', maxprice);
-	        this.props.updateSearchVars('maxprice', minprice);
-	      }
-	    }
-	  }, {
-	    key: 'clearSearch',
-	    value: function clearSearch() {
-	      this.refs.propertySearch.value = '';
-	      this.props.clear();
-	    }
-	  }, {
-	    key: 'togglePanel',
-	    value: function togglePanel() {
-	      this.setState({
-	        fullSize: !this.state.fullSize
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var beds = [{
-	        label: '1+ beds',
-	        handleClick: this.props.updateSearchVars.bind(null, 'beds', '1')
-	      }, {
-	        label: '2+ beds',
-	        handleClick: this.props.updateSearchVars.bind(null, 'beds', '2')
-	      }, {
-	        label: '3+ beds',
-	        handleClick: this.props.updateSearchVars.bind(null, 'beds', '3')
-	      }, {
-	        label: '4+ beds',
-	        handleClick: this.props.updateSearchVars.bind(null, 'beds', '4')
-	      }, {
-	        label: '5+ beds',
-	        handleClick: this.props.updateSearchVars.bind(null, 'beds', '5')
-	      }];
-	
-	      var baths = [{
-	        label: '1+ baths',
-	        handleClick: this.props.updateSearchVars.bind(null, 'baths', '1')
-	      }, {
-	        label: '2+ baths',
-	        handleClick: this.props.updateSearchVars.bind(null, 'baths', '2')
-	      }, {
-	        label: '3+ baths',
-	        handleClick: this.props.updateSearchVars.bind(null, 'baths', '3')
-	      }, {
-	        label: '4+ baths',
-	        handleClick: this.props.updateSearchVars.bind(null, 'baths', '4')
-	      }, {
-	        label: '5+ baths',
-	        handleClick: this.props.updateSearchVars.bind(null, 'baths', '5')
-	      }];
-	
-	      var minprice = [{
-	        label: 'Min. Price',
-	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '0')
-	      }, {
-	        label: '$100',
-	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '100')
-	      }, {
-	        label: '$200',
-	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '200')
-	      }, {
-	        label: '$300',
-	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '300')
-	      }, {
-	        label: '$400',
-	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '400')
-	      }, {
-	        label: '$500',
-	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '500')
-	      }, {
-	        label: '$750',
-	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '750')
-	      }, {
-	        label: '$1000',
-	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '1000')
-	      }];
-	
-	      var maxprice = [{
-	        label: 'Max price',
-	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '0')
-	      }, {
-	        label: '$200',
-	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '200')
-	      }, {
-	        label: '$300',
-	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '300')
-	      }, {
-	        label: '$400',
-	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '400')
-	      }, {
-	        label: '$500',
-	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '500')
-	      }, {
-	        label: '$750',
-	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '750')
-	      }, {
-	        label: '$1000',
-	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '1000')
-	      }, {
-	        label: '$2000',
-	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '2000')
-	      }];
-	
-	      var bedLabel = this.props.searchVars.beds + '+ beds';
-	      var bathLabel = this.props.searchVars.baths + '+ baths';
-	      var minpriceLabel = this.props.searchVars.minprice === '0' ? 'Min. price' : '$' + this.props.searchVars.minprice;
-	      var maxpriceLabel = this.props.searchVars.maxprice === '0' ? 'Max. price' : '$' + this.props.searchVars.maxprice;
-	
-	      var panelButton = this.state.fullSize ? _react2.default.createElement(
-	        'span',
-	        null,
-	        'Less search options ',
-	        _react2.default.createElement('i', { className: 'fa fa-caret-up' })
-	      ) : _react2.default.createElement(
-	        'span',
-	        null,
-	        'More search options ',
-	        _react2.default.createElement('i', { className: 'fa fa-caret-down' })
-	      );
-	
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'panel panel-default marginBottom' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'panel-body' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'row top-header' },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'col-sm-4' },
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'input-group' },
-	                _react2.default.createElement('input', {
-	                  ref: 'propertySearch',
-	                  className: 'form-control input-sm',
-	                  type: 'text',
-	                  placeholder: 'Search for properties...',
-	                  onChange: this.props.updateSearchString }),
-	                _react2.default.createElement(
-	                  'span',
-	                  { className: 'input-group-btn' },
-	                  _react2.default.createElement(
-	                    'button',
-	                    {
-	                      className: 'btn btn-default btn-sm',
-	                      type: 'button',
-	                      onClick: this.clearSearch },
-	                    'Clear'
-	                  )
-	                )
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'col-sm-8' },
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'pull-left' },
-	                _react2.default.createElement(_Dropdown2.default, { small: true, label: bedLabel, options: beds })
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'pull-left' },
-	                _react2.default.createElement(_Dropdown2.default, { small: true, label: bathLabel, options: baths })
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'pull-left' },
-	                _react2.default.createElement(_Dropdown2.default, { small: true, label: minpriceLabel, options: minprice })
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'pull-left' },
-	                _react2.default.createElement(_Dropdown2.default, { small: true, label: maxpriceLabel, options: maxprice })
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'pull-left' },
-	                _react2.default.createElement(
-	                  'button',
-	                  { className: 'btn btn-success btn-sm', onClick: this.props.resetConditions },
-	                  'Reset'
-	                )
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'row', style: { marginTop: '1em' } },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'col-sm-12 text-center' },
-	              _react2.default.createElement(
-	                'button',
-	                { className: 'btn btn-default btn-sm', onClick: this.togglePanel },
-	                panelButton
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            _reactAddonsCssTransitionGroup2.default,
-	            {
-	              transitionName: 'trans',
-	              transitionEnterTimeout: 500,
-	              transitionLeaveTimeout: 300 },
-	            this.state.fullSize === true ? _react2.default.createElement(
-	              'div',
-	              null,
-	              _react2.default.createElement(_Amenities2.default, { toggle: this.props.toggle, searchVars: this.props.searchVars }),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'text-center' },
-	                _react2.default.createElement(
-	                  'button',
-	                  { className: 'btn btn-success', onClick: this.props.clearAmenities },
-	                  'Uncheck above'
-	                )
-	              )
-	            ) : null
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return PropertyBar;
-	}(_react2.default.Component);
-	
-	exports.default = PropertyBar;
-	
-	
-	PropertyBar.propTypes = {
-	  updateSearchString: _react2.default.PropTypes.func,
-	  clear: _react2.default.PropTypes.func,
-	  updateSearchVars: _react2.default.PropTypes.func,
-	  searchVars: _react2.default.PropTypes.object,
-	  toggle: _react2.default.PropTypes.func,
-	  clearAmenities: _react2.default.PropTypes.func,
-	  resetConditions: _react2.default.PropTypes.func
-	};
-
-/***/ },
-
-/***/ 204:
-/*!*******************************************!*\
-  !*** ./javascript/Property/Amenities.jsx ***!
-  \*******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Amenities = function (_React$Component) {
-	  _inherits(Amenities, _React$Component);
-	
-	  function Amenities(props) {
-	    _classCallCheck(this, Amenities);
-	
-	    var _this = _possibleConstructorReturn(this, (Amenities.__proto__ || Object.getPrototypeOf(Amenities)).call(this, props));
-	
-	    _this.state = {
-	      drop: false
-	    };
-	    _this.toggleDrop = _this.toggleDrop.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(Amenities, [{
-	    key: 'stop',
-	    value: function stop(e) {
-	      e.stopPropagation();
-	    }
-	  }, {
-	    key: 'toggleDrop',
-	    value: function toggleDrop() {
-	      this.setState({
-	        drop: !this.state.drop
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var searchVars = this.props.searchVars;
-	
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement('hr', null),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'row' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-4' },
-	            _react2.default.createElement(
-	              'h4',
-	              null,
-	              'Features'
-	            ),
-	            _react2.default.createElement(
-	              'ul',
-	              { className: 'list-unstyled' },
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(
-	                  'label',
-	                  null,
-	                  _react2.default.createElement('input', {
-	                    type: 'checkbox',
-	                    checked: searchVars.furnished === '1',
-	                    onChange: this.props.toggle.bind(null, 'furnished') }),
-	                  '\xA0 Furnished'
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(
-	                  'label',
-	                  null,
-	                  _react2.default.createElement('input', { type: 'checkbox',
-	                    checked: searchVars.pets === '1', onChange: this.props.toggle.bind(null, 'pets') }),
-	                  '\xA0 Pets allowed'
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(
-	                  'label',
-	                  null,
-	                  _react2.default.createElement('input', { type: 'checkbox',
-	                    checked: searchVars.appalcart === '1', onChange: this.props.toggle.bind(null, 'appalcart') }),
-	                  '\xA0 AppalCART'
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(
-	                  'label',
-	                  null,
-	                  _react2.default.createElement('input', { type: 'checkbox',
-	                    checked: searchVars.campus === '1', onChange: this.props.toggle.bind(null, 'campus') }),
-	                  '\xA0 Close to campus'
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(
-	                  'label',
-	                  null,
-	                  _react2.default.createElement('input', { type: 'checkbox',
-	                    checked: searchVars.utils === '1', onChange: this.props.toggle.bind(null, 'utils') }),
-	                  '\xA0 Utilities included'
-	                )
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-4' },
-	            _react2.default.createElement(
-	              'h4',
-	              null,
-	              'Amenities'
-	            ),
-	            _react2.default.createElement(
-	              'ul',
-	              { className: 'list-unstyled' },
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(
-	                  'label',
-	                  null,
-	                  _react2.default.createElement('input', { type: 'checkbox',
-	                    checked: searchVars.ac === '1', onChange: this.props.toggle.bind(null, 'ac') }),
-	                  '\xA0 Air conditioning'
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(
-	                  'label',
-	                  null,
-	                  _react2.default.createElement('input', { type: 'checkbox',
-	                    checked: searchVars.dishwasher === '1', onChange: this.props.toggle.bind(null, 'dishwasher') }),
-	                  '\xA0 Dishwasher'
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(
-	                  'label',
-	                  null,
-	                  _react2.default.createElement('input', { type: 'checkbox',
-	                    checked: searchVars.laundry === '1', onChange: this.props.toggle.bind(null, 'laundry') }),
-	                  '\xA0 Washer/Dryer'
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(
-	                  'label',
-	                  null,
-	                  _react2.default.createElement('input', { type: 'checkbox',
-	                    checked: searchVars.clubhouse === '1', onChange: this.props.toggle.bind(null, 'clubhouse') }),
-	                  '\xA0 Club House'
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(
-	                  'label',
-	                  null,
-	                  _react2.default.createElement('input', { type: 'checkbox',
-	                    checked: searchVars.workout === '1', onChange: this.props.toggle.bind(null, 'workout') }),
-	                  '\xA0 Workout Room'
-	                )
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-4' },
-	            _react2.default.createElement(
-	              'h4',
-	              null,
-	              'Property type'
-	            ),
-	            _react2.default.createElement(
-	              'ul',
-	              { className: 'list-unstyled' },
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(
-	                  'label',
-	                  null,
-	                  _react2.default.createElement('input', { type: 'checkbox',
-	                    checked: searchVars.efficiency === '1', onChange: this.props.toggle.bind(null, 'efficiency') }),
-	                  '\xA0 Efficiency'
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(
-	                  'label',
-	                  null,
-	                  _react2.default.createElement('input', { type: 'checkbox',
-	                    checked: searchVars.apartment === '1', onChange: this.props.toggle.bind(null, 'apartment') }),
-	                  '\xA0 Apartment'
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(
-	                  'label',
-	                  null,
-	                  _react2.default.createElement('input', { type: 'checkbox',
-	                    checked: searchVars.house === '1', onChange: this.props.toggle.bind(null, 'house') }),
-	                  '\xA0 House'
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(
-	                  'label',
-	                  null,
-	                  _react2.default.createElement('input', { type: 'checkbox',
-	                    checked: searchVars.condo === '1', onChange: this.props.toggle.bind(null, 'condo') }),
-	                  '\xA0 Condo'
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(
-	                  'label',
-	                  null,
-	                  _react2.default.createElement('input', { type: 'checkbox',
-	                    checked: searchVars.townhouse === '1', onChange: this.props.toggle.bind(null, 'townhouse') }),
-	                  '\xA0 Townhouse'
-	                )
-	              ),
-	              _react2.default.createElement(
-	                'li',
-	                null,
-	                _react2.default.createElement(
-	                  'label',
-	                  null,
-	                  _react2.default.createElement('input', { type: 'checkbox',
-	                    checked: searchVars.duplex === '1', onChange: this.props.toggle.bind(null, 'duplex') }),
-	                  '\xA0 Duplex'
-	                )
-	              )
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return Amenities;
-	}(_react2.default.Component);
-	
-	exports.default = Amenities;
-	
-	
-	Amenities.propTypes = {
-	  toggle: _react2.default.PropTypes.func,
-	  searchVars: _react2.default.PropTypes.object
-	};
 
 /***/ },
 
@@ -2648,6 +1939,786 @@ webpackJsonp([6],{
 	    }
 	  }
 	}
+
+/***/ },
+
+/***/ 424:
+/*!**********************************************!*\
+  !*** ./javascript/Mixin/Place/Amenities.jsx ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Amenities = function (_React$Component) {
+	  _inherits(Amenities, _React$Component);
+	
+	  function Amenities(props) {
+	    _classCallCheck(this, Amenities);
+	
+	    var _this = _possibleConstructorReturn(this, (Amenities.__proto__ || Object.getPrototypeOf(Amenities)).call(this, props));
+	
+	    _this.state = {
+	      drop: false
+	    };
+	    _this.toggleDrop = _this.toggleDrop.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(Amenities, [{
+	    key: 'stop',
+	    value: function stop(e) {
+	      e.stopPropagation();
+	    }
+	  }, {
+	    key: 'toggleDrop',
+	    value: function toggleDrop() {
+	      this.setState({
+	        drop: !this.state.drop
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var searchVars = this.props.searchVars;
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement('hr', null),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'row' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-4' },
+	            _react2.default.createElement(
+	              'h4',
+	              null,
+	              'Features'
+	            ),
+	            _react2.default.createElement(
+	              'ul',
+	              { className: 'list-unstyled' },
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  'label',
+	                  null,
+	                  _react2.default.createElement('input', {
+	                    type: 'checkbox',
+	                    checked: searchVars.furnished === '1',
+	                    onChange: this.props.toggle.bind(null, 'furnished') }),
+	                  '\xA0 Furnished'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  'label',
+	                  null,
+	                  _react2.default.createElement('input', { type: 'checkbox',
+	                    checked: searchVars.pets === '1', onChange: this.props.toggle.bind(null, 'pets') }),
+	                  '\xA0 Pets allowed'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  'label',
+	                  null,
+	                  _react2.default.createElement('input', { type: 'checkbox',
+	                    checked: searchVars.appalcart === '1', onChange: this.props.toggle.bind(null, 'appalcart') }),
+	                  '\xA0 AppalCART'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  'label',
+	                  null,
+	                  _react2.default.createElement('input', { type: 'checkbox',
+	                    checked: searchVars.campus === '1', onChange: this.props.toggle.bind(null, 'campus') }),
+	                  '\xA0 Close to campus'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  'label',
+	                  null,
+	                  _react2.default.createElement('input', { type: 'checkbox',
+	                    checked: searchVars.utils === '1', onChange: this.props.toggle.bind(null, 'utils') }),
+	                  '\xA0 Utilities included'
+	                )
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-4' },
+	            _react2.default.createElement(
+	              'h4',
+	              null,
+	              'Amenities'
+	            ),
+	            _react2.default.createElement(
+	              'ul',
+	              { className: 'list-unstyled' },
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  'label',
+	                  null,
+	                  _react2.default.createElement('input', { type: 'checkbox',
+	                    checked: searchVars.ac === '1', onChange: this.props.toggle.bind(null, 'ac') }),
+	                  '\xA0 Air conditioning'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  'label',
+	                  null,
+	                  _react2.default.createElement('input', { type: 'checkbox',
+	                    checked: searchVars.dishwasher === '1', onChange: this.props.toggle.bind(null, 'dishwasher') }),
+	                  '\xA0 Dishwasher'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  'label',
+	                  null,
+	                  _react2.default.createElement('input', { type: 'checkbox',
+	                    checked: searchVars.laundry === '1', onChange: this.props.toggle.bind(null, 'laundry') }),
+	                  '\xA0 Washer/Dryer'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  'label',
+	                  null,
+	                  _react2.default.createElement('input', { type: 'checkbox',
+	                    checked: searchVars.clubhouse === '1', onChange: this.props.toggle.bind(null, 'clubhouse') }),
+	                  '\xA0 Club House'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  'label',
+	                  null,
+	                  _react2.default.createElement('input', { type: 'checkbox',
+	                    checked: searchVars.workout === '1', onChange: this.props.toggle.bind(null, 'workout') }),
+	                  '\xA0 Workout Room'
+	                )
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'col-sm-4' },
+	            _react2.default.createElement(
+	              'h4',
+	              null,
+	              'Property type'
+	            ),
+	            _react2.default.createElement(
+	              'ul',
+	              { className: 'list-unstyled' },
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  'label',
+	                  null,
+	                  _react2.default.createElement('input', { type: 'checkbox',
+	                    checked: searchVars.efficiency === '1', onChange: this.props.toggle.bind(null, 'efficiency') }),
+	                  '\xA0 Efficiency'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  'label',
+	                  null,
+	                  _react2.default.createElement('input', { type: 'checkbox',
+	                    checked: searchVars.apartment === '1', onChange: this.props.toggle.bind(null, 'apartment') }),
+	                  '\xA0 Apartment'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  'label',
+	                  null,
+	                  _react2.default.createElement('input', { type: 'checkbox',
+	                    checked: searchVars.house === '1', onChange: this.props.toggle.bind(null, 'house') }),
+	                  '\xA0 House'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  'label',
+	                  null,
+	                  _react2.default.createElement('input', { type: 'checkbox',
+	                    checked: searchVars.condo === '1', onChange: this.props.toggle.bind(null, 'condo') }),
+	                  '\xA0 Condo'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  'label',
+	                  null,
+	                  _react2.default.createElement('input', { type: 'checkbox',
+	                    checked: searchVars.townhouse === '1', onChange: this.props.toggle.bind(null, 'townhouse') }),
+	                  '\xA0 Townhouse'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  'label',
+	                  null,
+	                  _react2.default.createElement('input', { type: 'checkbox',
+	                    checked: searchVars.duplex === '1', onChange: this.props.toggle.bind(null, 'duplex') }),
+	                  '\xA0 Duplex'
+	                )
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Amenities;
+	}(_react2.default.Component);
+	
+	exports.default = Amenities;
+	
+	
+	Amenities.propTypes = {
+	  toggle: _react2.default.PropTypes.func,
+	  searchVars: _react2.default.PropTypes.object
+	};
+
+/***/ },
+
+/***/ 425:
+/*!**********************************************!*\
+  !*** ./javascript/Mixin/Place/SearchBar.jsx ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Dropdown = __webpack_require__(/*! ../Dropdown.jsx */ 175);
+	
+	var _Dropdown2 = _interopRequireDefault(_Dropdown);
+	
+	var _Amenities = __webpack_require__(/*! ./Amenities.jsx */ 424);
+	
+	var _Amenities2 = _interopRequireDefault(_Amenities);
+	
+	var _reactAddonsCssTransitionGroup = __webpack_require__(/*! react-addons-css-transition-group */ 205);
+	
+	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var SearchBar = function (_React$Component) {
+	  _inherits(SearchBar, _React$Component);
+	
+	  function SearchBar(props) {
+	    _classCallCheck(this, SearchBar);
+	
+	    var _this = _possibleConstructorReturn(this, (SearchBar.__proto__ || Object.getPrototypeOf(SearchBar)).call(this, props));
+	
+	    _this.state = {
+	      fullSize: false
+	    };
+	    _this.clearSearch = _this.clearSearch.bind(_this);
+	    _this.togglePanel = _this.togglePanel.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(SearchBar, [{
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      var minprice = this.props.searchVars['minprice'];
+	      var maxprice = this.props.searchVars['maxprice'];
+	      if (maxprice !== '0' && minprice !== '0' && parseInt(maxprice) < parseInt(minprice)) {
+	        this.props.updateSearchVars('minprice', maxprice);
+	        this.props.updateSearchVars('maxprice', minprice);
+	      }
+	    }
+	  }, {
+	    key: 'clearSearch',
+	    value: function clearSearch() {
+	      this.refs.propertySearch.value = '';
+	      this.props.clear();
+	    }
+	  }, {
+	    key: 'togglePanel',
+	    value: function togglePanel() {
+	      this.setState({
+	        fullSize: !this.state.fullSize
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var beds = [{
+	        label: '1+ beds',
+	        handleClick: this.props.updateSearchVars.bind(null, 'beds', '1')
+	      }, {
+	        label: '2+ beds',
+	        handleClick: this.props.updateSearchVars.bind(null, 'beds', '2')
+	      }, {
+	        label: '3+ beds',
+	        handleClick: this.props.updateSearchVars.bind(null, 'beds', '3')
+	      }, {
+	        label: '4+ beds',
+	        handleClick: this.props.updateSearchVars.bind(null, 'beds', '4')
+	      }, {
+	        label: '5+ beds',
+	        handleClick: this.props.updateSearchVars.bind(null, 'beds', '5')
+	      }];
+	
+	      var baths = [{
+	        label: '1+ baths',
+	        handleClick: this.props.updateSearchVars.bind(null, 'baths', '1')
+	      }, {
+	        label: '2+ baths',
+	        handleClick: this.props.updateSearchVars.bind(null, 'baths', '2')
+	      }, {
+	        label: '3+ baths',
+	        handleClick: this.props.updateSearchVars.bind(null, 'baths', '3')
+	      }, {
+	        label: '4+ baths',
+	        handleClick: this.props.updateSearchVars.bind(null, 'baths', '4')
+	      }, {
+	        label: '5+ baths',
+	        handleClick: this.props.updateSearchVars.bind(null, 'baths', '5')
+	      }];
+	
+	      var minprice = [{
+	        label: 'Min. Price',
+	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '0')
+	      }, {
+	        label: '$100',
+	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '100')
+	      }, {
+	        label: '$200',
+	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '200')
+	      }, {
+	        label: '$300',
+	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '300')
+	      }, {
+	        label: '$400',
+	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '400')
+	      }, {
+	        label: '$500',
+	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '500')
+	      }, {
+	        label: '$750',
+	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '750')
+	      }, {
+	        label: '$1000',
+	        handleClick: this.props.updateSearchVars.bind(null, 'minprice', '1000')
+	      }];
+	
+	      var maxprice = [{
+	        label: 'Max price',
+	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '0')
+	      }, {
+	        label: '$200',
+	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '200')
+	      }, {
+	        label: '$300',
+	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '300')
+	      }, {
+	        label: '$400',
+	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '400')
+	      }, {
+	        label: '$500',
+	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '500')
+	      }, {
+	        label: '$750',
+	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '750')
+	      }, {
+	        label: '$1000',
+	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '1000')
+	      }, {
+	        label: '$2000',
+	        handleClick: this.props.updateSearchVars.bind(null, 'maxprice', '2000')
+	      }];
+	
+	      var bedLabel = this.props.searchVars.beds + '+ beds';
+	      var bathLabel = this.props.searchVars.baths + '+ baths';
+	      var minpriceLabel = this.props.searchVars.minprice === '0' ? 'Min. price' : '$' + this.props.searchVars.minprice;
+	      var maxpriceLabel = this.props.searchVars.maxprice === '0' ? 'Max. price' : '$' + this.props.searchVars.maxprice;
+	
+	      var panelButton = this.state.fullSize ? _react2.default.createElement(
+	        'span',
+	        null,
+	        'Less search options ',
+	        _react2.default.createElement('i', { className: 'fa fa-caret-up' })
+	      ) : _react2.default.createElement(
+	        'span',
+	        null,
+	        'More search options ',
+	        _react2.default.createElement('i', { className: 'fa fa-caret-down' })
+	      );
+	
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'panel panel-default marginBottom' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'panel-body' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'row top-header' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-sm-4' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'input-group' },
+	                _react2.default.createElement('input', {
+	                  ref: 'propertySearch',
+	                  className: 'form-control input-sm',
+	                  type: 'text',
+	                  placeholder: 'Search...',
+	                  onChange: this.props.updateSearchString }),
+	                _react2.default.createElement(
+	                  'span',
+	                  { className: 'input-group-btn' },
+	                  _react2.default.createElement(
+	                    'button',
+	                    {
+	                      className: 'btn btn-default btn-sm',
+	                      type: 'button',
+	                      onClick: this.clearSearch },
+	                    'Clear'
+	                  )
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-sm-8' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'pull-left' },
+	                _react2.default.createElement(_Dropdown2.default, { small: true, label: bedLabel, options: beds })
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'pull-left' },
+	                _react2.default.createElement(_Dropdown2.default, { small: true, label: bathLabel, options: baths })
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'pull-left' },
+	                _react2.default.createElement(_Dropdown2.default, { small: true, label: minpriceLabel, options: minprice })
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'pull-left' },
+	                _react2.default.createElement(_Dropdown2.default, { small: true, label: maxpriceLabel, options: maxprice })
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'pull-left' },
+	                _react2.default.createElement(
+	                  'button',
+	                  { className: 'btn btn-success btn-sm', onClick: this.props.resetConditions },
+	                  'Reset'
+	                )
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'row', style: { marginTop: '1em' } },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-sm-12 text-center' },
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-default btn-sm', onClick: this.togglePanel },
+	                panelButton
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _reactAddonsCssTransitionGroup2.default,
+	            {
+	              transitionName: 'trans',
+	              transitionEnterTimeout: 500,
+	              transitionLeaveTimeout: 300 },
+	            this.state.fullSize === true ? _react2.default.createElement(
+	              'div',
+	              null,
+	              _react2.default.createElement(_Amenities2.default, { toggle: this.props.toggle, searchVars: this.props.searchVars }),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'text-center' },
+	                _react2.default.createElement(
+	                  'button',
+	                  { className: 'btn btn-success', onClick: this.props.clearAmenities },
+	                  'Uncheck above'
+	                )
+	              )
+	            ) : null
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return SearchBar;
+	}(_react2.default.Component);
+	
+	exports.default = SearchBar;
+	
+	
+	SearchBar.propTypes = {
+	  updateSearchString: _react2.default.PropTypes.func,
+	  clear: _react2.default.PropTypes.func,
+	  updateSearchVars: _react2.default.PropTypes.func,
+	  searchVars: _react2.default.PropTypes.object,
+	  toggle: _react2.default.PropTypes.func,
+	  clearAmenities: _react2.default.PropTypes.func,
+	  resetConditions: _react2.default.PropTypes.func
+	};
+
+/***/ },
+
+/***/ 426:
+/*!******************************************!*\
+  !*** ./javascript/Mixin/Place/Place.jsx ***!
+  \******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Bind = __webpack_require__(/*! ../Bind.js */ 182);
+	
+	var _Bind2 = _interopRequireDefault(_Bind);
+	
+	var _DecodeUrl = __webpack_require__(/*! ../DecodeUrl.js */ 193);
+	
+	var _DecodeUrl2 = _interopRequireDefault(_DecodeUrl);
+	
+	var _setIfDefined = __webpack_require__(/*! ../setIfDefined.js */ 213);
+	
+	var _setIfDefined2 = _interopRequireDefault(_setIfDefined);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Place = function (_React$Component) {
+	  _inherits(Place, _React$Component);
+	
+	  function Place(props) {
+	    _classCallCheck(this, Place);
+	
+	    var _this = _possibleConstructorReturn(this, (Place.__proto__ || Object.getPrototypeOf(Place)).call(this, props));
+	
+	    _this.state = {};
+	
+	    _this.delay;
+	    _this.search;
+	    _this.searchVars = {
+	      beds: '1',
+	      baths: '1',
+	      minprice: '0',
+	      maxprice: '0'
+	    };
+	    _this.loadAmenities();
+	
+	    (0, _Bind2.default)(['toggle', 'clearAmenities', 'clearSearch', 'updateSearchVars', 'updateSearchString'], _this);
+	    return _this;
+	  }
+	
+	  _createClass(Place, [{
+	    key: 'clearSearch',
+	    value: function clearSearch() {
+	      this.search = '';
+	      this.load();
+	    }
+	  }, {
+	    key: 'resetConditions',
+	    value: function resetConditions() {
+	      this.searchVars = {
+	        beds: '1',
+	        baths: '1',
+	        minprice: '0',
+	        maxprice: '0'
+	      };
+	      this.load();
+	      this.updateLink();
+	    }
+	  }, {
+	    key: 'clearAmenities',
+	    value: function clearAmenities() {
+	      this.searchVars.furnished = null;
+	      this.searchVars.ac = null;
+	      this.searchVars.pets = null;
+	      this.searchVars.utils = null;
+	      this.searchVars.appalcart = null;
+	      this.searchVars.campus = null;
+	      this.searchVars.dishwasher = null;
+	      this.searchVars.laundry = null;
+	      this.searchVars.clubhouse = null;
+	      this.searchVars.efficiency = null;
+	      this.searchVars.apartment = null;
+	      this.searchVars.house = null;
+	      this.searchVars.condo = null;
+	      this.searchVars.townhouse = null;
+	      this.searchVars.duplex = null;
+	      this.searchVars.workout = null;
+	      this.load();
+	      this.updateLink();
+	    }
+	  }, {
+	    key: 'updateSearchString',
+	    value: function updateSearchString(e) {
+	      clearTimeout(this.delay);
+	      var search = e.target.value;
+	      if (search.length < 4 && search.length > 0) {
+	        return;
+	      }
+	      this.delay = setTimeout(function () {
+	        this.search = search;
+	        this.load();
+	      }.bind(this, search), 500);
+	    }
+	  }, {
+	    key: 'updateSearchVars',
+	    value: function updateSearchVars(varname, value) {
+	      this.searchVars[varname] = value;
+	      this.load();
+	      this.updateLink();
+	    }
+	  }, {
+	    key: 'toggle',
+	    value: function toggle(type) {
+	      this.updateSearchVars(type, this.searchVars[type] === '1' ? undefined : '1');
+	    }
+	  }, {
+	    key: 'loadAmenities',
+	    value: function loadAmenities() {
+	      var url = new _DecodeUrl2.default();
+	
+	      this.searchVars = {
+	        beds: (0, _setIfDefined2.default)(url.values, 'beds', '1'),
+	        baths: (0, _setIfDefined2.default)(url.values, 'baths', '1'),
+	        furnished: (0, _setIfDefined2.default)(url.values, 'furnished'),
+	        ac: (0, _setIfDefined2.default)(url.values, 'ac'),
+	        pets: (0, _setIfDefined2.default)(url.values, 'pets'),
+	        utils: (0, _setIfDefined2.default)(url.values, 'utils'),
+	        minprice: (0, _setIfDefined2.default)(url.values, 'minprice', '0'),
+	        maxprice: (0, _setIfDefined2.default)(url.values, 'maxprice', '0'),
+	        appalcart: (0, _setIfDefined2.default)(url.values, 'appalcart', '0'),
+	        campus: (0, _setIfDefined2.default)(url.values, 'campus', '0'),
+	        dishwasher: (0, _setIfDefined2.default)(url.values, 'dishwasher', '0'),
+	        laundry: (0, _setIfDefined2.default)(url.values, 'laundry', '0'),
+	        clubhouse: (0, _setIfDefined2.default)(url.values, 'clubhouse', '0'),
+	        efficiency: (0, _setIfDefined2.default)(url.values, 'efficiency', '0'),
+	        apartment: (0, _setIfDefined2.default)(url.values, 'apartment', '0'),
+	        house: (0, _setIfDefined2.default)(url.values, 'house', '0'),
+	        condo: (0, _setIfDefined2.default)(url.values, 'condo', '0'),
+	        townhouse: (0, _setIfDefined2.default)(url.values, 'townhouse', '0'),
+	        duplex: (0, _setIfDefined2.default)(url.values, 'duplex', '0')
+	      };
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement('div', null);
+	    }
+	  }]);
+	
+	  return Place;
+	}(_react2.default.Component);
+	
+	exports.default = Place;
+	
+	
+	Place.propTypes = {};
 
 /***/ }
 
