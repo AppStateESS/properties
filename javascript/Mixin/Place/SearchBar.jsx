@@ -1,10 +1,10 @@
 'use strict'
 import React from 'react'
-import Dropdown from '../Mixin/Dropdown.jsx'
+import Dropdown from '../Dropdown.jsx'
 import Amenities from './Amenities.jsx'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
-export default class PropertyBar extends React.Component {
+export default class SearchBar extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -152,7 +152,7 @@ export default class PropertyBar extends React.Component {
                   ref="propertySearch"
                   className="form-control input-sm"
                   type="text"
-                  placeholder="Search for properties..."
+                  placeholder="Search..."
                   onChange={this.props.updateSearchString}/>
                 <span className="input-group-btn">
                   <button
@@ -196,7 +196,7 @@ export default class PropertyBar extends React.Component {
   }
 }
 
-PropertyBar.propTypes = {
+SearchBar.propTypes = {
   updateSearchString: React.PropTypes.func,
   clear: React.PropTypes.func,
   updateSearchVars: React.PropTypes.func,
