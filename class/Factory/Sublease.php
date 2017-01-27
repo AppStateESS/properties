@@ -29,7 +29,7 @@ class Sublease extends Base
         return new Resource;
     }
 
-    public function listing(\Request $request, $view = false)
+    public function listing(\Request $request)
     {
         $listing = new Sublease\Listing();
         $listing->pullVariables($request);
