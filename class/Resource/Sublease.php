@@ -35,13 +35,13 @@ class Sublease extends Place
     {
         parent::__construct();
 
-        $this->additional_fees = new Variable\TextOnly('', 'additional_fees');
-        $this->contact_phone = new Variable\PhoneNumber('', 'contact_phone');
+        $this->additional_fees = new Variable\TextOnly(null, 'additional_fees');
+        $this->contact_phone = new Variable\PhoneNumber(null, 'contact_phone');
         $this->contact_phone->allowEmpty(false);
         $this->contact_phone->formatNumber(true);
-        $this->contact_email = new Variable\Email('', 'contact_email');
+        $this->contact_email = new Variable\Email(null, 'contact_email');
         $this->landlord_perm = new Variable\Bool(false, 'landlord_perm');
-        $this->move_out_date = new Variable\Date(time(), 'move_out_date');
+        $this->move_out_date = new Variable\Date(0, 'move_out_date');
         $this->user_id = new Variable\Integer(0, 'user_id');
     }
 

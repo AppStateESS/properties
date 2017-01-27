@@ -53,7 +53,7 @@ abstract class Place extends Base
     {
         parent::__construct();
         $this->active = new Variable\Bool(false, 'active');
-        $this->address = new Variable\CanopyString('', 'address');
+        $this->address = new Variable\CanopyString(null, 'address');
         $this->airconditioning = new Variable\Bool(false, 'airconditioning');
         $this->appalcart = new Variable\Bool(false, 'appalcart');
         $this->bathroom_no = new \phpws2\Variable\Decimal(1.0, 'bathroom_no');
@@ -62,7 +62,7 @@ abstract class Place extends Base
         $this->campus_distance = new Variable\SmallInteger(0, 'campus_distance');
         $this->campus_distance->setRange(0, 100);
         $this->created = new Variable\DateTime(null, 'created');
-        $this->description = new Variable\CanopyString('', 'description');
+        $this->description = new Variable\CanopyString(null, 'description');
         $this->dishwasher = new Variable\Bool(false, 'dishwasher');
         $this->furnished = new Variable\Bool(false, 'furnished');
         $this->internet_type = new Variable\SmallInteger(1, 'internet_type');
@@ -72,8 +72,8 @@ abstract class Place extends Base
         $this->lease_type = new Variable\SmallInteger(0, 'lease_type');
         $this->lease_type->setRange(0, 10);
         $this->monthly_rent = new Variable\SmallInteger(0, 'monthly_rent');
-        $this->move_in_date = new Variable\Date(time(), 'move_in_date');
-        $this->name = new Variable\CanopyString('', 'name');
+        $this->move_in_date = new Variable\Date(0, 'move_in_date');
+        $this->name = new Variable\CanopyString(null, 'name');
         $this->name->setLimit(100);
         $this->parking_per_unit = new Variable\SmallInteger(1,
                 'parking_per_unit');

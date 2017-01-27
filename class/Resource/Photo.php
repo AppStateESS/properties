@@ -49,7 +49,7 @@ class Photo extends Base
         $this->pid = new \phpws2\Variable\Integer(0, 'pid');
         $this->path = new \phpws2\Variable\File(null, 'path');
         $this->path->setLimit(255);
-        $this->title = new \phpws2\Variable\CanopyString('', 'title');
+        $this->title = new \phpws2\Variable\CanopyString(null, 'title');
         $this->title->setLimit(255);
         $this->main_pic = new \phpws2\Variable\Bool(false, 'main_pic');
         
