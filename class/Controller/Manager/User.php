@@ -86,5 +86,23 @@ class User extends \properties\Controller\SubController
     {
         return $this->factory->view($this->id, true);
     }
+    
+    protected function checkUsernameJsonCommand(\Request $request)
+    {
+        $json['duplicate'] = $this->factory->checkUsername($request->pullGetString('username'));
+        return $json;
+    }
+
+    protected function checkEmailJsonCommand(\Request $request)
+    {
+        $json['duplicate'] = $this->factory->checkEmail($request->pullGetString('email_address'));
+        return $json;
+    }
+    
+    protected function checkCompanyNameJsonCommand(\Request $request)
+    {
+        $json['duplicate'] = $this->factory->checkCompanyName($request->pullGetString('company_name'));
+        return $json;
+    }
 
 }
