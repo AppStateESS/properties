@@ -54,4 +54,11 @@ class Admin extends User
         $json = $this->factory->adminPost($request);
         return $json;
     }
+    
+    public function deleteCommand(\Request $request)
+    {
+        $json['success'] = $this->factory->delete($this->id);
+        return $json;
+    }
+    
 }
