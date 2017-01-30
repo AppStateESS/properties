@@ -446,9 +446,9 @@ class Manager extends Base
         $tbl = $db->addTable('prop_contacts');
         $usernameCheck = $db->createConditional($tbl->getField('username'),
                 strtolower($username), 'like');
-        $passwordCheck = $db->createConditional($tbl->getField('email_address'),
+        $emailCheck = $db->createConditional($tbl->getField('email_address'),
                 strtolower($username), 'like');
-        $combined = $db->createConditional($usernameCheck, $passwordCheck, 'or');
+        $combined = $db->createConditional($usernameCheck, $emailCheck, 'or');
         if ($id > 0) {
             $idCheck = $db->createConditional($tbl->getField('id'), $id, '!=');
             $together = $db->createConditional($combined, $idCheck, 'and');
