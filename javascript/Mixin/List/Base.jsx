@@ -25,6 +25,7 @@ export default class Base extends React.Component {
       'clearSearch',
       'updateSearchVars',
       'updateSearchString',
+      'resetConditions',
     ], this)
   }
 
@@ -115,12 +116,4 @@ export default class Base extends React.Component {
       duplex: setIfDefined(url.values, 'duplex', '0')
     }
   }
-
-  render() {
-    return(
-      <div></div>
-    )
-  }
 }
-
-Place.propTypes = {}
