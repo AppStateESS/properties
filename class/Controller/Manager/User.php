@@ -105,4 +105,20 @@ class User extends \properties\Controller\SubController
         return $json;
     }
 
+    protected function signupHtmlCommand(\Request $request)
+    {
+        return $this->factory->reactView('managersignup');
+    }
+    
+    protected function savePostCommand(\Request $request)
+    {
+        return $this->factory->signup($request);
+    }
+    
+    protected function successHtmlCommand(\Request $request)
+    {
+        $template = new \phpws2\Template();
+        $template->setModuleTemplate('properties', 'manager/success_signup.html');
+        return $template->get();
+    }
 }
