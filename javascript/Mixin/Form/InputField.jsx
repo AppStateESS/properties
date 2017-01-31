@@ -1,6 +1,11 @@
 'use strict'
 import React from 'react'
 
+/**
+ * When using errorMessage with required, be sure to clear
+ * the errorMessage prop on successful input
+ */
+
 export default class InputField extends React.Component {
   constructor(props) {
     super(props)
@@ -42,7 +47,7 @@ export default class InputField extends React.Component {
 
   handleChange(e) {
     const value = e.target.value
-    if (this.props.required && value.length > 0) {
+    if (value.length > 0) {
       this.setState({empty: false})
     }
     this.props.change(e)
@@ -144,5 +149,5 @@ InputField.propTypes = {
 }
 
 export const RequiredIcon = () => {
-  return <i className="fa fa-asterisk" style={{color: 'red'}}></i>
+  return <i className="fa fa-asterisk text-danger"></i>
 }
