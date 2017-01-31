@@ -1,6 +1,6 @@
 'use strict'
 import React from 'react'
-import ViewRow from '../Mixin/List/Row.jsx'
+import Row from '../Mixin/List/Row.jsx'
 
 /* global $ */
 
