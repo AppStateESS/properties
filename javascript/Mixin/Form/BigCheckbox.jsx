@@ -10,7 +10,7 @@ export default class BigCheckbox extends React.Component {
 
   handle()
   {
-    this.props.handle(!this.props.checked)
+    this.props.handle(empty(this.props.checked))
   }
 
   render() {
@@ -31,8 +31,8 @@ export default class BigCheckbox extends React.Component {
       <div onClick={this.handle} style={point}>
         <div className="fa-stack fa-lg pull-left">
           <i className="fa fa-square-o fa-stack-2x" style={mute}></i>
-          {this.props.checked ?
-          <i className="fa fa-check text-success fa-stack-2x"></i> : null}
+          {empty(this.props.checked) ? null :
+          <i className="fa fa-check text-success fa-stack-2x"></i>}
         </div>&nbsp;
         <div style={labelText} className={!empty(this.props.checked) ? 'text-success' : 'text-muted'}>{this.props.label}</div>
       </div>
@@ -42,7 +42,7 @@ export default class BigCheckbox extends React.Component {
 
 BigCheckbox.propTypes = {
   label: React.PropTypes.string,
-  checked: React.PropTypes.oneOfType([React.PropTypes.bool,React.PropTypes.string]),
+  checked: React.PropTypes.oneOfType([React.PropTypes.bool,React.PropTypes.string,React.PropTypes.number]),
   handle: React.PropTypes.func.isRequired
 }
 
