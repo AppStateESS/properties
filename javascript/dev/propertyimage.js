@@ -16,7 +16,7 @@ webpackJsonp([8],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _PropertyImage = __webpack_require__(/*! ./PropertyImage.jsx */ 412);
+	var _PropertyImage = __webpack_require__(/*! ./PropertyImage.jsx */ 411);
 	
 	var _PropertyImage2 = _interopRequireDefault(_PropertyImage);
 	
@@ -26,7 +26,186 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 412:
+/***/ 183:
+/*!*****************************************!*\
+  !*** ./javascript/Mixin/Helper/Bind.js ***!
+  \*****************************************/
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = bindMethods;
+	function bindMethods(bindable, object) {
+	  bindable.map(function (v) {
+	    if (object[v] === undefined) {
+	      throw new Error("Cannot bind undefined method: " + v);
+	    }
+	    object[v] = this[v].bind(object);
+	  }.bind(object));
+	}
+
+/***/ },
+
+/***/ 407:
+/*!*******************************************!*\
+  !*** ./javascript/Mixin/Html/Overlay.jsx ***!
+  \*******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	/* global $ */
+	
+	var Overlay = function (_React$Component) {
+	  _inherits(Overlay, _React$Component);
+	
+	  function Overlay(props) {
+	    _classCallCheck(this, Overlay);
+	
+	    var _this = _possibleConstructorReturn(this, (Overlay.__proto__ || Object.getPrototypeOf(Overlay)).call(this, props));
+	
+	    _this.state = {};
+	    _this.lighten = _this.lighten.bind(_this);
+	    _this.normal = _this.normal.bind(_this);
+	    _this.unlockBody = _this.unlockBody.bind(_this);
+	    _this.close = _this.close.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(Overlay, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.lockBody();
+	    }
+	  }, {
+	    key: 'lockBody',
+	    value: function lockBody() {
+	      $('body').css('overflow', 'hidden');
+	    }
+	  }, {
+	    key: 'unlockBody',
+	    value: function unlockBody() {
+	      $('body').css('overflow', 'inherit');
+	    }
+	  }, {
+	    key: 'normal',
+	    value: function normal() {
+	      this.refs.closebutton.style.backgroundColor = 'inherit';
+	    }
+	  }, {
+	    key: 'lighten',
+	    value: function lighten() {
+	      this.refs.closebutton.style.backgroundColor = '#e3e3e3';
+	    }
+	  }, {
+	    key: 'close',
+	    value: function close() {
+	      this.unlockBody();
+	      this.props.close();
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var overlayStyle = {
+	        width: '100%',
+	        position: 'fixed',
+	        top: '0px',
+	        bottom: '0px',
+	        left: '0px',
+	        backgroundColor: 'white',
+	        zIndex: '100',
+	        overflowY: 'scroll',
+	        overflowX: 'hidden',
+	        padding: '10px'
+	      };
+	
+	      var headerStyle = {
+	        backgroundColor: '#F2F2F2',
+	        border: '1px solid #D9D9D9',
+	        marginBottom: '1em',
+	        height: '40px'
+	      };
+	
+	      var titleStyle = {
+	        padding: '9px',
+	        fontSize: '14px',
+	        fontWeight: 'bold'
+	      };
+	
+	      var closeButton = {
+	        padding: '5px',
+	        float: 'right'
+	      };
+	
+	      var childrenStyle = {
+	        paddingBottom: '50px'
+	      };
+	      return _react2.default.createElement(
+	        'div',
+	        { style: overlayStyle },
+	        _react2.default.createElement(
+	          'div',
+	          { style: headerStyle },
+	          _react2.default.createElement(
+	            'div',
+	            {
+	              ref: 'closebutton',
+	              style: closeButton,
+	              onMouseEnter: this.lighten,
+	              onMouseLeave: this.normal },
+	            _react2.default.createElement('i', { className: ' fa fa-2x fa-times pointer', onClick: this.close })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { style: titleStyle },
+	            this.props.title
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { style: childrenStyle },
+	          this.props.children
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Overlay;
+	}(_react2.default.Component);
+	
+	exports.default = Overlay;
+	
+	
+	Overlay.propTypes = {
+	  children: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.element]),
+	  close: _react2.default.PropTypes.func,
+	  title: _react2.default.PropTypes.string
+	};
+
+/***/ },
+
+/***/ 411:
 /*!****************************************************!*\
   !*** ./javascript/PropertyImage/PropertyImage.jsx ***!
   \****************************************************/
@@ -44,11 +223,11 @@ webpackJsonp([8],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _ImageOverlay = __webpack_require__(/*! ./ImageOverlay.jsx */ 413);
+	var _ImageOverlay = __webpack_require__(/*! ./ImageOverlay.jsx */ 412);
 	
 	var _ImageOverlay2 = _interopRequireDefault(_ImageOverlay);
 	
-	var _Bind = __webpack_require__(/*! ../Mixin/Helper/Bind.js */ 432);
+	var _Bind = __webpack_require__(/*! ../Mixin/Helper/Bind.js */ 183);
 	
 	var _Bind2 = _interopRequireDefault(_Bind);
 	
@@ -212,7 +391,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 413:
+/***/ 412:
 /*!***************************************************!*\
   !*** ./javascript/PropertyImage/ImageOverlay.jsx ***!
   \***************************************************/
@@ -232,19 +411,19 @@ webpackJsonp([8],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Overlay = __webpack_require__(/*! ../Mixin/Html/Overlay.jsx */ 448);
+	var _Overlay = __webpack_require__(/*! ../Mixin/Html/Overlay.jsx */ 407);
 	
 	var _Overlay2 = _interopRequireDefault(_Overlay);
 	
-	var _reactDropzone = __webpack_require__(/*! react-dropzone */ 414);
+	var _reactDropzone = __webpack_require__(/*! react-dropzone */ 413);
 	
 	var _reactDropzone2 = _interopRequireDefault(_reactDropzone);
 	
-	var _Thumb = __webpack_require__(/*! ./Thumb.jsx */ 415);
+	var _Thumb = __webpack_require__(/*! ./Thumb.jsx */ 414);
 	
 	var _Thumb2 = _interopRequireDefault(_Thumb);
 	
-	var _ImageFrame = __webpack_require__(/*! ./ImageFrame.jsx */ 416);
+	var _ImageFrame = __webpack_require__(/*! ./ImageFrame.jsx */ 415);
 	
 	var _ImageFrame2 = _interopRequireDefault(_ImageFrame);
 	
@@ -366,7 +545,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 414:
+/***/ 413:
 /*!****************************************!*\
   !*** ./~/react-dropzone/dist/index.js ***!
   \****************************************/
@@ -782,7 +961,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 415:
+/***/ 414:
 /*!********************************************!*\
   !*** ./javascript/PropertyImage/Thumb.jsx ***!
   \********************************************/
@@ -897,7 +1076,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 416:
+/***/ 415:
 /*!*************************************************!*\
   !*** ./javascript/PropertyImage/ImageFrame.jsx ***!
   \*************************************************/
@@ -1017,185 +1196,6 @@ webpackJsonp([8],{
 	ImageFrame.propTypes = {
 	  image: _react2.default.PropTypes.object,
 	  status: _react2.default.PropTypes.bool
-	};
-
-/***/ },
-
-/***/ 432:
-/*!*****************************************!*\
-  !*** ./javascript/Mixin/Helper/Bind.js ***!
-  \*****************************************/
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = bindMethods;
-	function bindMethods(bindable, object) {
-	  bindable.map(function (v) {
-	    if (object[v] === undefined) {
-	      throw new Error("Cannot bind undefined method: " + v);
-	    }
-	    object[v] = this[v].bind(object);
-	  }.bind(object));
-	}
-
-/***/ },
-
-/***/ 448:
-/*!*******************************************!*\
-  !*** ./javascript/Mixin/Html/Overlay.jsx ***!
-  \*******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	/* global $ */
-	
-	var Overlay = function (_React$Component) {
-	  _inherits(Overlay, _React$Component);
-	
-	  function Overlay(props) {
-	    _classCallCheck(this, Overlay);
-	
-	    var _this = _possibleConstructorReturn(this, (Overlay.__proto__ || Object.getPrototypeOf(Overlay)).call(this, props));
-	
-	    _this.state = {};
-	    _this.lighten = _this.lighten.bind(_this);
-	    _this.normal = _this.normal.bind(_this);
-	    _this.unlockBody = _this.unlockBody.bind(_this);
-	    _this.close = _this.close.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(Overlay, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.lockBody();
-	    }
-	  }, {
-	    key: 'lockBody',
-	    value: function lockBody() {
-	      $('body').css('overflow', 'hidden');
-	    }
-	  }, {
-	    key: 'unlockBody',
-	    value: function unlockBody() {
-	      $('body').css('overflow', 'inherit');
-	    }
-	  }, {
-	    key: 'normal',
-	    value: function normal() {
-	      this.refs.closebutton.style.backgroundColor = 'inherit';
-	    }
-	  }, {
-	    key: 'lighten',
-	    value: function lighten() {
-	      this.refs.closebutton.style.backgroundColor = '#e3e3e3';
-	    }
-	  }, {
-	    key: 'close',
-	    value: function close() {
-	      this.unlockBody();
-	      this.props.close();
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var overlayStyle = {
-	        width: '100%',
-	        position: 'fixed',
-	        top: '0px',
-	        bottom: '0px',
-	        left: '0px',
-	        backgroundColor: 'white',
-	        zIndex: '100',
-	        overflowY: 'scroll',
-	        overflowX: 'hidden',
-	        padding: '10px'
-	      };
-	
-	      var headerStyle = {
-	        backgroundColor: '#F2F2F2',
-	        border: '1px solid #D9D9D9',
-	        marginBottom: '1em',
-	        height: '40px'
-	      };
-	
-	      var titleStyle = {
-	        padding: '9px',
-	        fontSize: '14px',
-	        fontWeight: 'bold'
-	      };
-	
-	      var closeButton = {
-	        padding: '5px',
-	        float: 'right'
-	      };
-	
-	      var childrenStyle = {
-	        paddingBottom: '50px'
-	      };
-	      return _react2.default.createElement(
-	        'div',
-	        { style: overlayStyle },
-	        _react2.default.createElement(
-	          'div',
-	          { style: headerStyle },
-	          _react2.default.createElement(
-	            'div',
-	            {
-	              ref: 'closebutton',
-	              style: closeButton,
-	              onMouseEnter: this.lighten,
-	              onMouseLeave: this.normal },
-	            _react2.default.createElement('i', { className: ' fa fa-2x fa-times pointer', onClick: this.close })
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { style: titleStyle },
-	            this.props.title
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { style: childrenStyle },
-	          this.props.children
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return Overlay;
-	}(_react2.default.Component);
-	
-	exports.default = Overlay;
-	
-	
-	Overlay.propTypes = {
-	  children: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.string, _react2.default.PropTypes.element]),
-	  close: _react2.default.PropTypes.func,
-	  title: _react2.default.PropTypes.string
 	};
 
 /***/ }
