@@ -204,7 +204,7 @@ export default class SubleaseForm extends Base {
 
   checkMoveOutDate(out_date, in_date)
   {
-    if (moment(out_date).unix() < moment().unix() || moment(out_date).unix() < moment(in_date).unix()) {
+    if (out_date < moment().unix() || out_date <= in_date) {
       this.setError('move_out_date', true)
       return false
     } else {
@@ -256,10 +256,6 @@ export default class SubleaseForm extends Base {
     }
     const {sublease} = this.state
     let parking = Range(sublease.parking_per_unit)
-    const red = {
-      color: 'red'
-    }
-
     let message
     if (this.state.message !== null) {
       message = <Message
@@ -278,7 +274,7 @@ export default class SubleaseForm extends Base {
     if (this.state.errors.move_out_date) {
       moveOutError = <span className="label label-danger">Move out date must be after move in date and the current date.</span>
     }
-
+    console.log(this.state.errors)
     return (
       <div ref="PageTop" className="sublease-form">
         <h2>Update my sublease</h2>
@@ -354,7 +350,7 @@ export default class SubleaseForm extends Base {
               maxWidth: '200px'
             }}>
               <label>Monthly rent</label>
-              <i className="fa fa-asterisk" style={red}></i>&nbsp;
+              <i className="fa fa-asterisk text-danger"></i>&nbsp;
               <Help
                 title="Enter the total amount the subleaser will pay per month, not the rent for the whole unit"/>
               <InputField
