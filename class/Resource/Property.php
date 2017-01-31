@@ -57,29 +57,28 @@ class Property extends Place
     {
         parent::__construct();
 
-
         $this->admin_fee_amt = new Variable\Integer(0, 'admin_fee_amt');
-        $this->admin_fee_refund = new Variable\Bool(false, 'admin_fee_refund');
-        $this->approved = new Variable\Bool(false, 'approved');
+        $this->admin_fee_refund = new Variable\Boolean(false, 'admin_fee_refund');
+        $this->approved = new Variable\Boolean(false, 'approved');
         $this->clean_fee_amt = new Variable\Integer(0, 'clean_fee_amt');
-        $this->clean_fee_refund = new Variable\Bool(0, 'clean_fee_refund');
-        $this->clubhouse = new Variable\Bool(false, 'clubhouse');
+        $this->clean_fee_refund = new Variable\Boolean(0, 'clean_fee_refund');
+        $this->clubhouse = new Variable\Boolean(false, 'clubhouse');
         $this->contact_id = new Variable\Integer(0, 'contact_id');
         $this->contact_id->setRange(1);
         $this->contract_length = new Variable\SmallInteger(3, 'contract_length');
-        $this->efficiency = new Variable\Bool(false, 'efficiency');
+        $this->efficiency = new Variable\Boolean(false, 'efficiency');
         $this->heat_type = new Variable\Arr(null, 'heat_type');
         $this->heat_type->allowNull(true);
         $this->other_fees = new Variable\CanopyString('', 'other_fees');
         $this->parking_fee = new Variable\Integer(0, 'parking_fee');
         $this->pet_deposit = new Variable\Integer(0, 'pet_deposit');
-        $this->pet_dep_refund = new Variable\Bool(false, 'pet_dep_refund');
+        $this->pet_dep_refund = new Variable\Boolean(false, 'pet_dep_refund');
         $this->pet_fee = new Variable\Integer(0, 'pet_fee');
         $this->pet_type = new Variable\CanopyString('', 'pet_type');
         $this->security_amt = new Variable\Integer(0, 'security_amt');
-        $this->security_refund = new Variable\Bool(false, 'security_refund');
+        $this->security_refund = new Variable\Boolean(false, 'security_refund');
         $this->student_type = new Variable\SmallInteger(0, 'student_type');
-        $this->sublease = new Variable\Bool(false, 'sublease');
+        $this->sublease = new Variable\Boolean(false, 'sublease');
         $this->timeout = new Variable\Integer(0, 'timeout');
         $this->trash_type = new Variable\Integer(0, 'trash_type');
         $this->trash_type->setRange(0, 10);
@@ -97,8 +96,8 @@ class Property extends Place
         $this->util_internet->setRange(-1, 2000);
         $this->util_phone = new Variable\Integer(0, 'util_phone');
         $this->util_phone->setRange(-1, 2000);
-        $this->window_number = new Variable\Bool(true, 'window_number');
-        $this->workout_room = new Variable\Bool(false, 'workout_room');
+        $this->window_number = new Variable\Boolean(true, 'window_number');
+        $this->workout_room = new Variable\Boolean(false, 'workout_room');
         $this->company_name = new Variable\CanopyString('', 'company_name');
         $this->thumbnail = new Variable\CanopyString('', 'thumbnail');
         $this->doNotSave(array('company_name', 'thumbnail'));

@@ -51,7 +51,7 @@ class Photo extends Base
         $this->path->setLimit(255);
         $this->title = new \phpws2\Variable\CanopyString(null, 'title');
         $this->title->setLimit(255);
-        $this->main_pic = new \phpws2\Variable\Bool(false, 'main_pic');
+        $this->main_pic = new \phpws2\Variable\Boolean(false, 'main_pic');
         
     }
     

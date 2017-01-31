@@ -52,10 +52,10 @@ abstract class Place extends Base
     public function __construct()
     {
         parent::__construct();
-        $this->active = new Variable\Bool(false, 'active');
+        $this->active = new Variable\Boolean(false, 'active');
         $this->address = new Variable\CanopyString(null, 'address');
-        $this->airconditioning = new Variable\Bool(false, 'airconditioning');
-        $this->appalcart = new Variable\Bool(false, 'appalcart');
+        $this->airconditioning = new Variable\Boolean(false, 'airconditioning');
+        $this->appalcart = new Variable\Boolean(false, 'appalcart');
         $this->bathroom_no = new \phpws2\Variable\Decimal(1.0, 'bathroom_no');
         $this->bedroom_no = new Variable\SmallInteger(1, 'bedroom_no');
         $this->bedroom_no->setRange(1, 10);
@@ -63,8 +63,8 @@ abstract class Place extends Base
         $this->campus_distance->setRange(0, 100);
         $this->created = new Variable\DateTime(null, 'created');
         $this->description = new Variable\CanopyString(null, 'description');
-        $this->dishwasher = new Variable\Bool(false, 'dishwasher');
-        $this->furnished = new Variable\Bool(false, 'furnished');
+        $this->dishwasher = new Variable\Boolean(false, 'dishwasher');
+        $this->furnished = new Variable\Boolean(false, 'furnished');
         $this->internet_type = new Variable\SmallInteger(1, 'internet_type');
         $this->internet_type->setRange(0, 20);
         $this->laundry_type = new Variable\SmallInteger(0, 'laundry_type');
@@ -77,15 +77,15 @@ abstract class Place extends Base
         $this->name->setLimit(100);
         $this->parking_per_unit = new Variable\SmallInteger(1,
                 'parking_per_unit');
-        $this->pets_allowed = new Variable\Bool(false, 'pets_allowed');
+        $this->pets_allowed = new Variable\Boolean(false, 'pets_allowed');
         $this->proptype = new Variable\SmallInteger(0, 'proptype');
         $this->proptype->setRange(0, 20);
-        $this->smoking_allowed = new Variable\Bool(false, 'smoking_allowed');
+        $this->smoking_allowed = new Variable\Boolean(false, 'smoking_allowed');
         $this->trash_type = new Variable\SmallInteger(0, 'trash_type');
         $this->tv_type = new Variable\SmallInteger(0, 'tv_type');
         $this->tv_type->setRange(0, 10);
         $this->updated = new Variable\DateTime(time(), 'updated');
-        $this->utilities_inc = new Variable\Bool(false, 'utilities_inc');
+        $this->utilities_inc = new Variable\Boolean(false, 'utilities_inc');
     }
 
     public function getCampusDistance()
