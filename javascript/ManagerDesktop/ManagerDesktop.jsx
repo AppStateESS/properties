@@ -46,7 +46,7 @@ export default class ManagerDesktop extends React.Component {
       propertyList = <PropertyListing list={this.state.properties}/>
     } else {
       propertyList = <p className="text-center">
-        No properties found. <a href="./properties/Manager/create">Click here to create a new property.</a>
+        No properties found. <a href="./properties/Property/create">Click here to create a new property.</a>
       </p>
     }
 

@@ -89,7 +89,7 @@ export default class ManagerSignin extends React.Component {
         callback()
       }
     } else {
-      $.getJSON('./properties/ManagerSignup/checkUsername', {username: this.state.username}).done(function (data) {
+      $.getJSON('./properties/Manager/checkUsername', {username: this.state.username}).done(function (data) {
         this.setError('username', data.duplicate
           ? 'Please use try a different username'
           : null)
@@ -106,7 +106,7 @@ export default class ManagerSignin extends React.Component {
         callback()
       }
     } else {
-      $.getJSON('./properties/ManagerSignup/checkEmail', {email: this.state.email_address}).done(function (data) {
+      $.getJSON('./properties/Manager/checkEmail', {email_address: this.state.email_address}).done(function (data) {
         this.setError('email_address', data.duplicate
           ? 'Email address already in use'
           : null)
@@ -123,7 +123,7 @@ export default class ManagerSignin extends React.Component {
         callback()
       }
     } else {
-      $.getJSON('./properties/ManagerSignup/checkCompanyName', {company_name: this.state.company_name}).done(function (data) {
+      $.getJSON('./properties/Manager/checkCompanyName', {company_name: this.state.company_name}).done(function (data) {
         this.setError('company_name', data.duplicate
           ? 'Company name already in use'
           : null)
@@ -251,12 +251,12 @@ export default class ManagerSignin extends React.Component {
 
     $.ajax({
       method: 'POST',
-      url: './properties/ManagerSignup',
+      url: './properties/Manager',
       dataType: 'json',
       data: values,
       success: function (data) {
         if (data.status) {
-          window.location.href = './properties/ManagerSignup/success'
+          window.location.href = './properties/Manager/success'
         }
       }.bind(this),
       failure: function () {

@@ -50,7 +50,7 @@ export default class ManagerApproval extends React.Component {
   }
 
   load() {
-    $.getJSON('properties/ManagerApproval').done(function (data) {
+    $.getJSON('properties/Manager/approval').done(function (data) {
       this.setState({managers: data['managerList']})
     }.bind(this)).fail(function (data) {
       this.setState({managers: null})

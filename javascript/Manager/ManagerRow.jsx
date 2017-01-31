@@ -16,7 +16,7 @@ class ManagerRow extends React.Component {
     if (prompt("Deleting this manager will remove their account and all their properties.\nType " +
         "'DELETE' to confirm") === 'DELETE') {
       $.ajax({
-        url: './properties/Manager/?managerId=' + this.props.id,
+        url: './properties/Manager/' + this.props.id,
         dataType: 'json',
         type: 'delete'
       }).done(function (data) {
@@ -58,13 +58,6 @@ class ManagerRow extends React.Component {
   }
 
   render() {
-    let lastLog
-
-    if (this.props.last_log !== null) {
-      let lastDate = new Date(this.props.last_log * 1000)
-      lastLog = lastDate.toDateString()
-    }
-
     let alabel = null
     let aicon = null
     let ahandle = null

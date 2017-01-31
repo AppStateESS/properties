@@ -5,6 +5,7 @@ import ManagerForm from './ManagerForm.jsx'
 import Message from '../Mixin/Html/Message.jsx'
 import Waiting from '../Mixin/Html/Waiting.jsx'
 import bindMethods from '../Mixin/Helper/Bind.js'
+import ManagerObject from '../Mixin/Objects/ManagerObject.js'
 
 /* global $ */
 
@@ -16,7 +17,7 @@ class Manager extends React.Component {
     this.state = {
       managers: null,
       message: null,
-      currentManager: {}
+      currentManager: ManagerObject
     }
     this.search = ''
     const bindable = [

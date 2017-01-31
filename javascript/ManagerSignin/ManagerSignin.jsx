@@ -79,7 +79,7 @@ export default class ManagerSignin extends React.Component {
           <a href="./properties/Manager/forgot">Forgot password?</a>
         </p>
         <p>
-          <a href="./properties/ManagerSignup">Request a manager account.</a>
+          <a href="./properties/Manager/signup">Request a manager account.</a>
         </p>
       </div>
     )

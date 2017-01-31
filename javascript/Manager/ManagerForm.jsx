@@ -3,6 +3,7 @@ import React from 'react'
 import InputField from '../Mixin/Form/InputField.jsx'
 import Modal from '../Mixin/Html/Modal.jsx'
 import CheckValues from '../Mixin/Helper/CheckValues'
+import ManagerObject from '../Mixin/Objects/ManagerObject.js'
 
 /* global $ */
 
@@ -10,28 +11,19 @@ class ManagerForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      id: 0,
-      username: '',
-      password: '',
-      first_name: '',
-      last_name: '',
-      phone: '',
-      email_address: '',
-      company_name: '',
-      company_address: '',
-      company_url: '',
-      times_available: '',
-      usernameError: null,
-      passwordError: null,
-      firstNameError: null,
-      lastNameError: null,
-      phoneError: null,
-      emailError: null,
-      companyNameError: null
+      manager: ManagerObject,
+      errors: {
+        username: null,
+        password: null,
+        first_name: null,
+        last_name: null,
+        phone: null,
+        email: null,
+        company_name: null
+      }
     }
 
     let bindable = [
-      'addTestData',
       'checkCompanyName',
       'checkEmailAddress',
       'checkEmailDuplicate',
@@ -41,16 +33,8 @@ class ManagerForm extends React.Component {
       'checkUsernameDuplicate',
       'resetForm',
       'save',
-      'setCompanyName',
-      'setCompanyAddress',
-      'setCompanyUrl',
-      'setEmailAddress',
-      'setFirstName',
-      'setLastName',
-      'setPassword',
-      'setPhone',
-      'setTimesAvailable',
-      'setUsername'
+      'setValue',
+      'setError'
     ]
 
     bindable.map(function (v) {
@@ -63,176 +47,107 @@ class ManagerForm extends React.Component {
     if (manager.length === 0) {
       return
     }
-    this.setState({
-      id: manager.id,
-      username: manager.username,
-      password: manager.password,
-      first_name: manager.first_name,
-      last_name: manager.last_name,
-      phone: manager.phone,
-      email_address: manager.email_address,
-      company_name: manager.company_name,
-      company_address: manager.company_address,
-      company_url: manager.company_url,
-      times_available: manager.times_available,
-      usernameError: null,
-      passwordError: null,
-      firstNameError: null,
-      lastNameError: null,
-      phoneError: null,
-      emailError: null,
-      companyNameError: null
-    })
+    this.setState({manager: manager})
   }
 
-  componentWillUpdate(props) {
-    const manager = props.manager
-    if (manager.id !== undefined && manager.id !== this.state.id) {
-      this.setState({
-        id: manager.id,
-        username: manager.username,
-        password: '',
-        first_name: manager.first_name,
-        last_name: manager.last_name,
-        phone: manager.phone,
-        email_address: manager.email_address,
-        company_name: manager.company_name,
-        company_address: manager.company_address,
-        company_url: manager.company_url,
-        times_available: manager.times_available,
-        usernameError: null,
-        passwordError: null,
-        firstNameError: null,
-        lastNameError: null,
-        phoneError: null,
-        emailError: null,
-        companyNameError: null
-      })
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.manager.id !== this.state.manager.id) {
+      this.setState({manager: nextProps.manager})
     }
+  }
+
+  setValue(varname, value) {
+    if (typeof value === 'object' && value.target !== undefined) {
+      value = value.target.value
+    }
+    this.setError(varname, null)
+    let manager = this.state.manager
+    manager[varname] = value
+    this.setState({manager})
+  }
+
+  setError(varname, value) {
+    let errors = this.state.errors
+    errors[varname] = value
+    this.setState({errors})
   }
 
   resetForm() {
     this.setState({
-      id: '0',
-      username: '',
-      password: '',
-      first_name: '',
-      last_name: '',
-      phone: '',
-      email_address: '',
-      company_name: '',
-      company_address: '',
-      company_url: '',
-      times_available: '',
-      usernameError: null,
-      passwordError: null,
-      firstNameError: null,
-      lastNameError: null,
-      phoneError: null,
-      emailError: null,
-      companyNameError: null
+      manager: ManagerObject,
+      errors: {
+        username: null,
+        password: null,
+        first_name: null,
+        last_name: null,
+        phone: null,
+        email: null,
+        company_name: null
+      }
     })
     $('#reactModal').modal('hide')
   }
 
   copyUsername(username) {
-    if (CheckValues.isEmail(username) && CheckValues.isEmpty(this.state.email_address)) {
-      this.setState({email_address: username})
+    if (CheckValues.isEmail(username) && CheckValues.isEmpty(this.state.manager.email_address)) {
+      this.setValue('email_address', username)
     }
-  }
-
-  setUsername(e) {
-    this.setState({username: e.target.value})
-  }
-
-  setPassword(e) {
-    this.setState({password: e.target.value})
-  }
-
-  setFirstName(e) {
-    this.setState({first_name: e.target.value})
-  }
-
-  setLastName(e) {
-    this.setState({last_name: e.target.value})
-  }
-
-  setPhone(e) {
-    this.setState({phone: e.target.value})
-  }
-
-  setEmailAddress(e) {
-    this.setState({email_address: e.target.value})
-  }
-
-  setCompanyName(e) {
-    this.setState({company_name: e.target.value})
-  }
-
-  setCompanyAddress(e) {
-    this.setState({company_address: e.target.value})
-  }
-
-  setCompanyUrl(e) {
-    this.setState({company_url: e.target.value})
-  }
-
-  setTimesAvailable(e) {
-    this.setState({times_available: e.target.value})
   }
 
   postErrors(errors) {
     if (errors.companyEmpty) {
-      this.setState({companyNameError: 'Please enter a company name'})
-    } else if(errors.companyDuplicate) {
-      this.setState({companyNameError: 'Company name already in use'})
+      this.setError('company_name', 'Please enter a company name')
+    } else if (errors.companyDuplicate) {
+      this.setError('company_name', 'Company name already in use')
+    } else {
+      this.setError('company_name', null)
     }
 
     if (errors.emailEmpty) {
-      this.setState({emailError: 'Email may not be empty'})
+      this.setError('email', 'Email may not be empty')
+    } else {
+      this.setError('email', null)
     }
 
     if (errors.firstNameEmpty) {
-      this.setState({firstNameError: 'First name may not be empty'})
+      this.setError('first_name', 'First name may not be empty')
+    } else {
+      this.setError('first_name', null)
     }
 
     if (errors.lastNameEmpty) {
-      this.setState({lastNameError: 'Last name may not be empty'})
+      this.setError('last_name', 'Last name may not be empty')
+    } else {
+      this.setError('last_name', null)
     }
 
     if (errors.passwordEmpty) {
-      this.setState({passwordError: 'Password may not be empty'})
+      this.setError('password', 'Password may not be empty')
     } else if (errors.passwordShort) {
-      this.setState({passwordError: 'Password must be a least 8 characters'})
+      this.setError('password', 'Password must be a least 8 characters')
+    } else {
+      this.setError('password', null)
     }
 
     if (errors.phoneEmpty) {
-      this.setState({phoneError: 'Phone number may not be empty'})
+      this.setError('phone', 'Phone number may not be empty')
     } else if (errors.phoneBadFormat) {
-      this.setState({phoneError: 'Phone number is improperly formatted'})
+      this.setError('phone', 'Phone number is improperly formatted')
+    } else {
+      this.setError('phone', null)
     }
 
     if (errors.usernameEmpty) {
-      this.setState({usernameError: 'Username may not be empty'})
+      this.setError('username', 'Username may not be empty')
     } else if (errors.usernameDuplicate) {
-      this.setState({usernameError: 'Username already in use'})
+      this.setError('username', 'Username already in use')
+    } else {
+      this.setError('username', null)
     }
   }
 
   save() {
-    $.post('properties/Manager/', {
-      id: this.state.id,
-      username: this.state.username,
-      password: this.state.password,
-      first_name: this.state.first_name,
-      last_name: this.state.last_name,
-      phone: this.state.phone,
-      email_address: this.state.email_address,
-      company_name: this.state.company_name,
-      company_address: this.state.company_address,
-      company_url: this.state.company_url,
-      times_available: this.state.times_available
-    }, null, 'json').done(function (data) {
+    $.post('properties/Manager/', this.state.manager, null, 'json').done(function (data) {
       if (data.status === 'error') {
         this.postErrors(data)
       } else {
@@ -243,32 +158,35 @@ class ManagerForm extends React.Component {
   }
 
   checkPhone() {
-    if (!CheckValues.isPhone(this.state.phone)) {
-      this.setState({phoneError: 'Phone number not formatted properly'})
+    if (!CheckValues.isPhone(this.state.manager.phone)) {
+      this.setError('phone', 'Phone number not formatted properly')
     } else {
-      this.setState({phoneError: null})
+      this.setError('phone', null)
     }
   }
 
   checkUsername() {
-    if (this.state.username.match(/\s/)) {
-      this.setState({usernameError: 'No spaces are allowed'})
+    if (this.state.manager.username && this.state.manager.username.match(/\s/)) {
+      this.setError('username', 'No spaces are allowed')
     } else {
       this.checkUsernameDuplicate(function () {
-        this.copyUsername(this.state.username)
+        this.copyUsername(this.state.manager.username)
       }.bind(this))
     }
   }
 
   checkUsernameDuplicate(callback) {
+    if (!this.state.manager.username) {
+      return
+    }
     $.getJSON('properties/Manager/checkUsername', {
-      username: this.state.username,
-      id: this.state.id
+      username: this.state.manager.username,
+      id: this.state.manager.id
     }).done(function (data) {
       if (data.duplicate) {
-        this.setState({usernameError: 'Username already in use'})
+        this.setState({username: 'Username already in use'})
       } else {
-        this.setState({usernameError: null})
+        this.setState({username: null})
         if (callback !== undefined) {
           callback()
         }
@@ -277,8 +195,8 @@ class ManagerForm extends React.Component {
   }
 
   checkEmailAddress() {
-    if (!CheckValues.isEmail(this.state.email_address)) {
-      this.setState({emailError: 'Email not formatted properly'})
+    if (!CheckValues.isEmail(this.state.manager.email_address)) {
+      this.setError('email', 'Email not formatted properly')
     } else {
       this.checkEmailDuplicate()
     }
@@ -286,13 +204,13 @@ class ManagerForm extends React.Component {
 
   checkEmailDuplicate(callback) {
     $.getJSON('properties/Manager/checkEmail', {
-      email_address: this.state.email_address,
-      id: this.state.id
+      email_address: this.state.manager.email_address,
+      id: this.state.manager.id
     }).done(function (data) {
       if (data.duplicate) {
-        this.setState({emailError: 'Email address already in use'})
+        this.setError('email', 'Email address already in use')
       } else {
-        this.setState({emailError: null})
+        this.setError('email', null)
       }
       if (callback !== undefined) {
         callback()
@@ -301,37 +219,35 @@ class ManagerForm extends React.Component {
   }
 
   checkPassword() {
-    if (this.state.password.length < 8) {
-      this.setState({passwordError: 'Password must be 8 characters or more'})
+    if (this.state.manager.password && this.state.manager.password.length < 8) {
+      this.setError('password', 'Password must be 8 characters or more')
     } else {
-      this.setState({passwordError: null})
+      this.setError('password', null)
     }
   }
 
   checkCompanyName() {
-    if (CheckValues.isEmpty(this.state.company_name)) {
-      if (this.state.first_name.length > 0 && this.state.last_name.length > 0) {
-        this.setState({
-          company_name: this.state.first_name + ' ' + this.state.last_name,
-          companyNameEmptyError: false
-        })
+    if (CheckValues.isEmpty(this.state.manager.company_name)) {
+      if (this.state.manager.first_name.length > 0 && this.state.manager.last_name.length > 0) {
+        this.setValue('company_name', this.state.manager.first_name + ' ' + this.state.manager.last_name)
+        this.setError('company_name', 'Company name was empty. Using full name. Change or save to continue.')
       }
     } else {
       this.checkCompanyDuplicate(function () {
-        this.setState({companyNameError: null})
+        this.setError('company_name', null)
       }.bind(this))
     }
   }
 
   checkCompanyDuplicate(callback) {
     $.getJSON('properties/Manager/checkCompanyName', {
-      company_name: this.state.company_name,
-      'id': this.state.id
+      company_name: this.state.manager.company_name,
+      'id': this.state.manager.id
     }).done(function (data) {
       if (data.duplicate) {
-        this.setState({companyNameError: 'Company Name already in use'})
+        this.setError('company_name', 'Company Name already in use')
       } else {
-        this.setState({companyNameError: null})
+        this.setError('company_name', null)
         if (callback !== undefined) {
           callback()
         }
@@ -339,28 +255,13 @@ class ManagerForm extends React.Component {
     }.bind(this))
   }
 
-  addTestData() {
-    this.setState({
-      username: 'tommy',
-      password: 'password',
-      first_name: 'Tommy',
-      last_name: 'Tutone',
-      phone: '828-123-1233',
-      email_address: 'Tom@aol.com',
-      company_name: 'Tommy Place',
-      company_address: '123 Elm Street',
-      company_url: 'http://google.com',
-      times_available: '8am to 5pm'
-    })
-  }
-
   render() {
-    let testButton = <button className="btn btn-warning" onClick={this.addTestData}>Test</button>
-
     let button = <button className="btn btn-success" onClick={this.save}>
       <i className="fa fa-floppy-o"></i>&nbsp;Save</button>
 
-    let footer = <span>{button}&nbsp;{testButton}&nbsp;</span>
+    let footer = <span>{button}&nbsp;</span>
+    const manager = this.state.manager
+    const errors = this.state.errors
 
     let managerForm = (
       <div className="managerForm">
@@ -370,11 +271,11 @@ class ManagerForm extends React.Component {
               <InputField
                 name="username"
                 label="Username"
-                value={this.state.username}
-                change={this.setUsername}
+                value={manager.username}
+                change={this.setValue.bind(this, 'username')}
                 required={true}
                 blur={this.checkUsername}
-                errorMessage={this.state.usernameError}/>
+                errorMessage={errors.username}/>
             </div>
             <div className="col-sm-6">
               <InputField
@@ -383,9 +284,9 @@ class ManagerForm extends React.Component {
                 iid="managerPassword"
                 label="Password"
                 blur={this.checkPassword}
-                value={this.state.password}
-                change={this.setPassword}
-                errorMessage={this.state.passwordError}
+                value={manager.password}
+                change={this.setValue.bind(this, 'password')}
+                errorMessage={errors.password}
                 required={true}/>
             </div>
           </div>
@@ -395,9 +296,9 @@ class ManagerForm extends React.Component {
                 name="first_name"
                 iid="managerFirstName"
                 label="First name"
-                value={this.state.first_name}
-                change={this.setFirstName}
-                errorMessage={this.state.firstNameError}
+                value={manager.first_name}
+                change={this.setValue.bind(this, 'first_name')}
+                errorMessage={errors.first_name}
                 required={true}/>
             </div>
             <div className="col-sm-6">
@@ -405,9 +306,9 @@ class ManagerForm extends React.Component {
                 name="last_name"
                 iid="managerLastName"
                 label="Last name"
-                value={this.state.last_name}
-                change={this.setLastName}
-                errorMessage={this.state.lastNameError}
+                value={manager.last_name}
+                change={this.setValue.bind(this, 'last_name')}
+                errorMessage={errors.last_name}
                 required={true}/>
             </div>
           </div>
@@ -417,9 +318,9 @@ class ManagerForm extends React.Component {
                 name="phone"
                 iid="managerPhone"
                 label="Phone"
-                value={this.state.phone}
-                change={this.setPhone}
-                errorMessage={this.state.phoneError}
+                value={manager.phone}
+                change={this.setValue.bind(this, 'phone')}
+                errorMessage={errors.phone}
                 blur={this.checkPhone}
                 required={true}/>
             </div>
@@ -428,10 +329,10 @@ class ManagerForm extends React.Component {
                 name="email_address"
                 iid="managerEmailAddress"
                 label="Email"
-                value={this.state.email_address}
-                change={this.setEmailAddress}
+                value={manager.email_address}
+                change={this.setValue.bind(this, 'email_address')}
                 blur={this.checkEmailAddress}
-                errorMessage={this.state.emailError}
+                errorMessage={errors.email}
                 required={true}/>
             </div>
           </div>
@@ -441,35 +342,36 @@ class ManagerForm extends React.Component {
                 name="company_name"
                 iid="managerCompanyName"
                 label="Company name"
-                value={this.state.company_name}
-                change={this.setCompanyName}
-                errorMessage={this.state.companyNameError}
+                value={manager.company_name}
+                change={this.setValue.bind(this, 'company_name')}
+                errorMessage={errors.company_name}
                 required={true}
                 blur={this.checkCompanyName}/>
               <InputField
                 name="company_address"
                 iid="managerCompanyAddress"
                 label="Company address"
-                value={this.state.company_address}
-                change={this.setCompanyAddress}/>
+                value={manager.company_address}
+                change={this.setValue.bind(this, 'company_address')}/>
               <InputField
                 name="company_url"
                 iid="managerCompanyUrl"
                 label="Company URL"
-                value={this.state.company_url}
-                change={this.setCompanyUrl}/>
+                value={manager.company_url}
+                change={this.setValue.bind(this, 'company_url')}/>
               <label htmlFor="m-times-available">Times available</label>
               <textarea
                 id="m-times-available"
                 className="form-control"
                 name="times_available"
-                value={this.state.times_available}
-                onChange={this.setTimesAvailable}/>
+                value={manager.times_available}
+                onChange={this.setValue.bind(this, 'times_available')}/>
             </div>
           </div>
         </form>
       </div>
     )
+
     return <Modal
       body={managerForm}
       header="Create manager"
