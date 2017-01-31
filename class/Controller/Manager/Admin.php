@@ -49,16 +49,24 @@ class Admin extends User
         return parent::getHtml($request);
     }
 
-    public function savePostCommand(\Request $request)
+    protected function savePostCommand(\Request $request)
     {
         $json = $this->factory->adminPost($request);
         return $json;
     }
-    
-    public function deleteCommand(\Request $request)
+
+    protected function deleteCommand(\Request $request)
     {
         $json['success'] = $this->factory->delete($this->id);
         return $json;
     }
-    
+
+    protected function approvalHtmlCommand(\Request $request)
+    {
+        $json['admin'] = 1;
+        $json['managerList'] = $this->factory->unapprovedListing($request->pullGetVarIfSet('limit',
+                        true), $request->pullGetString('search', true));
+        return $json;
+    }
+
 }
