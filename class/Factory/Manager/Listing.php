@@ -39,23 +39,24 @@ class Listing
 
     public function get()
     {
+        $groups = array();
         $db = Database::getDB();
         $tbl = $db->addTable('prop_contacts');
-        
+
         if ($this->include_property_count) {
             $tbl2 = $db->addTable('properties');
             $tbl2->addField('id', 'property_count')->showCount();
         }
         if ($this->include_inquiry) {
             $tbl3 = $db->addTable('prop_inquiry');
-            $tbl3->addField('inquiry_date');
-            $tbl3->addField('inquiry_type');
+            $groups[] = $tbl3->addField('inquiry_date');
+            $groups[] = $tbl3->addField('inquiry_type');
         }
 
         $db->setLimit($this->limit);
 
         // avoiding the password field
-        $tbl->addField('id');
+        $groups[] = $tbl->addField('id');
         $tbl->addField('username');
         $tbl->addField('phone');
         $tbl->addField('email_address');
@@ -69,14 +70,17 @@ class Listing
         $tbl->addField('active');
         $tbl->addField('approved');
 
+
         if ($this->include_property_count) {
             $join_conditional = $db->createConditional($tbl->getField('id'),
                     $tbl2->getField('contact_id'));
             $db->joinResources($tbl, $tbl2, $join_conditional, 'left');
+            $groups[] = $tbl2->getField('id');
         }
-        
+
         if ($this->include_inquiry) {
-            $join_conditional2 = $db->createConditional($tbl->getField('id'), $tbl3->getField('contact_id'));
+            $join_conditional2 = $db->createConditional($tbl->getField('id'),
+                    $tbl3->getField('contact_id'));
             $db->joinResources($tbl, $tbl3, $join_conditional2, 'left');
         }
 
@@ -89,7 +93,7 @@ class Listing
         if ($this->approved !== null) {
             $tbl->addFieldConditional('approved', $this->approved);
         }
-        $db->setGroupBy($tbl->getField('id'));
+        $db->setGroupBy($groups);
         if ($this->orderby) {
             $tbl->addOrderBy($this->orderby, $this->orderby_dir);
         }
@@ -101,7 +105,7 @@ class Listing
             }
             foreach ($result as $manager) {
                 $listing[] = $manager->view($this->restricted);
-                }
+            }
             return $listing;
         } else {
             $result = $db->select();
