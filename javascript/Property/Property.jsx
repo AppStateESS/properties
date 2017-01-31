@@ -6,7 +6,7 @@ import Message from '../Mixin/Html/Message.jsx'
 import SearchBar from '../Mixin/List/SearchBar.jsx'
 import DecodeUrl from '../Mixin/Helper/DecodeUrl.js'
 import PropertyListing from './PropertyListing.jsx'
-import Place from '../Mixin/Edit/Base.jsx'
+import Base from '../Mixin/List/Base.jsx'
 
 
 /* global $ */
@@ -24,8 +24,6 @@ export default class Property extends Base {
     this.managerId = 0
     bindMethods([
       'load',
-      'resetConditions',
-
     ], this)
   }
 
