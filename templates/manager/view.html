@@ -15,7 +15,7 @@
         </tr>
         <tr>
             <th>Email</th>
-            <td><a href="mailto:<?$email_address?>"><?=$email_address?></a></td>
+            <td><a href="mailto:<?=$email_address?>"><?=$email_address?></a></td>
         </tr>
         <tr>
             <th>Address</th>
@@ -33,5 +33,11 @@
             <th>Number of properties</th>
             <td><a href="./properties/Property/list?managerId=<?=$id?>"><?=$property_count?></a></td>
         </tr>
+        <?php if (isset($last_log)):?>
+        <tr>
+            <th>Last logged</th>
+            <td><?=$last_log_date?></td>
+        </tr>
+        <?php endif; ?>
     </tbody>
 </table>
