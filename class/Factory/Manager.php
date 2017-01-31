@@ -45,9 +45,6 @@ class Manager extends Base
 
     public function unapprovedListing($limit = 100, $search = null)
     {
-        if (!$this->role->isAdmin()) {
-            throw new PrivilegeMissing;
-        }
         $listing = new Manager\Listing;
         $listing->limit = $limit;
         $listing->active = null;
@@ -561,5 +558,26 @@ class Manager extends Base
         $template->setModuleTemplate('properties', 'manager/view.html');
         return $template->get();
     }
+    
+     public function signup(\Request $request)
+    {
+        $manager = $this->loadResourceFromPost($request);
+        // if array, there were problems
+        if (is_array($manager)) {
+            return $manager;
+        }
+
+        try {
+            $manager->active = false;
+            $manager->approved = false;
+            $this->saveResource($manager);
+        } catch (\Exception $e) {
+            \phpws2\Error::log($e);
+            $json = array('status' => 'fail', 'error' => 'An unrecoverable error occurred.');
+        }
+        $json = array('status' => 'success');
+        return $json;
+    }
+    
 
 }
