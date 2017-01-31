@@ -34,10 +34,6 @@
     overflow: auto;
 }
 
-.required {
-    color : red;
-}
-
 .property-form div.row:nth-child(odd) {
     background-color : #d9edf7;
 }
