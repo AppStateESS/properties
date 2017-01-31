@@ -19,6 +19,7 @@
 namespace properties\Controller;
 
 use properties\Exception\BadCommand;
+use properties\Factory\NavBar;
 use \phpws2\Database;
 
 abstract class SubController extends Base
@@ -202,7 +203,7 @@ abstract class SubController extends Base
             return;
         }
         $label = ($needApproval == 1) ? "$needApproval manager needs approval" : "$needApproval managers need approval";
-        $link = "<button onClick=\"window.location.href='./properties/ManagerApproval'\" class=\"btn btn-default navbar-btn\">$label</button>";
+        $link = "<button onClick=\"window.location.href='./properties/Manager/approval'\" class=\"btn btn-default navbar-btn\">$label</button>";
         NavBar::addItem($link);
     }
     
