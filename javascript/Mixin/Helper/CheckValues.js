@@ -1,13 +1,19 @@
 class CheckValues {
   static isEmpty(value) {
-    return value === '' || value === null
+    return value === '' || value === null || typeof value === undefined
   }
 
   static isEmail(value) {
+    if (this.isEmpty(value)) {
+      return false
+    }
     return value.match(/^[\w.%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/i)
   }
 
   static isPhone(value) {
+    if (this.isEmpty(value)) {
+      return false
+    }
     return (value.replace(/[^\d]/g, '').length == 10)
   }
 
