@@ -35,4 +35,16 @@ class Manager extends User
         return parent::getHtml($request);
     }
 
+    protected function createHtmlCommand(\Request $request)
+    {
+        \Layout::addStyle('properties', 'property/form.css');
+        return $this->factory->edit(0, $this->getCurrentLoggedManager());
+    }
+
+    protected function editHtmlCommand(\Request $request)
+    {
+        \Layout::addStyle('properties', 'property/form.css');
+        return $this->factory->edit($this->id);
+    }
+
 }
