@@ -41,17 +41,17 @@ class Photo extends Base
     public function __construct()
     {
         parent::__construct();
-        $this->cid = new \phpws2\Variable\Integer(0, 'cid');
-        $this->width = new \phpws2\Variable\Integer(0, 'width');
+        $this->cid = new \phpws2\Variable\IntegerVar(0, 'cid');
+        $this->width = new \phpws2\Variable\IntegerVar(0, 'width');
         $this->width->setRange(5);
-        $this->height = new \phpws2\Variable\Integer(0, 'height');
+        $this->height = new \phpws2\Variable\IntegerVar(0, 'height');
         $this->height->setRange(5);
-        $this->pid = new \phpws2\Variable\Integer(0, 'pid');
-        $this->path = new \phpws2\Variable\File(null, 'path');
+        $this->pid = new \phpws2\Variable\IntegerVar(0, 'pid');
+        $this->path = new \phpws2\Variable\FileVar(null, 'path');
         $this->path->setLimit(255);
-        $this->title = new \phpws2\Variable\CanopyString(null, 'title');
+        $this->title = new \phpws2\Variable\StringVar(null, 'title');
         $this->title->setLimit(255);
-        $this->main_pic = new \phpws2\Variable\Boolean(false, 'main_pic');
+        $this->main_pic = new \phpws2\Variable\BooleanVar(false, 'main_pic');
         
     }
     

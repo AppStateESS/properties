@@ -43,7 +43,7 @@ class Listing extends \properties\Factory\Listing
         $this->photo_table->addField('path', 'thumbnail');
     }
 
-    public function pullVariables(\Request $request)
+    public function pullVariables(\Canopy\Request $request)
     {
         parent::pullVariables($request);
         $this->manager_id = $request->pullGetInteger('managerId', true);

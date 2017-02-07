@@ -29,7 +29,7 @@ class Sublease extends Base
         return new Resource;
     }
 
-    public function listing(\Request $request)
+    public function listing(\Canopy\Request $request)
     {
         $listing = new Sublease\Listing();
         $listing->pullVariables($request);
@@ -53,7 +53,7 @@ class Sublease extends Base
         return $sublease;
     }
 
-    public function post(\Request $request, $user_id)
+    public function post(\Canopy\Request $request, $user_id)
     {
         $r = new Resource;
         $r->user_id = $user_id;
@@ -93,7 +93,7 @@ class Sublease extends Base
         return $template->get();
     }
 
-    public function put(\Request $request, $user_id)
+    public function put(\Canopy\Request $request, $user_id)
     {
         $r = $this->getSubleaseByUser($user_id);
         try {

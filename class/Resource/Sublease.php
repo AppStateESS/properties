@@ -29,7 +29,7 @@ class Sublease extends Place
     protected $landlord_perm;
     protected $move_out_date;
     protected $user_id;
-    protected $table = 'prop_sublease_test';
+    protected $table = 'prop_sublease';
 
     public function __construct()
     {
@@ -40,9 +40,9 @@ class Sublease extends Place
         $this->contact_phone->allowEmpty(false);
         $this->contact_phone->formatNumber(true);
         $this->contact_email = new Variable\Email(null, 'contact_email');
-        $this->landlord_perm = new Variable\Boolean(false, 'landlord_perm');
-        $this->move_out_date = new Variable\Date(0, 'move_out_date');
-        $this->user_id = new Variable\Integer(0, 'user_id');
+        $this->landlord_perm = new Variable\BooleanVar(false, 'landlord_perm');
+        $this->move_out_date = new Variable\DateVar(0, 'move_out_date');
+        $this->user_id = new Variable\IntegerVar(0, 'user_id');
     }
 
     public function view()

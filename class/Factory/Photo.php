@@ -128,7 +128,7 @@ class Photo extends Base
         return preg_replace('/[\W_]{1,}/', '', $file_name2);
     }
 
-    public function post(\Request $request)
+    public function post(\Canopy\Request $request)
     {
         if (!isset($_FILES) || empty($_FILES)) {
             return array('error' => 'No files uploaded');

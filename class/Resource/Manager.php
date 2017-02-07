@@ -29,6 +29,8 @@ class Manager extends Base
     protected $property_count;
     protected $inquiry_date;
     protected $inquiry_type;
+    protected $pw_timeout;
+    protected $pw_hash;
     protected $table = 'prop_contacts';
 
     public function __construct()
@@ -59,15 +61,18 @@ class Manager extends Base
         $this->company_url->allowNull(true);
         $this->times_available = new Variable\TextOnly(null, 'times_available');
         $this->times_available->allowNull(true);
-        $this->last_log = new Variable\Integer(time(), 'last_log');
-        $this->active = new Variable\Boolean(0, 'active');
-        $this->private = new Variable\Boolean(0, 'private');
-        $this->approved = new Variable\Boolean(0, 'approved');
-        $this->property_count = new Variable\Integer(0, 'properties_count');
+        $this->last_log = new Variable\IntegerVar(time(), 'last_log');
+        $this->active = new Variable\BooleanVar(0, 'active');
+        $this->private = new Variable\BooleanVar(0, 'private');
+        $this->approved = new Variable\BooleanVar(0, 'approved');
+        $this->property_count = new Variable\IntegerVar(0, 'properties_count');
         $this->property_count->setIsTableColumn(false);
-
-        $this->inquiry_date = new Variable\Integer(0, 'inquiry_date');
+        $this->inquiry_date = new Variable\IntegerVar(0, 'inquiry_date');
         $this->inquiry_type = new Variable\Attribute(null, 'inquiry_type');
+        $this->inquiry_type->allowNull(true);
+        $this->pw_timeout = new Variable\IntegerVar(0, 'pw_timeout');
+        $this->pw_hash = new Variable\String(null, 'pw_hash');
+        
         $this->doNotSave(array('inquiry_date', 'inquiry_type'));
     }
 

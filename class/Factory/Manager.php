@@ -66,7 +66,7 @@ class Manager extends Base
      * Administrative post of the manager
      * @return string
      */
-    public function adminPost(\Request $request)
+    public function adminPost(\Canopy\Request $request)
     {
         $manager = $this->loadResourceFromPost($request);
         // if array, there were problems
@@ -256,7 +256,7 @@ class Manager extends Base
 
     private function sendEmail($manager, $email_template)
     {
-        $vars = $manager->view(true);
+        $vars = $manager->view(false);
         $vars = array_merge($this->contactInformation(), $vars);
         $template = new \phpws2\Template($vars);
         $template->setModuleTemplate('properties', "emails/$email_template");
@@ -264,7 +264,6 @@ class Manager extends Base
 
         $contact_info = $this->contactInformation();
 
-        $email_address = $manager->email_address;
         $transport = \Swift_MailTransport::newInstance();
         //$transport = \Swift_SendmailTransport::newInstance();
 
@@ -280,7 +279,7 @@ class Manager extends Base
     public function inquiry(Resource $manager, $inquiry_type)
     {
         $this->emailInquiry($manager, $inquiry_type);
-        InquiryFactory::save($manager->id, $inquiry_type);
+        $this->saveInquiry($manager->id, $inquiry_type);
     }
 
     /**
@@ -317,7 +316,7 @@ class Manager extends Base
         return $db->selectOneRow();
     }
 
-    protected function loadResourceFromPost(\Request $request)
+    protected function loadResourceFromPost(\Canopy\Request $request)
     {
         $errors = array();
         $r = new Resource;
@@ -558,8 +557,8 @@ class Manager extends Base
         $template->setModuleTemplate('properties', 'manager/view.html');
         return $template->get();
     }
-    
-     public function signup(\Request $request)
+
+    public function signup(\Canopy\Request $request)
     {
         $manager = $this->loadResourceFromPost($request);
         // if array, there were problems
@@ -578,6 +577,76 @@ class Manager extends Base
         $json = array('status' => 'success');
         return $json;
     }
+
+    protected function saveInquiry($manager_id, $type)
+    {
+        $db = Database::getDB();
+        $tbl = $db->addTable('prop_inquiry');
+        $tbl->addValue('contact_id', $manager_id);
+        $tbl->addValue('inquiry_date', time());
+        $tbl->addValue('inquiry_type', $type);
+        return $db->insert();
+    }
+
+    public function forgotForm()
+    {
+        $template = new \phpws2\Template;
+        $template->setModuleTemplate('properties', 'manager/forgot.html');
+        return $template->get();
+    }
+
+    public function forgotPost(\Canopy\Request $request)
+    {
+        $email_address = $request->pullPostString('email');
+        $manager = $this->getManagerByEmail($email_address);
+        if ($manager === null) {
+            return 'oh snap';
+        }
+        $this->sendForgotEmail($manager);
+    }
+
+    public function getManagerByEmail($email_address)
+    {
+        $manager = $this->build();
+        $db = \phpws2\Database::getDB();
+        $tbl = $db->addTable('prop_contacts');
+        $tbl->addFieldConditional('email_address', $email_address);
+        $db->selectInto($manager);
+        if ($manager->id) {
+            return $manager;
+        } else {
+            return null;
+        }
+    }
     
+    private function sendForgotEmail(Resource $manager)
+    {
+        if (!$manager->id) {
+            throw new \Exception('Empty manager');
+        }
+        // Start the email template with contact information
+        $tpl = array_merge($manager->getStringVars(), $this->contactInformation());
+        $hash = md5(randomString(12));
+        $link = \Server::getCurrentUrl(false) . '/changepw/' . $hash;
+        
+        $tpl['reset_link'] = $link;
+        
+        $tpl['timeout'] = strftime('%B %e, %Y at %l:%M%P', time() + 86400);
+        
+        $template = new \phpws2\Template($tpl);
+        $template->setModuleTemplate('properties', 'emails/forgot.html');
+        $content = $template->get();
+        echo $content;
+        /*
+        $message = \Swift_Message::newInstance();
+        $message->setSubject('Property manager password request');
+        $message->setFrom($contact_info);
+        $message->setTo($email_address);
+        $message->setBody($content, 'text/html');
+        $mailer = \Swift_Mailer::newInstance($transport);
+        $mailer->send($message);
+         * 
+         */
+    }
 
 }

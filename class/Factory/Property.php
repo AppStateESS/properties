@@ -56,14 +56,14 @@ class Property extends Base
         $property->delete();
     }
 
-    public function listing(\Request $request, $view = false)
+    public function listing(\Canopy\Request $request, $view = false)
     {
         $listing = new Property\Listing();
         $listing->pullVariables($request);
         return $listing->get($view);
     }
 
-    public function post(\Request $request)
+    public function post(\Canopy\Request $request)
     {
         $errors = array();
         $r = new Resource;
@@ -86,7 +86,7 @@ class Property extends Base
         }
     }
     
-    public function put(\Request $request)
+    public function put(\Canopy\Request $request)
     {
         $errors = array();
         $r = new Resource;

@@ -60,7 +60,7 @@ class Listing
         $this->sublease_table = $this->db->addTable('prop_sublease');
     }
 
-    public function pullVariables(\Request $request)
+    public function pullVariables(\Canopy\Request $request)
     {
         $this->search_string = $request->pullGetString('search', true);
         $this->limit = $request->pullGetInteger('limit', true);
