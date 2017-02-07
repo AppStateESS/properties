@@ -42,14 +42,14 @@ class Base extends \phpws2\Http\Controller
     public function htmlResponse($content)
     {
         $view = new \phpws2\View\HtmlView($content);
-        $response = new \Response($view);
+        $response = new \Canopy\Response($view);
         return $response;
     }
 
     public function jsonResponse($json)
     {
         $view = new \phpws2\View\JsonView($json);
-        $response = new \Response($view);
+        $response = new \Canopy\Response($view);
         return $response;
     }
 

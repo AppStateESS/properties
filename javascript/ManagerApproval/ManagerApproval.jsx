@@ -74,7 +74,15 @@ export default class ManagerApproval extends React.Component {
   }
 
   approve(managerId, key) {
-    $.ajax({url: `./properties/ManagerAdmin/${managerId}/approve`, dataType: 'json', type: 'patch'}).done(function (data) {
+    $.ajax({
+      url: './properties/Manager/' + managerId,
+      data: {
+        varname: 'approved',
+        value: true
+      },
+      dataType: 'json',
+      type: 'patch'
+    }).done(function (data) {
       if (data.success) {
         this.removeManager(key)
         this.setMessage('Manager approved', 'success')
@@ -91,6 +99,9 @@ export default class ManagerApproval extends React.Component {
   {
     let managers = this.state.managers
     delete(managers[key])
+    if (managers.length === 0) {
+      managers = null
+    }
     this.setState({managers: managers})
   }
 
@@ -109,8 +120,9 @@ export default class ManagerApproval extends React.Component {
   inquiryType(e) {
     const type = e.target.dataset.inquiryType
     $.ajax({
-      url: `./properties/ManagerAdmin/${this.currentManager.id}/inquiry/`,
+      url: `./properties/Manager/inquiry/`,
       data: {
+        managerId: this.currentManager.id,
         inquiryType: type
       },
       dataType: 'json',
@@ -128,8 +140,9 @@ export default class ManagerApproval extends React.Component {
   refuseReason(e) {
     const reason = e.target.dataset.reason
     $.ajax({
-      url: `./properties/ManagerAdmin/${this.currentManager.id}/refuse/`,
+      url: './properties/Manager/refuse',
       data: {
+        managerId: this.currentManager.id,
         reason: reason
       },
       dataType: 'json',

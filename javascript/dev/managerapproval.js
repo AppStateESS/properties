@@ -465,7 +465,15 @@ webpackJsonp([1],{
 	  }, {
 	    key: 'approve',
 	    value: function approve(managerId, key) {
-	      $.ajax({ url: './properties/ManagerAdmin/' + managerId + '/approve', dataType: 'json', type: 'patch' }).done(function (data) {
+	      $.ajax({
+	        url: './properties/Manager/' + managerId,
+	        data: {
+	          varname: 'approved',
+	          value: true
+	        },
+	        dataType: 'json',
+	        type: 'patch'
+	      }).done(function (data) {
 	        if (data.success) {
 	          this.removeManager(key);
 	          this.setMessage('Manager approved', 'success');
@@ -482,6 +490,9 @@ webpackJsonp([1],{
 	    value: function removeManager(key) {
 	      var managers = this.state.managers;
 	      delete managers[key];
+	      if (managers.length === 0) {
+	        managers = null;
+	      }
 	      this.setState({ managers: managers });
 	    }
 	  }, {
@@ -503,8 +514,9 @@ webpackJsonp([1],{
 	    value: function inquiryType(e) {
 	      var type = e.target.dataset.inquiryType;
 	      $.ajax({
-	        url: './properties/ManagerAdmin/' + this.currentManager.id + '/inquiry/',
+	        url: './properties/Manager/inquiry/',
 	        data: {
+	          managerId: this.currentManager.id,
 	          inquiryType: type
 	        },
 	        dataType: 'json',
@@ -523,8 +535,9 @@ webpackJsonp([1],{
 	    value: function refuseReason(e) {
 	      var reason = e.target.dataset.reason;
 	      $.ajax({
-	        url: './properties/ManagerAdmin/' + this.currentManager.id + '/refuse/',
+	        url: './properties/Manager/refuse',
 	        data: {
+	          managerId: this.currentManager.id,
 	          reason: reason
 	        },
 	        dataType: 'json',

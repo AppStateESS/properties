@@ -16,7 +16,7 @@ webpackJsonp([9],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _Sublease = __webpack_require__(/*! ./Sublease.jsx */ 416);
+	var _Sublease = __webpack_require__(/*! ./Sublease.jsx */ 418);
 	
 	var _Sublease2 = _interopRequireDefault(_Sublease);
 	
@@ -1945,358 +1945,7 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 416:
-/*!******************************************!*\
-  !*** ./javascript/Sublease/Sublease.jsx ***!
-  \******************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _Bind = __webpack_require__(/*! ../Mixin/Helper/Bind.js */ 183);
-	
-	var _Bind2 = _interopRequireDefault(_Bind);
-	
-	var _Listing = __webpack_require__(/*! ./Listing.jsx */ 417);
-	
-	var _Listing2 = _interopRequireDefault(_Listing);
-	
-	var _SearchBar = __webpack_require__(/*! ../Mixin/List/SearchBar.jsx */ 204);
-	
-	var _SearchBar2 = _interopRequireDefault(_SearchBar);
-	
-	var _Base = __webpack_require__(/*! ../Mixin/List/Base.jsx */ 419);
-	
-	var _Base2 = _interopRequireDefault(_Base);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	//import empty from '../Mixin/Empty.js'
-	
-	//import DecodeUrl from '../Mixin/DecodeUrl.js'
-	//import setIfDefined from '../Mixin/setIfDefined.js'
-	
-	
-	/* global $ */
-	
-	var Property = function (_Place) {
-	  _inherits(Property, _Place);
-	
-	  function Property(props) {
-	    _classCallCheck(this, Property);
-	
-	    var _this = _possibleConstructorReturn(this, (Property.__proto__ || Object.getPrototypeOf(Property)).call(this, props));
-	
-	    _this.state = {
-	      subleases: null
-	    };
-	    (0, _Bind2.default)(['load'], _this);
-	    return _this;
-	  }
-	
-	  _createClass(Property, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.load();
-	    }
-	  }, {
-	    key: 'load',
-	    value: function load() {
-	      $.getJSON('./properties/Sublease/list', {}).done(function (data) {
-	        this.setState({ subleases: data.subleases });
-	      }.bind(this));
-	    }
-	  }, {
-	    key: 'updateLink',
-	    value: function updateLink() {
-	      var stateObj = {};
-	      var url = 'properties/Sublease/list/?' + $.param(this.searchVars);
-	
-	      window.history.pushState(stateObj, "", url);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'sublease-list' },
-	        _react2.default.createElement(
-	          'h2',
-	          null,
-	          'Subleases'
-	        ),
-	        _react2.default.createElement(_SearchBar2.default, {
-	          updateSearchString: this.updateSearchString,
-	          clear: this.clearSearch,
-	          updateSearchVars: this.updateSearchVars,
-	          searchVars: this.searchVars,
-	          clearAmenities: this.clearAmenities,
-	          resetConditions: this.resetConditions,
-	          toggle: this.toggle }),
-	        _react2.default.createElement(_Listing2.default, { subleases: this.state.subleases })
-	      );
-	    }
-	  }]);
-	
-	  return Property;
-	}(_Base2.default);
-	
-	exports.default = Property;
-
-/***/ },
-
-/***/ 417:
-/*!*****************************************!*\
-  !*** ./javascript/Sublease/Listing.jsx ***!
-  \*****************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _Waiting = __webpack_require__(/*! ../Mixin/Html/Waiting.jsx */ 182);
-	
-	var _Waiting2 = _interopRequireDefault(_Waiting);
-	
-	var _SubleaseRow = __webpack_require__(/*! ./SubleaseRow.jsx */ 418);
-	
-	var _SubleaseRow2 = _interopRequireDefault(_SubleaseRow);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Listing = function (_React$Component) {
-	  _inherits(Listing, _React$Component);
-	
-	  function Listing(props) {
-	    _classCallCheck(this, Listing);
-	
-	    var _this = _possibleConstructorReturn(this, (Listing.__proto__ || Object.getPrototypeOf(Listing)).call(this, props));
-	
-	    _this.state = {};
-	    return _this;
-	  }
-	
-	  _createClass(Listing, [{
-	    key: 'render',
-	    value: function render() {
-	
-	      var list = this.props.subleases;
-	      if (list === null) {
-	        return _react2.default.createElement(_Waiting2.default, { label: 'subleases' });
-	      } else if (list.length === 0) {
-	        if (this.props.search === true) {
-	          return _react2.default.createElement(
-	            'div',
-	            { className: 'lead' },
-	            'No subleases found. Try a different search?'
-	          );
-	        } else {
-	          return _react2.default.createElement(
-	            'div',
-	            { className: 'lead' },
-	            'No subleases found.'
-	          );
-	        }
-	      } else {
-	        var rows = void 0;
-	        rows = list.map(function (value, key) {
-	          return _react2.default.createElement(_SubleaseRow2.default, { sublease: value, key: key });
-	        }.bind(this));
-	        return _react2.default.createElement(
-	          'div',
-	          null,
-	          rows
-	        );
-	      }
-	    }
-	  }]);
-	
-	  return Listing;
-	}(_react2.default.Component);
-	
-	exports.default = Listing;
-	
-	
-	Listing.propTypes = {
-	  subleases: _react2.default.PropTypes.array,
-	  search: _react2.default.PropTypes.bool
-	};
-
-/***/ },
-
-/***/ 418:
-/*!*********************************************!*\
-  !*** ./javascript/Sublease/SubleaseRow.jsx ***!
-  \*********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _Row2 = __webpack_require__(/*! ../Mixin/List/Row.jsx */ 192);
-	
-	var _Row3 = _interopRequireDefault(_Row2);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var SubleaseRow = function (_Row) {
-	  _inherits(SubleaseRow, _Row);
-	
-	  function SubleaseRow(props) {
-	    _classCallCheck(this, SubleaseRow);
-	
-	    var _this = _possibleConstructorReturn(this, (SubleaseRow.__proto__ || Object.getPrototypeOf(SubleaseRow)).call(this, props));
-	
-	    _this.state = {};
-	    return _this;
-	  }
-	
-	  _createClass(SubleaseRow, [{
-	    key: 'getRent',
-	    value: function getRent() {
-	      var rent = '$' + this.props.sublease.monthly_rent;
-	      if (this.props.sublease.lease_type === '1') {
-	        return rent.concat(' share of rent');
-	      } else {
-	        return rent.concat(' for unit');
-	      }
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var sublease = this.props.sublease;
-	
-	      var link = './properties/Sublease/' + sublease.id + '/' + this.urlTitle(sublease.name);
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'row sublease-row' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'title' },
-	          _react2.default.createElement(
-	            'a',
-	            { href: link },
-	            sublease.name
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'col-sm-4' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'rent' },
-	            this.getRent()
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'room-bath' },
-	            sublease.proptype,
-	            '\xA0 - ',
-	            sublease.bedroom_no,
-	            '\xA0Bed, ',
-	            sublease.bathroom_no,
-	            '\xA0Bath'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'col-sm-4' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'availability' },
-	            _react2.default.createElement(
-	              'strong',
-	              null,
-	              'Availability:'
-	            ),
-	            ' ',
-	            sublease.move_in_date
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'end-date' },
-	            _react2.default.createElement(
-	              'strong',
-	              null,
-	              'Sublease end date:'
-	            ),
-	            ' ',
-	            sublease.move_out_date
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'col-sm-4' },
-	          this.petsAllowed(sublease.pets_allowed),
-	          this.furnished(sublease.furnished),
-	          this.airconditioner(sublease.airconditioning),
-	          this.dishwasher(sublease.dishwasher),
-	          this.utilities(sublease.utilities_inc),
-	          this.appalcart(sublease.appalcart),
-	          this.washer(sublease.washer)
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return SubleaseRow;
-	}(Row);
-	
-	exports.default = SubleaseRow;
-	
-	
-	SubleaseRow.propTypes = {
-	  sublease: _react2.default.PropTypes.object
-	};
-
-/***/ },
-
-/***/ 419:
+/***/ 214:
 /*!****************************************!*\
   !*** ./javascript/Mixin/List/Base.jsx ***!
   \****************************************/
@@ -2322,7 +1971,7 @@ webpackJsonp([9],{
 	
 	var _DecodeUrl2 = _interopRequireDefault(_DecodeUrl);
 	
-	var _setIfDefined = __webpack_require__(/*! ../Helper/setIfDefined.js */ 420);
+	var _setIfDefined = __webpack_require__(/*! ../Helper/setIfDefined.js */ 215);
 	
 	var _setIfDefined2 = _interopRequireDefault(_setIfDefined);
 	
@@ -2459,7 +2108,7 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 420:
+/***/ 215:
 /*!*************************************************!*\
   !*** ./javascript/Mixin/Helper/setIfDefined.js ***!
   \*************************************************/
@@ -2489,6 +2138,357 @@ webpackJsonp([9],{
 	    }
 	  }
 	}
+
+/***/ },
+
+/***/ 418:
+/*!******************************************!*\
+  !*** ./javascript/Sublease/Sublease.jsx ***!
+  \******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Bind = __webpack_require__(/*! ../Mixin/Helper/Bind.js */ 183);
+	
+	var _Bind2 = _interopRequireDefault(_Bind);
+	
+	var _Listing = __webpack_require__(/*! ./Listing.jsx */ 419);
+	
+	var _Listing2 = _interopRequireDefault(_Listing);
+	
+	var _SearchBar = __webpack_require__(/*! ../Mixin/List/SearchBar.jsx */ 204);
+	
+	var _SearchBar2 = _interopRequireDefault(_SearchBar);
+	
+	var _Base = __webpack_require__(/*! ../Mixin/List/Base.jsx */ 214);
+	
+	var _Base2 = _interopRequireDefault(_Base);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	//import empty from '../Mixin/Empty.js'
+	
+	//import DecodeUrl from '../Mixin/DecodeUrl.js'
+	//import setIfDefined from '../Mixin/setIfDefined.js'
+	
+	
+	/* global $ */
+	
+	var Property = function (_Place) {
+	  _inherits(Property, _Place);
+	
+	  function Property(props) {
+	    _classCallCheck(this, Property);
+	
+	    var _this = _possibleConstructorReturn(this, (Property.__proto__ || Object.getPrototypeOf(Property)).call(this, props));
+	
+	    _this.state = {
+	      subleases: null
+	    };
+	    (0, _Bind2.default)(['load'], _this);
+	    return _this;
+	  }
+	
+	  _createClass(Property, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.load();
+	    }
+	  }, {
+	    key: 'load',
+	    value: function load() {
+	      $.getJSON('./properties/Sublease/list', {}).done(function (data) {
+	        this.setState({ subleases: data.subleases });
+	      }.bind(this));
+	    }
+	  }, {
+	    key: 'updateLink',
+	    value: function updateLink() {
+	      var stateObj = {};
+	      var url = 'properties/Sublease/list/?' + $.param(this.searchVars);
+	
+	      window.history.pushState(stateObj, "", url);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'sublease-list' },
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Subleases'
+	        ),
+	        _react2.default.createElement(_SearchBar2.default, {
+	          updateSearchString: this.updateSearchString,
+	          clear: this.clearSearch,
+	          updateSearchVars: this.updateSearchVars,
+	          searchVars: this.searchVars,
+	          clearAmenities: this.clearAmenities,
+	          resetConditions: this.resetConditions,
+	          toggle: this.toggle }),
+	        _react2.default.createElement(_Listing2.default, { subleases: this.state.subleases })
+	      );
+	    }
+	  }]);
+	
+	  return Property;
+	}(_Base2.default);
+	
+	exports.default = Property;
+
+/***/ },
+
+/***/ 419:
+/*!*****************************************!*\
+  !*** ./javascript/Sublease/Listing.jsx ***!
+  \*****************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Waiting = __webpack_require__(/*! ../Mixin/Html/Waiting.jsx */ 182);
+	
+	var _Waiting2 = _interopRequireDefault(_Waiting);
+	
+	var _SubleaseRow = __webpack_require__(/*! ./SubleaseRow.jsx */ 420);
+	
+	var _SubleaseRow2 = _interopRequireDefault(_SubleaseRow);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Listing = function (_React$Component) {
+	  _inherits(Listing, _React$Component);
+	
+	  function Listing(props) {
+	    _classCallCheck(this, Listing);
+	
+	    var _this = _possibleConstructorReturn(this, (Listing.__proto__ || Object.getPrototypeOf(Listing)).call(this, props));
+	
+	    _this.state = {};
+	    return _this;
+	  }
+	
+	  _createClass(Listing, [{
+	    key: 'render',
+	    value: function render() {
+	
+	      var list = this.props.subleases;
+	      if (list === null) {
+	        return _react2.default.createElement(_Waiting2.default, { label: 'subleases' });
+	      } else if (list.length === 0) {
+	        if (this.props.search === true) {
+	          return _react2.default.createElement(
+	            'div',
+	            { className: 'lead' },
+	            'No subleases found. Try a different search?'
+	          );
+	        } else {
+	          return _react2.default.createElement(
+	            'div',
+	            { className: 'lead' },
+	            'No subleases found.'
+	          );
+	        }
+	      } else {
+	        var rows = void 0;
+	        rows = list.map(function (value, key) {
+	          return _react2.default.createElement(_SubleaseRow2.default, { sublease: value, key: key });
+	        }.bind(this));
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          rows
+	        );
+	      }
+	    }
+	  }]);
+	
+	  return Listing;
+	}(_react2.default.Component);
+	
+	exports.default = Listing;
+	
+	
+	Listing.propTypes = {
+	  subleases: _react2.default.PropTypes.array,
+	  search: _react2.default.PropTypes.bool
+	};
+
+/***/ },
+
+/***/ 420:
+/*!*********************************************!*\
+  !*** ./javascript/Sublease/SubleaseRow.jsx ***!
+  \*********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Row2 = __webpack_require__(/*! ../Mixin/List/Row.jsx */ 192);
+	
+	var _Row3 = _interopRequireDefault(_Row2);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var SubleaseRow = function (_Row) {
+	  _inherits(SubleaseRow, _Row);
+	
+	  function SubleaseRow(props) {
+	    _classCallCheck(this, SubleaseRow);
+	
+	    var _this = _possibleConstructorReturn(this, (SubleaseRow.__proto__ || Object.getPrototypeOf(SubleaseRow)).call(this, props));
+	
+	    _this.state = {};
+	    return _this;
+	  }
+	
+	  _createClass(SubleaseRow, [{
+	    key: 'getRent',
+	    value: function getRent() {
+	      var rent = '$' + this.props.sublease.monthly_rent;
+	      if (this.props.sublease.lease_type === '1') {
+	        return rent.concat(' share of rent');
+	      } else {
+	        return rent.concat(' for unit');
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var sublease = this.props.sublease;
+	
+	      var link = './properties/Sublease/' + sublease.id + '/' + this.urlTitle(sublease.name);
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'row sublease-row' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'title' },
+	          _react2.default.createElement(
+	            'a',
+	            { href: link },
+	            sublease.name
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-4' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'rent' },
+	            this.getRent()
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'room-bath' },
+	            sublease.proptype,
+	            '\xA0 - ',
+	            sublease.bedroom_no,
+	            '\xA0Bed, ',
+	            sublease.bathroom_no,
+	            '\xA0Bath'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-4' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'availability' },
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              'Availability:'
+	            ),
+	            ' ',
+	            sublease.move_in_date
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'end-date' },
+	            _react2.default.createElement(
+	              'strong',
+	              null,
+	              'Sublease end date:'
+	            ),
+	            ' ',
+	            sublease.move_out_date
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'col-sm-4' },
+	          this.petsAllowed(sublease.pets_allowed),
+	          this.furnished(sublease.furnished),
+	          this.airconditioner(sublease.airconditioning),
+	          this.dishwasher(sublease.dishwasher),
+	          this.utilities(sublease.utilities_inc),
+	          this.appalcart(sublease.appalcart),
+	          this.washer(sublease.washer)
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return SubleaseRow;
+	}(_Row3.default);
+	
+	exports.default = SubleaseRow;
+	
+	
+	SubleaseRow.propTypes = {
+	  sublease: _react2.default.PropTypes.object
+	};
 
 /***/ }
 

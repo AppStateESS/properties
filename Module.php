@@ -16,7 +16,7 @@ require_once PHPWS_SOURCE_DIR . 'src/Module.php';
 require_once PHPWS_SOURCE_DIR . 'mod/properties/conf/system_defines.php';
 require_once PHPWS_SOURCE_DIR . 'mod/properties/conf/defines.php';
 
-class Module extends \Module
+class Module extends \Canopy\Module
 {
 
     public function __construct()
@@ -28,7 +28,7 @@ class Module extends \Module
         spl_autoload_register('\properties\Module::autoloader');
     }
 
-    public function getController(\Request $request)
+    public function getController(\Canopy\Request $request)
     {
         try {
             $controller = new Controller\Controller($this, $request);
@@ -47,14 +47,14 @@ class Module extends \Module
         return $error_controller;
     }
 
-    public function afterRun(\Request $request, \Response $response)
+    public function afterRun(\Canopy\Request $request, \Canopy\Response $response)
     {
         if ($request->isGet() && !$request->isAjax()) {
             \properties\Factory\NavBar::view();
         }
     }
 
-    public function runTime(\Request $request)
+    public function runTime(\Canopy\Request $request)
     {
         if (\phpws\PHPWS_Core::atHome()) {
             \Layout::add($this->home());

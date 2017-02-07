@@ -36,7 +36,7 @@ class FriendlyError extends \phpws2\Http\Controller
         $template->setModuleTemplate('properties', 'error.html');
         $template->add('message', PROPERTIES_FRIENDLY_MESSAGE);
         $view = new \phpws2\View\HtmlView($template->get());
-        $response = new \Response($view);
+        $response = new \Canopy\Response($view);
         return $response;
     }
 
