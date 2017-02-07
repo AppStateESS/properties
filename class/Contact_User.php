@@ -149,7 +149,7 @@ class Contact_User extends Base
 
     private function submitManagerApplication()
     {
-        $request = \Server::getCurrentRequest();
+        $request = \Canopy\Server::getCurrentRequest();
         $vars = $request->getVars();
 
         $username = $request->getVar('managerUsername');
@@ -445,7 +445,7 @@ EOF;
 
     private function checkEmail()
     {
-        $request = \Server::getCurrentRequest();
+        $request = \Canopy\Server::getCurrentRequest();
 
         if (!$request->isVar('email')) {
             throw new \Http\NotAcceptableException('No email address submitted');
@@ -467,7 +467,7 @@ EOF;
     
     private function checkUsername()
     {
-        $request = \Server::getCurrentRequest();
+        $request = \Canopy\Server::getCurrentRequest();
 
         if (!$request->isVar('username')) {
             throw new \Http\NotAcceptableException('No username submitted');
