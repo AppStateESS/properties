@@ -190,6 +190,7 @@ EOF;
                 $tbl->addDataType('inquiry_date', 'int');
                 $tbl->addDataType('inquiry_type', 'varchar')->setSize(20);
                 $tbl->create();
+                $db->commit();
             } catch (\Exception $ex) {
                 $db->rollback();
                 $content[] = 'Update failed: ' . $ex->getMessage();
@@ -213,7 +214,7 @@ EOF;
                 $sublease = new \properties\Resource\Sublease;
                 $sublease->createTable($db);
                 $sub_table = $db->buildTable($sublease->getTable());
-                
+                $db->commit();
             } catch (\Exception $ex) {
                 $db->rollback();
                 $content[] = 'Update failed: ' . $ex->getMessage();
@@ -222,6 +223,28 @@ EOF;
             $content[] = <<<EOF
 <pre>
 + Added smoking note.
+</pre>
+EOF;
+        case (version_compare($currentVersion, '2.0.3', '<')):
+            try {
+                $db = \phpws2\Database::getDB();
+                $db->begin();
+                $tbl = $db->addTable('prop_contacts');
+                $dt = $tbl->addDataType('pw_timeout', 'int');
+                $dt->setDefault(0);
+                $dt->add();
+                $dt2 = $tbl->addDataType('pw_hash', 'varchar(255)');
+                $dt2->setIsNull(true);
+                $dt2->add();
+                $db->commit();
+            } catch (\Exception $ex) {
+                $db->rollback();
+                $content[] = 'Update failed: ' . $ex->getMessage();
+                return false;
+            }
+            $content[] = <<<EOF
+<pre>
++ Inquiry feature added.
 </pre>
 EOF;
     }
