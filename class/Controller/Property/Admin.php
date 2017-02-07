@@ -23,25 +23,25 @@ use properties\Resource\Property as Resource;
 class Admin extends User
 {
 
-    protected function viewHtmlCommand(\Request $request)
+    protected function viewHtmlCommand(\Canopy\Request $request)
     {
         \Layout::addStyle('properties', 'property/view.css');
         return $this->factory->view($this->id, true);
     }
 
-    protected function editHtmlCommand(\Request $request)
+    protected function editHtmlCommand(\Canopy\Request $request)
     {
         \Layout::addStyle('properties', 'property/form.css');
         return $this->factory->edit($this->id);
     }
     
-    protected function createHtmlCommand(\Request $request)
+    protected function createHtmlCommand(\Canopy\Request $request)
     {
         \Layout::addStyle('properties', 'property/form.css');
         return $this->factory->edit(0, $request->pullGetInteger('managerId'));
     }
 
-    protected function savePostCommand(\Request $request)
+    protected function savePostCommand(\Canopy\Request $request)
     {
         try {
             return $this->factory->post($request);
@@ -50,7 +50,7 @@ class Admin extends User
         }
     }
 
-    protected function updatePutCommand(\Request $request)
+    protected function updatePutCommand(\Canopy\Request $request)
     {
         try {
             return $this->factory->put($request);
@@ -59,7 +59,7 @@ class Admin extends User
         }
     }
 
-    public function getHtml(\Request $request)
+    public function getHtml(\Canopy\Request $request)
     {
         $this->addApprovalLink();
         return parent::getHtml($request);

@@ -22,24 +22,24 @@ class Logged extends User
 {
 
     /**
-     * @param \Request $request
+     * @param \Canopy\Request $request
      */
-    public function createHtmlCommand(\Request $request)
+    public function createHtmlCommand(\Canopy\Request $request)
     {
         \Layout::addStyle('properties', 'sublease/form.css');
         return $this->factory->reactView('subleaseform');
     }
 
     /**
-     * @param \Request $request
+     * @param \Canopy\Request $request
      */
-    public function editHtmlCommand(\Request $request)
+    public function editHtmlCommand(\Canopy\Request $request)
     {
         \Layout::addStyle('properties', 'sublease/form.css');
         return $this->factory->reactView('subleaseform');
     }
 
-    public function listHtmlCommand(\Request $request)
+    public function listHtmlCommand(\Canopy\Request $request)
     {
         $sublease = $this->factory->getSubleaseByUser($this->role->getId());
         if ($sublease) {
@@ -65,7 +65,7 @@ class Logged extends User
         return $json;
     }
 
-    public function savePostCommand(\Request $request)
+    public function savePostCommand(\Canopy\Request $request)
     {
         try {
             return $this->factory->post($request, $this->role->getId());
@@ -74,7 +74,7 @@ class Logged extends User
         }
     }
 
-    public function updatePutCommand(\Request $request)
+    public function updatePutCommand(\Canopy\Request $request)
     {
         try {
             return $this->factory->put($request, $this->role->getId());
@@ -91,7 +91,7 @@ EOF;
         \properties\Factory\NavBar::addItem($button);
     }
 
-    public function viewHtmlCommand(\Request $request)
+    public function viewHtmlCommand(\Canopy\Request $request)
     {
         if ($this->factory->loggedIsOwner($this->id, $this->role->getId())) {
             $this->editButton();

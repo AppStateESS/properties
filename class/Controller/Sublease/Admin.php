@@ -21,9 +21,15 @@ namespace properties\Controller\Sublease;
 class Admin extends User
 {
 
-    public function createHtmlCommand(\Request $request)
+    public function createHtmlCommand(\Canopy\Request $request)
     {
         return '<p>Site admins may not create subleases.</p>';
+    }
+
+    public function listHtmlCommand(\Canopy\Request $request)
+    {
+        \Layout::addStyle('properties', 'sublease/list.css');
+        return $this->factory->reactView('sublease');
     }
 
 }

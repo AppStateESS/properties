@@ -21,7 +21,7 @@ namespace properties\Controller\Property;
 class Manager extends User
 {
 
-    protected function viewHtmlCommand(\Request $request)
+    protected function viewHtmlCommand(\Canopy\Request $request)
     {
         $property = $this->factory->load($this->id);
         $admin = $property->contact_id == $this->getCurrentLoggedManager();
@@ -29,19 +29,19 @@ class Manager extends User
         return $this->factory->view($property, $admin);
     }
 
-    public function getHtml(\Request $request)
+    public function getHtml(\Canopy\Request $request)
     {
         $this->managerButtons();
         return parent::getHtml($request);
     }
 
-    protected function createHtmlCommand(\Request $request)
+    protected function createHtmlCommand(\Canopy\Request $request)
     {
         \Layout::addStyle('properties', 'property/form.css');
         return $this->factory->edit(0, $this->getCurrentLoggedManager());
     }
 
-    protected function editHtmlCommand(\Request $request)
+    protected function editHtmlCommand(\Canopy\Request $request)
     {
         \Layout::addStyle('properties', 'property/form.css');
         return $this->factory->edit($this->id);

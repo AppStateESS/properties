@@ -22,7 +22,7 @@ define('PROPERTIES_FRIENDLY_MESSAGE', 'Server error. Could not complete action')
 
 class FriendlyError extends \phpws2\Http\Controller
 {
-    public function execute(\Request $request)
+    public function execute(\Canopy\Request $request)
     {
         if ($request->isAjax()) {
             throw new \Exception(PROPERTIES_FRIENDLY_MESSAGE);
@@ -30,7 +30,7 @@ class FriendlyError extends \phpws2\Http\Controller
         parent::execute($request);
     }
     
-    public function get(\Request $request)
+    public function get(\Canopy\Request $request)
     {
         $template = new \phpws2\Template();
         $template->setModuleTemplate('properties', 'error.html');

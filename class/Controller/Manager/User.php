@@ -33,18 +33,18 @@ class User extends \properties\Controller\SubController
         return $factory;
     }
 
-    protected function signinHtmlCommand(\Request $request)
+    protected function signinHtmlCommand(\Canopy\Request $request)
     {
         return $this->factory->reactView('managersignin');
     }
 
-    protected function listHtmlCommand(\Request $request)
+    protected function listHtmlCommand(\Canopy\Request $request)
     {
         \Layout::addStyle('properties', 'manager/list.css');
         return $this->factory->reactView('manager');
     }
 
-    protected function listJsonCommand(\Request $request)
+    protected function listJsonCommand(\Canopy\Request $request)
     {
         $json['admin'] = false;
         $json['managerList'] = $this->factory->approvedListing($request->pullGetVarIfSet('limit',
@@ -52,7 +52,7 @@ class User extends \properties\Controller\SubController
         return $json;
     }
 
-    protected function signinPostCommand(\Request $request)
+    protected function signinPostCommand(\Canopy\Request $request)
     {
         $username = $request->pullPostString('manager_username');
         $password = $request->pullPostString('manager_password');
@@ -70,55 +70,65 @@ class User extends \properties\Controller\SubController
     }
 
     /**
-     * @param \Request $request
+     * @param \Canopy\Request $request
      * @return string
      */
-    protected function desktopHtmlCommand(\Request $request)
+    protected function desktopHtmlCommand(\Canopy\Request $request)
     {
         return $this->factory->reactView('managersignin');
     }
     
     /**
-     * @param \Request $request
+     * @param \Canopy\Request $request
      * @return string
      */
-    protected function viewHtmlCommand(\Request $request)
+    protected function viewHtmlCommand(\Canopy\Request $request)
     {
         return $this->factory->view($this->id, true);
     }
     
-    protected function checkUsernameJsonCommand(\Request $request)
+    protected function checkUsernameJsonCommand(\Canopy\Request $request)
     {
         $json['duplicate'] = $this->factory->checkUsername($request->pullGetString('username'));
         return $json;
     }
 
-    protected function checkEmailJsonCommand(\Request $request)
+    protected function checkEmailJsonCommand(\Canopy\Request $request)
     {
         $json['duplicate'] = $this->factory->checkEmail($request->pullGetString('email_address'));
         return $json;
     }
     
-    protected function checkCompanyNameJsonCommand(\Request $request)
+    protected function checkCompanyNameJsonCommand(\Canopy\Request $request)
     {
         $json['duplicate'] = $this->factory->checkCompanyName($request->pullGetString('company_name'));
         return $json;
     }
 
-    protected function signupHtmlCommand(\Request $request)
+    protected function signupHtmlCommand(\Canopy\Request $request)
     {
         return $this->factory->reactView('managersignup');
     }
     
-    protected function savePostCommand(\Request $request)
+    protected function savePostCommand(\Canopy\Request $request)
     {
         return $this->factory->signup($request);
     }
     
-    protected function successHtmlCommand(\Request $request)
+    protected function successHtmlCommand(\Canopy\Request $request)
     {
         $template = new \phpws2\Template();
         $template->setModuleTemplate('properties', 'manager/success_signup.html');
         return $template->get();
+    }
+    
+    protected function forgotHtmlCommand(\Canopy\Request $request)
+    {
+        return $this->factory->forgotForm();
+    }
+    
+    protected function forgotPostCommand(\Canopy\Request $request)
+    {
+        return $this->factory->forgotPost($request);
     }
 }

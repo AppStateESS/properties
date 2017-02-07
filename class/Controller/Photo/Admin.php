@@ -19,7 +19,7 @@ namespace properties\Controller\Photo;
 
 class Admin extends User
 {
-    protected function savePostCommand(\Request $request)
+    protected function savePostCommand(\Canopy\Request $request)
     {
         return $this->factory->post($request);
     }
@@ -30,7 +30,7 @@ class Admin extends User
         return array('success'=>true);
     }
     
-    protected function patchCommand(\Request $request)
+    protected function patchCommand(\Canopy\Request $request)
     {
         $photo = $this->factory->load($this->id);
         $variableName = $request->pullPatchString('varname');

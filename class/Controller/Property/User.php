@@ -34,19 +34,19 @@ class User extends \properties\Controller\SubController
         return $factory;
     }
 
-    protected function listHtmlCommand(\Request $request)
+    protected function listHtmlCommand(\Canopy\Request $request)
     {
         \Layout::addStyle('properties', 'property/list.css');
         return $this->factory->reactView('property');
     }
 
-    protected function viewHtmlCommand(\Request $request)
+    protected function viewHtmlCommand(\Canopy\Request $request)
     {
         \Layout::addStyle('properties', 'property/view.css');
         return $this->factory->view($this->id, false);
     }
 
-    protected function listJsonCommand(\Request $request)
+    protected function listJsonCommand(\Canopy\Request $request)
     {
         $json['properties'] = $this->factory->listing($request, true);
         $manager_id = $request->pullGetInteger('managerId', true);

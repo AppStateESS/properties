@@ -27,7 +27,7 @@ class User extends \properties\Controller\SubController
         return $factory;
     }
     
-    public function listJsonCommand(\Request $request)
+    public function listJsonCommand(\Canopy\Request $request)
     {
         return $this->factory->thumbs($request->pullGetInteger('propertyId'), null, false, true);
     }

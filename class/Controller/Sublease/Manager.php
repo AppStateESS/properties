@@ -20,5 +20,11 @@ namespace properties\Controller\Sublease;
 
 class Manager extends User
 {
-    
+
+    public function listHtmlCommand(\Canopy\Request $request)
+    {
+        \Layout::addStyle('properties', 'sublease/list.css');
+        return $this->factory->reactView('sublease');
+    }
+
 }

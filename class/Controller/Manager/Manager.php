@@ -23,19 +23,19 @@ use properties\Factory\Property\Listing as Listing;
 class Manager extends User
 {
 
-    protected function signinHtmlCommand(\Request $request)
+    protected function signinHtmlCommand(\Canopy\Request $request)
     {
         return \PHPWS_Core::reroute('./properties/Manager/desktop');
     }
 
-    protected function desktopHtmlCommand(\Request $request)
+    protected function desktopHtmlCommand(\Canopy\Request $request)
     {
         \Layout::addStyle('properties');
         \Layout::addStyle('properties', 'property/list.css');
         return $this->factory->reactView('managerdesktop');
     }
 
-    protected function mylistJsonCommand(\Request $request)
+    protected function mylistJsonCommand(\Canopy\Request $request)
     {
         $listing = new Listing;
         $listing->manager_id = $this->getCurrentLoggedManager();
@@ -56,7 +56,7 @@ class Manager extends User
         return $template->get();
     }
 
-    public function getHtml(\Request $request)
+    public function getHtml(\Canopy\Request $request)
     {
         $this->managerButtons();
         return parent::getHtml($request);

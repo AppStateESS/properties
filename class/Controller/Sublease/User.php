@@ -35,14 +35,14 @@ class User extends \properties\Controller\SubController
     }
 
     /**
-     * @param \Request $request
+     * @param \Canopy\Request $request
      */
-    public function createHtmlCommand(\Request $request)
+    public function createHtmlCommand(\Canopy\Request $request)
     {
         \Current_User::requireLogin();
     }
 
-    public function listHtmlCommand(\Request $request)
+    public function listHtmlCommand(\Canopy\Request $request)
     {
         $this->createButton();
 
@@ -50,7 +50,7 @@ class User extends \properties\Controller\SubController
         return $this->factory->reactView('sublease');
     }
 
-    public function listJsonCommand(\Request $request)
+    public function listJsonCommand(\Canopy\Request $request)
     {
         $json['subleases'] = $this->factory->listing($request);
         return $json;
@@ -65,7 +65,7 @@ EOF;
     }
 
 
-    public function viewHtmlCommand(\Request $request)
+    public function viewHtmlCommand(\Canopy\Request $request)
     {
         \Layout::addStyle('properties', 'sublease/view.css');
         return $this->factory->view($this->id);

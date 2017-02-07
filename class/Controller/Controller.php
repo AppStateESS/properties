@@ -31,7 +31,7 @@ class Controller extends Base
         $this->loadController($request, $this->role);
     }
 
-    private function loadController(\Request $request)
+    private function loadController(\Canopy\Request $request)
     {
         $major_controller = filter_var($request->shiftCommand(),
                 FILTER_SANITIZE_STRING);
@@ -71,7 +71,7 @@ class Controller extends Base
         }
     }
 
-    public function execute(\Request $request)
+    public function execute(\Canopy\Request $request)
     {
         try {
             return parent::execute($request);
@@ -92,27 +92,27 @@ class Controller extends Base
         }
     }
 
-    public function post(\Request $request)
+    public function post(\Canopy\Request $request)
     {
         return $this->controller->post($request);
     }
 
-    public function patch(\Request $request)
+    public function patch(\Canopy\Request $request)
     {
         return $this->controller->patch($request);
     }
 
-    public function delete(\Request $request)
+    public function delete(\Canopy\Request $request)
     {
         return $this->controller->delete($request);
     }
 
-    public function put(\Request $request)
+    public function put(\Canopy\Request $request)
     {
         return $this->controller->put($request);
     }
 
-    public function get(\Request $request)
+    public function get(\Canopy\Request $request)
     {
         if ($request->isAjax()) {
             $result = $this->controller->getJson($request);
@@ -123,7 +123,7 @@ class Controller extends Base
         return $result;
     }
 
-    public function friendlyError(\Request $request, $message = null)
+    public function friendlyError(\Canopy\Request $request, $message = null)
     {
         $fe = new FriendlyError($this->getModule());
         if ($message) {

@@ -37,7 +37,7 @@ abstract class SubController extends Base
         $this->role = $role;
     }
 
-    protected function pullGetCommand(\Request $request)
+    protected function pullGetCommand(\Canopy\Request $request)
     {
         $command = $request->shiftCommand();
         if (is_numeric($command)) {
@@ -55,7 +55,7 @@ abstract class SubController extends Base
         return $command;
     }
 
-    public function post(\Request $request)
+    public function post(\Canopy\Request $request)
     {
         $command = $request->shiftCommand();
 
@@ -77,7 +77,7 @@ abstract class SubController extends Base
         }
     }
 
-    public function put(\Request $request)
+    public function put(\Canopy\Request $request)
     {
         $command = $request->shiftCommand();
 
@@ -104,7 +104,7 @@ abstract class SubController extends Base
         }
     }
 
-    public function getHtml(\Request $request)
+    public function getHtml(\Canopy\Request $request)
     {
         $command = $this->pullGetCommand($request);
 
@@ -126,7 +126,7 @@ abstract class SubController extends Base
         return $this->htmlResponse($content);
     }
 
-    public function getJson(\Request $request)
+    public function getJson(\Canopy\Request $request)
     {
         $command = $this->pullGetCommand($request);
 
@@ -144,7 +144,7 @@ abstract class SubController extends Base
         return $this->jsonResponse($json);
     }
 
-    public function patch(\Request $request)
+    public function patch(\Canopy\Request $request)
     {
         $id = $request->shiftCommand();
 
@@ -153,15 +153,17 @@ abstract class SubController extends Base
         }
         $this->id = $id;
 
-        if (!method_exists($this, 'patchCommand')) {
-            throw new BadCommand($patchCommand);
+        $patch_command = $request->isAjax() ? 'jsonPatchCommand' : 'htmlPatchCommand';
+        
+        if (!method_exists($this, $patch_command)) {
+            throw new BadCommand($patch_command);
         }
 
-        $json = $this->patchCommand($request);
+        $json = $this->$patch_command($request);
         return $this->jsonResponse($json);
     }
 
-    public function delete(\Request $request)
+    public function delete(\Canopy\Request $request)
     {
         $id = $request->shiftCommand();
 
@@ -179,7 +181,7 @@ abstract class SubController extends Base
         return $this->jsonResponse($content);
     }
 
-    public function getResponse($content, \Request $request)
+    public function getResponse($content, \Canopy\Request $request)
     {
         return $request->isAjax() ? $this->jsonResponse($content) : $this->htmlResponse($content);
     }
