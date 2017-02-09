@@ -265,7 +265,7 @@ class Admin extends Base
         \Layout::addJSHeader($script);
 
         $vars['authkey'] = \Current_User::getAuthKey();
-        $template = new \Template($vars);
+        $template = new \phpws2\Template($vars);
         $template->setModuleTemplate('properties', 'ManagerSignUp.html');
         $this->title = 'Contact Approval';
         $this->content = '<div id="ContactApproval"></div>';
@@ -327,7 +327,7 @@ class Admin extends Base
         if (empty($result)) {
             $this->content = 'No inactive properties';
         } else {
-            $tpl = new \Template($result);
+            $tpl = new \phpws2\Template($result);
             $tpl->setModuleTemplate('properties', 'overdue.html');
             $this->content = $tpl->__toString();
         }
@@ -429,7 +429,7 @@ class Admin extends Base
             'email_address' => \PHPWS_Settings::get('properties', 'email')
         );
 
-        $template = new \Template($vars);
+        $template = new \phpws2\Template($vars);
         $template->setModuleTemplate('properties', 'approvalLetter.html');
         $content = $template->get();
         $this->emailInfo('Manager account approved', $content, $contact->getEmailAddress());
@@ -453,7 +453,7 @@ class Admin extends Base
             'email_address' => \PHPWS_Settings::get('properties', 'email')
         );
 
-        $template = new \Template($vars);
+        $template = new \phpws2\Template($vars);
         $template->setModuleTemplate('properties', 'disapprovalLetter.html');
         $content = $template->get();
         $this->emailInfo('Manager account not approved', $content, $contact->getEmailAddress());

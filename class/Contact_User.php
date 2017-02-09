@@ -37,7 +37,7 @@ class Contact_User extends Base
         $vars = array();
         $form = self::contactForm();
         $vars = $form->getTemplate();
-        $template = new \Template($vars);
+        $template = new \phpws2\Template($vars);
         $template->setModuleTemplate('properties', 'contact_login.html');
         \Layout::add($template->get());
     }
@@ -231,7 +231,7 @@ EOF;
         $vars['site_address'] = \PHPWS_Core::getHomeHttp() . 'index.php?module=properties&amp;aop=approve';
         $vars['count'] = $count > 1 ? "$count submissions" : "one submission";
 
-        $template = new \Template($vars);
+        $template = new \phpws2\Template($vars);
         $template->setModuleTemplate('properties', 'reminder.html');
         $content = $template->get();
 
@@ -286,7 +286,7 @@ EOF;
         \Layout::addJSHeader($script);
 
         $vars['authkey'] = \Current_User::getAuthKey();
-        $template = new \Template($vars);
+        $template = new \phpws2\Template($vars);
         $template->setModuleTemplate('properties', 'ManagerSignUp.html');
         $this->title = 'New Manager Sign-Up';
         $this->content = $template->get();
