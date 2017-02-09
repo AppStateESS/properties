@@ -217,7 +217,7 @@ EOF;
 
     private function emailApprovalNeeded()
     {
-        $db = \Database::getDB();
+        $db = \phpws2\Database::getDB();
         $t = $db->addTable('prop_contacts');
         $t->addFieldConditional('approved', 0);
         $rows = $db->select();
@@ -458,7 +458,7 @@ EOF;
             exit;
         }
         
-        $db = \Database::getDB();
+        $db = \phpws2\Database::getDB();
         $t1 = $db->addTable('prop_contacts');
         $t1->addFieldConditional('email_address', $email);
         $result = $db->selectOneRow();
@@ -475,7 +475,7 @@ EOF;
 
         $username = filter_var($request->getVar('username'), FILTER_SANITIZE_ENCODED);
 
-        $db = \Database::getDB();
+        $db = \phpws2\Database::getDB();
         $t1 = $db->addTable('prop_contacts');
         $t1->addFieldConditional('username', $username);
         $result = $db->selectOneRow();

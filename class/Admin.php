@@ -230,7 +230,7 @@ class Admin extends Base
 
     private function approvalList()
     {
-        $db = \Database::newDB();
+        $db = \phpws2\Database::newDB();
         $tbl = $db->addTable('prop_contacts');
         $tbl->addFieldConditional('approved', 0);
         $tbl->addOrderBy('last_log', 'desc');
@@ -298,7 +298,7 @@ class Admin extends Base
     public function emailContacts()
     {
         $oldtime = time() - 86400 * 30 * 12;
-        $db = \Database::newDB();
+        $db = \phpws2\Database::newDB();
         $pc = $db->addTable('prop_contacts');
         $pc->addField('first_name');
         $pc->addField('last_name');
@@ -310,7 +310,7 @@ class Admin extends Base
         $db->setGroupBy($id_pc);
 
         $properties = $db->addTable('properties');
-        $exp = new \Database\Expression('count(' . $properties->getField('id') . ')', 'properties');
+        $exp = new \phpws2\Database\Expression('count(' . $properties->getField('id') . ')', 'properties');
         $properties->addField($exp);
         $c2 = $properties->getFieldConditional('contact_id', $id_pc);
         $c3 = $properties->getFieldConditional('active', 0);
@@ -413,7 +413,7 @@ class Admin extends Base
     {
         $id = (int) $id;
 
-        $db = \Database::newDB();
+        $db = \phpws2\Database::newDB();
         $tbl = $db->addTable('prop_contacts');
         $tbl->addFieldConditional('id', $id);
         $tbl->addValue('approved', 1);
@@ -440,7 +440,7 @@ class Admin extends Base
         $id = (int) $id;
         $contact = new Contact($id);
 
-        $db = \Database::newDB();
+        $db = \phpws2\Database::newDB();
         $tbl = $db->addTable('prop_contacts');
         $tbl->addFieldConditional('id', $id);
         $db->delete();

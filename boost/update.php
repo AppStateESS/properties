@@ -117,7 +117,7 @@ EOF;
                 $content[] = 'Composer is not installed. Be sure to run `composer install` in your installation\'s lib directory.';
                 return false;
             }
-            $db = \Database::getDB();
+            $db = \phpws2\Database::getDB();
             $t1 = $db->addTable('prop_contacts');
             $dt = $t1->addDataType('private', 'smallint');
             $dt->setDefault(0);
