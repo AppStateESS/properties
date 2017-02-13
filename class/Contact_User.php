@@ -448,7 +448,7 @@ EOF;
         $request = \Canopy\Server::getCurrentRequest();
 
         if (!$request->isVar('email')) {
-            throw new \Http\NotAcceptableException('No email address submitted');
+            throw new \phpws2\Http\NotAcceptableException('No email address submitted');
         }
 
         $email = trim($request->getVar('email'));
@@ -470,7 +470,7 @@ EOF;
         $request = \Canopy\Server::getCurrentRequest();
 
         if (!$request->isVar('username')) {
-            throw new \Http\NotAcceptableException('No username submitted');
+            throw new \phpws2\Http\NotAcceptableException('No username submitted');
         }
 
         $username = filter_var($request->getVar('username'), FILTER_SANITIZE_ENCODED);
