@@ -52,40 +52,41 @@ abstract class Place extends Base
     public function __construct()
     {
         parent::__construct();
-        $this->active = new Variable\BooleanVar(false, 'active');
-        $this->address = new Variable\StringVar(null, 'address');
-        $this->airconditioning = new Variable\BooleanVar(false, 'airconditioning');
-        $this->appalcart = new Variable\BooleanVar(false, 'appalcart');
+        $this->active = new \phpws2\Variable\BooleanVar(false, 'active');
+        $this->address = new \phpws2\Variable\StringVar(null, 'address');
+        $this->airconditioning = new \phpws2\Variable\BooleanVar(false, 'airconditioning');
+        $this->appalcart = new \phpws2\Variable\BooleanVar(false, 'appalcart');
         $this->bathroom_no = new \phpws2\Variable\DecimalVar(1.0, 'bathroom_no');
-        $this->bedroom_no = new Variable\SmallInteger(1, 'bedroom_no');
+        $this->bedroom_no = new \phpws2\Variable\SmallInteger(1, 'bedroom_no');
         $this->bedroom_no->setRange(1, 10);
-        $this->campus_distance = new Variable\SmallInteger(0, 'campus_distance');
+        $this->campus_distance = new \phpws2\Variable\SmallInteger(0, 'campus_distance');
         $this->campus_distance->setRange(0, 100);
-        $this->created = new Variable\DateTime(null, 'created');
-        $this->description = new Variable\StringVar(null, 'description');
-        $this->dishwasher = new Variable\BooleanVar(false, 'dishwasher');
-        $this->furnished = new Variable\BooleanVar(false, 'furnished');
-        $this->internet_type = new Variable\SmallInteger(1, 'internet_type');
+        $this->created = new \phpws2\Variable\DateTime(null, 'created');
+        $this->description = new \phpws2\Variable\StringVar(null, 'description');
+        $this->dishwasher = new \phpws2\Variable\BooleanVar(false, 'dishwasher');
+        $this->furnished = new \phpws2\Variable\BooleanVar(false, 'furnished');
+        $this->internet_type = new \phpws2\Variable\SmallInteger(1, 'internet_type');
         $this->internet_type->setRange(0, 20);
-        $this->laundry_type = new Variable\SmallInteger(0, 'laundry_type');
+        $this->laundry_type = new \phpws2\Variable\SmallInteger(0, 'laundry_type');
         $this->laundry_type->setRange(0, 10);
-        $this->lease_type = new Variable\SmallInteger(0, 'lease_type');
+        $this->lease_type = new \phpws2\Variable\SmallInteger(0, 'lease_type');
         $this->lease_type->setRange(0, 10);
-        $this->monthly_rent = new Variable\SmallInteger(0, 'monthly_rent');
-        $this->move_in_date = new Variable\DateVar(0, 'move_in_date');
-        $this->name = new Variable\StringVar(null, 'name');
+        $this->monthly_rent = new \phpws2\Variable\SmallInteger(0, 'monthly_rent');
+        $this->move_in_date = new \phpws2\Variable\DateVar(0, 'move_in_date');
+        $this->move_in_date->stamp();
+        $this->name = new \phpws2\Variable\StringVar(null, 'name');
         $this->name->setLimit(100);
-        $this->parking_per_unit = new Variable\SmallInteger(1,
+        $this->parking_per_unit = new \phpws2\Variable\SmallInteger(1,
                 'parking_per_unit');
-        $this->pets_allowed = new Variable\BooleanVar(false, 'pets_allowed');
-        $this->proptype = new Variable\SmallInteger(0, 'proptype');
+        $this->pets_allowed = new \phpws2\Variable\BooleanVar(false, 'pets_allowed');
+        $this->proptype = new \phpws2\Variable\SmallInteger(0, 'proptype');
         $this->proptype->setRange(0, 20);
-        $this->smoking_allowed = new Variable\BooleanVar(false, 'smoking_allowed');
-        $this->trash_type = new Variable\SmallInteger(0, 'trash_type');
-        $this->tv_type = new Variable\SmallInteger(0, 'tv_type');
+        $this->smoking_allowed = new \phpws2\Variable\BooleanVar(false, 'smoking_allowed');
+        $this->trash_type = new \phpws2\Variable\SmallInteger(0, 'trash_type');
+        $this->tv_type = new \phpws2\Variable\SmallInteger(0, 'tv_type');
         $this->tv_type->setRange(0, 10);
-        $this->updated = new Variable\DateTime(time(), 'updated');
-        $this->utilities_inc = new Variable\BooleanVar(false, 'utilities_inc');
+        $this->updated = new \phpws2\Variable\DateTime(time(), 'updated');
+        $this->utilities_inc = new \phpws2\Variable\BooleanVar(false, 'utilities_inc');
     }
 
     public function getCampusDistance()
