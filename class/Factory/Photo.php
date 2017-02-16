@@ -23,12 +23,12 @@ use \phpws2\Database;
 
 class Photo extends Base
 {
+
     public function build()
     {
         return new Resource;
     }
 
-    /*
     public function load($id)
     {
         if (empty($id)) {
@@ -45,8 +45,6 @@ class Photo extends Base
         $photo->setVars($row);
         return $photo;
     }
-     * 
-     */
 
     public function delete($photo)
     {
@@ -95,7 +93,7 @@ class Photo extends Base
         $db->loadSelectStatement();
         while ($row = $db->fetch()) {
             $rows[] = array('id' => $row['id'], 'original' => $row['path'],
-                'thumbnail' => $this->thumbnailed($row['path']), 'main_pic'=>$row['main_pic']);
+                'thumbnail' => $this->thumbnailed($row['path']), 'main_pic' => $row['main_pic']);
         }
         return $rows;
     }
@@ -153,6 +151,7 @@ class Photo extends Base
             $photo->path = $this->moveImage($pic, $property->contact_id);
             self::saveResource($photo);
             $result['photo'] = array('original' => $photo->path, 'thumbnail' => $photo->getThumbnail(), 'id' => $photo->getId());
+            $result['success'] = true;
         } catch (properties\Exception\FileSaveFailure $e) {
             $result['success'] = false;
             $result['error'] = $e->getMessage();
@@ -163,7 +162,7 @@ class Photo extends Base
             $result['success'] = false;
             $result['error'] = $e->getMessage();
         }
-        $result['success'] = true;
+
         return $result;
     }
 
@@ -174,9 +173,9 @@ class Photo extends Base
         $tbl->addFieldConditional('pid', $property_id);
         $tbl->addFieldConditional('main_pic', 1);
         $result = $db->selectOneRow();
-        return (bool)$result;
+        return (bool) $result;
     }
-    
+
     private function resize($file)
     {
         return \phpws\PHPWS_File::scaleImage($file, $file, PROP_MAX_IMAGE_WIDTH,
@@ -228,7 +227,7 @@ class Photo extends Base
             }
         }
     }
-    
+
     public function removeMain(Resource $photo)
     {
         $db = Database::getDB();
@@ -238,8 +237,9 @@ class Photo extends Base
         $tbl->addValue('main_pic', 0);
         return $db->update();
     }
-    
-    public function patch(Resource $photo, $varname, $value) {
+
+    public function patch(Resource $photo, $varname, $value)
+    {
         $photo->$varname = $value;
         self::saveResource($photo);
     }
