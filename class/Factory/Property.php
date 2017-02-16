@@ -8,12 +8,13 @@
 
 namespace properties\Factory;
 
-use \properties\Resource\Property as Resource;
-use \properties\Factory\Photo as Photo;
-use \properties\Factory\Manager;
-use \properties\Controller\Property as Controller;
-use \phpws2\Database;
-use \properties\Exception\MissingInput;
+use properties\Resource\Property as Resource;
+use properties\Factory\Photo as Photo;
+use properties\Factory\Manager;
+use properties\Controller\Property as Controller;
+use phpws2\Database;
+use properties\Exception\MissingInput;
+use properties\Exception\PrivilegeMissing;
 
 /**
  * Description of PropertyFactory
@@ -32,7 +33,14 @@ class Property extends Base
         return new Resource;
     }
 
-    public function load($id)
+    /**
+     * 
+     * @param integer $id
+     * @param integer $manager_id If set, then test against it on query
+     * @return \properties\Resource\Property
+     * @throws \properties\Exception\ResourceNotFound
+     */
+    public function load($id, $manager_id = 0)
     {
         $db = Database::getDB();
         $tbl = $db->addTable('properties');
@@ -40,6 +48,10 @@ class Property extends Base
         $tbl2->addField('company_name');
         $tbl->addFieldConditional('id', $id);
         $tbl->addFieldConditional('contact_id', $tbl2->getField('id'));
+
+        if ($manager_id) {
+            $tbl->addFieldConditional('contact_id', $manager_id);
+        }
         $row = $db->selectOneRow();
         if (empty($row)) {
             throw new \properties\Exception\ResourceNotFound;
@@ -79,17 +91,29 @@ class Property extends Base
             $r->approved = true;
             $r->created = time();
             $r->updated = time();
-            self::saveResource($r);
-            return array('id' => $r->id);
         } catch (\Exception $e) {
             throw new \properties\Exception\PropertySaveFailure($e->getMessage());
         }
+        return $r;
     }
-    
+
+    public function save(Resource $property)
+    {
+        self::saveResource($property);
+        return $property->id;
+    }
+
+    public function postManager(\Canopy\Request $request, $manager_id)
+    {
+        $r = new Resource;
+        exit('postManager incomplete');
+    }
+
     public function put(\Canopy\Request $request)
     {
         $errors = array();
-        $r = new Resource;
+        $r = $this->load($request->pullPutInteger('id'));
+        
         try {
             $r->loadPutByType($request,
                     array('active', 'approved', 'company_name', 'heat_type', 'created', 'updated', 'thumbnail'));
@@ -116,9 +140,20 @@ class Property extends Base
         } elseif (!is_a($property, 'properties\Resource\Property')) {
             throw new \properties\Exception\ResourceNotFound;
         }
-        $photoFactory = new Photo;
-        $tpl = $this->addManagerInfo($property->view(), $property->contact_id);
+        $managerFactory = new Manager;
+        $manager = $managerFactory->load($property->contact_id);
 
+        $tpl = $this->addManagerInfo($property->view(), $manager);
+        
+        if (!$manager->active || !$manager->approved) {
+            if ($admin) {
+                $tpl['manager_warning'] = 'This property\'s owner is currently deactivated.';
+            } else {
+                \phpws2\Error::errorPage('404');
+            }
+        }
+
+        $photoFactory = new Photo;
         $tpl['current_photos'] = json_encode($photoFactory->thumbs($property->id));
         $tpl['photo'] = $this->reactView('photo');
         $tpl['id'] = $property->id;
@@ -159,30 +194,27 @@ EOF;
 EOF;
     }
 
-    private function addManagerInfo(array $tpl, $contact_id)
+    private function addManagerInfo(array $tpl, \properties\Resource\Manager $manager)
     {
-        $managerFactory = new Manager;
-        $manager = $managerFactory->load($contact_id);
         $managerTpl = $manager->view(true);
-        $tpl = array_merge($tpl, $managerTpl);
-        return $tpl;
+        $finaltpl = array_merge($tpl, $managerTpl);
+        return $finaltpl;
     }
 
     public function edit($property_id, $manager_id = null)
     {
         if ($property_id) {
-            $property = $this->load($property_id);
+            $property = $this->load($property_id, $manager_id);
             $property_json = json_encode($property->getVariablesAsValue(true,
-                            array('approved', 'active')));
+                            array('approved', 'active'), true));
         } elseif ($manager_id) {
             $property = $this->build();
             $property->contact_id = $manager_id;
             $managerFactory = new Manager;
             $manager = $managerFactory->load($manager_id);
             $property->company_name = $manager->company_name;
-
             $property_json = json_encode($property->getVariablesAsValue(true,
-                            array('approved', 'active')));
+                            array('approved', 'active'), true));
         } else {
             throw new \properties\Exception\ResourceNotFound;
         }
