@@ -19,9 +19,11 @@
 namespace properties\Controller\Manager;
 
 use properties\Exception\BadCommand;
+use \Canopy\Request;
 
 class User extends \properties\Controller\SubController
 {
+
     /**
      * @var \properties\Factory\Manager
      */
@@ -33,18 +35,18 @@ class User extends \properties\Controller\SubController
         return $factory;
     }
 
-    protected function signinHtmlCommand(\Canopy\Request $request)
+    protected function signinHtmlCommand(Request $request)
     {
         return $this->factory->reactView('managersignin');
     }
 
-    protected function listHtmlCommand(\Canopy\Request $request)
+    protected function listHtmlCommand(Request $request)
     {
         \Layout::addStyle('properties', 'manager/list.css');
         return $this->factory->reactView('manager');
     }
 
-    protected function listJsonCommand(\Canopy\Request $request)
+    protected function listJsonCommand(Request $request)
     {
         $json['admin'] = false;
         $json['managerList'] = $this->factory->approvedListing($request->pullGetVarIfSet('limit',
@@ -52,7 +54,7 @@ class User extends \properties\Controller\SubController
         return $json;
     }
 
-    protected function signinPostCommand(\Canopy\Request $request)
+    protected function signinPostCommand(Request $request)
     {
         $username = $request->pullPostString('manager_username');
         $password = $request->pullPostString('manager_password');
@@ -70,65 +72,66 @@ class User extends \properties\Controller\SubController
     }
 
     /**
-     * @param \Canopy\Request $request
+     * @param Request $request
      * @return string
      */
-    protected function desktopHtmlCommand(\Canopy\Request $request)
+    protected function desktopHtmlCommand(Request $request)
     {
         return $this->factory->reactView('managersignin');
     }
-    
+
     /**
-     * @param \Canopy\Request $request
+     * @param Request $request
      * @return string
      */
-    protected function viewHtmlCommand(\Canopy\Request $request)
+    protected function viewHtmlCommand(Request $request)
     {
         return $this->factory->view($this->id, true);
     }
-    
-    protected function checkUsernameJsonCommand(\Canopy\Request $request)
+
+    protected function checkUsernameJsonCommand(Request $request)
     {
         $json['duplicate'] = $this->factory->checkUsername($request->pullGetString('username'));
         return $json;
     }
 
-    protected function checkEmailJsonCommand(\Canopy\Request $request)
+    protected function checkEmailJsonCommand(Request $request)
     {
         $json['duplicate'] = $this->factory->checkEmail($request->pullGetString('email_address'));
         return $json;
     }
-    
-    protected function checkCompanyNameJsonCommand(\Canopy\Request $request)
+
+    protected function checkCompanyNameJsonCommand(Request $request)
     {
         $json['duplicate'] = $this->factory->checkCompanyName($request->pullGetString('company_name'));
         return $json;
     }
 
-    protected function signupHtmlCommand(\Canopy\Request $request)
+    protected function signupHtmlCommand(Request $request)
     {
         return $this->factory->reactView('managersignup');
     }
-    
-    protected function savePostCommand(\Canopy\Request $request)
+
+    protected function savePostCommand(Request $request)
     {
         return $this->factory->signup($request);
     }
-    
-    protected function successHtmlCommand(\Canopy\Request $request)
+
+    protected function successHtmlCommand(Request $request)
     {
         $template = new \phpws2\Template();
         $template->setModuleTemplate('properties', 'manager/success_signup.html');
         return $template->get();
     }
-    
-    protected function forgotHtmlCommand(\Canopy\Request $request)
+
+    protected function forgotHtmlCommand(Request $request)
     {
         return $this->factory->forgotForm();
     }
-    
-    protected function forgotPostCommand(\Canopy\Request $request)
+
+    protected function forgotPostCommand(Request $request)
     {
         return $this->factory->forgotPost($request);
     }
+
 }
