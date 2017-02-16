@@ -83,6 +83,9 @@ export default class PropertyImage extends React.Component {
   delete(id, key) {
     $.ajax({
       url: './properties/Photo/' + id,
+      data: {
+        propertyId: propertyId
+      },
       dataType: 'json',
       method: 'DELETE',
       success: function (data) {
@@ -100,15 +103,18 @@ export default class PropertyImage extends React.Component {
     $.ajax({
       url: './properties/Photo/' + id,
       data: {
-        varname: 'main_pic'
+        varname: 'main_pic',
+        propertyId: propertyId
       },
       method: 'PATCH',
       success: function () {
         let photos = this.state.currentPhotos
-        photos.forEach(function(value, idx, photos){
-          photos[idx].main_pic = value.id == id ? '1' : '0'
+        photos.forEach(function (value, idx, photos) {
+          photos[idx].main_pic = value.id == id
+            ? '1'
+            : '0'
         })
-        this.setState({currentPhotos : photos})
+        this.setState({currentPhotos: photos})
       }.bind(this),
       error: function () {}.bind(this)
     })
