@@ -19,33 +19,40 @@
 namespace properties\Controller\Manager;
 
 use properties\Factory\Property\Listing as Listing;
+use \Canopy\Request;
 
 class Manager extends User
 {
 
-    protected function signinHtmlCommand(\Canopy\Request $request)
+    public function __construct($role)
+    {
+        parent::__construct($role);
+        $this->id = $this->getCurrentLoggedManager();
+    }
+
+    protected function signinHtmlCommand(Request $request)
     {
         return \PHPWS_Core::reroute('./properties/Manager/desktop');
     }
 
-    protected function desktopHtmlCommand(\Canopy\Request $request)
+    protected function desktopHtmlCommand(Request $request)
     {
         \Layout::addStyle('properties');
         \Layout::addStyle('properties', 'property/list.css');
         return $this->factory->reactView('managerdesktop');
     }
 
-    protected function mylistJsonCommand(\Canopy\Request $request)
+    protected function mylistJsonCommand(Request $request)
     {
         $listing = new Listing;
-        $listing->manager_id = $this->getCurrentLoggedManager();
+        $listing->manager_id = $this->id;
         $json['properties'] = $listing->get(true);
         return $json;
     }
 
     protected function signoutHtmlCommand()
     {
-        $manager_id = $this->factory->getCurrentLoggedManager();
+        $manager_id = $this->id;
         if (empty($manager_id)) {
             \Server::forward('./');
         }
@@ -56,10 +63,36 @@ class Manager extends User
         return $template->get();
     }
 
-    public function getHtml(\Canopy\Request $request)
+    protected function editHtmlCommand(Request $request)
+    {
+        return $this->factory->reactView('manageredit');
+    }
+
+    protected function viewJsonCommand(Request $request)
+    {
+        $manager = $this->factory->load($this->id);
+        $json = $manager->view(false);
+        return $json;
+    }
+
+    public function getHtml(Request $request)
     {
         $this->managerButtons();
         return parent::getHtml($request);
+    }
+
+    protected function checkCompanyNameJsonCommand(Request $request)
+    {
+        $json['duplicate'] = $this->factory->checkCompanyName($request->pullGetString('company_name'),
+                $this->id);
+        return $json;
+    }
+
+    protected function checkEmailJsonCommand(Request $request)
+    {
+        $json['duplicate'] = $this->factory->checkEmail($request->pullGetString('email_address'),
+                $this->id);
+        return $json;
     }
 
 }
