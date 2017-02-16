@@ -60,6 +60,9 @@ export default class PropertyForm extends React.Component {
     if (typeof value === 'object' && value.target !== undefined) {
       value = value.target.value
     }
+    if (value.length > 0) {
+      this.setError(varname, false)
+    }
     let property = this.state.property
     property[varname] = value
     this.setState({property})
