@@ -100,6 +100,7 @@ class Listing extends \properties\Factory\Listing
     private function addConditionals()
     {
         $this->contact_table->addFieldConditional('active', 1);
+        $this->contact_table->addFieldConditional('approved', 1);
         if ($this->beds > 1) {
             $this->data_table->addFieldConditional('bedroom_no', $this->beds,
                     '>=');
