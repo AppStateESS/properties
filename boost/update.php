@@ -233,7 +233,7 @@ EOF;
                 $dt = $tbl->addDataType('pw_timeout', 'int');
                 $dt->setDefault(0);
                 $dt->add();
-                $dt2 = $tbl->addDataType('pw_hash', 'varchar(255)');
+                $dt2 = $tbl->addDataType('pw_hash', 'varchar');
                 $dt2->setIsNull(true);
                 $dt2->add();
                 $db->commit();
