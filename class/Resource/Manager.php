@@ -71,7 +71,7 @@ class Manager extends Base
         $this->inquiry_type = new Variable\Attribute(null, 'inquiry_type');
         $this->inquiry_type->allowNull(true);
         $this->pw_timeout = new Variable\IntegerVar(0, 'pw_timeout');
-        $this->pw_hash = new Variable\String(null, 'pw_hash');
+        $this->pw_hash = new Variable\StringVar(null, 'pw_hash');
         
         $this->doNotSave(array('inquiry_date', 'inquiry_type'));
     }
@@ -104,6 +104,11 @@ class Manager extends Base
         $this->phone->formatNumber(false);
         $view['phone_tel'] = 'tel:+1' . $this->phone->get();
         return $view;
+    }
+    
+    public function savePassword()
+    {
+        $this->password->setHashResult(false);
     }
 
 }
