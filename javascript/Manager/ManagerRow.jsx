@@ -29,30 +29,28 @@ class ManagerRow extends React.Component {
 
   activate() {
     $.ajax({
-      url: './properties/Manager',
+      url: './properties/Manager/' + this.props.id,
       type: 'patch',
       data: {
-        param: 'active',
-        active: true,
-        managerId: this.props.id
+        varname: 'active',
+        value: true,
       }
     }).done(function () {
-      this.props.message('Manager activated')
+      this.props.message(this.props.company_name + ' activated')
       this.props.reload()
     }.bind(this))
   }
 
   deactivate() {
     $.ajax({
-      url: './properties/Manager',
+      url: './properties/Manager/' + this.props.id,
       type: 'patch',
       data: {
-        param: 'active',
-        active: false,
-        managerId: this.props.id
+        varname: 'active',
+        value: false,
       }
     }).done(function () {
-      this.props.message('Manager deactivated')
+      this.props.message(this.props.company_name + ' deactivated')
       this.props.reload()
     }.bind(this))
   }
