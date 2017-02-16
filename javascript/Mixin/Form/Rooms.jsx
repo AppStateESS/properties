@@ -21,6 +21,11 @@ export default class Rooms extends React.Component {
     this.setState({
       half: !this.state.half
     })
+    if (!this.state.half) {
+      this.updateBathroom(`${this.props.property.bathroom_no}.5`)
+    } else {
+      this.updateBathroom(this.props.property.bathroom_no.substr(0,1))
+    }
   }
 
   updateBedroom(bedrooms) {
