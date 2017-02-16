@@ -18,24 +18,26 @@
 
 namespace properties\Controller\Manager;
 
+use \Canopy\Request;
+
 class Admin extends User
 {
 
-    protected function createPostCommand(\Canopy\Request $request)
+    protected function createPostCommand(Request $request)
     {
         return $this->factory->adminPost($request);
     }
 
     /**
-     * @param \Canopy\Request $request
+     * @param Request $request
      * @return string
      */
-    protected function viewHtmlCommand(\Canopy\Request $request)
+    protected function viewHtmlCommand(Request $request)
     {
         return $this->factory->view($this->id, false);
     }
 
-    protected function listJsonCommand(\Canopy\Request $request)
+    protected function listJsonCommand(Request $request)
     {
         $json['admin'] = true;
         $json['managerList'] = $this->factory->approvedListing($request->pullGetVarIfSet('limit',
@@ -43,30 +45,30 @@ class Admin extends User
         return $json;
     }
 
-    public function getHtml(\Canopy\Request $request)
+    public function getHtml(Request $request)
     {
         $this->addApprovalLink();
         return parent::getHtml($request);
     }
 
-    protected function savePostCommand(\Canopy\Request $request)
+    protected function savePostCommand(Request $request)
     {
-        $json = $this->factory->adminPost($request);
+        $json = $this->factory->adminPost($request, $this->id);
         return $json;
     }
 
-    protected function deleteCommand(\Canopy\Request $request)
+    protected function deleteCommand(Request $request)
     {
         $json['success'] = $this->factory->delete($this->id);
         return $json;
     }
 
-    protected function approvalHtmlCommand(\Canopy\Request $request)
+    protected function approvalHtmlCommand(Request $request)
     {
         return $this->factory->reactView('managerapproval');
     }
 
-    protected function approvalJsonCommand(\Canopy\Request $request)
+    protected function approvalJsonCommand(Request $request)
     {
         $json['admin'] = 1;
         $json['managerList'] = $this->factory->unapprovedListing($request->pullGetVarIfSet('limit',
@@ -74,24 +76,46 @@ class Admin extends User
         return $json;
     }
 
-    protected function inquiryPutCommand(\Canopy\Request $request)
+    protected function inquiryPutCommand(Request $request)
     {
         $manager = $this->factory->load($request->pullPutInteger('managerId'));
         $this->factory->inquiry($manager, $request->pullPutString('inquiryType'));
     }
 
-    protected function refusePutCommand(\Canopy\Request $request)
+    protected function refusePutCommand(Request $request)
     {
         $manager = $this->factory->load($request->pullPutInteger('managerId'));
         $this->factory->refuse($manager, $request->pullPutString('reason'));
     }
 
-    protected function jsonPatchCommand(\Canopy\Request $request)
+    protected function jsonPatchCommand(Request $request)
     {
-        $json['success'] = $this->factory->patch($this->id,
-                $request->pullPatchString('varname'),
-                $request->pullPatchBoolean('value'));
+
+        if ($request->patchVarIsset('values')) {
+            $values = $request->pullPatchVar('values');
+            foreach ($values as $arrVal) {
+                $this->factory->patch($this->id, $arrVal['varname'],
+                        $arrVal['value']);
+            }
+        } else {
+            $this->factory->patch($this->id,
+                    $request->pullPatchString('varname'),
+                    $request->pullPatchBoolean('value'));
+        }
+        $json['success'] = true;
         return $json;
+    }
+
+    protected function viewJsonCommand(Request $request)
+    {
+        $manager = $this->factory->load($this->id);
+        $json = $manager->view(false);
+        return $json;
+    }
+
+    protected function signinHtmlCommand(\Canopy\Request $request)
+    {
+        return '<p>Logout of your administrator account to sign in as a manager</p>';
     }
 
 }
