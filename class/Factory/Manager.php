@@ -316,7 +316,7 @@ class Manager extends Base
         return $db->selectOneRow();
     }
 
-    protected function loadResourceFromPost(\Canopy\Request $request)
+    protected function loadResourceFromPost(\Canopy\Request $request, $id = 0)
     {
         $errors = array();
         $r = new Resource;
@@ -324,7 +324,7 @@ class Manager extends Base
         try {
             $id = $request->pullPostInteger('id', true);
             if ($id) {
-                $r->setId($id);
+                $r = $this->load($id);
             }
 
             $username = strtolower($request->pullPostString('username', true));
@@ -342,6 +342,10 @@ class Manager extends Base
             if (empty($password)) {
                 if ($id == 0) {
                     $errors['passwordEmpty'] = true;
+                } else {
+                    // The id is set but the password is empty. We don't want
+                    // to have it rehashed in the database.
+                    $r->savePassword();
                 }
             } else {
                 if (strlen($password) < 8) {
@@ -525,6 +529,8 @@ class Manager extends Base
                 PROPERTIES_MANAGER_SALT);
         $tbl->addFieldConditional('username', $username);
         $tbl->addFieldConditional('password', $password);
+        $tbl->addFieldConditional('approved', 1);
+        $tbl->addFieldConditional('active', 1);
         $manager = $db->selectOneRow();
         if ($manager === false) {
             return false;
@@ -618,33 +624,34 @@ class Manager extends Base
             return null;
         }
     }
-    
+
     private function sendForgotEmail(Resource $manager)
     {
         if (!$manager->id) {
             throw new \Exception('Empty manager');
         }
         // Start the email template with contact information
-        $tpl = array_merge($manager->getStringVars(), $this->contactInformation());
+        $tpl = array_merge($manager->getStringVars(),
+                $this->contactInformation());
         $hash = md5(randomString(12));
         $link = \Server::getCurrentUrl(false) . '/changepw/' . $hash;
-        
+
         $tpl['reset_link'] = $link;
-        
+
         $tpl['timeout'] = strftime('%B %e, %Y at %l:%M%P', time() + 86400);
-        
+
         $template = new \phpws2\Template($tpl);
         $template->setModuleTemplate('properties', 'emails/forgot.html');
         $content = $template->get();
         echo $content;
         /*
-        $message = \Swift_Message::newInstance();
-        $message->setSubject('Property manager password request');
-        $message->setFrom($contact_info);
-        $message->setTo($email_address);
-        $message->setBody($content, 'text/html');
-        $mailer = \Swift_Mailer::newInstance($transport);
-        $mailer->send($message);
+          $message = \Swift_Message::newInstance();
+          $message->setSubject('Property manager password request');
+          $message->setFrom($contact_info);
+          $message->setTo($email_address);
+          $message->setBody($content, 'text/html');
+          $mailer = \Swift_Mailer::newInstance($transport);
+          $mailer->send($message);
          * 
          */
     }
