@@ -77,8 +77,15 @@ export default class ManagerApproval extends React.Component {
     $.ajax({
       url: './properties/Manager/' + managerId,
       data: {
-        varname: 'approved',
-        value: true
+        values: [
+          {
+            varname: 'approved',
+            value: true
+          }, {
+            varname: 'active',
+            value: true
+          }
+        ]
       },
       dataType: 'json',
       type: 'patch'
