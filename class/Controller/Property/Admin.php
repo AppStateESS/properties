@@ -44,7 +44,8 @@ class Admin extends User
     protected function savePostCommand(\Canopy\Request $request)
     {
         try {
-            return $this->factory->post($request);
+            $property = $this->factory->post($request);
+            return array('id' => $this->factory->save($property));
         } catch (\properties\Exception\PropertySaveFailure $e) {
             return array('error' => $e->getMessage());
         }
