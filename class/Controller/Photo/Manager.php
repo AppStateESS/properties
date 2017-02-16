@@ -17,13 +17,16 @@
  */
 
 namespace properties\Controller\Photo;
+
 use properties\Resource\Photo;
 
 class Manager extends User
 {
 
-    protected function deleteCommand()
+    protected function deleteCommand(\Canopy\Request $request)
     {
+        $this->checkPropertyOwnership($request->pullDeleteInteger('propertyId'),
+                $this->getCurrentLoggedManager());
         $photo = $this->factory->load($this->id);
         if ($photo->cid !== $this->id) {
             throw new \properties\Exception\PrivilegeMissing;
@@ -31,4 +34,28 @@ class Manager extends User
         $this->factory->delete($photo);
         return array('success' => true);
     }
+
+    protected function savePostCommand(\Canopy\Request $request)
+    {
+        $this->checkPropertyOwnership($request->pullPostInteger('propertyId'),
+                $this->getCurrentLoggedManager());
+
+        return $this->factory->post($request);
+    }
+
+    protected function jsonPatchCommand(\Canopy\Request $request)
+    {
+        $this->checkPropertyOwnership($request->pullPatchInteger('propertyId'),
+                $this->getCurrentLoggedManager());
+        $photo = $this->factory->load($this->id);
+        $variableName = $request->pullPatchString('varname');
+        switch ($variableName) {
+            case 'main_pic':
+                $this->factory->removeMain($photo);
+                $this->factory->patch($photo, 'main_pic', 1);
+                break;
+        }
+        return array('success' => true);
+    }
+
 }
