@@ -44,7 +44,7 @@ class NavBar
         $vars['is_deity'] = \Current_User::isDeity();
         $vars['logout_uri'] = $auth->logout_link;
         $vars['username'] = \Current_User::getDisplayName();
-        $vars['home'] = \Server::getSiteUrl();
+        $vars['home'] = \Canopy\Server::getSiteUrl();
         $template = new \phpws2\Template($vars);
         $template->setModuleTemplate('properties', 'navbar.html');
         $content = $template->get();
