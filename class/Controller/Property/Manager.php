@@ -25,7 +25,7 @@ class Manager extends User
     {
         $property = $this->factory->load($this->id);
         $admin = $property->contact_id == $this->getCurrentLoggedManager();
-        \Layout::addStyle('properties', 'propertyView.css');
+        \Layout::addStyle('properties', 'property/view.css');
         return $this->factory->view($property, $admin);
     }
 
@@ -44,7 +44,18 @@ class Manager extends User
     protected function editHtmlCommand(\Canopy\Request $request)
     {
         \Layout::addStyle('properties', 'property/form.css');
-        return $this->factory->edit($this->id);
+        return $this->factory->edit($this->id, $this->getCurrentLoggedManager());
+    }
+
+    protected function savePostCommand(\Canopy\Request $request)
+    {
+        try {
+            $property = $this->factory->post($request);
+            $property->contact_id = $this->getCurrentLoggedManager();
+            return array('id' => $this->factory->save($property));
+        } catch (\properties\Exception\PropertySaveFailure $e) {
+            return array('error' => $e->getMessage());
+        }
     }
 
 }
