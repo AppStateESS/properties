@@ -13,5 +13,6 @@ exports.entry = {
   managerdesktop: exports.APP_DIR + '/ManagerDesktop/index.jsx',
   sublease: exports.APP_DIR + '/Sublease/index.jsx',
   subleaseform: exports.APP_DIR + '/SubleaseForm/index.jsx',
+  manageredit: exports.APP_DIR + '/ManagerEdit/index.jsx',
   vendor: ['react', 'react-dom']
 }
