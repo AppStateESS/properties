@@ -38,8 +38,17 @@ export default class ManagerSignin extends React.Component {
     switch (this.url.values.error) {
       case 'not_found':
         return (
-          <div className="alert alert-warning">Could not log-in account.&nbsp;
-            <a href="./properties/Manager/forgot">Did you forget your password?</a>
+          <div className="alert alert-warning">
+            <p>Could not log-in account.</p>
+            <ul>
+              <li>
+                <a href="./properties/Manager/signup">Have you applied for an account yet?</a>
+              </li>
+              <li>Has your account been approved?</li>
+              <li>
+                <a href="./properties/Manager/forgot">Did you forget your password?</a>
+              </li>
+            </ul>
           </div>
         )
     }
