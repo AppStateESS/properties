@@ -15,21 +15,23 @@
  *
  * @license http://opensource.org/licenses/lgpl-3.0.html
  */
+
 namespace properties\Controller\Photo;
 
 class Admin extends User
 {
+
     protected function savePostCommand(\Canopy\Request $request)
     {
         return $this->factory->post($request);
     }
-    
+
     protected function deleteCommand()
     {
         $this->factory->delete($this->id);
-        return array('success'=>true);
+        return array('success' => true);
     }
-    
+
     protected function patchCommand(\Canopy\Request $request)
     {
         $photo = $this->factory->load($this->id);
@@ -42,4 +44,5 @@ class Admin extends User
         }
         return array('success' => true);
     }
+
 }
