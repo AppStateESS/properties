@@ -154,7 +154,7 @@ abstract class SubController extends Base
         $this->id = $id;
 
         $patch_command = $request->isAjax() ? 'jsonPatchCommand' : 'htmlPatchCommand';
-        
+
         if (!method_exists($this, $patch_command)) {
             throw new BadCommand($patch_command);
         }
@@ -188,16 +188,19 @@ abstract class SubController extends Base
 
     protected function managerButtons()
     {
-        $myprops = '<a class="btn" href="./properties/Manager/desktop">View my properties</a>';
+        $myprops = '<a href="./properties/Manager/desktop">View my properties</a>';
         \properties\Factory\NavBar::addOption($myprops);
 
-        $editInfo = '<a href="./properties/Manager/edit">Edit account</a>';
+        $editInfo = '<a href="./properties/Manager/edit">Update my information</a>';
         \properties\Factory\NavBar::addOption($editInfo);
+
+        $passInfo = '<a href="./properties/Manager/changepw">Change my password</a>';
+        \properties\Factory\NavBar::addOption($passInfo);
 
         $signout = '<a href="./properties/Manager/signout">Sign out</a>';
         \properties\Factory\NavBar::addOption($signout);
     }
-    
+
     protected function addApprovalLink()
     {
         $needApproval = $this->needApproval();
@@ -208,7 +211,7 @@ abstract class SubController extends Base
         $link = "<button onClick=\"window.location.href='./properties/Manager/approval'\" class=\"btn btn-default navbar-btn\">$label</button>";
         NavBar::addItem($link);
     }
-    
+
     private function needApproval()
     {
         $db = Database::getDB();
@@ -216,6 +219,18 @@ abstract class SubController extends Base
         $tbl->addFieldConditional('approved', 0);
         $tbl->addField('id')->showCount();
         return $db->selectColumn();
+    }
+
+    public function checkPropertyOwnership($property_id, $manager_id)
+    {
+        $db = Database::getDB();
+        $tbl = $db->addTable('properties');
+        $tbl->addFieldConditional('id', $property_id);
+        $tbl->addFieldConditional('contact_id', $manager_id);
+        $result = $db->selectOneRow();
+        if (!$result) {
+            throw new \properties\Exception\PropertyPrivilege;
+        }
     }
 
 }
