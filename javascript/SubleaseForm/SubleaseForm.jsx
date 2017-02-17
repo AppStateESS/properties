@@ -276,7 +276,7 @@ export default class SubleaseForm extends Base {
     }
     return (
       <div ref="PageTop" className="sublease-form">
-        <h2>Update my sublease</h2>
+        <h2>{sublease.id > 0 ? 'Update' : 'Create'} my sublease</h2>
         {message}
         <div className="row">
           <div className="col-sm-6">
@@ -451,7 +451,7 @@ export default class SubleaseForm extends Base {
               <BigCheckbox
                 handle={this.setIntegerValue.bind(this, 'smoking_allowed')}
                 checked={sublease.smoking_allowed}
-                label="Smoking allowed"/>
+                label="No smoking preferences"/>
               &nbsp;
               <Help
                 title="Regardless of landlord's allowance, the other tenant's wishes should be respected."/>
