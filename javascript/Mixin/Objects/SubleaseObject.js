@@ -1,4 +1,5 @@
 const SubleaseObject = {
+  id: '0',
   additional_fees: '',
   address: '',
   airconditioning: '0',
