@@ -1,4 +1,4 @@
-webpackJsonp([9],{
+webpackJsonp([10],{
 
 /***/ 0:
 /*!***************************************!*\
@@ -16,7 +16,7 @@ webpackJsonp([9],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _Sublease = __webpack_require__(/*! ./Sublease.jsx */ 418);
+	var _Sublease = __webpack_require__(/*! ./Sublease.jsx */ 419);
 	
 	var _Sublease2 = _interopRequireDefault(_Sublease);
 	
@@ -423,7 +423,7 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 194:
+/***/ 195:
 /*!**********************************************!*\
   !*** ./javascript/Mixin/Helper/DecodeUrl.js ***!
   \**********************************************/
@@ -472,7 +472,7 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 204:
+/***/ 205:
 /*!*********************************************!*\
   !*** ./javascript/Mixin/List/SearchBar.jsx ***!
   \*********************************************/
@@ -494,11 +494,11 @@ webpackJsonp([9],{
 	
 	var _Dropdown2 = _interopRequireDefault(_Dropdown);
 	
-	var _Amenities = __webpack_require__(/*! ../Edit/Amenities.jsx */ 205);
+	var _Amenities = __webpack_require__(/*! ../Edit/Amenities.jsx */ 206);
 	
 	var _Amenities2 = _interopRequireDefault(_Amenities);
 	
-	var _reactAddonsCssTransitionGroup = __webpack_require__(/*! react-addons-css-transition-group */ 206);
+	var _reactAddonsCssTransitionGroup = __webpack_require__(/*! react-addons-css-transition-group */ 207);
 	
 	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 	
@@ -781,7 +781,7 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 205:
+/***/ 206:
 /*!*********************************************!*\
   !*** ./javascript/Mixin/Edit/Amenities.jsx ***!
   \*********************************************/
@@ -852,7 +852,7 @@ webpackJsonp([9],{
 	            _react2.default.createElement(
 	              'h4',
 	              null,
-	              'Features'
+	              'Details'
 	            ),
 	            _react2.default.createElement(
 	              'ul',
@@ -912,6 +912,17 @@ webpackJsonp([9],{
 	                  _react2.default.createElement('input', { type: 'checkbox',
 	                    checked: searchVars.utils === '1', onChange: this.props.toggle.bind(null, 'utils') }),
 	                  '\xA0 Utilities included'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  'label',
+	                  null,
+	                  _react2.default.createElement('input', { type: 'checkbox',
+	                    checked: searchVars.smoking_allowed === '1', onChange: this.props.toggle.bind(null, 'smoking_allowed') }),
+	                  '\xA0 No smoking preference'
 	                )
 	              )
 	            )
@@ -1081,17 +1092,17 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 206:
+/***/ 207:
 /*!******************************************************!*\
   !*** ./~/react-addons-css-transition-group/index.js ***!
   \******************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(/*! react/lib/ReactCSSTransitionGroup */ 207);
+	module.exports = __webpack_require__(/*! react/lib/ReactCSSTransitionGroup */ 208);
 
 /***/ },
 
-/***/ 207:
+/***/ 208:
 /*!************************************************!*\
   !*** ./~/react/lib/ReactCSSTransitionGroup.js ***!
   \************************************************/
@@ -1114,8 +1125,8 @@ webpackJsonp([9],{
 	
 	var React = __webpack_require__(/*! ./React */ 2);
 	
-	var ReactTransitionGroup = __webpack_require__(/*! ./ReactTransitionGroup */ 208);
-	var ReactCSSTransitionGroupChild = __webpack_require__(/*! ./ReactCSSTransitionGroupChild */ 210);
+	var ReactTransitionGroup = __webpack_require__(/*! ./ReactTransitionGroup */ 209);
+	var ReactCSSTransitionGroupChild = __webpack_require__(/*! ./ReactCSSTransitionGroupChild */ 211);
 	
 	function createTransitionTimeoutPropValidator(transitionType) {
 	  var timeoutPropName = 'transition' + transitionType + 'Timeout';
@@ -1187,7 +1198,7 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 208:
+/***/ 209:
 /*!*********************************************!*\
   !*** ./~/react/lib/ReactTransitionGroup.js ***!
   \*********************************************/
@@ -1210,7 +1221,7 @@ webpackJsonp([9],{
 	
 	var React = __webpack_require__(/*! ./React */ 2);
 	var ReactInstanceMap = __webpack_require__(/*! ./ReactInstanceMap */ 119);
-	var ReactTransitionChildMapping = __webpack_require__(/*! ./ReactTransitionChildMapping */ 209);
+	var ReactTransitionChildMapping = __webpack_require__(/*! ./ReactTransitionChildMapping */ 210);
 	
 	var emptyFunction = __webpack_require__(/*! fbjs/lib/emptyFunction */ 12);
 	
@@ -1443,7 +1454,7 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 209:
+/***/ 210:
 /*!****************************************************!*\
   !*** ./~/react/lib/ReactTransitionChildMapping.js ***!
   \****************************************************/
@@ -1556,7 +1567,7 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 210:
+/***/ 211:
 /*!*****************************************************!*\
   !*** ./~/react/lib/ReactCSSTransitionGroupChild.js ***!
   \*****************************************************/
@@ -1578,8 +1589,8 @@ webpackJsonp([9],{
 	var React = __webpack_require__(/*! ./React */ 2);
 	var ReactDOM = __webpack_require__(/*! ./ReactDOM */ 35);
 	
-	var CSSCore = __webpack_require__(/*! fbjs/lib/CSSCore */ 211);
-	var ReactTransitionEvents = __webpack_require__(/*! ./ReactTransitionEvents */ 212);
+	var CSSCore = __webpack_require__(/*! fbjs/lib/CSSCore */ 212);
+	var ReactTransitionEvents = __webpack_require__(/*! ./ReactTransitionEvents */ 213);
 	
 	var onlyChild = __webpack_require__(/*! ./onlyChild */ 33);
 	
@@ -1732,7 +1743,7 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 211:
+/***/ 212:
 /*!*******************************!*\
   !*** ./~/fbjs/lib/CSSCore.js ***!
   \*******************************/
@@ -1863,7 +1874,7 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 212:
+/***/ 213:
 /*!**********************************************!*\
   !*** ./~/react/lib/ReactTransitionEvents.js ***!
   \**********************************************/
@@ -1945,7 +1956,7 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 214:
+/***/ 215:
 /*!****************************************!*\
   !*** ./javascript/Mixin/List/Base.jsx ***!
   \****************************************/
@@ -1967,11 +1978,11 @@ webpackJsonp([9],{
 	
 	var _Bind2 = _interopRequireDefault(_Bind);
 	
-	var _DecodeUrl = __webpack_require__(/*! ../Helper/DecodeUrl.js */ 194);
+	var _DecodeUrl = __webpack_require__(/*! ../Helper/DecodeUrl.js */ 195);
 	
 	var _DecodeUrl2 = _interopRequireDefault(_DecodeUrl);
 	
-	var _setIfDefined = __webpack_require__(/*! ../Helper/setIfDefined.js */ 215);
+	var _setIfDefined = __webpack_require__(/*! ../Helper/setIfDefined.js */ 216);
 	
 	var _setIfDefined2 = _interopRequireDefault(_setIfDefined);
 	
@@ -2108,7 +2119,7 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 215:
+/***/ 216:
 /*!*************************************************!*\
   !*** ./javascript/Mixin/Helper/setIfDefined.js ***!
   \*************************************************/
@@ -2141,7 +2152,7 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 418:
+/***/ 419:
 /*!******************************************!*\
   !*** ./javascript/Sublease/Sublease.jsx ***!
   \******************************************/
@@ -2163,15 +2174,15 @@ webpackJsonp([9],{
 	
 	var _Bind2 = _interopRequireDefault(_Bind);
 	
-	var _Listing = __webpack_require__(/*! ./Listing.jsx */ 419);
+	var _Listing = __webpack_require__(/*! ./Listing.jsx */ 420);
 	
 	var _Listing2 = _interopRequireDefault(_Listing);
 	
-	var _SearchBar = __webpack_require__(/*! ../Mixin/List/SearchBar.jsx */ 204);
+	var _SearchBar = __webpack_require__(/*! ../Mixin/List/SearchBar.jsx */ 205);
 	
 	var _SearchBar2 = _interopRequireDefault(_SearchBar);
 	
-	var _Base = __webpack_require__(/*! ../Mixin/List/Base.jsx */ 214);
+	var _Base = __webpack_require__(/*! ../Mixin/List/Base.jsx */ 215);
 	
 	var _Base2 = _interopRequireDefault(_Base);
 	
@@ -2182,11 +2193,6 @@ webpackJsonp([9],{
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	//import empty from '../Mixin/Empty.js'
-	
-	//import DecodeUrl from '../Mixin/DecodeUrl.js'
-	//import setIfDefined from '../Mixin/setIfDefined.js'
-	
 	
 	/* global $ */
 	
@@ -2256,7 +2262,7 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 419:
+/***/ 420:
 /*!*****************************************!*\
   !*** ./javascript/Sublease/Listing.jsx ***!
   \*****************************************/
@@ -2278,7 +2284,7 @@ webpackJsonp([9],{
 	
 	var _Waiting2 = _interopRequireDefault(_Waiting);
 	
-	var _SubleaseRow = __webpack_require__(/*! ./SubleaseRow.jsx */ 420);
+	var _SubleaseRow = __webpack_require__(/*! ./SubleaseRow.jsx */ 421);
 	
 	var _SubleaseRow2 = _interopRequireDefault(_SubleaseRow);
 	
@@ -2329,8 +2335,8 @@ webpackJsonp([9],{
 	          return _react2.default.createElement(_SubleaseRow2.default, { sublease: value, key: key });
 	        }.bind(this));
 	        return _react2.default.createElement(
-	          'div',
-	          null,
+	          'ul',
+	          { className: 'listing' },
 	          rows
 	        );
 	      }
@@ -2350,7 +2356,7 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 420:
+/***/ 421:
 /*!*********************************************!*\
   !*** ./javascript/Sublease/SubleaseRow.jsx ***!
   \*********************************************/
@@ -2409,10 +2415,10 @@ webpackJsonp([9],{
 	
 	      var link = './properties/Sublease/' + sublease.id + '/' + this.urlTitle(sublease.name);
 	      return _react2.default.createElement(
-	        'div',
-	        { className: 'row sublease-row' },
+	        'li',
+	        { className: 'sublease-row' },
 	        _react2.default.createElement(
-	          'div',
+	          'h4',
 	          { className: 'title' },
 	          _react2.default.createElement(
 	            'a',
@@ -2422,59 +2428,61 @@ webpackJsonp([9],{
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'col-sm-4' },
+	          { className: 'row' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'rent' },
-	            this.getRent()
+	            { className: 'col-sm-4' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'rent' },
+	              this.getRent()
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'room-bath' },
+	              sublease.proptype,
+	              '\xA0 - ',
+	              sublease.bedroom_no,
+	              '\xA0Bed, ',
+	              sublease.bathroom_no,
+	              '\xA0Bath'
+	            )
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'room-bath' },
-	            sublease.proptype,
-	            '\xA0 - ',
-	            sublease.bedroom_no,
-	            '\xA0Bed, ',
-	            sublease.bathroom_no,
-	            '\xA0Bath'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'col-sm-4' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'availability' },
+	            { className: 'col-sm-4' },
 	            _react2.default.createElement(
-	              'strong',
-	              null,
-	              'Availability:'
+	              'div',
+	              { className: 'availability' },
+	              _react2.default.createElement(
+	                'strong',
+	                null,
+	                'Availability:'
+	              ),
+	              sublease.move_in_date
 	            ),
-	            ' ',
-	            sublease.move_in_date
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'end-date' },
+	              _react2.default.createElement(
+	                'strong',
+	                null,
+	                'Sublease end date:'
+	              ),
+	              sublease.move_out_date
+	            )
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'end-date' },
-	            _react2.default.createElement(
-	              'strong',
-	              null,
-	              'Sublease end date:'
-	            ),
-	            ' ',
-	            sublease.move_out_date
+	            { className: 'col-sm-4' },
+	            this.petsAllowed(sublease.pets_allowed),
+	            this.furnished(sublease.furnished),
+	            this.airconditioner(sublease.airconditioning),
+	            this.dishwasher(sublease.dishwasher),
+	            this.utilities(sublease.utilities_inc),
+	            this.appalcart(sublease.appalcart),
+	            this.washer(sublease.washer)
 	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'col-sm-4' },
-	          this.petsAllowed(sublease.pets_allowed),
-	          this.furnished(sublease.furnished),
-	          this.airconditioner(sublease.airconditioning),
-	          this.dishwasher(sublease.dishwasher),
-	          this.utilities(sublease.utilities_inc),
-	          this.appalcart(sublease.appalcart),
-	          this.washer(sublease.washer)
 	        )
 	      );
 	    }

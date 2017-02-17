@@ -1,4 +1,4 @@
-webpackJsonp([4],{
+webpackJsonp([5],{
 
 /***/ 0:
 /*!********************************************!*\
@@ -16,7 +16,7 @@ webpackJsonp([4],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _ManagerSignup = __webpack_require__(/*! ./ManagerSignup.jsx */ 195);
+	var _ManagerSignup = __webpack_require__(/*! ./ManagerSignup.jsx */ 196);
 	
 	var _ManagerSignup2 = _interopRequireDefault(_ManagerSignup);
 	
@@ -423,7 +423,7 @@ webpackJsonp([4],{
 
 /***/ },
 
-/***/ 195:
+/***/ 196:
 /*!****************************************************!*\
   !*** ./javascript/ManagerSignup/ManagerSignup.jsx ***!
   \****************************************************/

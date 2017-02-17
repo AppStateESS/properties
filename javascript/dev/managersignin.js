@@ -1,4 +1,4 @@
-webpackJsonp([3],{
+webpackJsonp([4],{
 
 /***/ 0:
 /*!********************************************!*\
@@ -16,7 +16,7 @@ webpackJsonp([3],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _ManagerSignin = __webpack_require__(/*! ./ManagerSignin.jsx */ 193);
+	var _ManagerSignin = __webpack_require__(/*! ./ManagerSignin.jsx */ 194);
 	
 	var _ManagerSignin2 = _interopRequireDefault(_ManagerSignin);
 	
@@ -243,7 +243,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 193:
+/***/ 194:
 /*!****************************************************!*\
   !*** ./javascript/ManagerSignin/ManagerSignin.jsx ***!
   \****************************************************/
@@ -269,7 +269,7 @@ webpackJsonp([3],{
 	
 	var _Empty2 = _interopRequireDefault(_Empty);
 	
-	var _DecodeUrl = __webpack_require__(/*! ../Mixin/Helper/DecodeUrl.js */ 194);
+	var _DecodeUrl = __webpack_require__(/*! ../Mixin/Helper/DecodeUrl.js */ 195);
 	
 	var _DecodeUrl2 = _interopRequireDefault(_DecodeUrl);
 	
@@ -328,11 +328,37 @@ webpackJsonp([3],{
 	          return _react2.default.createElement(
 	            'div',
 	            { className: 'alert alert-warning' },
-	            'Could not log-in account.\xA0',
 	            _react2.default.createElement(
-	              'a',
-	              { href: './properties/Manager/forgot' },
-	              'Did you forget your password?'
+	              'p',
+	              null,
+	              'Could not log-in account.'
+	            ),
+	            _react2.default.createElement(
+	              'ul',
+	              null,
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  'a',
+	                  { href: './properties/Manager/signup' },
+	                  'Have you applied for an account yet?'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                'Has your account been approved?'
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  'a',
+	                  { href: './properties/Manager/forgot' },
+	                  'Did you forget your password?'
+	                )
+	              )
 	            )
 	          );
 	      }
@@ -418,7 +444,7 @@ webpackJsonp([3],{
 
 /***/ },
 
-/***/ 194:
+/***/ 195:
 /*!**********************************************!*\
   !*** ./javascript/Mixin/Helper/DecodeUrl.js ***!
   \**********************************************/

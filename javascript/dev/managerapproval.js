@@ -468,8 +468,13 @@ webpackJsonp([1],{
 	      $.ajax({
 	        url: './properties/Manager/' + managerId,
 	        data: {
-	          varname: 'approved',
-	          value: true
+	          values: [{
+	            varname: 'approved',
+	            value: true
+	          }, {
+	            varname: 'active',
+	            value: true
+	          }]
 	        },
 	        dataType: 'json',
 	        type: 'patch'

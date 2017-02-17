@@ -1,4 +1,4 @@
-webpackJsonp([8],{
+webpackJsonp([9],{
 
 /***/ 0:
 /*!********************************************!*\
@@ -16,7 +16,7 @@ webpackJsonp([8],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _PropertyImage = __webpack_require__(/*! ./PropertyImage.jsx */ 413);
+	var _PropertyImage = __webpack_require__(/*! ./PropertyImage.jsx */ 414);
 	
 	var _PropertyImage2 = _interopRequireDefault(_PropertyImage);
 	
@@ -49,7 +49,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 409:
+/***/ 410:
 /*!*******************************************!*\
   !*** ./javascript/Mixin/Html/Overlay.jsx ***!
   \*******************************************/
@@ -205,7 +205,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 413:
+/***/ 414:
 /*!****************************************************!*\
   !*** ./javascript/PropertyImage/PropertyImage.jsx ***!
   \****************************************************/
@@ -223,7 +223,7 @@ webpackJsonp([8],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _ImageOverlay = __webpack_require__(/*! ./ImageOverlay.jsx */ 414);
+	var _ImageOverlay = __webpack_require__(/*! ./ImageOverlay.jsx */ 415);
 	
 	var _ImageOverlay2 = _interopRequireDefault(_ImageOverlay);
 	
@@ -325,6 +325,9 @@ webpackJsonp([8],{
 	    value: function _delete(id, key) {
 	      $.ajax({
 	        url: './properties/Photo/' + id,
+	        data: {
+	          propertyId: propertyId
+	        },
 	        dataType: 'json',
 	        method: 'DELETE',
 	        success: function (data) {
@@ -343,7 +346,8 @@ webpackJsonp([8],{
 	      $.ajax({
 	        url: './properties/Photo/' + id,
 	        data: {
-	          varname: 'main_pic'
+	          varname: 'main_pic',
+	          propertyId: propertyId
 	        },
 	        method: 'PATCH',
 	        success: function () {
@@ -391,7 +395,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 414:
+/***/ 415:
 /*!***************************************************!*\
   !*** ./javascript/PropertyImage/ImageOverlay.jsx ***!
   \***************************************************/
@@ -411,19 +415,19 @@ webpackJsonp([8],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Overlay = __webpack_require__(/*! ../Mixin/Html/Overlay.jsx */ 409);
+	var _Overlay = __webpack_require__(/*! ../Mixin/Html/Overlay.jsx */ 410);
 	
 	var _Overlay2 = _interopRequireDefault(_Overlay);
 	
-	var _reactDropzone = __webpack_require__(/*! react-dropzone */ 415);
+	var _reactDropzone = __webpack_require__(/*! react-dropzone */ 416);
 	
 	var _reactDropzone2 = _interopRequireDefault(_reactDropzone);
 	
-	var _Thumb = __webpack_require__(/*! ./Thumb.jsx */ 416);
+	var _Thumb = __webpack_require__(/*! ./Thumb.jsx */ 417);
 	
 	var _Thumb2 = _interopRequireDefault(_Thumb);
 	
-	var _ImageFrame = __webpack_require__(/*! ./ImageFrame.jsx */ 417);
+	var _ImageFrame = __webpack_require__(/*! ./ImageFrame.jsx */ 418);
 	
 	var _ImageFrame2 = _interopRequireDefault(_ImageFrame);
 	
@@ -545,7 +549,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 415:
+/***/ 416:
 /*!****************************************!*\
   !*** ./~/react-dropzone/dist/index.js ***!
   \****************************************/
@@ -961,7 +965,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 416:
+/***/ 417:
 /*!********************************************!*\
   !*** ./javascript/PropertyImage/Thumb.jsx ***!
   \********************************************/
@@ -1076,7 +1080,7 @@ webpackJsonp([8],{
 
 /***/ },
 
-/***/ 417:
+/***/ 418:
 /*!*************************************************!*\
   !*** ./javascript/PropertyImage/ImageFrame.jsx ***!
   \*************************************************/
