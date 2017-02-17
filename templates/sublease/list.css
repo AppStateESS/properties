@@ -1,8 +1,19 @@
+.sublease-list ul.listing {
+    padding:0px;
+}
+
 .sublease-row {
     margin-bottom : 1.2em;
+    list-style-type: none;
+    padding: 0px;
 }
-.sublease-row .title, .sublease-row .rent {
+.sublease-row h4.title {
     font-size : 1.6em;
+    margin : 0px;
+}
+
+.sublease-row .rent {
+    font-size : 1.5em;
 }
 
 .sublease-row .title {
@@ -47,8 +58,4 @@
 .trans-leave.trans-leave-active {
     opacity: 0.01;
     transition: opacity 300ms ease-in;
-}
-
-.sublease-list div.sublease-row:nth-child(odd) {
-    background-color : #d9edf7;
 }
