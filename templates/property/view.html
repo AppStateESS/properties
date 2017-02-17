@@ -5,6 +5,8 @@
     let currentPhotos = <?=$current_photos?>
 </script>
 
+<?= isset($manager_warning) ? '<div class="alert alert-danger">' . $manager_warning . '</div>' : null;?>
+
 <div class="property-view">
     <div class="row">
         <div class="col-sm-8 header">
@@ -76,6 +78,7 @@
                     <i class="fa fa-circle fa-stack-2x"></i>
                     <i class="fa fa-paw fa-stack-1x fa-inverse"></i>
                 </span> Pet policy</h4>
+            <h5>Pets allowed</h5>
             <?php if (empty($pet_type) && empty($pet_fee) && empty($pet_deposit)): ?>
             <p>Contact our office for details.</p>
             <?php endif;?>
