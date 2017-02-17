@@ -28,7 +28,7 @@ export default class Amenities extends React.Component {
         <hr />
         <div className="row">
           <div className="col-sm-4">
-            <h4>Features</h4>
+            <h4>Details</h4>
             <ul className="list-unstyled">
               <li>
                 <label><input
@@ -51,6 +51,10 @@ export default class Amenities extends React.Component {
               <li>
                 <label><input type="checkbox"
                   checked={searchVars.utils === '1'} onChange={this.props.toggle.bind(null, 'utils')}/>&nbsp; Utilities included</label>
+              </li>
+              <li>
+                <label><input type="checkbox"
+                  checked={searchVars.smoking_allowed === '1'} onChange={this.props.toggle.bind(null, 'smoking_allowed')}/>&nbsp; No smoking preference</label>
               </li>
             </ul>
           </div>
