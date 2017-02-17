@@ -1,6 +1,7 @@
 'use strict'
 import React from 'react'
 import BooleanButton from '../Mixin/Form/BooleanButton.jsx'
+import BigCheckbox from '../Mixin/Form/BigCheckbox.jsx'
 
 export default class Features extends React.Component {
   constructor(props) {
@@ -16,70 +17,54 @@ export default class Features extends React.Component {
         <div className="row">
           <div className="col-sm-6">
             <p>
-              <BooleanButton
-                name="utilities_inc"
-                current={property.utilities_inc}
-                label={['Utilities included', 'Utilities not included']}
-                icon={true}
-                handleClick={this.props.setValue.bind(this, 'utilities_inc')}/>
+              <BigCheckbox
+                label="Utilities included"
+                checked={property.utilities_inc}
+                handle={this.props.setValue.bind(this, 'utilities_inc')}/>
             </p>
             <p>
-              <BooleanButton
-                name="furnished"
-                current={property.furnished}
-                label={['Furnished', 'Not furnished']}
-                icon={true}
-                handleClick={this.props.setValue.bind(this, 'furnished')}/>
+              <BigCheckbox
+                label="Furnished"
+                checked={property.furnished}
+                handle={this.props.setValue.bind(this, 'furnished')}/>
             </p>
             <p>
-              <BooleanButton
-                name="dishwasher"
-                current={property.dishwasher}
-                label={['Dishwasher included', 'No dishwasher']}
-                icon={true}
-                handleClick={this.props.setValue.bind(this, 'dishwasher')}/>
+              <BigCheckbox
+                label="Dishwasher included"
+                checked={property.dishwasher}
+                handle={this.props.setValue.bind(this, 'dishwasher')}/>
             </p>
             <p>
-              <BooleanButton
-                name="airconditioning"
-                current={property.airconditioning}
-                icon={true}
-                label={['Air conditioning', 'No air conditioning']}
-                handleClick={this.props.setValue.bind(this, 'airconditioning')}/>
+              <BigCheckbox
+                label="Air conditioning"
+                checked={property.airconditioning}
+                handle={this.props.setValue.bind(this, 'airconditioning')}/>
             </p>
           </div>
           <div className="col-sm-6">
             <p>
-              <BooleanButton
-                name="appalcart"
-                current={property.appalcart}
-                icon={true}
-                label={['On Appalcart route', 'Not on Appalcart route']}
-                handleClick={this.props.setValue.bind(this, 'appalcart')}/>
+              <BigCheckbox
+                label="On Appalcart route"
+                checked={property.appalcart}
+                handle={this.props.setValue.bind(this, 'appalcart')}/>
             </p>
             <p>
-              <BooleanButton
-                name="clubhouse"
-                current={property.clubhouse}
-                icon={true}
-                label={['Club house available', 'No club house']}
-                handleClick={this.props.setValue.bind(this, 'clubhouse')}/>
+              <BigCheckbox
+                label="Club house available"
+                checked={property.clubhouse}
+                handle={this.props.setValue.bind(this, 'clubhouse')}/>
             </p>
             <p>
-              <BooleanButton
-                current={property.workout_room}
-                name="workout_room"
-                icon={true}
-                label={['Workout room', 'No workout room']}
-                handleClick={this.props.setValue.bind(this, 'workout_room')}/>
+              <BigCheckbox
+                label="Workout room"
+                checked={property.workout_room}
+                handle={this.props.setValue.bind(this, 'workout_room')}/>
             </p>
             <p>
-            <BooleanButton
-              name="smoking_allowed"
-              label={['Smoking allowed', 'No smoking allowed']}
-              current={property.utilities_inc}
-              icon={true}
-              handleClick={this.props.setValue.bind(this, 'smoking_allowed')}/>
+              <BigCheckbox
+                label="No smoking preference"
+                checked={property.smoking_allowed}
+                handle={this.props.setValue.bind(this, 'smoking_allowed')}/>
             </p>
           </div>
         </div>
