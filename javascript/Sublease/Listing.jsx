@@ -28,7 +28,7 @@ export default class Listing extends React.Component {
         return <SubleaseRow sublease={value} key={key}/>
       }.bind(this))
       return (
-        <div>{rows}</div>
+        <ul className="listing">{rows}</ul>
       )
     }
 
