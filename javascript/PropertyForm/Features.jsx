@@ -16,56 +16,56 @@ export default class Features extends React.Component {
         <h3>Amenities</h3>
         <div className="row">
           <div className="col-sm-6">
-            <p>
+            <div>
               <BigCheckbox
                 label="Utilities included"
                 checked={property.utilities_inc}
                 handle={this.props.setValue.bind(this, 'utilities_inc')}/>
-            </p>
-            <p>
+            </div>
+            <div>
               <BigCheckbox
                 label="Furnished"
                 checked={property.furnished}
                 handle={this.props.setValue.bind(this, 'furnished')}/>
-            </p>
-            <p>
+            </div>
+            <div>
               <BigCheckbox
                 label="Dishwasher included"
                 checked={property.dishwasher}
                 handle={this.props.setValue.bind(this, 'dishwasher')}/>
-            </p>
-            <p>
+            </div>
+            <div>
               <BigCheckbox
                 label="Air conditioning"
                 checked={property.airconditioning}
                 handle={this.props.setValue.bind(this, 'airconditioning')}/>
-            </p>
+            </div>
           </div>
           <div className="col-sm-6">
-            <p>
+            <div>
               <BigCheckbox
                 label="On Appalcart route"
                 checked={property.appalcart}
                 handle={this.props.setValue.bind(this, 'appalcart')}/>
-            </p>
-            <p>
+            </div>
+            <div>
               <BigCheckbox
                 label="Club house available"
                 checked={property.clubhouse}
                 handle={this.props.setValue.bind(this, 'clubhouse')}/>
-            </p>
-            <p>
+            </div>
+            <div>
               <BigCheckbox
                 label="Workout room"
                 checked={property.workout_room}
                 handle={this.props.setValue.bind(this, 'workout_room')}/>
-            </p>
-            <p>
+            </div>
+            <div>
               <BigCheckbox
                 label="No smoking preference"
                 checked={property.smoking_allowed}
                 handle={this.props.setValue.bind(this, 'smoking_allowed')}/>
-            </p>
+            </div>
           </div>
         </div>
       </div>

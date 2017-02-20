@@ -8,7 +8,6 @@ import DecodeUrl from '../Mixin/Helper/DecodeUrl.js'
 import PropertyListing from './PropertyListing.jsx'
 import Base from '../Mixin/List/Base.jsx'
 
-
 /* global $ */
 
 export default class Property extends Base {
@@ -22,9 +21,7 @@ export default class Property extends Base {
     }
 
     this.managerId = 0
-    bindMethods([
-      'load',
-    ], this)
+    bindMethods(['load'], this)
   }
 
   componentDidMount() {
@@ -74,7 +71,9 @@ export default class Property extends Base {
     let manager = 'All managers'
     if (this.state.manager) {
       const managerLink = `./properties/Manager/${this.state.manager.id}/view`
-      manager = <span><a href={managerLink}>{this.state.manager.company_name}</a></span>
+      manager = <span>
+        <a href={managerLink}>{this.state.manager.company_name}</a>
+      </span>
     }
 
     let message
