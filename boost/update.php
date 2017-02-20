@@ -244,7 +244,28 @@ EOF;
             }
             $content[] = <<<EOF
 <pre>
+Version 2.0.3
+---------------
 + Inquiry feature added.
+</pre>
+EOF;
+        case (version_compare($currentVersion, '2.0.4', '<')):
+            try {
+                $db = \phpws2\Database::getDB();
+                $db->begin();
+                $sublease_photo = new \properties\Resource\SubleasePhoto;
+                $sublease_photo->createTable($db);
+                $db->commit();
+            } catch (\Exception $ex) {
+                $db->rollback();
+                $content[] = 'Update failed: ' . $ex->getMessage();
+                return false;
+            }
+            $content[] = <<<EOF
+<pre>
+Version 2.0.4
+---------------
++ Added sublease photos
 </pre>
 EOF;
     }
