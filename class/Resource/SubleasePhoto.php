@@ -18,43 +18,20 @@
 
 namespace properties\Resource;
 
-class SubleasePhoto extends Base
+class SubleasePhoto extends PicBase
 {
-    protected $width;
-    protected $height;
     /**
-     * Property id
-     * @var phpws2\Variable\Integer
+     * Id of sublease photo is associated to
+     * @var \phpws2\Variable\IntegerVar
      */
     protected $sid;
-    protected $path;
-    protected $title;
-    
+    protected $uid;
     protected $table = 'prop_sub_photo';
-            
+
     public function __construct()
     {
         parent::__construct();
-        $this->width = new \phpws2\Variable\IntegerVar(0, 'width');
-        $this->width->setRange(5);
-        $this->height = new \phpws2\Variable\IntegerVar(0, 'height');
-        $this->height->setRange(5);
+        $this->uid = new \phpws2\Variable\IntegerVar(0, 'uid');
         $this->sid = new \phpws2\Variable\IntegerVar(0, 'sid');
-        $this->path = new \phpws2\Variable\FileVar(null, 'path');
-        $this->path->setLimit(255);
-        $this->title = new \phpws2\Variable\StringVar('', 'title');
-        $this->title->setLimit(255);
-    }
-    
-    public function delete()
-    {
-        unlink($this->path);
-        unlink($this->getThumbnail());
-        parent::delete();
-    }
-    
-    public function getThumbnail()
-    {
-        return preg_replace('/\.(jpg|jpeg|gif|png)$/i', '_tn.\\1', $this->path);
     }
 }
