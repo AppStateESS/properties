@@ -15,7 +15,7 @@ webpackJsonp([11],[
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _SubleaseForm = __webpack_require__(/*! ./SubleaseForm.jsx */ 422);
+	var _SubleaseForm = __webpack_require__(/*! ./SubleaseForm.jsx */ 423);
 	
 	var _SubleaseForm2 = _interopRequireDefault(_SubleaseForm);
 	
@@ -29306,9 +29306,108 @@ webpackJsonp([11],[
 /* 404 */,
 /* 405 */,
 /* 406 */,
-/* 407 */,
+/* 407 */
+/*!***********************************************!*\
+  !*** ./javascript/Mixin/Form/BigCheckbox.jsx ***!
+  \***********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Empty = __webpack_require__(/*! ../Helper/Empty.js */ 187);
+	
+	var _Empty2 = _interopRequireDefault(_Empty);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var BigCheckbox = function (_React$Component) {
+	  _inherits(BigCheckbox, _React$Component);
+	
+	  function BigCheckbox(props) {
+	    _classCallCheck(this, BigCheckbox);
+	
+	    var _this = _possibleConstructorReturn(this, (BigCheckbox.__proto__ || Object.getPrototypeOf(BigCheckbox)).call(this, props));
+	
+	    _this.handle = _this.handle.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(BigCheckbox, [{
+	    key: 'handle',
+	    value: function handle() {
+	      this.props.handle((0, _Empty2.default)(this.props.checked));
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var mute = {
+	        color: '#666'
+	      };
+	      var point = {
+	        cursor: 'pointer',
+	        display: 'inline-block'
+	      };
+	      var labelText = {
+	        fontSize: '20px',
+	        display: 'inline-block',
+	        marginTop: '4px'
+	      };
+	
+	      return _react2.default.createElement(
+	        'div',
+	        { onClick: this.handle, style: point, className: 'big-checkbox' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'fa-stack fa-lg pull-left' },
+	          _react2.default.createElement('i', { className: 'fa fa-square-o fa-stack-2x', style: mute }),
+	          (0, _Empty2.default)(this.props.checked) ? null : _react2.default.createElement('i', { className: 'fa fa-check text-success fa-stack-2x' })
+	        ),
+	        '\xA0',
+	        _react2.default.createElement(
+	          'div',
+	          { style: labelText, className: !(0, _Empty2.default)(this.props.checked) ? 'text-success' : 'text-muted' },
+	          this.props.label
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return BigCheckbox;
+	}(_react2.default.Component);
+	
+	exports.default = BigCheckbox;
+	
+	
+	BigCheckbox.propTypes = {
+	  label: _react2.default.PropTypes.string,
+	  checked: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.bool, _react2.default.PropTypes.string, _react2.default.PropTypes.number]),
+	  handle: _react2.default.PropTypes.func.isRequired
+	};
+	
+	BigCheckbox.defaultProps = {
+	  checked: false
+	};
+
+/***/ },
 /* 408 */,
-/* 409 */
+/* 409 */,
+/* 410 */
 /*!***************************************************!*\
   !*** ./javascript/Mixin/Edit/UtilityFunctions.js ***!
   \***************************************************/
@@ -29414,8 +29513,8 @@ webpackJsonp([11],[
 	exports.default = UtilityFunctions;
 
 /***/ },
-/* 410 */,
-/* 411 */
+/* 411 */,
+/* 412 */
 /*!**********************************************!*\
   !*** ./javascript/Mixin/Form/SubmitForm.jsx ***!
   \**********************************************/
@@ -29473,7 +29572,7 @@ webpackJsonp([11],[
 	exports.default = SubmitForm;
 
 /***/ },
-/* 412 */
+/* 413 */
 /*!***************************************!*\
   !*** ./~/react-date-picker/index.css ***!
   \***************************************/
@@ -29482,7 +29581,7 @@ webpackJsonp([11],[
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !./../css-loader!./index.css */ 413);
+	var content = __webpack_require__(/*! !./../css-loader!./index.css */ 414);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ./../style-loader/addStyles.js */ 203)(content, {});
@@ -29502,7 +29601,7 @@ webpackJsonp([11],[
 	}
 
 /***/ },
-/* 413 */
+/* 414 */
 /*!******************************************************!*\
   !*** ./~/css-loader!./~/react-date-picker/index.css ***!
   \******************************************************/
@@ -29519,7 +29618,6 @@ webpackJsonp([11],[
 
 
 /***/ },
-/* 414 */,
 /* 415 */,
 /* 416 */,
 /* 417 */,
@@ -29527,7 +29625,8 @@ webpackJsonp([11],[
 /* 419 */,
 /* 420 */,
 /* 421 */,
-/* 422 */
+/* 422 */,
+/* 423 */
 /*!**************************************************!*\
   !*** ./javascript/SubleaseForm/SubleaseForm.jsx ***!
   \**************************************************/
@@ -29547,7 +29646,7 @@ webpackJsonp([11],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _SubleaseObject = __webpack_require__(/*! ../Mixin/Objects/SubleaseObject.js */ 423);
+	var _SubleaseObject = __webpack_require__(/*! ../Mixin/Objects/SubleaseObject.js */ 424);
 	
 	var _SubleaseObject2 = _interopRequireDefault(_SubleaseObject);
 	
@@ -29585,7 +29684,7 @@ webpackJsonp([11],[
 	
 	var _Base3 = _interopRequireDefault(_Base2);
 	
-	var _BigCheckbox = __webpack_require__(/*! ../Mixin/Form/BigCheckbox.jsx */ 424);
+	var _BigCheckbox = __webpack_require__(/*! ../Mixin/Form/BigCheckbox.jsx */ 407);
 	
 	var _BigCheckbox2 = _interopRequireDefault(_BigCheckbox);
 	
@@ -29593,7 +29692,7 @@ webpackJsonp([11],[
 	
 	var _Message2 = _interopRequireDefault(_Message);
 	
-	var _SubmitForm = __webpack_require__(/*! ../Mixin/Form/SubmitForm.jsx */ 411);
+	var _SubmitForm = __webpack_require__(/*! ../Mixin/Form/SubmitForm.jsx */ 412);
 	
 	var _SubmitForm2 = _interopRequireDefault(_SubmitForm);
 	
@@ -29609,11 +29708,11 @@ webpackJsonp([11],[
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
-	var _UtilityFunctions = __webpack_require__(/*! ../Mixin/Edit/UtilityFunctions.js */ 409);
+	var _UtilityFunctions = __webpack_require__(/*! ../Mixin/Edit/UtilityFunctions.js */ 410);
 	
 	var _UtilityFunctions2 = _interopRequireDefault(_UtilityFunctions);
 	
-	__webpack_require__(/*! react-date-picker/index.css */ 412);
+	__webpack_require__(/*! react-date-picker/index.css */ 413);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -30348,7 +30447,7 @@ webpackJsonp([11],[
 	SubleaseForm.propTypes = {};
 
 /***/ },
-/* 423 */
+/* 424 */
 /*!****************************************************!*\
   !*** ./javascript/Mixin/Objects/SubleaseObject.js ***!
   \****************************************************/
@@ -30390,105 +30489,6 @@ webpackJsonp([11],[
 	};
 	
 	exports.default = SubleaseObject;
-
-/***/ },
-/* 424 */
-/*!***********************************************!*\
-  !*** ./javascript/Mixin/Form/BigCheckbox.jsx ***!
-  \***********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _Empty = __webpack_require__(/*! ../Helper/Empty.js */ 187);
-	
-	var _Empty2 = _interopRequireDefault(_Empty);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var BigCheckbox = function (_React$Component) {
-	  _inherits(BigCheckbox, _React$Component);
-	
-	  function BigCheckbox(props) {
-	    _classCallCheck(this, BigCheckbox);
-	
-	    var _this = _possibleConstructorReturn(this, (BigCheckbox.__proto__ || Object.getPrototypeOf(BigCheckbox)).call(this, props));
-	
-	    _this.handle = _this.handle.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(BigCheckbox, [{
-	    key: 'handle',
-	    value: function handle() {
-	      this.props.handle((0, _Empty2.default)(this.props.checked));
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var mute = {
-	        color: '#666'
-	      };
-	      var point = {
-	        cursor: 'pointer',
-	        display: 'inline-block'
-	      };
-	      var labelText = {
-	        fontSize: '20px',
-	        display: 'inline-block',
-	        marginTop: '4px'
-	      };
-	
-	      return _react2.default.createElement(
-	        'div',
-	        { onClick: this.handle, style: point },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'fa-stack fa-lg pull-left' },
-	          _react2.default.createElement('i', { className: 'fa fa-square-o fa-stack-2x', style: mute }),
-	          (0, _Empty2.default)(this.props.checked) ? null : _react2.default.createElement('i', { className: 'fa fa-check text-success fa-stack-2x' })
-	        ),
-	        '\xA0',
-	        _react2.default.createElement(
-	          'div',
-	          { style: labelText, className: !(0, _Empty2.default)(this.props.checked) ? 'text-success' : 'text-muted' },
-	          this.props.label
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return BigCheckbox;
-	}(_react2.default.Component);
-	
-	exports.default = BigCheckbox;
-	
-	
-	BigCheckbox.propTypes = {
-	  label: _react2.default.PropTypes.string,
-	  checked: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.bool, _react2.default.PropTypes.string, _react2.default.PropTypes.number]),
-	  handle: _react2.default.PropTypes.func.isRequired
-	};
-	
-	BigCheckbox.defaultProps = {
-	  checked: false
-	};
 
 /***/ },
 /* 425 */
