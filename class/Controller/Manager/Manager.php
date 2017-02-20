@@ -54,7 +54,7 @@ class Manager extends User
     {
         $manager_id = $this->id;
         if (empty($manager_id)) {
-            \Server::forward('./');
+            \Canopy\Server::forward('./');
         }
         $vars['manager_id'] = $manager_id;
         $this->factory->signout();

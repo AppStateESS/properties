@@ -634,7 +634,7 @@ class Manager extends Base
         $tpl = array_merge($manager->getStringVars(),
                 $this->contactInformation());
         $hash = md5(randomString(12));
-        $link = \Server::getCurrentUrl(false) . '/changepw/' . $hash;
+        $link = \Canopy\Server::getCurrentUrl(false) . '/changepw/' . $hash;
 
         $tpl['reset_link'] = $link;
 
