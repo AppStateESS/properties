@@ -28,7 +28,7 @@ export default class BigCheckbox extends React.Component {
     }
 
     return (
-      <div onClick={this.handle} style={point}>
+      <div onClick={this.handle} style={point} className="big-checkbox">
         <div className="fa-stack fa-lg pull-left">
           <i className="fa fa-square-o fa-stack-2x" style={mute}></i>
           {empty(this.props.checked) ? null :
