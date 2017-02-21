@@ -23,6 +23,7 @@ class NavBar
 
     public static $items;
     public static $options;
+    public static $title = 'Administrate';
 
     public static function view()
     {
@@ -45,6 +46,7 @@ class NavBar
         $vars['logout_uri'] = $auth->logout_link;
         $vars['username'] = \Current_User::getDisplayName();
         $vars['home'] = \Canopy\Server::getSiteUrl();
+        $vars['title'] = self::$title;
         $template = new \phpws2\Template($vars);
         $template->setModuleTemplate('properties', 'navbar.html');
         $content = $template->get();
@@ -60,5 +62,10 @@ class NavBar
     public static function addOption($option)
     {
         self::$options[] = $option;
+    }
+    
+    public static function setTitle($title)
+    {
+        self::$title = $title;
     }
 }
