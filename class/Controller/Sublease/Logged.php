@@ -18,14 +18,22 @@
 
 namespace properties\Controller\Sublease;
 
+use properties\Factory\NavBar;
+
 class Logged extends User
 {
+
+    public function __construct($role)
+    {
+        parent::__construct($role);
+    }
 
     /**
      * @param \Canopy\Request $request
      */
     public function createHtmlCommand(\Canopy\Request $request)
     {
+        $this->ownerOptions();
         \Layout::addStyle('properties', 'sublease/form.css');
         return $this->factory->reactView('subleaseform');
     }
@@ -35,18 +43,14 @@ class Logged extends User
      */
     public function editHtmlCommand(\Canopy\Request $request)
     {
+        $this->ownerOptions();
         \Layout::addStyle('properties', 'sublease/form.css');
         return $this->factory->reactView('subleaseform');
     }
 
     public function listHtmlCommand(\Canopy\Request $request)
     {
-        $sublease = $this->factory->getSubleaseByUser($this->role->getId());
-        if ($sublease) {
-            $this->editButton();
-        } else {
-            $this->createButton();
-        }
+        $this->ownerOptions();
 
         \Layout::addStyle('properties', 'sublease/list.css');
         return $this->factory->reactView('sublease');
@@ -83,21 +87,34 @@ class Logged extends User
         }
     }
 
-    private function editButton()
-    {
-        $button = <<<EOF
-<button onClick="window.location.href='./properties/Sublease/edit'" class="btn btn-primary btn-sm navbar-btn">Update my sublease</button>
-EOF;
-        \properties\Factory\NavBar::addItem($button);
-    }
-
     public function viewHtmlCommand(\Canopy\Request $request)
     {
-        if ($this->factory->loggedIsOwner($this->id, $this->role->getId())) {
-            $this->editButton();
-        }
+        $this->ownerOptions();
         \Layout::addStyle('properties', 'sublease/view.css');
-        return $this->factory->view($this->id);
+        return $this->factory->view($this->id,
+                        $this->factory->loggedIsOwner($this->id,
+                                $this->role->getId()));
+    }
+
+    public function ownerOptions()
+    {
+        $sublease = $this->factory->getSubleaseByUser($this->role->getId());
+        if ($sublease) {
+            NavBar::addOption('<a href="./properties/Sublease/' . $sublease->getId() . '"><i class="fa fa-building-o"></i>&nbsp;View my sublease</a>');
+            NavBar::addOption('<a href="./properties/Sublease/edit"><i class="fa fa-edit"></i>&nbsp;Update my sublease</a>');
+            NavBar::addOption('<a onClick="editPhotos.callback()" class="pointer"><i class="fa fa-camera"></i>&nbsp;Edit photos</a>');
+            NavBar::addOption('<a href="./properties/Sublease/delete"><i class="fa fa-trash-o"></i>&nbsp;Delete my sublease</a>');
+        } else {
+            $this->createButton();
+        }
+    }
+
+    private function createButton()
+    {
+        $button = <<<EOF
+<button onClick="window.location.href='./properties/Sublease/create'" class="btn btn-primary btn-sm navbar-btn">Create my sublease</button>
+EOF;
+        \properties\Factory\NavBar::addItem($button);
     }
 
 }
