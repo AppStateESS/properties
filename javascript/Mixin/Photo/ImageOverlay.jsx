@@ -1,6 +1,6 @@
 'use strict'
 import React from 'react'
-import Overlay from '../Mixin/Html/Overlay.jsx'
+import Overlay from '../Html/Overlay.jsx'
 import Dropzone from 'react-dropzone'
 import Thumb from './Thumb.jsx'
 import ImageFrame from './ImageFrame.jsx'

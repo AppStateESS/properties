@@ -3,9 +3,8 @@ import React from 'react'
 require('react-image-gallery/styles/css/image-gallery.css')
 import ImageGallery from 'react-image-gallery'
 import Waiting from '../Mixin/Html/Waiting.jsx'
-//import PhotoList from '../Mixin/List/PhotoList.jsx'
 
-/* global $, require, loadPhotos, currentPhotos */
+/* global $, require, subleaseId, loadPhotos, currentPhotos */
 
 export default class Photo extends React.Component {
   constructor() {
@@ -23,7 +22,7 @@ export default class Photo extends React.Component {
   }
 
   load() {
-    $.getJSON('./properties/SubleasePhoto/list').done(function (data) {
+    $.getJSON('./properties/SubleasePhoto/list', {subleaseId: subleaseId }).done(function (data) {
       currentPhotos = data
       this.setState({photos: data})
     }.bind(this))
