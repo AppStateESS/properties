@@ -20,7 +20,12 @@ namespace properties\Controller\Photo;
 
 class User extends \properties\Controller\SubController
 {
-
+    /**
+     * @var \properties\Factory\Sublease\Photo 
+     */
+    protected $factory;
+    
+    
     public function loadFactory()
     {
         $factory = new \properties\Factory\Sublease\Photo;
