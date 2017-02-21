@@ -18,16 +18,16 @@
 
 namespace properties\Factory;
 
-use \properties\Resource\Photo as Resource;
+use \properties\Factory\Base;
 use \phpws2\Database;
 
-class Photo extends Base
+abstract class Photo extends Base
 {
 
-    public function build()
-    {
-        return new Resource;
-    }
+    protected $table_name;
+    protected $item_column;
+    protected $owner_column;
+    protected $save_directory;
 
     public function load($id)
     {
@@ -35,7 +35,7 @@ class Photo extends Base
             throw new \properties\Exception\ResourceNotFound;
         }
         $db = Database::getDB();
-        $tbl = $db->addTable('prop_photo');
+        $tbl = $db->addTable($this->table_name);
         $tbl->addFieldConditional('id', $id);
         $row = $db->selectOneRow();
         if (empty($row)) {
@@ -58,32 +58,20 @@ class Photo extends Base
         $photo->delete();
     }
 
-    public function removeByProperty($propertyId)
-    {
-        $photo_list = $this->listing($propertyId, null, true);
-        if (empty($photo_list)) {
-            return true;
-        }
-
-        foreach ($photo_list as $photo) {
-            $this->delete($photo);
-        }
-    }
-
-    private function thumbnailed($url)
+    protected function thumbnailed($url)
     {
         return preg_replace('/\.(jpg|jpeg|gif|png)$/i', '_tn.\\1', $url);
     }
 
-    public function thumbs($property_id)
+    public function thumbs($id)
     {
         $rows = array();
-        $images = $this->listing($property_id);
+        $images = $this->listing($id);
 
         $db = Database::getDB();
-        $tbl = $db->addTable('prop_photo');
-        if (!empty($property_id)) {
-            $tbl->addFieldConditional('pid', $property_id);
+        $tbl = $db->addTable($this->table_name);
+        if (!empty($id)) {
+            $tbl->addFieldConditional($this->item_column, $id);
         } else {
             throw new \Exception('Property not specified.');
         }
@@ -98,91 +86,41 @@ class Photo extends Base
         return $rows;
     }
 
-    public function listing($property_id = null, $manager_id = null,
+    public function listing($item_id = null, $owner_id = null,
             $as_resource = false)
     {
-        if (empty($property_id) || !is_numeric($property_id)) {
-            throw new \Exception('Property id invalid');
+        if (empty($item_id) || !is_numeric($item_id)) {
+            throw new \Exception('Item id invalid');
         }
         $db = Database::getDB();
-        $tbl = $db->addTable('prop_photo');
-        if (!empty($property_id)) {
-            $tbl->addFieldConditional('pid', $property_id);
-        } elseif (!empty($manager_id)) {
-            $tbl->addFieldConditional('cid', $property_id);
+        $tbl = $db->addTable($this->table_name);
+        if (!empty($item_id)) {
+            $tbl->addFieldConditional($this->item_column, $item_id);
+        } elseif (!empty($owner_id)) {
+            $tbl->addFieldConditional($this->owner_column, $owner_id);
         } else {
-            throw new \Exception('Property not specified.');
+            throw new \Exception('Photo owner not specified.');
         }
         if ($as_resource) {
-            return $db->selectAsResources('\properties\Resource\Photo');
+            return $db->selectAsResources(__NAMESPACE__);
         } else {
             return $db->select();
         }
     }
 
-    private function createTitleFromFileName($file_name)
+    protected function createTitleFromFileName($file_name)
     {
         $file_name2 = preg_replace('/\.(jpe?g|png|gif$)$/', '', $file_name);
         return preg_replace('/[\W_]{1,}/', '', $file_name2);
     }
 
-    public function post(\Canopy\Request $request)
-    {
-        if (!isset($_FILES) || empty($_FILES)) {
-            return array('error' => 'No files uploaded');
-        }
-
-        $propertyId = $request->pullPostInteger('propertyId');
-
-        $propertyFactory = new \properties\Factory\Property;
-        $property = $propertyFactory->load($propertyId);
-        $pic = $_FILES['photo'];
-        try {
-            $this->resize($pic['tmp_name']);
-            $title = $this->createTitleFromFileName($pic['tmp_name']);
-            $size = getimagesize($pic['tmp_name']);
-            $photo = $this->build();
-            $photo->cid = $property->contact_id;
-            $photo->width = $size[0];
-            $photo->height = $size[1];
-            $photo->pid = $property->id;
-            $photo->title = $title;
-            $photo->main_pic = !$this->mainPropertyPicExists($propertyId);
-            $photo->path = $this->moveImage($pic, $property->contact_id);
-            self::saveResource($photo);
-            $result['photo'] = array('original' => $photo->path, 'thumbnail' => $photo->getThumbnail(), 'id' => $photo->getId());
-            $result['success'] = true;
-        } catch (properties\Exception\FileSaveFailure $e) {
-            $result['success'] = false;
-            $result['error'] = $e->getMessage();
-        } catch (properties\Exception\WrongImageType $e) {
-            $result['success'] = false;
-            $result['error'] = $e->getMessage();
-        } catch (\Exception $e) {
-            $result['success'] = false;
-            $result['error'] = $e->getMessage();
-        }
-
-        return $result;
-    }
-
-    private function mainPropertyPicExists($property_id)
-    {
-        $db = Database::getDB();
-        $tbl = $db->addTable('prop_photo');
-        $tbl->addFieldConditional('pid', $property_id);
-        $tbl->addFieldConditional('main_pic', 1);
-        $result = $db->selectOneRow();
-        return (bool) $result;
-    }
-
-    private function resize($file)
+    protected function resize($file)
     {
         return \phpws\PHPWS_File::scaleImage($file, $file, PROP_MAX_IMAGE_WIDTH,
                         PROP_MAX_IMAGE_HEIGHT);
     }
 
-    public function moveImage($pic, $contact_id)
+    public function moveImage($pic, $owner_id)
     {
         if ($pic['error'] !== 0) {
             throw new \Exception('Upload error');
@@ -192,13 +130,12 @@ class Photo extends Base
                         array('image/jpeg', 'image/gif', 'image/png'))) {
             throw new \properties\Exception\WrongImageType;
         }
-        $dest = 'images/properties/c' . $contact_id . '/';
+        $dest = $this->save_directory . $owner_id . '/';
         if (!is_dir($dest)) {
             if (!mkdir($dest, 0755)) {
                 throw new \Exception('Could not create directory');
             }
         }
-
 
         $file_name = rand() . time() . '.' . \phpws\PHPWS_File::getFileExtension($pic['name']);
         $path = $dest . $file_name;
@@ -210,11 +147,11 @@ class Photo extends Base
         return $path;
     }
 
-    public function removePhotos($property_id)
+    public function removePhotos($item_id)
     {
         $db = Database::getDB();
-        $tbl = $db->addTable('prop_photo');
-        $tbl->addFieldConditional('pid', $property_id);
+        $tbl = $db->addTable($this->table_name);
+        $tbl->addFieldConditional($this->item_column, $item_id);
         $tbl->addField('path');
         while ($path = $db->selectColumn()) {
             $files[] = $path;
@@ -228,20 +165,63 @@ class Photo extends Base
         }
     }
 
-    public function removeMain(Resource $photo)
+    protected function mainPicExists($id)
     {
         $db = Database::getDB();
-        $tbl = $db->addTable('prop_photo');
+        $tbl = $db->addTable($this->table_name);
+        $tbl->addFieldConditional($this->item_column, $id);
+        $tbl->addFieldConditional('main_pic', 1);
+        $result = $db->selectOneRow();
+        return (bool) $result;
+    }
+
+    public function removeMain(\properties\Resource\PicBase $photo)
+    {
+        $db = Database::getDB();
+        $tbl = $db->addTable($this->table_name);
         $tbl->addFieldConditional('id', $photo->id, '!=');
-        $tbl->addFieldConditional('pid', $photo->pid, '=');
+        $tbl->addFieldConditional($this->item_column,
+                $photo->{$this->item_column}, '=');
         $tbl->addValue('main_pic', 0);
         return $db->update();
     }
 
-    public function patch(Resource $photo, $varname, $value)
+    public function patch(\properties\Resource\PicBase $photo, $varname, $value)
     {
         $photo->$varname = $value;
         self::saveResource($photo);
+    }
+
+    protected function handlePhotoPost($photo, $item_id, $owner_id)
+    {
+        if (!isset($_FILES) || empty($_FILES)) {
+            return array('error' => 'No files uploaded');
+        }
+        $pic = $_FILES['photo'];
+        
+        try {
+            $this->resize($pic['tmp_name']);
+            $title = $this->createTitleFromFileName($pic['tmp_name']);
+            $size = getimagesize($pic['tmp_name']);
+            $photo->width = $size[0];
+            $photo->height = $size[1];
+            $photo->title = $title;
+            $photo->main_pic = !$this->mainPicExists($item_id);
+            $photo->path = $this->moveImage($pic, $owner_id);
+            self::saveResource($photo);
+            $result['photo'] = array('original' => $photo->path, 'thumbnail' => $photo->getThumbnail(), 'id' => $photo->getId());
+            $result['success'] = true;
+        } catch (properties\Exception\FileSaveFailure $e) {
+            $result['success'] = false;
+            $result['error'] = $e->getMessage();
+        } catch (properties\Exception\WrongImageType $e) {
+            $result['success'] = false;
+            $result['error'] = $e->getMessage();
+        } catch (\Exception $e) {
+            $result['success'] = false;
+            $result['error'] = $e->getMessage();
+        }
+        return $result;
     }
 
 }
