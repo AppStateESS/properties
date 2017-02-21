@@ -23,12 +23,12 @@ class User extends \properties\Controller\SubController
 
     public function loadFactory()
     {
-        $factory = new \properties\Factory\Photo;
+        $factory = new \properties\Factory\Sublease\Photo;
         return $factory;
     }
     
     public function listJsonCommand(\Canopy\Request $request)
     {
-        return $this->factory->thumbs($request->pullGetInteger('propertyId'), null, false, true);
+        return $this->factory->thumbs($request->pullGetInteger('propertyId'));
     }
 }
