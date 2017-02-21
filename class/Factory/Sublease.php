@@ -19,7 +19,8 @@
 namespace properties\Factory;
 
 use properties\Resource\Sublease as Resource;
-use \phpws2\Database;
+use properties\Factory\Sublease\Photo as Photo;
+use phpws2\Database;
 
 class Sublease extends Base
 {
@@ -82,12 +83,12 @@ class Sublease extends Base
         }
         $tpl = $sublease->view();
 
-        //$tpl['id'] = $sublease->id;
-        //$tpl['property_edit_button'] = null;
-
+        $tpl['photo'] = $this->reactView('subleasephoto');
         if ($admin) {
-            //NavBar::addItem($this->updateButton($property->id));
+            $tpl['photoupdate'] = $this->reactView('subleaseimage');
         }
+        $photoFactory = new Photo;
+        $tpl['current_photos'] = json_encode($photoFactory->thumbs($sublease->id));
         $template = new \phpws2\Template($tpl);
         $template->setModuleTemplate('properties', 'sublease/view.html');
         return $template->get();
@@ -106,7 +107,7 @@ class Sublease extends Base
             throw new \properties\Exception\PropertySaveFailure($e->getMessage());
         }
     }
-    
+
     public function loggedIsOwner($sublease_id, $user_id)
     {
         $sublease = $this->load($sublease_id);
