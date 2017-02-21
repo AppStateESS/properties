@@ -18,7 +18,7 @@
 
 namespace properties\Resource;
 
-class Photo extends Base
+class Photo extends PicBase
 {
     /**
      * Contact id
