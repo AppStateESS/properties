@@ -9,7 +9,7 @@
 namespace properties\Factory;
 
 use properties\Resource\Property as Resource;
-use properties\Factory\Photo as Photo;
+use properties\Factory\Property\Photo as Photo;
 use properties\Factory\Manager;
 use properties\Controller\Property as Controller;
 use phpws2\Database;
