@@ -56,14 +56,6 @@ class User extends \properties\Controller\SubController
         return $json;
     }
 
-    private function createButton()
-    {
-        $button = <<<EOF
-<button onClick="window.location.href='./properties/Sublease/create'" class="btn btn-primary btn-sm navbar-btn">Create my sublease</button>
-EOF;
-        \properties\Factory\NavBar::addItem($button);
-    }
-
 
     public function viewHtmlCommand(\Canopy\Request $request)
     {
