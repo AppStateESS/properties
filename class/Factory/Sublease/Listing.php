@@ -18,7 +18,7 @@
 
 namespace properties\Factory\Sublease;
 
-class Listing
+class Listing extends \properties\Factory\Listing
 {
 
     public $search_string;
@@ -44,43 +44,12 @@ class Listing
     public $townhouse = 0;
     public $duplex = 0;
 
-    /**
-     * @var \phpws2\Database\DB
-     */
-    private $db;
-
-    /**
-     * @var \phpws2\Database\Table
-     */
-    private $sublease_table; //tbl
-
     public function __construct()
     {
-        $this->db = \phpws2\Database::getDB();
-        $this->sublease_table = $this->db->addTable('prop_sublease');
-    }
-
-    public function pullVariables(\Canopy\Request $request)
-    {
-        $this->search_string = $request->pullGetString('search', true);
-        $this->limit = $request->pullGetInteger('limit', true);
-        $this->beds = $request->pullGetInteger('beds', true);
-        $this->baths = $request->pullGetInteger('baths', true);
-        $this->minprice = (int) $request->pullGetInteger('minprice', true);
-        $this->maxprice = (int) $request->pullGetInteger('maxprice', true);
-        $this->furnished = $request->pullGetBoolean('furnished', true);
-        $this->pets = $request->pullGetBoolean('pets', true);
-        $this->appalcart = $request->pullGetBoolean('appalcart', true);
-        $this->campus = $request->pullGetBoolean('campus', true);
-        $this->utils = $request->pullGetBoolean('utils', true);
-        $this->dishwasher = $request->pullGetBoolean('dishwasher', true);
-        $this->laundry = $request->pullGetBoolean('laundry', true);
-        $this->efficiency = $request->pullGetBoolean('efficiency', true);
-        $this->apartment = $request->pullGetBoolean('apartment', true);
-        $this->house = $request->pullGetBoolean('house', true);
-        $this->condo = $request->pullGetBoolean('condo', true);
-        $this->townhouse = $request->pullGetBoolean('townhouse', true);
-        $this->duplex = $request->pullGetBoolean('duplex', true);
+        parent::__construct();
+        $this->data_table = $this->db->addTable('prop_sublease');
+        $this->photo_table = $this->db->addTable('prop_sub_photo');
+        $this->photo_table->addField('path', 'thumbnail');
     }
 
     public function get($view = false)
@@ -92,8 +61,17 @@ class Listing
         $this->db->setLimit($this->limit);
         $this->addSearch();
 
+        $this->data_table->addOrderBy('updated', 'desc');
 
-        $this->sublease_table->addOrderBy('updated', 'desc');
+        $c1 = $this->db->createConditional($this->data_table->getField('id'),
+                $this->photo_table->getField('sid'));
+        $c2 = $this->db->createConditional($this->photo_table->getField('main_pic'),
+                1);
+        $c3 = $this->db->createConditional($c1, $c2, 'and');
+
+        $this->db->joinResources($this->data_table, $this->photo_table, $c3,
+                'left');
+
         $this->addConditionals();
         if ($view) {
             $result = $this->db->selectAsResources('\properties\Resource\Sublease');
@@ -107,101 +85,6 @@ class Listing
         } else {
             $result = $this->db->select();
             return $result;
-        }
-    }
-
-    private function addConditionals()
-    {
-        if ($this->beds > 1) {
-            $this->sublease_table->addFieldConditional('bedroom_no',
-                    $this->beds, '>=');
-        }
-        if ($this->baths > 1) {
-            $this->sublease_table->addFieldConditional('bathroom_no',
-                    $this->baths, '>=');
-        }
-        if ($this->minprice) {
-            $this->sublease_table->addFieldConditional('monthly_rent',
-                    (int) $this->minprice, '>=');
-        }
-        if ($this->maxprice) {
-            $this->sublease_table->addFieldConditional('monthly_rent',
-                    (int) $this->maxprice, '<=');
-        }
-        if ($this->furnished) {
-            $this->sublease_table->addFieldConditional('furnished', 1);
-        }
-        if ($this->pets) {
-            $this->sublease_table->addFieldConditional('pets_allowed', 1);
-        }
-        if ($this->appalcart) {
-            $this->sublease_table->addFieldConditional('appalcart', 1);
-        }
-        if ($this->campus) {
-            $this->sublease_table->addFieldConditional('campus_distance', 0);
-        }
-        if ($this->utils) {
-            $this->sublease_table->addFieldConditional('utilities_inc', 1);
-        }
-
-        if ($this->dishwasher) {
-            $this->sublease_table->addFieldConditional('dishwasher', 1);
-        }
-        if ($this->laundry) {
-            $this->sublease_table->addFieldConditional('laundry_type',
-                    LAUNDRY_IN_UNIT);
-        }
-
-
-        if ($this->efficiency || $this->apartment || $this->house || $this->condo || $this->townhouse || $this->duplex) {
-            $prop_type = $this->sublease_table->getField('proptype');
-            if ($this->efficiency) {
-                $prop_cond[] = $this->db->createConditional($this->sublease_table->getField('proptype'),
-                        PROP_TYPE_EFFICIENCY);
-            }
-            if ($this->apartment) {
-                $prop_cond[] = $this->db->createConditional($this->sublease_table->getField('proptype'),
-                        PROP_TYPE_APARTMENT);
-            }
-            if ($this->house) {
-                $prop_cond[] = $this->db->createConditional($this->sublease_table->getField('proptype'),
-                        PROP_TYPE_HOUSE);
-            }
-            if ($this->condo) {
-                $prop_cond[] = $this->db->createConditional($this->sublease_table->getField('proptype'),
-                        PROP_TYPE_CONDO);
-            }
-            if ($this->townhouse) {
-                $prop_cond[] = $this->db->createConditional($this->sublease_table->getField('proptype'),
-                        PROP_TYPE_TOWNHOUSE);
-            }
-            if ($this->duplex) {
-                $prop_cond[] = $this->db->createConditional($this->sublease_table->getField('proptype'),
-                        PROP_TYPE_DUPLEX);
-            }
-
-            foreach ($prop_cond as $cond) {
-                if (empty($final_cond)) {
-                    $final_cond = $cond;
-                } else {
-                    $final_cond = $this->db->createConditional($final_cond,
-                            $cond, 'or');
-                }
-            }
-            $this->db->addConditional($final_cond);
-        }
-    }
-
-    private function addSearch()
-    {
-        if (!empty($this->search_string)) {
-            $search_string = '%' . $this->search_string . '%';
-            $s1 = $this->db->createConditional($this->sublease_table->getField('name'),
-                    $search_string, 'like');
-            $s2 = $this->db->createConditional($this->sublease_table->getField('address'),
-                    $search_string, 'like');
-            $conditional = $this->db->createConditional($s1, $s2, 'or');
-            $this->db->addConditional($conditional);
         }
     }
 

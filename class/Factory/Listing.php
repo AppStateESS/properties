@@ -57,7 +57,6 @@ abstract class Listing
     public function __construct()
     {
         $this->db = \phpws2\Database::getDB();
-        $this->data_table = $this->db->addTable('properties');
     }
 
     public function pullVariables(\Canopy\Request $request)
@@ -83,6 +82,109 @@ abstract class Listing
         $this->condo = $request->pullGetBoolean('condo', true);
         $this->townhouse = $request->pullGetBoolean('townhouse', true);
         $this->duplex = $request->pullGetBoolean('duplex', true);
+    }
+
+    protected function addConditionals()
+    {
+        $this->data_table->addFieldConditional('active', 1);
+        if ($this->beds > 1) {
+            $this->data_table->addFieldConditional('bedroom_no', $this->beds,
+                    '>=');
+        }
+        if ($this->baths > 1) {
+            $this->data_table->addFieldConditional('bathroom_no', $this->baths,
+                    '>=');
+        }
+        if ($this->minprice) {
+            $this->data_table->addFieldConditional('monthly_rent',
+                    (int) $this->minprice, '>=');
+        }
+        if ($this->maxprice) {
+            $this->data_table->addFieldConditional('monthly_rent',
+                    (int) $this->maxprice, '<=');
+        }
+        if ($this->furnished) {
+            $this->data_table->addFieldConditional('furnished', 1);
+        }
+        if ($this->pets) {
+            $this->data_table->addFieldConditional('pets_allowed', 1);
+        }
+        if ($this->appalcart) {
+            $this->data_table->addFieldConditional('appalcart', 1);
+        }
+        if ($this->campus) {
+            $this->data_table->addFieldConditional('campus_distance', 0);
+        }
+        if ($this->utils) {
+            $this->data_table->addFieldConditional('utilities_inc', 1);
+        }
+        if ($this->airconditioning) {
+            $this->data_table->addFieldConditional('airconditioning', 1);
+        }
+        if ($this->dishwasher) {
+            $this->data_table->addFieldConditional('dishwasher', 1);
+        }
+        if ($this->laundry) {
+            $this->data_table->addFieldConditional('laundry_type',
+                    LAUNDRY_IN_UNIT);
+        }
+        if ($this->clubhouse) {
+            $this->data_table->addFieldConditional('clubhouse', 1);
+        }
+        if ($this->workout) {
+            $this->data_table->addFieldConditional('workout_room', 1);
+        }
+
+        if ($this->efficiency || $this->apartment || $this->house || $this->condo || $this->townhouse || $this->duplex) {
+            $prop_type = $this->data_table->getField('proptype');
+            if ($this->efficiency) {
+                $prop_cond[] = $this->db->createConditional($this->data_table->getField('proptype'),
+                        PROP_TYPE_EFFICIENCY);
+            }
+            if ($this->apartment) {
+                $prop_cond[] = $this->db->createConditional($this->data_table->getField('proptype'),
+                        PROP_TYPE_APARTMENT);
+            }
+            if ($this->house) {
+                $prop_cond[] = $this->db->createConditional($this->data_table->getField('proptype'),
+                        PROP_TYPE_HOUSE);
+            }
+            if ($this->condo) {
+                $prop_cond[] = $this->db->createConditional($this->data_table->getField('proptype'),
+                        PROP_TYPE_CONDO);
+            }
+            if ($this->townhouse) {
+                $prop_cond[] = $this->db->createConditional($this->data_table->getField('proptype'),
+                        PROP_TYPE_TOWNHOUSE);
+            }
+            if ($this->duplex) {
+                $prop_cond[] = $this->db->createConditional($this->data_table->getField('proptype'),
+                        PROP_TYPE_DUPLEX);
+            }
+
+            foreach ($prop_cond as $cond) {
+                if (empty($final_cond)) {
+                    $final_cond = $cond;
+                } else {
+                    $final_cond = $this->db->createConditional($final_cond,
+                            $cond, 'or');
+                }
+            }
+            $this->db->addConditional($final_cond);
+        }
+    }
+
+    protected function addSearch()
+    {
+        if (!empty($this->search_string)) {
+            $search_string = '%' . $this->search_string . '%';
+            $s1 = $this->db->createConditional($this->data_table->getField('name'),
+                    $search_string, 'like');
+            $s2 = $this->db->createConditional($this->data_table->getField('address'),
+                    $search_string, 'like');
+            $conditional = $this->db->createConditional($s1, $s2, 'or');
+            $this->db->addConditional($conditional);
+        }
     }
 
 }
