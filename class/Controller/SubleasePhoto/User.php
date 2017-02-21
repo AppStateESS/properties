@@ -27,5 +27,11 @@ class User extends \properties\Controller\SubController
         $factory = new \properties\Factory\Sublease\Photo;
         return $factory;
     }
+    
+        
+    protected function listJsonCommand(\Canopy\Request $request)
+    {
+        return $this->factory->thumbs($request->pullGetInteger('subleaseId'));
+    }
 
 }
