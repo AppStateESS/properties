@@ -2335,7 +2335,7 @@ webpackJsonp([10],{
 	          return _react2.default.createElement(_SubleaseRow2.default, { sublease: value, key: key });
 	        }.bind(this));
 	        return _react2.default.createElement(
-	          'ul',
+	          'div',
 	          { className: 'listing' },
 	          rows
 	        );
@@ -2414,74 +2414,99 @@ webpackJsonp([10],{
 	      var sublease = this.props.sublease;
 	
 	      var link = './properties/Sublease/' + sublease.id + '/' + this.urlTitle(sublease.name);
+	      var image = _react2.default.createElement(
+	        'div',
+	        { className: 'text-muted', style: {
+	            padding: '6px'
+	          } },
+	        _react2.default.createElement('i', { className: 'fa fa-camera fa-5x' }),
+	        _react2.default.createElement('br', null),
+	        'No photos available'
+	      );
+	      if (sublease.thumbnail !== '') {
+	        image = _react2.default.createElement('img', { src: sublease.thumbnail, className: 'img-responsive' });
+	      }
 	      return _react2.default.createElement(
-	        'li',
-	        { className: 'sublease-row' },
+	        'div',
+	        { className: 'row sublease-row' },
 	        _react2.default.createElement(
-	          'h4',
-	          { className: 'title' },
+	          'div',
+	          { className: 'col-sm-3 col-md-3 text-center' },
 	          _react2.default.createElement(
 	            'a',
 	            { href: link },
-	            sublease.name
+	            image
 	          )
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'row' },
+	          { className: 'col-sm-9 col-md-9' },
 	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-4' },
+	            'h4',
+	            { className: 'title' },
 	            _react2.default.createElement(
-	              'div',
-	              { className: 'rent' },
-	              this.getRent()
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'room-bath' },
-	              sublease.proptype,
-	              '\xA0 - ',
-	              sublease.bedroom_no,
-	              '\xA0Bed, ',
-	              sublease.bathroom_no,
-	              '\xA0Bath'
+	              'a',
+	              { href: link },
+	              sublease.name
 	            )
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'col-sm-4' },
+	            { className: 'row' },
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'availability' },
+	              { className: 'col-sm-4' },
 	              _react2.default.createElement(
-	                'strong',
-	                null,
-	                'Availability:'
+	                'div',
+	                { className: 'rent' },
+	                this.getRent()
 	              ),
-	              sublease.move_in_date
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'room-bath' },
+	                sublease.proptype,
+	                '\xA0 - ',
+	                sublease.bedroom_no,
+	                '\xA0Bed, ',
+	                sublease.bathroom_no,
+	                '\xA0Bath'
+	              )
 	            ),
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'end-date' },
+	              { className: 'col-sm-4' },
 	              _react2.default.createElement(
-	                'strong',
-	                null,
-	                'Sublease end date:'
+	                'div',
+	                { className: 'availability' },
+	                _react2.default.createElement(
+	                  'strong',
+	                  null,
+	                  'Availability:'
+	                ),
+	                sublease.move_in_date
 	              ),
-	              sublease.move_out_date
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'end-date' },
+	                _react2.default.createElement(
+	                  'strong',
+	                  null,
+	                  'Sublease end date:'
+	                ),
+	                sublease.move_out_date
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-sm-4' },
+	              this.petsAllowed(sublease.pets_allowed),
+	              this.furnished(sublease.furnished),
+	              this.airconditioner(sublease.airconditioning),
+	              this.dishwasher(sublease.dishwasher),
+	              this.utilities(sublease.utilities_inc),
+	              this.appalcart(sublease.appalcart),
+	              this.washer(sublease.washer)
 	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-4' },
-	            this.petsAllowed(sublease.pets_allowed),
-	            this.furnished(sublease.furnished),
-	            this.airconditioner(sublease.airconditioning),
-	            this.dishwasher(sublease.dishwasher),
-	            this.utilities(sublease.utilities_inc),
-	            this.appalcart(sublease.appalcart),
-	            this.washer(sublease.washer)
 	          )
 	        )
 	      );
