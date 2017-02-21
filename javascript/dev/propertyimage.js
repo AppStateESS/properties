@@ -223,7 +223,7 @@ webpackJsonp([9],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _ImageOverlay = __webpack_require__(/*! ./ImageOverlay.jsx */ 416);
+	var _ImageOverlay = __webpack_require__(/*! ../Mixin/Photo/ImageOverlay.jsx */ 432);
 	
 	var _ImageOverlay2 = _interopRequireDefault(_ImageOverlay);
 	
@@ -391,160 +391,6 @@ webpackJsonp([9],{
 	
 	PropertyImage.propTypes = {
 	  current: _react2.default.PropTypes.array
-	};
-
-/***/ },
-
-/***/ 416:
-/*!***************************************************!*\
-  !*** ./javascript/PropertyImage/ImageOverlay.jsx ***!
-  \***************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _Overlay = __webpack_require__(/*! ../Mixin/Html/Overlay.jsx */ 411);
-	
-	var _Overlay2 = _interopRequireDefault(_Overlay);
-	
-	var _reactDropzone = __webpack_require__(/*! react-dropzone */ 417);
-	
-	var _reactDropzone2 = _interopRequireDefault(_reactDropzone);
-	
-	var _Thumb = __webpack_require__(/*! ./Thumb.jsx */ 418);
-	
-	var _Thumb2 = _interopRequireDefault(_Thumb);
-	
-	var _ImageFrame = __webpack_require__(/*! ./ImageFrame.jsx */ 419);
-	
-	var _ImageFrame2 = _interopRequireDefault(_ImageFrame);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var ImageOverlay = function (_React$Component) {
-	  _inherits(ImageOverlay, _React$Component);
-	
-	  function ImageOverlay(props) {
-	    _classCallCheck(this, ImageOverlay);
-	
-	    return _possibleConstructorReturn(this, (ImageOverlay.__proto__ || Object.getPrototypeOf(ImageOverlay)).call(this, props));
-	  }
-	
-	  _createClass(ImageOverlay, [{
-	    key: 'render',
-	    value: function render() {
-	      var photos = _react2.default.createElement(
-	        'div',
-	        { style: {
-	            paddingTop: '2%'
-	          } },
-	        _react2.default.createElement('i', { className: 'fa fa-camera fa-5x' }),
-	        _react2.default.createElement('br', null),
-	        _react2.default.createElement(
-	          'h4',
-	          null,
-	          'Click to browse',
-	          _react2.default.createElement('br', null),
-	          '- or -',
-	          _react2.default.createElement('br', null),
-	          'drag image(s) here'
-	        )
-	      );
-	      if (this.props.newPhotos.length > 0) {
-	        photos = this.props.newPhotos.map(function (value, key) {
-	          var status = void 0;
-	          if (this.props.status[key] !== undefined) {
-	            status = this.props.status[key];
-	          }
-	          return _react2.default.createElement(_ImageFrame2.default, { key: key, image: value, status: status });
-	        }.bind(this));
-	      }
-	
-	      var currentImages = void 0;
-	      if (this.props.currentPhotos.length > 0) {
-	        currentImages = this.props.currentPhotos.map(function (value, key) {
-	          return _react2.default.createElement(_Thumb2.default, _extends({}, value, {
-	            key: key,
-	            'delete': this.props.delete.bind(null, value.id, key),
-	            setMain: this.props.setMain.bind(this, value.id) }));
-	        }.bind(this));
-	      }
-	
-	      return _react2.default.createElement(
-	        _Overlay2.default,
-	        { close: this.props.close, title: 'Update images' },
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(
-	            _reactDropzone2.default,
-	            {
-	              ref: 'dropzone',
-	              onDrop: this.props.update,
-	              className: 'dropzone text-center pointer' },
-	            photos
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            null,
-	            _react2.default.createElement(
-	              'button',
-	              { className: 'btn btn-default', onClick: this.props.clear },
-	              'Clear'
-	            )
-	          ),
-	          _react2.default.createElement('hr', null),
-	          _react2.default.createElement('div', { style: {
-	              clear: 'both'
-	            } }),
-	          _react2.default.createElement(
-	            'div',
-	            null,
-	            _react2.default.createElement(
-	              'h4',
-	              null,
-	              'Current'
-	            ),
-	            currentImages
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return ImageOverlay;
-	}(_react2.default.Component);
-	
-	exports.default = ImageOverlay;
-	
-	
-	ImageOverlay.propTypes = {
-	  close: _react2.default.PropTypes.func,
-	  update: _react2.default.PropTypes.func,
-	  delete: _react2.default.PropTypes.func,
-	  clear: _react2.default.PropTypes.func,
-	  newPhotos: _react2.default.PropTypes.array,
-	  currentPhotos: _react2.default.PropTypes.array,
-	  status: _react2.default.PropTypes.array,
-	  setMain: _react2.default.PropTypes.func
 	};
 
 /***/ },
@@ -965,125 +811,10 @@ webpackJsonp([9],{
 
 /***/ },
 
-/***/ 418:
-/*!********************************************!*\
-  !*** ./javascript/PropertyImage/Thumb.jsx ***!
-  \********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Thumb = function (_React$Component) {
-	  _inherits(Thumb, _React$Component);
-	
-	  function Thumb(props) {
-	    _classCallCheck(this, Thumb);
-	
-	    var _this = _possibleConstructorReturn(this, (Thumb.__proto__ || Object.getPrototypeOf(Thumb)).call(this, props));
-	
-	    _this.delete = _this.delete.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(Thumb, [{
-	    key: 'delete',
-	    value: function _delete(e) {
-	      e.preventDefault();
-	      e.stopPropagation();
-	      this.props.delete();
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var outer = {
-	        width: '184px',
-	        height: '184px',
-	        float: 'left',
-	        margin: '0px 8px 8px 0',
-	        textAlign: 'center',
-	        backgroundColor: '#e3e3e3',
-	        borderWidth: '2px',
-	        borderStyle: 'solid',
-	        borderColor: this.props.main_pic === '1' ? 'blue' : '#bbb',
-	        position: 'relative'
-	      };
-	
-	      var inner = {
-	        position: 'absolute',
-	        display: 'block',
-	        bottom: '0px',
-	        left: '72px',
-	        cursor: 'pointer'
-	      };
-	
-	      var main = {
-	        position: 'absolute',
-	        top: '0px',
-	        width: '100%',
-	        backgroundColor: 'rgba(0,0,255,0.4)',
-	        color: 'white'
-	      };
-	      return _react2.default.createElement(
-	        'div',
-	        { style: outer, onClick: this.props.setMain },
-	        this.props.main_pic === '1' ? _react2.default.createElement(
-	          'div',
-	          { style: main },
-	          'Main photo'
-	        ) : null,
-	        _react2.default.createElement('img', { src: this.props.thumbnail }),
-	        _react2.default.createElement(
-	          'span',
-	          { className: 'fa-stack fa-lg', style: inner, onClick: this.delete },
-	          _react2.default.createElement('i', { className: 'text-danger fa fa-circle fa-stack-2x' }),
-	          _react2.default.createElement('i', { className: 'text-danger fa fa-trash-o fa-stack-1x fa-inverse' })
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return Thumb;
-	}(_react2.default.Component);
-	
-	exports.default = Thumb;
-	
-	
-	Thumb.propTypes = {
-	  thumbnail: _react2.default.PropTypes.string,
-	  main_pic: _react2.default.PropTypes.string,
-	  id: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
-	  delete: _react2.default.PropTypes.func,
-	  setMain: _react2.default.PropTypes.func
-	};
-	
-	Thumb.defaultProps = {
-	  main: false
-	};
-
-/***/ },
-
-/***/ 419:
-/*!*************************************************!*\
-  !*** ./javascript/PropertyImage/ImageFrame.jsx ***!
-  \*************************************************/
+/***/ 431:
+/*!***********************************************!*\
+  !*** ./javascript/Mixin/Photo/ImageFrame.jsx ***!
+  \***********************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1200,6 +931,275 @@ webpackJsonp([9],{
 	ImageFrame.propTypes = {
 	  image: _react2.default.PropTypes.object,
 	  status: _react2.default.PropTypes.bool
+	};
+
+/***/ },
+
+/***/ 432:
+/*!*************************************************!*\
+  !*** ./javascript/Mixin/Photo/ImageOverlay.jsx ***!
+  \*************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _Overlay = __webpack_require__(/*! ../Html/Overlay.jsx */ 411);
+	
+	var _Overlay2 = _interopRequireDefault(_Overlay);
+	
+	var _reactDropzone = __webpack_require__(/*! react-dropzone */ 417);
+	
+	var _reactDropzone2 = _interopRequireDefault(_reactDropzone);
+	
+	var _Thumb = __webpack_require__(/*! ./Thumb.jsx */ 433);
+	
+	var _Thumb2 = _interopRequireDefault(_Thumb);
+	
+	var _ImageFrame = __webpack_require__(/*! ./ImageFrame.jsx */ 431);
+	
+	var _ImageFrame2 = _interopRequireDefault(_ImageFrame);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ImageOverlay = function (_React$Component) {
+	  _inherits(ImageOverlay, _React$Component);
+	
+	  function ImageOverlay(props) {
+	    _classCallCheck(this, ImageOverlay);
+	
+	    return _possibleConstructorReturn(this, (ImageOverlay.__proto__ || Object.getPrototypeOf(ImageOverlay)).call(this, props));
+	  }
+	
+	  _createClass(ImageOverlay, [{
+	    key: 'render',
+	    value: function render() {
+	      var photos = _react2.default.createElement(
+	        'div',
+	        { style: {
+	            paddingTop: '2%'
+	          } },
+	        _react2.default.createElement('i', { className: 'fa fa-camera fa-5x' }),
+	        _react2.default.createElement('br', null),
+	        _react2.default.createElement(
+	          'h4',
+	          null,
+	          'Click to browse',
+	          _react2.default.createElement('br', null),
+	          '- or -',
+	          _react2.default.createElement('br', null),
+	          'drag image(s) here'
+	        )
+	      );
+	      if (this.props.newPhotos.length > 0) {
+	        photos = this.props.newPhotos.map(function (value, key) {
+	          var status = void 0;
+	          if (this.props.status[key] !== undefined) {
+	            status = this.props.status[key];
+	          }
+	          return _react2.default.createElement(_ImageFrame2.default, { key: key, image: value, status: status });
+	        }.bind(this));
+	      }
+	
+	      var currentImages = void 0;
+	      if (this.props.currentPhotos.length > 0) {
+	        currentImages = this.props.currentPhotos.map(function (value, key) {
+	          return _react2.default.createElement(_Thumb2.default, _extends({}, value, {
+	            key: key,
+	            'delete': this.props.delete.bind(null, value.id, key),
+	            setMain: this.props.setMain.bind(this, value.id) }));
+	        }.bind(this));
+	      }
+	
+	      return _react2.default.createElement(
+	        _Overlay2.default,
+	        { close: this.props.close, title: 'Update images' },
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            _reactDropzone2.default,
+	            {
+	              ref: 'dropzone',
+	              onDrop: this.props.update,
+	              className: 'dropzone text-center pointer' },
+	            photos
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'btn btn-default', onClick: this.props.clear },
+	              'Clear'
+	            )
+	          ),
+	          _react2.default.createElement('hr', null),
+	          _react2.default.createElement('div', { style: {
+	              clear: 'both'
+	            } }),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            _react2.default.createElement(
+	              'h4',
+	              null,
+	              'Current'
+	            ),
+	            currentImages
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return ImageOverlay;
+	}(_react2.default.Component);
+	
+	exports.default = ImageOverlay;
+	
+	
+	ImageOverlay.propTypes = {
+	  close: _react2.default.PropTypes.func,
+	  update: _react2.default.PropTypes.func,
+	  delete: _react2.default.PropTypes.func,
+	  clear: _react2.default.PropTypes.func,
+	  newPhotos: _react2.default.PropTypes.array,
+	  currentPhotos: _react2.default.PropTypes.array,
+	  status: _react2.default.PropTypes.array,
+	  setMain: _react2.default.PropTypes.func
+	};
+
+/***/ },
+
+/***/ 433:
+/*!******************************************!*\
+  !*** ./javascript/Mixin/Photo/Thumb.jsx ***!
+  \******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Thumb = function (_React$Component) {
+	  _inherits(Thumb, _React$Component);
+	
+	  function Thumb(props) {
+	    _classCallCheck(this, Thumb);
+	
+	    var _this = _possibleConstructorReturn(this, (Thumb.__proto__ || Object.getPrototypeOf(Thumb)).call(this, props));
+	
+	    _this.delete = _this.delete.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(Thumb, [{
+	    key: 'delete',
+	    value: function _delete(e) {
+	      e.preventDefault();
+	      e.stopPropagation();
+	      this.props.delete();
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var outer = {
+	        width: '184px',
+	        height: '184px',
+	        float: 'left',
+	        margin: '0px 8px 8px 0',
+	        textAlign: 'center',
+	        backgroundColor: '#e3e3e3',
+	        borderWidth: '2px',
+	        borderStyle: 'solid',
+	        borderColor: this.props.main_pic === '1' ? 'blue' : '#bbb',
+	        position: 'relative'
+	      };
+	
+	      var inner = {
+	        position: 'absolute',
+	        display: 'block',
+	        bottom: '0px',
+	        left: '72px',
+	        cursor: 'pointer'
+	      };
+	
+	      var main = {
+	        position: 'absolute',
+	        top: '0px',
+	        width: '100%',
+	        backgroundColor: 'rgba(0,0,255,0.4)',
+	        color: 'white'
+	      };
+	      return _react2.default.createElement(
+	        'div',
+	        { style: outer, onClick: this.props.setMain },
+	        this.props.main_pic === '1' ? _react2.default.createElement(
+	          'div',
+	          { style: main },
+	          'Main photo'
+	        ) : null,
+	        _react2.default.createElement('img', { src: this.props.thumbnail }),
+	        _react2.default.createElement(
+	          'span',
+	          { className: 'fa-stack fa-lg', style: inner, onClick: this.delete },
+	          _react2.default.createElement('i', { className: 'text-danger fa fa-circle fa-stack-2x' }),
+	          _react2.default.createElement('i', { className: 'text-danger fa fa-trash-o fa-stack-1x fa-inverse' })
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Thumb;
+	}(_react2.default.Component);
+	
+	exports.default = Thumb;
+	
+	
+	Thumb.propTypes = {
+	  thumbnail: _react2.default.PropTypes.string,
+	  main_pic: _react2.default.PropTypes.string,
+	  id: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.number, _react2.default.PropTypes.string]),
+	  delete: _react2.default.PropTypes.func,
+	  setMain: _react2.default.PropTypes.func
+	};
+	
+	Thumb.defaultProps = {
+	  main: false
 	};
 
 /***/ }

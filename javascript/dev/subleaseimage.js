@@ -639,7 +639,7 @@ webpackJsonp([12],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _ImageOverlay = __webpack_require__(/*! ./ImageOverlay.jsx */ 427);
+	var _ImageOverlay = __webpack_require__(/*! ../Mixin/Photo/ImageOverlay.jsx */ 432);
 	
 	var _ImageOverlay2 = _interopRequireDefault(_ImageOverlay);
 	
@@ -806,10 +806,134 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 427:
-/*!***************************************************!*\
-  !*** ./javascript/SubleaseImage/ImageOverlay.jsx ***!
-  \***************************************************/
+/***/ 431:
+/*!***********************************************!*\
+  !*** ./javascript/Mixin/Photo/ImageFrame.jsx ***!
+  \***********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	/* global $ */
+	
+	var ImageFrame = function (_React$Component) {
+	  _inherits(ImageFrame, _React$Component);
+	
+	  function ImageFrame(props) {
+	    _classCallCheck(this, ImageFrame);
+	
+	    return _possibleConstructorReturn(this, (ImageFrame.__proto__ || Object.getPrototypeOf(ImageFrame)).call(this, props));
+	  }
+	
+	  _createClass(ImageFrame, [{
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      if (this.props.status === false) {
+	        $('.tool').tooltip();
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var divStyle = {
+	        width: '152px',
+	        textAlign: 'center',
+	        height: '152px',
+	        backgroundColor: '#B9B9B9',
+	        marginBottom: '4px',
+	        border: '1px solid black'
+	      };
+	      var imageStyle = {
+	        maxHeight: '150px',
+	        maxWidth: '150px'
+	      };
+	
+	      var flag = _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement('i', { className: 'fa fa-spinner fa-spin fa-2x fa-fw' }),
+	        _react2.default.createElement(
+	          'span',
+	          null,
+	          'Uploading...'
+	        )
+	      );
+	      if (this.props.status) {
+	        if (this.props.status === true) {
+	          flag = _react2.default.createElement(
+	            'div',
+	            { style: imageStyle },
+	            _react2.default.createElement('i', { className: 'fa fa-check text-success fa-2x' }),
+	            'Success!'
+	          );
+	        } else if (this.props.status === false) {
+	          flag = _react2.default.createElement(
+	            'div',
+	            {
+	              className: 'tool',
+	              style: imageStyle,
+	              'data-toggle': 'tooltip',
+	              'data-placement': 'bottom',
+	              title: this.props.status.error },
+	            _react2.default.createElement('i', { className: 'fa fa-times text-danger fa-2x' }),
+	            'Failure'
+	          );
+	        }
+	      }
+	
+	      var outerStyle = {
+	        float: 'left',
+	        marginRight: '6px',
+	        textAlign: 'center'
+	      };
+	      return _react2.default.createElement(
+	        'div',
+	        { style: outerStyle },
+	        _react2.default.createElement(
+	          'div',
+	          { style: divStyle },
+	          _react2.default.createElement('img', { src: this.props.image.thumbnail, style: imageStyle })
+	        ),
+	        flag
+	      );
+	    }
+	  }]);
+	
+	  return ImageFrame;
+	}(_react2.default.Component);
+	
+	exports.default = ImageFrame;
+	
+	
+	ImageFrame.propTypes = {
+	  image: _react2.default.PropTypes.object,
+	  status: _react2.default.PropTypes.bool
+	};
+
+/***/ },
+
+/***/ 432:
+/*!*************************************************!*\
+  !*** ./javascript/Mixin/Photo/ImageOverlay.jsx ***!
+  \*************************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -826,7 +950,7 @@ webpackJsonp([12],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Overlay = __webpack_require__(/*! ../Mixin/Html/Overlay.jsx */ 411);
+	var _Overlay = __webpack_require__(/*! ../Html/Overlay.jsx */ 411);
 	
 	var _Overlay2 = _interopRequireDefault(_Overlay);
 	
@@ -834,11 +958,11 @@ webpackJsonp([12],{
 	
 	var _reactDropzone2 = _interopRequireDefault(_reactDropzone);
 	
-	var _Thumb = __webpack_require__(/*! ./Thumb.jsx */ 428);
+	var _Thumb = __webpack_require__(/*! ./Thumb.jsx */ 433);
 	
 	var _Thumb2 = _interopRequireDefault(_Thumb);
 	
-	var _ImageFrame = __webpack_require__(/*! ./ImageFrame.jsx */ 429);
+	var _ImageFrame = __webpack_require__(/*! ./ImageFrame.jsx */ 431);
 	
 	var _ImageFrame2 = _interopRequireDefault(_ImageFrame);
 	
@@ -960,10 +1084,10 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 428:
-/*!********************************************!*\
-  !*** ./javascript/SubleaseImage/Thumb.jsx ***!
-  \********************************************/
+/***/ 433:
+/*!******************************************!*\
+  !*** ./javascript/Mixin/Photo/Thumb.jsx ***!
+  \******************************************/
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -1071,130 +1195,6 @@ webpackJsonp([12],{
 	
 	Thumb.defaultProps = {
 	  main: false
-	};
-
-/***/ },
-
-/***/ 429:
-/*!*************************************************!*\
-  !*** ./javascript/SubleaseImage/ImageFrame.jsx ***!
-  \*************************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	/* global $ */
-	
-	var ImageFrame = function (_React$Component) {
-	  _inherits(ImageFrame, _React$Component);
-	
-	  function ImageFrame(props) {
-	    _classCallCheck(this, ImageFrame);
-	
-	    return _possibleConstructorReturn(this, (ImageFrame.__proto__ || Object.getPrototypeOf(ImageFrame)).call(this, props));
-	  }
-	
-	  _createClass(ImageFrame, [{
-	    key: 'componentDidUpdate',
-	    value: function componentDidUpdate() {
-	      if (this.props.status === false) {
-	        $('.tool').tooltip();
-	      }
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var divStyle = {
-	        width: '152px',
-	        textAlign: 'center',
-	        height: '152px',
-	        backgroundColor: '#B9B9B9',
-	        marginBottom: '4px',
-	        border: '1px solid black'
-	      };
-	      var imageStyle = {
-	        maxHeight: '150px',
-	        maxWidth: '150px'
-	      };
-	
-	      var flag = _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement('i', { className: 'fa fa-spinner fa-spin fa-2x fa-fw' }),
-	        _react2.default.createElement(
-	          'span',
-	          null,
-	          'Uploading...'
-	        )
-	      );
-	      if (this.props.status) {
-	        if (this.props.status === true) {
-	          flag = _react2.default.createElement(
-	            'div',
-	            { style: imageStyle },
-	            _react2.default.createElement('i', { className: 'fa fa-check text-success fa-2x' }),
-	            'Success!'
-	          );
-	        } else if (this.props.status === false) {
-	          flag = _react2.default.createElement(
-	            'div',
-	            {
-	              className: 'tool',
-	              style: imageStyle,
-	              'data-toggle': 'tooltip',
-	              'data-placement': 'bottom',
-	              title: this.props.status.error },
-	            _react2.default.createElement('i', { className: 'fa fa-times text-danger fa-2x' }),
-	            'Failure'
-	          );
-	        }
-	      }
-	
-	      var outerStyle = {
-	        float: 'left',
-	        marginRight: '6px',
-	        textAlign: 'center'
-	      };
-	      return _react2.default.createElement(
-	        'div',
-	        { style: outerStyle },
-	        _react2.default.createElement(
-	          'div',
-	          { style: divStyle },
-	          _react2.default.createElement('img', { src: this.props.image.thumbnail, style: imageStyle })
-	        ),
-	        flag
-	      );
-	    }
-	  }]);
-	
-	  return ImageFrame;
-	}(_react2.default.Component);
-	
-	exports.default = ImageFrame;
-	
-	
-	ImageFrame.propTypes = {
-	  image: _react2.default.PropTypes.object,
-	  status: _react2.default.PropTypes.bool
 	};
 
 /***/ }

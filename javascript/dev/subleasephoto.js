@@ -1660,9 +1660,7 @@ webpackJsonp([13],{
 	
 	__webpack_require__(/*! react-image-gallery/styles/css/image-gallery.css */ 200);
 	
-	//import PhotoList from '../Mixin/List/PhotoList.jsx'
-	
-	/* global $, require, loadPhotos, currentPhotos */
+	/* global $, require, subleaseId, loadPhotos, currentPhotos */
 	
 	var Photo = function (_React$Component) {
 	  _inherits(Photo, _React$Component);
@@ -1689,7 +1687,7 @@ webpackJsonp([13],{
 	  }, {
 	    key: 'load',
 	    value: function load() {
-	      $.getJSON('./properties/SubleasePhoto/list').done(function (data) {
+	      $.getJSON('./properties/SubleasePhoto/list', { subleaseId: subleaseId }).done(function (data) {
 	        currentPhotos = data;
 	        this.setState({ photos: data });
 	      }.bind(this));
