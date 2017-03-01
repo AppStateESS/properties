@@ -52,7 +52,7 @@ class Roommate extends Base
     public function put(\Canopy\Request $request, $roommate)
     {
         try {
-            $roommate->loadPostByType($request, array('created', 'updated', 'uid'), array('languages', 'music', 'hobbies'));
+            $roommate->loadPutByType($request, array('created', 'updated', 'uid'), array('languages', 'music', 'hobbies'));
             $roommate->updated = time();
         } catch (\Exception $e) {
             throw new \properties\Exception\RoommateSaveFailure($e->getMessage());
