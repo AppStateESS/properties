@@ -1,0 +1,28 @@
+const RoommateObject = {
+  id: 0,
+  move_in_date: '',
+  move_in_date_unix: 0,
+  name: '',
+  description: '',
+  email: '',
+  phone: '',
+  facebook: '',
+  instagram: '',
+  twitter: '',
+  politics: '',
+  major: '',
+  focus: '',
+  wake_time: '',
+  sleep_time: '',
+  overnighter: '',
+  free_time: '',
+  cleanliness: '',
+  loudness: '',
+  study_time: '',
+  languages: '',
+  music: '',
+  hobbies: '',
+  smoking: '',
+  pets: ''
+}
+export default RoommateObject

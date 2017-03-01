@@ -1,0 +1,17 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Feb 22, 2017, 3:03:54 PM
+    Author     : matt
+*/
+
+div.roommate-form div.marginBottom {
+    margin-bottom : 1em;
+}
+
+div.roommate-form fieldset {
+    margin-bottom: 2em;
+}
