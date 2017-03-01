@@ -16,5 +16,7 @@ exports.entry = {
   subleasephoto: exports.APP_DIR + '/SubleasePhoto/index.jsx',
   subleaseimage: exports.APP_DIR + '/SubleaseImage/index.jsx',
   manageredit: exports.APP_DIR + '/ManagerEdit/index.jsx',
+  roommatelist: exports.APP_DIR + '/RoommateList/index.jsx',
+  roommateform: exports.APP_DIR + '/RoommateForm/index.jsx',
   vendor: ['react', 'react-dom']
 }
