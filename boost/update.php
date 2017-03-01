@@ -253,8 +253,15 @@ EOF;
             try {
                 $db = \phpws2\Database::getDB();
                 $db->begin();
-                $sublease_photo = new \properties\Resource\SubleasePhoto;
-                $sublease_photo->createTable($db);
+                $sublease_table = $db->getTable('sublease');
+                $sublease_table_id = $sub_table->getDataType('id');
+                $sublease_photo_resource = new \properties\Resource\SubleasePhoto;
+                $sublease_photo_resource->createTable($db);
+                $sublease_photo_table = $db->buildTable($sublease_photo_resource->getTable());
+                $sublease_photo_sid_column = $sublease_photo_table->getDataType('sid');
+                $sublease_photo_index = new \phpws2\Database\ForeignKey($sublease_photo_sid_column,
+                        $sublease_table_id);
+                $sublease_photo_index->add();
                 $db->commit();
             } catch (\Exception $ex) {
                 $db->rollback();
@@ -266,6 +273,25 @@ EOF;
 Version 2.0.4
 ---------------
 + Added sublease photos
+</pre>
+EOF;
+        case (version_compare($currentVersion, '2.0.5', '<')):
+            try {
+                $db = \phpws2\Database::getDB();
+                $db->begin();
+                $roommate = new \properties\Resource\Roommate;
+                $roommate->createTable($db);
+                $db->commit();
+            } catch (\Exception $ex) {
+                $db->rollback();
+                $content[] = 'Update failed: ' . $ex->getMessage();
+                return false;
+            }
+            $content[] = <<<EOF
+<pre>
+Version 2.0.5
+---------------
++ Added roommate section.
 </pre>
 EOF;
     }
