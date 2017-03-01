@@ -146,6 +146,9 @@ class Property extends Place
                     case HT_GAS:
                         $type = 'Natural gas';
                         break;
+                    
+                    default:
+                        throw new \Exception("Unknown heat type: $t");
                 }
                 $types[] = $type;
             }
