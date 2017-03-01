@@ -24,8 +24,7 @@ class Module extends \Canopy\Module
         parent::__construct();
         $this->setTitle('properties');
         $this->setProperName('Properties');
-        $namespace = __NAMESPACE__;
-        spl_autoload_register('\properties\Module::autoloader');
+        spl_autoload_register('\properties\Module::autoloader', true, true);
     }
 
     public function getController(\Canopy\Request $request)
@@ -61,10 +60,14 @@ class Module extends \Canopy\Module
         }
     }
 
-    public function autoloader($class_name)
+    public static function autoloader($class_name)
     {
         static $not_found = array();
 
+        if (strpos($class_name, 'properties') !== 0) {
+            return;
+        }
+        
         if (isset($not_found[$class_name])) {
             return;
         }
