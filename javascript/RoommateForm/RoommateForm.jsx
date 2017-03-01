@@ -436,6 +436,7 @@ export default class RoommateForm extends React.Component {
                 value={this.state.roommate.loudness}
                 options={ProfileData.listLoudness()}
                 placeholder="Select from below or leave blank"
+                simpleValue={true}
                 onChange={this.setValue.bind(this, 'loudness')}/>
             </div>
             <div className="col-sm-6 marginBottom">
@@ -458,6 +459,7 @@ export default class RoommateForm extends React.Component {
                 name="smoking"
                 value={this.state.roommate.smoking}
                 options={ProfileData.listSmoking()}
+                simpleValue={true}
                 placeholder="Select from below or leave blank"
                 onChange={this.setValue.bind(this, 'smoking')}/>
             </div>
@@ -494,6 +496,7 @@ export default class RoommateForm extends React.Component {
                 name="wake_time"
                 value={this.state.roommate.wake_time}
                 options={ProfileData.listWakeTimes()}
+                simpleValue={true}
                 placeholder="Select from below or leave blank"
                 onChange={this.setValue.bind(this, 'wake_time')}/>
             </div>
