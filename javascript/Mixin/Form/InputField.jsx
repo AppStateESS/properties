@@ -55,7 +55,7 @@ export default class InputField extends React.Component {
 
   render() {
     let inputClass
-    if ((this.props.errorMessage !== null && this.props.errorMessage !== '') || (this.state.empty && this.props.required)) {
+    if ((this.props.errorMessage !== null && this.props.errorMessage !== '') || (this.state.empty && this.props.required && this.props.disableRequireCheck === false)) {
       inputClass = 'form-control error-highlight'
     } else {
       inputClass = 'form-control'
@@ -88,7 +88,7 @@ export default class InputField extends React.Component {
     let errorMessage
     if (this.props.errorMessage) {
       errorMessage = this.props.errorMessage
-    } else if (this.state.empty && this.props.required) {
+    } else if (this.state.empty && this.props.required && this.props.disableRequireCheck === false) {
       errorMessage = this.emptyMessage()
     }
 
@@ -124,7 +124,8 @@ InputField.defaultProps = {
   selectOnClick: true,
   wrap: null,
   onEmpty: null,
-  flagEmpty: true
+  flagEmpty: true,
+  disableRequireCheck: false
 }
 
 InputField.propTypes = {
@@ -145,7 +146,8 @@ InputField.propTypes = {
   wrap: React.PropTypes.func,
   selectOnClick: React.PropTypes.bool,
   onEmpty: React.PropTypes.func,
-  flagEmpty: React.PropTypes.bool
+  flagEmpty: React.PropTypes.bool,
+  disableRequireCheck: React.PropTypes.bool
 }
 
 export const RequiredIcon = () => {
