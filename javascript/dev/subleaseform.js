@@ -1,4 +1,4 @@
-webpackJsonp([11],[
+webpackJsonp([13],[
 /* 0 */
 /*!*******************************************!*\
   !*** ./javascript/SubleaseForm/index.jsx ***!
@@ -15,7 +15,7 @@ webpackJsonp([11],[
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _SubleaseForm = __webpack_require__(/*! ./SubleaseForm.jsx */ 423);
+	var _SubleaseForm = __webpack_require__(/*! ./SubleaseForm.jsx */ 442);
 	
 	var _SubleaseForm2 = _interopRequireDefault(_SubleaseForm);
 	
@@ -292,7 +292,7 @@ webpackJsonp([11],[
 	    key: 'render',
 	    value: function render() {
 	      var inputClass = void 0;
-	      if (this.props.errorMessage !== null && this.props.errorMessage !== '' || this.state.empty && this.props.required) {
+	      if (this.props.errorMessage !== null && this.props.errorMessage !== '' || this.state.empty && this.props.required && this.props.disableRequireCheck === false) {
 	        inputClass = 'form-control error-highlight';
 	      } else {
 	        inputClass = 'form-control';
@@ -321,7 +321,7 @@ webpackJsonp([11],[
 	      var errorMessage = void 0;
 	      if (this.props.errorMessage) {
 	        errorMessage = this.props.errorMessage;
-	      } else if (this.state.empty && this.props.required) {
+	      } else if (this.state.empty && this.props.required && this.props.disableRequireCheck === false) {
 	        errorMessage = this.emptyMessage();
 	      }
 	
@@ -369,7 +369,8 @@ webpackJsonp([11],[
 	  selectOnClick: true,
 	  wrap: null,
 	  onEmpty: null,
-	  flagEmpty: true
+	  flagEmpty: true,
+	  disableRequireCheck: false
 	};
 	
 	InputField.propTypes = {
@@ -390,7 +391,8 @@ webpackJsonp([11],[
 	  wrap: _react2.default.PropTypes.func,
 	  selectOnClick: _react2.default.PropTypes.bool,
 	  onEmpty: _react2.default.PropTypes.func,
-	  flagEmpty: _react2.default.PropTypes.bool
+	  flagEmpty: _react2.default.PropTypes.bool,
+	  disableRequireCheck: _react2.default.PropTypes.bool
 	};
 	
 	var RequiredIcon = exports.RequiredIcon = function RequiredIcon() {
@@ -442,6 +444,17 @@ webpackJsonp([11],[
 	        return false;
 	      }
 	      return value.replace(/[^\d]/g, '').length == 10;
+	    }
+	  }, {
+	    key: 'isUrl',
+	    value: function isUrl(value) {
+	      var httpRequired = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+	
+	      if (httpRequired) {
+	        return value.match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/);
+	      } else {
+	        return value.match(/[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/);
+	      }
 	    }
 	  }, {
 	    key: 'randomId',
@@ -29626,7 +29639,26 @@ webpackJsonp([11],[
 /* 420 */,
 /* 421 */,
 /* 422 */,
-/* 423 */
+/* 423 */,
+/* 424 */,
+/* 425 */,
+/* 426 */,
+/* 427 */,
+/* 428 */,
+/* 429 */,
+/* 430 */,
+/* 431 */,
+/* 432 */,
+/* 433 */,
+/* 434 */,
+/* 435 */,
+/* 436 */,
+/* 437 */,
+/* 438 */,
+/* 439 */,
+/* 440 */,
+/* 441 */,
+/* 442 */
 /*!**************************************************!*\
   !*** ./javascript/SubleaseForm/SubleaseForm.jsx ***!
   \**************************************************/
@@ -29646,7 +29678,7 @@ webpackJsonp([11],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _SubleaseObject = __webpack_require__(/*! ../Mixin/Objects/SubleaseObject.js */ 424);
+	var _SubleaseObject = __webpack_require__(/*! ../Mixin/Objects/SubleaseObject.js */ 443);
 	
 	var _SubleaseObject2 = _interopRequireDefault(_SubleaseObject);
 	
@@ -29704,7 +29736,7 @@ webpackJsonp([11],[
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
-	var _Help = __webpack_require__(/*! ../Mixin/Html/Help.jsx */ 425);
+	var _Help = __webpack_require__(/*! ../Mixin/Html/Help.jsx */ 444);
 	
 	var _Help2 = _interopRequireDefault(_Help);
 	
@@ -30447,7 +30479,7 @@ webpackJsonp([11],[
 	SubleaseForm.propTypes = {};
 
 /***/ },
-/* 424 */
+/* 443 */
 /*!****************************************************!*\
   !*** ./javascript/Mixin/Objects/SubleaseObject.js ***!
   \****************************************************/
@@ -30491,7 +30523,7 @@ webpackJsonp([11],[
 	exports.default = SubleaseObject;
 
 /***/ },
-/* 425 */
+/* 444 */
 /*!****************************************!*\
   !*** ./javascript/Mixin/Html/Help.jsx ***!
   \****************************************/

@@ -292,7 +292,7 @@ webpackJsonp([8],[
 	    key: 'render',
 	    value: function render() {
 	      var inputClass = void 0;
-	      if (this.props.errorMessage !== null && this.props.errorMessage !== '' || this.state.empty && this.props.required) {
+	      if (this.props.errorMessage !== null && this.props.errorMessage !== '' || this.state.empty && this.props.required && this.props.disableRequireCheck === false) {
 	        inputClass = 'form-control error-highlight';
 	      } else {
 	        inputClass = 'form-control';
@@ -321,7 +321,7 @@ webpackJsonp([8],[
 	      var errorMessage = void 0;
 	      if (this.props.errorMessage) {
 	        errorMessage = this.props.errorMessage;
-	      } else if (this.state.empty && this.props.required) {
+	      } else if (this.state.empty && this.props.required && this.props.disableRequireCheck === false) {
 	        errorMessage = this.emptyMessage();
 	      }
 	
@@ -369,7 +369,8 @@ webpackJsonp([8],[
 	  selectOnClick: true,
 	  wrap: null,
 	  onEmpty: null,
-	  flagEmpty: true
+	  flagEmpty: true,
+	  disableRequireCheck: false
 	};
 	
 	InputField.propTypes = {
@@ -390,7 +391,8 @@ webpackJsonp([8],[
 	  wrap: _react2.default.PropTypes.func,
 	  selectOnClick: _react2.default.PropTypes.bool,
 	  onEmpty: _react2.default.PropTypes.func,
-	  flagEmpty: _react2.default.PropTypes.bool
+	  flagEmpty: _react2.default.PropTypes.bool,
+	  disableRequireCheck: _react2.default.PropTypes.bool
 	};
 	
 	var RequiredIcon = exports.RequiredIcon = function RequiredIcon() {

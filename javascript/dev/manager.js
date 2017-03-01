@@ -723,21 +723,6 @@ webpackJsonp([0],{
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	/**
-	props.label = 'Pick option below'
-	props.small = false
-	props.options = [
-	{
-	  link : 'http://address', // default: null
-	  icon : <i className="fa fa-check"></i>, // default: null
-	  label : 'Click here',
-	  handleClick : functionName,
-	},
-	{
-	  divider: true
-	}
-	]
-	*/
 	var Dropdown = function (_React$Component) {
 	  _inherits(Dropdown, _React$Component);
 	
@@ -1401,7 +1386,7 @@ webpackJsonp([0],{
 	    key: 'render',
 	    value: function render() {
 	      var inputClass = void 0;
-	      if (this.props.errorMessage !== null && this.props.errorMessage !== '' || this.state.empty && this.props.required) {
+	      if (this.props.errorMessage !== null && this.props.errorMessage !== '' || this.state.empty && this.props.required && this.props.disableRequireCheck === false) {
 	        inputClass = 'form-control error-highlight';
 	      } else {
 	        inputClass = 'form-control';
@@ -1430,7 +1415,7 @@ webpackJsonp([0],{
 	      var errorMessage = void 0;
 	      if (this.props.errorMessage) {
 	        errorMessage = this.props.errorMessage;
-	      } else if (this.state.empty && this.props.required) {
+	      } else if (this.state.empty && this.props.required && this.props.disableRequireCheck === false) {
 	        errorMessage = this.emptyMessage();
 	      }
 	
@@ -1478,7 +1463,8 @@ webpackJsonp([0],{
 	  selectOnClick: true,
 	  wrap: null,
 	  onEmpty: null,
-	  flagEmpty: true
+	  flagEmpty: true,
+	  disableRequireCheck: false
 	};
 	
 	InputField.propTypes = {
@@ -1499,7 +1485,8 @@ webpackJsonp([0],{
 	  wrap: _react2.default.PropTypes.func,
 	  selectOnClick: _react2.default.PropTypes.bool,
 	  onEmpty: _react2.default.PropTypes.func,
-	  flagEmpty: _react2.default.PropTypes.bool
+	  flagEmpty: _react2.default.PropTypes.bool,
+	  disableRequireCheck: _react2.default.PropTypes.bool
 	};
 	
 	var RequiredIcon = exports.RequiredIcon = function RequiredIcon() {
@@ -1678,6 +1665,17 @@ webpackJsonp([0],{
 	        return false;
 	      }
 	      return value.replace(/[^\d]/g, '').length == 10;
+	    }
+	  }, {
+	    key: 'isUrl',
+	    value: function isUrl(value) {
+	      var httpRequired = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+	
+	      if (httpRequired) {
+	        return value.match(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/);
+	      } else {
+	        return value.match(/[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/);
+	      }
 	    }
 	  }, {
 	    key: 'randomId',
