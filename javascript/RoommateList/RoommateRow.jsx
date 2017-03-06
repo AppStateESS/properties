@@ -1,5 +1,6 @@
 'use strict'
 import React from 'react'
+import empty from '../Mixin/Helper/Empty.js'
 
 export default class RoommateRow extends React.Component {
   constructor(props) {
@@ -7,27 +8,43 @@ export default class RoommateRow extends React.Component {
     this.state = {}
   }
 
+  paragraphIfNotEmpty(value, label = null) {
+    if (empty(value)) {
+      return null
+    } else {
+      return <div>
+        <strong>{label}</strong>{value}</div>
+    }
+  }
+
   render() {
     const {roommate} = this.props
+    const para = this.paragraphIfNotEmpty
+    let {description} = roommate
+    if (description.length > 50) {
+      description = description.substring(0, 50) + '...'
+    }
+
     return (
-      <div>
-        <div>{roommate.move_in_date}</div>
-        <div>{roommate.description}</div>
-        <div>{roommate.politics}</div>
-        <div>{roommate.major}</div>
-        <div>{roommate.focus}</div>
-        <div>{roommate.wake_time}</div>
-        <div>{roommate.sleep_time}</div>
-        <div>{roommate.overnighter}</div>
-        <div>{roommate.free_time}</div>
-        <div>{roommate.cleanliness}</div>
-        <div>{roommate.loudness}</div>
-        <div>{roommate.study_time}</div>
-        <div>{roommate.languages}</div>
-        <div>{roommate.music}</div>
-        <div>{roommate.hobbies}</div>
-        <div>{roommate.smoking}</div>
-        <div>{roommate.pets}</div>
+      <div className="panel panel-default">
+        <div className="panel-body">
+          <div className="row">
+            <div className="col-sm-4">
+              <div>
+                <strong>Move in:</strong>&nbsp;
+                {roommate.move_in_date}</div>
+              <div>
+                <strong>Created:</strong>&nbsp;
+                {roommate.created}</div>
+              {para(description, 'Description: ')}
+            </div>
+            <div className="col-sm-4">{para(roommate.major, 'Major: ')}{para(roommate.study_time, 'Study time: ')}{para(roommate.focus, 'Focus: ')}</div>
+            <div className="col-sm-4">{para(roommate.free_time, 'Free time: ')}{para(roommate.music, 'Music: ')}{para(roommate.hobbies, 'Hobbies: ')}</div>
+          </div>
+        </div>
+        <div className="panel-footer text-center">
+          <a className="btn btn-primary" href={`./properties/Roommate/${roommate.id}`}>Full details</a>
+        </div>
       </div>
     )
   }

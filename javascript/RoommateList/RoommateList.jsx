@@ -38,7 +38,10 @@ export default class RoommateList extends React.Component {
     })
 
     return (
-      <div>{rows}</div>
+      <div>
+        <h2>Roommate listing</h2>
+        <div>{rows}</div>
+      </div>
     )
   }
 }
