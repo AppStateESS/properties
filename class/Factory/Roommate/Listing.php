@@ -42,6 +42,7 @@ class Listing
             $tbl->addField('phone');
         }
 
+        $tbl->addField('id');
         $tbl->addField('cleanliness');
         $tbl->addField('created');
         $tbl->addField('description');
@@ -66,7 +67,8 @@ class Listing
             return array();
         }
         foreach ($result as $rm) {
-            $listing[] = $rm->view();
+            /* @var $rm \properties\Resource\Roommate */
+            $listing[] = $rm->view(true, true);
         }
         return $listing;
     }
