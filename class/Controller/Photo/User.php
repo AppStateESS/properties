@@ -28,7 +28,7 @@ class User extends \properties\Controller\SubController
     
     public function loadFactory()
     {
-        $factory = new \properties\Factory\Sublease\Photo;
+        $factory = new \properties\Factory\Property\Photo;
         return $factory;
     }
     
