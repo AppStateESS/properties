@@ -18,7 +18,7 @@
 
 namespace properties\Controller\Photo;
 
-class Admin extends User
+class Admin extends Manager
 {
 
     protected function savePostCommand(\Canopy\Request $request)
@@ -26,13 +26,14 @@ class Admin extends User
         return $this->factory->post($request);
     }
 
-    protected function deleteCommand()
+    protected function deleteCommand(\Canopy\Request $request)
     {
-        $this->factory->delete($this->id);
+        $photo = $this->factory->load($this->id);
+        $this->factory->delete($photo);
         return array('success' => true);
     }
 
-    protected function patchCommand(\Canopy\Request $request)
+    protected function jsonPatchCommand(\Canopy\Request $request)
     {
         $photo = $this->factory->load($this->id);
         $variableName = $request->pullPatchString('varname');
