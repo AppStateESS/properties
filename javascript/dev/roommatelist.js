@@ -107,6 +107,24 @@ webpackJsonp([11],{
 
 /***/ },
 
+/***/ 187:
+/*!******************************************!*\
+  !*** ./javascript/Mixin/Helper/Empty.js ***!
+  \******************************************/
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = empty;
+	function empty(value) {
+	  return value === undefined || value === null || value === 0 || value === '0' || value.length === 0 || value === false;
+	}
+
+/***/ },
+
 /***/ 437:
 /*!**************************************************!*\
   !*** ./javascript/RoommateList/RoommateList.jsx ***!
@@ -189,7 +207,16 @@ webpackJsonp([11],{
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        rows
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Roommate listing'
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          rows
+	        )
 	      );
 	    }
 	  }]);
@@ -222,6 +249,10 @@ webpackJsonp([11],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _Empty = __webpack_require__(/*! ../Mixin/Helper/Empty.js */ 187);
+	
+	var _Empty2 = _interopRequireDefault(_Empty);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -243,97 +274,97 @@ webpackJsonp([11],{
 	  }
 	
 	  _createClass(RoommateRow, [{
+	    key: 'paragraphIfNotEmpty',
+	    value: function paragraphIfNotEmpty(value) {
+	      var label = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+	
+	      if ((0, _Empty2.default)(value)) {
+	        return null;
+	      } else {
+	        return _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'strong',
+	            null,
+	            label
+	          ),
+	          value
+	        );
+	      }
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var roommate = this.props.roommate;
 	
+	      var para = this.paragraphIfNotEmpty;
+	      var description = roommate.description;
+	
+	      if (description.length > 50) {
+	        description = description.substring(0, 50) + '...';
+	      }
+	
 	      return _react2.default.createElement(
 	        'div',
-	        null,
+	        { className: 'panel panel-default' },
 	        _react2.default.createElement(
 	          'div',
-	          null,
-	          roommate.move_in_date
+	          { className: 'panel-body' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'row' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-sm-4' },
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                  'strong',
+	                  null,
+	                  'Move in:'
+	                ),
+	                '\xA0',
+	                roommate.move_in_date
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                  'strong',
+	                  null,
+	                  'Created:'
+	                ),
+	                '\xA0',
+	                roommate.created
+	              ),
+	              para(description, 'Description: ')
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-sm-4' },
+	              para(roommate.major, 'Major: '),
+	              para(roommate.study_time, 'Study time: '),
+	              para(roommate.focus, 'Focus: ')
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-sm-4' },
+	              para(roommate.free_time, 'Free time: '),
+	              para(roommate.music, 'Music: '),
+	              para(roommate.hobbies, 'Hobbies: ')
+	            )
+	          )
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          null,
-	          roommate.description
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          roommate.politics
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          roommate.major
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          roommate.focus
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          roommate.wake_time
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          roommate.sleep_time
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          roommate.overnighter
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          roommate.free_time
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          roommate.cleanliness
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          roommate.loudness
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          roommate.study_time
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          roommate.languages
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          roommate.music
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          roommate.hobbies
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          roommate.smoking
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          roommate.pets
+	          { className: 'panel-footer text-center' },
+	          _react2.default.createElement(
+	            'a',
+	            { className: 'btn btn-primary', href: './properties/Roommate/' + roommate.id },
+	            'Full details'
+	          )
 	        )
 	      );
 	    }

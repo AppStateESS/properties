@@ -29440,6 +29440,7 @@ webpackJsonp([10],[
 	                value: this.state.roommate.loudness,
 	                options: _ProfileData2.default.listLoudness(),
 	                placeholder: 'Select from below or leave blank',
+	                simpleValue: true,
 	                onChange: this.setValue.bind(this, 'loudness') })
 	            ),
 	            _react2.default.createElement(
@@ -29474,6 +29475,7 @@ webpackJsonp([10],[
 	                name: 'smoking',
 	                value: this.state.roommate.smoking,
 	                options: _ProfileData2.default.listSmoking(),
+	                simpleValue: true,
 	                placeholder: 'Select from below or leave blank',
 	                onChange: this.setValue.bind(this, 'smoking') })
 	            ),
@@ -29537,6 +29539,7 @@ webpackJsonp([10],[
 	                name: 'wake_time',
 	                value: this.state.roommate.wake_time,
 	                options: _ProfileData2.default.listWakeTimes(),
+	                simpleValue: true,
 	                placeholder: 'Select from below or leave blank',
 	                onChange: this.setValue.bind(this, 'wake_time') })
 	            ),
@@ -29568,6 +29571,7 @@ webpackJsonp([10],[
 	                name: 'study_time',
 	                value: this.state.roommate.study_time,
 	                options: _ProfileData2.default.listStudyTimes(),
+	                simpleValue: true,
 	                placeholder: 'Select from below or leave blank',
 	                onChange: this.setValue.bind(this, 'study_time') })
 	            ),
