@@ -516,6 +516,7 @@ export default class RoommateForm extends React.Component {
                 name="study_time"
                 value={this.state.roommate.study_time}
                 options={ProfileData.listStudyTimes()}
+                simpleValue={true}
                 placeholder="Select from below or leave blank"
                 onChange={this.setValue.bind(this, 'study_time')}/></div>
             <div className="col-sm-6 col-lg-3 marginBottom">
