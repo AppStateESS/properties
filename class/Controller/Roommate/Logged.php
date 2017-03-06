@@ -52,16 +52,21 @@ class Logged extends User
         if (empty($roommate)) {
             return array('roommate' => null);
         } else {
-            $json['roommate'] = $roommate->view(true);
+            $json['roommate'] = $roommate->view(false);
             return $json;
         }
     }
 
     protected function viewHtmlCommand(\Canopy\Request $request)
     {
-        $button = $this->updateButton();
+        $roommate = $this->getUserRoommate();
+        if ($roommate) {
+            $button = $this->updateButton();
+        } else {
+            $button = $this->createButton();
+        }
         \properties\Factory\NavBar::addItem($button);
-        return 'hi';
+        return $this->factory->view($this->id, true);
     }
 
     protected function editHtmlCommand(\Canopy\Request $request)
