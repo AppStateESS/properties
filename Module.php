@@ -49,7 +49,7 @@ class Module extends \Canopy\Module
     public function afterRun(\Canopy\Request $request, \Canopy\Response $response)
     {
         if ($request->isGet() && !$request->isAjax()) {
-            \properties\Factory\NavBar::view();
+            \properties\Factory\NavBar::view($request);
         }
     }
 

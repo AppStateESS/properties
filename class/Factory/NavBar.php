@@ -25,7 +25,7 @@ class NavBar
     public static $options;
     public static $title = 'Administrate';
 
-    public static function view()
+    public static function view(\Canopy\Request $request)
     {
         $auth = \Current_User::getAuthorization();
 
@@ -47,6 +47,7 @@ class NavBar
         $vars['username'] = \Current_User::getDisplayName();
         $vars['home'] = \Canopy\Server::getSiteUrl();
         $vars['title'] = self::$title;
+        $vars['current_area'] = self::getNavTitle($request);
         $template = new \phpws2\Template($vars);
         $template->setModuleTemplate('properties', 'navbar.html');
         $content = $template->get();
@@ -54,6 +55,22 @@ class NavBar
         \Layout::plug($content, 'NAV_LINKS');
     }
 
+    private static function getNavTitle(\Canopy\Request $request)
+    {
+        $url = $request->getUrl();
+        if (preg_match('/Roommate/', $url)) {
+            return '<i class="fa fa-comments-o"></i>&nbsp;Roommates';
+        } elseif (preg_match('/Manager/', $url)) {
+            return '<i class="fa fa-users"></i>&nbsp;Managers';
+        } elseif (preg_match('/Sublease/', $url)) {
+            return '<i class="fa fa-suitcase"></i>&nbsp;Subleases';
+        } elseif (preg_match('/Property/', $url)) {
+            return '<i class="fa fa-building"></i>&nbsp;Properties';
+        } else {
+            return 'Main menu';
+        }
+    }
+    
     public static function addItem($item)
     {
         self::$items[] = $item;
