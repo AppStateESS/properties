@@ -86,5 +86,24 @@ class Roommate extends Base
     {
         return ((int)$roommate->uid === (int)$uid && !empty($uid));
     }
+    
+    public function view($id, $contact_allowed)
+    {
+        \Layout::addStyle('properties', 'roommate/view.css');
+        $roommate = $this->load($id);
+        $tpl = $roommate->view(true);
+        $tpl['contact_allowed'] = $contact_allowed;
+        
+        $auth = \Current_User::getAuthorization();
+        if (!empty($auth->login_link)) {
+            $tpl['login'] = $auth->login_link;
+        } else {
+            $tpl['login'] = 'index.php?module=users&action=user&command=login_page';
+        }
+        
+        $template = new \phpws2\Template($tpl);
+        $template->setModuleTemplate('properties', 'roommate/view.html');
+        return $template->get();
+    }
 
 }

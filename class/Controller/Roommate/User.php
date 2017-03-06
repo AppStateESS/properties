@@ -20,7 +20,11 @@ namespace properties\Controller\Roommate;
 
 class User extends \properties\Controller\SubController
 {
-
+    /**
+     * @var \properties\Factory\Roommate
+     */
+    public $factory;
+    
     public function __construct($role)
     {
         parent::__construct($role);
@@ -35,7 +39,7 @@ class User extends \properties\Controller\SubController
     {
         $button = $this->createButton();
         \properties\Factory\NavBar::addItem($button);
-        return 'hi';
+        return $this->factory->view($this->id, false);
     }
 
     protected function listHtmlCommand(\Canopy\Request $request)
@@ -57,7 +61,7 @@ class User extends \properties\Controller\SubController
         \Current_User::requireLogin();
     }
 
-    private function createButton()
+    protected function createButton()
     {
         return '<button class="btn btn-primary btn-sm navbar-btn" onClick="window.location.href=\'./properties/Roommate/create\'"><i class="fa fa-bullhorn"></i>&nbsp;Add Roommate request</button>';
     }
