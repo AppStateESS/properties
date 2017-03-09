@@ -12,11 +12,11 @@ webpackJsonp([0],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(/*! react-dom */ 34);
+	var _reactDom = __webpack_require__(/*! react-dom */ 32);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _Manager = __webpack_require__(/*! ./Manager.jsx */ 172);
+	var _Manager = __webpack_require__(/*! ./Manager.jsx */ 178);
 	
 	var _Manager2 = _interopRequireDefault(_Manager);
 	
@@ -26,7 +26,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 172:
+/***/ 178:
 /*!****************************************!*\
   !*** ./javascript/Manager/Manager.jsx ***!
   \****************************************/
@@ -44,27 +44,27 @@ webpackJsonp([0],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _ListManagers = __webpack_require__(/*! ./ListManagers.jsx */ 173);
+	var _ListManagers = __webpack_require__(/*! ./ListManagers.jsx */ 179);
 	
 	var _ListManagers2 = _interopRequireDefault(_ListManagers);
 	
-	var _ManagerForm = __webpack_require__(/*! ./ManagerForm.jsx */ 176);
+	var _ManagerForm = __webpack_require__(/*! ./ManagerForm.jsx */ 182);
 	
 	var _ManagerForm2 = _interopRequireDefault(_ManagerForm);
 	
-	var _Message = __webpack_require__(/*! ../Mixin/Html/Message.jsx */ 181);
+	var _Message = __webpack_require__(/*! ../Mixin/Html/Message.jsx */ 187);
 	
 	var _Message2 = _interopRequireDefault(_Message);
 	
-	var _Waiting = __webpack_require__(/*! ../Mixin/Html/Waiting.jsx */ 182);
+	var _Waiting = __webpack_require__(/*! ../Mixin/Html/Waiting.jsx */ 188);
 	
 	var _Waiting2 = _interopRequireDefault(_Waiting);
 	
-	var _Bind = __webpack_require__(/*! ../Mixin/Helper/Bind.js */ 183);
+	var _Bind = __webpack_require__(/*! ../Mixin/Helper/Bind.js */ 189);
 	
 	var _Bind2 = _interopRequireDefault(_Bind);
 	
-	var _ManagerObject = __webpack_require__(/*! ../Mixin/Objects/ManagerObject.js */ 180);
+	var _ManagerObject = __webpack_require__(/*! ../Mixin/Objects/ManagerObject.js */ 186);
 	
 	var _ManagerObject2 = _interopRequireDefault(_ManagerObject);
 	
@@ -252,7 +252,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 173:
+/***/ 179:
 /*!*********************************************!*\
   !*** ./javascript/Manager/ListManagers.jsx ***!
   \*********************************************/
@@ -272,7 +272,7 @@ webpackJsonp([0],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _ManagerRow = __webpack_require__(/*! ./ManagerRow.jsx */ 174);
+	var _ManagerRow = __webpack_require__(/*! ./ManagerRow.jsx */ 180);
 	
 	var _ManagerRow2 = _interopRequireDefault(_ManagerRow);
 	
@@ -373,7 +373,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 174:
+/***/ 180:
 /*!*******************************************!*\
   !*** ./javascript/Manager/ManagerRow.jsx ***!
   \*******************************************/
@@ -391,7 +391,7 @@ webpackJsonp([0],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Dropdown = __webpack_require__(/*! ../Mixin/Form/Dropdown.jsx */ 175);
+	var _Dropdown = __webpack_require__(/*! ../Mixin/Form/Dropdown.jsx */ 181);
 	
 	var _Dropdown2 = _interopRequireDefault(_Dropdown);
 	
@@ -697,7 +697,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 175:
+/***/ 181:
 /*!********************************************!*\
   !*** ./javascript/Mixin/Form/Dropdown.jsx ***!
   \********************************************/
@@ -814,7 +814,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 176:
+/***/ 182:
 /*!********************************************!*\
   !*** ./javascript/Manager/ManagerForm.jsx ***!
   \********************************************/
@@ -834,19 +834,19 @@ webpackJsonp([0],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _InputField = __webpack_require__(/*! ../Mixin/Form/InputField.jsx */ 177);
+	var _InputField = __webpack_require__(/*! ../Mixin/Form/InputField.jsx */ 183);
 	
 	var _InputField2 = _interopRequireDefault(_InputField);
 	
-	var _Modal = __webpack_require__(/*! ../Mixin/Html/Modal.jsx */ 178);
+	var _Modal = __webpack_require__(/*! ../Mixin/Html/Modal.jsx */ 184);
 	
 	var _Modal2 = _interopRequireDefault(_Modal);
 	
-	var _CheckValues = __webpack_require__(/*! ../Mixin/Helper/CheckValues */ 179);
+	var _CheckValues = __webpack_require__(/*! ../Mixin/Helper/CheckValues */ 185);
 	
 	var _CheckValues2 = _interopRequireDefault(_CheckValues);
 	
-	var _ManagerObject = __webpack_require__(/*! ../Mixin/Objects/ManagerObject.js */ 180);
+	var _ManagerObject = __webpack_require__(/*! ../Mixin/Objects/ManagerObject.js */ 186);
 	
 	var _ManagerObject2 = _interopRequireDefault(_ManagerObject);
 	
@@ -1294,7 +1294,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 177:
+/***/ 183:
 /*!**********************************************!*\
   !*** ./javascript/Mixin/Form/InputField.jsx ***!
   \**********************************************/
@@ -1495,7 +1495,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 178:
+/***/ 184:
 /*!*****************************************!*\
   !*** ./javascript/Mixin/Html/Modal.jsx ***!
   \*****************************************/
@@ -1622,7 +1622,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 179:
+/***/ 185:
 /*!************************************************!*\
   !*** ./javascript/Mixin/Helper/CheckValues.js ***!
   \************************************************/
@@ -1691,7 +1691,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 180:
+/***/ 186:
 /*!***************************************************!*\
   !*** ./javascript/Mixin/Objects/ManagerObject.js ***!
   \***************************************************/
@@ -1719,7 +1719,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 181:
+/***/ 187:
 /*!*******************************************!*\
   !*** ./javascript/Mixin/Html/Message.jsx ***!
   \*******************************************/
@@ -1818,7 +1818,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 182:
+/***/ 188:
 /*!*******************************************!*\
   !*** ./javascript/Mixin/Html/Waiting.jsx ***!
   \*******************************************/
@@ -1899,7 +1899,7 @@ webpackJsonp([0],{
 
 /***/ },
 
-/***/ 183:
+/***/ 189:
 /*!*****************************************!*\
   !*** ./javascript/Mixin/Helper/Bind.js ***!
   \*****************************************/

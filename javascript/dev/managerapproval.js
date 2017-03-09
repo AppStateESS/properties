@@ -12,11 +12,11 @@ webpackJsonp([1],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(/*! react-dom */ 34);
+	var _reactDom = __webpack_require__(/*! react-dom */ 32);
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _ManagerApproval = __webpack_require__(/*! ./ManagerApproval.jsx */ 184);
+	var _ManagerApproval = __webpack_require__(/*! ./ManagerApproval.jsx */ 190);
 	
 	var _ManagerApproval2 = _interopRequireDefault(_ManagerApproval);
 	
@@ -26,7 +26,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 178:
+/***/ 184:
 /*!*****************************************!*\
   !*** ./javascript/Mixin/Html/Modal.jsx ***!
   \*****************************************/
@@ -153,7 +153,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 181:
+/***/ 187:
 /*!*******************************************!*\
   !*** ./javascript/Mixin/Html/Message.jsx ***!
   \*******************************************/
@@ -252,7 +252,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 182:
+/***/ 188:
 /*!*******************************************!*\
   !*** ./javascript/Mixin/Html/Waiting.jsx ***!
   \*******************************************/
@@ -333,7 +333,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 184:
+/***/ 190:
 /*!********************************************************!*\
   !*** ./javascript/ManagerApproval/ManagerApproval.jsx ***!
   \********************************************************/
@@ -351,27 +351,27 @@ webpackJsonp([1],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _RefuseModal = __webpack_require__(/*! ./RefuseModal.jsx */ 185);
+	var _RefuseModal = __webpack_require__(/*! ./RefuseModal.jsx */ 191);
 	
 	var _RefuseModal2 = _interopRequireDefault(_RefuseModal);
 	
-	var _InquiryModal = __webpack_require__(/*! ./InquiryModal.jsx */ 186);
+	var _InquiryModal = __webpack_require__(/*! ./InquiryModal.jsx */ 192);
 	
 	var _InquiryModal2 = _interopRequireDefault(_InquiryModal);
 	
-	var _Empty = __webpack_require__(/*! ../Mixin/Helper/Empty.js */ 187);
+	var _Empty = __webpack_require__(/*! ../Mixin/Helper/Empty.js */ 193);
 	
 	var _Empty2 = _interopRequireDefault(_Empty);
 	
-	var _Message = __webpack_require__(/*! ../Mixin/Html/Message.jsx */ 181);
+	var _Message = __webpack_require__(/*! ../Mixin/Html/Message.jsx */ 187);
 	
 	var _Message2 = _interopRequireDefault(_Message);
 	
-	var _ErrorPage = __webpack_require__(/*! ../Mixin/Html/ErrorPage.jsx */ 188);
+	var _ErrorPage = __webpack_require__(/*! ../Mixin/Html/ErrorPage.jsx */ 194);
 	
 	var _ErrorPage2 = _interopRequireDefault(_ErrorPage);
 	
-	var _Waiting = __webpack_require__(/*! ../Mixin/Html/Waiting.jsx */ 182);
+	var _Waiting = __webpack_require__(/*! ../Mixin/Html/Waiting.jsx */ 188);
 	
 	var _Waiting2 = _interopRequireDefault(_Waiting);
 	
@@ -817,7 +817,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 185:
+/***/ 191:
 /*!****************************************************!*\
   !*** ./javascript/ManagerApproval/RefuseModal.jsx ***!
   \****************************************************/
@@ -835,7 +835,7 @@ webpackJsonp([1],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Modal = __webpack_require__(/*! ../Mixin/Html/Modal.jsx */ 178);
+	var _Modal = __webpack_require__(/*! ../Mixin/Html/Modal.jsx */ 184);
 	
 	var _Modal2 = _interopRequireDefault(_Modal);
 	
@@ -913,7 +913,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 186:
+/***/ 192:
 /*!*****************************************************!*\
   !*** ./javascript/ManagerApproval/InquiryModal.jsx ***!
   \*****************************************************/
@@ -931,7 +931,7 @@ webpackJsonp([1],{
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Modal = __webpack_require__(/*! ../Mixin/Html/Modal.jsx */ 178);
+	var _Modal = __webpack_require__(/*! ../Mixin/Html/Modal.jsx */ 184);
 	
 	var _Modal2 = _interopRequireDefault(_Modal);
 	
@@ -999,7 +999,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 187:
+/***/ 193:
 /*!******************************************!*\
   !*** ./javascript/Mixin/Helper/Empty.js ***!
   \******************************************/
@@ -1017,7 +1017,7 @@ webpackJsonp([1],{
 
 /***/ },
 
-/***/ 188:
+/***/ 194:
 /*!*********************************************!*\
   !*** ./javascript/Mixin/Html/ErrorPage.jsx ***!
   \*********************************************/
