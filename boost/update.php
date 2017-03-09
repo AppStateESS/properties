@@ -8,6 +8,7 @@
 
 function properties_update(&$content, $currentVersion)
 {
+    $propertyUpgrade = new PropertyUpgrade;
     switch ($currentVersion) {
         case (version_compare($currentVersion, '1.1.0', '<')):
             $db = new PHPWS_DB('properties');
@@ -159,141 +160,238 @@ EOF;
 EOF;
 
         case (version_compare($currentVersion, '2.0.0', '<')):
-            try {
-                $db = \phpws2\Database::getDB();
-                $db->begin();
-                $tbl = $db->addTable('properties');
-                $dt = $tbl->addDataType('proptype', 'smallint');
-                $dt->setDefault(0);
-                $dt->add();
+            $content[] = $propertyUpgrade->v2_0_0();
 
-                $tbl->addValue('proptype', 1);
-                $tbl->addFieldConditional('efficiency', 1);
-                $db->update();
-                $db->commit();
-            } catch (\Exception $ex) {
-                $db->rollback();
-                $content[] = 'Update failed: ' . $ex->getMessage();
-                return false;
-            }
-            $content[] = <<<EOF
-<pre>
-+ Rewrite of original properties modules.
-</pre>
-EOF;
         case (version_compare($currentVersion, '2.0.1', '<')):
-            try {
-                $db = \phpws2\Database::getDB();
-                $db->begin();
-                $tbl = $db->buildTable('prop_inquiry');
-                $tbl->addDataType('contact_id', 'int');
-                $tbl->addDataType('inquiry_date', 'int');
-                $tbl->addDataType('inquiry_type', 'varchar')->setSize(20);
-                $tbl->create();
-                $db->commit();
-            } catch (\Exception $ex) {
-                $db->rollback();
-                $content[] = 'Update failed: ' . $ex->getMessage();
-                return false;
-            }
-            $content[] = <<<EOF
-<pre>
-+ Inquiry feature added.
-</pre>
-EOF;
-        case (version_compare($currentVersion, '2.0.2', '<')):
-            try {
-                $db = \phpws2\Database::getDB();
-                $db->begin();
-                $tbl = $db->addTable('properties');
-                $dt = $tbl->addDataType('smoking_allowed', 'smallint');
-                $dt->setDefault(0);
-                $dt->add();
-                $db->clearTables();
+            $content[] = $propertyUpgrade->v2_0_1();
 
-                $sublease = new \properties\Resource\Sublease;
-                $sublease->createTable($db);
-                $sub_table = $db->buildTable($sublease->getTable());
-                $db->commit();
-            } catch (\Exception $ex) {
-                $db->rollback();
-                $content[] = 'Update failed: ' . $ex->getMessage();
-                return false;
-            }
-            $content[] = <<<EOF
-<pre>
-+ Added smoking note.
-</pre>
-EOF;
+        case (version_compare($currentVersion, '2.0.2', '<')):
+            $content[] = $propertyUpgrade->v2_0_2();
+
         case (version_compare($currentVersion, '2.0.3', '<')):
-            try {
-                $db = \phpws2\Database::getDB();
-                $db->begin();
-                $tbl = $db->addTable('prop_contacts');
-                $dt = $tbl->addDataType('pw_timeout', 'int');
-                $dt->setDefault(0);
-                $dt->add();
-                $dt2 = $tbl->addDataType('pw_hash', 'varchar');
-                $dt2->setIsNull(true);
-                $dt2->add();
-                $db->commit();
-            } catch (\Exception $ex) {
-                $db->rollback();
-                $content[] = 'Update failed: ' . $ex->getMessage();
-                return false;
-            }
-            $content[] = <<<EOF
-<pre>
-Version 2.0.3
----------------
-+ Inquiry feature added.
-</pre>
-EOF;
+            $content[] = $propertyUpgrade->v2_0_3();
+
         case (version_compare($currentVersion, '2.0.4', '<')):
-            try {
-                $db = \phpws2\Database::getDB();
-                $db->begin();
-                $sublease_table = $db->getTable('sublease');
-                $sublease_table_id = $sub_table->getDataType('id');
-                $sublease_photo_resource = new \properties\Resource\SubleasePhoto;
-                $sublease_photo_resource->createTable($db);
-                $sublease_photo_table = $db->buildTable($sublease_photo_resource->getTable());
-                $sublease_photo_sid_column = $sublease_photo_table->getDataType('sid');
-                $sublease_photo_index = new \phpws2\Database\ForeignKey($sublease_photo_sid_column,
-                        $sublease_table_id);
-                $sublease_photo_index->add();
-                $db->commit();
-            } catch (\Exception $ex) {
-                $db->rollback();
-                $content[] = 'Update failed: ' . $ex->getMessage();
-                return false;
-            }
-            $content[] = <<<EOF
-<pre>
-Version 2.0.4
----------------
-+ Added sublease photos
-</pre>
-EOF;
+            $content[] = $propertyUpgrade->v2_0_4();
+
         case (version_compare($currentVersion, '2.0.5', '<')):
-            try {
-                $db = \phpws2\Database::getDB();
-                $db->begin();
-                $roommate = new \properties\Resource\Roommate;
-                $roommate->createTable($db);
-                $db->commit();
-            } catch (\Exception $ex) {
-                $db->rollback();
-                $content[] = 'Update failed: ' . $ex->getMessage();
-                return false;
+            $content[] = $propertyUpgrade->v2_0_5();
+
+        case (version_compare($currentVersion, '2.0.6', '<')):
+            $content[] = $propertyUpgrade->v2_0_6();
+    }
+    return true;
+}
+
+/**
+ * 
+ * public function v0_0_0() {
+ *  //logic
+ *  $changes = array();
+ *  $changes[] = 'Change made';
+ *  return $this->comments('0.0.0', $changes);
+ * }
+ */
+class PropertyUpgrade
+{
+
+    public function v2_0_0()
+    {
+        try {
+            $db = \phpws2\Database::getDB();
+            $db->begin();
+            $tbl = $db->addTable('properties');
+            $dt = $tbl->addDataType('proptype', 'smallint');
+            $dt->setDefault(0);
+            $dt->add();
+
+            $tbl->addValue('proptype', 1);
+            $tbl->addFieldConditional('efficiency', 1);
+            $db->update();
+            $db->commit();
+        } catch (\Exception $ex) {
+            $db->rollback();
+            $content[] = 'Update failed: ' . $ex->getMessage();
+            return false;
+        }
+        $changes = array();
+        $changes[] = ' Rewrite of original properties modules.';
+        return $this->comments('2.0.0', $changes);
+    }
+
+    public function v2_0_1()
+    {
+        try {
+            $db = \phpws2\Database::getDB();
+            $db->begin();
+            $tbl = $db->buildTable('prop_inquiry');
+            $tbl->addDataType('contact_id', 'int');
+            $tbl->addDataType('inquiry_date', 'int');
+            $tbl->addDataType('inquiry_type', 'varchar')->setSize(20);
+            $tbl->create();
+            $db->commit();
+        } catch (\Exception $ex) {
+            $db->rollback();
+            $content[] = 'Update failed: ' . $ex->getMessage();
+            return false;
+        }
+        $changes = array();
+        $changes[] = 'Inquiry feature added.';
+        return $this->comments('0.0.0', $changes);
+    }
+
+    public function v2_0_2()
+    {
+        try {
+            $db = \phpws2\Database::getDB();
+            $db->begin();
+            $tbl = $db->addTable('properties');
+            $dt = $tbl->addDataType('smoking_allowed', 'smallint');
+            $dt->setDefault(0);
+            $dt->add();
+            $db->clearTables();
+
+            $sublease = new \properties\Resource\Sublease;
+            $sublease->createTable($db);
+            $sub_table = $db->buildTable($sublease->getTable());
+            $db->commit();
+        } catch (\Exception $ex) {
+            $db->rollback();
+            $content[] = 'Update failed: ' . $ex->getMessage();
+            return false;
+        }
+        $changes = array();
+        $changes[] = 'Added smoking note.';
+        return $this->comments('2.0.2', $changes);
+    }
+
+    public function v2_0_3()
+    {
+        try {
+            $db = \phpws2\Database::getDB();
+            $db->begin();
+            $tbl = $db->addTable('prop_contacts');
+            $dt = $tbl->addDataType('pw_timeout', 'int');
+            $dt->setDefault(0);
+            $dt->add();
+            $dt2 = $tbl->addDataType('pw_hash', 'varchar');
+            $dt2->setIsNull(true);
+            $dt2->add();
+            $db->commit();
+        } catch (\Exception $ex) {
+            $db->rollback();
+            $content[] = 'Update failed: ' . $ex->getMessage();
+            return false;
+        }
+        return $this->comments('2.0.3', array('Inquiry feature added'));
+    }
+
+    public function v2_0_4()
+    {
+        try {
+            $db = \phpws2\Database::getDB();
+            $db->begin();
+            $sublease_table = $db->getTable('sublease');
+            $sublease_table_id = $sub_table->getDataType('id');
+            $sublease_photo_resource = new \properties\Resource\SubleasePhoto;
+            $sublease_photo_resource->createTable($db);
+            $sublease_photo_table = $db->buildTable($sublease_photo_resource->getTable());
+            $sublease_photo_sid_column = $sublease_photo_table->getDataType('sid');
+            $sublease_photo_index = new \phpws2\Database\ForeignKey($sublease_photo_sid_column,
+                    $sublease_table_id);
+            $sublease_photo_index->add();
+            $db->commit();
+        } catch (\Exception $ex) {
+            $db->rollback();
+            $content[] = 'Update failed: ' . $ex->getMessage();
+            return false;
+        }
+        return $this->comments('2.0.4', array('Added sublease photos'));
+    }
+
+    public function v2_0_5()
+    {
+        try {
+            $db = \phpws2\Database::getDB();
+            $db->begin();
+            $roommate = new \properties\Resource\Roommate;
+            $roommate->createTable($db);
+            $db->commit();
+        } catch (\Exception $ex) {
+            $db->rollback();
+            $content[] = 'Update failed: ' . $ex->getMessage();
+            return false;
+        }
+        return $this->comments('2.0.5', array('Added roommate section'));
+    }
+
+    public function v2_0_6()
+    {
+        $changes = array();
+        try {
+            $db = \phpws2\Database::getDB();
+            $db->begin();
+
+            $tbl = $db->addTable('prop_photo');
+            $dt = $tbl->addDataType('porder', 'int');
+            $dt->setDefault(1);
+            $dt->add();
+            $changes[] = 'Added porder to prop_photo';
+
+            $tbl = $db->addTable('prop_sub_photo');
+            $dt = $tbl->addDataType('porder', 'int');
+            $dt->setDefault(1);
+            $dt->add();
+            $changes[] = 'Added porder to prop_sub_photo';
+
+            $db = \phpws2\Database::getDB();
+            $tbl = $db->addTable('prop_photo');
+            $photos = $db->select();
+
+            $aCount = array();
+
+            foreach ($photos as $p) {
+                $property_id = $p['pid'];
+                $db->clearTables();
+                $db->clearConditional();
+                $tbl = $db->addTable('prop_photo');
+
+                $tbl->addFieldConditional('id', $p['id']);
+                if ((int) $p['main_pic'] === 1) {
+                    $tbl->addValue('porder', 1);
+                } else {
+                    if (isset($aCount[$property_id])) {
+                        $aCount[$property_id] ++;
+                        $current_count = $aCount[$property_id];
+                    } else {
+                        $current_count = $aCount[$property_id] = 2;
+                    }
+                    $tbl->addValue('porder', $current_count);
+                }
+                $db->update();
             }
-            $content[] = <<<EOF
+
+            $changes[] = 'Ordered photos in prop_photo';
+            $db->commit();
+        } catch (\Exception $ex) {
+            $db->rollback();
+            $content[] = 'Update failed: ' . $ex->getMessage();
+            return false;
+        }
+
+        return $this->comments('2.0.6', $changes);
+    }
+
+    private function comments($version, array $changes)
+    {
+        $changes_string = implode("\n+", $changes);
+        return <<<EOF
 <pre>
-Version 2.0.5
----------------
-+ Added roommate section.
+Version $version
+------------------------------------------------------
++$changes_string
 </pre>
 EOF;
     }
-    return true;
+
 }
