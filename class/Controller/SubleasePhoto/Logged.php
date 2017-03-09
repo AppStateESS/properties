@@ -32,9 +32,9 @@ class Logged extends User
         $photo = $this->factory->load($this->id);
         $variableName = $request->pullPatchString('varname');
         switch ($variableName) {
-            case 'main_pic':
-                $this->factory->removeMain($photo);
-                $this->factory->patch($photo, 'main_pic', 1);
+            case 'move':
+                $this->factory->sort($photo,
+                        $request->pullPatchInteger('newPosition'));
                 break;
         }
         return array('success' => true);
