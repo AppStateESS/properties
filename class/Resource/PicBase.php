@@ -26,6 +26,7 @@ abstract class PicBase extends Base
     protected $path;
     protected $title;
     protected $main_pic;
+    protected $porder;
 
     public function __construct()
     {
@@ -39,6 +40,7 @@ abstract class PicBase extends Base
         $this->title = new \phpws2\Variable\StringVar(null, 'title');
         $this->title->setLimit(255);
         $this->main_pic = new \phpws2\Variable\BooleanVar(false, 'main_pic');
+        $this->porder = new \phpws2\Variable\SmallInteger(0, 'porder');
     }
 
     public function delete()

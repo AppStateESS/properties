@@ -72,7 +72,7 @@ class Listing extends \properties\Factory\Listing
 
         $c1 = $this->db->createConditional($this->data_table->getField('id'),
                 $this->photo_table->getField('pid'));
-        $c2 = $this->db->createConditional($this->photo_table->getField('main_pic'),
+        $c2 = $this->db->createConditional($this->photo_table->getField('porder'),
                 1);
         $c3 = $this->db->createConditional($c1, $c2, 'and');
 

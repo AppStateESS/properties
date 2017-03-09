@@ -77,11 +77,13 @@ abstract class Photo extends Base
         }
         $tbl->addField('id');
         $tbl->addField('path');
-        $tbl->addField('main_pic');
+        $tbl->addField('porder');
+        $tbl->addOrderBy('porder');
         $db->loadSelectStatement();
         while ($row = $db->fetch()) {
-            $rows[] = array('id' => $row['id'], 'original' => $row['path'],
-                'thumbnail' => $this->thumbnailed($row['path']), 'main_pic' => $row['main_pic']);
+            $row['thumbnail'] = $this->thumbnailed($row['path']);
+            $row['original'] = $row['path'];
+            $rows[] = $row;
         }
         return $rows;
     }
@@ -142,9 +144,26 @@ abstract class Photo extends Base
         if (!move_uploaded_file($pic['tmp_name'], $path)) {
             throw new properties\Exception\FileSaveFailure($path);
         }
-        \PHPWS_File::makeThumbnail($file_name, $dest, $dest,
-                PROP_THUMBNAIL_WIDTH, PROP_THUMBNAIL_HEIGHT);
         return $path;
+    }
+
+    private function makeThumbnail($photo)
+    {
+        $thumbnail = $this->thumbnailed($photo->path);
+        $source_path = $photo->path;
+
+        if ($photo->width != $photo->height) {
+            if ($photo->width < $photo->height) {
+                $crop_size = $photo->width;
+            } else {
+                $crop_size = $photo->height;
+            }
+            \phpws\PHPWS_File::cropImage($source_path, $thumbnail, $crop_size,
+                    $crop_size);
+            $source_path = $thumbnail;
+        }
+
+        \phpws\PHPWS_File::scaleImage($source_path, $thumbnail, 100, 100);
     }
 
     public function removePhotos($item_id)
@@ -165,27 +184,6 @@ abstract class Photo extends Base
         }
     }
 
-    protected function mainPicExists($id)
-    {
-        $db = Database::getDB();
-        $tbl = $db->addTable($this->table_name);
-        $tbl->addFieldConditional($this->item_column, $id);
-        $tbl->addFieldConditional('main_pic', 1);
-        $result = $db->selectOneRow();
-        return (bool) $result;
-    }
-
-    public function removeMain(\properties\Resource\PicBase $photo)
-    {
-        $db = Database::getDB();
-        $tbl = $db->addTable($this->table_name);
-        $tbl->addFieldConditional('id', $photo->id, '!=');
-        $tbl->addFieldConditional($this->item_column,
-                $photo->{$this->item_column}, '=');
-        $tbl->addValue('main_pic', 0);
-        return $db->update();
-    }
-
     public function patch(\properties\Resource\PicBase $photo, $varname, $value)
     {
         $photo->$varname = $value;
@@ -198,7 +196,7 @@ abstract class Photo extends Base
             return array('error' => 'No files uploaded');
         }
         $pic = $_FILES['photo'];
-        
+
         try {
             $this->resize($pic['tmp_name']);
             $title = $this->createTitleFromFileName($pic['tmp_name']);
@@ -206,8 +204,9 @@ abstract class Photo extends Base
             $photo->width = $size[0];
             $photo->height = $size[1];
             $photo->title = $title;
-            $photo->main_pic = !$this->mainPicExists($item_id);
             $photo->path = $this->moveImage($pic, $owner_id);
+            $this->makeThumbnail($photo);
+            $photo->porder = $this->getMaxOrder($photo->pid) + 1;
             self::saveResource($photo);
             $result['photo'] = array('original' => $photo->path, 'thumbnail' => $photo->getThumbnail(), 'id' => $photo->getId());
             $result['success'] = true;
@@ -222,6 +221,23 @@ abstract class Photo extends Base
             $result['error'] = $e->getMessage();
         }
         return $result;
+    }
+
+    public function sort($photo, $new_position)
+    {
+        $sortable = new \phpws2\Sortable('prop_photo', 'porder');
+        $sortable->setAnchor('pid', $photo->pid);
+        $sortable->moveTo($photo->getId(), $new_position);
+    }
+
+    protected function getMaxOrder($photo_item_id)
+    {
+        $db = \phpws2\Database::getDB();
+        $tbl = $db->addTable($this->table_name, null, false);
+        $tbl->addFieldConditional($this->item_column, $photo_item_id);
+        $max_column = $tbl->getField('porder');
+        $db->addExpression('max(' . $max_column . ')', 'max');
+        return (int) $db->selectColumn();
     }
 
 }
