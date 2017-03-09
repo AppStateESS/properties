@@ -20,7 +20,6 @@ export default class SubleaseImage extends React.Component {
       'addPhotos',
       'clearNewPhotos',
       'delete',
-      'setMain'
     ]
     bindMethods(methods, this)
   }
@@ -95,26 +94,6 @@ export default class SubleaseImage extends React.Component {
     })
   }
 
-  setMain(id) {
-    $.ajax({
-      url: './properties/SubleasePhoto/' + id,
-      data: {
-        varname: 'main_pic'
-      },
-      method: 'PATCH',
-      success: function () {
-        let photos = this.state.currentPhotos
-        photos.forEach(function (value, idx, photos) {
-          photos[idx].main_pic = value.id == id
-            ? '1'
-            : '0'
-        })
-        this.setState({currentPhotos: photos})
-      }.bind(this),
-      error: function () {}.bind(this)
-    })
-  }
-
   render() {
     let overlay
     if (this.state.show) {
@@ -125,7 +104,6 @@ export default class SubleaseImage extends React.Component {
         update={this.addPhotos}
         newPhotos={this.state.newPhotos}
         currentPhotos={this.state.currentPhotos}
-        setMain={this.setMain}
         status={this.state.status}/>)
     }
     return (

@@ -1,79 +1,75 @@
 'use strict'
 import React from 'react'
+import {SortableElement, SortableHandle} from 'react-sortable-hoc'
 
 export default class Thumb extends React.Component {
   constructor(props) {
     super(props)
-    this.delete = this.delete.bind(this)
+    this.deletePhoto = this.deletePhoto.bind(this)
   }
 
-  delete(e) {
+  deletePhoto(e) {
     e.preventDefault()
     e.stopPropagation()
-    this.props.delete()
+    this.props.deletePhoto()
   }
 
   render() {
-    const outer = {
-      width: '184px',
-      height: '184px',
-      margin: '0px 8px 8px 0',
-      textAlign: 'center',
-      backgroundColor: '#e3e3e3',
-      borderWidth: '2px',
-      borderStyle: 'solid',
-      borderColor: this.props.main_pic === '1'
-        ? 'blue'
-        : '#bbb',
-      position: 'relative'
-    }
-
-    const inner = {
-      position: 'absolute',
-      display: 'block',
-      bottom: '0px',
-      left: '72px',
-      cursor: 'pointer'
-    }
-
-    const main = {
-      position: 'absolute',
-      top: '0px',
-      width: '100%',
-      backgroundColor: 'rgba(0,0,255,0.4)',
-      color: 'white'
-    }
-
-    const listStyle = {
-      listStyleType : 'none',
-      display: 'inline',
-      float: 'left',
-    }
-    return (
-      <li style={listStyle}>
-        <div style={outer} onClick={this.props.setMain}>
-          {this.props.main_pic === '1'
-            ? <div style={main}>Main photo</div>
-            : null}
-          <img src={this.props.thumbnail}/>
-          <span className="fa-stack fa-lg" style={inner} onClick={this.delete}>
-            <i className="text-danger fa fa-circle fa-stack-2x"></i>
-            <i className="text-danger fa fa-trash-o fa-stack-1x fa-inverse"></i>
-          </span>
-        </div>
-      </li>
-    )
+    const thumb = (<img src={this.props.thumbnail}/>)
+    return <SortableItem
+      value={thumb}
+      index={this.props.index}
+      deletePhoto={this.deletePhoto}/>
   }
 }
 
 Thumb.propTypes = {
   thumbnail: React.PropTypes.string,
-  main_pic: React.PropTypes.string,
   id: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.string]),
-  delete: React.PropTypes.func,
-  setMain: React.PropTypes.func
+  deletePhoto: React.PropTypes.func,
+  index: React.PropTypes.number
 }
 
 Thumb.defaultProps = {
   main: false
 }
+
+const DragHandle = SortableHandle(() => DragTag())
+
+const DragTag = () => {
+  const margin = {margin: '6px 0px'}
+  return (
+    <div style={margin} className="handle">
+        <i className="fa fa-arrows"></i>&nbsp;Sort
+    </div>
+  )
+}
+
+const SortableItem = SortableElement(({value, deletePhoto}) => {
+  const item = {
+    display: 'inline-block',
+    listStyleType: 'none',
+    zIndex: 1000,
+    width: '150px',
+    height: '177px',
+    border: '1px solid #c3c3c3',
+    backgroundColor: '#e3e3e3',
+    verticalAlign: 'top',
+    margin: '0px 8px 8px 0',
+    textAlign: 'center'
+  }
+
+  const deleteButton = {
+    marginTop: '6px'
+  }
+  return (
+    <li style={item}>
+      <DragHandle/> {value}
+      <button
+        style={deleteButton}
+        className="btn btn-sm btn-danger"
+        onClick={deletePhoto}>
+        <i className="fa fa-trash-o"></i>&nbsp;Delete</button>
+    </li>
+  )
+})

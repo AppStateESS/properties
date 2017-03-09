@@ -44,6 +44,7 @@ export default class Photo extends React.Component {
         items={this.state.photos}
         onScreenChange={this.toggleScreen}
         infinite={true}
+        thumbnailPosition="top"
         showFullscreenButton={true}
         showPlayButton={true}
         showThumbnails={true}

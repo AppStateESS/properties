@@ -2,6 +2,7 @@
 import React from 'react'
 import ImageOverlay from '../Mixin/Photo/ImageOverlay.jsx'
 import bindMethods from '../Mixin/Helper/Bind.js'
+import {arrayMove} from 'react-sortable-hoc'
 
 /* global $, propertyId, loadPhotos, editPhotos, currentPhotos */
 
@@ -19,8 +20,8 @@ export default class PropertyImage extends React.Component {
       'overlayOff',
       'addPhotos',
       'clearNewPhotos',
-      'delete',
-      'setMain'
+      'deletePhoto',
+      'onSortEnd'
     ]
     bindMethods(methods, this)
   }
@@ -71,6 +72,28 @@ export default class PropertyImage extends React.Component {
     }.bind(this))
   }
 
+  onSortEnd(movement)
+  {
+    const {oldIndex, newIndex} = movement
+    const newPosition = this.state.currentPhotos[newIndex].porder
+    const movingPhotoId = this.state.currentPhotos[oldIndex].id
+    $.ajax({
+      url: './properties/Photo/' + movingPhotoId,
+      data: {
+        varname: 'move',
+        newPosition: newPosition
+      },
+      dataType: 'json',
+      type: 'patch'
+    }).done(function (data) {
+      if (data.success) {
+        this.setState({
+          currentPhotos: arrayMove(this.state.currentPhotos, oldIndex, newIndex)
+        })
+      }
+    }.bind(this))
+  }
+
   overlayOn() {
     this.setState({show: true})
   }
@@ -80,9 +103,9 @@ export default class PropertyImage extends React.Component {
     loadPhotos.callback()
   }
 
-  delete(id, key) {
+  deletePhoto(photo, key) {
     $.ajax({
-      url: './properties/Photo/' + id,
+      url: './properties/Photo/' + photo.id,
       data: {
         propertyId: propertyId
       },
@@ -99,39 +122,18 @@ export default class PropertyImage extends React.Component {
     })
   }
 
-  setMain(id) {
-    $.ajax({
-      url: './properties/Photo/' + id,
-      data: {
-        varname: 'main_pic',
-        propertyId: propertyId
-      },
-      method: 'PATCH',
-      success: function () {
-        let photos = this.state.currentPhotos
-        photos.forEach(function (value, idx, photos) {
-          photos[idx].main_pic = value.id == id
-            ? '1'
-            : '0'
-        })
-        this.setState({currentPhotos: photos})
-      }.bind(this),
-      error: function () {}.bind(this)
-    })
-  }
-
   render() {
     let overlay
     if (this.state.show) {
       overlay = (<ImageOverlay
-        delete={this.delete}
+        deletePhoto={this.deletePhoto}
         close={this.overlayOff}
         clear={this.clearNewPhotos}
         update={this.addPhotos}
         newPhotos={this.state.newPhotos}
         currentPhotos={this.state.currentPhotos}
-        setMain={this.setMain}
-        status={this.state.status}/>)
+        status={this.state.status}
+        onSortEnd={this.onSortEnd}/>)
     }
     return (
       <div>

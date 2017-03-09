@@ -4,6 +4,7 @@ import Overlay from '../Html/Overlay.jsx'
 import Dropzone from 'react-dropzone'
 import Thumb from './Thumb.jsx'
 import ImageFrame from './ImageFrame.jsx'
+import {SortableContainer} from 'react-sortable-hoc'
 
 export default class ImageOverlay extends React.Component {
   constructor(props) {
@@ -31,13 +32,9 @@ export default class ImageOverlay extends React.Component {
 
     let currentImages
     if (this.props.currentPhotos.length > 0) {
-      currentImages = this.props.currentPhotos.map(function (value, key) {
-        return <Thumb
-          {...value}
-          key={key}
-          delete={this.props.delete.bind(null, value.id, key)}
-          setMain={this.props.setMain.bind(this, value.id)}/>
-      }.bind(this))
+      currentImages = <SortableList helperClass="sortableHelper"
+        items={this.props.currentPhotos} axis={'xy'} loadToContainerEdges={true}
+        onSortEnd={this.props.onSortEnd} deletePhoto={this.props.deletePhoto} useDragHandle={true}/>
     }
 
     return (
@@ -69,10 +66,18 @@ export default class ImageOverlay extends React.Component {
 ImageOverlay.propTypes = {
   close: React.PropTypes.func,
   update: React.PropTypes.func,
-  delete: React.PropTypes.func,
+  deletePhoto: React.PropTypes.func,
   clear: React.PropTypes.func,
   newPhotos: React.PropTypes.array,
   currentPhotos: React.PropTypes.array,
   status: React.PropTypes.array,
-  setMain: React.PropTypes.func
+  onSortEnd: React.PropTypes.func,
 }
+
+const SortableList = SortableContainer(({items, deletePhoto}) => {
+  return (
+    <ul style={{verticalAlign : 'top'}}>
+      {items.map((value, index) => <Thumb {...value} index={index} key={`item-${index}`} deletePhoto={deletePhoto.bind(this, value, index)}/>)}
+    </ul>
+  )
+})
