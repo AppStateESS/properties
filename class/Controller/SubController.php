@@ -149,7 +149,7 @@ abstract class SubController extends Base
         $id = $request->shiftCommand();
 
         if (empty($id)) {
-            throw new BadCommand;
+            throw new BadCommand('Empty command or missing id');
         }
         $this->id = $id;
 
