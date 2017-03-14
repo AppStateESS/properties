@@ -33,7 +33,7 @@ class Listing
     public $include_property_count = true;
     public $restricted = true;
     public $view = false;
-    public $orderby = null;
+    public $orderby = 'company_name';
     public $orderby_dir = 'asc';
     public $include_inquiry = true;
 
@@ -45,6 +45,7 @@ class Listing
 
         if ($this->include_property_count) {
             $tbl2 = $db->addTable('properties');
+            $tbl2->addFieldConditional('active', 1);
             $tbl2->addField('id', 'property_count')->showCount();
         }
         if ($this->include_inquiry) {
@@ -75,7 +76,6 @@ class Listing
             $join_conditional = $db->createConditional($tbl->getField('id'),
                     $tbl2->getField('contact_id'));
             $db->joinResources($tbl, $tbl2, $join_conditional, 'left');
-            $groups[] = $tbl2->getField('id');
         }
 
         if ($this->include_inquiry) {
@@ -85,7 +85,7 @@ class Listing
         }
 
         if (!empty($this->search)) {
-            $this->addSearch($db);
+            $this->addSearch($db, $tbl);
         }
         if ($this->active !== null) {
             $tbl->addFieldConditional('active', $this->active);
@@ -97,7 +97,7 @@ class Listing
         if ($this->orderby) {
             $tbl->addOrderBy($this->orderby, $this->orderby_dir);
         }
-        $sql = $db->selectQuery();
+        //echo $db->selectQuery();exit;
         if ($this->view) {
             $result = $db->selectAsResources('\properties\Resource\Manager');
             if (empty($result)) {
@@ -125,7 +125,7 @@ class Listing
         }
     }
 
-    private function addSearch($db)
+    private function addSearch($db, $tbl)
     {
         $search_string = $this->formatSearch();
         $s1 = $db->createConditional($tbl->getField('username'), $search_string,
