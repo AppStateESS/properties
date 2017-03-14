@@ -8,7 +8,7 @@ export default class Base extends React.Component {
   constructor(props) {
     super(props)
     this.state = {}
-
+    this.offset = 0
     this.delay
     this.search
     this.searchVars = {
@@ -26,11 +26,13 @@ export default class Base extends React.Component {
       'updateSearchVars',
       'updateSearchString',
       'resetConditions',
+      'showMore'
     ], this)
   }
 
   clearSearch() {
     this.search = ''
+    this.offset = 0
     this.load()
   }
 
@@ -41,6 +43,7 @@ export default class Base extends React.Component {
       minprice: '0',
       maxprice: '0'
     }
+    this.offset = 0
     this.load()
     this.updateLink()
   }
@@ -62,6 +65,7 @@ export default class Base extends React.Component {
     this.searchVars.townhouse = null
     this.searchVars.duplex = null
     this.searchVars.workout = null
+    this.offset = 0
     this.load()
     this.updateLink()
   }
@@ -74,6 +78,7 @@ export default class Base extends React.Component {
     }
     this.delay = setTimeout(function () {
       this.search = search
+      this.offset = 0
       this.load()
     }.bind(this, search), 500)
   }
@@ -81,6 +86,7 @@ export default class Base extends React.Component {
   updateSearchVars(varname, value)
   {
     this.searchVars[varname] = value
+    this.offset = 0
     this.load()
     this.updateLink()
   }
@@ -89,6 +95,11 @@ export default class Base extends React.Component {
     this.updateSearchVars(type, this.searchVars[type] === '1'
       ? undefined
       : '1')
+  }
+
+  showMore() {
+    this.offset = this.offset + 1
+    this.load()
   }
 
   loadAmenities() {
