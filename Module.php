@@ -12,6 +12,8 @@
 
 namespace properties;
 
+use properties\Factory\NavBar;
+
 require_once PHPWS_SOURCE_DIR . 'src/Module.php';
 require_once PHPWS_SOURCE_DIR . 'mod/properties/conf/system_defines.php';
 require_once PHPWS_SOURCE_DIR . 'mod/properties/conf/defines.php';
@@ -46,7 +48,8 @@ class Module extends \Canopy\Module
         return $error_controller;
     }
 
-    public function afterRun(\Canopy\Request $request, \Canopy\Response $response)
+    public function afterRun(\Canopy\Request $request,
+            \Canopy\Response $response)
     {
         if ($request->isGet() && !$request->isAjax()) {
             \properties\Factory\NavBar::view($request);
@@ -55,8 +58,22 @@ class Module extends \Canopy\Module
 
     public function runTime(\Canopy\Request $request)
     {
-        if (\phpws\PHPWS_Core::atHome()) {
-            \Layout::add($this->home());
+        if ($request->isGet() && !$request->isAjax()) {
+            if (\phpws\PHPWS_Core::atHome()) {
+                \Layout::add($this->home());
+            }
+            if (!preg_match('/^properties/', \Canopy\Server::getCurrentUrl())) {
+                if (!\Current_User::isLogged()) {
+                    $auth = \Current_User::getAuthorization();
+                    if (!empty($auth->login_link)) {
+                        $url = $auth->login_link;
+                    } else {
+                        $url = 'index.php?module=users&action=user&command=login_page';
+                    }
+                    NavBar::addItem("<a href='$url'>Sign in</a>");
+                }
+                \properties\Factory\NavBar::view($request);
+            }
         }
     }
 
@@ -67,7 +84,7 @@ class Module extends \Canopy\Module
         if (strpos($class_name, 'properties') !== 0) {
             return;
         }
-        
+
         if (isset($not_found[$class_name])) {
             return;
         }
