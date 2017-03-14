@@ -23,7 +23,7 @@ use properties\Exception\PrivilegeMissing;
  */
 class Property extends Base
 {
-
+    public $more_rows = true;
     /**
      * 
      * @return \properties\Resource\Property
@@ -72,7 +72,9 @@ class Property extends Base
     {
         $listing = new Property\Listing();
         $listing->pullVariables($request);
-        return $listing->get($view);
+        $result = $listing->get($view);
+        $this->more_rows = $listing->more_rows;
+        return $result;
     }
 
     public function post(\Canopy\Request $request)
