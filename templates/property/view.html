@@ -18,10 +18,13 @@
         <div class="col-sm-4">
             <div class="contact-info bg-primary">
                 <a href="./properties/Manager/<?=$contact_id?>/view"><h4><?=$company_name?></h4></a>
+                <?php if (!empty($company_url)):?>
+                <div class="contact-link" style="width: 100%;overflow: hidden;white-space:nowrap"><a href="<?=$company_url?>" target="_blank"><i class="fa fa-external-link"></i>&nbsp;<?=preg_replace('/^http:\/\//', '', $company_url)?></a></div>
+                <?php endif;?>
                 <div class="contact-link"><a href="tel:<?=$phone?>" target="_blank"><i class="fa fa-phone"></i>&nbsp;<?=$phone?></a></div>
                 <div class="contact-link"><a href="mailto:<?=$email_address?>" target="_blank"><i class="fa fa-envelope"></i>&nbsp;Email</a></div>
                 <?php if (!empty($company_address)):?>
-                <div class="contact-link"><a href="<?=$company_map_address?>" target="_blank"><i class="fa fa-map"></i>&nbsp;Visit</a></div>
+                <div class="contact-link"><a href="<?=$company_map_address?>" target="_blank"><i class="fa fa-map"></i>&nbsp;Office</a></div>
                 <?php endif;?>
             </div>
         </div>
