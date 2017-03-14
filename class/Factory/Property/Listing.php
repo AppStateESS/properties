@@ -54,11 +54,13 @@ class Listing extends \properties\Factory\Listing
 
     public function get($view = false)
     {
-        if ((int) $this->limit <= 0) {
-            $this->limit = 100;
-        }
+        if ((int) $this->limit <= 0 || (int) $this->limit > 20) {
+            $this->limit = 20;
+        } 
 
-        $this->db->setLimit($this->limit);
+        $offset = $this->offset * $this->limit;
+        
+        $this->db->setLimit($this->limit, $offset);
         $this->addSearch();
 
         if ($this->manager_id) {
@@ -67,7 +69,8 @@ class Listing extends \properties\Factory\Listing
             $this->data_table->addOrderBy('updated', 'desc');
         } else {
             // Properties are random if manager not specified
-            $this->data_table->randomOrder(true);
+            //$this->data_table->randomOrder(true);
+            $this->data_table->addOrderBy('updated', 'desc');
         }
 
         $c1 = $this->db->createConditional($this->data_table->getField('id'),
@@ -85,6 +88,9 @@ class Listing extends \properties\Factory\Listing
         $this->addConditionals();
         if ($view) {
             $result = $this->db->selectAsResources('\properties\Resource\Property');
+            if (count($result) < $this->limit) {
+                $this->more_rows = false;
+            }
             if (empty($result)) {
                 return array();
             }
@@ -94,6 +100,9 @@ class Listing extends \properties\Factory\Listing
             return $listing;
         } else {
             $result = $this->db->select();
+            if (count($result) < $this->limit) {
+                $this->more_rows = false;
+            }
             return $result;
         }
     }
