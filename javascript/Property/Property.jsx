@@ -17,7 +17,8 @@ export default class Property extends Base {
       properties: null,
       manager: null,
       message: '',
-      type: null
+      type: null,
+      moreRows : true,
     }
 
     this.managerId = 0
@@ -55,12 +56,19 @@ export default class Property extends Base {
   }
 
   load() {
-    this.setState({properties: null})
+    //this.setState({properties: null})
     const sendData = this.searchVars
     sendData.managerId = this.managerId
     sendData.search = this.search
+    if (this.offset > 0) {
+      sendData.offset = this.offset
+    }
     $.getJSON('./properties/Property', sendData).done(function (data) {
-      this.setState({properties: data.properties, manager: data.manager})
+      if (this.offset > 0) {
+        this.setState({properties: this.state.properties.concat(data.properties), manager: data.manager, moreRows: data.more_rows})
+      } else {
+        this.setState({properties: data.properties, manager: data.manager, moreRows: data.more_rows})
+      }
     }.bind(this)).fail(function () {
       this.setState({managers: null, loading: false})
       this.setMessage('Error: failure pulling properties')
@@ -93,6 +101,8 @@ export default class Property extends Base {
           resetConditions={this.resetConditions}
           toggle={this.toggle}/>
         <PropertyListing list={this.state.properties} search={!empty(this.search)}/>
+        {this.state.moreRows === true ?
+        <div className="text-center"><button className="btn btn-primary" onClick={this.showMore}>Show more results</button></div> : null}
       </div>
     )
   }
