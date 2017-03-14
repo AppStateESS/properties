@@ -49,6 +49,7 @@ class User extends \properties\Controller\SubController
     protected function listJsonCommand(\Canopy\Request $request)
     {
         $json['properties'] = $this->factory->listing($request, true);
+        $json['more_rows'] = $this->factory->more_rows;
         $manager_id = $request->pullGetInteger('managerId', true);
         if ($manager_id) {
             $mngFactory = new \properties\Factory\Manager;
