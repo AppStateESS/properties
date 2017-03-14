@@ -103,10 +103,12 @@ class ManagerRow extends React.Component {
     let properties = <div>
       <em>None</em>
     </div>
-    if (this.props.property_count > 0) {
+    const propertyCount = this.props.property_count
+    if (propertyCount > 0) {
+      const label = propertyCount > 1 ? `View ${this.props.property_count} properties` : 'View property'
       properties = <a
         href={`./properties/Property/?managerId=${this.props.id}`}
-        className="btn btn-default">View Properties</a>
+        className="btn btn-default"><i className="fa fa-building-o"></i>&nbsp;{label}</a>
     }
 
     let co = null
@@ -121,17 +123,15 @@ class ManagerRow extends React.Component {
         : ''}>
         <td>
           <span className="company-name"><a href={viewLink}>{this.props.company_name}</a></span><br/>{co}
-        </td>
-        <td>
-          {properties}
-        </td>
-        <td>
           <LinkToButton url={this.props.phone_tel} icon="fa-phone" label={this.props.phone}/>
           <Website url={this.props.company_url}/>
           <LinkToButton
             url={email}
             icon="fa-envelope-o"
             label={this.props.email_address}/>
+        </td>
+        <td>
+          {properties}
         </td>
         {this.props.admin === true
           ? <td>{optionList}</td>
