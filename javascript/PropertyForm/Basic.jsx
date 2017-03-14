@@ -94,17 +94,6 @@ export default class Basic extends Base {
         </div>
         <div className="row">
           <div className="col-sm-12">
-            <label>Description</label>
-            <textarea
-              className="form-control"
-              placeholder="Description is not searchable. Be sure to use other settings as well."
-              name="description"
-              value={property.description}
-              onChange={this.props.setValue.bind(null, 'description')}/>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-12">
             <InputField
               name="address"
               label="Address"
@@ -120,6 +109,17 @@ export default class Basic extends Base {
                   <a href={this.googleize(property.address)} target="_blank">View on Google Maps</a>
                 </small>
               : null}
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-12">
+            <label>Description</label>
+            <textarea
+              className="form-control"
+              placeholder="Description is not searchable. Be sure to use other settings as well."
+              name="description"
+              value={property.description}
+              onChange={this.props.setValue.bind(null, 'description')}/>
           </div>
         </div>
         <div className="row">
