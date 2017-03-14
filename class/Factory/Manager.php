@@ -270,7 +270,7 @@ class Manager extends Base
         $message = \Swift_Message::newInstance();
         $message->setSubject('Manager request denied');
         $message->setFrom($contact_info['our_email']);
-        $message->setTo($email_address);
+        $message->setTo($manager->email_address);
         $message->setBody($content, 'text/html');
         $mailer = \Swift_Mailer::newInstance($transport);
         $mailer->send($message);
