@@ -24,9 +24,14 @@ class NavBar
     public static $items;
     public static $options;
     public static $title = 'Administrate';
+    public static $has_run = false;
 
     public static function view(\Canopy\Request $request)
     {
+        if (self::$has_run) {
+            return;
+        }
+        self::$has_run = true;
         $auth = \Current_User::getAuthorization();
 
         $vars['logged'] = \Current_User::isLogged();
