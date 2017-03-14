@@ -32,7 +32,10 @@ export default class RoommateList extends React.Component {
   render() {
     if (this.state.roommates === null) {
       return <Waiting label="Roommates"/>
+    } else if (this.state.roommates.length === 0) {
+      return <div className="well"><h2>No roommates found. Sign in and create your own!</h2></div>
     }
+
     let rows = this.state.roommates.map(function (value, key) {
       return (<RoommateRow roommate={value} key={key}/>)
     })
