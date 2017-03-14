@@ -81,7 +81,7 @@ abstract class Place extends Base
         $this->move_in_date = new \phpws2\Variable\DateVar(0, 'move_in_date');
         $this->move_in_date->stamp();
         $this->name = new \phpws2\Variable\StringVar(null, 'name');
-        $this->name->setLimit(100);
+        $this->name->setLimit(256);
         $this->parking_per_unit = new \phpws2\Variable\SmallInteger(1,
                 'parking_per_unit');
         $this->pets_allowed = new \phpws2\Variable\BooleanVar(false,
@@ -96,7 +96,7 @@ abstract class Place extends Base
         $this->updated = new \phpws2\Variable\DateTime(time(), 'updated');
         $this->utilities_inc = new \phpws2\Variable\BooleanVar(false,
                 'utilities_inc');
-        $this->thumbnail = new Variable\StringVar('', 'thumbnail');
+        $this->thumbnail = new Variable\StringVar(null, 'thumbnail');
         $this->doNotSave('thumbnail');
     }
 
@@ -236,6 +236,7 @@ abstract class Place extends Base
     public function view()
     {
         $view = $this->getStringVars();
+        $view['description'] = nl2br($view['description']);
         $view['campus_distance'] = $this->getCampusDistance();
         $view['trash_type'] = $this->getTrashType();
         $view['internet_type'] = $this->getInternetType();
