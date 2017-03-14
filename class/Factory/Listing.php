@@ -22,7 +22,8 @@ abstract class Listing
 {
 
     public $search_string;
-    public $limit = 100;
+    public $limit = 20;
+    public $offset = 0;
     public $beds = 1;
     public $baths = 1;
     public $minprice = 0;
@@ -43,6 +44,7 @@ abstract class Listing
     public $condo = 0;
     public $townhouse = 0;
     public $duplex = 0;
+    public $more_rows = true;
 
     /**
      * @var \phpws2\Database\DB
@@ -62,7 +64,7 @@ abstract class Listing
     public function pullVariables(\Canopy\Request $request)
     {
         $this->search_string = $request->pullGetString('search', true);
-        $this->limit = $request->pullGetInteger('limit', true);
+        $this->offset = $request->pullGetInteger('offset', true);
         $this->beds = $request->pullGetInteger('beds', true);
         $this->baths = $request->pullGetInteger('baths', true);
         $this->minprice = (int) $request->pullGetInteger('minprice', true);
