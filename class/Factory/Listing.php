@@ -45,6 +45,7 @@ abstract class Listing
     public $townhouse = 0;
     public $duplex = 0;
     public $more_rows = true;
+    public $show_inactive = false;
 
     /**
      * @var \phpws2\Database\DB
@@ -88,7 +89,10 @@ abstract class Listing
 
     protected function addConditionals()
     {
-        $this->data_table->addFieldConditional('active', 1);
+        if ($this->show_inactive === false) {
+            $this->data_table->addFieldConditional('active', 1);
+        }
+        
         if ($this->beds > 1) {
             $this->data_table->addFieldConditional('bedroom_no', $this->beds,
                     '>=');
