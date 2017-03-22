@@ -57,5 +57,14 @@ class Manager extends User
             return array('error' => $e->getMessage());
         }
     }
+    
+    protected function updatePutCommand(\Canopy\Request $request)
+    {
+        try {
+            return $this->factory->put($request, $this->getCurrentLoggedManager());
+        } catch (\properties\Exception\PropertySaveFailure $e) {
+            return array('error' => $e->getMessage());
+        }
+    }
 
 }
