@@ -76,11 +76,19 @@ class Controller extends Base
         try {
             return parent::execute($request);
         } catch (\properties\Exception\PrivilegeMissing $e) {
-            throw $e;
+            if (PROPERTIES_FRIENDLY_ERRORS) {
+                \phpws2\Error::errorPage(401);
+            } else {
+                throw $e;
+            }
         } catch (\properties\Exception\PropertySaveFailure $e) {
             throw $e;
         } catch (\properties\Exception\ResourceNotFound $e) {
-            throw $e;
+            if (PROPERTIES_FRIENDLY_ERRORS) {
+                \phpws2\Error::errorPage(404);
+            } else {
+                throw $e;
+            }
         } catch (\properties\Exception\WrongImageType $e) {
             throw $e;
         } catch (\Exception $e) {
