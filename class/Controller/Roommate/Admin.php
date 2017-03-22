@@ -20,4 +20,15 @@ namespace properties\Controller\Roommate;
 
 class Admin extends Logged
 {
+
+    protected function viewHtmlCommand(\Canopy\Request $request)
+    {
+        return $this->factory->view($this->id, false);
+    }
+
+    protected function listHtmlCommand(\Canopy\Request $request)
+    {
+        return $this->factory->reactView('roommatelist');
+    }
+
 }
