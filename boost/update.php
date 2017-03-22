@@ -75,30 +75,6 @@ class PropertyUpgrade
             case $this->compare('2.0.0'):
                 $methodName = $this->getMethodName('2.0.0');
                 $this->$methodName($content);
-
-            case $this->compare('2.0.1'):
-                $methodName = $this->getMethodName('2.0.1');
-                $this->$methodName($content);
-
-            case $this->compare('2.0.2'):
-                $methodName = $this->getMethodName('2.0.2');
-                $this->$methodName($content);
-
-            case $this->compare('2.0.3'):
-                $methodName = $this->getMethodName('2.0.3');
-                $this->$methodName($content);
-
-            case $this->compare('2.0.4'):
-                $methodName = $this->getMethodName('2.0.4');
-                $this->$methodName($content);
-
-            case $this->compare('2.0.5'):
-                $methodName = $this->getMethodName('2.0.5');
-                $this->$methodName($content);
-
-            case $this->compare('2.0.6'):
-                $methodName = $this->getMethodName('2.0.6');
-                $this->$methodName($content);
         }
         return $content;
     }
@@ -215,78 +191,203 @@ class PropertyUpgrade
 
     public function v2_0_0(&$content)
     {
+        $updates = array();
         try {
             $db = \phpws2\Database::getDB();
             $db->begin();
 
-            $tbl = $db->addTable('properties');
+            $this->adjustAmounts();
 
-            /** reduce fee values * */
-            $admin_fee = new \phpws2\Database\Expression($tbl->getField('admin_fee_amt') . '* 0.01');
-            $monthly_rent = new \phpws2\Database\Expression($tbl->getField('monthly_rent') . '* 0.01');
-            $security_amt = new \phpws2\Database\Expression($tbl->getField('security_amt') . '* 0.01');
-            $pet_fee = new \phpws2\Database\Expression($tbl->getField('pet_fee') . '* 0.01');
-            $parking_fee = new \phpws2\Database\Expression($tbl->getField('parking_fee') . '* 0.01');
-            $pet_deposit = new \phpws2\Database\Expression($tbl->getField('pet_deposit') . '* 0.01');
-            $clean_fee_amt = new \phpws2\Database\Expression($tbl->getField('clean_fee_amt') . '* 0.01');
-            $util_water = new \phpws2\Database\Expression($tbl->getField('util_water') . '* 0.01');
-            $util_trash = new \phpws2\Database\Expression($tbl->getField('util_trash') . '* 0.01');
-            $util_power = new \phpws2\Database\Expression($tbl->getField('util_power') . '* 0.01');
-            $util_fuel = new \phpws2\Database\Expression($tbl->getField('util_fuel') . '* 0.01');
-            $util_cable = new \phpws2\Database\Expression($tbl->getField('util_cable') . '* 0.01');
-            $util_internet = new \phpws2\Database\Expression($tbl->getField('util_internet') . '* 0.01');
-            $util_phone = new \phpws2\Database\Expression($tbl->getField('util_phone') . '* 0.01');
+            $this->addPropertyColumns();
+            $updates[] = 'Added smoking note to properties';
+            $updates[] = 'Added property type to properties';
 
-            $tbl->addValue('admin_fee_amt', $admin_fee);
-            $tbl->addValue('monthly_rent', $monthly_rent);
-            $tbl->addValue('security_amt', $security_amt);
-            $tbl->addValue('pet_fee', $pet_fee);
-            $tbl->addValue('parking_fee', $parking_fee);
-            $tbl->addValue('pet_deposit', $pet_deposit);
-            $tbl->addValue('clean_fee_amt', $clean_fee_amt);
-            $tbl->addValue('util_water', $util_water);
-            $tbl->addValue('util_trash', $util_trash);
-            $tbl->addValue('util_power', $util_power);
-            $tbl->addValue('util_fuel', $util_fuel);
-            $tbl->addValue('util_cable', $util_cable);
-            $tbl->addValue('util_internet', $util_internet);
-            $tbl->addValue('util_phone', $util_phone);
+            $this->updateContactsTable();
+            $updates[] = 'Contacts have ability to reset their password.';
 
-            $db->update();
-            $tbl->resetValues();
-
-            $dt = $tbl->addDataType('proptype', 'smallint');
-            $dt->setDefault(0);
-            $dt->add();
-
-            $tbl->addValue('proptype', 1);
-            $tbl->addFieldConditional('efficiency', 1);
-            $db->update();
-
-            $db->clearTables();
-            $pctbl = $db->addTable('prop_contacts');
-            // cannot find the origin of this column but removing it
-            if ($pctbl->columnExists('default_active')) {
-                $pctbl->dropColumn('default_active');
-            }
-
-            // Change all private accounts to managers with a company name
             $this->rewritePrivates();
-            // Fix the control panel link from the old link
+            $updates[] = 'No more private managers. All managers are named.';
+
             $this->fixControlPanel();
-            // Remove associative array format of heat type
+
             $this->fixHeatType();
+
+            $this->updatePassword();
+            $updates[] = 'Manager passwords extended, better security';
+
+            $this->createInquiryTable();
+            $updates[] = 'Manager inquiries can be made in admin';
+
+            $this->createSubleaseTable();
+            $updates[] = 'Added sublease section separate from roommmates';
+            $updates[] = 'Subleases may now have pictures.';
+
+            $this->createRoommateTable();
+            $updates[] = 'All roommate flushed. Students will need to re-enter.';
+
+            $this->updatePropertyPhotos();
+            $update[] = 'Property photos may now be ordered.';
+            
+            $this->updateSequences();
 
             $db->commit();
         } catch (\Exception $ex) {
             $db->rollback();
             throw $ex;
         }
-        $this->addContent($content, '2.0.0',
-                array('Property and efficiency added'));
+        $this->addContent($content, '2.0.0', $updates);
     }
 
+    private function updateSequences()
+    {
+        $tables = array('prop_contacts', 'prop_messages', 'prop_photo',
+            'prop_report', 'properties');
+        foreach ($tables as $tbl_name) {
+            $db = Database::getDB();
+            $tbl = $db->addTable($tbl_name);
+            $tbl->serializePrimaryKey();
+            $seq = $db->addTable($tbl_name . '_seq');
+            $seq->drop();
+        }
+    }
+
+    private function createRoommateTable()
+    {
+        $db = \phpws2\Database::getDB();
+        $roommate_table = $db->addTable('prop_roommate');
+        $roommate_table->drop(true);
+        $roommate = new \properties\Resource\Roommate;
+        $roommate->createTable($db);
+    }
+
+    private function createSubleaseTable()
+    {
+        $db = \phpws2\Database::getDB();
+        $sublease = new \properties\Resource\Sublease;
+        $sublease->createTable($db);
+
+        $sublease_table = $db->addTable('prop_sublease');
+        $sublease_table_id = $sublease_table->getDataType('id');
+        $sublease_photo_resource = new \properties\Resource\SubleasePhoto;
+        $sublease_photo_resource->createTable($db);
+        $sublease_photo_table = $db->buildTable($sublease_photo_resource->getTable());
+        $sublease_photo_sid_column = $sublease_photo_table->getDataType('sid');
+        $sublease_photo_index = new \phpws2\Database\ForeignKey($sublease_photo_sid_column,
+                $sublease_table_id);
+        $sublease_photo_index->add();
+    }
+
+    private function createInquiryTable()
+    {
+        $db = \phpws2\Database::getDB();
+        $db->begin();
+        $tbl = $db->buildTable('prop_inquiry');
+        $tbl->addDataType('contact_id', 'int');
+        $tbl->addDataType('inquiry_date', 'int');
+        $tbl->addDataType('inquiry_type', 'varchar')->setSize(20);
+        $tbl->create();
+    }
+
+    /**
+     * Removes odd column from contacts table. Not even sure where it came from.
+     */
+    private function updateContactsTable()
+    {
+        $db = Database::getDB();
+        $tbl = $db->addTable('prop_contacts');
+        if ($tbl->columnExists('default_active')) {
+            $tbl->dropColumn('default_active');
+        }
+
+        $dt = $tbl->addDataType('pw_timeout', 'int');
+        $dt->setDefault(0);
+        $dt->add();
+
+        $dt2 = $tbl->addDataType('pw_hash', 'varchar');
+        $dt2->setIsNull(true);
+        $dt2->add();
+    }
+
+    /**
+     * Adds proptype column to properties
+     * Replaces efficiency column
+     */
+    private function addPropertyColumns()
+    {
+        $db = Database::getDB();
+        $tbl = $db->addTable('properties');
+        $dt = $tbl->addDataType('proptype', 'smallint');
+        $dt->setDefault(0);
+        $dt->add();
+
+        $dt = $tbl->addDataType('smoking_allowed', 'smallint');
+        $dt->setDefault(0);
+        $dt->add();
+
+        $tbl->addValue('proptype', 1);
+        $tbl->addFieldConditional('efficiency', 1);
+        $db->update();
+    }
+
+    /**
+     * Removes 00 from amounts
+     */
+    private function adjustAmounts()
+    {
+        $db = Database::getDB();
+        $tbl = $db->addTable('properties');
+
+        /** reduce fee values * */
+        $admin_fee = new \phpws2\Database\Expression($tbl->getField('admin_fee_amt') . '* 0.01');
+        $monthly_rent = new \phpws2\Database\Expression($tbl->getField('monthly_rent') . '* 0.01');
+        $security_amt = new \phpws2\Database\Expression($tbl->getField('security_amt') . '* 0.01');
+        $pet_fee = new \phpws2\Database\Expression($tbl->getField('pet_fee') . '* 0.01');
+        $parking_fee = new \phpws2\Database\Expression($tbl->getField('parking_fee') . '* 0.01');
+        $pet_deposit = new \phpws2\Database\Expression($tbl->getField('pet_deposit') . '* 0.01');
+        $clean_fee_amt = new \phpws2\Database\Expression($tbl->getField('clean_fee_amt') . '* 0.01');
+        $util_water = new \phpws2\Database\Expression($tbl->getField('util_water') . '* 0.01');
+        $util_trash = new \phpws2\Database\Expression($tbl->getField('util_trash') . '* 0.01');
+        $util_power = new \phpws2\Database\Expression($tbl->getField('util_power') . '* 0.01');
+        $util_fuel = new \phpws2\Database\Expression($tbl->getField('util_fuel') . '* 0.01');
+        $util_cable = new \phpws2\Database\Expression($tbl->getField('util_cable') . '* 0.01');
+        $util_internet = new \phpws2\Database\Expression($tbl->getField('util_internet') . '* 0.01');
+        $util_phone = new \phpws2\Database\Expression($tbl->getField('util_phone') . '* 0.01');
+
+        $tbl->addValue('admin_fee_amt', $admin_fee);
+        $tbl->addValue('monthly_rent', $monthly_rent);
+        $tbl->addValue('security_amt', $security_amt);
+        $tbl->addValue('pet_fee', $pet_fee);
+        $tbl->addValue('parking_fee', $parking_fee);
+        $tbl->addValue('pet_deposit', $pet_deposit);
+        $tbl->addValue('clean_fee_amt', $clean_fee_amt);
+        $tbl->addValue('util_water', $util_water);
+        $tbl->addValue('util_trash', $util_trash);
+        $tbl->addValue('util_power', $util_power);
+        $tbl->addValue('util_fuel', $util_fuel);
+        $tbl->addValue('util_cable', $util_cable);
+        $tbl->addValue('util_internet', $util_internet);
+        $tbl->addValue('util_phone', $util_phone);
+
+        $db->update();
+    }
+
+    /**
+     * Fixes old control panel link
+     */
     private function fixControlPanel()
+    {
+        $db = \phpws2\Database::getDB();
+        $tbl = $db->addTable('controlpanel_link');
+        $tbl->addFieldConditional('itemname', 'properties');
+        $tbl->addValue('url', './properties/');
+        $db->update();
+    }
+
+    /**
+     * Fixes old array format of heat type
+     * @return null
+     */
+    private function fixHeatType()
     {
         $db = \phpws2\Database::getDB();
         $tbl = $db->addTable('properties');
@@ -312,6 +413,21 @@ class PropertyUpgrade
         }
     }
 
+    /**
+     * Changes length of password varchar column
+     */
+    private function updatePassword()
+    {
+        $db = Database::getDB();
+        $tbl = $db->addTable('prop_contacts');
+        $newdt = new \phpws2\Database\Datatype\Varchar($tbl, 'password', 255);
+        $tbl->alter($tbl->getDataType('password'), $newdt);
+    }
+
+    /*
+     * Changes all private renters to managers using the contact name.
+     */
+
     private function rewritePrivates()
     {
         $db = \phpws2\Database::getDB();
@@ -322,7 +438,6 @@ class PropertyUpgrade
         $tbl->addField('last_name');
         $tbl->addFieldConditional('private', 1);
         $privates = $db->select();
-
         $db->clearConditional();
         if (empty($privates)) {
             return;
@@ -339,161 +454,52 @@ class PropertyUpgrade
         }
     }
 
-    public function v2_0_1(&$content)
+    private function updatePropertyPhotos()
     {
-        try {
-            $db = \phpws2\Database::getDB();
-            $db->begin();
-            $tbl = $db->buildTable('prop_inquiry');
-            $tbl->addDataType('contact_id', 'int');
-            $tbl->addDataType('inquiry_date', 'int');
-            $tbl->addDataType('inquiry_type', 'varchar')->setSize(20);
-            $tbl->create();
-            $db->commit();
-        } catch (\Exception $ex) {
-            $db->rollback();
-            throw $ex;
-        }
-        $this->addContent($content, '2.0.1', array('Inquiry feature added'));
-    }
+        $db = \phpws2\Database::getDB();
 
-    public function v2_0_2(&$content)
-    {
-        try {
-            $db = \phpws2\Database::getDB();
-            $db->begin();
-            $tbl = $db->addTable('properties');
-            $dt = $tbl->addDataType('smoking_allowed', 'smallint');
-            $dt->setDefault(0);
+        $tbl = $db->addTable('prop_photo');
+        if (!$tbl->columnExists('porder')) {
+            $dt = $tbl->addDataType('porder', 'int');
+            $dt->setDefault(1);
             $dt->add();
+        }
+
+        /*
+          $tbl = $db->addTable('prop_sub_photo');
+          if (!$tbl->columnExists('porder')) {
+          $dt = $tbl->addDataType('porder', 'int');
+          $dt->setDefault(1);
+          $dt->add();
+          }
+          $changes[] = 'Added porder to prop_sub_photo';
+         */
+        $db = \phpws2\Database::getDB();
+        $tbl = $db->addTable('prop_photo');
+        $photos = $db->select();
+
+        $aCount = array();
+
+        foreach ($photos as $p) {
+            $property_id = $p['pid'];
             $db->clearTables();
-            $sublease = new \properties\Resource\Sublease;
-            $sublease->createTable($db);
-            $db->commit();
-        } catch (\Exception $ex) {
-            $db->rollback();
-            throw $ex;
-        }
-        $this->addContent($content, '2.0.2', array('Added smoking note'));
-    }
-
-    public function v2_0_3(&$content)
-    {
-        try {
-            $db = \phpws2\Database::getDB();
-            $db->begin();
-            $tbl = $db->addTable('prop_contacts');
-            $dt = $tbl->addDataType('pw_timeout', 'int');
-            $dt->setDefault(0);
-            $dt->add();
-            $dt2 = $tbl->addDataType('pw_hash', 'varchar');
-            $dt2->setIsNull(true);
-            $dt2->add();
-            $db->commit();
-        } catch (\Exception $ex) {
-            $db->rollback();
-            throw $ex;
-        }
-        $this->addContent($content, '2.0.3', array('Password timeout'));
-    }
-
-    public function v2_0_4(&$content)
-    {
-        try {
-            $db = \phpws2\Database::getDB();
-            $db->begin();
-            $sublease_table = $db->addTable('prop_sublease');
-            $sublease_table_id = $sublease_table->getDataType('id');
-            $sublease_photo_resource = new \properties\Resource\SubleasePhoto;
-            $sublease_photo_resource->createTable($db);
-            $sublease_photo_table = $db->buildTable($sublease_photo_resource->getTable());
-            $sublease_photo_sid_column = $sublease_photo_table->getDataType('sid');
-            $sublease_photo_index = new \phpws2\Database\ForeignKey($sublease_photo_sid_column,
-                    $sublease_table_id);
-            $sublease_photo_index->add();
-            $db->commit();
-        } catch (\Exception $ex) {
-            $db->rollback();
-            throw $ex;
-        }
-        $this->addContent($content, '2.0.4', array('Added sublease photos'));
-    }
-
-    public function v2_0_5(&$content)
-    {
-        try {
-            $db = \phpws2\Database::getDB();
-            $db->begin();
-            $roommate_table = $db->addTable('prop_roommate');
-            $roommate_table->drop(true);
-            $roommate = new \properties\Resource\Roommate;
-            $roommate->createTable($db);
-            $db->commit();
-        } catch (\Exception $ex) {
-            $db->rollback();
-            throw $ex;
-        }
-        $this->addContent($content, '2.0.5', array('Added roommate section'));
-    }
-
-    public function v2_0_6(&$content)
-    {
-        $changes = array();
-        try {
-            $db = \phpws2\Database::getDB();
-            $db->begin();
-
+            $db->clearConditional();
             $tbl = $db->addTable('prop_photo');
-            if (!$tbl->columnExists('porder')) {
-                $dt = $tbl->addDataType('porder', 'int');
-                $dt->setDefault(1);
-                $dt->add();
-            }
-            $changes[] = 'Added porder to prop_photo';
 
-
-            $tbl = $db->addTable('prop_sub_photo');
-            if (!$tbl->columnExists('porder')) {
-                $dt = $tbl->addDataType('porder', 'int');
-                $dt->setDefault(1);
-                $dt->add();
-            }
-            $changes[] = 'Added porder to prop_sub_photo';
-
-            $db = \phpws2\Database::getDB();
-            $tbl = $db->addTable('prop_photo');
-            $photos = $db->select();
-
-            $aCount = array();
-
-            foreach ($photos as $p) {
-                $property_id = $p['pid'];
-                $db->clearTables();
-                $db->clearConditional();
-                $tbl = $db->addTable('prop_photo');
-
-                $tbl->addFieldConditional('id', $p['id']);
-                if ((int) $p['main_pic'] === 1) {
-                    $tbl->addValue('porder', 1);
+            $tbl->addFieldConditional('id', $p['id']);
+            if ((int) $p['main_pic'] === 1) {
+                $tbl->addValue('porder', 1);
+            } else {
+                if (isset($aCount[$property_id])) {
+                    $aCount[$property_id] ++;
+                    $current_count = $aCount[$property_id];
                 } else {
-                    if (isset($aCount[$property_id])) {
-                        $aCount[$property_id] ++;
-                        $current_count = $aCount[$property_id];
-                    } else {
-                        $current_count = $aCount[$property_id] = 2;
-                    }
-                    $tbl->addValue('porder', $current_count);
+                    $current_count = $aCount[$property_id] = 2;
                 }
-                $db->update();
+                $tbl->addValue('porder', $current_count);
             }
-
-            $changes[] = 'Ordered photos in prop_photo';
-            $db->commit();
-        } catch (\Exception $ex) {
-            $db->rollback();
-            throw $ex;
+            $db->update();
         }
-        $this->addContent($content, '2.0.6', $changes);
     }
 
     private function addContent(&$content, $version, array $changes)
