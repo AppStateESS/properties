@@ -188,17 +188,18 @@ abstract class SubController extends Base
 
     protected function managerButtons()
     {
-        $myprops = '<a href="./properties/Manager/desktop">View my properties</a>';
+        $myprops = '<a href="./properties/Manager/desktop"><i class="fa fa-list"></i>&nbsp;View my properties</a>';
         \properties\Factory\NavBar::addOption($myprops);
 
-        $editInfo = '<a href="./properties/Manager/edit">Update my information</a>';
+        $editInfo = '<a href="./properties/Manager/edit"><i class="fa fa-pencil-square-o"></i>&nbsp;Update my information</a>';
         \properties\Factory\NavBar::addOption($editInfo);
 
-        $passInfo = '<a href="./properties/Manager/changepw">Change my password</a>';
+        $passInfo = '<a href="./properties/Manager/changepw"><i class="fa fa-key"></i>&nbsp;Change my password</a>';
         \properties\Factory\NavBar::addOption($passInfo);
 
-        $signout = '<a href="./properties/Manager/signout">Sign out</a>';
+        $signout = '<a href="./properties/Manager/signout"><i class="fa fa-sign-out"></i>&nbsp;Sign out</a>';
         \properties\Factory\NavBar::addOption($signout);
+        \properties\Factory\NavBar::addOption('<hr>');
     }
 
     protected function addApprovalLink()
