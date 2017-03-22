@@ -18,7 +18,7 @@ require_once PHPWS_SOURCE_DIR . 'src/Module.php';
 require_once PHPWS_SOURCE_DIR . 'mod/properties/conf/system_defines.php';
 require_once PHPWS_SOURCE_DIR . 'mod/properties/conf/defines.php';
 
-class Module extends \Canopy\Module
+class Module extends \Canopy\Module implements \Canopy\SettingDefaults
 {
 
     public function __construct()
@@ -29,6 +29,13 @@ class Module extends \Canopy\Module
         spl_autoload_register('\properties\Module::autoloader', true, true);
     }
 
+    public function getSettingDefaults()
+    {
+        $settings['site_email'] = '';
+        $settings['approval_email'] = '';
+        return $settings;
+    }
+    
     public function getController(\Canopy\Request $request)
     {
         try {
