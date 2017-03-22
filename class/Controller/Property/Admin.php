@@ -34,7 +34,7 @@ class Admin extends User
         \Layout::addStyle('properties', 'property/form.css');
         return $this->factory->edit($this->id);
     }
-    
+
     protected function createHtmlCommand(\Canopy\Request $request)
     {
         \Layout::addStyle('properties', 'property/form.css');
@@ -60,10 +60,40 @@ class Admin extends User
         }
     }
 
+    protected function listJsonCommand(\Canopy\Request $request)
+    {
+        $json['properties'] = $this->factory->listing($request, true, true);
+        $json['more_rows'] = $this->factory->more_rows;
+        $manager_id = $request->pullGetInteger('managerId', true);
+        if ($manager_id) {
+            $mngFactory = new \properties\Factory\Manager;
+            $manager = $mngFactory->load($manager_id);
+            $json['manager'] = $manager->view(true);
+        }
+        return $json;
+    }
+
     public function getHtml(\Canopy\Request $request)
     {
         $this->addApprovalLink();
         return parent::getHtml($request);
+    }
+
+    protected function jsonPatchCommand(\Canopy\Request $request)
+    {
+        if ($request->patchVarIsset('values')) {
+            $values = $request->pullPatchVar('values');
+            foreach ($values as $arrVal) {
+                $this->factory->patch($this->id, $arrVal['varname'],
+                        $arrVal['value']);
+            }
+        } else {
+            $this->factory->patch($this->id,
+                    $request->pullPatchString('varname'),
+                    $request->pullPatchBoolean('value'));
+        }
+        $json['success'] = true;
+        return $json;
     }
 
 }
