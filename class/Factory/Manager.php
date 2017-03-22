@@ -13,6 +13,8 @@ use properties\Resource\Manager as Resource;
 use properties\Exception\MissingInput;
 use properties\Exception\PrivilegeMissing;
 
+//require_once 'mod/properties/class/FakeSwiftMailer.php';
+
 /**
  * @author Matthew McNaney <mcnaneym@appstate.edu>
  */
@@ -27,14 +29,16 @@ class Manager extends Base
         return new Resource;
     }
 
-    public function approvedListing($limit = 100, $search = null,
+    public function approvedListing($limit = 20, $search = null,
             $restricted = true)
     {
         $listing = new Manager\Listing;
         $listing->limit = $limit;
         $listing->search = $search;
-        $listing->active = null;
+        $listing->active = true;
         $listing->view = true;
+        $listing->orderby = 'company_name';
+        $listing->orderby_dir = 'asc';
         $listing->restricted = $restricted;
         $result = $listing->get(true, true);
         if (empty($result)) {
@@ -43,18 +47,44 @@ class Manager extends Base
         return $result;
     }
 
-    public function unapprovedListing($limit = 100, $search = null)
+    public function unapprovedListing($limit = 20, $search = null)
     {
         $listing = new Manager\Listing;
         $listing->limit = $limit;
         $listing->active = null;
         $listing->approved = 0;
         $listing->include_property_count = false;
-        $listing->orderby = 'last_log';
-        $listing->orderby_dir = 'desc';
+        $listing->orderby = 'company_name';
+        $listing->orderby_dir = 'asc';
         $listing->view = true;
         $listing->restricted = false;
         $listing->include_inquiry = true;
+        $result = $listing->get();
+        if (empty($result)) {
+            return array();
+        }
+        return $result;
+    }
+
+    /**
+     * Lists all managers. Admin only.
+     * @param integer $limit
+     * @param string $search
+     * @return array
+     */
+    public function listAll($limit = 20, $search = null)
+    {
+        $listing = new Manager\Listing;
+        $listing->limit = $limit;
+        $listing->active = null;
+        $listing->approved = null;
+        $listing->include_property_count = true;
+        $listing->orderby = 'company_name';
+        $listing->orderby_dir = 'asc';
+        $listing->view = true;
+        $listing->restricted = false;
+        $listing->include_inquiry = true;
+        $listing->search = $search;
         $result = $listing->get();
         if (empty($result)) {
             return array();
@@ -152,7 +182,7 @@ class Manager extends Base
         }
 
         // Delete all their properties.
-        $propertyFactory = new PropertyFactory;
+        $propertyFactory = new Property;
         foreach ($properties as $property) {
             $propertyFactory->delete($property);
         }
@@ -304,6 +334,7 @@ class Manager extends Base
         $db = Database::getDB();
         $tbl = $db->addTable('properties');
         $tbl->addFieldConditional('contact_id', $contact_id);
+        $tbl->addFieldConditional('active', 1);
         $tbl->addField('id', 'count')->showCount();
         return $db->selectColumn();
     }
@@ -342,16 +373,12 @@ class Manager extends Base
             if (empty($password)) {
                 if ($id == 0) {
                     $errors['passwordEmpty'] = true;
-                } else {
-                    // The id is set but the password is empty. We don't want
-                    // to have it rehashed in the database.
-                    $r->savePassword();
                 }
             } else {
                 if (strlen($password) < 8) {
                     $errors['passwordShort'] = true;
                 } else {
-                    $r->password = $password;
+                    $r->password = password_hash($password, PASSWORD_DEFAULT);
                 }
             }
 
@@ -525,17 +552,15 @@ class Manager extends Base
         $db = Database::getDB();
         $tbl = $db->addTable('prop_contacts');
 
-        $password = new \phpws2\Variable\Password($password, 'password',
-                PROPERTIES_MANAGER_SALT);
         $tbl->addFieldConditional('username', $username);
-        $tbl->addFieldConditional('password', $password);
         $tbl->addFieldConditional('approved', 1);
         $tbl->addFieldConditional('active', 1);
         $manager = $db->selectOneRow();
-        if ($manager === false) {
-            return false;
-        } else {
+        if ($manager !== false && password_verify($password,
+                        $manager['password'])) {
             return $manager['id'];
+        } else {
+            return false;
         }
     }
 
@@ -605,10 +630,12 @@ class Manager extends Base
     {
         $email_address = $request->pullPostString('email');
         $manager = $this->getManagerByEmail($email_address);
-        if ($manager === null) {
-            return 'oh snap';
+        if ($manager !== null) {
+            $this->sendForgotEmail($manager);
         }
-        $this->sendForgotEmail($manager);
+        $tpl = new \phpws2\Template(array('email' => $email_address));
+        $tpl->setModuleTemplate('properties', 'manager/password_sent.html');
+        return $tpl->get();
     }
 
     public function getManagerByEmail($email_address)
@@ -617,12 +644,13 @@ class Manager extends Base
         $db = \phpws2\Database::getDB();
         $tbl = $db->addTable('prop_contacts');
         $tbl->addFieldConditional('email_address', $email_address);
-        $db->selectInto($manager);
-        if ($manager->id) {
-            return $manager;
-        } else {
+        $result = $db->selectOneRow();
+        if (empty($result)) {
             return null;
         }
+
+        $manager->setVars($result);
+        return $manager;
     }
 
     private function sendForgotEmail(Resource $manager)
@@ -633,27 +661,30 @@ class Manager extends Base
         // Start the email template with contact information
         $tpl = array_merge($manager->getStringVars(),
                 $this->contactInformation());
-        $hash = md5(randomString(12));
+        $hash = md5(\Canopy\TextString::randomString(12));
         $link = \Canopy\Server::getCurrentUrl(false) . '/changepw/' . $hash;
 
         $tpl['reset_link'] = $link;
 
-        $tpl['timeout'] = strftime('%B %e, %Y at %l:%M%P', time() + 86400);
+        $timeout = time() + 1800;
+        $tpl['timeout'] = strftime('%B %e, %Y at %l:%M%P', $timeout);
+
+        $manager->pw_timeout = $timeout;
+        $manager->pw_hash = $hash;
+        $this->saveResource($manager);
+
+        $subject = 'Password reset request from ' . \Layout::getPageTitle();
 
         $template = new \phpws2\Template($tpl);
         $template->setModuleTemplate('properties', 'emails/forgot.html');
         $content = $template->get();
-        echo $content;
-        /*
-          $message = \Swift_Message::newInstance();
-          $message->setSubject('Property manager password request');
-          $message->setFrom($contact_info);
-          $message->setTo($email_address);
-          $message->setBody($content, 'text/html');
-          $mailer = \Swift_Mailer::newInstance($transport);
-          $mailer->send($message);
-         * 
-         */
+        $message = \Swift_Message::newInstance();
+        $message->setSubject($subject);
+        $message->setFrom($contact_info);
+        $message->setTo($email_address);
+        $message->setBody($content, 'text/html');
+        $mailer = \Swift_Mailer::newInstance($transport);
+        $mailer->send($message);
     }
 
 }
