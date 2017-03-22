@@ -21,9 +21,13 @@ namespace properties\Exception;
 class ResourceNotFound extends \Exception
 {
 
-    public function __construct($id)
+    public function __construct($id = null)
     {
-        parent::__construct('Resource not found: ' . $id);
+        if ($id) {
+            parent::__construct('Resource not found: ' . $id);
+        } else {
+            parent::__construct('Resource not found');
+        }
     }
 
 }
