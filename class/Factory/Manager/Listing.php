@@ -36,6 +36,7 @@ class Listing
     public $orderby = 'company_name';
     public $orderby_dir = 'asc';
     public $include_inquiry = true;
+    public $full_search = false;
 
     public function get()
     {
@@ -45,7 +46,13 @@ class Listing
 
         if ($this->include_property_count) {
             $tbl2 = $db->addTable('properties');
-            $tbl2->addFieldConditional('active', 1);
+            $property_conditional1 = $db->createConditional($tbl2->getField('active'),
+                    1);
+            $property_conditional2 = $db->createConditional($tbl2->getField('active'),
+                    null, 'is');
+            $property_conditional3 = $db->createConditional($property_conditional1,
+                    $property_conditional2, 'or');
+            $db->addConditional($property_conditional3);
             $tbl2->addField('id', 'property_count')->showCount();
         }
         if ($this->include_inquiry) {
@@ -97,7 +104,8 @@ class Listing
         if ($this->orderby) {
             $tbl->addOrderBy($this->orderby, $this->orderby_dir);
         }
-        //echo $db->selectQuery();exit;
+        //$sql = $db->selectQuery();
+
         if ($this->view) {
             $result = $db->selectAsResources('\properties\Resource\Manager');
             if (empty($result)) {
@@ -113,11 +121,6 @@ class Listing
         }
     }
 
-    private function formatSearch()
-    {
-        return '%' . $this->search . '%';
-    }
-
     public function __set($varname, $value)
     {
         if ($varname === 'limit' && $value >= 1) {
@@ -125,20 +128,39 @@ class Listing
         }
     }
 
-    private function addSearch($db, $tbl)
+    private function addSearch(&$db, $tbl)
     {
-        $search_string = $this->formatSearch();
-        $s1 = $db->createConditional($tbl->getField('username'), $search_string,
-                'like');
-        $s2 = $db->createConditional($tbl->getField('first_name'),
-                $search_string, 'like');
-        $s3 = $db->createConditional($tbl->getField('last_name'),
-                $search_string, 'like');
-        $s4 = $db->createConditional($tbl->getField('company_name'),
-                $search_string, 'like');
-        $sf1 = $db->createConditional($s1, $s2, 'or');
-        $sf2 = $db->createConditional($s3, $s4, 'or');
-        $conditional = $db->createConditional($sf1, $sf2, 'or');
+        $full_search = $this->full_search;
+        // short character searches do not use a full search regardless of status
+        if ($this->search === 'xyz') {
+            $c1 = $db->createConditional($tbl->getField('company_name'), 'x%',
+                    'like');
+            $c2 = $db->createConditional($tbl->getField('company_name'), 'y%',
+                    'like');
+            $c3 = $db->createConditional($tbl->getField('company_name'), 'z%',
+                    'like');
+            $sf1 = $db->createConditional($c1, $c2, 'or');
+            $sf2 = $db->createConditional($sf1, $c3, 'or');
+            $conditional = $db->createConditional($sf1, $sf2, 'or');
+        } elseif (strlen($this->search) <= 2) {
+            $search_string = $this->search . '%';
+            $conditional = $db->createConditional($tbl->getField('company_name'),
+                    $search_string, 'like');
+        } else {
+            $search_string = '%' . $this->search . '%';
+            $s1 = $db->createConditional($tbl->getField('username'),
+                    $search_string, 'like');
+            $s2 = $db->createConditional($tbl->getField('first_name'),
+                    $search_string, 'like');
+            $s3 = $db->createConditional($tbl->getField('last_name'),
+                    $search_string, 'like');
+            $s4 = $db->createConditional($tbl->getField('company_name'),
+                    $search_string, 'like');
+            $sf1 = $db->createConditional($s1, $s2, 'or');
+            $sf2 = $db->createConditional($s3, $s4, 'or');
+            $conditional = $db->createConditional($sf1, $sf2, 'or');
+        }
+
         $db->addConditional($conditional);
     }
 
