@@ -104,7 +104,7 @@ abstract class Photo extends Base
             throw new \Exception('Photo owner not specified.');
         }
         if ($as_resource) {
-            return $db->selectAsResources(__NAMESPACE__);
+            return $db->selectAsResources('\properties\Resource\Photo');
         } else {
             return $db->select();
         }
