@@ -23,7 +23,9 @@ use properties\Exception\PrivilegeMissing;
  */
 class Property extends Base
 {
+
     public $more_rows = true;
+
     /**
      * 
      * @return \properties\Resource\Property
@@ -63,14 +65,18 @@ class Property extends Base
 
     public function delete(Resource $property)
     {
-        $photo = new PhotoFactory;
+        $photo = new Photo;
         $photo->removeByProperty($property->id);
         $property->delete();
     }
 
-    public function listing(\Canopy\Request $request, $view = false)
+    public function listing(\Canopy\Request $request, $view = false,
+            $admin = false)
     {
         $listing = new Property\Listing();
+        if ($admin) {
+            $listing->show_inactive = true;
+        }
         $listing->pullVariables($request);
         $result = $listing->get($view);
         $this->more_rows = $listing->more_rows;
@@ -111,11 +117,11 @@ class Property extends Base
         exit('postManager incomplete');
     }
 
-    public function put(\Canopy\Request $request)
+    public function put(\Canopy\Request $request, $manager_id=null)
     {
         $errors = array();
-        $r = $this->load($request->pullPutInteger('id'));
-        
+        $r = $this->load($request->pullPutInteger('id'), $manager_id);
+
         try {
             $r->loadPutByType($request,
                     array('active', 'approved', 'company_name', 'heat_type', 'created', 'updated', 'thumbnail'));
@@ -140,13 +146,18 @@ class Property extends Base
         if (is_numeric($property)) {
             $property = $this->load($property);
         } elseif (!is_a($property, 'properties\Resource\Property')) {
-            throw new \properties\Exception\ResourceNotFound;
+            throw new \properties\Exception\ResourceNotFound();
         }
+
+        if (!$property->active && !$admin) {
+            return "<p>This property is not currently available.</p>";
+        }
+
         $managerFactory = new Manager;
         $manager = $managerFactory->load($property->contact_id);
 
         $tpl = $this->addManagerInfo($property->view(), $manager);
-        
+
         if (!$manager->active || !$manager->approved) {
             if ($admin) {
                 $tpl['manager_warning'] = 'This property\'s owner is currently deactivated.';
@@ -156,16 +167,18 @@ class Property extends Base
         }
 
         $photoFactory = new Photo;
+        $tpl['inactive_warning'] = $property->active == 0;
+
         $tpl['current_photos'] = json_encode($photoFactory->thumbs($property->id));
         $tpl['photo'] = $this->reactView('photo');
         $tpl['id'] = $property->id;
         $tpl['photoupdate'] = null;
         $tpl['photo_edit_button'] = null;
         $tpl['property_edit_button'] = null;
-
         if ($admin) {
-            NavBar::addItem($this->updateButton($property->id));
-            NavBar::addItem($this->photoButton($property->id));
+            $property_id = $property->id;
+            NavBar::addOption("<a href='./properties/Property/$property_id/edit'><i class='fa fa-edit'></i>&nbsp;Edit property</a>");
+            NavBar::addOption("<a onClick='editPhotos.callback();return false' href='#'><i class='fa fa-camera'></i>&nbsp;Edit photos</a>");
             $tpl['photoupdate'] = $this->reactView('propertyimage');
             $tpl['property_edit_button'] = null;
         }
@@ -182,6 +195,24 @@ class Property extends Base
 EOF;
     }
 
+    public function patch($id, $param, $value)
+    {
+        static $allowed_params = array('active');
+
+        if (!in_array($param, $allowed_params)) {
+            throw new \Exception('Parameter may not be patched');
+        }
+        $property = $this->load($id);
+        $property->$param = $value;
+        $this->saveResource($property);
+        return true;
+    }
+
+    /**
+     * Not used
+     * @param integer $property_id
+     * @return string
+     */
     private function updateButton($property_id)
     {
         return <<<EOF
@@ -196,7 +227,8 @@ EOF;
 EOF;
     }
 
-    private function addManagerInfo(array $tpl, \properties\Resource\Manager $manager)
+    private function addManagerInfo(array $tpl,
+            \properties\Resource\Manager $manager)
     {
         $managerTpl = $manager->view(true);
         $finaltpl = array_merge($tpl, $managerTpl);
@@ -208,7 +240,7 @@ EOF;
         if ($property_id) {
             $property = $this->load($property_id, $manager_id);
             $property_json = json_encode($property->getVariablesAsValue(true,
-                            array('approved', 'active'), true));
+                            null, true));
         } elseif ($manager_id) {
             $property = $this->build();
             $property->contact_id = $manager_id;
@@ -222,7 +254,7 @@ EOF;
         }
 
         $content[] = <<<EOF
-<script type="text/javascript">const property = $property_json;let deleteProperty = () => {}</script>
+<script type="text/javascript">const property = $property_json;let deleteProperty = () => {};let activate = () => {};let deactivate = () => {}</script>
 EOF;
         $content[] = $this->reactView('propertyform');
         return implode('', $content);
