@@ -71,16 +71,28 @@ class Logged extends User
 
     protected function editHtmlCommand(\Canopy\Request $request)
     {
+        $this->showRoommateViewLink();
         \Layout::addStyle('properties', 'roommate/form.css');
         return $this->factory->reactView('roommateform');
     }
 
     protected function createHtmlCommand(\Canopy\Request $request)
     {
+        $this->showRoommateViewLink();
         \Layout::addStyle('properties', 'roommate/form.css');
         return $this->factory->reactView('roommateform');
     }
 
+    private function showRoommateViewLink()
+    {
+        $roommate = $this->factory->getUserRoommate($this->role->getId());
+        $rm_id = $roommate->getId();
+        if ($rm_id) {
+        $link = "<button onClick='location.href=\"./properties/Roommate/$rm_id\"' class='btn btn-default navbar-btn btn-sm'><i class='fa fa-undo'></i>&nbsp;Back to my listing</button>";
+        \properties\Factory\NavBar::addItem($link);
+        }
+    }
+    
     protected function savePostCommand(\Canopy\Request $request)
     {
         try {
