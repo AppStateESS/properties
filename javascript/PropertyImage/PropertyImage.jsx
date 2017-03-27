@@ -80,6 +80,7 @@ export default class PropertyImage extends React.Component {
     $.ajax({
       url: './properties/Photo/' + movingPhotoId,
       data: {
+        propertyId: propertyId,
         varname: 'move',
         newPosition: newPosition
       },
