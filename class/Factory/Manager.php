@@ -40,6 +40,7 @@ class Manager extends Base
         $listing->orderby = 'company_name';
         $listing->orderby_dir = 'asc';
         $listing->restricted = $restricted;
+        $listing->must_have_property = true;
         $result = $listing->get(true, true);
         if (empty($result)) {
             return array();
@@ -85,6 +86,7 @@ class Manager extends Base
         $listing->restricted = false;
         $listing->include_inquiry = true;
         $listing->search = $search;
+        $listing->must_have_property = false;
         $result = $listing->get();
         if (empty($result)) {
             return array();
