@@ -1,3 +1,7 @@
+.property-form .nav {
+    padding: 1em 0 0 0;
+}
+
 .property-form .row {
     border : 1px solid #e3e3e3;
 }
@@ -36,4 +40,8 @@
 
 .property-form div.row:nth-child(odd) {
     background-color : #d9edf7;
+}
+
+.form-section {
+    background-color : white;
 }

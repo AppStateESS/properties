@@ -9,7 +9,14 @@
 
 .property-row .title {
     padding : .4em;
+}
+
+.property-row .title.active {
     background-color : #3C763D;
+}
+
+.property-row .title.deactive {
+    background-color : #FF4242;
 }
 
 .property-row .title a {

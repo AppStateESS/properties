@@ -1,41 +1,8 @@
-.contact-info.bg-primary {
-    padding: 4px 14px;
-    border: 2px solid #337AB7;
-    border-radius : 6px;
-    color : white;
+
+.property-view .contact-info a {
+    text-decoration : none;
 }
 
-.contact-info.bg-primary a {
-    color : white;
-    font-size : 16px;
-}
-
-.contact-info.bg-primary a:hover {
-    text-decoration: none;
-}
-
-.contact-link {
-    border : 2px solid #337AB7;
-    border-radius: 4px;
-    padding : 2px;
-}
-
-.contact-link:hover {
-    background-color : #6DB3F0;
-    border : 2px solid #6DB3F0;
-    cursor:pointer;
-}
-
-.contact-link a {
-    cursor:pointer;
-}
-
-.property-view .contact-info h4 {
-    font-size : 22px;
-    color : white;
-    margin:0px;
-    border: none;
-}
 
 .property-view .header {
     font-size : 20px;
@@ -45,15 +12,18 @@
     font-size : 16px;
 }
 
-.property-view h4 {
-    margin-top : 1em;
-    padding-bottom : 6px;
-    border-bottom : 1px solid #337AB7;
-    color : #337AB7;
-}
-
 .property-view .description {
     margin-top : 1em;
+}
+
+.property-view .contact-info {
+    margin-top : 1em;
+}
+
+.property-view .contact-info h4 {
+    color : white;
+    font-size : 22px;
+    margin : 0px;
 }
 
 h3.property-address {
