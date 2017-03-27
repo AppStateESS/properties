@@ -28,9 +28,8 @@ class ListManagers extends React.Component {
       <table className="table">
         <thead>
           <tr>
-            <th>Manager</th>
+            <th style={{width:'40%'}}>Manager</th>
             <th>Properties</th>
-            <th>Contact</th>
             {this.props.admin === true ? <th>Options</th>:null}
           </tr>
         </thead>
