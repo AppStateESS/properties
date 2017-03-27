@@ -18,7 +18,8 @@ export default class ManagerApproval extends React.Component {
       messageType: 'danger',
       modal: false,
       modalType: '',
-      errorPage: null
+      errorPage: null,
+      emailWarning: false
     }
     this.currentManager = {}
     this.currentKey = null
@@ -51,7 +52,7 @@ export default class ManagerApproval extends React.Component {
 
   load() {
     $.getJSON('properties/Manager/approval').done(function (data) {
-      this.setState({managers: data['managerList']})
+      this.setState({managers: data['managerList'], emailWarning: data['email_warning']})
     }.bind(this)).fail(function (data) {
       this.setState({managers: null})
       this.setState({'errorPage': data.responseText})
@@ -198,7 +199,6 @@ export default class ManagerApproval extends React.Component {
     } else if (this.state.managers.length === 0) {
       return <div>No managers need approving.</div>
     }
-
     listing = this.state.managers.map(function (value, key) {
       companyAddress = empty(value.company_address)
         ? <em>No physical address</em>
@@ -283,6 +283,12 @@ export default class ManagerApproval extends React.Component {
       return <ErrorPage message={this.state.errorPage}/>
     }
     const message = this.getMessage()
+    let errorWarning
+
+    if (this.state.emailWarning) {
+      errorWarning = <div className="alert alert-danger">
+        <i className="fa fa-exclamation-circle"></i>&nbsp;<a href="./properties/Settings/">Site email address is not set.</a> Your email will be used until sent.</div>
+    }
     let modal
     if (this.state.modal) {
       if (this.state.modalType === 'refuse') {
@@ -296,6 +302,7 @@ export default class ManagerApproval extends React.Component {
         <h2>Manager Approval</h2>
         {modal}
         {message}
+        {errorWarning}
         {this.listing()}
       </div>
     )
