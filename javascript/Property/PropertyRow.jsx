@@ -68,13 +68,20 @@ export default class PropertyRow extends Row {
       image = <img src={property.thumbnail} className="img-responsive"/>
     }
 
+    let titleClass
+    if (property.active !== undefined && property.active === '0') {
+      titleClass= 'title deactive'
+    } else {
+      titleClass='title active'
+    }
+
     return (
       <div className="row property-row">
         <div className="col-sm-3 col-md-3 text-center">
           <a href={link}>{image}</a>
         </div>
         <div className="col-sm-9 col-md-9">
-          <div className="title">
+          <div className={titleClass}>
             <a href={link}>{property.name}</a>
           </div>
           <div className="row">
