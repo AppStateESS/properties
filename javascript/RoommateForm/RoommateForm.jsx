@@ -8,7 +8,7 @@ import 'react-date-picker/index.css'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import Select from 'react-select'
 import 'react-select/dist/react-select.css'
-import ProfileData from './ProfileData.js'
+import ProfileData from '../Mixin/Objects/ProfileData.js'
 import CheckValues from '../Mixin/Helper/CheckValues.js'
 import Message from '../Mixin/Html/Message.jsx'
 
@@ -36,6 +36,7 @@ export default class RoommateForm extends React.Component {
       'checkErrors',
       'checkFacebook',
       'checkInstagram',
+      'checkDescription',
       'checkTwitter'
     ], this)
   }
@@ -72,6 +73,9 @@ export default class RoommateForm extends React.Component {
       allIsWell = false
     }
     if (!this.checkTwitter()) {
+      allIsWell = false
+    }
+    if (!this.checkDescription()) {
       allIsWell = false
     }
     return allIsWell
@@ -150,6 +154,16 @@ export default class RoommateForm extends React.Component {
       return false
     } else {
       this.setError('email', null)
+      return true
+    }
+  }
+
+  checkDescription() {
+    if (CheckValues.isEmpty(this.state.roommate.description)) {
+      this.setError('description', 'Introduction may not be empty')
+      return false
+    } else {
+      this.setError('description', null)
       return true
     }
   }
@@ -251,6 +265,8 @@ export default class RoommateForm extends React.Component {
         onClose={this.unsetMessage}/>
     }
 
+    let descriptionError = <div className="label label-danger">{this.state.errors.description}</div>
+
     return (
       <div className="roommate-form">
         <p className="alert alert-info">This service is for students looking to meet
@@ -270,6 +286,25 @@ export default class RoommateForm extends React.Component {
           </div>
           <div className="col-sm-6"></div>
         </div>
+        <fieldset>
+          <legend>Introduction
+            <i className="fa fa-asterisk text-danger"></i>
+          </legend>
+          <div className="row marginBottom">
+            <div className="col-sm-12">
+              <div className="alert alert-info">Give a brief introduction of your ideal
+                roommate. Leave out any information repeated below and any contact information
+                you wish to keep from anonymous users.</div>
+              <textarea
+                placeholder="e.g. Looking for single semester roommate."
+                className="form-control"
+                onChange={this.setValue.bind(this, 'description')}
+                value={roommate.description}
+                onBlur={this.checkDescription}
+                name="description"/> {descriptionError}
+            </div>
+          </div>
+        </fieldset>
         <fieldset>
           <legend>Contact information</legend>
           <div className="marginBottom">
@@ -473,17 +508,6 @@ export default class RoommateForm extends React.Component {
                 simpleValue={true}
                 placeholder="Select from below or leave blank"
                 onChange={this.setValue.bind(this, 'pets')}/>
-            </div>
-          </div>
-          <div className="row marginBottom">
-            <div className="col-sm-12">
-              <label>Other information</label>
-              <textarea
-                placeholder="Any other public information you wish to share should be entered here"
-                className="form-control"
-                onChange={this.setValue.bind(this, 'description')}
-                value={roommate.description}
-                name="description"/>
             </div>
           </div>
         </fieldset>
