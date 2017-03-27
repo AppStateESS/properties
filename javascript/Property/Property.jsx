@@ -91,7 +91,7 @@ export default class Property extends Base {
     return (
       <div>
         {message}
-        <h3>Properties: {manager}</h3>
+        <h3><a href="./properties/Property/list/">Properties:</a> {manager}</h3>
         <SearchBar
           updateSearchString={this.updateSearchString}
           clear={this.clearSearch}
