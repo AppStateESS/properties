@@ -121,7 +121,7 @@ class ManagerRow extends React.Component {
       <tr className={this.props.active === '0'
         ? 'bg-danger'
         : ''}>
-        <td>
+        <td className="company-column">
           <span className="company-name"><a href={viewLink}>{this.props.company_name}</a></span><br/>{co}
           <LinkToButton url={this.props.phone_tel} icon="fa-phone" label={this.props.phone}/>
           <Website url={this.props.company_url}/>
