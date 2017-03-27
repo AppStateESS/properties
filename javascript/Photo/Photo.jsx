@@ -4,7 +4,7 @@ require('react-image-gallery/styles/css/image-gallery.css')
 import ImageGallery from 'react-image-gallery'
 import Waiting from '../Mixin/Html/Waiting.jsx'
 
-/* global $, require, propertyId, loadPhotos, currentPhotos */
+/* global $, require, propertyId, loadPhotos, currentPhotos, editPhotos */
 
 export default class Photo extends React.Component {
   constructor() {
@@ -19,6 +19,11 @@ export default class Photo extends React.Component {
   componentDidMount() {
     this.setState({photos: currentPhotos})
     loadPhotos.callback = this.load.bind(this)
+  }
+
+  editPhotos()
+  {
+    editPhotos.callback()
   }
 
   load() {
@@ -52,7 +57,7 @@ export default class Photo extends React.Component {
         showNav={true}
         slideInterval={4000}/>)
     } else {
-      images = <div className="well text-center text-muted"><i className="fa fa-camera fa-5x"></i><br />No photos</div>
+      images = <div className="well text-center text-muted pointer" onClick={this.editPhotos}><i className="fa fa-camera fa-5x"></i><br />No photos</div>
     }
     return (
       <div>{images}</div>
