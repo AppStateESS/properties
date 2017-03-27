@@ -157,6 +157,13 @@ webpackJsonp([0],{
 	      this.setState({ managers: managers });
 	    }
 	  }, {
+	    key: 'searchLetter',
+	    value: function searchLetter(letter) {
+	      this.search = letter;
+	      this.refs.managerSearch.value = '';
+	      this.load();
+	    }
+	  }, {
 	    key: 'searchManager',
 	    value: function searchManager(e) {
 	      clearTimeout(this.delay);
@@ -230,6 +237,139 @@ webpackJsonp([0],{
 	                _react2.default.createElement('i', { className: 'fa fa-plus' }),
 	                '\xA0 Add manager'
 	              ) : null
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'row marginTop' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-sm-12 text-center' },
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-sm btn-default', onClick: this.searchLetter.bind(this, null) },
+	                'All'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-sm btn-default', onClick: this.searchLetter.bind(this, 'a') },
+	                'A'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-sm btn-default', onClick: this.searchLetter.bind(this, 'b') },
+	                'B'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-sm btn-default', onClick: this.searchLetter.bind(this, 'c') },
+	                'C'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-sm btn-default', onClick: this.searchLetter.bind(this, 'd') },
+	                'D'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-sm btn-default', onClick: this.searchLetter.bind(this, 'e') },
+	                'E'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-sm btn-default', onClick: this.searchLetter.bind(this, 'f') },
+	                'F'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-sm btn-default', onClick: this.searchLetter.bind(this, 'g') },
+	                'G'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-sm btn-default', onClick: this.searchLetter.bind(this, 'h') },
+	                'H'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-sm btn-default', onClick: this.searchLetter.bind(this, 'i') },
+	                'I'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-sm btn-default', onClick: this.searchLetter.bind(this, 'j') },
+	                'J'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-sm btn-default', onClick: this.searchLetter.bind(this, 'k') },
+	                'K'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-sm btn-default', onClick: this.searchLetter.bind(this, 'l') },
+	                'L'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-sm btn-default', onClick: this.searchLetter.bind(this, 'm') },
+	                'M'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-sm btn-default', onClick: this.searchLetter.bind(this, 'n') },
+	                'N'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-sm btn-default', onClick: this.searchLetter.bind(this, 'o') },
+	                'O'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-sm btn-default', onClick: this.searchLetter.bind(this, 'p') },
+	                'P'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-sm btn-default', onClick: this.searchLetter.bind(this, 'q') },
+	                'Q'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-sm btn-default', onClick: this.searchLetter.bind(this, 'r') },
+	                'R'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-sm btn-default', onClick: this.searchLetter.bind(this, 's') },
+	                'S'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-sm btn-default', onClick: this.searchLetter.bind(this, 't') },
+	                'T'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-sm btn-default', onClick: this.searchLetter.bind(this, 'u') },
+	                'U'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-sm btn-default', onClick: this.searchLetter.bind(this, 'v') },
+	                'V'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-sm btn-default', onClick: this.searchLetter.bind(this, 'w') },
+	                'W'
+	              ),
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-sm btn-default', onClick: this.searchLetter.bind(this, 'xyz') },
+	                'XYZ'
+	              )
 	            )
 	          ),
 	          _react2.default.createElement('hr', null),
@@ -327,18 +467,13 @@ webpackJsonp([0],{
 	            null,
 	            _react2.default.createElement(
 	              'th',
-	              null,
+	              { style: { width: '40%' } },
 	              'Manager'
 	            ),
 	            _react2.default.createElement(
 	              'th',
 	              null,
 	              'Properties'
-	            ),
-	            _react2.default.createElement(
-	              'th',
-	              null,
-	              'Contact'
 	            ),
 	            this.props.admin === true ? _react2.default.createElement(
 	              'th',
@@ -518,13 +653,17 @@ webpackJsonp([0],{
 	          'None'
 	        )
 	      );
-	      if (this.props.property_count > 0) {
+	      var propertyCount = this.props.property_count;
+	      if (propertyCount > 0) {
+	        var label = propertyCount > 1 ? 'View ' + this.props.property_count + ' properties' : 'View property';
 	        properties = _react2.default.createElement(
 	          'a',
 	          {
 	            href: './properties/Property/?managerId=' + this.props.id,
 	            className: 'btn btn-default' },
-	          'View Properties'
+	          _react2.default.createElement('i', { className: 'fa fa-building-o' }),
+	          '\xA0',
+	          label
 	        );
 	      }
 	
@@ -547,7 +686,7 @@ webpackJsonp([0],{
 	        { className: this.props.active === '0' ? 'bg-danger' : '' },
 	        _react2.default.createElement(
 	          'td',
-	          null,
+	          { className: 'company-column' },
 	          _react2.default.createElement(
 	            'span',
 	            { className: 'company-name' },
@@ -558,22 +697,18 @@ webpackJsonp([0],{
 	            )
 	          ),
 	          _react2.default.createElement('br', null),
-	          co
-	        ),
-	        _react2.default.createElement(
-	          'td',
-	          null,
-	          properties
-	        ),
-	        _react2.default.createElement(
-	          'td',
-	          null,
+	          co,
 	          _react2.default.createElement(LinkToButton, { url: this.props.phone_tel, icon: 'fa-phone', label: this.props.phone }),
 	          _react2.default.createElement(Website, { url: this.props.company_url }),
 	          _react2.default.createElement(LinkToButton, {
 	            url: email,
 	            icon: 'fa-envelope-o',
 	            label: this.props.email_address })
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          properties
 	        ),
 	        this.props.admin === true ? _react2.default.createElement(
 	          'td',

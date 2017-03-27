@@ -30,7 +30,7 @@
 /******/ 	// "0" means "already loaded"
 /******/ 	// Array means "loading", array contains callbacks
 /******/ 	var installedChunks = {
-/******/ 		16:0
+/******/ 		17:0
 /******/ 	};
 /******/
 /******/ 	// The require function
@@ -76,7 +76,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 /******/
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"manager","1":"managerapproval","2":"managerdesktop","3":"manageredit","4":"managersignin","5":"managersignup","6":"photo","7":"property","8":"propertyform","9":"propertyimage","10":"roommateform","11":"roommatelist","12":"sublease","13":"subleaseform","14":"subleaseimage","15":"subleasephoto"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + "." + ({"0":"manager","1":"managerapproval","2":"managerdesktop","3":"manageredit","4":"managersignin","5":"managersignup","6":"photo","7":"property","8":"propertyform","9":"propertyimage","10":"roommateform","11":"roommatelist","12":"settings","13":"sublease","14":"subleaseform","15":"subleaseimage","16":"subleasephoto"}[chunkId]||chunkId) + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};

@@ -15,7 +15,7 @@ webpackJsonp([10],[
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _RoommateForm = __webpack_require__(/*! ./RoommateForm.jsx */ 570);
+	var _RoommateForm = __webpack_require__(/*! ./RoommateForm.jsx */ 574);
 	
 	var _RoommateForm2 = _interopRequireDefault(_RoommateForm);
 	
@@ -29286,7 +29286,11 @@ webpackJsonp([10],[
 /* 426 */,
 /* 427 */,
 /* 428 */,
-/* 429 */
+/* 429 */,
+/* 430 */,
+/* 431 */,
+/* 432 */,
+/* 433 */
 /*!***************************************!*\
   !*** ./~/react-date-picker/index.css ***!
   \***************************************/
@@ -29295,7 +29299,7 @@ webpackJsonp([10],[
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !../css-loader!./index.css */ 430);
+	var content = __webpack_require__(/*! !../css-loader!./index.css */ 434);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ../style-loader/addStyles.js */ 210)(content, {});
@@ -29315,7 +29319,7 @@ webpackJsonp([10],[
 	}
 
 /***/ },
-/* 430 */
+/* 434 */
 /*!******************************************************!*\
   !*** ./~/css-loader!./~/react-date-picker/index.css ***!
   \******************************************************/
@@ -29332,10 +29336,6 @@ webpackJsonp([10],[
 
 
 /***/ },
-/* 431 */,
-/* 432 */,
-/* 433 */,
-/* 434 */,
 /* 435 */,
 /* 436 */,
 /* 437 */,
@@ -29471,7 +29471,11 @@ webpackJsonp([10],[
 /* 567 */,
 /* 568 */,
 /* 569 */,
-/* 570 */
+/* 570 */,
+/* 571 */,
+/* 572 */,
+/* 573 */,
+/* 574 */
 /*!**************************************************!*\
   !*** ./javascript/RoommateForm/RoommateForm.jsx ***!
   \**************************************************/
@@ -29497,7 +29501,7 @@ webpackJsonp([10],[
 	
 	var _reactDatePicker = __webpack_require__(/*! react-date-picker */ 235);
 	
-	var _RoommateObject = __webpack_require__(/*! ../Mixin/Objects/RoommateObject.js */ 571);
+	var _RoommateObject = __webpack_require__(/*! ../Mixin/Objects/RoommateObject.js */ 575);
 	
 	var _RoommateObject2 = _interopRequireDefault(_RoommateObject);
 	
@@ -29505,19 +29509,19 @@ webpackJsonp([10],[
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
-	__webpack_require__(/*! react-date-picker/index.css */ 429);
+	__webpack_require__(/*! react-date-picker/index.css */ 433);
 	
 	var _Bind = __webpack_require__(/*! ../Mixin/Helper/Bind.js */ 189);
 	
 	var _Bind2 = _interopRequireDefault(_Bind);
 	
-	var _reactSelect = __webpack_require__(/*! react-select */ 572);
+	var _reactSelect = __webpack_require__(/*! react-select */ 576);
 	
 	var _reactSelect2 = _interopRequireDefault(_reactSelect);
 	
-	__webpack_require__(/*! react-select/dist/react-select.css */ 584);
+	__webpack_require__(/*! react-select/dist/react-select.css */ 588);
 	
-	var _ProfileData = __webpack_require__(/*! ./ProfileData.js */ 586);
+	var _ProfileData = __webpack_require__(/*! ../Mixin/Objects/ProfileData.js */ 590);
 	
 	var _ProfileData2 = _interopRequireDefault(_ProfileData);
 	
@@ -29555,7 +29559,7 @@ webpackJsonp([10],[
 	      message: null
 	    };
 	
-	    (0, _Bind2.default)(['setValue', 'setError', 'save', 'setMoveIn', 'checkName', 'checkEmail', 'checkPhone', 'checkErrors', 'checkFacebook', 'checkInstagram', 'checkTwitter'], _this);
+	    (0, _Bind2.default)(['setValue', 'setError', 'save', 'setMoveIn', 'checkName', 'checkEmail', 'checkPhone', 'checkErrors', 'checkFacebook', 'checkInstagram', 'checkDescription', 'checkTwitter'], _this);
 	    return _this;
 	  }
 	
@@ -29595,6 +29599,9 @@ webpackJsonp([10],[
 	        allIsWell = false;
 	      }
 	      if (!this.checkTwitter()) {
+	        allIsWell = false;
+	      }
+	      if (!this.checkDescription()) {
 	        allIsWell = false;
 	      }
 	      return allIsWell;
@@ -29678,6 +29685,17 @@ webpackJsonp([10],[
 	        return false;
 	      } else {
 	        this.setError('email', null);
+	        return true;
+	      }
+	    }
+	  }, {
+	    key: 'checkDescription',
+	    value: function checkDescription() {
+	      if (_CheckValues2.default.isEmpty(this.state.roommate.description)) {
+	        this.setError('description', 'Introduction may not be empty');
+	        return false;
+	      } else {
+	        this.setError('description', null);
 	        return true;
 	      }
 	    }
@@ -29792,6 +29810,12 @@ webpackJsonp([10],[
 	          onClose: this.unsetMessage });
 	      }
 	
+	      var descriptionError = _react2.default.createElement(
+	        'div',
+	        { className: 'label label-danger' },
+	        this.state.errors.description
+	      );
+	
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'roommate-form' },
@@ -29828,6 +29852,38 @@ webpackJsonp([10],[
 	              value: this.formatDate(roommate.move_in_date) })
 	          ),
 	          _react2.default.createElement('div', { className: 'col-sm-6' })
+	        ),
+	        _react2.default.createElement(
+	          'fieldset',
+	          null,
+	          _react2.default.createElement(
+	            'legend',
+	            null,
+	            'Introduction',
+	            _react2.default.createElement('i', { className: 'fa fa-asterisk text-danger' })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'row marginBottom' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-sm-12' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'alert alert-info' },
+	                'Give a brief introduction of your ideal roommate. Leave out any information repeated below and any contact information you wish to keep from anonymous users.'
+	              ),
+	              _react2.default.createElement('textarea', {
+	                placeholder: 'e.g. Looking for single semester roommate.',
+	                className: 'form-control',
+	                onChange: this.setValue.bind(this, 'description'),
+	                value: roommate.description,
+	                onBlur: this.checkDescription,
+	                name: 'description' }),
+	              ' ',
+	              descriptionError
+	            )
+	          )
 	        ),
 	        _react2.default.createElement(
 	          'fieldset',
@@ -30140,25 +30196,6 @@ webpackJsonp([10],[
 	                placeholder: 'Select from below or leave blank',
 	                onChange: this.setValue.bind(this, 'pets') })
 	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'row marginBottom' },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'col-sm-12' },
-	              _react2.default.createElement(
-	                'label',
-	                null,
-	                'Other information'
-	              ),
-	              _react2.default.createElement('textarea', {
-	                placeholder: 'Any other public information you wish to share should be entered here',
-	                className: 'form-control',
-	                onChange: this.setValue.bind(this, 'description'),
-	                value: roommate.description,
-	                name: 'description' })
-	            )
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -30252,7 +30289,7 @@ webpackJsonp([10],[
 	RoommateForm.propTypes = {};
 
 /***/ },
-/* 571 */
+/* 575 */
 /*!****************************************************!*\
   !*** ./javascript/Mixin/Objects/RoommateObject.js ***!
   \****************************************************/
@@ -30293,7 +30330,7 @@ webpackJsonp([10],[
 	exports.default = RoommateObject;
 
 /***/ },
-/* 572 */
+/* 576 */
 /*!**************************************!*\
   !*** ./~/react-select/lib/Select.js ***!
   \**************************************/
@@ -30327,7 +30364,7 @@ webpackJsonp([10],[
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _reactInputAutosize = __webpack_require__(/*! react-input-autosize */ 573);
+	var _reactInputAutosize = __webpack_require__(/*! react-input-autosize */ 577);
 	
 	var _reactInputAutosize2 = _interopRequireDefault(_reactInputAutosize);
 	
@@ -30335,39 +30372,39 @@ webpackJsonp([10],[
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _utilsDefaultArrowRenderer = __webpack_require__(/*! ./utils/defaultArrowRenderer */ 574);
+	var _utilsDefaultArrowRenderer = __webpack_require__(/*! ./utils/defaultArrowRenderer */ 578);
 	
 	var _utilsDefaultArrowRenderer2 = _interopRequireDefault(_utilsDefaultArrowRenderer);
 	
-	var _utilsDefaultFilterOptions = __webpack_require__(/*! ./utils/defaultFilterOptions */ 575);
+	var _utilsDefaultFilterOptions = __webpack_require__(/*! ./utils/defaultFilterOptions */ 579);
 	
 	var _utilsDefaultFilterOptions2 = _interopRequireDefault(_utilsDefaultFilterOptions);
 	
-	var _utilsDefaultMenuRenderer = __webpack_require__(/*! ./utils/defaultMenuRenderer */ 577);
+	var _utilsDefaultMenuRenderer = __webpack_require__(/*! ./utils/defaultMenuRenderer */ 581);
 	
 	var _utilsDefaultMenuRenderer2 = _interopRequireDefault(_utilsDefaultMenuRenderer);
 	
-	var _utilsDefaultClearRenderer = __webpack_require__(/*! ./utils/defaultClearRenderer */ 578);
+	var _utilsDefaultClearRenderer = __webpack_require__(/*! ./utils/defaultClearRenderer */ 582);
 	
 	var _utilsDefaultClearRenderer2 = _interopRequireDefault(_utilsDefaultClearRenderer);
 	
-	var _Async = __webpack_require__(/*! ./Async */ 579);
+	var _Async = __webpack_require__(/*! ./Async */ 583);
 	
 	var _Async2 = _interopRequireDefault(_Async);
 	
-	var _AsyncCreatable = __webpack_require__(/*! ./AsyncCreatable */ 580);
+	var _AsyncCreatable = __webpack_require__(/*! ./AsyncCreatable */ 584);
 	
 	var _AsyncCreatable2 = _interopRequireDefault(_AsyncCreatable);
 	
-	var _Creatable = __webpack_require__(/*! ./Creatable */ 581);
+	var _Creatable = __webpack_require__(/*! ./Creatable */ 585);
 	
 	var _Creatable2 = _interopRequireDefault(_Creatable);
 	
-	var _Option = __webpack_require__(/*! ./Option */ 582);
+	var _Option = __webpack_require__(/*! ./Option */ 586);
 	
 	var _Option2 = _interopRequireDefault(_Option);
 	
-	var _Value = __webpack_require__(/*! ./Value */ 583);
+	var _Value = __webpack_require__(/*! ./Value */ 587);
 	
 	var _Value2 = _interopRequireDefault(_Value);
 	
@@ -31528,7 +31565,7 @@ webpackJsonp([10],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 573 */
+/* 577 */
 /*!*****************************************************!*\
   !*** ./~/react-input-autosize/lib/AutosizeInput.js ***!
   \*****************************************************/
@@ -31665,7 +31702,7 @@ webpackJsonp([10],[
 	module.exports = AutosizeInput;
 
 /***/ },
-/* 574 */
+/* 578 */
 /*!**********************************************************!*\
   !*** ./~/react-select/lib/utils/defaultArrowRenderer.js ***!
   \**********************************************************/
@@ -31697,7 +31734,7 @@ webpackJsonp([10],[
 	module.exports = exports["default"];
 
 /***/ },
-/* 575 */
+/* 579 */
 /*!**********************************************************!*\
   !*** ./~/react-select/lib/utils/defaultFilterOptions.js ***!
   \**********************************************************/
@@ -31707,7 +31744,7 @@ webpackJsonp([10],[
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
-	var _stripDiacritics = __webpack_require__(/*! ./stripDiacritics */ 576);
+	var _stripDiacritics = __webpack_require__(/*! ./stripDiacritics */ 580);
 	
 	var _stripDiacritics2 = _interopRequireDefault(_stripDiacritics);
 	
@@ -31747,7 +31784,7 @@ webpackJsonp([10],[
 	module.exports = filterOptions;
 
 /***/ },
-/* 576 */
+/* 580 */
 /*!*****************************************************!*\
   !*** ./~/react-select/lib/utils/stripDiacritics.js ***!
   \*****************************************************/
@@ -31765,7 +31802,7 @@ webpackJsonp([10],[
 	};
 
 /***/ },
-/* 577 */
+/* 581 */
 /*!*********************************************************!*\
   !*** ./~/react-select/lib/utils/defaultMenuRenderer.js ***!
   \*********************************************************/
@@ -31834,7 +31871,7 @@ webpackJsonp([10],[
 	module.exports = menuRenderer;
 
 /***/ },
-/* 578 */
+/* 582 */
 /*!**********************************************************!*\
   !*** ./~/react-select/lib/utils/defaultClearRenderer.js ***!
   \**********************************************************/
@@ -31864,7 +31901,7 @@ webpackJsonp([10],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 579 */
+/* 583 */
 /*!*************************************!*\
   !*** ./~/react-select/lib/Async.js ***!
   \*************************************/
@@ -31894,11 +31931,11 @@ webpackJsonp([10],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Select = __webpack_require__(/*! ./Select */ 572);
+	var _Select = __webpack_require__(/*! ./Select */ 576);
 	
 	var _Select2 = _interopRequireDefault(_Select);
 	
-	var _utilsStripDiacritics = __webpack_require__(/*! ./utils/stripDiacritics */ 576);
+	var _utilsStripDiacritics = __webpack_require__(/*! ./utils/stripDiacritics */ 580);
 	
 	var _utilsStripDiacritics2 = _interopRequireDefault(_utilsStripDiacritics);
 	
@@ -32137,7 +32174,7 @@ webpackJsonp([10],[
 	module.exports = exports['default'];
 
 /***/ },
-/* 580 */
+/* 584 */
 /*!**********************************************!*\
   !*** ./~/react-select/lib/AsyncCreatable.js ***!
   \**********************************************/
@@ -32153,7 +32190,7 @@ webpackJsonp([10],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Select = __webpack_require__(/*! ./Select */ 572);
+	var _Select = __webpack_require__(/*! ./Select */ 576);
 	
 	var _Select2 = _interopRequireDefault(_Select);
 	
@@ -32201,7 +32238,7 @@ webpackJsonp([10],[
 	module.exports = AsyncCreatable;
 
 /***/ },
-/* 581 */
+/* 585 */
 /*!*****************************************!*\
   !*** ./~/react-select/lib/Creatable.js ***!
   \*****************************************/
@@ -32219,15 +32256,15 @@ webpackJsonp([10],[
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _Select = __webpack_require__(/*! ./Select */ 572);
+	var _Select = __webpack_require__(/*! ./Select */ 576);
 	
 	var _Select2 = _interopRequireDefault(_Select);
 	
-	var _utilsDefaultFilterOptions = __webpack_require__(/*! ./utils/defaultFilterOptions */ 575);
+	var _utilsDefaultFilterOptions = __webpack_require__(/*! ./utils/defaultFilterOptions */ 579);
 	
 	var _utilsDefaultFilterOptions2 = _interopRequireDefault(_utilsDefaultFilterOptions);
 	
-	var _utilsDefaultMenuRenderer = __webpack_require__(/*! ./utils/defaultMenuRenderer */ 577);
+	var _utilsDefaultMenuRenderer = __webpack_require__(/*! ./utils/defaultMenuRenderer */ 581);
 	
 	var _utilsDefaultMenuRenderer2 = _interopRequireDefault(_utilsDefaultMenuRenderer);
 	
@@ -32525,7 +32562,7 @@ webpackJsonp([10],[
 	module.exports = Creatable;
 
 /***/ },
-/* 582 */
+/* 586 */
 /*!**************************************!*\
   !*** ./~/react-select/lib/Option.js ***!
   \**************************************/
@@ -32644,7 +32681,7 @@ webpackJsonp([10],[
 	module.exports = Option;
 
 /***/ },
-/* 583 */
+/* 587 */
 /*!*************************************!*\
   !*** ./~/react-select/lib/Value.js ***!
   \*************************************/
@@ -32758,7 +32795,7 @@ webpackJsonp([10],[
 	module.exports = Value;
 
 /***/ },
-/* 584 */
+/* 588 */
 /*!**********************************************!*\
   !*** ./~/react-select/dist/react-select.css ***!
   \**********************************************/
@@ -32767,7 +32804,7 @@ webpackJsonp([10],[
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(/*! !../../css-loader!./react-select.css */ 585);
+	var content = __webpack_require__(/*! !../../css-loader!./react-select.css */ 589);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(/*! ../../style-loader/addStyles.js */ 210)(content, {});
@@ -32787,7 +32824,7 @@ webpackJsonp([10],[
 	}
 
 /***/ },
-/* 585 */
+/* 589 */
 /*!*************************************************************!*\
   !*** ./~/css-loader!./~/react-select/dist/react-select.css ***!
   \*************************************************************/
@@ -32804,10 +32841,10 @@ webpackJsonp([10],[
 
 
 /***/ },
-/* 586 */
-/*!************************************************!*\
-  !*** ./javascript/RoommateForm/ProfileData.js ***!
-  \************************************************/
+/* 590 */
+/*!*************************************************!*\
+  !*** ./javascript/Mixin/Objects/ProfileData.js ***!
+  \*************************************************/
 /***/ function(module, exports) {
 
 	'use strict';
@@ -32819,6 +32856,51 @@ webpackJsonp([10],[
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var profileLabel = exports.profileLabel = {
+	  study: {
+	    'early_morning': 'Early in the morning',
+	    'morning_afternoon': 'In the morning and early afternoon',
+	    'afternoon_evening': 'In the afternoon and early evening',
+	    'evening': 'In the evening',
+	    'late_night': 'Late at night'
+	  },
+	  wake_time: {
+	    'six_or_earlier': 'Before 6:00AM',
+	    'six_to_eight': 'Between 6:00AM and 8:00AM',
+	    'eight_to_ten': 'Between 8:00AM and 10:00AM',
+	    'ten_to_noon': 'Between 10:00AM and Noon',
+	    'noon_or_later': 'Between Noon or later'
+	  },
+	  sleep_time: {
+	    'eight_or_earlier': '8:00pm or earlier',
+	    'eight_to_ten': '8:00pm to 10:00pm',
+	    'ten_to_midnight': '10:00pm to midnight',
+	    'after_midnight': 'After midnight'
+	  },
+	  focus: {
+	    'academic': 'My academic and intellectual growth',
+	    'relationships': 'The friends and relationships I create at college',
+	    'both': 'Both my academics and relationships equally'
+	  },
+	  free_time: {
+	    'go_out': 'I like to go out with friends',
+	    'stay_in_friends': 'I like to stay in with friends',
+	    'time_alone': 'I like relaxing alone'
+	  },
+	  pets: {
+	    'none': 'I do not want pets',
+	    'want': 'Do not have a pet, but want one',
+	    'have': 'I have a pet',
+	    'accept': 'I can room with someone with a pet'
+	  },
+	  smoking: {
+	    'never': 'I never smoke',
+	    'sometimes': 'I sometimes smoke',
+	    'outside': 'I smoke, but do so outside',
+	    'inside': 'I smoke inside'
+	  }
+	};
 	
 	var ProfileData = function () {
 	  function ProfileData() {

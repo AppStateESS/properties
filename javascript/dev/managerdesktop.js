@@ -545,6 +545,13 @@ webpackJsonp([2],{
 	        image = _react2.default.createElement('img', { src: property.thumbnail, className: 'img-responsive' });
 	      }
 	
+	      var titleClass = void 0;
+	      if (property.active !== undefined && property.active === '0') {
+	        titleClass = 'title deactive';
+	      } else {
+	        titleClass = 'title active';
+	      }
+	
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'row property-row' },
@@ -562,7 +569,7 @@ webpackJsonp([2],{
 	          { className: 'col-sm-9 col-md-9' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'title' },
+	            { className: titleClass },
 	            _react2.default.createElement(
 	              'a',
 	              { href: link },

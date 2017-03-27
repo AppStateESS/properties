@@ -143,7 +143,7 @@ webpackJsonp([6],{
 	
 	__webpack_require__(/*! react-image-gallery/styles/css/image-gallery.css */ 207);
 	
-	/* global $, require, propertyId, loadPhotos, currentPhotos */
+	/* global $, require, propertyId, loadPhotos, currentPhotos, editPhotos */
 	
 	var Photo = function (_React$Component) {
 	  _inherits(Photo, _React$Component);
@@ -167,6 +167,21 @@ webpackJsonp([6],{
 	      this.setState({ photos: currentPhotos });
 	      loadPhotos.callback = this.load.bind(this);
 	    }
+	  }, {
+	    key: 'editPhotos',
+	    value: function (_editPhotos) {
+	      function editPhotos() {
+	        return _editPhotos.apply(this, arguments);
+	      }
+	
+	      editPhotos.toString = function () {
+	        return _editPhotos.toString();
+	      };
+	
+	      return editPhotos;
+	    }(function () {
+	      editPhotos.callback();
+	    })
 	  }, {
 	    key: 'load',
 	    value: function load() {
@@ -208,7 +223,7 @@ webpackJsonp([6],{
 	      } else {
 	        images = _react2.default.createElement(
 	          'div',
-	          { className: 'well text-center text-muted' },
+	          { className: 'well text-center text-muted pointer', onClick: this.editPhotos },
 	          _react2.default.createElement('i', { className: 'fa fa-camera fa-5x' }),
 	          _react2.default.createElement('br', null),
 	          'No photos'

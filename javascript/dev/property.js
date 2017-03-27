@@ -471,6 +471,13 @@ webpackJsonp([7],{
 	        image = _react2.default.createElement('img', { src: property.thumbnail, className: 'img-responsive' });
 	      }
 	
+	      var titleClass = void 0;
+	      if (property.active !== undefined && property.active === '0') {
+	        titleClass = 'title deactive';
+	      } else {
+	        titleClass = 'title active';
+	      }
+	
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'row property-row' },
@@ -488,7 +495,7 @@ webpackJsonp([7],{
 	          { className: 'col-sm-9 col-md-9' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'title' },
+	            { className: titleClass },
 	            _react2.default.createElement(
 	              'a',
 	              { href: link },
@@ -832,7 +839,8 @@ webpackJsonp([7],{
 	      properties: null,
 	      manager: null,
 	      message: '',
-	      type: null
+	      type: null,
+	      moreRows: true
 	    };
 	
 	    _this.managerId = 0;
@@ -878,12 +886,19 @@ webpackJsonp([7],{
 	  }, {
 	    key: 'load',
 	    value: function load() {
-	      this.setState({ properties: null });
+	      //this.setState({properties: null})
 	      var sendData = this.searchVars;
 	      sendData.managerId = this.managerId;
 	      sendData.search = this.search;
+	      if (this.offset > 0) {
+	        sendData.offset = this.offset;
+	      }
 	      $.getJSON('./properties/Property', sendData).done(function (data) {
-	        this.setState({ properties: data.properties, manager: data.manager });
+	        if (this.offset > 0) {
+	          this.setState({ properties: this.state.properties.concat(data.properties), manager: data.manager, moreRows: data.more_rows });
+	        } else {
+	          this.setState({ properties: data.properties, manager: data.manager, moreRows: data.more_rows });
+	        }
 	      }.bind(this)).fail(function () {
 	        this.setState({ managers: null, loading: false });
 	        this.setMessage('Error: failure pulling properties');
@@ -917,7 +932,12 @@ webpackJsonp([7],{
 	        _react2.default.createElement(
 	          'h3',
 	          null,
-	          'Properties: ',
+	          _react2.default.createElement(
+	            'a',
+	            { href: './properties/Property/list/' },
+	            'Properties:'
+	          ),
+	          ' ',
 	          manager
 	        ),
 	        _react2.default.createElement(_SearchBar2.default, {
@@ -928,7 +948,16 @@ webpackJsonp([7],{
 	          clearAmenities: this.clearAmenities,
 	          resetConditions: this.resetConditions,
 	          toggle: this.toggle }),
-	        _react2.default.createElement(_PropertyListing2.default, { list: this.state.properties, search: !(0, _Empty2.default)(this.search) })
+	        _react2.default.createElement(_PropertyListing2.default, { list: this.state.properties, search: !(0, _Empty2.default)(this.search) }),
+	        this.state.moreRows === true ? _react2.default.createElement(
+	          'div',
+	          { className: 'text-center' },
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'btn btn-primary', onClick: this.showMore },
+	            'Show more results'
+	          )
+	        ) : null
 	      );
 	    }
 	  }]);
@@ -3862,7 +3891,7 @@ webpackJsonp([7],{
 	    var _this = _possibleConstructorReturn(this, (Base.__proto__ || Object.getPrototypeOf(Base)).call(this, props));
 	
 	    _this.state = {};
-	
+	    _this.offset = 0;
 	    _this.delay;
 	    _this.search;
 	    _this.searchVars = {
@@ -3873,7 +3902,7 @@ webpackJsonp([7],{
 	    };
 	    _this.loadAmenities();
 	
-	    (0, _Bind2.default)(['toggle', 'clearAmenities', 'clearSearch', 'updateSearchVars', 'updateSearchString', 'resetConditions'], _this);
+	    (0, _Bind2.default)(['toggle', 'clearAmenities', 'clearSearch', 'updateSearchVars', 'updateSearchString', 'resetConditions', 'showMore'], _this);
 	    return _this;
 	  }
 	
@@ -3881,6 +3910,7 @@ webpackJsonp([7],{
 	    key: 'clearSearch',
 	    value: function clearSearch() {
 	      this.search = '';
+	      this.offset = 0;
 	      this.load();
 	    }
 	  }, {
@@ -3892,6 +3922,7 @@ webpackJsonp([7],{
 	        minprice: '0',
 	        maxprice: '0'
 	      };
+	      this.offset = 0;
 	      this.load();
 	      this.updateLink();
 	    }
@@ -3914,6 +3945,7 @@ webpackJsonp([7],{
 	      this.searchVars.townhouse = null;
 	      this.searchVars.duplex = null;
 	      this.searchVars.workout = null;
+	      this.offset = 0;
 	      this.load();
 	      this.updateLink();
 	    }
@@ -3927,6 +3959,7 @@ webpackJsonp([7],{
 	      }
 	      this.delay = setTimeout(function () {
 	        this.search = search;
+	        this.offset = 0;
 	        this.load();
 	      }.bind(this, search), 500);
 	    }
@@ -3934,6 +3967,7 @@ webpackJsonp([7],{
 	    key: 'updateSearchVars',
 	    value: function updateSearchVars(varname, value) {
 	      this.searchVars[varname] = value;
+	      this.offset = 0;
 	      this.load();
 	      this.updateLink();
 	    }
@@ -3941,6 +3975,12 @@ webpackJsonp([7],{
 	    key: 'toggle',
 	    value: function toggle(type) {
 	      this.updateSearchVars(type, this.searchVars[type] === '1' ? undefined : '1');
+	    }
+	  }, {
+	    key: 'showMore',
+	    value: function showMore() {
+	      this.offset = this.offset + 1;
+	      this.load();
 	    }
 	  }, {
 	    key: 'loadAmenities',

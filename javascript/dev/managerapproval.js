@@ -399,7 +399,8 @@ webpackJsonp([1],{
 	      messageType: 'danger',
 	      modal: false,
 	      modalType: '',
-	      errorPage: null
+	      errorPage: null,
+	      emailWarning: false
 	    };
 	    _this.currentManager = {};
 	    _this.currentKey = null;
@@ -439,7 +440,7 @@ webpackJsonp([1],{
 	    key: 'load',
 	    value: function load() {
 	      $.getJSON('properties/Manager/approval').done(function (data) {
-	        this.setState({ managers: data['managerList'] });
+	        this.setState({ managers: data['managerList'], emailWarning: data['email_warning'] });
 	      }.bind(this)).fail(function (data) {
 	        this.setState({ managers: null });
 	        this.setState({ 'errorPage': data.responseText });
@@ -598,7 +599,6 @@ webpackJsonp([1],{
 	          'No managers need approving.'
 	        );
 	      }
-	
 	      listing = this.state.managers.map(function (value, key) {
 	        companyAddress = (0, _Empty2.default)(value.company_address) ? _react2.default.createElement(
 	          'em',
@@ -787,6 +787,22 @@ webpackJsonp([1],{
 	        return _react2.default.createElement(_ErrorPage2.default, { message: this.state.errorPage });
 	      }
 	      var message = this.getMessage();
+	      var errorWarning = void 0;
+	
+	      if (this.state.emailWarning) {
+	        errorWarning = _react2.default.createElement(
+	          'div',
+	          { className: 'alert alert-danger' },
+	          _react2.default.createElement('i', { className: 'fa fa-exclamation-circle' }),
+	          '\xA0',
+	          _react2.default.createElement(
+	            'a',
+	            { href: './properties/Settings/' },
+	            'Site email address is not set.'
+	          ),
+	          ' Your email will be used until sent.'
+	        );
+	      }
 	      var modal = void 0;
 	      if (this.state.modal) {
 	        if (this.state.modalType === 'refuse') {
@@ -805,6 +821,7 @@ webpackJsonp([1],{
 	        ),
 	        modal,
 	        message,
+	        errorWarning,
 	        this.listing()
 	      );
 	    }

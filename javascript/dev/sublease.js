@@ -1,4 +1,4 @@
-webpackJsonp([12],{
+webpackJsonp([13],{
 
 /***/ 0:
 /*!***************************************!*\
@@ -16,7 +16,7 @@ webpackJsonp([12],{
 	
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
-	var _Sublease = __webpack_require__(/*! ./Sublease.jsx */ 589);
+	var _Sublease = __webpack_require__(/*! ./Sublease.jsx */ 594);
 	
 	var _Sublease2 = _interopRequireDefault(_Sublease);
 	
@@ -3289,7 +3289,7 @@ webpackJsonp([12],{
 	    var _this = _possibleConstructorReturn(this, (Base.__proto__ || Object.getPrototypeOf(Base)).call(this, props));
 	
 	    _this.state = {};
-	
+	    _this.offset = 0;
 	    _this.delay;
 	    _this.search;
 	    _this.searchVars = {
@@ -3300,7 +3300,7 @@ webpackJsonp([12],{
 	    };
 	    _this.loadAmenities();
 	
-	    (0, _Bind2.default)(['toggle', 'clearAmenities', 'clearSearch', 'updateSearchVars', 'updateSearchString', 'resetConditions'], _this);
+	    (0, _Bind2.default)(['toggle', 'clearAmenities', 'clearSearch', 'updateSearchVars', 'updateSearchString', 'resetConditions', 'showMore'], _this);
 	    return _this;
 	  }
 	
@@ -3308,6 +3308,7 @@ webpackJsonp([12],{
 	    key: 'clearSearch',
 	    value: function clearSearch() {
 	      this.search = '';
+	      this.offset = 0;
 	      this.load();
 	    }
 	  }, {
@@ -3319,6 +3320,7 @@ webpackJsonp([12],{
 	        minprice: '0',
 	        maxprice: '0'
 	      };
+	      this.offset = 0;
 	      this.load();
 	      this.updateLink();
 	    }
@@ -3341,6 +3343,7 @@ webpackJsonp([12],{
 	      this.searchVars.townhouse = null;
 	      this.searchVars.duplex = null;
 	      this.searchVars.workout = null;
+	      this.offset = 0;
 	      this.load();
 	      this.updateLink();
 	    }
@@ -3354,6 +3357,7 @@ webpackJsonp([12],{
 	      }
 	      this.delay = setTimeout(function () {
 	        this.search = search;
+	        this.offset = 0;
 	        this.load();
 	      }.bind(this, search), 500);
 	    }
@@ -3361,6 +3365,7 @@ webpackJsonp([12],{
 	    key: 'updateSearchVars',
 	    value: function updateSearchVars(varname, value) {
 	      this.searchVars[varname] = value;
+	      this.offset = 0;
 	      this.load();
 	      this.updateLink();
 	    }
@@ -3368,6 +3373,12 @@ webpackJsonp([12],{
 	    key: 'toggle',
 	    value: function toggle(type) {
 	      this.updateSearchVars(type, this.searchVars[type] === '1' ? undefined : '1');
+	    }
+	  }, {
+	    key: 'showMore',
+	    value: function showMore() {
+	      this.offset = this.offset + 1;
+	      this.load();
 	    }
 	  }, {
 	    key: 'loadAmenities',
@@ -3438,7 +3449,7 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 589:
+/***/ 594:
 /*!******************************************!*\
   !*** ./javascript/Sublease/Sublease.jsx ***!
   \******************************************/
@@ -3460,7 +3471,7 @@ webpackJsonp([12],{
 	
 	var _Bind2 = _interopRequireDefault(_Bind);
 	
-	var _Listing = __webpack_require__(/*! ./Listing.jsx */ 590);
+	var _Listing = __webpack_require__(/*! ./Listing.jsx */ 595);
 	
 	var _Listing2 = _interopRequireDefault(_Listing);
 	
@@ -3548,7 +3559,7 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 590:
+/***/ 595:
 /*!*****************************************!*\
   !*** ./javascript/Sublease/Listing.jsx ***!
   \*****************************************/
@@ -3570,7 +3581,7 @@ webpackJsonp([12],{
 	
 	var _Waiting2 = _interopRequireDefault(_Waiting);
 	
-	var _SubleaseRow = __webpack_require__(/*! ./SubleaseRow.jsx */ 591);
+	var _SubleaseRow = __webpack_require__(/*! ./SubleaseRow.jsx */ 596);
 	
 	var _SubleaseRow2 = _interopRequireDefault(_SubleaseRow);
 	
@@ -3642,7 +3653,7 @@ webpackJsonp([12],{
 
 /***/ },
 
-/***/ 591:
+/***/ 596:
 /*!*********************************************!*\
   !*** ./javascript/Sublease/SubleaseRow.jsx ***!
   \*********************************************/
