@@ -39,15 +39,16 @@ class Manager extends Base
 
         $this->username = new Variable\TextOnly(null, 'username');
         $this->username->allowEmpty(false);
-        $this->password = new Variable\Password(null, 'password');
+        $this->username->setLimit(50);
+        $this->password = new Variable\StringVar(null, 'password');
         $this->password->allowEmpty(false);
-        if (defined('PROPERTIES_MANAGER_SALT')) {
-            $this->password->setSalt(PROPERTIES_MANAGER_SALT);
-        }
+        $this->password->setLimit(255);
         $this->first_name = new Variable\TextOnly(null, 'first_name');
         $this->first_name->allowEmpty(false);
+        $this->first_name->setLimit(50);
         $this->last_name = new Variable\TextOnly(null, 'last_name');
         $this->last_name->allowEmpty(false);
+        $this->last_name->setLimit(50);
         $this->phone = new Variable\PhoneNumber(null, 'phone');
         $this->phone->allowEmpty(false);
         $this->phone->formatNumber(true);
