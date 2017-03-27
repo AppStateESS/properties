@@ -2,10 +2,11 @@
 <form method="post" action="./properties/Settings">
     <div class="form-group">
         <label for="site-email">Site email</label>
-        <input class="form-control" type="text" name="site_email" value="" id="site-email" />
+        <input class="form-control" type="text" name="site_email" value="" id="site-email" placeholder="This is the from/reply-to address from this site." />
     </div>
     <div class="form-group">
         <label for="approver-email">Approver email</label>
-        <input class="form-control" type="text" name="approver_email" value="" id="approver-email" />
+        <input class="form-control" type="text" name="approver_email" value="" id="approver-email" placeholder="This email address will receive new manager notifications."/>
     </div>
+    <button type="submit" name="submit" value="" class="btn btn-primary">Save settings</button>
 </form>
