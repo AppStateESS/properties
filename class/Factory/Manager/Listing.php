@@ -37,6 +37,7 @@ class Listing
     public $orderby_dir = 'asc';
     public $include_inquiry = true;
     public $full_search = false;
+    public $must_have_property = false;
 
     public function get()
     {
@@ -53,7 +54,11 @@ class Listing
             $property_conditional3 = $db->createConditional($property_conditional1,
                     $property_conditional2, 'or');
             $db->addConditional($property_conditional3);
-            $tbl2->addField('id', 'property_count')->showCount();
+            $count_field = $tbl2->addField('id', 'property_count');
+            $count_field->showCount();
+            if ($this->must_have_property) {
+                $tbl2->addHaving($count_field, 0, '>');
+            }
         }
         if ($this->include_inquiry) {
             $tbl3 = $db->addTable('prop_inquiry');
@@ -104,7 +109,6 @@ class Listing
         if ($this->orderby) {
             $tbl->addOrderBy($this->orderby, $this->orderby_dir);
         }
-        //$sql = $db->selectQuery();
 
         if ($this->view) {
             $result = $db->selectAsResources('\properties\Resource\Manager');
