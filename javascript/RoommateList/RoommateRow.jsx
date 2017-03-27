@@ -21,25 +21,26 @@ export default class RoommateRow extends React.Component {
     const {roommate} = this.props
     const para = this.paragraphIfNotEmpty
     let {description} = roommate
-    if (description.length > 50) {
-      description = description.substring(0, 50) + '...'
+    if (description.length > 100) {
+      description = description.substring(0, 100) + '...'
     }
 
     return (
       <div className="panel panel-default">
+        <div className="panel-heading">
+          <div>
+            <strong>Move in:</strong>&nbsp;
+            {roommate.move_in_date}</div>
+            <div>
+              <strong>Created:</strong>&nbsp;
+              {roommate.created}</div>
+        </div>
         <div className="panel-body">
           <div className="row">
-            <div className="col-sm-4">
-              <div>
-                <strong>Move in:</strong>&nbsp;
-                {roommate.move_in_date}</div>
-              <div>
-                <strong>Created:</strong>&nbsp;
-                {roommate.created}</div>
+            <div className="col-sm-6">
               {para(description, 'Description: ')}
             </div>
-            <div className="col-sm-4">{para(roommate.major, 'Major: ')}{para(roommate.study_time, 'Study time: ')}{para(roommate.focus, 'Focus: ')}</div>
-            <div className="col-sm-4">{para(roommate.free_time, 'Free time: ')}{para(roommate.music, 'Music: ')}{para(roommate.hobbies, 'Hobbies: ')}</div>
+            <div className="col-sm-6">{para(roommate.major, 'Major: ')}{para(roommate.study_time, 'Study time: ')}{para(roommate.focus, 'Focus: ')}</div>
           </div>
         </div>
         <div className="panel-footer text-center">
