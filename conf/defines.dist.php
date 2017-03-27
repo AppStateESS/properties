@@ -12,9 +12,5 @@ define('SWIFT_MAIL_TRANSPORT_PARAMETER', 'localhost');
 
 define('PROPERTIES_REACT_DEV', false);
 
-// Change this, but ONLY ONCE. If changed later, 
-// managers will not be able to log in.
-define('PROPERTIES_MANAGER_SALT', 'DzGdGuRQlX');
-
 // If true, exceptions are caught and an error page is shown
 define('PROPERTIES_FRIENDLY_ERRORS', true);
