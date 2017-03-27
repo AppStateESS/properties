@@ -78,7 +78,7 @@ export default class Basic extends Base {
       paddingTop: '43px'
     }
     return (
-      <div>
+      <div className="container-fluid">
         <div className="row">
           <div className="col-sm-12 ">
             <InputField
