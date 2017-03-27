@@ -3,6 +3,14 @@
        font-size : 18px;
     }
 </style>
+        <?php if ($admin): ?>
+        <fieldset>
+            <legend>Administrative information</legend>
+            <p><strong>Contact name:</strong> <?=$first_name, ' ', $last_name?></p>
+            <p><strong>Username:</strong> <?=$username?></p>
+            <p><strong>Last logged:</strong> <?=$last_log_date?></p>
+        </fieldset>
+        <?php endif; ?>
 <table class="table table-striped property-manager">
     <tbody>
         <tr>
@@ -19,7 +27,7 @@
         </tr>
         <tr>
             <th>Address</th>
-            <td><?=$company_address ? $company_address : '<i>None given</i>'?></td>
+            <td><?=$company_address ? "<a href='$company_map_address'>$company_address</a>" : '<i>None given</i>'?></td>
         </tr>
         <tr>
             <th>Website</th>
@@ -33,11 +41,5 @@
             <th>Number of properties</th>
             <td><a href="./properties/Property/list?managerId=<?=$id?>"><?=$property_count?></a></td>
         </tr>
-        <?php if (isset($last_log)):?>
-        <tr>
-            <th>Last logged</th>
-            <td><?=$last_log_date?></td>
-        </tr>
-        <?php endif; ?>
     </tbody>
 </table>
