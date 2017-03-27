@@ -13,6 +13,7 @@ import Features from './Features.jsx'
 import Utilities from './Utilities.jsx'
 import Overlay from '../Mixin/Html/Overlay.jsx'
 import SubmitForm from '../Mixin/Form/SubmitForm.jsx'
+import {StickyContainer, Sticky} from 'react-sticky'
 
 import 'react-date-picker/index.css'
 
@@ -35,6 +36,8 @@ export default class PropertyForm extends React.Component {
       'setTab',
       'setValue',
       'setError',
+      'activate',
+      'deactivate',
       'checkForm',
       'openDelete',
       'closeDelete',
@@ -160,6 +163,33 @@ export default class PropertyForm extends React.Component {
       }.bind(this)
     })
   }
+  activate() {
+    $.ajax({
+      url: './properties/Property/' + this.state.property.id,
+      data: {
+        varname: 'active',
+        value: 1
+      },
+      dataType: 'json',
+      type: 'patch'
+    }).done(function () {
+      this.setValue('active', true)
+    }.bind(this))
+  }
+
+  deactivate() {
+    $.ajax({
+      url: './properties/Property/' + this.state.property.id,
+      data: {
+        varname: 'active',
+        value: 0
+      },
+      dataType: 'json',
+      type: 'patch'
+    }).done(function () {
+      this.setValue('active', false)
+    }.bind(this))
+  }
 
   save() {
     let property = this.readyPost()
@@ -251,28 +281,43 @@ export default class PropertyForm extends React.Component {
     }
 
     let deleteButton
+    let activateButton
+    let goBack = <a className="btn btn-sm btn-default"href={`./properties/Property/${this.state.property.id}`}><i className="fa fa-undo"></i>&nbsp;Back to view</a>
+
     if (property.id > 0) {
+      if (property.active) {
+        activateButton = <button className="btn btn-sm btn-warning" onClick={this.deactivate}>
+          <i className="fa fa-ban"></i>&nbsp;Deactivate</button>
+      } else {
+        activateButton = <button className="btn btn-sm btn-success" onClick={this.activate}>
+          <i className="fa fa-check"></i>&nbsp;Activate</button>
+      }
       deleteButton = (
-        <button className="btn btn-danger" onClick={this.openDelete}>
+        <button className="btn btn-sm btn-danger" onClick={this.openDelete}>
           <i className="fa fa-trash-o"></i>&nbsp;Delete property</button>
       )
     }
 
     return (
-      <div ref="PageTop" className="property-form">
-        {deleteForm}
-        {message}
-        <h2>Property for {this.state.property.company_name}&nbsp;{deleteButton}
-        </h2>
-        <Nav
-          buttons={this.navButtons()}
-          active={this.state.activeTab}
-          disable={this.basicComplete()
-          ? null
-          : [1, 2, 3, 4]}
-          click={this.setTab}/> {section}
-        <SubmitForm check={this.checkForm} saving={this.state.saving} label="Property"/>
-      </div>
+      <StickyContainer>
+        <div ref="PageTop" className="property-form">
+          {deleteForm}
+          {message}
+          <h2>Property for {this.state.property.company_name}</h2>
+          <div>{goBack}&nbsp;{activateButton}&nbsp;{deleteButton}</div>
+          <Sticky style={{zIndex:'100'}}>
+            <Nav
+              buttons={this.navButtons()}
+              active={this.state.activeTab}
+              disable={this.basicComplete()
+              ? null
+              : [1, 2, 3, 4]}
+              click={this.setTab}/>
+          </Sticky>
+            {section}
+          <SubmitForm check={this.checkForm} saving={this.state.saving} label="Property"/>
+        </div>
+      </StickyContainer>
     )
   }
 }
