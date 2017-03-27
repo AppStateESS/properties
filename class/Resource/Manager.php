@@ -56,6 +56,7 @@ class Manager extends Base
         $this->email_address->allowEmpty(false);
         $this->company_name = new Variable\TextOnly(null, 'company_name');
         $this->company_name->allowEmpty(false);
+        $this->company_name->setLimit(100);
         $this->company_address = new Variable\TextOnly(null, 'company_address');
         $this->company_address->allowNull(true);
         $this->company_url = new Variable\Url(null, 'company_url');
@@ -73,6 +74,7 @@ class Manager extends Base
         $this->inquiry_type->allowNull(true);
         $this->pw_timeout = new Variable\IntegerVar(0, 'pw_timeout');
         $this->pw_hash = new Variable\StringVar(null, 'pw_hash');
+        $this->pw_hash->setLimit(255);
         
         $this->doNotSave(array('inquiry_date', 'inquiry_type'));
     }
@@ -92,6 +94,7 @@ class Manager extends Base
         $view = $this->getStringVars(null, $hide);
         $view['company_map_address'] = $this->googleMapUrl($this->company_address);
         if (!$restricted) {
+            $view['admin'] = true;
             $view['last_log_date'] = strftime('%e %b %Y, %r',
                     $this->last_log->get());
             if ($this->inquiry_date->get()) {
@@ -106,10 +109,4 @@ class Manager extends Base
         $view['phone_tel'] = 'tel:+1' . $this->phone->get();
         return $view;
     }
-    
-    public function savePassword()
-    {
-        $this->password->setHashResult(false);
-    }
-
 }
