@@ -22,10 +22,21 @@ class Listing
 {
 
     public $identify = false;
+    public $focus;
+    public $wake_time;
+    public $sleep_time;
+    public $free_time;
+    public $pets;
+    public $smoking;
 
     public function pullVariables(\Canopy\Request $request)
     {
-        
+        $this->focus = $request->pullGetString('focus', true);
+        $this->wake_time = $request->pullGetString('wake_time', true);
+        $this->sleep_time = $request->pullGetString('sleep_time', true);
+        $this->free_time = $request->pullGetString('free_time', true);
+        $this->pets = $request->pullGetString('pets', true);
+        $this->smoking = $request->pullGetString('smoking', true);
     }
 
     public function get()
@@ -62,6 +73,9 @@ class Listing
         $tbl->addField('study_time');
         $tbl->addField('updated');
         $tbl->addField('wake_time');
+
+        $this->addConditionals($tbl);
+
         $result = $db->selectAsResources('\properties\Resource\Roommate');
         if (empty($result)) {
             return array();
@@ -71,6 +85,37 @@ class Listing
             $listing[] = $rm->view(true, true);
         }
         return $listing;
+    }
+
+    /**
+     * 
+     * @param \phpws2\Database\Table $tbl
+     */
+    private function addConditionals(&$tbl)
+    {
+        if ($this->focus) {
+            $tbl->addFieldConditional('focus', $this->focus);
+        }
+
+        if ($this->wake_time) {
+            $tbl->addFieldConditional('wake_time', $this->wake_time);
+        }
+
+        if ($this->sleep_time) {
+            $tbl->addFieldConditional('sleep_time', $this->sleep_time);
+        }
+        
+        if ($this->free_time) {
+            $tbl->addFieldConditional('free_time', $this->free_time);
+        }
+        
+        if ($this->pets) {
+            $tbl->addFieldConditional('pets', $this->pets);
+        }
+        
+        if ($this->smoking) {
+            $tbl->addFieldConditional('smoking', $this->smoking);
+        }
     }
 
 }
