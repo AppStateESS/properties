@@ -56,22 +56,52 @@ class Listing extends \properties\Factory\Listing
     {
         if ((int) $this->limit <= 0 || (int) $this->limit > 20) {
             $this->limit = 20;
-        } 
+        }
 
         $offset = $this->offset * $this->limit;
-        
+
         $this->db->setLimit($this->limit, $offset);
         $this->addSearch();
 
         if ($this->manager_id) {
             $this->data_table->addFieldConditional('contact_id',
                     $this->manager_id);
-            $this->data_table->addOrderBy('updated', 'desc');
-        } else {
-            // Properties are random if manager not specified
-            //$this->data_table->randomOrder(true);
-            $this->data_table->addOrderBy('updated', 'desc');
         }
+        if ($this->sort_type) {
+            switch ($this->sort_type) {
+                case 'rentall':
+                    $this->data_table->addOrderBy('monthly_rent');
+                    break;
+                
+                case 'rentunit':
+                    $this->data_table->addOrderBy('lease_type', 'asc');
+                    $this->data_table->addOrderBy('monthly_rent');
+                    break;
+                
+                case 'rentindiv':
+                    $this->data_table->addOrderBy('lease_type', 'desc');
+                    $this->data_table->addOrderBy('monthly_rent');
+                    break;
+                
+                case 'alpha':
+                    $this->data_table->addOrderBy('name');
+                    break;
+                
+                case 'creatednew':
+                    $this->data_table->addOrderBy('created', 'desc');
+                    break;
+                
+                case 'createdold':
+                    $this->data_table->addOrderBy('created', 'asc');
+                    break;
+                
+                case 'updated':
+                    $this->data_table->addOrderBy('updated', 'desc');
+                    break;
+            }
+        }
+        $this->data_table->addOrderBy('lease_type', 'asc');
+        $this->data_table->addOrderBy('monthly_rent');
 
         $c1 = $this->db->createConditional($this->data_table->getField('id'),
                 $this->photo_table->getField('pid'));
