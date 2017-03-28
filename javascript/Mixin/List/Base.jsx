@@ -11,6 +11,7 @@ export default class Base extends React.Component {
     this.offset = 0
     this.delay
     this.search
+    this.sortType
     this.searchVars = {
       beds: '1',
       baths: '1',
@@ -26,6 +27,7 @@ export default class Base extends React.Component {
       'updateSearchVars',
       'updateSearchString',
       'resetConditions',
+      'updateSortType',
       'showMore'
     ], this)
   }
@@ -33,6 +35,11 @@ export default class Base extends React.Component {
   clearSearch() {
     this.search = ''
     this.offset = 0
+    this.load()
+  }
+
+  updateSortType(type) {
+    this.sortType = type
     this.load()
   }
 

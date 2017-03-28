@@ -56,10 +56,10 @@ export default class Property extends Base {
   }
 
   load() {
-    //this.setState({properties: null})
     const sendData = this.searchVars
     sendData.managerId = this.managerId
     sendData.search = this.search
+    sendData.sortType = this.sortType
     if (this.offset > 0) {
       sendData.offset = this.offset
     }
@@ -96,9 +96,11 @@ export default class Property extends Base {
           updateSearchString={this.updateSearchString}
           clear={this.clearSearch}
           updateSearchVars={this.updateSearchVars}
+          updateSortType={this.updateSortType}
           searchVars={this.searchVars}
           clearAmenities={this.clearAmenities}
           resetConditions={this.resetConditions}
+          sortType={this.sortType}
           toggle={this.toggle}/>
         <PropertyListing list={this.state.properties} search={!empty(this.search)}/>
         {this.state.moreRows === true ?

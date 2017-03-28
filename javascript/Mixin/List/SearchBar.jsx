@@ -10,6 +10,17 @@ export default class SearchBar extends React.Component {
     this.state = {
       fullSize: false
     }
+
+    this.sortTypes = {
+      rentall: 'Monthy rent',
+      rentunit: 'Monthly rent by unit',
+      rentindiv: 'Monthly rent by renter',
+      alpha: 'Alphabetical',
+      creatednew: 'Newest',
+      createdold: 'Oldest',
+      updated: 'Last update'
+    }
+
     this.clearSearch = this.clearSearch.bind(this)
     this.togglePanel = this.togglePanel.bind(this)
   }
@@ -139,9 +150,42 @@ export default class SearchBar extends React.Component {
       : `$${this.props.searchVars.maxprice}`
 
     const panelButton = this.state.fullSize
-      ? <span>Less search options <i className="fa fa-caret-up"></i></span>
-      : <span>More search options <i className="fa fa-caret-down"></i></span>
+      ? <span>Less search options
+          <i className="fa fa-caret-up"></i>
+        </span>
+      : <span>More search options
+        <i className="fa fa-caret-down"></i>
+      </span>
 
+    let sortLabel = 'Sort by'
+    if (this.props.sortType) {
+      sortLabel = this.sortTypes[this.props.sortType]
+    }
+
+    const sortby = [
+      {
+        label: this.sortTypes.rentall,
+        handleClick: this.props.updateSortType.bind(null, 'rentall')
+      }, {
+        label: this.sortTypes.rentunit,
+        handleClick: this.props.updateSortType.bind(null, 'rentunit')
+      }, {
+        label: this.sortTypes.rentindiv,
+        handleClick: this.props.updateSortType.bind(null, 'rentindiv')
+      }, {
+        label: this.sortTypes.alpha,
+        handleClick: this.props.updateSortType.bind(null, 'alpha')
+      }, {
+        label: this.sortTypes.creatednew,
+        handleClick: this.props.updateSortType.bind(null, 'creatednew')
+      }, {
+        label: this.sortTypes.createdold,
+        handleClick: this.props.updateSortType.bind(null, 'createdold')
+      }, {
+        label: this.sortTypes.updated,
+        handleClick: this.props.updateSortType.bind(null, 'updated')
+      }
+    ]
     return (
       <div className="panel panel-default marginBottom">
         <div className="panel-body">
@@ -167,10 +211,15 @@ export default class SearchBar extends React.Component {
               <div className="pull-left"><Dropdown small={true} label={bathLabel} options={baths}/></div>
               <div className="pull-left"><Dropdown small={true} label={minpriceLabel} options={minprice}/></div>
               <div className="pull-left"><Dropdown small={true} label={maxpriceLabel} options={maxprice}/></div>
-              <div className="pull-left"><button className="btn btn-success btn-sm" onClick={this.props.resetConditions}>Reset</button></div>
+              <div className="pull-left">
+                <button className="btn btn-success btn-sm" onClick={this.props.resetConditions}>Reset</button>
+              </div>
+              <div className="pull-left marginLeft"><Dropdown small={true} label={sortLabel} options={sortby}/></div>
             </div>
           </div>
-          <div className="row" style={{marginTop:'1em'}}>
+          <div className="row" style={{
+            marginTop: '1em'
+          }}>
             <div className="col-sm-12 text-center">
               <button className="btn btn-default btn-sm" onClick={this.togglePanel}>{panelButton}</button>
             </div>
@@ -203,5 +252,7 @@ SearchBar.propTypes = {
   searchVars: React.PropTypes.object,
   toggle: React.PropTypes.func,
   clearAmenities: React.PropTypes.func,
-  resetConditions: React.PropTypes.func
+  updateSortType: React.PropTypes.func,
+  resetConditions: React.PropTypes.func,
+  sortType: React.PropTypes.string
 }
