@@ -3,10 +3,10 @@ import React from 'react'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import Listing from './Listing.jsx'
 import SearchBar from '../Mixin/List/SearchBar.jsx'
-import Place from '../Mixin/List/Base.jsx'
+import Base from '../Mixin/List/Base.jsx'
 /* global $ */
 
-export default class Property extends Place {
+export default class Property extends Base {
   constructor(props) {
     super(props)
     this.state = {
@@ -20,8 +20,11 @@ export default class Property extends Place {
   }
 
   load() {
-    $.getJSON('./properties/Sublease/list', {}).done(function(data) {
-      this.setState({subleases : data.subleases})
+    $.getJSON('./properties/Sublease/list', {
+      sortType: this.sortType,
+      offset: this.offset
+    }).done(function (data) {
+      this.setState({subleases: data.subleases})
     }.bind(this))
   }
 
@@ -43,6 +46,8 @@ export default class Property extends Place {
           searchVars={this.searchVars}
           clearAmenities={this.clearAmenities}
           resetConditions={this.resetConditions}
+          updateSortType={this.updateSortType}
+          sortType={this.sortType}
           toggle={this.toggle}/>
         <Listing subleases={this.state.subleases}/>
       </div>
