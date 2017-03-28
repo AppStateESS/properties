@@ -49,7 +49,8 @@ class Sublease extends Place
     {
         $view = parent::view();
 
-        if ($this->furnished->get() || $this->airconditioning->get() ||
+        if ($this->isCloseToCampus() || $this->furnished->get() || 
+                $this->airconditioning->get() ||
                 $this->isHighSpeed() || $this->dishwasher->get() ||
                 $this->utilities_inc->get() || $this->appalcart->get() ||
                 $this->pets_allowed->get()) {
