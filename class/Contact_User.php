@@ -199,7 +199,7 @@ class Contact_User extends Base
             $this->emailApprovalNeeded();
         } catch (\Exception $ex) {
             $address = \PHPWS_Settings::get('properties', 'email');
-            \Error::log($ex);
+            \phpws\PHPWS_Error::log($ex);
             $this->title = 'Sorry!';
             $this->content = <<<EOF
 <p>Your manager submission could not be processed. Please email <a href="mailto:$address">$address</a> to inform them of your problem.</p>
@@ -240,7 +240,7 @@ EOF;
 
     private function emailContact($subject, $content, $to)
     {
-        require_once PHPWS_SOURCE_DIR . 'lib/vendor/autoload.php';
+        //require_once PHPWS_SOURCE_DIR . 'vendor/autoload.php';
         switch (SWIFT_MAIL_TRANSPORT_TYPE) {
             case 1:
                 $transport = \Swift_SmtpTransport::newInstance(SWIFT_MAIL_TRANSPORT_PARAMETER);
