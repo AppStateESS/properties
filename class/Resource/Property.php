@@ -146,7 +146,7 @@ class Property extends Place
                     case HT_GAS:
                         $type = 'Natural gas';
                         break;
-                    
+
                     default:
                         throw new \Exception("Unknown heat type: $t");
                 }
@@ -159,8 +159,7 @@ class Property extends Place
     public function view()
     {
         $view = parent::view();
-
-        $view['lease_type'] = $this->lease_type === '0' ? 'per unit' : 'per tenant';
+        $view['lease_type'] = $this->lease_type->get() == 0 ? 'per unit' : 'per tenant';
         $view['admin_fee_refund'] = $this->admin_fee_refund->get() ? 'Refundable' : 'Non-refundable';
         $view['clean_fee_refund'] = $this->clean_fee_refund->get() ? 'Refundable' : 'Non-refundable';
         $view['pet_dep_refund'] = $this->pet_dep_refund->get() ? 'Refundable' : 'Non-refundable';
@@ -169,7 +168,8 @@ class Property extends Place
         $view['heat_type'] = $this->getHeatTypes();
         $view['contract_length'] = $this->getContractLength();
 
-        if ($this->furnished->get() || $this->airconditioning->get() ||
+        if ($this->isCloseToCampus() || $this->furnished->get() || 
+                $this->airconditioning->get() ||
                 $this->isHighSpeed() || $this->dishwasher->get() ||
                 $this->utilities_inc->get() || $this->clubhouse->get() ||
                 $this->appalcart->get() || $this->workout_room->get() ||
