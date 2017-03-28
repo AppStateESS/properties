@@ -46,6 +46,7 @@ abstract class Listing
     public $duplex = 0;
     public $more_rows = true;
     public $show_inactive = false;
+    public $sort_type = null;
 
     /**
      * @var \phpws2\Database\DB
@@ -75,8 +76,7 @@ abstract class Listing
         $this->appalcart = $request->pullGetBoolean('appalcart', true);
         $this->campus = $request->pullGetBoolean('campus', true);
         $this->utils = $request->pullGetBoolean('utils', true);
-        $this->airconditioning = $request->pullGetBoolean('airconditioning',
-                true);
+        $this->airconditioning = $request->pullGetBoolean('ac', true);
         $this->dishwasher = $request->pullGetBoolean('dishwasher', true);
         $this->laundry = $request->pullGetBoolean('laundry', true);
         $this->efficiency = $request->pullGetBoolean('efficiency', true);
@@ -85,6 +85,7 @@ abstract class Listing
         $this->condo = $request->pullGetBoolean('condo', true);
         $this->townhouse = $request->pullGetBoolean('townhouse', true);
         $this->duplex = $request->pullGetBoolean('duplex', true);
+        $this->sort_type = $request->pullGetString('sortType', true);
     }
 
     protected function addConditionals()
@@ -92,7 +93,7 @@ abstract class Listing
         if ($this->show_inactive === false) {
             $this->data_table->addFieldConditional('active', 1);
         }
-        
+
         if ($this->beds > 1) {
             $this->data_table->addFieldConditional('bedroom_no', $this->beds,
                     '>=');
