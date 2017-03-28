@@ -36,6 +36,12 @@ abstract class Place extends Base
     protected $furnished;
     protected $internet_type;
     protected $laundry_type;
+
+    /**
+     * 0 - per unit
+     * 1 - per renter
+     * @var phpws2\Variable\SmallInteger
+     */
     protected $lease_type;
     protected $monthly_rent;
     protected $move_in_date;
@@ -233,9 +239,15 @@ abstract class Place extends Base
         }
     }
 
+    public function isCloseToCampus()
+    {
+        return $this->campus_distance->get() == 0;
+    }
+
     public function view()
     {
         $view = $this->getStringVars();
+        $view['close_to_campus'] = $this->isCloseToCampus();
         $view['description'] = nl2br($view['description']);
         $view['campus_distance'] = $this->getCampusDistance();
         $view['trash_type'] = $this->getTrashType();
