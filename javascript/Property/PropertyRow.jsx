@@ -14,12 +14,8 @@ export default class PropertyRow extends Row {
   }
 
   getRent() {
-    let rent = '$' + this.props.property.monthly_rent
-    if (this.props.property.lease_type === '1') {
-      return rent.concat(' per tenant')
-    } else {
-      return rent.concat(' per unit')
-    }
+    let rent = `\$ ${this.props.property.monthly_rent} ${this.props.property.lease_type}`
+    return rent
   }
 
   workout() {
@@ -92,6 +88,7 @@ export default class PropertyRow extends Row {
               <div className="availability">Availability: {property.move_in_date}</div>
             </div>
             <div className="col-sm-5 col-md-4">
+              {this.closeToCampus(property.close_to_campus)}
               {this.petsAllowed(property.pets_allowed)}
               {this.furnished(property.furnished)}
               {this.airconditioner(property.airconditioning)}
