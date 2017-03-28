@@ -356,7 +356,7 @@ class User {
         $vars['clear'] = 1;
         $tpl['CLEAR'] = \PHPWS_Text::moduleLink('Clear all criteria', 'properties', $vars, null, 'Clear all criteria', 'btn btn-danger');
 
-        $content = \PHPWS_Template::process($tpl, 'properties', 'search.tpl');
+        $content = \phpws\PHPWS_Template::process($tpl, 'properties', 'search.tpl');
         \Layout::add($content, 'properties', 'search_settings');
     }
 

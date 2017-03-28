@@ -191,7 +191,7 @@ class Roommate_User {
             $row[] = $message->getRow();
         }
         $tpl['message_rows'] = $row;
-        $this->content = \PHPWS_Template::process($tpl, 'properties', 'message_listing.tpl');
+        $this->content = \phpws\PHPWS_Template::process($tpl, 'properties', 'message_listing.tpl');
     }
 
     private function display()
@@ -200,7 +200,7 @@ class Roommate_User {
         $tpl['TITLE'] = $this->title;
         $tpl['CONTENT'] = $this->content;
         $tpl['MESSAGE'] = $this->message;
-        $final_content = \PHPWS_Template::process($tpl, 'properties', 'admin.tpl');
+        $final_content = \phpws\PHPWS_Template::process($tpl, 'properties', 'admin.tpl');
         \Layout::add($final_content);
     }
 
@@ -217,7 +217,7 @@ class Roommate_User {
         $form->addSubmit('Report message');
         $tpl = $form->getTemplate();
 
-        echo \PHPWS_Template::process($tpl, 'properties', 'report_form.tpl');
+        echo \phpws\PHPWS_Template::process($tpl, 'properties', 'report_form.tpl');
     }
 
     public function contactRenter($id)
@@ -234,7 +234,7 @@ class Roommate_User {
 
         $tpl = $form->getTemplate();
 
-        echo \PHPWS_Template::process($tpl, 'properties', 'contact_form.tpl');
+        echo \phpws\PHPWS_Template::process($tpl, 'properties', 'contact_form.tpl');
     }
 
     public function post()
@@ -760,7 +760,7 @@ class Roommate_User {
         $vars['clear'] = 1;
         $tpl['CLEAR'] = \PHPWS_Text::moduleLink('Clear all', 'properties', $vars);
 
-        $content = \PHPWS_Template::process($tpl, 'properties', 'rm_search.tpl');
+        $content = \phpws\PHPWS_Template::process($tpl, 'properties', 'rm_search.tpl');
         \Layout::add($content, 'properties', 'search_settings');
     }
 

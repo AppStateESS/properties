@@ -167,7 +167,7 @@ class Roommate extends Room_Base {
                 $tpl[$new_key] = $message;
             }
         }
-        return \PHPWS_Template::process($tpl, 'properties', 'edit_roommate.tpl');
+        return \phpws\PHPWS_Template::process($tpl, 'properties', 'edit_roommate.tpl');
     }
 
     public function post()
@@ -275,7 +275,7 @@ class Roommate extends Room_Base {
         } else {
             $tpl['EMAIL'] = sprintf('<a href="%s">Login to contact this renter</a>', Base::loginLink());
         }
-        return \PHPWS_Template::process($tpl, 'properties', 'roommate_view.tpl');
+        return \phpws\PHPWS_Template::process($tpl, 'properties', 'roommate_view.tpl');
     }
 
     public function rowtags()

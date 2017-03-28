@@ -169,7 +169,7 @@ EOF;
             $tpl['CMD'] = 'aop';
         }
 
-        return \PHPWS_Template::process($tpl, 'properties', 'photo_form.tpl');
+        return \phpws\PHPWS_Template::process($tpl, 'properties', 'photo_form.tpl');
     }
 
     public static function thumbnailPath($path)

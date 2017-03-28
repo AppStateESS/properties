@@ -171,7 +171,7 @@ class Contact
             }
         }
 
-        return \PHPWS_Template::process($tpl, 'properties', 'edit_contact.tpl');
+        return \phpws\PHPWS_Template::process($tpl, 'properties', 'edit_contact.tpl');
     }
 
     public function post()
@@ -513,7 +513,7 @@ class Contact
         $tpl['EDIT'] = \PHPWS_Text::moduleLink('Edit my information', 'properties', $vars);
         $vars['cop'] = 'logout';
         $tpl['LOGOUT'] = \PHPWS_Text::moduleLink('Logout', 'properties', $vars);
-        $content = \PHPWS_Template::process($tpl, 'properties', 'mini_contact.tpl');
+        $content = \phpws\PHPWS_Template::process($tpl, 'properties', 'mini_contact.tpl');
         \Layout::add($content, 'properties', 'contact_login');
     }
 

@@ -125,7 +125,7 @@ class Report {
 
         $tpl['LINKS'] = implode(' | ', $links);
 
-        return \PHPWS_Template::process($tpl, 'properties', 'report_view.tpl');
+        return \phpws\PHPWS_Template::process($tpl, 'properties', 'report_view.tpl');
     }
 
     public function delete()

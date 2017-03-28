@@ -487,7 +487,7 @@ EOF;
         $tpl['TITLE'] = $this->title;
         $tpl['CONTENT'] = $this->content;
         $tpl['MESSAGE'] = $this->message;
-        $final_content = \PHPWS_Template::process($tpl, 'properties', 'admin.tpl');
+        $final_content = \phpws\PHPWS_Template::process($tpl, 'properties', 'admin.tpl');
         \Layout::add($final_content);
     }
 

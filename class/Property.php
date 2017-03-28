@@ -304,7 +304,7 @@ class Property extends Room_Base {
                 $tpl[$new_key] = $message;
             }
         }
-        return \PHPWS_Template::process($tpl, 'properties', 'edit_property.tpl');
+        return \phpws\PHPWS_Template::process($tpl, 'properties', 'edit_property.tpl');
     }
 
     public function post()
@@ -1042,7 +1042,7 @@ class Property extends Room_Base {
             $tpl['HEAT_TYPE'] = implode(', ', $this->getHeatType());
         }
 
-        $content = \PHPWS_Template::process($tpl, 'properties', 'view.tpl');
+        $content = \phpws\PHPWS_Template::process($tpl, 'properties', 'view.tpl');
         \Layout::add($content);
     }
 

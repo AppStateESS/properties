@@ -40,7 +40,7 @@ class Admin extends Base
         $tpl['TITLE'] = $this->title;
         $tpl['CONTENT'] = $this->content;
         $tpl['MESSAGE'] = $this->message;
-        $final_content = \PHPWS_Template::process($tpl, 'properties', 'admin.tpl');
+        $final_content = \phpws\PHPWS_Template::process($tpl, 'properties', 'admin.tpl');
         \Layout::add(\PHPWS_ControlPanel::display($this->panel->display($final_content)));
     }
 
@@ -353,7 +353,7 @@ class Admin extends Base
 
         $tpl = $form->getTemplate();
 
-        $this->content = \PHPWS_Template::process($tpl, 'properties', 'block.tpl');
+        $this->content = \phpws\PHPWS_Template::process($tpl, 'properties', 'block.tpl');
     }
 
     private function blockPost()
@@ -623,7 +623,7 @@ EOF;
         }
 
         $this->title = 'Settings';
-        $this->content = \PHPWS_Template::process($tpl, 'properties', 'settings.tpl');
+        $this->content = \phpws\PHPWS_Template::process($tpl, 'properties', 'settings.tpl');
     }
 
     private function postSettings()
