@@ -69,6 +69,9 @@
                 </span>
                 Amenities/Features</h4>
             <ul>
+                <?php if ($close_to_campus):?>
+                <li>Close to campus</li>
+                <?php endif; ?>
                 <?php if ($furnished):?>
                 <li>Furnished</li>
                 <?php endif; ?>
@@ -125,6 +128,10 @@
                     <i class="fa fa-check fa-stack-1x fa-inverse"></i>
                 </span> Other information</h4>
             <table class="table table-striped">
+                <tr>
+                    <th>Distance to campus</th>
+                    <td><?=$campus_distance?></td>
+                </tr>
                 <tr>
                     <th>Contract length</th>
                     <td><?=$contract_length?></td>
