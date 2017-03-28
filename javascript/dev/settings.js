@@ -211,15 +211,6 @@ webpackJsonp([12],{
 	              onClick: this.save },
 	            'Save settings'
 	          )
-	        ),
-	        _react2.default.createElement(
-	          'fieldset',
-	          { className: 'marginTop' },
-	          _react2.default.createElement(
-	            'legend',
-	            null,
-	            'Maintenance'
-	          )
 	        )
 	      );
 	    }

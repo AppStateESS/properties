@@ -413,12 +413,8 @@ webpackJsonp([7],{
 	  }, {
 	    key: 'getRent',
 	    value: function getRent() {
-	      var rent = '$' + this.props.property.monthly_rent;
-	      if (this.props.property.lease_type === '1') {
-	        return rent.concat(' per tenant');
-	      } else {
-	        return rent.concat(' per unit');
-	      }
+	      var rent = '$ ' + this.props.property.monthly_rent + ' ' + this.props.property.lease_type;
+	      return rent;
 	    }
 	  }, {
 	    key: 'workout',
@@ -533,6 +529,7 @@ webpackJsonp([7],{
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'col-sm-5 col-md-4' },
+	              this.closeToCampus(property.close_to_campus),
 	              this.petsAllowed(property.pets_allowed),
 	              this.furnished(property.furnished),
 	              this.airconditioner(property.airconditioning),
@@ -625,6 +622,22 @@ webpackJsonp([7],{
 	            title: 'Furnished' },
 	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
 	          _react2.default.createElement('i', { className: 'fa fa-bed fa-stack-1x fa-inverse' })
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'closeToCampus',
+	    value: function closeToCampus(close) {
+	      if (close === true) {
+	        return _react2.default.createElement(
+	          'span',
+	          {
+	            className: 'fa-stack fa-lg text-success',
+	            'data-toggle': 'tooltip',
+	            'data-placement': 'top',
+	            title: 'Close to campus' },
+	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
+	          _react2.default.createElement('i', { className: 'fa fa-bicycle fa-stack-1x fa-inverse' })
 	        );
 	      }
 	    }
@@ -886,10 +899,10 @@ webpackJsonp([7],{
 	  }, {
 	    key: 'load',
 	    value: function load() {
-	      //this.setState({properties: null})
 	      var sendData = this.searchVars;
 	      sendData.managerId = this.managerId;
 	      sendData.search = this.search;
+	      sendData.sortType = this.sortType;
 	      if (this.offset > 0) {
 	        sendData.offset = this.offset;
 	      }
@@ -944,9 +957,11 @@ webpackJsonp([7],{
 	          updateSearchString: this.updateSearchString,
 	          clear: this.clearSearch,
 	          updateSearchVars: this.updateSearchVars,
+	          updateSortType: this.updateSortType,
 	          searchVars: this.searchVars,
 	          clearAmenities: this.clearAmenities,
 	          resetConditions: this.resetConditions,
+	          sortType: this.sortType,
 	          toggle: this.toggle }),
 	        _react2.default.createElement(_PropertyListing2.default, { list: this.state.properties, search: !(0, _Empty2.default)(this.search) }),
 	        this.state.moreRows === true ? _react2.default.createElement(
@@ -1018,6 +1033,17 @@ webpackJsonp([7],{
 	    _this.state = {
 	      fullSize: false
 	    };
+	
+	    _this.sortTypes = {
+	      rentall: 'Monthy rent',
+	      rentunit: 'Monthly rent by unit',
+	      rentindiv: 'Monthly rent by renter',
+	      alpha: 'Alphabetical',
+	      creatednew: 'Newest',
+	      createdold: 'Oldest',
+	      updated: 'Last update'
+	    };
+	
 	    _this.clearSearch = _this.clearSearch.bind(_this);
 	    _this.togglePanel = _this.togglePanel.bind(_this);
 	    return _this;
@@ -1143,15 +1169,42 @@ webpackJsonp([7],{
 	      var panelButton = this.state.fullSize ? _react2.default.createElement(
 	        'span',
 	        null,
-	        'Less search options ',
+	        'Less search options',
 	        _react2.default.createElement('i', { className: 'fa fa-caret-up' })
 	      ) : _react2.default.createElement(
 	        'span',
 	        null,
-	        'More search options ',
+	        'More search options',
 	        _react2.default.createElement('i', { className: 'fa fa-caret-down' })
 	      );
 	
+	      var sortLabel = 'Sort by';
+	      if (this.props.sortType) {
+	        sortLabel = this.sortTypes[this.props.sortType];
+	      }
+	
+	      var sortby = [{
+	        label: this.sortTypes.rentall,
+	        handleClick: this.props.updateSortType.bind(null, 'rentall')
+	      }, {
+	        label: this.sortTypes.rentunit,
+	        handleClick: this.props.updateSortType.bind(null, 'rentunit')
+	      }, {
+	        label: this.sortTypes.rentindiv,
+	        handleClick: this.props.updateSortType.bind(null, 'rentindiv')
+	      }, {
+	        label: this.sortTypes.alpha,
+	        handleClick: this.props.updateSortType.bind(null, 'alpha')
+	      }, {
+	        label: this.sortTypes.creatednew,
+	        handleClick: this.props.updateSortType.bind(null, 'creatednew')
+	      }, {
+	        label: this.sortTypes.createdold,
+	        handleClick: this.props.updateSortType.bind(null, 'createdold')
+	      }, {
+	        label: this.sortTypes.updated,
+	        handleClick: this.props.updateSortType.bind(null, 'updated')
+	      }];
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'panel panel-default marginBottom' },
@@ -1218,12 +1271,19 @@ webpackJsonp([7],{
 	                  { className: 'btn btn-success btn-sm', onClick: this.props.resetConditions },
 	                  'Reset'
 	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'pull-left marginLeft' },
+	                _react2.default.createElement(_Dropdown2.default, { small: true, label: sortLabel, options: sortby })
 	              )
 	            )
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'row', style: { marginTop: '1em' } },
+	            { className: 'row', style: {
+	                marginTop: '1em'
+	              } },
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'col-sm-12 text-center' },
@@ -1273,7 +1333,9 @@ webpackJsonp([7],{
 	  searchVars: _react2.default.PropTypes.object,
 	  toggle: _react2.default.PropTypes.func,
 	  clearAmenities: _react2.default.PropTypes.func,
-	  resetConditions: _react2.default.PropTypes.func
+	  updateSortType: _react2.default.PropTypes.func,
+	  resetConditions: _react2.default.PropTypes.func,
+	  sortType: _react2.default.PropTypes.string
 	};
 
 /***/ },
@@ -3894,6 +3956,7 @@ webpackJsonp([7],{
 	    _this.offset = 0;
 	    _this.delay;
 	    _this.search;
+	    _this.sortType;
 	    _this.searchVars = {
 	      beds: '1',
 	      baths: '1',
@@ -3902,7 +3965,7 @@ webpackJsonp([7],{
 	    };
 	    _this.loadAmenities();
 	
-	    (0, _Bind2.default)(['toggle', 'clearAmenities', 'clearSearch', 'updateSearchVars', 'updateSearchString', 'resetConditions', 'showMore'], _this);
+	    (0, _Bind2.default)(['toggle', 'clearAmenities', 'clearSearch', 'updateSearchVars', 'updateSearchString', 'resetConditions', 'updateSortType', 'showMore'], _this);
 	    return _this;
 	  }
 	
@@ -3911,6 +3974,12 @@ webpackJsonp([7],{
 	    value: function clearSearch() {
 	      this.search = '';
 	      this.offset = 0;
+	      this.load();
+	    }
+	  }, {
+	    key: 'updateSortType',
+	    value: function updateSortType(type) {
+	      this.sortType = type;
 	      this.load();
 	    }
 	  }, {

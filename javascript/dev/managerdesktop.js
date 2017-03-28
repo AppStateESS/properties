@@ -487,12 +487,8 @@ webpackJsonp([2],{
 	  }, {
 	    key: 'getRent',
 	    value: function getRent() {
-	      var rent = '$' + this.props.property.monthly_rent;
-	      if (this.props.property.lease_type === '1') {
-	        return rent.concat(' per tenant');
-	      } else {
-	        return rent.concat(' per unit');
-	      }
+	      var rent = '$ ' + this.props.property.monthly_rent + ' ' + this.props.property.lease_type;
+	      return rent;
 	    }
 	  }, {
 	    key: 'workout',
@@ -607,6 +603,7 @@ webpackJsonp([2],{
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'col-sm-5 col-md-4' },
+	              this.closeToCampus(property.close_to_campus),
 	              this.petsAllowed(property.pets_allowed),
 	              this.furnished(property.furnished),
 	              this.airconditioner(property.airconditioning),
@@ -699,6 +696,22 @@ webpackJsonp([2],{
 	            title: 'Furnished' },
 	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
 	          _react2.default.createElement('i', { className: 'fa fa-bed fa-stack-1x fa-inverse' })
+	        );
+	      }
+	    }
+	  }, {
+	    key: 'closeToCampus',
+	    value: function closeToCampus(close) {
+	      if (close === true) {
+	        return _react2.default.createElement(
+	          'span',
+	          {
+	            className: 'fa-stack fa-lg text-success',
+	            'data-toggle': 'tooltip',
+	            'data-placement': 'top',
+	            title: 'Close to campus' },
+	          _react2.default.createElement('i', { className: 'fa fa-square fa-stack-2x' }),
+	          _react2.default.createElement('i', { className: 'fa fa-bicycle fa-stack-1x fa-inverse' })
 	        );
 	      }
 	    }
