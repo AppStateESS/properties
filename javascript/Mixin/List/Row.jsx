@@ -36,6 +36,22 @@ export default class Row extends React.Component {
     }
   }
 
+  closeToCampus(close) {
+    if (close === true) {
+      return (
+        <span
+          className="fa-stack fa-lg text-success"
+          data-toggle="tooltip"
+          data-placement="top"
+          title="Close to campus">
+          <i className="fa fa-square fa-stack-2x"></i>
+          <i className="fa fa-bicycle fa-stack-1x fa-inverse"></i>
+        </span>
+      )
+
+    }
+  }
+
   appalcart(appalcart) {
     if (appalcart === '1') {
       return (
