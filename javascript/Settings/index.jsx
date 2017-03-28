@@ -150,7 +150,6 @@ export default class Settings extends React.Component {
             disabled={!this.errorFree()}
             onClick={this.save}>Save settings</button>
         </form>
-        <fieldset className="marginTop"><legend>Maintenance</legend></fieldset>
       </div>
     )
   }
