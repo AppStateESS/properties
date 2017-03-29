@@ -158,32 +158,32 @@ export default class SearchBar extends React.Component {
       </span>
 
     let sortLabel = 'Sort by'
-    if (this.props.sortType) {
-      sortLabel = this.sortTypes[this.props.sortType]
+    if (this.props.searchVars.sortBy) {
+      sortLabel = 'Sort by: ' + this.sortTypes[this.props.searchVars.sortBy]
     }
 
     const sortby = [
       {
         label: this.sortTypes.rentall,
-        handleClick: this.props.updateSortType.bind(null, 'rentall')
+        handleClick: this.props.updateSortBy.bind(null, 'rentall')
       }, {
         label: this.sortTypes.rentunit,
-        handleClick: this.props.updateSortType.bind(null, 'rentunit')
+        handleClick: this.props.updateSortBy.bind(null, 'rentunit')
       }, {
         label: this.sortTypes.rentindiv,
-        handleClick: this.props.updateSortType.bind(null, 'rentindiv')
+        handleClick: this.props.updateSortBy.bind(null, 'rentindiv')
       }, {
         label: this.sortTypes.alpha,
-        handleClick: this.props.updateSortType.bind(null, 'alpha')
+        handleClick: this.props.updateSortBy.bind(null, 'alpha')
       }, {
         label: this.sortTypes.creatednew,
-        handleClick: this.props.updateSortType.bind(null, 'creatednew')
+        handleClick: this.props.updateSortBy.bind(null, 'creatednew')
       }, {
         label: this.sortTypes.createdold,
-        handleClick: this.props.updateSortType.bind(null, 'createdold')
+        handleClick: this.props.updateSortBy.bind(null, 'createdold')
       }, {
         label: this.sortTypes.updated,
-        handleClick: this.props.updateSortType.bind(null, 'updated')
+        handleClick: this.props.updateSortBy.bind(null, 'updated')
       }
     ]
     return (
@@ -252,7 +252,6 @@ SearchBar.propTypes = {
   searchVars: React.PropTypes.object,
   toggle: React.PropTypes.func,
   clearAmenities: React.PropTypes.func,
-  updateSortType: React.PropTypes.func,
-  resetConditions: React.PropTypes.func,
-  sortType: React.PropTypes.string
+  updateSortBy: React.PropTypes.func,
+  resetConditions: React.PropTypes.func
 }
