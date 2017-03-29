@@ -10,13 +10,13 @@ export default class Base extends React.Component {
     this.state = {}
     this.offset = 0
     this.delay
-    this.search
-    this.sortType
+    this.sortBy
     this.searchVars = {
       beds: '1',
       baths: '1',
       minprice: '0',
-      maxprice: '0'
+      maxprice: '0',
+      search: ''
     }
     this.loadAmenities()
 
@@ -27,20 +27,22 @@ export default class Base extends React.Component {
       'updateSearchVars',
       'updateSearchString',
       'resetConditions',
-      'updateSortType',
+      'updateSortBy',
       'showMore'
     ], this)
   }
 
   clearSearch() {
-    this.search = ''
+    this.searchVars.search = ''
     this.offset = 0
     this.load()
+    this.updateLink()
   }
 
-  updateSortType(type) {
-    this.sortType = type
+  updateSortBy(type) {
+    this.searchVars.sortBy = type
     this.load()
+    this.updateLink()
   }
 
   resetConditions() {
@@ -84,9 +86,10 @@ export default class Base extends React.Component {
       return
     }
     this.delay = setTimeout(function () {
-      this.search = search
+      this.searchVars.search = search
       this.offset = 0
       this.load()
+      this.updateLink()
     }.bind(this, search), 500)
   }
 
@@ -131,7 +134,9 @@ export default class Base extends React.Component {
       house: setIfDefined(url.values, 'house', '0'),
       condo: setIfDefined(url.values, 'condo', '0'),
       townhouse: setIfDefined(url.values, 'townhouse', '0'),
-      duplex: setIfDefined(url.values, 'duplex', '0')
+      duplex: setIfDefined(url.values, 'duplex', '0'),
+      sortBy: setIfDefined(url.values, 'sortBy'),
+      search: setIfDefined(url.values, 'search')
     }
   }
 }
