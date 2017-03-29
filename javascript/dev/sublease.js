@@ -668,31 +668,31 @@ webpackJsonp([13],{
 	      );
 	
 	      var sortLabel = 'Sort by';
-	      if (this.props.sortType) {
-	        sortLabel = this.sortTypes[this.props.sortType];
+	      if (this.props.searchVars.sortBy) {
+	        sortLabel = 'Sort by: ' + this.sortTypes[this.props.searchVars.sortBy];
 	      }
 	
 	      var sortby = [{
 	        label: this.sortTypes.rentall,
-	        handleClick: this.props.updateSortType.bind(null, 'rentall')
+	        handleClick: this.props.updateSortBy.bind(null, 'rentall')
 	      }, {
 	        label: this.sortTypes.rentunit,
-	        handleClick: this.props.updateSortType.bind(null, 'rentunit')
+	        handleClick: this.props.updateSortBy.bind(null, 'rentunit')
 	      }, {
 	        label: this.sortTypes.rentindiv,
-	        handleClick: this.props.updateSortType.bind(null, 'rentindiv')
+	        handleClick: this.props.updateSortBy.bind(null, 'rentindiv')
 	      }, {
 	        label: this.sortTypes.alpha,
-	        handleClick: this.props.updateSortType.bind(null, 'alpha')
+	        handleClick: this.props.updateSortBy.bind(null, 'alpha')
 	      }, {
 	        label: this.sortTypes.creatednew,
-	        handleClick: this.props.updateSortType.bind(null, 'creatednew')
+	        handleClick: this.props.updateSortBy.bind(null, 'creatednew')
 	      }, {
 	        label: this.sortTypes.createdold,
-	        handleClick: this.props.updateSortType.bind(null, 'createdold')
+	        handleClick: this.props.updateSortBy.bind(null, 'createdold')
 	      }, {
 	        label: this.sortTypes.updated,
-	        handleClick: this.props.updateSortType.bind(null, 'updated')
+	        handleClick: this.props.updateSortBy.bind(null, 'updated')
 	      }];
 	      return _react2.default.createElement(
 	        'div',
@@ -822,9 +822,8 @@ webpackJsonp([13],{
 	  searchVars: _react2.default.PropTypes.object,
 	  toggle: _react2.default.PropTypes.func,
 	  clearAmenities: _react2.default.PropTypes.func,
-	  updateSortType: _react2.default.PropTypes.func,
-	  resetConditions: _react2.default.PropTypes.func,
-	  sortType: _react2.default.PropTypes.string
+	  updateSortBy: _react2.default.PropTypes.func,
+	  resetConditions: _react2.default.PropTypes.func
 	};
 
 /***/ },
@@ -3354,32 +3353,34 @@ webpackJsonp([13],{
 	    _this.state = {};
 	    _this.offset = 0;
 	    _this.delay;
-	    _this.search;
-	    _this.sortType;
+	    _this.sortBy;
 	    _this.searchVars = {
 	      beds: '1',
 	      baths: '1',
 	      minprice: '0',
-	      maxprice: '0'
+	      maxprice: '0',
+	      search: ''
 	    };
 	    _this.loadAmenities();
 	
-	    (0, _Bind2.default)(['toggle', 'clearAmenities', 'clearSearch', 'updateSearchVars', 'updateSearchString', 'resetConditions', 'updateSortType', 'showMore'], _this);
+	    (0, _Bind2.default)(['toggle', 'clearAmenities', 'clearSearch', 'updateSearchVars', 'updateSearchString', 'resetConditions', 'updateSortBy', 'showMore'], _this);
 	    return _this;
 	  }
 	
 	  _createClass(Base, [{
 	    key: 'clearSearch',
 	    value: function clearSearch() {
-	      this.search = '';
+	      this.searchVars.search = '';
 	      this.offset = 0;
 	      this.load();
+	      this.updateLink();
 	    }
 	  }, {
-	    key: 'updateSortType',
-	    value: function updateSortType(type) {
-	      this.sortType = type;
+	    key: 'updateSortBy',
+	    value: function updateSortBy(type) {
+	      this.searchVars.sortBy = type;
 	      this.load();
+	      this.updateLink();
 	    }
 	  }, {
 	    key: 'resetConditions',
@@ -3426,9 +3427,10 @@ webpackJsonp([13],{
 	        return;
 	      }
 	      this.delay = setTimeout(function () {
-	        this.search = search;
+	        this.searchVars.search = search;
 	        this.offset = 0;
 	        this.load();
+	        this.updateLink();
 	      }.bind(this, search), 500);
 	    }
 	  }, {
@@ -3474,7 +3476,9 @@ webpackJsonp([13],{
 	        house: (0, _setIfDefined2.default)(url.values, 'house', '0'),
 	        condo: (0, _setIfDefined2.default)(url.values, 'condo', '0'),
 	        townhouse: (0, _setIfDefined2.default)(url.values, 'townhouse', '0'),
-	        duplex: (0, _setIfDefined2.default)(url.values, 'duplex', '0')
+	        duplex: (0, _setIfDefined2.default)(url.values, 'duplex', '0'),
+	        sortBy: (0, _setIfDefined2.default)(url.values, 'sortBy'),
+	        search: (0, _setIfDefined2.default)(url.values, 'search')
 	      };
 	    }
 	  }]);
