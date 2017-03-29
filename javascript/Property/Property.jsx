@@ -42,7 +42,6 @@ export default class Property extends Base {
   updateLink() {
     const stateObj = {}
     const url = 'properties/Property/list/?' + $.param(this.searchVars)
-
     window.history.pushState(stateObj, "", url)
   }
 
@@ -58,8 +57,6 @@ export default class Property extends Base {
   load() {
     const sendData = this.searchVars
     sendData.managerId = this.managerId
-    sendData.search = this.search
-    sendData.sortType = this.sortType
     if (this.offset > 0) {
       sendData.offset = this.offset
     }
@@ -96,11 +93,10 @@ export default class Property extends Base {
           updateSearchString={this.updateSearchString}
           clear={this.clearSearch}
           updateSearchVars={this.updateSearchVars}
-          updateSortType={this.updateSortType}
+          updateSortBy={this.updateSortBy}
           searchVars={this.searchVars}
           clearAmenities={this.clearAmenities}
           resetConditions={this.resetConditions}
-          sortType={this.sortType}
           toggle={this.toggle}/>
         <PropertyListing list={this.state.properties} search={!empty(this.search)}/>
         {this.state.moreRows === true ?
