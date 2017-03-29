@@ -21,9 +21,9 @@
 }
 
 .property-view .contact-info h4 {
-    color : white;
     font-size : 22px;
     margin : 0px;
+    color : black;
 }
 
 h3.property-address {
