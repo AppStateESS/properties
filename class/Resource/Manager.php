@@ -104,7 +104,10 @@ class Manager extends Base
                 $view['inquiry_date'] = null;
                 $view['inquiry_type'] = null;
             }
+        } else {
+            $view['admin'] = false;
         }
+        
         $this->phone->formatNumber(false);
         $view['phone_tel'] = 'tel:+1' . $this->phone->get();
         return $view;
