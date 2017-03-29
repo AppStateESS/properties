@@ -67,8 +67,8 @@ class Listing extends \properties\Factory\Listing
             $this->data_table->addFieldConditional('contact_id',
                     $this->manager_id);
         }
-        if ($this->sort_type) {
-            switch ($this->sort_type) {
+        if ($this->sort_by) {
+            switch ($this->sort_by) {
                 case 'rentall':
                     $this->data_table->addOrderBy('monthly_rent');
                     break;
