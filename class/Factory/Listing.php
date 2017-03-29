@@ -46,7 +46,7 @@ abstract class Listing
     public $duplex = 0;
     public $more_rows = true;
     public $show_inactive = false;
-    public $sort_type = null;
+    public $sort_by = null;
 
     /**
      * @var \phpws2\Database\DB
@@ -85,7 +85,7 @@ abstract class Listing
         $this->condo = $request->pullGetBoolean('condo', true);
         $this->townhouse = $request->pullGetBoolean('townhouse', true);
         $this->duplex = $request->pullGetBoolean('duplex', true);
-        $this->sort_type = $request->pullGetString('sortType', true);
+        $this->sort_by = $request->pullGetString('sortBy', true);
     }
 
     protected function addConditionals()
