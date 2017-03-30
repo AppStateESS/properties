@@ -75,6 +75,7 @@ class Manager extends Base
         $this->pw_timeout = new Variable\IntegerVar(0, 'pw_timeout');
         $this->pw_hash = new Variable\StringVar(null, 'pw_hash');
         $this->pw_hash->setLimit(255);
+        $this->pw_hash->allowNull(true);
         
         $this->doNotSave(array('inquiry_date', 'inquiry_type'));
     }
