@@ -25,7 +25,7 @@ class Message extends React.Component {
         break
     }
 
-    let messageType = 'lead alert alert-dismissible alert-' + this.props.type
+    let messageType = 'alert alert-dismissible alert-' + this.props.type
     return (
       <div className={messageType} role="alert">
         <button
