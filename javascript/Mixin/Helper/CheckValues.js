@@ -1,6 +1,6 @@
 class CheckValues {
   static isEmpty(value) {
-    return value === '' || value === null || typeof value === undefined
+    return value === '' || value === null || value === undefined
   }
 
   static isEmail(value) {
