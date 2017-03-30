@@ -60,7 +60,7 @@ class Sublease extends Base
         $r->user_id = $user_id;
         try {
             $r->loadPostByType($request,
-                    array('active', 'created', 'updated', 'user_id', 'id'));
+                    array('active', 'created', 'updated', 'user_id', 'id', 'thumbnail'));
             $r->active = true;
             $r->created = time();
             $r->updated = time();
