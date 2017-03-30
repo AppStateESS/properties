@@ -58,6 +58,9 @@ export default class PropertyImage extends React.Component {
           currentPhotos = this.state.currentPhotos
           if (data.success === true) {
             currentPhotos.push(data.photo)
+          } else if (data.success === false) {
+            alert('A server error prevented uploading of your image. Contact the site administrators')
+            return
           }
           newPhotos.push(data.photo)
           status[key] = data.success
