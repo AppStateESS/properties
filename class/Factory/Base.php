@@ -41,7 +41,7 @@ abstract class Base extends \phpws2\ResourceFactory
 
     public function contactInformation()
     {
-        $vars['our_email'] = 'somewebsite@appstate.edu';
+        $vars['our_email'] = $this->getSiteEmail();
         $vars['our_phone'] = '(123) 123-1234';
         $vars['our_contact_name'] = 'Chuck Charles';
         $vars['our_website'] = \Canopy\Server::getSiteUrl();
@@ -92,6 +92,12 @@ abstract class Base extends \phpws2\ResourceFactory
 $react
 EOF;
         return $content;
+    }
+    
+    public function getSiteEmail()
+    {
+        $site_email = \phpws2\Settings::get('properties', 'site_email');
+                
     }
     
     
