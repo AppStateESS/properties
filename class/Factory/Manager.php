@@ -628,6 +628,13 @@ class Manager extends Base
         return $template->get();
     }
 
+    public function passwordSent()
+    {
+        $tpl = new \phpws2\Template(array('email' => $email_address));
+        $tpl->setModuleTemplate('properties', 'manager/password_sent.html');
+        return $tpl->get();
+    }
+
     public function forgotPost(\Canopy\Request $request)
     {
         $email_address = $request->pullPostString('email');
@@ -635,9 +642,7 @@ class Manager extends Base
         if ($manager !== null) {
             $this->sendForgotEmail($manager);
         }
-        $tpl = new \phpws2\Template(array('email' => $email_address));
-        $tpl->setModuleTemplate('properties', 'manager/password_sent.html');
-        return $tpl->get();
+        \Canopy\Server::forward('./properties/Manager/passwordSent?email=' . $email_address);
     }
 
     public function getManagerByEmail($email_address)
@@ -664,7 +669,7 @@ class Manager extends Base
         $tpl = array_merge($manager->getStringVars(),
                 $this->contactInformation());
         $hash = md5(\Canopy\TextString::randomString(12));
-        $link = \Canopy\Server::getCurrentUrl(false) . '/changepw/' . $hash;
+        $link = \Canopy\Server::getSiteUrl(true) . 'properties/Manager/changepw/' . $hash;
 
         $tpl['reset_link'] = $link;
 
@@ -677,16 +682,84 @@ class Manager extends Base
 
         $subject = 'Password reset request from ' . \Layout::getPageTitle();
 
+        $transport = \Swift_MailTransport::newInstance();
+        //$transport = \Swift_SendmailTransport::newInstance();
         $template = new \phpws2\Template($tpl);
         $template->setModuleTemplate('properties', 'emails/forgot.html');
         $content = $template->get();
         $message = \Swift_Message::newInstance();
         $message->setSubject($subject);
-        $message->setFrom($contact_info);
-        $message->setTo($email_address);
+        $message->setFrom($tpl['our_email']);
+        $message->setTo($manager->email_address);
         $message->setBody($content, 'text/html');
         $mailer = \Swift_Mailer::newInstance($transport);
         $mailer->send($message);
+    }
+
+    private function getByPasswordHash($hash)
+    {
+        $db = Database::getDB();
+        $tbl = $db->addTable('prop_contacts');
+        $tbl->addFieldConditional('pw_hash', $hash);
+        $row = $db->selectOneRow();
+        if (empty($row)) {
+            return null;
+        }
+        $manager = $this->build();
+        $manager->setVars($row);
+        return $manager;
+    }
+
+    public function handlePasswordChange($request)
+    {
+        $hash = $request->shiftCommand();
+        $tpl = new \phpws2\Template();
+        $tpl->setModuleTemplate('properties',
+                'manager/change_password_error.html');
+        if (empty($hash)) {
+            $tpl->add('reason', 'your identifying hash is missing');
+            return $tpl->get();
+        }
+
+        $manager = $this->getByPasswordHash($hash);
+        if (empty($manager)) {
+            $tpl->add('reason', 'it cannot find your password request');
+            return $tpl->get();
+        }
+
+        if ($manager->pw_timeout < time()) {
+            $tpl->add('reason', 'your request timed out');
+            return $tpl->get();
+        }
+        $content = <<<EOF
+<script>
+const hash = '$hash'
+</script>
+EOF;
+        return $content . $this->reactView('passwordchange');
+    }
+
+    public function postPasswordChange(\Canopy\Request $request)
+    {
+        $username = $request->pullPostString('username');
+        $password = $request->pullPostString('password');
+        $hash = $request->pullPostString('hash');
+
+        $db = Database::getDB();
+        $tbl = $db->addTable('prop_contacts');
+        $tbl->addFieldConditional('username', $username);
+        $tbl->addFieldConditional('pw_hash', $hash);
+        $row = $db->selectOneRow();
+        if (empty($row)) {
+            return array('success' => false, 'error' => 'Could not find account. Check username or reapply for a password change');
+        }
+        $manager = $this->build();
+        $manager->setVars($row);
+        $manager->password = password_hash($password, PASSWORD_DEFAULT);
+        $manager->pw_hash = null;
+        $manager->pw_timeout = 0;
+        self::saveResource($manager);
+        return array('success' => true);
     }
 
 }

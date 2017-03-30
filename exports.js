@@ -19,5 +19,6 @@ exports.entry = {
   roommatelist: exports.APP_DIR + '/RoommateList/index.jsx',
   roommateform: exports.APP_DIR + '/RoommateForm/index.jsx',
   settings: exports.APP_DIR + '/Settings/index.jsx',
+  passwordchange: exports.APP_DIR + '/PasswordChange/index.jsx',
   vendor: ['react', 'react-dom']
 }

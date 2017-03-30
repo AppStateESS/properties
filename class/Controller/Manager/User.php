@@ -134,4 +134,30 @@ class User extends \properties\Controller\SubController
         return $this->factory->forgotPost($request);
     }
 
+    protected function passwordSentHtmlCommand(Request $request)
+    {
+        $email_address = $request->pullGetString('email');
+        $tpl = new \phpws2\Template(array('email' => $email_address));
+        $tpl->setModuleTemplate('properties', 'manager/password_sent.html');
+        return $tpl->get();
+    }
+    
+    protected function changepwHtmlCommand(Request $request)
+    {
+        return $this->factory->handlePasswordChange($request);
+
+    }
+    
+    protected function changepwPostCommand(Request $request)
+    {
+       return $this->factory->postPasswordChange($request);
+    }
+    
+    protected function passwordChangeCompleteHtmlCommand()
+    {
+        $template = new \phpws2\Template();
+        $template->setModuleTemplate('properties', 'manager/password_success.html');
+        return $template->get();
+    }
+
 }
