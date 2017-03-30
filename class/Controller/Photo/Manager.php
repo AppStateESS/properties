@@ -28,7 +28,7 @@ class Manager extends User
         $this->checkPropertyOwnership($request->pullDeleteInteger('propertyId'),
                 $this->getCurrentLoggedManager());
         $photo = $this->factory->load($this->id);
-        if ($photo->cid !== $this->id) {
+        if ($photo->cid != $this->role->getId()) {
             throw new \properties\Exception\PrivilegeMissing;
         }
         $this->factory->delete($photo);
