@@ -226,12 +226,14 @@ abstract class SubController extends Base
     {
         $db = Database::getDB();
         $tbl = $db->addTable('properties');
+        $tbl->addField('id');
         $tbl->addFieldConditional('id', $property_id);
         $tbl->addFieldConditional('contact_id', $manager_id);
         $result = $db->selectOneRow();
         if (!$result) {
             throw new \properties\Exception\PropertyPrivilege;
         }
+        return true;
     }
 
 }
