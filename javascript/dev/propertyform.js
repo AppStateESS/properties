@@ -1,4 +1,4 @@
-webpackJsonp([8],[
+webpackJsonp([9],[
 /* 0 */
 /*!*******************************************!*\
   !*** ./javascript/PropertyForm/index.jsx ***!
@@ -466,7 +466,7 @@ webpackJsonp([8],[
 	          break;
 	      }
 	
-	      var messageType = 'lead alert alert-dismissible alert-' + this.props.type;
+	      var messageType = 'alert alert-dismissible alert-' + this.props.type;
 	      return _react2.default.createElement(
 	        'div',
 	        { className: messageType, role: 'alert' },
