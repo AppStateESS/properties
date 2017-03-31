@@ -26,29 +26,26 @@ class Settings extends Base
         
     }
 
-    public function form()
-    {
-        $settings['site_email'] = \phpws2\Settings::get('properties',
-                        'site_email');
-        $settings['approval_email'] = \phpws2\Settings::get('properties',
-                        'approval_email');
-        $template = new \phpws2\Template($settings);
-        $template->setModuleTemplate('properties', 'settings.html');
-        return $template->get();
-    }
-
     public function post(\Canopy\Request $request)
     {
-        \phpws2\Settings::set('properties', 'site_email',
-                $request->pullPostString('site_email', true));
         \phpws2\Settings::set('properties', 'approval_email',
                 $request->pullPostString('approval_email', true));
+        \phpws2\Settings::set('properties', 'our_email',
+                $request->pullPostString('our_email', true));
+        \phpws2\Settings::set('properties', 'our_name',
+                $request->pullPostString('our_name', true));
+        \phpws2\Settings::set('properties', 'our_phone',
+                $request->pullPostString('our_phone', true));
     }
 
     public function view()
     {
-        $settings['site_email'] = \phpws2\Settings::get('properties',
-                        'site_email');
+        $settings['our_email'] = \phpws2\Settings::get('properties',
+                        'our_email');
+        $settings['our_name'] = \phpws2\Settings::get('properties',
+                        'our_name');
+        $settings['our_phone'] = \phpws2\Settings::get('properties',
+                        'our_phone');
         $settings['approval_email'] = \phpws2\Settings::get('properties',
                         'approval_email');
         return $settings;

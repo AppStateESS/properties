@@ -3,7 +3,7 @@
 namespace properties\Factory;
 
 use properties\Exception\ResourceNotFound;
-
+use phpws2\Settings;
 /**
  *
  * @author Matthew McNaney <mcnaneym@appstate.edu>
@@ -41,9 +41,9 @@ abstract class Base extends \phpws2\ResourceFactory
 
     public function contactInformation()
     {
-        $vars['our_email'] = $this->getSiteEmail();
-        $vars['our_phone'] = '(123) 123-1234';
-        $vars['our_contact_name'] = 'Chuck Charles';
+        $vars['our_email'] = Settings::get('properties', 'contact_email');
+        $vars['our_phone'] = Settings::get('properties', 'contact_phone');
+        $vars['our_name'] = Settings::get('properties', 'contact_email');
         $vars['our_website'] = \Canopy\Server::getSiteUrl();
         return $vars;
     }
@@ -93,12 +93,4 @@ $react
 EOF;
         return $content;
     }
-    
-    public function getSiteEmail()
-    {
-        $site_email = \phpws2\Settings::get('properties', 'site_email');
-                
-    }
-    
-    
 }
