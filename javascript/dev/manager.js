@@ -88,13 +88,15 @@ webpackJsonp([0],{
 	
 	    _this.delay;
 	    _this.admin = false;
+	    _this.offset = 0;
 	    _this.state = {
 	      managers: null,
 	      message: null,
-	      currentManager: _ManagerObject2.default
+	      currentManager: _ManagerObject2.default,
+	      moreRows: true
 	    };
 	    _this.search = '';
-	    var bindable = ['clearSearch', 'dropManager', 'getMessage', 'load', 'fillForm', 'searchManager', 'setMessage', 'updateManager'];
+	    var bindable = ['clearSearch', 'dropManager', 'getMessage', 'load', 'fillForm', 'searchManager', 'setMessage', 'updateManager', 'showMore'];
 	
 	    (0, _Bind2.default)(bindable, _this);
 	    return _this;
@@ -129,11 +131,21 @@ webpackJsonp([0],{
 	      }
 	    }
 	  }, {
+	    key: 'showMore',
+	    value: function showMore() {
+	      this.offset = this.offset + 1;
+	      this.load();
+	    }
+	  }, {
 	    key: 'load',
 	    value: function load() {
-	      $.getJSON('properties/Manager', { search: this.search }).done(function (data) {
+	      $.getJSON('properties/Manager', { search: this.search, offset: this.offset }).done(function (data) {
 	        this.admin = data.admin;
-	        this.setState({ managers: data['managerList'] });
+	        if (this.offset > 0) {
+	          this.setState({ managers: this.state.managers.concat(data.managerList), moreRows: data.more_rows });
+	        } else {
+	          this.setState({ managers: data.managerList, moreRows: data.more_rows });
+	        }
 	      }.bind(this)).fail(function () {
 	        this.setState({ managers: null });
 	        this.setMessage('Error: failure pulling managers');
@@ -379,7 +391,16 @@ webpackJsonp([0],{
 	            reload: this.updateManager,
 	            remove: this.dropManager,
 	            message: this.setMessage,
-	            admin: this.admin })
+	            admin: this.admin }),
+	          this.state.moreRows === true ? _react2.default.createElement(
+	            'div',
+	            { className: 'text-center' },
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'btn btn-primary', onClick: this.showMore },
+	              'Show more results'
+	            )
+	          ) : null
 	        );
 	      }
 	    }

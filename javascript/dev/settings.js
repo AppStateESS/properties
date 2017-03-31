@@ -61,15 +61,18 @@ webpackJsonp([13],{
 	    _this.state = {
 	      message: null,
 	      settings: {
-	        site_email: '',
-	        approval_email: ''
+	        our_email: '',
+	        approval_email: '',
+	        our_name: '',
+	        our_phone: ''
 	      },
 	      errors: {
-	        site_email: false,
-	        approval_email: false
+	        our_email: false,
+	        approval_email: false,
+	        our_phone: false
 	      }
 	    };
-	    (0, _Bind2.default)(['setValue', 'setError', 'checkValues', 'save', 'clearMessage', 'checkSiteEmail', 'checkApprovalEmail'], _this);
+	    (0, _Bind2.default)(['setValue', 'setError', 'checkValues', 'save', 'clearMessage', 'checkSiteEmail', 'checkApprovalEmail', 'checkPhone'], _this);
 	    return _this;
 	  }
 	
@@ -97,13 +100,24 @@ webpackJsonp([13],{
 	      this.setState({ errors: errors });
 	    }
 	  }, {
-	    key: 'checkSiteEmail',
-	    value: function checkSiteEmail() {
-	      if (!_CheckValues2.default.isEmail(this.state.settings.site_email)) {
-	        this.setError('site_email', true);
+	    key: 'checkPhone',
+	    value: function checkPhone() {
+	      if (this.state.settings.our_phone.length > 0 && !_CheckValues2.default.isPhone(this.state.settings.our_phone)) {
+	        this.setError('our_phone', true);
 	        return false;
 	      } else {
-	        this.setError('site_email', false);
+	        this.setError('our_phone', false);
+	        return true;
+	      }
+	    }
+	  }, {
+	    key: 'checkSiteEmail',
+	    value: function checkSiteEmail() {
+	      if (!_CheckValues2.default.isEmail(this.state.settings.our_email)) {
+	        this.setError('our_email', true);
+	        return false;
+	      } else {
+	        this.setError('our_email', false);
 	        return true;
 	      }
 	    }
@@ -128,6 +142,9 @@ webpackJsonp([13],{
 	      if (!this.checkApprovalEmail()) {
 	        allClear = false;
 	      }
+	      if (!this.checkPhone()) {
+	        allClear = false;
+	      }
 	      return allClear;
 	    }
 	  }, {
@@ -150,7 +167,7 @@ webpackJsonp([13],{
 	      var errors = _state.errors;
 	      var settings = _state.settings;
 	
-	      return errors.site_email === false && errors.approval_email === false && settings.site_email !== '' && settings.approval_email !== '';
+	      return errors.our_email === false && errors.approval_email === false && settings.our_email !== '' && settings.approval_email !== '' && errors.our_phone === false;
 	    }
 	  }, {
 	    key: 'load',
@@ -174,33 +191,86 @@ webpackJsonp([13],{
 	      return _react2.default.createElement(
 	        'div',
 	        null,
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Administrative Settings'
+	        ),
 	        message,
 	        _react2.default.createElement(
 	          'form',
 	          null,
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'form-group' },
-	            _react2.default.createElement(_InputField2.default, {
-	              label: 'Site email',
-	              name: 'site_email',
-	              value: this.state.settings.site_email,
-	              placeholder: 'This is the from/reply-to address from this site.',
-	              change: this.setValue.bind(this, 'site_email'),
-	              errorMessage: this.state.errors.site_email ? 'Check your email address formatting' : null,
-	              blur: this.checkSiteEmail })
+	            { className: 'row' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-sm-6' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'form-group' },
+	                _react2.default.createElement(_InputField2.default, {
+	                  label: 'Approval email',
+	                  name: 'approval_email',
+	                  value: this.state.settings.approval_email,
+	                  placeholder: 'This email address will receive new manager notifications.',
+	                  required: true,
+	                  change: this.setValue.bind(this, 'approval_email'),
+	                  errorMessage: this.state.errors.approval_email ? 'Email address must be complete and in the correct format' : null,
+	                  blur: this.checkApprovalEmail })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-sm-6' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'form-group' },
+	                _react2.default.createElement(_InputField2.default, {
+	                  label: 'Site email',
+	                  name: 'our_email',
+	                  value: this.state.settings.our_email,
+	                  required: true,
+	                  placeholder: 'This is the from/reply-to address from this site.',
+	                  change: this.setValue.bind(this, 'our_email'),
+	                  errorMessage: this.state.errors.our_email ? 'Email address must be complete and in the correct format' : null,
+	                  blur: this.checkSiteEmail })
+	              )
+	            )
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'form-group' },
-	            _react2.default.createElement(_InputField2.default, {
-	              label: 'Approval email',
-	              name: 'site_email',
-	              value: this.state.settings.approval_email,
-	              placeholder: 'This email address will receive new manager notifications.',
-	              change: this.setValue.bind(this, 'approval_email'),
-	              errorMessage: this.state.errors.approval_email ? 'Check your email address formatting' : null,
-	              blur: this.checkApprovalEmail })
+	            { className: 'row' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-sm-6' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'form-group' },
+	                _react2.default.createElement(_InputField2.default, {
+	                  label: 'Contact name',
+	                  name: 'our_name',
+	                  value: this.state.settings.our_name,
+	                  placeholder: 'The contact name on outgoing email.',
+	                  change: this.setValue.bind(this, 'our_name') })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-sm-6' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'form-group' },
+	                _react2.default.createElement(_InputField2.default, {
+	                  label: 'Contact phone',
+	                  name: 'our_phone',
+	                  value: this.state.settings.our_phone,
+	                  placeholder: 'The contact phone number on outgoing email.',
+	                  change: this.setValue.bind(this, 'our_phone'),
+	                  errorMessage: this.state.errors.our_phone ? 'Check your phone number formatting (10 digits)' : null,
+	                  blur: this.checkPhone })
+	              )
+	            )
 	          ),
 	          _react2.default.createElement(
 	            'button',
@@ -220,7 +290,6 @@ webpackJsonp([13],{
 	}(_react2.default.Component);
 	
 	exports.default = Settings;
-	
 	
 	Settings.propTypes = {};
 	
