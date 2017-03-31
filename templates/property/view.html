@@ -27,10 +27,10 @@
                     <h2 class="property-title"><?=$name?></h2>
                     <h3 class="property-address"><a href="<?=$property_map_address?>" target="_blank"><i class="fa fa-map"></i>&nbsp;<?=$address?></a></h3>
                     <div>
-                        <?=$bedroom_no?> bed
-                        <?=$bedroom_no>1?'s':null?>,
-                        <?=$bathroom_no?> bath
-                        <?=$bathroom_no>1?'s':null?> -
+                        <?=$bedroom_no?>
+                        <?=$bedroom_no>1?'beds':'bed'?>,
+                        <?=$bathroom_no?>
+                        <?=$bathroom_no>1?'baths':'bath'?> -
                         <?= '$', $monthly_rent, ' ', $lease_type?>
                     </div>
                     <div>Availability:
