@@ -31,8 +31,10 @@ class Module extends \Canopy\Module implements \Canopy\SettingDefaults
 
     public function getSettingDefaults()
     {
-        $settings['site_email'] = '';
         $settings['approval_email'] = '';
+        $settings['our_email'] = '';
+        $settings['our_phone'] = null;
+        $settings['our_name'] = null;
         return $settings;
     }
     
