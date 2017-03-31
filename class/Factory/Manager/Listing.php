@@ -26,7 +26,8 @@ use properties\Exception\PrivilegeMissing;
 class Listing
 {
 
-    private $limit = 50;
+    public $limit = 20;
+    public $offset = 0;
     public $search = null;
     public $active = 1; // null pulls all
     public $approved = 1; // null pulls all
@@ -38,11 +39,20 @@ class Listing
     public $include_inquiry = true;
     public $full_search = false;
     public $must_have_property = false;
+    public $more_rows = true;
 
     public function get()
     {
+        if ((int) $this->limit <= 0 || (int) $this->limit > 20) {
+            $this->limit = 20;
+        }
+
+        $offset = $this->offset * $this->limit;
+
         $groups = array();
         $db = Database::getDB();
+        $db->setLimit($this->limit, $offset);
+
         $tbl = $db->addTable('prop_contacts');
 
         if ($this->include_property_count) {
@@ -115,12 +125,18 @@ class Listing
             if (empty($result)) {
                 return array();
             }
+            if (count($result) < $this->limit) {
+                $this->more_rows = false;
+            }
             foreach ($result as $manager) {
                 $listing[] = $manager->view($this->restricted);
             }
             return $listing;
         } else {
             $result = $db->select();
+            if (count($result) < $this->limit) {
+                $this->more_rows = false;
+            }
             return $result;
         }
     }

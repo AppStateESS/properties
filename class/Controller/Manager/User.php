@@ -49,8 +49,8 @@ class User extends \properties\Controller\SubController
     protected function listJsonCommand(Request $request)
     {
         $json['admin'] = false;
-        $json['managerList'] = $this->factory->approvedListing($request->pullGetVarIfSet('limit',
-                        true), $request->pullGetString('search', true), true);
+        $json['managerList'] = $this->factory->approvedListing($request);
+        $json['more_rows'] = $this->factory->more_rows;
         return $json;
     }
 

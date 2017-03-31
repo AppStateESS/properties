@@ -20,7 +20,6 @@ namespace properties\Factory;
 
 abstract class Listing
 {
-
     public $search_string;
     public $limit = 20;
     public $offset = 0;

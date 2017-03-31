@@ -14,10 +14,12 @@ class Manager extends React.Component {
     super(props)
     this.delay
     this.admin = false
+    this.offset = 0
     this.state = {
       managers: null,
       message: null,
-      currentManager: ManagerObject
+      currentManager: ManagerObject,
+      moreRows : true
     }
     this.search = ''
     const bindable = [
@@ -28,7 +30,8 @@ class Manager extends React.Component {
       'fillForm',
       'searchManager',
       'setMessage',
-      'updateManager'
+      'updateManager',
+      'showMore'
     ]
 
     bindMethods(bindable, this)
@@ -58,10 +61,19 @@ class Manager extends React.Component {
     }
   }
 
+  showMore() {
+    this.offset = this.offset + 1
+    this.load()
+  }
+
   load() {
-    $.getJSON('properties/Manager', {search: this.search}).done(function (data) {
+    $.getJSON('properties/Manager', {search: this.search, offset: this.offset}).done(function (data) {
       this.admin = data.admin
-      this.setState({managers: data['managerList']})
+      if (this.offset > 0) {
+        this.setState({managers: this.state.managers.concat(data.managerList), moreRows: data.more_rows})
+      } else {
+        this.setState({managers: data.managerList, moreRows: data.more_rows})
+      }
     }.bind(this)).fail(function () {
       this.setState({managers: null})
       this.setMessage('Error: failure pulling managers')
@@ -136,14 +148,12 @@ class Manager extends React.Component {
             </div>
             <div className="col-sm-2">
               {this.admin
-                ? (
-                  <button
+                ? (<button
                     className="btn btn-success"
                     data-toggle="modal"
                     data-target="#reactModal">
                     <i className="fa fa-plus"></i>&nbsp; Add manager</button>
-                )
-                : null}
+                ) : null}
             </div>
           </div>
           <div className="row marginTop">
@@ -183,6 +193,8 @@ class Manager extends React.Component {
             remove={this.dropManager}
             message={this.setMessage}
             admin={this.admin}/>
+            {this.state.moreRows === true ?
+            <div className="text-center"><button className="btn btn-primary" onClick={this.showMore}>Show more results</button></div> : null}
         </div>
       )
     }

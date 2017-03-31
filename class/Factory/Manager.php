@@ -12,6 +12,7 @@ use phpws2\Database;
 use properties\Resource\Manager as Resource;
 use properties\Exception\MissingInput;
 use properties\Exception\PrivilegeMissing;
+use Canopy\Request;
 
 //require_once 'mod/properties/class/FakeSwiftMailer.php';
 
@@ -21,6 +22,8 @@ use properties\Exception\PrivilegeMissing;
 class Manager extends Base
 {
 
+    public $more_rows = true;
+
     /**
      * @return properties\Resource\Manager
      */
@@ -29,29 +32,29 @@ class Manager extends Base
         return new Resource;
     }
 
-    public function approvedListing($limit = 20, $search = null,
-            $restricted = true)
+    public function approvedListing(Request $request)
     {
         $listing = new Manager\Listing;
-        $listing->limit = $limit;
-        $listing->search = $search;
+        $listing->offset = $request->pullGetString('offset', true);
+        $listing->search = $request->pullGetString('search', true);
         $listing->active = true;
         $listing->view = true;
         $listing->orderby = 'company_name';
         $listing->orderby_dir = 'asc';
-        $listing->restricted = $restricted;
+        $listing->restricted = true;
         $listing->must_have_property = true;
         $result = $listing->get(true, true);
+        $this->more_rows = $listing->more_rows;
         if (empty($result)) {
             return array();
         }
         return $result;
     }
 
-    public function unapprovedListing($limit = 20, $search = null)
+    public function unapprovedListing(Request $request)
     {
         $listing = new Manager\Listing;
-        $listing->limit = $limit;
+        $listing->offset = $request->pullGetString('offset', true);
         $listing->active = null;
         $listing->approved = 0;
         $listing->include_property_count = false;
@@ -61,6 +64,7 @@ class Manager extends Base
         $listing->restricted = false;
         $listing->include_inquiry = true;
         $result = $listing->get();
+        $this->more_rows = $listing->more_rows;
         if (empty($result)) {
             return array();
         }
@@ -73,11 +77,11 @@ class Manager extends Base
      * @param string $search
      * @return array
      */
-    public function listAll($limit = 20, $search = null)
+    public function adminList(Request $request)
     {
         $listing = new Manager\Listing;
-        $listing->limit = $limit;
         $listing->active = null;
+        $listing->offset = $request->pullGetString('offset', true);
         $listing->approved = null;
         $listing->include_property_count = true;
         $listing->orderby = 'company_name';
@@ -85,9 +89,10 @@ class Manager extends Base
         $listing->view = true;
         $listing->restricted = false;
         $listing->include_inquiry = true;
-        $listing->search = $search;
+        $listing->search = $request->pullGetString('search', true);
         $listing->must_have_property = false;
         $result = $listing->get();
+        $this->more_rows = $listing->more_rows;
         if (empty($result)) {
             return array();
         }
@@ -288,13 +293,13 @@ class Manager extends Base
 
     private function sendEmail($manager, $email_template)
     {
+        $contact_info = $this->contactInformation();
         $vars = $manager->view(false);
-        $vars = array_merge($this->contactInformation(), $vars);
+        $vars = array_merge($contact_info, $vars);
         $template = new \phpws2\Template($vars);
         $template->setModuleTemplate('properties', "emails/$email_template");
         $content = $template->get();
 
-        $contact_info = $this->contactInformation();
 
         $transport = \Swift_MailTransport::newInstance();
         //$transport = \Swift_SendmailTransport::newInstance();

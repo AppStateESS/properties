@@ -40,8 +40,8 @@ class Admin extends User
     protected function listJsonCommand(Request $request)
     {
         $json['admin'] = true;
-        $json['managerList'] = $this->factory->listAll($request->pullGetVarIfSet('limit',
-                        true), $request->pullGetString('search', true), false);
+        $json['managerList'] = $this->factory->adminList($request);
+        $json['more_rows'] = $this->factory->more_rows;
         return $json;
     }
 
@@ -73,7 +73,8 @@ class Admin extends User
         $json['admin'] = 1;
         $json['managerList'] = $this->factory->unapprovedListing($request->pullGetVarIfSet('limit',
                         true), $request->pullGetString('search', true));
-        $json['email_warning'] = empty(\phpws2\Settings::get('properties', 'site_email'));
+        $json['email_warning'] = empty(\phpws2\Settings::get('properties',
+                        'site_email'));
         return $json;
     }
 
