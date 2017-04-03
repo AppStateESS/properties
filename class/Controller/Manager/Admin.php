@@ -71,8 +71,7 @@ class Admin extends User
     protected function approvalJsonCommand(Request $request)
     {
         $json['admin'] = 1;
-        $json['managerList'] = $this->factory->unapprovedListing($request->pullGetVarIfSet('limit',
-                        true), $request->pullGetString('search', true));
+        $json['managerList'] = $this->factory->unapprovedListing($request);
         $json['email_warning'] = empty(\phpws2\Settings::get('properties',
                         'site_email'));
         return $json;
@@ -92,6 +91,19 @@ class Admin extends User
 
     protected function jsonPatchCommand(Request $request)
     {
+        $this->applyPatchValues($request);
+        return array('success'=>true);
+    }
+    
+    protected function approvePatchCommand(Request $request)
+    {
+        $this->applyPatchValues($request);
+        $this->factory->emailApproval($this->factory->load($this->id));
+        return array('success'=>true);
+    }
+    
+    private function applyPatchValues(Request $request)
+    {
         if ($request->patchVarIsset('values')) {
             $values = $request->pullPatchVar('values');
             foreach ($values as $arrVal) {
@@ -103,8 +115,6 @@ class Admin extends User
                     $request->pullPatchString('varname'),
                     $request->pullPatchBoolean('value'));
         }
-        $json['success'] = true;
-        return $json;
     }
 
     protected function viewJsonCommand(Request $request)
