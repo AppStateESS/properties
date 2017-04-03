@@ -45,6 +45,7 @@ class Manager extends User
     protected function mylistJsonCommand(Request $request)
     {
         $listing = new Listing;
+        $listing->show_inactive = true;
         $listing->manager_id = $this->id;
         $json['properties'] = $listing->get(true);
         return $json;
@@ -94,5 +95,12 @@ class Manager extends User
                 $this->id);
         return $json;
     }
-
+    
+    protected function updatePutCommand(Request $request)
+    {
+        if ($request->pullPutInteger('id') != $this->getCurrentLoggedManager()) {
+            throw new \properties\Exception\PrivilegeMissing;
+        }
+        return $this->factory->managerUpdate($request);
+    }
 }
