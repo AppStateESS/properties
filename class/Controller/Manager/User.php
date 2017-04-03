@@ -20,6 +20,8 @@ namespace properties\Controller\Manager;
 
 use properties\Exception\BadCommand;
 use \Canopy\Request;
+use \phpws2\Template;
+use \phpws2\Settings;
 
 class User extends \properties\Controller\SubController
 {
@@ -61,14 +63,36 @@ class User extends \properties\Controller\SubController
         if (empty($username) || empty($password)) {
             \PHPWS_Core::reroute('./properties/Manager/signin?error=login');
         }
-        $manager_id = $this->factory->signin($username, $password);
-        if ($manager_id) {
-            $session = \phpws2\Session::getInstance();
-            $session->property_manager_id = $manager_id;
-            \PHPWS_Core::reroute('./properties/Manager/desktop');
+        $manager = $this->factory->signin($username, $password);
+        if ($manager) {
+            if (!$manager->approved) {
+                \PHPWS_Core::reroute('./properties/Manager/notApproved');
+            } elseif (!$manager->active) {
+                \PHPWS_Core::reroute('./properties/Manager/notActive');
+            } else {
+                $session = \phpws2\Session::getInstance();
+                $session->property_manager_id = $manager_id;
+                \PHPWS_Core::reroute('./properties/Manager/desktop');
+            }
         } else {
-            \PHPWS_Core::reroute('./properties/Manager/signin?error=not_found');
+            \PHPWS_Core::reroute('./properties/Manager/signin?error=not_found&username=' . $username);
         }
+    }
+    
+    protected function notApprovedHtmlCommand()
+    {
+        $template = new Template(array('our_email'=>Settings::get('properties', 'our_email')));
+        $template->setModuleTemplate('properties',
+                'manager/not_approved.html');
+        return $template->get();
+    }
+
+    protected function notActiveHtmlCommand()
+    {
+        $template = new Template(array('our_email'=>Settings::get('properties', 'our_email')));
+        $template->setModuleTemplate('properties',
+                'manager/not_active.html');
+        return $template->get();
     }
 
     /**
@@ -119,7 +143,7 @@ class User extends \properties\Controller\SubController
 
     protected function successHtmlCommand(Request $request)
     {
-        $template = new \phpws2\Template();
+        $template = new Template;
         $template->setModuleTemplate('properties', 'manager/success_signup.html');
         return $template->get();
     }
@@ -141,23 +165,33 @@ class User extends \properties\Controller\SubController
         $tpl->setModuleTemplate('properties', 'manager/password_sent.html');
         return $tpl->get();
     }
-    
+
     protected function changepwHtmlCommand(Request $request)
     {
         return $this->factory->handlePasswordChange($request);
-
     }
-    
+
     protected function changepwPostCommand(Request $request)
     {
-       return $this->factory->postPasswordChange($request);
+        return $this->factory->postPasswordChange($request);
     }
-    
+
     protected function passwordChangeCompleteHtmlCommand()
     {
-        $template = new \phpws2\Template();
-        $template->setModuleTemplate('properties', 'manager/password_success.html');
+        $template = new Template();
+        $template->setModuleTemplate('properties',
+                'manager/password_success.html');
         return $template->get();
+    }
+
+    /**
+     * Called a manager function without being signed in
+     * @param Request $request
+     * @return type
+     */
+    protected function editHtmlCommand(Request $request)
+    {
+        return $this->factory->reactView('managersignin');
     }
 
 }
