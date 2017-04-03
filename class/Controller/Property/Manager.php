@@ -57,14 +57,34 @@ class Manager extends User
             return array('error' => $e->getMessage());
         }
     }
-    
+
     protected function updatePutCommand(\Canopy\Request $request)
     {
         try {
-            return $this->factory->put($request, $this->getCurrentLoggedManager());
+            return $this->factory->put($request,
+                            $this->getCurrentLoggedManager());
         } catch (\properties\Exception\PropertySaveFailure $e) {
             return array('error' => $e->getMessage());
         }
+    }
+
+    protected function jsonPatchCommand(\Canopy\Request $request)
+    {
+
+        if ($request->patchVarIsset('values')) {
+            $values = $request->pullPatchVar('values');
+            foreach ($values as $arrVal) {
+                $this->factory->patch($this->id, $arrVal['varname'],
+                        $arrVal['value']);
+            }
+        } else {
+            $this->factory->patch($this->id,
+                    $request->pullPatchString('varname'),
+                    $request->pullPatchBoolean('value'),
+                    $this->getCurrentLoggedManager());
+        }
+        $json['success'] = true;
+        return $json;
     }
 
 }
