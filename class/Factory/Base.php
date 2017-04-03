@@ -41,9 +41,9 @@ abstract class Base extends \phpws2\ResourceFactory
 
     public function contactInformation()
     {
-        $vars['our_email'] = Settings::get('properties', 'contact_email');
-        $vars['our_phone'] = Settings::get('properties', 'contact_phone');
-        $vars['our_name'] = Settings::get('properties', 'contact_email');
+        $vars['our_email'] = Settings::get('properties', 'our_email');
+        $vars['our_phone'] = Settings::get('properties', 'our_phone');
+        $vars['our_name'] = Settings::get('properties', 'our_name');
         $vars['our_website'] = \Canopy\Server::getSiteUrl();
         return $vars;
     }
