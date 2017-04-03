@@ -152,8 +152,13 @@ abstract class SubController extends Base
             throw new BadCommand('Empty command or missing id');
         }
         $this->id = $id;
-
-        $patch_command = $request->isAjax() ? 'jsonPatchCommand' : 'htmlPatchCommand';
+        
+        $patch_command = $request->shiftCommand();
+        if (empty($patch_command)) {
+            $patch_command = $request->isAjax() ? 'jsonPatchCommand' : 'htmlPatchCommand';
+        } else {
+            $patch_command .= 'PatchCommand';
+        }
 
         if (!method_exists($this, $patch_command)) {
             throw new BadCommand($patch_command);
