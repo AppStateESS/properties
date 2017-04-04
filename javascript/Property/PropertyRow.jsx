@@ -2,15 +2,9 @@
 import React from 'react'
 import Row from '../Mixin/List/Row.jsx'
 
-/* global $ */
-
 export default class PropertyRow extends Row {
   constructor(props) {
     super(props)
-  }
-
-  componentDidMount() {
-    $('[data-toggle="tooltip"]').tooltip()
   }
 
   getRent() {

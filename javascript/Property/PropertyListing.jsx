@@ -3,9 +3,15 @@ import React from 'react'
 import PropertyRow from './PropertyRow.jsx'
 import Waiting from '../Mixin/Html/Waiting.jsx'
 
+/* global $ */
+
 export default class PropertyListing extends React.Component {
   constructor(props) {
     super(props)
+  }
+
+  componentDidUpdate() {
+    $('[data-toggle="tooltip"]').tooltip()
   }
 
   render() {
