@@ -4,16 +4,17 @@
         <div class="contact-info well col-sm-12">
             <h2 class="text-center"><?=$name?></h2>
             <div class="row">
-                <div class="col-sm-4 text-center">
+                <div class="<?=$social_media ? 'col-sm-4' : 'col-sm-6'?> text-center">
                     <span class="email">
                         <a href="mailto:<?=$email?>"><i class="fa fa-envelope"></i>&nbsp;<?=$email?></a>
                     </span>
                 </div>
-                <div class="col-sm-4 text-center">
+                <div class="<?=$social_media ? 'col-sm-4' : 'col-sm-6'?> text-center">
                     <span class="phone">
                         <a href="tel:+1<?=$phone?>"><i class="fa fa-phone"></i>&nbsp;<?=$phone_format?></a>
                     </span>
                 </div>
+                <?php if($social_media): ?>
                 <div class="col-sm-4 text-center">
                     <?php if (!empty($facebook)):?>
                     <a class="social" href="<?=$facebook?>">
@@ -40,6 +41,7 @@
                     </a>
                     <?php endif;?>
                 </div>
+                <?php endif;?>
             </div>
             <?php endif;?>
             <?php if (!$contact_allowed):?>
@@ -52,7 +54,9 @@
             Ready to move: <?=$move_in_date?>
         </h3>
         <div class="row">
+            <?php if ($college_life || $living_habits):?>
             <div class="about-me col-sm-6">
+                <?php if ($college_life):?>
                 <fieldset>
                     <legend>College life</legend>
                     <?php if (!empty($major)):?>
@@ -86,6 +90,8 @@
                     </p>
                     <?php endif;?>
                 </fieldset>
+                <?php endif;?>
+                <?php if($living_habits):?>
                 <fieldset>
                     <legend>Living habits</legend>
                     <?php if (!empty($overnighter)):?>
@@ -113,7 +119,9 @@
                     </p>
                     <?php endif;?>
                 </fieldset>
+                <?php endif;?>
             </div>
+            <?php endif;?>
             <div class="col-sm-6">  
                 <fieldset>
                     <legend>About me</legend>
