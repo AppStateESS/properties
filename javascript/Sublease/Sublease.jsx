@@ -46,7 +46,7 @@ export default class Property extends Base {
           searchVars={this.searchVars}
           clearAmenities={this.clearAmenities}
           resetConditions={this.resetConditions}
-          updateSortType={this.updateSortType}
+          updateSortBy={this.updateSortBy}
           sortType={this.sortType}
           toggle={this.toggle}/>
         <Listing subleases={this.state.subleases}/>
