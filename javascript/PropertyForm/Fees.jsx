@@ -20,7 +20,8 @@ export default class Fees extends React.Component {
             <BooleanButton
               name="security_refund"
               current={property.security_refund}
-              label={['Deposit refunded', 'Nonrefundable']}/>
+              label={['Deposit refunded', 'Nonrefundable']}
+              handleClick={this.props.setValue.bind(this, 'security_refund')}/>
             <div className="input-group">
               <span className="input-group-addon">$</span>
               <InputField
@@ -36,6 +37,7 @@ export default class Fees extends React.Component {
             <label>Administrative Fee</label>
             <BooleanButton
               name="admin_fee_refund"
+              handleClick={this.props.setValue.bind(this, 'admin_fee_refund')}
               current={property.admin_fee_refund}
               label={['Admin fee refunded', 'Nonrefundable']}/>
             <div className="input-group">
@@ -53,6 +55,7 @@ export default class Fees extends React.Component {
             <label>Cleaning fee</label>
             <BooleanButton
               name="clean_fee_refund"
+              handleClick={this.props.setValue.bind(this, 'clean_fee_refund')}
               current={property.clean_fee_refund}
               label={['Fee refunded', 'Nonrefundable']}/>
             <div className="input-group">
