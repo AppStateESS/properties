@@ -204,7 +204,6 @@ abstract class SubController extends Base
 
         $signout = '<a href="./properties/Manager/signout"><i class="fa fa-sign-out"></i>&nbsp;Sign out</a>';
         \properties\Factory\NavBar::addOption($signout);
-        \properties\Factory\NavBar::addOption('<hr>');
     }
 
     protected function addApprovalLink()
