@@ -1,6 +1,5 @@
 'use strict'
 import React from 'react'
-import BooleanButton from '../Mixin/Form/BooleanButton.jsx'
 import BigCheckbox from '../Mixin/Form/BigCheckbox.jsx'
 
 export default class Features extends React.Component {
