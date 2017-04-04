@@ -66,31 +66,31 @@ class Roommate extends Base
         $this->instagram->allowNull(true);
         $this->twitter = new \phpws2\Variable\Url(null, 'twitter', 255);
         $this->twitter->allowNull(true);
-        $this->politics = new \phpws2\Variable\Alphanumeric(null, 'politics', 20);
+        $this->politics = new \phpws2\Variable\Alphanumeric(null, 'politics', 50);
         $this->politics->allowNull(true);
-        $this->major = new \phpws2\Variable\TextOnly(null, 'major', 20);
+        $this->major = new \phpws2\Variable\TextOnly(null, 'major', 50);
         $this->major->allowNull(true);
-        $this->focus = new \phpws2\Variable\Alphanumeric(null, 'focus', 20);
+        $this->focus = new \phpws2\Variable\Alphanumeric(null, 'focus', 50);
         $this->focus->allowNull(true);
         $this->wake_time = new \phpws2\Variable\Alphanumeric(null, 'wake_time',
-                20);
+                50);
         $this->wake_time->allowNull(true);
         $this->sleep_time = new \phpws2\Variable\Alphanumeric(null,
-                'sleep_time', 20);
+                'sleep_time', 50);
         $this->sleep_time->allowNull(true);
         $this->overnighter = new \phpws2\Variable\Alphanumeric(null,
-                'overnighter', 20);
+                'overnighter', 50);
         $this->overnighter->allowNull(true);
         $this->free_time = new \phpws2\Variable\Alphanumeric(null, 'free_time',
-                20);
+                50);
         $this->free_time->allowNull(true);
         $this->cleanliness = new \phpws2\Variable\Alphanumeric(null,
-                'cleanliness', 20);
+                'cleanliness', 50);
         $this->cleanliness->allowNull(true);
-        $this->loudness = new \phpws2\Variable\Alphanumeric(null, 'loudness', 20);
+        $this->loudness = new \phpws2\Variable\Alphanumeric(null, 'loudness', 50);
         $this->loudness->allowNull(true);
         $this->study_time = new \phpws2\Variable\Alphanumeric(null,
-                'study_time', 20);
+                'study_time', 50);
         $this->study_time->allowNull(true);
         $this->languages = new \phpws2\Variable\ArrayVar(null, 'languages');
         $this->languages->allowNull(true);
@@ -98,9 +98,9 @@ class Roommate extends Base
         $this->music->allowNull(true);
         $this->hobbies = new \phpws2\Variable\ArrayVar(null, 'hobbies');
         $this->hobbies->allowNull(true);
-        $this->smoking = new \phpws2\Variable\Alphanumeric(null, 'smoking', 20);
+        $this->smoking = new \phpws2\Variable\Alphanumeric(null, 'smoking', 50);
         $this->smoking->allowNull(true);
-        $this->pets = new \phpws2\Variable\Alphanumeric(null, 'pets', 20);
+        $this->pets = new \phpws2\Variable\Alphanumeric(null, 'pets', 50);
         $this->pets->allowNull(true);
         $this->created = new \phpws2\Variable\DateVar(null, 'created');
         $this->updated = new \phpws2\Variable\DateVar(null, 'updated');
