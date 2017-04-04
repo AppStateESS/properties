@@ -5,6 +5,7 @@ import InputField from '../Mixin/Form/InputField.jsx'
 import CheckValues from '../Mixin/Helper/CheckValues.js'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import Message from '../Mixin/Html/Message.jsx'
+import BooleanButton from '../Mixin/Form/BooleanButton.jsx'
 
 /* global $ */
 
@@ -17,7 +18,8 @@ export default class Settings extends React.Component {
         our_email: '',
         approval_email: '',
         our_name: '',
-        our_phone: ''
+        our_phone: '',
+        front_buttons: true
       },
       errors: {
         our_email: false,
@@ -196,6 +198,17 @@ export default class Settings extends React.Component {
               </div>
             </div>
           </div>
+          <div className="row">
+            <div className="col-sm-6">
+              <BooleanButton
+                label={['Show front page buttons', 'Do not show front page buttons']}
+                icon={true}
+                current={this.state.settings.front_buttons}
+                handleClick={this.setValue.bind(this, 'front_buttons')}/>
+            </div>
+            <div className="col-sm-6"></div>
+          </div>
+          <hr />
           <button
             type="button"
             className="btn btn-primary"

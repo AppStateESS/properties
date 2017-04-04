@@ -36,6 +36,9 @@ class Settings extends Base
                 $request->pullPostString('our_name', true));
         \phpws2\Settings::set('properties', 'our_phone',
                 $request->pullPostString('our_phone', true));
+        $front_buttons = (int)$request->pullPostBoolean('front_buttons', true);
+        \phpws2\Settings::set('properties', 'front_buttons',
+                $front_buttons);
     }
 
     public function view()
@@ -48,6 +51,8 @@ class Settings extends Base
                         'our_phone');
         $settings['approval_email'] = \phpws2\Settings::get('properties',
                         'approval_email');
+        $settings['front_buttons'] = (bool) \phpws2\Settings::get('properties',
+                        'front_buttons');
         return $settings;
     }
 

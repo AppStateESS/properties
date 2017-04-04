@@ -35,6 +35,7 @@ class Module extends \Canopy\Module implements \Canopy\SettingDefaults
         $settings['our_email'] = '';
         $settings['our_phone'] = null;
         $settings['our_name'] = null;
+        $settings['front_buttons'] = 1;
         return $settings;
     }
     
@@ -68,7 +69,7 @@ class Module extends \Canopy\Module implements \Canopy\SettingDefaults
     public function runTime(\Canopy\Request $request)
     {
         if ($request->isGet() && !$request->isAjax()) {
-            if (\phpws\PHPWS_Core::atHome()) {
+            if (\phpws\PHPWS_Core::atHome() && \phpws2\Settings::get('properties', 'front_buttons')) {
                 \Layout::add($this->home());
             }
             if (!preg_match('/^properties/', \Canopy\Server::getCurrentUrl())) {
