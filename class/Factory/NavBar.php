@@ -81,9 +81,13 @@ class NavBar
         self::$items[] = $item;
     }
 
-    public static function addOption($option)
+    public static function addOption($option, $unshift=false)
     {
-        self::$options[] = $option;
+        if ($unshift && !empty(self::$options)) {
+            array_unshift(self::$options,$option);
+        } else {
+            self::$options[] = $option;
+        }
     }
     
     public static function setTitle($title)
