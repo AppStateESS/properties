@@ -43,16 +43,19 @@ class Listing
 
     public function get()
     {
-        if ((int) $this->limit <= 0 || (int) $this->limit > 20) {
+        if ((int) $this->limit < 0 || (int) $this->limit > 20) {
             $this->limit = 20;
         }
 
-        $offset = $this->offset * $this->limit;
 
         $groups = array();
         $db = Database::getDB();
-        $db->setLimit($this->limit, $offset);
 
+        if ($this->limit) {
+            $offset = $this->offset * $this->limit;
+            $db->setLimit($this->limit, $offset);
+        }
+        
         $tbl = $db->addTable('prop_contacts');
 
         if ($this->include_property_count) {
@@ -75,8 +78,6 @@ class Listing
             $groups[] = $tbl3->addField('inquiry_date');
             $groups[] = $tbl3->addField('inquiry_type');
         }
-
-        $db->setLimit($this->limit);
 
         // avoiding the password field
         $groups[] = $tbl->addField('id');
