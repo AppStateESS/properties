@@ -111,12 +111,6 @@ class Property extends Base
         return $property->id;
     }
 
-    public function postManager(\Canopy\Request $request, $manager_id)
-    {
-        $r = new Resource;
-        exit('postManager incomplete');
-    }
-
     public function put(\Canopy\Request $request, $manager_id=null)
     {
         $errors = array();
@@ -195,15 +189,16 @@ class Property extends Base
 EOF;
     }
 
-    public function patch($id, $param, $value)
+    public function patch($id, $param, $value, $manager_id=null)
     {
         static $allowed_params = array('active');
 
         if (!in_array($param, $allowed_params)) {
             throw new \Exception('Parameter may not be patched');
         }
-        $property = $this->load($id);
+        $property = $this->load($id, $manager_id);
         $property->$param = $value;
+        $property->updated = time();
         $this->saveResource($property);
         return true;
     }
