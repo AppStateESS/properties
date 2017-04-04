@@ -2,8 +2,9 @@
 import React from 'react'
 import ImageOverlay from '../Mixin/Photo/ImageOverlay.jsx'
 import bindMethods from '../Mixin/Helper/Bind.js'
+import {arrayMove} from 'react-sortable-hoc'
 
-/* global $, loadPhotos, editPhotos, currentPhotos */
+/* global $, subleaseId, loadPhotos, editPhotos, currentPhotos */
 
 export default class SubleaseImage extends React.Component {
   constructor(props) {
@@ -20,6 +21,7 @@ export default class SubleaseImage extends React.Component {
       'addPhotos',
       'clearNewPhotos',
       'delete',
+      'onSortEnd'
     ]
     bindMethods(methods, this)
   }
@@ -94,16 +96,40 @@ export default class SubleaseImage extends React.Component {
     })
   }
 
+  onSortEnd(movement)
+  {
+    const {oldIndex, newIndex} = movement
+    const newPosition = this.state.currentPhotos[newIndex].porder
+    const movingPhotoId = this.state.currentPhotos[oldIndex].id
+    $.ajax({
+      url: './properties/SubleasePhoto/' + movingPhotoId,
+      data: {
+        subleaseId: subleaseId,
+        varname: 'move',
+        newPosition: newPosition
+      },
+      dataType: 'json',
+      type: 'patch'
+    }).done(function (data) {
+      if (data.success) {
+        this.setState({
+          currentPhotos: arrayMove(this.state.currentPhotos, oldIndex, newIndex)
+        })
+      }
+    }.bind(this))
+  }
+
   render() {
     let overlay
     if (this.state.show) {
       overlay = (<ImageOverlay
-        delete={this.delete}
+        deletePhoto={this.delete}
         close={this.overlayOff}
         clear={this.clearNewPhotos}
         update={this.addPhotos}
         newPhotos={this.state.newPhotos}
         currentPhotos={this.state.currentPhotos}
+        onSortEnd={this.onSortEnd}
         status={this.state.status}/>)
     }
     return (
