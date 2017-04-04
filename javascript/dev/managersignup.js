@@ -737,7 +737,7 @@ webpackJsonp([5],{
 	
 	      $.ajax({
 	        method: 'POST',
-	        url: './properties/Manager',
+	        url: './properties/Manager/apply',
 	        dataType: 'json',
 	        data: values,
 	        success: function (data) {

@@ -446,13 +446,27 @@ webpackJsonp([3],{
 	  }, {
 	    key: 'save',
 	    value: function save() {
-	      $.post('properties/Manager/', this.state.manager, null, 'json').done(function (data) {
+	      $.ajax({
+	        url: 'properties/Manager/',
+	        data: this.state.manager,
+	        dataType: 'json',
+	        type: 'put'
+	      }).done(function (data) {
 	        if (data.status === 'error') {
 	          this.postErrors(data);
 	        } else {
 	          window.location.href = './properties/Manager/desktop';
 	        }
-	      }.bind(this)).fail(function () {});
+	      }.bind(this));
+	      /*
+	      $.post('properties/Manager/', this.state.manager, null, 'json').done(function (data) {
+	        if (data.status === 'error') {
+	          this.postErrors(data)
+	        } else {
+	          window.location.href = './properties/Manager/desktop'
+	        }
+	      }.bind(this)).fail(function () {})
+	      */
 	    }
 	  }, {
 	    key: 'checkPhone',

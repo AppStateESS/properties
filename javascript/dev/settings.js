@@ -40,6 +40,10 @@ webpackJsonp([13],{
 	
 	var _Message2 = _interopRequireDefault(_Message);
 	
+	var _BooleanButton = __webpack_require__(/*! ../Mixin/Form/BooleanButton.jsx */ 420);
+	
+	var _BooleanButton2 = _interopRequireDefault(_BooleanButton);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -64,7 +68,8 @@ webpackJsonp([13],{
 	        our_email: '',
 	        approval_email: '',
 	        our_name: '',
-	        our_phone: ''
+	        our_phone: '',
+	        front_buttons: true
 	      },
 	      errors: {
 	        our_email: false,
@@ -272,6 +277,21 @@ webpackJsonp([13],{
 	              )
 	            )
 	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'row' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-sm-6' },
+	              _react2.default.createElement(_BooleanButton2.default, {
+	                label: ['Show front page buttons', 'Do not show front page buttons'],
+	                icon: true,
+	                current: this.state.settings.front_buttons,
+	                handleClick: this.setValue.bind(this, 'front_buttons') })
+	            ),
+	            _react2.default.createElement('div', { className: 'col-sm-6' })
+	          ),
+	          _react2.default.createElement('hr', null),
 	          _react2.default.createElement(
 	            'button',
 	            {
@@ -684,6 +704,170 @@ webpackJsonp([13],{
 	    object[v] = this[v].bind(object);
 	  }.bind(object));
 	}
+
+/***/ },
+
+/***/ 420:
+/*!*************************************************!*\
+  !*** ./javascript/Mixin/Form/BooleanButton.jsx ***!
+  \*************************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var BooleanButton = function (_React$Component) {
+	  _inherits(BooleanButton, _React$Component);
+	
+	  function BooleanButton(props) {
+	    _classCallCheck(this, BooleanButton);
+	
+	    var _this = _possibleConstructorReturn(this, (BooleanButton.__proto__ || Object.getPrototypeOf(BooleanButton)).call(this, props));
+	
+	    _this.state = {
+	      status: _this.props.current
+	    };
+	    _this.flip = _this.flip.bind(_this);
+	    _this.getHidden = _this.getHidden.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(BooleanButton, [{
+	    key: 'flip',
+	    value: function flip() {
+	      var status = !this.state.status;
+	      this.setState({ status: status });
+	      if (this.props.handleClick) {
+	        this.props.handleClick(status);
+	      }
+	    }
+	  }, {
+	    key: 'componentWillUpdate',
+	    value: function componentWillUpdate(props) {
+	      if (props.current !== this.state.status) {
+	        this.setState({ status: !this.state.status });
+	      }
+	    }
+	  }, {
+	    key: 'getHidden',
+	    value: function getHidden() {
+	      if (this.props.name !== null && this.props.name.length > 0) {
+	        return _react2.default.createElement('input', { type: 'hidden', name: this.props.name, value: this.state.status });
+	      } else {
+	        return null;
+	      }
+	    }
+	  }, {
+	    key: 'positiveIcon',
+	    value: function positiveIcon() {
+	      if (this.props.icon === true) {
+	        return 'fa fa-check';
+	      } else if (this.props.icon !== null && _typeof(this.props.icon) === 'object') {
+	        return this.props.icon[0];
+	      } else {
+	        return null;
+	      }
+	    }
+	  }, {
+	    key: 'negativeIcon',
+	    value: function negativeIcon() {
+	      if (this.props.icon === true) {
+	        return 'fa fa-times';
+	      } else if (this.props.icon !== null && _typeof(this.props.icon) === 'object') {
+	        return this.props.icon[1];
+	      } else {
+	        return null;
+	      }
+	    }
+	  }, {
+	    key: 'getIcon',
+	    value: function getIcon() {
+	      return this.state.status ? this.positiveIcon() : this.negativeIcon();
+	    }
+	  }, {
+	    key: 'getLabel',
+	    value: function getLabel() {
+	      return this.state.status ? this.props.label[0] : this.props.label[1];
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var label = this.getLabel();
+	      if (this.props.icon) {
+	        label = _react2.default.createElement(
+	          'span',
+	          null,
+	          _react2.default.createElement('i', { className: this.getIcon() }),
+	          '\xA0',
+	          label
+	        );
+	      }
+	      var className = this.state.status ? 'btn btn-success' : 'btn btn-danger';
+	
+	      if (this.props.small) {
+	        className = className + ' btn-sm';
+	      }
+	
+	      return _react2.default.createElement(
+	        'span',
+	        null,
+	        _react2.default.createElement(
+	          'button',
+	          {
+	            type: 'button',
+	            name: this.props.name,
+	            value: this.state.status,
+	            className: className,
+	            onClick: this.flip },
+	          label
+	        ),
+	        this.getHidden()
+	      );
+	    }
+	  }]);
+	
+	  return BooleanButton;
+	}(_react2.default.Component);
+	
+	BooleanButton.defaultProps = {
+	  label: ['Yes', 'No'],
+	  icon: null
+	};
+	
+	BooleanButton.propTypes = {
+	  label: _react2.default.PropTypes.array,
+	  icon: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.array, _react2.default.PropTypes.bool]),
+	  handleClick: _react2.default.PropTypes.func,
+	  current: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.bool, _react2.default.PropTypes.string]),
+	  name: _react2.default.PropTypes.string,
+	  small: _react2.default.PropTypes.bool
+	};
+	
+	BooleanButton.defaultProps = {
+	  name: null,
+	  small: false
+	};
+	
+	exports.default = BooleanButton;
 
 /***/ }
 

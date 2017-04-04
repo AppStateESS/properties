@@ -303,6 +303,13 @@ webpackJsonp([4],{
 	  }
 	
 	  _createClass(ManagerSignin, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      if (this.url.values.username) {
+	        this.setState({ username: this.url.values.username });
+	      }
+	    }
+	  }, {
 	    key: 'updateUsername',
 	    value: function updateUsername(e) {
 	      this.setState({ username: e.target.value });
@@ -341,11 +348,7 @@ webpackJsonp([4],{
 	              _react2.default.createElement(
 	                'li',
 	                null,
-	                _react2.default.createElement(
-	                  'a',
-	                  { href: './properties/Manager/signup' },
-	                  'Have you applied for an account yet?'
-	                )
+	                'Is your caps lock on?'
 	              ),
 	              _react2.default.createElement(
 	                'li',
@@ -357,8 +360,19 @@ webpackJsonp([4],{
 	                null,
 	                _react2.default.createElement(
 	                  'a',
+	                  { href: './properties/Manager/signup' },
+	                  'Have you applied for an account yet? ',
+	                  _react2.default.createElement('i', { className: 'fa fa-external-link' })
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(
+	                  'a',
 	                  { href: './properties/Manager/forgot' },
-	                  'Did you forget your password?'
+	                  'Did you forget your password? ',
+	                  _react2.default.createElement('i', { className: 'fa fa-external-link' })
 	                )
 	              )
 	            )

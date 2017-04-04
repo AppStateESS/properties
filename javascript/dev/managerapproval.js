@@ -467,7 +467,7 @@ webpackJsonp([1],{
 	    key: 'approve',
 	    value: function approve(managerId, key) {
 	      $.ajax({
-	        url: './properties/Manager/' + managerId,
+	        url: './properties/Manager/' + managerId + '/approve',
 	        data: {
 	          values: [{
 	            varname: 'approved',
@@ -589,16 +589,16 @@ webpackJsonp([1],{
 	      var listing = void 0;
 	      var companyAddress = void 0;
 	      var websiteAddress = void 0;
-	
 	      if (this.state.managers === null) {
 	        return _react2.default.createElement(_Waiting2.default, { label: 'Loading managers...' });
-	      } else if (this.state.managers.length === 0) {
+	      } else if (this.state.managers.length === 0 || this.state.managers[0] === undefined) {
 	        return _react2.default.createElement(
 	          'div',
 	          null,
 	          'No managers need approving.'
 	        );
 	      }
+	
 	      listing = this.state.managers.map(function (value, key) {
 	        companyAddress = (0, _Empty2.default)(value.company_address) ? _react2.default.createElement(
 	          'em',
@@ -800,7 +800,7 @@ webpackJsonp([1],{
 	            { href: './properties/Settings/' },
 	            'Site email address is not set.'
 	          ),
-	          ' Your email will be used until sent.'
+	          'Your email will be used until sent.'
 	        );
 	      }
 	      var modal = void 0;

@@ -30952,6 +30952,13 @@ webpackJsonp([9],[
 	      }
 	    }
 	  }, {
+	    key: 'componentWillUpdate',
+	    value: function componentWillUpdate(props) {
+	      if (props.current !== this.state.status) {
+	        this.setState({ status: !this.state.status });
+	      }
+	    }
+	  }, {
 	    key: 'getHidden',
 	    value: function getHidden() {
 	      if (this.props.name !== null && this.props.name.length > 0) {
@@ -31007,6 +31014,10 @@ webpackJsonp([9],[
 	      }
 	      var className = this.state.status ? 'btn btn-success' : 'btn btn-danger';
 	
+	      if (this.props.small) {
+	        className = className + ' btn-sm';
+	      }
+	
 	      return _react2.default.createElement(
 	        'span',
 	        null,
@@ -31038,11 +31049,13 @@ webpackJsonp([9],[
 	  icon: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.array, _react2.default.PropTypes.bool]),
 	  handleClick: _react2.default.PropTypes.func,
 	  current: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.bool, _react2.default.PropTypes.string]),
-	  name: _react2.default.PropTypes.string
+	  name: _react2.default.PropTypes.string,
+	  small: _react2.default.PropTypes.bool
 	};
 	
 	BooleanButton.defaultProps = {
-	  name: null
+	  name: null,
+	  small: false
 	};
 	
 	exports.default = BooleanButton;
@@ -31120,7 +31133,8 @@ webpackJsonp([9],[
 	            _react2.default.createElement(_BooleanButton2.default, {
 	              name: 'security_refund',
 	              current: property.security_refund,
-	              label: ['Deposit refunded', 'Nonrefundable'] }),
+	              label: ['Deposit refunded', 'Nonrefundable'],
+	              handleClick: this.props.setValue.bind(this, 'security_refund') }),
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'input-group' },
@@ -31152,6 +31166,7 @@ webpackJsonp([9],[
 	            ),
 	            _react2.default.createElement(_BooleanButton2.default, {
 	              name: 'admin_fee_refund',
+	              handleClick: this.props.setValue.bind(this, 'admin_fee_refund'),
 	              current: property.admin_fee_refund,
 	              label: ['Admin fee refunded', 'Nonrefundable'] }),
 	            _react2.default.createElement(
@@ -31185,6 +31200,7 @@ webpackJsonp([9],[
 	            ),
 	            _react2.default.createElement(_BooleanButton2.default, {
 	              name: 'clean_fee_refund',
+	              handleClick: this.props.setValue.bind(this, 'clean_fee_refund'),
 	              current: property.clean_fee_refund,
 	              label: ['Fee refunded', 'Nonrefundable'] }),
 	            _react2.default.createElement(
@@ -31289,10 +31305,6 @@ webpackJsonp([9],[
 	var _react = __webpack_require__(/*! react */ 1);
 	
 	var _react2 = _interopRequireDefault(_react);
-	
-	var _BooleanButton = __webpack_require__(/*! ../Mixin/Form/BooleanButton.jsx */ 420);
-	
-	var _BooleanButton2 = _interopRequireDefault(_BooleanButton);
 	
 	var _BigCheckbox = __webpack_require__(/*! ../Mixin/Form/BigCheckbox.jsx */ 423);
 	

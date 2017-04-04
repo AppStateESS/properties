@@ -768,6 +768,7 @@ webpackJsonp([10],[
 	
 	      var newPosition = this.state.currentPhotos[newIndex].porder;
 	      var movingPhotoId = this.state.currentPhotos[oldIndex].id;
+	
 	      $.ajax({
 	        url: './properties/Photo/' + movingPhotoId,
 	        data: {
