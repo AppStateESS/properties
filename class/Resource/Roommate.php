@@ -106,7 +106,7 @@ class Roommate extends Base
         $this->updated = new \phpws2\Variable\DateVar(null, 'updated');
     }
 
-    public function view($format = false, $as_string=false)
+    public function view($format = false, $as_string = false)
     {
         $view = $this->getStringVars();
         if ($format) {
@@ -131,6 +131,11 @@ class Roommate extends Base
             $view['smoking'] = $this->getSmoking();
             $view['pets'] = $this->getPets();
             $view['politics'] = $this->getPolitics();
+
+            //Triggers
+            $view['college_life'] = !($this->major->isEmpty() && $this->focus->isEmpty() && $this->wake_time->isEmpty() && $this->sleep_time->isEmpty() && $this->study_time->isEmpty());
+            $view['living_habits'] = !($this->overnighter->isEmpty() && $this->cleanliness->isEmpty() && $this->smoking->isEmpty() && $this->pets->isEmpty());
+            $view['social_media'] = !($this->facebook->isEmpty() && $this->twitter->isEmpty() && $this->instagram->isEmpty());
         } else {
             $view['languages'] = $this->languages->get();
             $view['music'] = $this->music->get();
@@ -140,7 +145,7 @@ class Roommate extends Base
         return $view;
     }
 
-    protected function getHobbies($as_string=false)
+    protected function getHobbies($as_string = false)
     {
         static $hobbies = array(
             'arts_and_crafts' => 'Arts and Crafts',
@@ -172,8 +177,9 @@ class Roommate extends Base
         if ($this->hobbies->isEmpty()) {
             return null;
         }
-        $join_array = array_intersect_key($hobbies, array_flip($this->hobbies->get()));
-        
+        $join_array = array_intersect_key($hobbies,
+                array_flip($this->hobbies->get()));
+
         if ($as_string) {
             return implode(', ', $join_array);
         } else {
@@ -287,7 +293,7 @@ class Roommate extends Base
         return $overnight[$this->overnighter->get()];
     }
 
-    protected function getMusic($as_string=false)
+    protected function getMusic($as_string = false)
     {
         static $music = array(
             'alternative' => 'Alternative',
