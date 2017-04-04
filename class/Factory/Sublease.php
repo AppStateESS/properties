@@ -84,9 +84,7 @@ class Sublease extends Base
         $tpl = $sublease->view();
 
         $tpl['photo'] = $this->reactView('subleasephoto');
-        if ($admin) {
-            $tpl['photoupdate'] = $this->reactView('subleaseimage');
-        }
+        $tpl['photoupdate'] = $admin ? $this->reactView('subleaseimage') : null;
         $photoFactory = new Photo;
         $tpl['current_photos'] = json_encode($photoFactory->thumbs($sublease->id));
         $template = new \phpws2\Template($tpl);
