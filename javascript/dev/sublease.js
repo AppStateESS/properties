@@ -3623,7 +3623,7 @@ webpackJsonp([14],{
 	          searchVars: this.searchVars,
 	          clearAmenities: this.clearAmenities,
 	          resetConditions: this.resetConditions,
-	          updateSortType: this.updateSortType,
+	          updateSortBy: this.updateSortBy,
 	          sortType: this.sortType,
 	          toggle: this.toggle }),
 	        _react2.default.createElement(_Listing2.default, { subleases: this.state.subleases })

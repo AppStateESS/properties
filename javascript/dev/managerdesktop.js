@@ -468,8 +468,6 @@ webpackJsonp([2],{
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	/* global $ */
-	
 	var PropertyRow = function (_Row) {
 	  _inherits(PropertyRow, _Row);
 	
@@ -480,11 +478,6 @@ webpackJsonp([2],{
 	  }
 	
 	  _createClass(PropertyRow, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      $('[data-toggle="tooltip"]').tooltip();
-	    }
-	  }, {
 	    key: 'getRent',
 	    value: function getRent() {
 	      var rent = '$ ' + this.props.property.monthly_rent + ' ' + this.props.property.lease_type;

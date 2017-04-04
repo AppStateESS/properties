@@ -7465,6 +7465,8 @@ webpackJsonp([16],[
 	
 	var _Bind2 = _interopRequireDefault(_Bind);
 	
+	var _reactSortableHoc = __webpack_require__(/*! react-sortable-hoc */ 439);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -7473,7 +7475,7 @@ webpackJsonp([16],[
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	/* global $, loadPhotos, editPhotos, currentPhotos */
+	/* global $, subleaseId, loadPhotos, editPhotos, currentPhotos */
 	
 	var SubleaseImage = function (_React$Component) {
 	  _inherits(SubleaseImage, _React$Component);
@@ -7489,7 +7491,7 @@ webpackJsonp([16],[
 	      currentPhotos: [],
 	      status: []
 	    };
-	    var methods = ['overlayOn', 'overlayOff', 'addPhotos', 'clearNewPhotos', 'delete'];
+	    var methods = ['overlayOn', 'overlayOff', 'addPhotos', 'clearNewPhotos', 'delete', 'onSortEnd'];
 	    (0, _Bind2.default)(methods, _this);
 	    return _this;
 	  }
@@ -7571,17 +7573,43 @@ webpackJsonp([16],[
 	      });
 	    }
 	  }, {
+	    key: 'onSortEnd',
+	    value: function onSortEnd(movement) {
+	      var oldIndex = movement.oldIndex;
+	      var newIndex = movement.newIndex;
+	
+	      var newPosition = this.state.currentPhotos[newIndex].porder;
+	      var movingPhotoId = this.state.currentPhotos[oldIndex].id;
+	      $.ajax({
+	        url: './properties/SubleasePhoto/' + movingPhotoId,
+	        data: {
+	          subleaseId: subleaseId,
+	          varname: 'move',
+	          newPosition: newPosition
+	        },
+	        dataType: 'json',
+	        type: 'patch'
+	      }).done(function (data) {
+	        if (data.success) {
+	          this.setState({
+	            currentPhotos: (0, _reactSortableHoc.arrayMove)(this.state.currentPhotos, oldIndex, newIndex)
+	          });
+	        }
+	      }.bind(this));
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var overlay = void 0;
 	      if (this.state.show) {
 	        overlay = _react2.default.createElement(_ImageOverlay2.default, {
-	          'delete': this.delete,
+	          deletePhoto: this.delete,
 	          close: this.overlayOff,
 	          clear: this.clearNewPhotos,
 	          update: this.addPhotos,
 	          newPhotos: this.state.newPhotos,
 	          currentPhotos: this.state.currentPhotos,
+	          onSortEnd: this.onSortEnd,
 	          status: this.state.status });
 	      }
 	      return _react2.default.createElement(
