@@ -458,15 +458,6 @@ webpackJsonp([3],{
 	          window.location.href = './properties/Manager/desktop';
 	        }
 	      }.bind(this));
-	      /*
-	      $.post('properties/Manager/', this.state.manager, null, 'json').done(function (data) {
-	        if (data.status === 'error') {
-	          this.postErrors(data)
-	        } else {
-	          window.location.href = './properties/Manager/desktop'
-	        }
-	      }.bind(this)).fail(function () {})
-	      */
 	    }
 	  }, {
 	    key: 'checkPhone',
