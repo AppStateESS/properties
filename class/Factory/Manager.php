@@ -57,6 +57,7 @@ class Manager extends Base
         $listing->offset = $request->pullGetString('offset', true);
         $listing->active = null;
         $listing->approved = 0;
+        $listing->limit = 0;
         $listing->include_property_count = false;
         $listing->orderby = 'company_name';
         $listing->orderby_dir = 'asc';
@@ -115,6 +116,26 @@ class Manager extends Base
                 $manager->active = true;
                 $manager->approved = true;
             }
+            $this->saveResource($manager);
+        } catch (\Exception $e) {
+            \phpws2\Error::log($e);
+            $json = array('status' => 'fail', 'error' => 'An unrecoverable error occurred.');
+        }
+        $json = array('status' => 'success');
+        return $json;
+    }
+
+    /**
+     * Limited field update for managers only.
+     * @return string
+     */
+    public function managerUpdate(\Canopy\Request $request)
+    {
+        $manager = $this->load($request->pullPutInteger('id'));
+        $ignore = array('username', 'password', 'last_log', 'active', 'private', 
+            'approved', 'pw_timeout', 'pw_hash', 'inquiry_date', 'inquiry_type', 'property_count');
+        $manager->loadPutByType($request, $ignore);
+        try {
             $this->saveResource($manager);
         } catch (\Exception $e) {
             \phpws2\Error::log($e);
@@ -232,6 +253,7 @@ class Manager extends Base
      */
     private function emailRefusal($manager, $reason)
     {
+        $subject = 'Property manager application declined';
         switch ($reason) {
             case 'duplicate':
                 $refusalLetter = 'duplicate.html';
@@ -249,12 +271,13 @@ class Manager extends Base
                 throw new \Exception('Bad reason variable sent to refusal');
         }
 
-        $this->sendEmail($manager, $refusalLetter);
+        $this->sendEmail($manager, $refusalLetter, $subject);
     }
 
-    private function emailApproval($manager)
+    public function emailApproval($manager)
     {
-        $this->sendEmail($manager, 'approval.html');
+        $this->sendEmail($manager, 'approval.html',
+                'Property manager account approved');
     }
 
     /**
@@ -275,6 +298,7 @@ class Manager extends Base
      */
     private function emailInquiry($manager, $type)
     {
+        $subject = 'Manager account inquiry';
         switch ($type) {
             case 'sublease':
                 $inquiryLetter = 'sublease.html';
@@ -288,10 +312,10 @@ class Manager extends Base
                 throw new \Exception('Bad reason variable sent to inquiry');
         }
 
-        $this->sendEmail($manager, $inquiryLetter);
+        $this->sendEmail($manager, $inquiryLetter, $subject);
     }
 
-    private function sendEmail($manager, $email_template)
+    private function sendEmail($manager, $email_template, $subject)
     {
         $contact_info = $this->contactInformation();
         $vars = $manager->view(false);
@@ -305,7 +329,7 @@ class Manager extends Base
         //$transport = \Swift_SendmailTransport::newInstance();
 
         $message = \Swift_Message::newInstance();
-        $message->setSubject('Manager request denied');
+        $message->setSubject($subject);
         $message->setFrom($contact_info['our_email']);
         $message->setTo($manager->email_address);
         $message->setBody($content, 'text/html');
@@ -560,12 +584,11 @@ class Manager extends Base
         $tbl = $db->addTable('prop_contacts');
 
         $tbl->addFieldConditional('username', $username);
-        $tbl->addFieldConditional('approved', 1);
-        $tbl->addFieldConditional('active', 1);
-        $manager = $db->selectOneRow();
-        if ($manager !== false && password_verify($password,
-                        $manager['password'])) {
-            return $manager['id'];
+        $row = $db->selectOneRow();
+        if ($row !== false && password_verify($password, $row['password'])) {
+            $manager = $this->build();
+            $manager->setVars($row);
+            return $manager;
         } else {
             return false;
         }
