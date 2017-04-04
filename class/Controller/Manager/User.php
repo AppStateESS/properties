@@ -71,7 +71,7 @@ class User extends \properties\Controller\SubController
                 \PHPWS_Core::reroute('./properties/Manager/notActive');
             } else {
                 $session = \phpws2\Session::getInstance();
-                $session->property_manager_id = $manager_id;
+                $session->property_manager_id = $manager->id;
                 \PHPWS_Core::reroute('./properties/Manager/desktop');
             }
         } else {
@@ -136,7 +136,7 @@ class User extends \properties\Controller\SubController
         return $this->factory->reactView('managersignup');
     }
 
-    protected function savePostCommand(Request $request)
+    protected function applyPostCommand(Request $request)
     {
         return $this->factory->signup($request);
     }
