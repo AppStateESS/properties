@@ -17,6 +17,12 @@ export default class ManagerSignin extends React.Component {
     this.url = new DecodeUrl
   }
 
+  componentDidMount(){
+    if (this.url.values.username) {
+      this.setState({username: this.url.values.username})
+    }
+  }
+
   updateUsername(e) {
     this.setState({username: e.target.value})
   }
@@ -41,12 +47,13 @@ export default class ManagerSignin extends React.Component {
           <div className="alert alert-warning">
             <p>Could not log-in account.</p>
             <ul>
-              <li>
-                <a href="./properties/Manager/signup">Have you applied for an account yet?</a>
-              </li>
+              <li>Is your caps lock on?</li>
               <li>Has your account been approved?</li>
               <li>
-                <a href="./properties/Manager/forgot">Did you forget your password?</a>
+              <a href="./properties/Manager/signup">Have you applied for an account yet? <i className="fa fa-external-link"></i></a>
+              </li>
+              <li>
+                <a href="./properties/Manager/forgot">Did you forget your password? <i className="fa fa-external-link"></i></a>
               </li>
             </ul>
           </div>
