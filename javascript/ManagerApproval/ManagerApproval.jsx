@@ -76,7 +76,7 @@ export default class ManagerApproval extends React.Component {
 
   approve(managerId, key) {
     $.ajax({
-      url: './properties/Manager/' + managerId,
+      url: './properties/Manager/' + managerId + '/approve',
       data: {
         values: [
           {
@@ -193,12 +193,12 @@ export default class ManagerApproval extends React.Component {
     let listing
     let companyAddress
     let websiteAddress
-
     if (this.state.managers === null) {
       return <Waiting label="Loading managers..."/>
-    } else if (this.state.managers.length === 0) {
+    } else if (this.state.managers.length === 0 || this.state.managers[0] === undefined) {
       return <div>No managers need approving.</div>
     }
+
     listing = this.state.managers.map(function (value, key) {
       companyAddress = empty(value.company_address)
         ? <em>No physical address</em>
@@ -287,7 +287,8 @@ export default class ManagerApproval extends React.Component {
 
     if (this.state.emailWarning) {
       errorWarning = <div className="alert alert-danger">
-        <i className="fa fa-exclamation-circle"></i>&nbsp;<a href="./properties/Settings/">Site email address is not set.</a> Your email will be used until sent.</div>
+        <i className="fa fa-exclamation-circle"></i>&nbsp;<a href="./properties/Settings/">Site email address is not set.</a>
+        Your email will be used until sent.</div>
     }
     let modal
     if (this.state.modal) {
