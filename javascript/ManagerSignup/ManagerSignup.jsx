@@ -251,7 +251,7 @@ export default class ManagerSignin extends React.Component {
 
     $.ajax({
       method: 'POST',
-      url: './properties/Manager',
+      url: './properties/Manager/apply',
       dataType: 'json',
       data: values,
       success: function (data) {
