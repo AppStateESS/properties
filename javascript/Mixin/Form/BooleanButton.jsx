@@ -19,6 +19,12 @@ class BooleanButton extends React.Component {
     }
   }
 
+  componentWillUpdate(props) {
+    if (props.current !== this.state.status) {
+      this.setState({status : !this.state.status})
+    }
+  }
+
   getHidden() {
     if (this.props.name !== null && this.props.name.length > 0) {
       return <input type="hidden" name={this.props.name} value={this.state.status}/>
@@ -65,6 +71,10 @@ class BooleanButton extends React.Component {
       ? 'btn btn-success'
       : 'btn btn-danger'
 
+    if (this.props.small) {
+      className = className + ' btn-sm'
+    }
+
     return (
       <span>
         <button
@@ -91,11 +101,13 @@ BooleanButton.propTypes = {
   icon: React.PropTypes.oneOfType([React.PropTypes.array, React.PropTypes.bool]),
   handleClick: React.PropTypes.func,
   current: React.PropTypes.oneOfType([React.PropTypes.bool, React.PropTypes.string]),
-  name: React.PropTypes.string
+  name: React.PropTypes.string,
+  small : React.PropTypes.bool
 }
 
 BooleanButton.defaultProps = {
-  name: null
+  name: null,
+  small : false
 }
 
 export default BooleanButton
