@@ -68,6 +68,16 @@ class Manager extends User
         }
     }
 
+    protected function deleteCommand(\Canopy\Request $request)
+    {
+        $property = $this->factory->load($this->id);
+        if ($property->contact_id != $this->role->getId()) {
+            throw new \properties\Exception\PropertyPrivilege;
+        }
+        $this->factory->delete($property);
+        return array('success' => true);
+    }
+
     protected function jsonPatchCommand(\Canopy\Request $request)
     {
 

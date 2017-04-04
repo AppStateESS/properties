@@ -73,6 +73,13 @@ class Admin extends User
         return $json;
     }
 
+    protected function deleteCommand(\Canopy\Request $request)
+    {
+        $property = $this->factory->load($this->id);
+        $this->factory->delete($property);
+        return array('success' => true);
+    }
+
     public function getHtml(\Canopy\Request $request)
     {
         $this->addApprovalLink();
