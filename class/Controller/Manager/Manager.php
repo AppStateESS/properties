@@ -95,7 +95,17 @@ class Manager extends User
                 $this->id);
         return $json;
     }
-    
+
+    /**
+     * 
+     * @param Request $request
+     * @return type
+     */
+    protected function savePostCommand(Request $request)
+    {
+        return $this->factory->signup($request);
+    }
+
     protected function updatePutCommand(Request $request)
     {
         if ($request->pullPutInteger('id') != $this->getCurrentLoggedManager()) {
@@ -103,4 +113,5 @@ class Manager extends User
         }
         return $this->factory->managerUpdate($request);
     }
+
 }
