@@ -12,7 +12,7 @@
         <div class="col-sm-8 header">
             <h2 class="sublease-title">Sublease: <?=$name?></h2>
             <h3 class="sublease-address"><a href="<?=$property_map_address?>" target="_blank"><?=$address?>&nbsp;<i class="fa fa-map"></i></a></h3>
-            <div><?=$bedroom_no?> bed<?=$bedroom_no>1?'s':null?>, <?=$bathroom_no?> bath<?=$bathroom_no>1?'s':null?> - <?= '$', $monthly_rent, ' ', $lease_type?></div>
+            <div><?=$bedroom_no?> bed, <?=$bathroom_no?> bath <?=$proptype?> - <?= '$', $monthly_rent, ' ', $lease_type?></div>
             <div>Availability: <?=$move_in_date?></div>
         </div>
         <div class="col-sm-4">
@@ -39,6 +39,10 @@
                 </span> Other information</h4>
             <table class="table table-striped">
                 <tr>
+                    <th>Distance from campus:</th>
+                    <td><?=$campus_distance?></td>
+                </tr>
+                <tr>
                     <th>Sublease ends:</th>
                     <td><?=$move_out_date?></td>
                 </tr>
@@ -50,6 +54,16 @@
                     <th>Smoking</th>
                     <td><?=$smoking_allowed?></td>
                 </tr>
+                <tr>
+                    <th>Pets allowed</th>
+                    <td><?=$pets_allowed ? 'Yes':'No'?></td>
+                </tr>
+                <?php if(!empty($additional_fees)):?>
+                <tr>
+                    <th>Additional fees</th>
+                    <td><?=$additional_fees?></td>
+                </tr>
+                <?php endif;?>
             </table>
             <h4>
                 <span class="fa-stack">
