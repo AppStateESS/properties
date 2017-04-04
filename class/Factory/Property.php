@@ -171,8 +171,8 @@ class Property extends Base
         $tpl['property_edit_button'] = null;
         if ($admin) {
             $property_id = $property->id;
-            NavBar::addOption("<a href='./properties/Property/$property_id/edit'><i class='fa fa-edit'></i>&nbsp;Edit property</a>");
-            NavBar::addOption("<a onClick='editPhotos.callback();return false' href='#'><i class='fa fa-camera'></i>&nbsp;Edit photos</a>");
+            NavBar::addOption("<a href='./properties/Property/$property_id/edit'><i class='fa fa-edit'></i>&nbsp;Edit property</a>", true);
+            NavBar::addOption("<a onClick='editPhotos.callback();return false' href='#'><i class='fa fa-camera'></i>&nbsp;Edit photos</a>", true);
             $tpl['photoupdate'] = $this->reactView('propertyimage');
             $tpl['property_edit_button'] = null;
         }
