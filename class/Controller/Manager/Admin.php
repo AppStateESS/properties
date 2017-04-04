@@ -92,16 +92,16 @@ class Admin extends User
     protected function jsonPatchCommand(Request $request)
     {
         $this->applyPatchValues($request);
-        return array('success'=>true);
+        return array('success' => true);
     }
-    
+
     protected function approvePatchCommand(Request $request)
     {
         $this->applyPatchValues($request);
         $this->factory->emailApproval($this->factory->load($this->id));
-        return array('success'=>true);
+        return array('success' => true);
     }
-    
+
     private function applyPatchValues(Request $request)
     {
         if ($request->patchVarIsset('values')) {
@@ -125,6 +125,11 @@ class Admin extends User
     }
 
     protected function signinHtmlCommand(\Canopy\Request $request)
+    {
+        return '<p>Logout of your administrator account to sign in as a manager</p>';
+    }
+
+    protected function editHtmlCommand(Request $request)
     {
         return '<p>Logout of your administrator account to sign in as a manager</p>';
     }
