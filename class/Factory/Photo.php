@@ -206,7 +206,7 @@ abstract class Photo extends Base
             $photo->title = $title;
             $photo->path = $this->moveImage($pic, $owner_id);
             $this->makeThumbnail($photo);
-            $photo->porder = $this->getMaxOrder($photo->pid) + 1;
+            $photo->porder = $this->getMaxOrder($photo->{$this->item_column}) + 1;
             self::saveResource($photo);
             $result['photo'] = array('original' => $photo->path, 'thumbnail' => $photo->getThumbnail(), 'id' => $photo->getId(), 'porder' => $photo->porder);
             $result['success'] = true;
@@ -225,8 +225,8 @@ abstract class Photo extends Base
 
     public function sort($photo, $new_position)
     {
-        $sortable = new \phpws2\Sortable('prop_photo', 'porder');
-        $sortable->setAnchor('pid', $photo->pid);
+        $sortable = new \phpws2\Sortable($this->table_name, 'porder');
+        $sortable->setAnchor($this->item_column, $photo->{$this->item_column});
         $sortable->moveTo($photo->getId(), $new_position);
     }
 
