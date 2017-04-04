@@ -5,211 +5,209 @@
     let currentPhotos = <?=$current_photos?>
 
     const activate = function() {
-        $.ajax({
+            $.ajax({
             url: './properties/Property/' + propertyId,
-            data: {
-                varname: 'active',
-                value: 1
-            },
-            dataType: 'json',
-            type: 'patch'
-        }).done(function() {
-            location.reload()
-        })
-    }
+                    data: {
+                    varname: 'active',
+                            value: 1
+                            },
+                            dataType: 'json',
+                            type: 'patch'
+                            }).done(function() {
+                            location.reload()
+                            })
+                            }
 </script>
 
 <?=$inactive_warning ? '<div class="alert alert-danger"><i class="fa fa-ban"></i> Notice: this property is currently not active. <button onClick="activate()" class="pull-right btn btn-success btn-sm">Reactivate</button></div>' : null;?>
-    <?= isset($manager_warning) ? '<div class="alert alert-danger">' . $manager_warning . '</div>' : null;?>
-        <div class="property-view">
-            <div class="row">
-                <div class="header col-md-7 col-lg-8">
-                    <h2 class="property-title"><?=$name?></h2>
-                    <h3 class="property-address"><a href="<?=$property_map_address?>" target="_blank"><i class="fa fa-map"></i>&nbsp;<?=$address?></a></h3>
-                    <div>
-                        <?=$bedroom_no?>
-                        <?=$bedroom_no>1?'beds':'bed'?>,
-                        <?=$bathroom_no?>
-                        <?=$bathroom_no>1?'baths':'bath'?> -
-                        <?= '$', $monthly_rent, ' ', $lease_type?>
-                    </div>
-                    <div>Availability:
-                        <?=$move_in_date?>
-                    </div>
-                </div>
+<?= isset($manager_warning) ? '<div class="alert alert-danger">' . $manager_warning . '</div>' : null;?>
+<div class="property-view">
+    <div class="row">
+        <div class="header col-md-7 col-lg-8">
+            <h2 class="property-title"><?=$name?></h2>
+            <h3 class="property-address"><a href="<?=$property_map_address?>" target="_blank"><i class="fa fa-map"></i>&nbsp;<?=$address?></a></h3>
+            <div>
+                <?=$bedroom_no?> bed,
+                <?=$bathroom_no?> bath
+                <?=$proptype?> -
+                <?= '$', $monthly_rent, ' ', $lease_type?> 
+            </div>
+            <div>Availability:
+                <?=$move_in_date?>
+            </div>
+        </div>
 
-                <div class="col-md-5 contact-info col-lg-4">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <a href="./properties/Manager/<?=$contact_id?>/view"><h4><?=$company_name?></h4></a>
-                        </div>
-                        <div class="panel-body">
-                            <?php if (!empty($company_url)):?>
-                            <p style="width: 100%;overflow: hidden;white-space:nowrap"><a href="<?=$company_url?>" target="_blank"><i class="fa fa-external-link"></i>&nbsp;<?=preg_replace('/^http:\/\//', '', $company_url)?></a></p>
-                            <?php endif;?>
-                            <p><a href="tel:<?=$phone?>" target="_blank"><i class="fa fa-phone"></i>&nbsp;<?=$phone?></a></p>
-                            <p><a href="mailto:<?=$email_address?>" target="_blank"><i class="fa fa-envelope"></i>&nbsp;<?=$email_address?></a></p>
-                            <?php if (!empty($company_address)):?>
-                            <p><a href="<?=$company_map_address?>" target="_blank"><i class="fa fa-map"></i>&nbsp;<?=$company_address?></a></p>
-                            <?php endif;?>
-                        </div>
-                    </div>
+        <div class="col-md-5 contact-info col-lg-4">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <a href="./properties/Manager/<?=$contact_id?>/view"><h4><?=$company_name?></h4></a>
                 </div>
-            </div>
-            <?php if (!empty($description)):?>
-            <div class="description panel panel-primary">
                 <div class="panel-body">
-                    <?=$description?>
+                    <?php if (!empty($company_url)):?>
+                    <p style="width: 100%;overflow: hidden;white-space:nowrap"><a href="<?=$company_url?>" target="_blank"><i class="fa fa-external-link"></i>&nbsp;<?=preg_replace('/^http:\/\//', '', $company_url)?></a></p>
+                    <?php endif;?>
+                    <p><a href="tel:<?=$phone?>" target="_blank"><i class="fa fa-phone"></i>&nbsp;<?=$phone?></a></p>
+                    <p><a href="mailto:<?=$email_address?>" target="_blank"><i class="fa fa-envelope"></i>&nbsp;<?=$email_address?></a></p>
+                    <?php if (!empty($company_address)):?>
+                    <p><a href="<?=$company_map_address?>" target="_blank"><i class="fa fa-map"></i>&nbsp;<?=$company_address?></a></p>
+                    <?php endif;?>
                 </div>
             </div>
-            <?php endif; ?>
-            <hr />
-            <div class="row">
-                <div class="col-md-6 col-md-push-6">
-                    <?=$photo?>
-                </div>
-                <div class="col-md-6 col-md-pull-6">
-                    <?php if ($has_amenities): ?>
-                    <div style="margin-bottom:2em">
-                        <h4 class="text-success">
+        </div>
+    </div>
+    <?php if (!empty($description)):?>
+    <div class="description panel panel-primary">
+        <div class="panel-body">
+            <?=$description?>
+        </div>
+    </div>
+    <?php endif; ?>
+    <hr />
+    <div class="row">
+        <div class="col-md-6 col-md-push-6">
+            <?=$photo?>
+        </div>
+        <div class="col-md-6 col-md-pull-6">
+            <?php if ($has_amenities): ?>
+            <div style="margin-bottom:2em">
+                <h4 class="text-success">
                     <span class="fa-stack">
                         <i class="fa fa-circle fa-stack-2x"></i>
                         <i class="fa fa-diamond fa-stack-1x fa-inverse"></i>
                     </span>
                     Amenities/Features</h4>
-                        <ul>
-                            <?php if ($close_to_campus):?>
-                            <li>Close to campus</li>
-                            <?php endif; ?>
-                            <?php if ($furnished):?>
-                            <li>Furnished</li>
-                            <?php endif; ?>
-                            <?php if ($airconditioning === '1'):?>
-                            <li>Air Conditioning</li>
-                            <?php endif; ?>
-                            <?php if ($high_speed):?>
-                            <li>High speed Internet</li>
-                            <?php endif;?>
-                            <?php if ($dishwasher === '1'):?>
-                            <li>Dishwasher</li>
-                            <?php endif; ?>
-                            <?php if ($utilities_inc):?>
-                            <li>Utilities included</li>
-                            <?php endif;?>
-                            <?php if ($clubhouse === '1'):?>
-                            <li>Clubhouse</li>
-                            <?php endif; ?>
-                            <?php if ($appalcart === '1'):?>
-                            <li>AppalCART</li>
-                            <?php endif; ?>
-                            <?php if ($workout_room):?>
-                            <li>Workout room</li>
-                            <?php endif;?>
-                            <?php if ($pets_allowed === '1'): ?>
-                            <li>Pets allowed</li>
-                            <?php endif;?>
-                        </ul>
-                    </div>
-                    <?php endif;// has_amenities?>
+                <ul>
+                    <?php if ($close_to_campus):?>
+                    <li>Close to campus</li>
+                    <?php endif; ?>
+                    <?php if ($furnished):?>
+                    <li>Furnished</li>
+                    <?php endif; ?>
+                    <?php if ($airconditioning === '1'):?>
+                    <li>Air Conditioning</li>
+                    <?php endif; ?>
+                    <?php if ($high_speed):?>
+                    <li>High speed Internet</li>
+                    <?php endif;?>
+                    <?php if ($dishwasher === '1'):?>
+                    <li>Dishwasher</li>
+                    <?php endif; ?>
+                    <?php if ($utilities_inc):?>
+                    <li>Utilities included</li>
+                    <?php endif;?>
+                    <?php if ($clubhouse === '1'):?>
+                    <li>Clubhouse</li>
+                    <?php endif; ?>
+                    <?php if ($appalcart === '1'):?>
+                    <li>AppalCART</li>
+                    <?php endif; ?>
+                    <?php if ($workout_room):?>
+                    <li>Workout room</li>
+                    <?php endif;?>
                     <?php if ($pets_allowed === '1'): ?>
-                    <h4 class="text-success"><span class="fa-stack">
+                    <li>Pets allowed</li>
+                    <?php endif;?>
+                </ul>
+            </div>
+            <?php endif;// has_amenities?>
+            <?php if ($pets_allowed === '1'): ?>
+            <h4 class="text-success"><span class="fa-stack">
                     <i class="fa fa-circle fa-stack-2x"></i>
                     <i class="fa fa-paw fa-stack-1x fa-inverse"></i>
-                </span> Pet policy</h4>
-                    <h5>Pets allowed</h5>
-                    <?php if (empty($pet_type) && empty($pet_fee) && empty($pet_deposit)): ?>
-                    <p>Contact our office for details.</p>
-                    <?php endif;?>
-                    <table class="table table-striped">
-                        <?php if (!empty($pet_type)):?>
-                        <tr>
-                            <th>Allowed pet types</th>
-                            <td>
-                                <?=$pet_type?>
-                            </td>
-                        </tr>
-                        <?php endif; ?>
-                        <?php if ($pet_fee):?>
-                        <tr>
-                            <th>Monthly fee</th>
-                            <td>$
-                                <?=$pet_fee?>
-                            </td>
-                        </tr>
-                        <?php endif; ?>
-                        <?php if ($pet_deposit):?>
-                        <tr>
-                            <th>Deposit</th>
-                            <td>$
-                                <?=$pet_deposit?> <small class="text-muted">(<?=$pet_dep_refund?>)</small></td>
-                        </tr>
-                        <?php endif; ?>
-                    </table>
-                    <?php endif; ?>
+                </span> Pets allowed</h4>
+            <?php if (empty($pet_type) && empty($pet_fee) && empty($pet_deposit)): ?>
+            <p>Contact our office for details.</p>
+            <?php endif;?>
+            <table class="table table-striped">
+                <?php if (!empty($pet_type)):?>
+                <tr>
+                    <th>Allowed pet types</th>
+                    <td>
+                        <?=$pet_type?>
+                    </td>
+                </tr>
+                <?php endif; ?>
+                <?php if ($pet_fee):?>
+                <tr>
+                    <th>Monthly fee</th>
+                    <td>$
+                        <?=$pet_fee?>
+                    </td>
+                </tr>
+                <?php endif; ?>
+                <?php if ($pet_deposit):?>
+                <tr>
+                    <th>Deposit</th>
+                    <td>$
+                        <?=$pet_deposit?> <small class="text-muted">(<?=$pet_dep_refund?>)</small></td>
+                </tr>
+                <?php endif; ?>
+            </table>
+            <?php endif; ?>
 
-                    <h4 class="text-success"><span class="fa-stack">
+            <h4 class="text-success"><span class="fa-stack">
                     <i class="fa fa-circle fa-stack-2x"></i>
                     <i class="fa fa-check fa-stack-1x fa-inverse"></i>
                 </span> Other information</h4>
-                    <table class="table table-striped">
-                        <tr>
-                            <th>Distance to campus</th>
-                            <td>
-                                <?=$campus_distance?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Contract length</th>
-                            <td>
-                                <?=$contract_length?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Parking per unit</th>
-                            <td>
-                                <?=$parking_per_unit?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Student preference</th>
-                            <td>
-                                <?=$student_type?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Smoking</th>
-                            <td>
-                                <?=$smoking_allowed?>
-                            </td>
-                        </tr>
-                    </table>
-                    <?php if ($admin_fee_amt > 0 || $security_amt > 0 || $clean_fee_amt > 0 || $parking_fee > 0 || $other_fees > 0): ?>
-                    <h4 class="text-success"><span class="fa-stack">
+            <table class="table table-striped">
+                <tr>
+                    <th>Distance to campus</th>
+                    <td>
+                        <?=$campus_distance?>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Contract length</th>
+                    <td>
+                        <?=$contract_length?>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Parking per unit</th>
+                    <td>
+                        <?=$parking_per_unit?>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Student preference</th>
+                    <td>
+                        <?=$student_type?>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Smoking</th>
+                    <td>
+                        <?=$smoking_allowed?>
+                    </td>
+                </tr>
+            </table>
+            <?php if ($admin_fee_amt > 0 || $security_amt > 0 || $clean_fee_amt > 0 || $parking_fee > 0 || $other_fees > 0): ?>
+            <h4 class="text-success"><span class="fa-stack">
                     <i class="fa fa-circle fa-stack-2x"></i>
                     <i class="fa fa-money fa-stack-1x fa-inverse"></i>
                 </span> Expenses</h4>
-                    <table class="table table-striped">
-                        <?php if ($admin_fee_amt > 0):?>
-                        <tr>
-                            <th>Administrative</th>
-                            <td>$
-                                <?=$admin_fee_amt?> <small class="text-muted">(<?=$admin_fee_refund?>)</small></td>
-                        </tr>
-                        <?php endif; ?>
+            <table class="table table-striped">
+                <?php if ($admin_fee_amt > 0):?>
+                <tr>
+                    <th>Administrative</th>
+                    <td>$
+                        <?=$admin_fee_amt?> <small class="text-muted">(<?=$admin_fee_refund?>)</small></td>
+                </tr>
+                <?php endif; ?>
 
-                        <?php if ($security_amt > 0):?>
-                        <tr>
-                            <th>Security fee</th>
-                            <td>$
-                                <?=$security_amt?> <small class="text-muted">(<?=$security_refund?>)</small></td>
-                        </tr>
-                        <?php endif; ?>
-                        <?php if ($clean_fee_amt > 0):?>
-                        <tr>
-                            <th>Cleaning fee</small>
-                            </th>
-                            <td>$
-                                <?=$clean_fee_amt?> <small class="text-muted">(<?=$clean_fee_refund?>)</td>
+                <?php if ($security_amt > 0):?>
+                <tr>
+                    <th>Security fee</th>
+                    <td>$
+                        <?=$security_amt?> <small class="text-muted">(<?=$security_refund?>)</small></td>
+                </tr>
+                <?php endif; ?>
+                <?php if ($clean_fee_amt > 0):?>
+                <tr>
+                    <th>Cleaning fee</small>
+                    </th>
+                    <td>$
+                        <?=$clean_fee_amt?> <small class="text-muted">(<?=$clean_fee_refund?>)</td>
                 </tr>
                 <?php endif;?>
                 <?php if ($parking_fee > 0): ?>
@@ -259,27 +257,34 @@
                     </td>
                 </tr>
             </table>
-            <?php if ($util_water > 0 || $util_trash > 0 || $util_power > 0):?>
-
-            <p class="lead">Utility imbursement</p>
+            <?php if ($util_water > 0 || $util_trash > 0 || $util_power > 0 || $util_cable > 0 || $util_internet > 0 || $util_phone > 0 || $util_gas):?>
+            <h4 class="text-success">
+                <span class="fa-stack">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-credit-card fa-stack-1x fa-inverse"></i>
+                </span>Utility imbursing
+            </h4>
             <table class="table table-striped">
                 <?php if ($util_water > 0):?>
-                <tr><th style="width:15%">Water</th><td>$<?=$util_water?></td></tr>
+                <tr><th style="width:20%">Water</th><td>$<?=$util_water?></td></tr>
                 <?php endif; ?>
-                <?php if ($util_water > 0):?>
-                <tr><th style="width:15%">Cable</th><td>$<?=$util_cable?></td></tr>
+                <?php if ($util_cable > 0):?>
+                <tr><th style="width:20%">Cable</th><td>$<?=$util_cable?></td></tr>
                 <?php endif; ?>
-                <?php if ($util_water > 0):?>
-                <tr><th style="width:15%">Internet</th><td>$<?=$util_internet?></td></tr>
+                <?php if ($util_internet > 0):?>
+                <tr><th style="width:20%">Internet</th><td>$<?=$util_internet?></td></tr>
                 <?php endif; ?>
-                <?php if ($util_water > 0):?>
-                <tr><th style="width:15%">Phone</th><td>$<?=$util_phone?></td></tr>
+                <?php if ($util_phone > 0):?>
+                <tr><th style="width:20%">Phone</th><td>$<?=$util_phone?></td></tr>
                 <?php endif; ?>
                 <?php if ($util_trash > 0):?>
-                <tr><th>Trash</th><td>$<?=$util_trash?></td></tr>
+                <tr><th style="width:20%">Trash</th><td>$<?=$util_trash?></td></tr>
                 <?php endif; ?>
                 <?php if ($util_power > 0):?>
-                <tr><th>Power</th><td>$<?=$util_power?></td></tr>
+                <tr><th style="width:20%">Power</th><td>$<?=$util_power?></td></tr>
+                <?php endif; ?>
+                <?php if ($util_fuel > 0):?>
+                <tr><th style="width:20%">Fuel/Gas</th><td>$<?=$util_fuel?></td></tr>
                 <?php endif; ?>
             </table>
             <?php endif; ?>
