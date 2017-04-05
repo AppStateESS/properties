@@ -1,0 +1,39 @@
+.sublease-form .row {
+    border : 1px solid #e3e3e3;
+}
+
+.sublease-form .row > div {
+    padding : 1em;
+}
+
+.sublease-form .form-group {
+    margin: 0;
+}
+
+.sublease-form label {
+    font-size : 1.2em;
+}
+
+.form-group {
+    margin-bottom : 2em;
+}
+
+.single-input {
+    font-size : 1.5em;
+    text-align: center;
+    border : 1px solid #e3e3e3;
+    border-radius : 5px;
+}
+
+.submit-form {
+    padding: 1em;
+    text-align : center;
+}
+.current-images {
+    border : 1px solid #bbb;
+    overflow: auto;
+}
+
+.sublease-form div.row:nth-child(odd) {
+    background-color : #d9edf7;
+}

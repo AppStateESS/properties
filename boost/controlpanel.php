@@ -1,4 +1,5 @@
 <?php
+
 /**
  * See docs/AUTHORS and docs/COPYRIGHT for relevant info.
  *
@@ -14,13 +15,14 @@
  *
  *
  * @version $Id$
- * @author Matthew McNaney <mcnaney at gmail dot com>
+ * @author Matthew McNaney <mcnaneym@appstate.edu>
  * @package
  * @license http://opensource.org/licenses/gpl-3.0.html
  */
-$link[] = array('label' => 'Properties',
-        'restricted'  => TRUE,
-        'url'         => 'index.php?module=properties&amp;aop=get',
-        'description' => dgettext('Properties', 'Manage off-campus properties.'),
-        'image'       => 'properties.gif',
-        'tab'         => 'content');
+$link[] = array(
+    'label' => 'Properties',
+    'restricted' => TRUE,
+    'url' => 'properties/',
+    'description' => 'Properties', 'Manage off-campus properties.',
+    'image' => 'properties.gif',
+    'tab' => 'content');

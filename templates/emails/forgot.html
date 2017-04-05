@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <title>Manager password forgotten</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <p><?=$first_name,' ', $last_name?>,</p>
+        <p>Someone requested your <?=$company_name?> account password be reset.</p>
+        <p><a href="<?=$reset_link?>">Click here to reset it.</a></p>
+        <p>If you did not make this request, or have changed your mind you may
+        ignore this email.</p>
+        <p>This process will expire after <?=$timeout?>.</p>
+        <p><?=$our_name?><br />
+            <?=$our_email?><br />
+            <?=$our_phone?></p>
+    </body>
+</html>

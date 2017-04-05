@@ -1,0 +1,57 @@
+.sublease-row {
+    margin-bottom : 1.2em;
+    list-style-type: none;
+    padding: 0px;
+}
+.sublease-row h4.title {
+    font-size : 1.6em;
+    margin : 0px;
+}
+
+.sublease-row .rent {
+    font-size : 1.5em;
+}
+
+.sublease-row .title {
+    font-size : 1.4em;
+}
+
+.sublease-row .availability {
+    font-size : 1.3em;
+}
+
+.sublease-row .end-date {
+    font-size : 1.3em;
+}
+
+.room-bath {
+    font-size : 1.3em;
+}
+
+.dropdown-item {
+    padding : 3px 20px;
+}
+
+.dropdown-item label {
+    font-weight: normal;
+    margin: 0px;
+    cursor: pointer;
+}
+
+.trans-enter {
+    opacity: 0.01;
+}
+
+.trans-enter.trans-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+}
+
+.trans-leave {
+    opacity: 1;
+}
+
+.trans-leave.trans-leave-active {
+    opacity: 0.01;
+    transition: opacity 300ms ease-in;
+}

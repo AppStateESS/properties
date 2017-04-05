@@ -1,0 +1,45 @@
+<style>
+    .property-manager tr {
+       font-size : 18px;
+    }
+</style>
+        <?php if ($admin): ?>
+        <fieldset>
+            <legend>Administrative information</legend>
+            <p><strong>Contact name:</strong> <?=$first_name, ' ', $last_name?></p>
+            <p><strong>Username:</strong> <?=$username?></p>
+            <p><strong>Last logged:</strong> <?=$last_log_date?></p>
+        </fieldset>
+        <?php endif; ?>
+<table class="table table-striped property-manager">
+    <tbody>
+        <tr>
+            <th style="width:30%">Company</th>
+            <td><?=$company_name?></td>
+        </tr>
+        <tr>
+            <th>Phone</th>
+            <td><a href="<?=$phone_tel?>"><?=$phone?></a></td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td><a href="mailto:<?=$email_address?>"><?=$email_address?></a></td>
+        </tr>
+        <tr>
+            <th>Address</th>
+            <td><?=$company_address ? "<a href='$company_map_address'>$company_address</a>" : '<i>None given</i>'?></td>
+        </tr>
+        <tr>
+            <th>Website</th>
+            <td><?=$company_url ? "<a href=\"$company_url\">$company_url</a>" : '<i>None given</i>'?></td>
+        </tr>
+        <tr>
+            <th>Times available for contact</th>
+            <td><?=$times_available ? $times_available : 'Any time'?></td>
+        </tr>
+        <tr>
+            <th>Number of properties</th>
+            <td><a href="./properties/Property/list?managerId=<?=$id?>"><?=$property_count?></a></td>
+        </tr>
+    </tbody>
+</table>

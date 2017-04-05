@@ -1,0 +1,47 @@
+.property-form .nav {
+    padding: 1em 0 0 0;
+}
+
+.property-form .row {
+    border : 1px solid #e3e3e3;
+}
+
+.property-form .row > div {
+    padding : 1em;
+}
+
+.property-form .form-group {
+    margin: 0;
+}
+
+.property-form label {
+    font-size : 1.2em;
+}
+
+.form-group {
+    margin-bottom : 2em;
+}
+
+.single-input {
+    font-size : 1.5em;
+    text-align: center;
+    border : 1px solid #e3e3e3;
+    border-radius : 5px;
+}
+
+.submit-form {
+    padding: 1em;
+    text-align : center;
+}
+.current-images {
+    border : 1px solid #bbb;
+    overflow: auto;
+}
+
+.property-form div.row:nth-child(odd) {
+    background-color : #d9edf7;
+}
+
+.form-section {
+    background-color : white;
+}

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * See docs/AUTHORS and docs/COPYRIGHT for relevant info.
  *
@@ -13,18 +14,16 @@
  * GNU General Public License for more details.
  *
  *
- * @version $Id$
- * @author Matthew McNaney <mcnaney at gmail dot com>
- * @package
+ * @author Matthew McNaney <mcnaneym@appstate.edu>
  * @license http://opensource.org/licenses/gpl-3.0.html
  */
-$proper_name  = 'Properties';
-$version      = '1.4.2';
-$register     = false;
-$unregister   = false;
-$import_sql   = true;
-$version_http = 'http://phpwebsite.appstate.edu/downloads/modules/properties/check.xml';
-$about        = false;
-$priority     = 50;
-$dependency   = false;
-$image_dir    = true;
+$proper_name = 'Properties';
+$version = '2.0.0';
+$register = false;
+$unregister = false;
+$import_sql = false;
+$version_http = '';
+$about = false;
+$priority = 50;
+$dependency = false;
+$image_dir = true;
