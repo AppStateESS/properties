@@ -657,6 +657,7 @@ webpackJsonp([1],{
 	                'button',
 	                {
 	                  className: 'btn btn-success',
+	                  disabled: this.state.emailWarning,
 	                  onClick: this.approve.bind(this, value.id, key) },
 	                _react2.default.createElement('i', { className: 'fa fa-check' }),
 	                '\xA0Accept'
@@ -667,7 +668,7 @@ webpackJsonp([1],{
 	                null,
 	                _react2.default.createElement(
 	                  'button',
-	                  { className: 'btn btn-info', onClick: this.inquiry.bind(this, value, key) },
+	                  { disabled: this.state.emailWarning, className: 'btn btn-info', onClick: this.inquiry.bind(this, value, key) },
 	                  _react2.default.createElement('i', { className: 'fa fa-question' }),
 	                  '\xA0Inquiry'
 	                ),
@@ -675,7 +676,7 @@ webpackJsonp([1],{
 	              ),
 	              _react2.default.createElement(
 	                'button',
-	                { className: 'btn btn-danger', onClick: this.refuse.bind(this, value, key) },
+	                { className: 'btn btn-danger', onClick: this.refuse.bind(this, value, key), disabled: this.state.emailWarning },
 	                _react2.default.createElement('i', { className: 'fa fa-ban' }),
 	                '\xA0Refuse'
 	              )
@@ -788,6 +789,7 @@ webpackJsonp([1],{
 	      }
 	      var message = this.getMessage();
 	      var errorWarning = void 0;
+	      var modal = void 0;
 	
 	      if (this.state.emailWarning) {
 	        errorWarning = _react2.default.createElement(
@@ -800,15 +802,15 @@ webpackJsonp([1],{
 	            { href: './properties/Settings/' },
 	            'Site email address is not set.'
 	          ),
-	          'Your email will be used until sent.'
+	          '\xA0 You will not be able to perform any actions until it is entered.'
 	        );
-	      }
-	      var modal = void 0;
-	      if (this.state.modal) {
-	        if (this.state.modalType === 'refuse') {
-	          modal = _react2.default.createElement(_RefuseModal2.default, { reason: this.refuseReason, manager: this.currentManager });
-	        } else if (this.state.modalType === 'inquiry') {
-	          modal = _react2.default.createElement(_InquiryModal2.default, { inquiry: this.inquiryType, manager: this.currentManager });
+	      } else {
+	        if (this.state.modal) {
+	          if (this.state.modalType === 'refuse') {
+	            modal = _react2.default.createElement(_RefuseModal2.default, { reason: this.refuseReason, manager: this.currentManager });
+	          } else if (this.state.modalType === 'inquiry') {
+	            modal = _react2.default.createElement(_InquiryModal2.default, { inquiry: this.inquiryType, manager: this.currentManager });
+	          }
 	        }
 	      }
 	      return _react2.default.createElement(
