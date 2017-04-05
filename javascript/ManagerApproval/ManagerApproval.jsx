@@ -229,16 +229,17 @@ export default class ManagerApproval extends React.Component {
             <div className="pull-right">
               <button
                 className="btn btn-success"
+                disabled={this.state.emailWarning}
                 onClick={this.approve.bind(this, value.id, key)}>
                 <i className="fa fa-check"></i>&nbsp;Accept</button>&nbsp;{value.inquiry_date
                 ? null
                 : (
                   <span>
-                    <button className="btn btn-info" onClick={this.inquiry.bind(this, value, key)}>
+                    <button disabled={this.state.emailWarning} className="btn btn-info" onClick={this.inquiry.bind(this, value, key)}>
                       <i className="fa fa-question"></i>&nbsp;Inquiry</button>&nbsp;
                   </span>
                 )}
-              <button className="btn btn-danger" onClick={this.refuse.bind(this, value, key)}>
+              <button className="btn btn-danger" onClick={this.refuse.bind(this, value, key)} disabled={this.state.emailWarning}>
                 <i className="fa fa-ban"></i>&nbsp;Refuse</button>
             </div>
           </div>
@@ -284,18 +285,18 @@ export default class ManagerApproval extends React.Component {
     }
     const message = this.getMessage()
     let errorWarning
+    let modal
 
     if (this.state.emailWarning) {
       errorWarning = <div className="alert alert-danger">
-        <i className="fa fa-exclamation-circle"></i>&nbsp;<a href="./properties/Settings/">Site email address is not set.</a>
-        Your email will be used until sent.</div>
-    }
-    let modal
-    if (this.state.modal) {
-      if (this.state.modalType === 'refuse') {
-        modal = <RefuseModal reason={this.refuseReason} manager={this.currentManager}/>
-      } else if (this.state.modalType === 'inquiry') {
-        modal = <InquiryModal inquiry={this.inquiryType} manager={this.currentManager}/>
+        <i className="fa fa-exclamation-circle"></i>&nbsp;<a href="./properties/Settings/">Site email address is not set.</a>&nbsp; You will not be able to perform any actions until it is entered.</div>
+    } else {
+      if (this.state.modal) {
+        if (this.state.modalType === 'refuse') {
+          modal = <RefuseModal reason={this.refuseReason} manager={this.currentManager}/>
+        } else if (this.state.modalType === 'inquiry') {
+          modal = <InquiryModal inquiry={this.inquiryType} manager={this.currentManager}/>
+        }
       }
     }
     return (
