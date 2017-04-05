@@ -73,7 +73,7 @@ class Admin extends User
         $json['admin'] = 1;
         $json['managerList'] = $this->factory->unapprovedListing($request);
         $json['email_warning'] = empty(\phpws2\Settings::get('properties',
-                        'site_email'));
+                        'our_email'));
         return $json;
     }
 
