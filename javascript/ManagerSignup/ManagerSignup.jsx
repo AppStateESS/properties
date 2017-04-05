@@ -135,10 +135,10 @@ export default class ManagerSignin extends React.Component {
   }
 
   checkPassword() {
-    const status = this.state.password.length >= 10
+    const status = this.state.password.length >= 8
     this.setError('password', status
       ? null
-      : 'Password must be 10 characters or more')
+      : 'Password must be 8 characters or more')
     return status
   }
 
@@ -304,7 +304,7 @@ export default class ManagerSignin extends React.Component {
               change={this.updateState.bind(this, 'password')}
               errorMessage={this.state.errors.password}
               blur={this.checkPassword}
-              placeholder="10 character minimum"
+              placeholder="8 character minimum"
               value={this.state.password}
               onEmpty={this.setEmpty.bind(this, 'password')}
               label="Password"/>
