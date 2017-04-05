@@ -133,6 +133,10 @@ class User extends \properties\Controller\SubController
 
     protected function signupHtmlCommand(Request $request)
     {
+        $email = \phpws2\Settings::get('properties', 'our_email');
+        if (empty($email)) {
+            return '<h2>Sorry</h2><p>Manager signup is disabled at this time. Please try back later.</p>';
+        }
         return $this->factory->reactView('managersignup');
     }
 
