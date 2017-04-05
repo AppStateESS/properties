@@ -848,7 +848,7 @@ webpackJsonp([8],{
 	      type: null,
 	      moreRows: true
 	    };
-	
+	    _this.showActiveButton = false;
 	    _this.managerId = 0;
 	    (0, _Bind2.default)(['load'], _this);
 	    return _this;
@@ -897,6 +897,9 @@ webpackJsonp([8],{
 	        sendData.offset = this.offset;
 	      }
 	      $.getJSON('./properties/Property', sendData).done(function (data) {
+	        if (data.active_button !== undefined) {
+	          this.showActiveButton = data.active_button;
+	        }
 	        if (this.offset > 0) {
 	          this.setState({ properties: this.state.properties.concat(data.properties), manager: data.manager, moreRows: data.more_rows });
 	        } else {
@@ -944,6 +947,7 @@ webpackJsonp([8],{
 	          manager
 	        ),
 	        _react2.default.createElement(_SearchBar2.default, {
+	          showActiveButton: this.showActiveButton,
 	          updateSearchString: this.updateSearchString,
 	          clear: this.clearSearch,
 	          updateSearchVars: this.updateSearchVars,
@@ -1023,6 +1027,8 @@ webpackJsonp([8],{
 	      fullSize: false
 	    };
 	
+	    _this.hideInactive = false;
+	
 	    _this.sortTypes = {
 	      rentall: 'Monthy rent',
 	      rentunit: 'Monthly rent by unit',
@@ -1041,8 +1047,8 @@ webpackJsonp([8],{
 	  _createClass(SearchBar, [{
 	    key: 'componentDidUpdate',
 	    value: function componentDidUpdate() {
-	      var minprice = this.props.searchVars['minprice'];
-	      var maxprice = this.props.searchVars['maxprice'];
+	      var minprice = this.props.searchVars.minprice;
+	      var maxprice = this.props.searchVars.maxprice;
 	      if (maxprice !== '0' && minprice !== '0' && parseInt(maxprice) < parseInt(minprice)) {
 	        this.props.updateSearchVars('minprice', maxprice);
 	        this.props.updateSearchVars('maxprice', minprice);
@@ -1194,6 +1200,24 @@ webpackJsonp([8],{
 	        label: this.sortTypes.updated,
 	        handleClick: this.props.updateSortBy.bind(null, 'updated')
 	      }];
+	
+	      var activeButton = void 0;
+	      if (this.props.showActiveButton) {
+	        if (this.props.searchVars.showinactive === true || this.props.searchVars.showinactive === undefined) {
+	          activeButton = _react2.default.createElement(
+	            'button',
+	            { className: 'btn btn-info btn-sm', onClick: this.props.updateSearchVars.bind(null, 'showinactive', false) },
+	            'Hide inactive'
+	          );
+	        } else {
+	          activeButton = _react2.default.createElement(
+	            'button',
+	            { className: 'btn btn-info btn-sm', onClick: this.props.updateSearchVars.bind(null, 'showinactive', true) },
+	            'Show inactive'
+	          );
+	        }
+	      }
+	
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'panel panel-default marginBottom' },
@@ -1202,72 +1226,67 @@ webpackJsonp([8],{
 	          { className: 'panel-body' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'row top-header' },
+	            { className: 'pull-left', style: {
+	                maxWidth: '300px'
+	              } },
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'col-sm-4' },
+	              { className: 'input-group' },
+	              _react2.default.createElement('input', {
+	                ref: 'propertySearch',
+	                className: 'form-control input-sm',
+	                type: 'text',
+	                placeholder: 'Search...',
+	                onChange: this.props.updateSearchString }),
 	              _react2.default.createElement(
-	                'div',
-	                { className: 'input-group' },
-	                _react2.default.createElement('input', {
-	                  ref: 'propertySearch',
-	                  className: 'form-control input-sm',
-	                  type: 'text',
-	                  placeholder: 'Search...',
-	                  onChange: this.props.updateSearchString }),
-	                _react2.default.createElement(
-	                  'span',
-	                  { className: 'input-group-btn' },
-	                  _react2.default.createElement(
-	                    'button',
-	                    {
-	                      className: 'btn btn-default btn-sm',
-	                      type: 'button',
-	                      onClick: this.clearSearch },
-	                    'Clear'
-	                  )
-	                )
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'col-sm-8' },
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'pull-left' },
-	                _react2.default.createElement(_Dropdown2.default, { small: true, label: bedLabel, options: beds })
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'pull-left' },
-	                _react2.default.createElement(_Dropdown2.default, { small: true, label: bathLabel, options: baths })
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'pull-left' },
-	                _react2.default.createElement(_Dropdown2.default, { small: true, label: minpriceLabel, options: minprice })
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'pull-left' },
-	                _react2.default.createElement(_Dropdown2.default, { small: true, label: maxpriceLabel, options: maxprice })
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'pull-left' },
+	                'span',
+	                { className: 'input-group-btn' },
 	                _react2.default.createElement(
 	                  'button',
-	                  { className: 'btn btn-success btn-sm', onClick: this.props.resetConditions },
-	                  'Reset'
+	                  {
+	                    className: 'btn btn-default btn-sm',
+	                    type: 'button',
+	                    onClick: this.clearSearch },
+	                  'Clear'
 	                )
-	              ),
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'pull-left marginLeft' },
-	                _react2.default.createElement(_Dropdown2.default, { small: true, label: sortLabel, options: sortby })
 	              )
 	            )
 	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'pull-left' },
+	            _react2.default.createElement(_Dropdown2.default, { small: true, label: bedLabel, options: beds })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'pull-left' },
+	            _react2.default.createElement(_Dropdown2.default, { small: true, label: bathLabel, options: baths })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'pull-left' },
+	            _react2.default.createElement(_Dropdown2.default, { small: true, label: minpriceLabel, options: minprice })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'pull-left' },
+	            _react2.default.createElement(_Dropdown2.default, { small: true, label: maxpriceLabel, options: maxprice })
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'pull-left' },
+	            _react2.default.createElement(
+	              'button',
+	              { className: 'btn btn-success btn-sm', onClick: this.props.resetConditions },
+	              'Reset'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'pull-left' },
+	            _react2.default.createElement(_Dropdown2.default, { small: true, label: sortLabel, options: sortby })
+	          ),
+	          activeButton,
 	          _react2.default.createElement(
 	            'div',
 	            { className: 'row', style: {
@@ -1323,7 +1342,8 @@ webpackJsonp([8],{
 	  toggle: _react2.default.PropTypes.func,
 	  clearAmenities: _react2.default.PropTypes.func,
 	  updateSortBy: _react2.default.PropTypes.func,
-	  resetConditions: _react2.default.PropTypes.func
+	  resetConditions: _react2.default.PropTypes.func,
+	  showActiveButton: _react2.default.PropTypes.bool
 	};
 
 /***/ },
@@ -3956,7 +3976,8 @@ webpackJsonp([8],{
 	      baths: '1',
 	      minprice: '0',
 	      maxprice: '0',
-	      search: ''
+	      search: '',
+	      showinactive: null
 	    };
 	    _this.loadAmenities();
 	
