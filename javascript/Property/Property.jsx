@@ -20,7 +20,7 @@ export default class Property extends Base {
       type: null,
       moreRows : true,
     }
-
+    this.showActiveButton = false
     this.managerId = 0
     bindMethods(['load'], this)
   }
@@ -61,6 +61,9 @@ export default class Property extends Base {
       sendData.offset = this.offset
     }
     $.getJSON('./properties/Property', sendData).done(function (data) {
+      if (data.active_button !== undefined) {
+        this.showActiveButton = data.active_button
+      }
       if (this.offset > 0) {
         this.setState({properties: this.state.properties.concat(data.properties), manager: data.manager, moreRows: data.more_rows})
       } else {
@@ -90,6 +93,7 @@ export default class Property extends Base {
         {message}
         <h3><a href="./properties/Property/list/">Properties:</a> {manager}</h3>
         <SearchBar
+          showActiveButton={this.showActiveButton}
           updateSearchString={this.updateSearchString}
           clear={this.clearSearch}
           updateSearchVars={this.updateSearchVars}

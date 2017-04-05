@@ -74,8 +74,14 @@ class Property extends Base
             $admin = false)
     {
         $listing = new Property\Listing();
+        
         if ($admin) {
-            $listing->show_inactive = true;
+            $show_inactive = $request->pullGetBoolean('showinactive', true);
+            if ($show_inactive === null || $show_inactive === true) {
+                $listing->show_inactive = true;
+            } else {
+                $listing->show_inactive = false;
+            }
         }
         $listing->pullVariables($request);
         $result = $listing->get($view);

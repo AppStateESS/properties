@@ -65,6 +65,7 @@ class Admin extends User
         $json['properties'] = $this->factory->listing($request, true, true);
         $json['more_rows'] = $this->factory->more_rows;
         $manager_id = $request->pullGetInteger('managerId', true);
+        $json['active_button'] = true;
         if ($manager_id) {
             $mngFactory = new \properties\Factory\Manager;
             $manager = $mngFactory->load($manager_id);

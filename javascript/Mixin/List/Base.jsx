@@ -16,7 +16,8 @@ export default class Base extends React.Component {
       baths: '1',
       minprice: '0',
       maxprice: '0',
-      search: ''
+      search: '',
+      showinactive: null
     }
     this.loadAmenities()
 

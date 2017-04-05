@@ -11,6 +11,8 @@ export default class SearchBar extends React.Component {
       fullSize: false
     }
 
+    this.hideInactive = false
+
     this.sortTypes = {
       rentall: 'Monthy rent',
       rentunit: 'Monthly rent by unit',
@@ -26,8 +28,8 @@ export default class SearchBar extends React.Component {
   }
 
   componentDidUpdate() {
-    const minprice = this.props.searchVars['minprice']
-    const maxprice = this.props.searchVars['maxprice']
+    const minprice = this.props.searchVars.minprice
+    const maxprice = this.props.searchVars.maxprice
     if (maxprice !== '0' && minprice !== '0' && parseInt(maxprice) < parseInt(minprice)) {
       this.props.updateSearchVars('minprice', maxprice)
       this.props.updateSearchVars('maxprice', minprice)
@@ -186,37 +188,46 @@ export default class SearchBar extends React.Component {
         handleClick: this.props.updateSortBy.bind(null, 'updated')
       }
     ]
+
+    let activeButton
+    if (this.props.showActiveButton) {
+      if (this.props.searchVars.showinactive === true || this.props.searchVars.showinactive === undefined) {
+        activeButton = <button className="btn btn-info btn-sm" onClick={this.props.updateSearchVars.bind(null, 'showinactive', false)}>Hide inactive</button>
+      } else {
+        activeButton = <button className="btn btn-info btn-sm" onClick={this.props.updateSearchVars.bind(null, 'showinactive', true)}>Show inactive</button>
+      }
+    }
+
     return (
       <div className="panel panel-default marginBottom">
         <div className="panel-body">
-          <div className="row top-header">
-            <div className="col-sm-4">
-              <div className="input-group">
-                <input
-                  ref="propertySearch"
-                  className="form-control input-sm"
-                  type="text"
-                  placeholder="Search..."
-                  onChange={this.props.updateSearchString}/>
-                <span className="input-group-btn">
-                  <button
-                    className="btn btn-default btn-sm"
-                    type="button"
-                    onClick={this.clearSearch}>Clear</button>
-                </span>
-              </div>
-            </div>
-            <div className="col-sm-8">
-              <div className="pull-left"><Dropdown small={true} label={bedLabel} options={beds}/></div>
-              <div className="pull-left"><Dropdown small={true} label={bathLabel} options={baths}/></div>
-              <div className="pull-left"><Dropdown small={true} label={minpriceLabel} options={minprice}/></div>
-              <div className="pull-left"><Dropdown small={true} label={maxpriceLabel} options={maxprice}/></div>
-              <div className="pull-left">
-                <button className="btn btn-success btn-sm" onClick={this.props.resetConditions}>Reset</button>
-              </div>
-              <div className="pull-left marginLeft"><Dropdown small={true} label={sortLabel} options={sortby}/></div>
+          <div className="pull-left" style={{
+            maxWidth: '300px'
+          }}>
+            <div className="input-group">
+              <input
+                ref="propertySearch"
+                className="form-control input-sm"
+                type="text"
+                placeholder="Search..."
+                onChange={this.props.updateSearchString}/>
+              <span className="input-group-btn">
+                <button
+                  className="btn btn-default btn-sm"
+                  type="button"
+                  onClick={this.clearSearch}>Clear</button>
+              </span>
             </div>
           </div>
+          <div className="pull-left"><Dropdown small={true} label={bedLabel} options={beds}/></div>
+          <div className="pull-left"><Dropdown small={true} label={bathLabel} options={baths}/></div>
+          <div className="pull-left"><Dropdown small={true} label={minpriceLabel} options={minprice}/></div>
+          <div className="pull-left"><Dropdown small={true} label={maxpriceLabel} options={maxprice}/></div>
+          <div className="pull-left">
+            <button className="btn btn-success btn-sm" onClick={this.props.resetConditions}>Reset</button>
+          </div>
+          <div className="pull-left"><Dropdown small={true} label={sortLabel} options={sortby}/></div>
+          {activeButton}
           <div className="row" style={{
             marginTop: '1em'
           }}>
@@ -253,5 +264,6 @@ SearchBar.propTypes = {
   toggle: React.PropTypes.func,
   clearAmenities: React.PropTypes.func,
   updateSortBy: React.PropTypes.func,
-  resetConditions: React.PropTypes.func
+  resetConditions: React.PropTypes.func,
+  showActiveButton: React.PropTypes.bool
 }
