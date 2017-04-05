@@ -206,6 +206,12 @@ abstract class SubController extends Base
         \properties\Factory\NavBar::addOption($signout);
     }
 
+    protected function addEmailWarning()
+    {
+        $link = "<button onClick=\"window.location.href='./properties/Settings'\" class=\"btn btn-danger navbar-btn\">The site email address must be set.</button>";
+        NavBar::addItem($link);
+    }
+    
     protected function addApprovalLink()
     {
         $needApproval = $this->needApproval();
