@@ -43,13 +43,13 @@ class Settings extends Base
 
     public function view()
     {
-        $settings['our_email'] = \phpws2\Settings::get('properties',
+        $settings['our_email'] = (string) \phpws2\Settings::get('properties',
                         'our_email');
-        $settings['our_name'] = \phpws2\Settings::get('properties',
+        $settings['our_name'] = (string) \phpws2\Settings::get('properties',
                         'our_name');
-        $settings['our_phone'] = \phpws2\Settings::get('properties',
+        $settings['our_phone'] = (string) \phpws2\Settings::get('properties',
                         'our_phone');
-        $settings['approval_email'] = \phpws2\Settings::get('properties',
+        $settings['approval_email'] = (string) \phpws2\Settings::get('properties',
                         'approval_email');
         $settings['front_buttons'] = (bool) \phpws2\Settings::get('properties',
                         'front_buttons');
