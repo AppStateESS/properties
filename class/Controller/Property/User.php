@@ -22,12 +22,12 @@ use properties\Resource\Property as Resource;
 
 class User extends \properties\Controller\SubController
 {
+
     /**
      * @var \properties\Factory\Property
      */
     protected $factory;
-    
-    
+
     public function loadFactory()
     {
         $factory = new \properties\Factory\Property;
@@ -48,14 +48,29 @@ class User extends \properties\Controller\SubController
 
     protected function listJsonCommand(\Canopy\Request $request)
     {
-        $json['properties'] = $this->factory->listing($request, true);
-        $json['more_rows'] = $this->factory->more_rows;
+        return $this->getPropertyRows($request, false);
+    }
+
+    protected function getPropertyRows(\Canopy\Request $request, $admin = false)
+    {
         $manager_id = $request->pullGetInteger('managerId', true);
         if ($manager_id) {
-            $mngFactory = new \properties\Factory\Manager;
-            $manager = $mngFactory->load($manager_id);
-            $json['manager'] = $manager->view(true);
+            try {
+                $mngFactory = new \properties\Factory\Manager;
+                $manager = $mngFactory->load($manager_id);
+                $json['manager'] = $manager->view(true);
+            } catch (\properties\Exception\ResourceNotFound $e) {
+                $json['manager'] = false;
+                $json['properties'] = array();
+                $json['more_rows'] = null;
+                return $json;
+            } catch (\Exception $e) {
+                throw $e;
+            }
         }
+        $json['active_button'] = $admin;
+        $json['properties'] = $this->factory->listing($request, true, $admin);
+        $json['more_rows'] = $this->factory->more_rows;
         return $json;
     }
 
