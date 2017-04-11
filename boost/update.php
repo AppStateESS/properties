@@ -198,9 +198,10 @@ class PropertyUpgrade
 
             $this->adjustAmounts();
 
-            $this->addPropertyColumns();
+            $this->updatePropertyColumns();
             $updates[] = 'Added smoking note to properties';
             $updates[] = 'Added property type to properties';
+            $updates[] = 'Removed efficiency and window_number columns from properties';
 
             $this->updateContactsTable();
             $updates[] = 'Contacts have ability to reset their password.';
@@ -226,7 +227,7 @@ class PropertyUpgrade
             $updates[] = 'All roommate flushed. Students will need to re-enter.';
 
             $this->updatePropertyPhotos();
-            $update[] = 'Property photos may now be ordered.';
+            $updates[] = 'Property photos may now be ordered.';
             
             $this->updateSequences();
 
@@ -312,7 +313,7 @@ class PropertyUpgrade
      * Adds proptype column to properties
      * Replaces efficiency column
      */
-    private function addPropertyColumns()
+    private function updatePropertyColumns()
     {
         $db = Database::getDB();
         $tbl = $db->addTable('properties');
@@ -327,6 +328,9 @@ class PropertyUpgrade
         $tbl->addValue('proptype', 1);
         $tbl->addFieldConditional('efficiency', 1);
         $db->update();
+        
+        $tbl->dropColumn('window_number');
+        $tbl->dropColumn('efficiency');
     }
 
     /**
