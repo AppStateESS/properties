@@ -17,7 +17,7 @@ export default class ManagerSignin extends React.Component {
     this.url = new DecodeUrl
   }
 
-  componentDidMount(){
+  componentDidMount() {
     if (this.url.values.username) {
       this.setState({username: this.url.values.username})
     }
@@ -50,10 +50,14 @@ export default class ManagerSignin extends React.Component {
               <li>Is your caps lock on?</li>
               <li>Has your account been approved?</li>
               <li>
-              <a href="./properties/Manager/signup">Have you applied for an account yet? <i className="fa fa-external-link"></i></a>
+                <a href="./properties/Manager/signup">Have you applied for an account yet?
+                  <i className="fa fa-external-link"></i>
+                </a>
               </li>
               <li>
-                <a href="./properties/Manager/forgot">Did you forget your password? <i className="fa fa-external-link"></i></a>
+                <a href="./properties/Manager/forgot">Did you forget your password?
+                  <i className="fa fa-external-link"></i>
+                </a>
               </li>
             </ul>
           </div>
@@ -65,7 +69,7 @@ export default class ManagerSignin extends React.Component {
     const disabled = empty(this.state.username) || empty(this.state.password)
     return (
       <div>
-        <h2>Manager log-in</h2>
+        <h2>Manager sign in</h2>
         {this.checkError()}
         <form action="./properties/Manager/signin" method="post">
           <div className="row">
@@ -91,12 +95,10 @@ export default class ManagerSignin extends React.Component {
           </div>
           <button className="btn btn-primary" disabled={disabled} onClick={this.submit}>Log in</button>
         </form>
-        <p className="marginTop">
-          <a href="./properties/Manager/forgot">Forgot password?</a>
-        </p>
-        <p>
+        <div className="well marginTop lead">
+          <a href="./properties/Manager/forgot">Forgot password?</a><br/>
           <a href="./properties/Manager/signup">Request a manager account.</a>
-        </p>
+        </div>
       </div>
     )
   }
