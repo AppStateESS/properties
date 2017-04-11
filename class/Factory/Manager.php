@@ -614,6 +614,9 @@ class Manager extends Base
         }
 
         $manager = $this->load($contact_id);
+        if ($restricted && !$manager->active) {
+            throw new \properties\Exception\ResourceNotFound;
+        }
         $vars = $manager->view($restricted);
         $template = new \phpws2\Template($vars);
         $template->setModuleTemplate('properties', 'manager/view.html');
