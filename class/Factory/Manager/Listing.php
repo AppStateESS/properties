@@ -55,21 +55,22 @@ class Listing
             $offset = $this->offset * $this->limit;
             $db->setLimit($this->limit, $offset);
         }
-        
+
         $tbl = $db->addTable('prop_contacts');
 
         if ($this->include_property_count) {
             $tbl2 = $db->addTable('properties');
-            $property_conditional1 = $db->createConditional($tbl2->getField('active'),
-                    1);
-            $property_conditional2 = $db->createConditional($tbl2->getField('active'),
-                    null, 'is');
-            $property_conditional3 = $db->createConditional($property_conditional1,
-                    $property_conditional2, 'or');
-            $db->addConditional($property_conditional3);
+
             $count_field = $tbl2->addField('id', 'property_count');
             $count_field->showCount();
             if ($this->must_have_property) {
+                $property_conditional1 = $db->createConditional($tbl2->getField('active'),
+                        1);
+                $property_conditional2 = $db->createConditional($tbl2->getField('active'),
+                        null, 'is');
+                $property_conditional3 = $db->createConditional($property_conditional1,
+                        $property_conditional2, 'or');
+                $db->addConditional($property_conditional3);
                 $tbl2->addHaving($count_field, 0, '>');
             }
         }
