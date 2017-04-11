@@ -132,7 +132,7 @@ class Manager extends Base
     public function managerUpdate(\Canopy\Request $request)
     {
         $manager = $this->load($request->pullPutInteger('id'));
-        $ignore = array('username', 'password', 'last_log', 'active', 'private', 
+        $ignore = array('username', 'password', 'last_log', 'active', 'private',
             'approved', 'pw_timeout', 'pw_hash', 'inquiry_date', 'inquiry_type', 'property_count');
         $manager->loadPutByType($request, $ignore);
         try {
@@ -218,15 +218,16 @@ class Manager extends Base
 
     public function deleteImageDirectory($id)
     {
-        $directory = 'c' . $id;
+        $directory = 'images/properties/c' . $id;
         if (is_dir($directory)) {
-            $files = glob($directory . '*', GLOB_MARK);
+            $files = glob($directory . '/*', GLOB_MARK);
 
             foreach ($files as $file) {
                 unlink($file);
             }
-
-            rmdir($directory);
+            if (is_writable('images/properties/')) {
+                rmdir($directory);
+            }
         }
     }
 
