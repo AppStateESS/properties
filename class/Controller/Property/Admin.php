@@ -62,16 +62,7 @@ class Admin extends User
 
     protected function listJsonCommand(\Canopy\Request $request)
     {
-        $json['properties'] = $this->factory->listing($request, true, true);
-        $json['more_rows'] = $this->factory->more_rows;
-        $manager_id = $request->pullGetInteger('managerId', true);
-        $json['active_button'] = true;
-        if ($manager_id) {
-            $mngFactory = new \properties\Factory\Manager;
-            $manager = $mngFactory->load($manager_id);
-            $json['manager'] = $manager->view(true);
-        }
-        return $json;
+        return $this->getPropertyRows($request, true);
     }
 
     protected function deleteCommand(\Canopy\Request $request)
