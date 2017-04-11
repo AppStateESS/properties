@@ -16,33 +16,30 @@
  * @license http://opensource.org/licenses/lgpl-3.0.html
  */
 
-namespace properties\Controller\Settings;
+namespace properties\Controller\Reports;
 
 use properties\Resource\Property as Resource;
+use Canopy\Request;
 
 class Admin extends \properties\Controller\SubController
 {
 
     protected function loadFactory()
     {
-        $factory = new \properties\Factory\Settings;
+        $factory = new \properties\Factory\Reports;
         return $factory;
     }
 
-    protected function listHtmlCommand(\Canopy\Request $request)
+    protected function listHtmlCommand(Request $request)
     {
-        return $this->factory->reactView('settings');
+        \Layout::addStyle('properties', 'reports/style.css');
+        return $this->factory->reactView('reports');
     }
-    
-    protected function savePostCommand(\Canopy\Request $request)
+
+    protected function inactivityJsonCommand(Request $request)
     {
-        $this->factory->post($request);
-        return array('success'=>true);
-    }
-    
-    protected function viewJsonCommand(\Canopy\Request $request)
-    {
-        return $this->factory->view();
+        $json['list'] = $this->factory->getInactiveManagers($request->pullGetString('date'));
+        return $json;
     }
 
 }
