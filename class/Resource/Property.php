@@ -66,7 +66,6 @@ class Property extends Place
         $this->contact_id = new Variable\IntegerVar(0, 'contact_id');
         $this->contact_id->setRange(1);
         $this->contract_length = new Variable\SmallInteger(3, 'contract_length');
-        $this->efficiency = new Variable\BooleanVar(false, 'efficiency');
         $this->heat_type = new Variable\ArrayVar(null, 'heat_type');
         $this->heat_type->allowNull(true);
         $this->other_fees = new Variable\StringVar('', 'other_fees');
@@ -97,7 +96,6 @@ class Property extends Place
         $this->util_internet->setRange(-1, 2000);
         $this->util_phone = new Variable\IntegerVar(0, 'util_phone');
         $this->util_phone->setRange(-1, 2000);
-        $this->window_number = new Variable\BooleanVar(true, 'window_number');
         $this->workout_room = new Variable\BooleanVar(false, 'workout_room');
         $this->company_name = new Variable\StringVar('', 'company_name');
         $this->doNotSave('company_name');
