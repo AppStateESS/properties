@@ -85,7 +85,7 @@ class Controller extends Base
             throw $e;
         } catch (\properties\Exception\ResourceNotFound $e) {
             if (PROPERTIES_FRIENDLY_ERRORS) {
-                \phpws2\Error::errorPage(404);
+                return $this->resourceNotFound();
             } else {
                 throw $e;
             }
@@ -98,6 +98,17 @@ class Controller extends Base
                 throw $e;
             }
         }
+    }
+
+    private function resourceNotFound()
+    {
+        $template = new \phpws2\Template;
+        $template->setModuleTemplate('properties',
+                'errorpage/ResourceNotFound.html');
+        $content = $template->get();
+        $view = new \phpws2\View\HtmlView($content);
+        $response = new \Canopy\Response($view);
+        return $response;
     }
 
     public function post(\Canopy\Request $request)
