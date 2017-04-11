@@ -1,0 +1,11 @@
+.scroll-table tbody {
+    height: 500px;
+    overflow: auto;
+    display: block;
+}
+
+.scroll-table thead, .scroll-table tbody tr {
+    display : table;
+    width: 100%;
+    table-layout: fixed;
+}
