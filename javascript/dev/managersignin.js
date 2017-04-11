@@ -361,7 +361,7 @@ webpackJsonp([4],{
 	                _react2.default.createElement(
 	                  'a',
 	                  { href: './properties/Manager/signup' },
-	                  'Have you applied for an account yet? ',
+	                  'Have you applied for an account yet?',
 	                  _react2.default.createElement('i', { className: 'fa fa-external-link' })
 	                )
 	              ),
@@ -371,7 +371,7 @@ webpackJsonp([4],{
 	                _react2.default.createElement(
 	                  'a',
 	                  { href: './properties/Manager/forgot' },
-	                  'Did you forget your password? ',
+	                  'Did you forget your password?',
 	                  _react2.default.createElement('i', { className: 'fa fa-external-link' })
 	                )
 	              )
@@ -389,7 +389,7 @@ webpackJsonp([4],{
 	        _react2.default.createElement(
 	          'h2',
 	          null,
-	          'Manager log-in'
+	          'Manager sign in'
 	        ),
 	        this.checkError(),
 	        _react2.default.createElement(
@@ -429,17 +429,14 @@ webpackJsonp([4],{
 	          )
 	        ),
 	        _react2.default.createElement(
-	          'p',
-	          { className: 'marginTop' },
+	          'div',
+	          { className: 'well marginTop lead' },
 	          _react2.default.createElement(
 	            'a',
 	            { href: './properties/Manager/forgot' },
 	            'Forgot password?'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'p',
-	          null,
+	          ),
+	          _react2.default.createElement('br', null),
 	          _react2.default.createElement(
 	            'a',
 	            { href: './properties/Manager/signup' },

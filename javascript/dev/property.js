@@ -897,6 +897,11 @@ webpackJsonp([8],{
 	        sendData.offset = this.offset;
 	      }
 	      $.getJSON('./properties/Property', sendData).done(function (data) {
+	        // bad manager id
+	        if (data.manager === false) {
+	          this.setState({ properties: [], manager: null, moreRows: false });
+	          return;
+	        }
 	        if (data.active_button !== undefined) {
 	          this.showActiveButton = data.active_button;
 	        }
