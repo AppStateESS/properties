@@ -72,6 +72,8 @@ class User extends \properties\Controller\SubController
             } else {
                 $session = \phpws2\Session::getInstance();
                 $session->property_manager_id = $manager->id;
+                $manager->stamp();
+                $this->factory->saveResource($manager);
                 \PHPWS_Core::reroute('./properties/Manager/desktop');
             }
         } else {
