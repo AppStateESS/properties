@@ -50,6 +50,7 @@ abstract class Place extends Base
     protected $pets_allowed;
     protected $proptype;
     protected $smoking_allowed;
+    protected $timeout;
     protected $trash_type;
     protected $tv_type;
     protected $updated;
@@ -96,6 +97,7 @@ abstract class Place extends Base
         $this->proptype->setRange(0, 20);
         $this->smoking_allowed = new \phpws2\Variable\BooleanVar(false,
                 'smoking_allowed');
+        $this->timeout = new Variable\IntegerVar(time(), 'timeout');
         $this->trash_type = new \phpws2\Variable\SmallInteger(0, 'trash_type');
         $this->tv_type = new \phpws2\Variable\SmallInteger(0, 'tv_type');
         $this->tv_type->setRange(0, 10);
