@@ -23,6 +23,7 @@ class Roommate extends Base
 
     protected $uid;
     protected $move_in_date;
+    protected $active;
     protected $name;
     protected $description;
     protected $email;
@@ -45,6 +46,7 @@ class Roommate extends Base
     protected $hobbies;
     protected $smoking;
     protected $pets;
+    protected $timeout;
     protected $created;
     protected $updated;
     protected $table = 'prop_roommate';
@@ -55,6 +57,7 @@ class Roommate extends Base
         $this->uid = new \phpws2\Variable\IntegerVar(null, 'uid');
         $this->move_in_date = new \phpws2\Variable\IntegerVar(null,
                 'move_in_date');
+        $this->active = new \phpws2\Variable\BooleanVar(false, 'active');
         $this->name = new \phpws2\Variable\TextOnly(null, 'name');
         $this->name->setLimit('60');
         $this->description = new \phpws2\Variable\TextOnly(null, 'description');
@@ -102,6 +105,7 @@ class Roommate extends Base
         $this->smoking->allowNull(true);
         $this->pets = new \phpws2\Variable\Alphanumeric(null, 'pets', 50);
         $this->pets->allowNull(true);
+        $this->timeout = new \phpws2\Variable\IntegerVar(time(), 'timeout');
         $this->created = new \phpws2\Variable\DateVar(null, 'created');
         $this->updated = new \phpws2\Variable\DateVar(null, 'updated');
     }
