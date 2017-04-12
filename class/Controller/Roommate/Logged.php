@@ -61,12 +61,15 @@ class Logged extends User
     {
         $roommate = $this->getUserRoommate();
         if ($roommate) {
+            $admin = true;
             $button = $this->updateButton();
         } else {
+            $admin = false;
             $button = $this->createButton();
         }
+        
         \properties\Factory\NavBar::addItem($button);
-        return $this->factory->view($this->id, true);
+        return $this->factory->view($this->id, true, $admin);
     }
 
     protected function editHtmlCommand(\Canopy\Request $request)
@@ -112,6 +115,7 @@ class Logged extends User
         }
         try {
             $roommate = $this->factory->put($request, $roommate);
+            $roommate->active = true;
             return array('id' => $this->factory->save($roommate));
         } catch (\properties\Exception\RoommateSaveFailure $e) {
             return array('error' => $e->getMessage());
