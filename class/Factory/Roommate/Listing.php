@@ -28,6 +28,8 @@ class Listing
     public $free_time;
     public $pets;
     public $smoking;
+    public $show_inactive = false;
+    public $more_rows = true;
 
     public function pullVariables(\Canopy\Request $request)
     {
@@ -93,6 +95,10 @@ class Listing
      */
     private function addConditionals(&$tbl)
     {
+        if ($this->show_inactive === false) {
+            $tbl->addFieldConditional('active', 1);
+        }
+
         if ($this->focus) {
             $tbl->addFieldConditional('focus', $this->focus);
         }
@@ -104,15 +110,15 @@ class Listing
         if ($this->sleep_time) {
             $tbl->addFieldConditional('sleep_time', $this->sleep_time);
         }
-        
+
         if ($this->free_time) {
             $tbl->addFieldConditional('free_time', $this->free_time);
         }
-        
+
         if ($this->pets) {
             $tbl->addFieldConditional('pets', $this->pets);
         }
-        
+
         if ($this->smoking) {
             $tbl->addFieldConditional('smoking', $this->smoking);
         }
