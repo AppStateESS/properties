@@ -20,13 +20,11 @@ class Property extends Place
 
     protected $admin_fee_amt;
     protected $admin_fee_refund;
-    protected $approved;
     protected $clean_fee_amt;
     protected $clean_fee_refund;
     protected $clubhouse;
     protected $contact_id;
     protected $contract_length;
-    protected $efficiency;
     protected $heat_type;
     protected $other_fees;
     protected $parking_fee;
@@ -38,8 +36,6 @@ class Property extends Place
     protected $security_amt;
     protected $security_refund;
     protected $student_type;
-    protected $sublease;
-    protected $timeout;
     protected $util_cable;
     protected $util_fuel;
     protected $util_internet;
@@ -47,7 +43,6 @@ class Property extends Place
     protected $util_water;
     protected $util_trash;
     protected $util_power;
-    protected $window_number;
     protected $workout_room;
     protected $table = 'properties';
     protected $company_name;
@@ -59,7 +54,6 @@ class Property extends Place
         $this->admin_fee_amt = new Variable\IntegerVar(0, 'admin_fee_amt');
         $this->admin_fee_refund = new Variable\BooleanVar(false,
                 'admin_fee_refund');
-        $this->approved = new Variable\BooleanVar(false, 'approved');
         $this->clean_fee_amt = new Variable\IntegerVar(0, 'clean_fee_amt');
         $this->clean_fee_refund = new Variable\BooleanVar(0, 'clean_fee_refund');
         $this->clubhouse = new Variable\BooleanVar(false, 'clubhouse');
@@ -78,8 +72,6 @@ class Property extends Place
         $this->security_refund = new Variable\BooleanVar(false,
                 'security_refund');
         $this->student_type = new Variable\SmallInteger(0, 'student_type');
-        $this->sublease = new Variable\BooleanVar(false, 'sublease');
-        $this->timeout = new Variable\IntegerVar(0, 'timeout');
         $this->trash_type = new Variable\IntegerVar(0, 'trash_type');
         $this->trash_type->setRange(0, 10);
         $this->util_water = new Variable\IntegerVar(0, 'util_water');
