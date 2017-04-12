@@ -699,7 +699,7 @@ webpackJsonp([15],{
 	
 	      var activeButton = void 0;
 	      if (this.props.showActiveButton) {
-	        if (this.props.searchVars.showinactive === true || this.props.searchVars.showinactive === undefined) {
+	        if (this.props.searchVars.showinactive === true) {
 	          activeButton = _react2.default.createElement(
 	            'button',
 	            { className: 'btn btn-info btn-sm', onClick: this.props.updateSearchVars.bind(null, 'showinactive', false) },

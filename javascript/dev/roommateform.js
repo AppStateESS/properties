@@ -29802,6 +29802,20 @@ webpackJsonp([12],[
 	        )
 	      );
 	
+	      var reactivate = void 0;
+	      if (roommate.active === '0') {
+	        reactivate = _react2.default.createElement(
+	          'div',
+	          { className: 'text-align marginBottom' },
+	          _react2.default.createElement(
+	            'button',
+	            { type: 'button', className: 'btn btn-lg btn-warning', onClick: this.save },
+	            _react2.default.createElement('i', { className: 'fa fa-power-off' }),
+	            '\xA0Reactivate my roommate request'
+	          )
+	        );
+	      }
+	
 	      var message = void 0;
 	      if (this.state.message !== null) {
 	        message = _react2.default.createElement(_Message2.default, {
@@ -29819,6 +29833,7 @@ webpackJsonp([12],[
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'roommate-form' },
+	        reactivate,
 	        _react2.default.createElement(
 	          'p',
 	          { className: 'alert alert-info' },
