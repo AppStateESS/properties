@@ -8,11 +8,12 @@
 
 namespace properties\Factory;
 
+use phpws2\Database;
+use phpws2\Settings;
 use properties\Resource\Property as Resource;
 use properties\Factory\Property\Photo as Photo;
 use properties\Factory\Manager;
 use properties\Controller\Property as Controller;
-use phpws2\Database;
 use properties\Exception\MissingInput;
 use properties\Exception\PrivilegeMissing;
 
@@ -74,13 +75,13 @@ class Property extends Base
             $admin = false)
     {
         $listing = new Property\Listing();
-        
+
         if ($admin) {
             $show_inactive = $request->pullGetBoolean('showinactive', true);
-            if ($show_inactive === null || $show_inactive === true) {
-                $listing->show_inactive = true;
-            } else {
+            if ($show_inactive === null || $show_inactive === false) {
                 $listing->show_inactive = false;
+            } else {
+                $listing->show_inactive = true;
             }
         }
         $listing->pullVariables($request);
@@ -95,7 +96,7 @@ class Property extends Base
         $r = new Resource;
         try {
             $r->loadPostByType($request,
-                    array('active', 'approved', 'company_name', 'heat_type', 'created', 'updated', 'thumbnail'));
+                    array('active', 'approved', 'company_name', 'heat_type', 'created', 'updated', 'thumbnail', 'timeout'));
             $heat_type = $request->pullPostVar('heat_type');
             if (empty($heat_type)) {
                 $heat_type = array();
@@ -111,26 +112,60 @@ class Property extends Base
         return $r;
     }
 
+    /**
+     * Checks to see if the property inactive timeout check has passed.
+     * updatePropertyTimeout does the setting update
+     * @return boolean
+     */
+    public function propertyTimeoutPast()
+    {
+        $timeout = Settings::get('properties', 'property_timeout');
+        return $timeout < time();
+    }
+
+    /**
+     * Sets the property timeout 30 days in advance
+     */
+    public function updatePropertyTimeout()
+    {
+        Settings::set('properties', 'property_timeout', time() + 2592000);
+    }
+
+    /**
+     * Flips properties that have passed the timeout
+     */
+    public function flipPropertyTimeout()
+    {
+        $db = Database::getDB();
+        $tbl = $db->addTable('properties');
+        $tbl->addFieldConditional('timeout', time(), '<');
+        $tbl->addFieldConditional('active', 1);
+        $tbl->addValue('active', 0);
+        $db->update();
+    }
+
     public function save(Resource $property)
     {
+        $property->timeout = time() + 2592000;
+        $property->updated = time();
         self::saveResource($property);
         return $property->id;
     }
 
-    public function put(\Canopy\Request $request, $manager_id=null)
+    public function put(\Canopy\Request $request, $manager_id = null)
     {
         $errors = array();
         $r = $this->load($request->pullPutInteger('id'), $manager_id);
 
         try {
             $r->loadPutByType($request,
-                    array('active', 'approved', 'company_name', 'heat_type', 'created', 'updated', 'thumbnail'));
+                    array('active', 'approved', 'company_name', 'heat_type', 'created', 'updated', 'thumbnail', 'timeout'));
             $heat_type = $request->pullPutVar('heat_type');
             if (empty($heat_type)) {
                 $heat_type = array();
             }
             $r->heat_type = $heat_type;
-            $r->updated = time();
+
             self::saveResource($r);
             return array('id' => $r->getId());
         } catch (\Exception $e) {
@@ -177,8 +212,10 @@ class Property extends Base
         $tpl['property_edit_button'] = null;
         if ($admin) {
             $property_id = $property->id;
-            NavBar::addOption("<a href='./properties/Property/$property_id/edit'><i class='fa fa-edit'></i>&nbsp;Edit property</a>", true);
-            NavBar::addOption("<a onClick='editPhotos.callback();return false' href='#'><i class='fa fa-camera'></i>&nbsp;Edit photos</a>", true);
+            NavBar::addOption("<a href='./properties/Property/$property_id/edit'><i class='fa fa-edit'></i>&nbsp;Edit property</a>",
+                    true);
+            NavBar::addOption("<a onClick='editPhotos.callback();return false' href='#'><i class='fa fa-camera'></i>&nbsp;Edit photos</a>",
+                    true);
             $tpl['photoupdate'] = $this->reactView('propertyimage');
             $tpl['property_edit_button'] = null;
         }
@@ -195,7 +232,7 @@ class Property extends Base
 EOF;
     }
 
-    public function patch($id, $param, $value, $manager_id=null)
+    public function patch($id, $param, $value, $manager_id = null)
     {
         static $allowed_params = array('active');
 

@@ -18,7 +18,9 @@
 
 namespace properties\Factory;
 
-use \properties\Resource\Roommate as Resource;
+use properties\Resource\Roommate as Resource;
+use phpws2\Settings;
+use phpws2\Database;
 
 class Roommate extends Base
 {
@@ -40,9 +42,11 @@ class Roommate extends Base
     {
         $r = new Resource;
         try {
-            $r->loadPostByType($request, array('created', 'updated', 'uid'), array('languages', 'music', 'hobbies'));
+            $r->loadPostByType($request,
+                    array('created', 'updated', 'uid', 'active', 'timeout'),
+                    array('languages', 'music', 'hobbies'));
             $r->created = time();
-            $r->updated = time();
+            $r->active = true;
         } catch (\Exception $e) {
             throw new \properties\Exception\RoommateSaveFailure($e->getMessage());
         }
@@ -52,20 +56,23 @@ class Roommate extends Base
     public function put(\Canopy\Request $request, $roommate)
     {
         try {
-            $roommate->loadPutByType($request, array('created', 'updated', 'uid'), array('languages', 'music', 'hobbies'));
-            $roommate->updated = time();
+            $roommate->loadPutByType($request,
+                    array('created', 'updated', 'uid', 'active', 'timeout'),
+                    array('languages', 'music', 'hobbies'));
         } catch (\Exception $e) {
             throw new \properties\Exception\RoommateSaveFailure($e->getMessage());
         }
         return $roommate;
     }
-    
+
     public function save(Resource $roommate)
     {
+        $roommate->updated = time();
+        $roommate->timeout = time() + 2592000;
         self::saveResource($roommate);
         return $roommate->id;
     }
-    
+
     public function getUserRoommate($uid)
     {
         $db = \phpws2\Database::getDB();
@@ -76,24 +83,24 @@ class Roommate extends Base
         if (empty($row)) {
             return null;
         }
-        
+
         $resource = new Resource;
         $resource->setVars($row);
         return $resource;
     }
-    
+
     public function isOwner(\properties\Resource\Roommate $roommate, $uid)
     {
-        return ((int)$roommate->uid === (int)$uid && !empty($uid));
+        return ((int) $roommate->uid === (int) $uid && !empty($uid));
     }
-    
-    public function view($id, $contact_allowed)
+
+    public function view($id, $contact_allowed, $admin=false)
     {
         \Layout::addStyle('properties', 'roommate/view.css');
         $roommate = $this->load($id);
         $tpl = $roommate->view(true);
         $tpl['contact_allowed'] = $contact_allowed;
-        
+
         $auth = \Current_User::getAuthorization();
         if (!empty($auth->login_link)) {
             $tpl['login'] = $auth->login_link;
@@ -101,9 +108,47 @@ class Roommate extends Base
             $tpl['login'] = 'index.php?module=users&action=user&command=login_page';
         }
         
-        $template = new \phpws2\Template($tpl);
-        $template->setModuleTemplate('properties', 'roommate/view.html');
+        $template = new \phpws2\Template;
+        if (!$roommate->active && !$admin) {
+            $template->setModuleTemplate('properties', 'errorpage/ResourceNotFound.html');
+        } else {
+            $template->addVariables($tpl);
+            $template->setModuleTemplate('properties', 'roommate/view.html');
+        }
+
         return $template->get();
+    }
+
+    /**
+     * Checks to see if the property inactive timeout check has passed.
+     * updatePropertyTimeout does the setting update
+     * @return boolean
+     */
+    public function roommateTimeoutPast()
+    {
+        $timeout = Settings::get('properties', 'roommate_timeout');
+        return $timeout < time();
+    }
+
+    /**
+     * Sets the property timeout 30 days in advance
+     */
+    public function updateRoommateTimeout()
+    {
+        Settings::set('properties', 'roommate_timeout', time() + 2592000);
+    }
+
+    /**
+     * Flips properties that have passed the timeout
+     */
+    public function flipRoommateTimeout()
+    {
+        $db = Database::getDB();
+        $tbl = $db->addTable('prop_roommate');
+        $tbl->addFieldConditional('timeout', time(), '<');
+        $tbl->addFieldConditional('active', 1);
+        $tbl->addValue('active', 0);
+        $db->update();
     }
 
 }

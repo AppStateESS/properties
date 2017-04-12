@@ -21,6 +21,7 @@ namespace properties\Factory;
 use properties\Resource\Sublease as Resource;
 use properties\Factory\Sublease\Photo as Photo;
 use phpws2\Database;
+use phpws2\Settings;
 
 class Sublease extends Base
 {
@@ -54,6 +55,14 @@ class Sublease extends Base
         return $sublease;
     }
 
+    public function save(Resource $sublease)
+    {
+        $sublease->updated = time();
+        $sublease->timeout = time() + 2592000;
+        self::saveResource($sublease);
+        return $sublease->id;
+    }
+
     public function post(\Canopy\Request $request, $user_id)
     {
         $r = new Resource;
@@ -63,9 +72,7 @@ class Sublease extends Base
                     array('active', 'created', 'updated', 'user_id', 'id', 'thumbnail'));
             $r->active = true;
             $r->created = time();
-            $r->updated = time();
-            self::saveResource($r);
-            return array('id' => $r->id);
+            return array('id' => $this->save($r));
         } catch (\Exception $e) {
             throw new \properties\Exception\PropertySaveFailure($e->getMessage());
         }
@@ -98,9 +105,7 @@ class Sublease extends Base
         try {
             $r->loadPutByType($request,
                     array('active', 'created', 'updated', 'user_id', 'id'));
-            $r->updated = time();
-            self::saveResource($r);
-            return array('id' => $r->id);
+            return array('id' => $this->save($r));
         } catch (\Exception $e) {
             throw new \properties\Exception\PropertySaveFailure($e->getMessage());
         }
@@ -110,6 +115,38 @@ class Sublease extends Base
     {
         $sublease = $this->load($sublease_id);
         return $sublease->user_id == $user_id;
+    }
+
+    /**
+     * Checks to see if the property inactive timeout check has passed.
+     * updatePropertyTimeout does the setting update
+     * @return boolean
+     */
+    public function subleaseTimeoutPast()
+    {
+        $timeout = Settings::get('properties', 'sublease_timeout');
+        return $timeout < time();
+    }
+
+    /**
+     * Sets the sublease timeout 30 days in advance
+     */
+    public function updateSubleaseTimeout()
+    {
+        Settings::set('properties', 'sublease_timeout', time() + 2592000);
+    }
+
+    /**
+     * Flips properties that have passed the timeout
+     */
+    public function flipSubleaseTimeout()
+    {
+        $db = Database::getDB();
+        $tbl = $db->addTable('prop_sublease');
+        $tbl->addFieldConditional('timeout', time(), '<');
+        $tbl->addFieldConditional('active', 1);
+        $tbl->addValue('active', 0);
+        $db->update();
     }
 
 }
