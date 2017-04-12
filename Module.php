@@ -36,6 +36,9 @@ class Module extends \Canopy\Module implements \Canopy\SettingDefaults
         $settings['our_phone'] = null;
         $settings['our_name'] = null;
         $settings['front_buttons'] = 1;
+        $settings['property_timeout'] = time() - 86400;
+        $settings['sublease_timeout'] = time() - 86400;
+        $settings['roommate_timeout'] = time() - 86400;
         return $settings;
     }
     
