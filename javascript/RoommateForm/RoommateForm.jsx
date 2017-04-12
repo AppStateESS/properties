@@ -257,6 +257,16 @@ export default class RoommateForm extends React.Component {
       </div>
     )
 
+    let reactivate
+    if (roommate.active === '0') {
+      reactivate = (
+        <div className="text-align marginBottom">
+          <button type="button" className="btn btn-lg btn-warning" onClick={this.save}>
+            <i className="fa fa-power-off"></i>&nbsp;Reactivate my roommate request</button>
+        </div>
+      )
+    }
+
     let message
     if (this.state.message !== null) {
       message = <Message
@@ -269,6 +279,7 @@ export default class RoommateForm extends React.Component {
 
     return (
       <div className="roommate-form">
+        {reactivate}
         <p className="alert alert-info">This service is for students looking to meet
           others to share a residence. If you are looking for someone to assume a
           sublease, please use our&nbsp;<strong>
