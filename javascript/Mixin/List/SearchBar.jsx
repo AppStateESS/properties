@@ -191,7 +191,7 @@ export default class SearchBar extends React.Component {
 
     let activeButton
     if (this.props.showActiveButton) {
-      if (this.props.searchVars.showinactive === true || this.props.searchVars.showinactive === undefined) {
+      if (this.props.searchVars.showinactive === true) {
         activeButton = <button className="btn btn-info btn-sm" onClick={this.props.updateSearchVars.bind(null, 'showinactive', false)}>Hide inactive</button>
       } else {
         activeButton = <button className="btn btn-info btn-sm" onClick={this.props.updateSearchVars.bind(null, 'showinactive', true)}>Show inactive</button>
