@@ -20,11 +20,12 @@ namespace properties\Controller\Roommate;
 
 class User extends \properties\Controller\SubController
 {
+
     /**
      * @var \properties\Factory\Roommate
      */
     public $factory;
-    
+
     public function __construct($role)
     {
         parent::__construct($role);
@@ -44,9 +45,14 @@ class User extends \properties\Controller\SubController
 
     protected function listHtmlCommand(\Canopy\Request $request)
     {
+        if ($this->factory->roommateTimeoutPast()) {
+            $this->factory->flipRoommateTimeout();
+            $this->factory->updateRoommateTimeout();
+        }
+
         $button = $this->createButton();
         \properties\Factory\NavBar::addItem($button);
-        
+
         return $this->factory->reactView('roommatelist');
     }
 

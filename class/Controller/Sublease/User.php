@@ -44,6 +44,7 @@ class User extends \properties\Controller\SubController
 
     public function listHtmlCommand(\Canopy\Request $request)
     {
+        $this->updateTimeouts();
         $this->createButton();
 
         \Layout::addStyle('properties', 'sublease/list.css');
@@ -68,6 +69,14 @@ class User extends \properties\Controller\SubController
 <button onClick="window.location.href='./properties/Sublease/create'" class="btn btn-primary btn-sm navbar-btn">Create my sublease</button>
 EOF;
         \properties\Factory\NavBar::addItem($button);
+    }
+
+    protected function updateTimeouts()
+    {
+        if ($this->factory->subleaseTimeoutPast()) {
+            $this->factory->flipSubleaseTimeout();
+            $this->factory->updateSubleaseTimeout();
+        }
     }
 
 }

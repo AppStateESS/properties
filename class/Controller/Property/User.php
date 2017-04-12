@@ -36,6 +36,10 @@ class User extends \properties\Controller\SubController
 
     protected function listHtmlCommand(\Canopy\Request $request)
     {
+        if ($this->factory->propertyTimeoutPast()) {
+            $this->factory->flipPropertyTimeout();
+            $this->factory->updatePropertyTimeout();
+        }
         \Layout::addStyle('properties', 'property/list.css');
         return $this->factory->reactView('property');
     }
