@@ -331,8 +331,10 @@ class PropertyUpgrade
         
         $tbl->dropColumn('window_number');
         $tbl->dropColumn('efficiency');
+        $tbl->dropColumn('sublease');
+        $tbl->dropColumn('approved');
     }
-
+    
     /**
      * Removes 00 from amounts
      */
