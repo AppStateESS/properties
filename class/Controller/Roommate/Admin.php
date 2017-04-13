@@ -23,7 +23,7 @@ class Admin extends Logged
 
     protected function viewHtmlCommand(\Canopy\Request $request)
     {
-        return $this->factory->view($this->id, false);
+        return $this->factory->view($this->id, true);
     }
 
     protected function listHtmlCommand(\Canopy\Request $request)
