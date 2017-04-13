@@ -1178,9 +1178,9 @@ webpackJsonp([8],{
 	        _react2.default.createElement('i', { className: 'fa fa-caret-down' })
 	      );
 	
-	      var sortLabel = 'Sort by';
+	      var sortLabel = 'Sort results by...';
 	      if (this.props.searchVars.sortBy) {
-	        sortLabel = 'Sort by: ' + this.sortTypes[this.props.searchVars.sortBy];
+	        sortLabel = 'Sort results by: ' + this.sortTypes[this.props.searchVars.sortBy];
 	      }
 	
 	      var sortby = [{
@@ -1211,124 +1211,135 @@ webpackJsonp([8],{
 	        if (this.props.searchVars.showinactive === true) {
 	          activeButton = _react2.default.createElement(
 	            'button',
-	            { className: 'btn btn-info btn-sm', onClick: this.props.updateSearchVars.bind(null, 'showinactive', false) },
+	            {
+	              className: 'btn btn-info btn-sm marginLeft',
+	              onClick: this.props.updateSearchVars.bind(null, 'showinactive', false) },
 	            'Hide inactive'
 	          );
 	        } else {
 	          activeButton = _react2.default.createElement(
 	            'button',
-	            { className: 'btn btn-info btn-sm', onClick: this.props.updateSearchVars.bind(null, 'showinactive', true) },
+	            {
+	              className: 'btn btn-info btn-sm marginLeft',
+	              onClick: this.props.updateSearchVars.bind(null, 'showinactive', true) },
 	            'Show inactive'
 	          );
 	        }
 	      }
 	
+	      var searchStyle = {
+	        maxWidth: '300px'
+	      };
+	
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'panel panel-default marginBottom' },
+	        null,
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'panel-body' },
+	          { className: 'panel panel-default marginBottom' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'pull-left', style: {
-	                maxWidth: '300px'
-	              } },
+	            { className: 'panel-body' },
 	            _react2.default.createElement(
 	              'div',
-	              { className: 'input-group' },
-	              _react2.default.createElement('input', {
-	                ref: 'propertySearch',
-	                className: 'form-control input-sm',
-	                type: 'text',
-	                placeholder: 'Search...',
-	                onChange: this.props.updateSearchString }),
-	              _react2.default.createElement(
-	                'span',
-	                { className: 'input-group-btn' },
-	                _react2.default.createElement(
-	                  'button',
-	                  {
-	                    className: 'btn btn-default btn-sm',
-	                    type: 'button',
-	                    onClick: this.clearSearch },
-	                  'Clear'
-	                )
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'pull-left' },
-	            _react2.default.createElement(_Dropdown2.default, { small: true, label: bedLabel, options: beds })
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'pull-left' },
-	            _react2.default.createElement(_Dropdown2.default, { small: true, label: bathLabel, options: baths })
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'pull-left' },
-	            _react2.default.createElement(_Dropdown2.default, { small: true, label: minpriceLabel, options: minprice })
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'pull-left' },
-	            _react2.default.createElement(_Dropdown2.default, { small: true, label: maxpriceLabel, options: maxprice })
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'pull-left' },
-	            _react2.default.createElement(
-	              'button',
-	              { className: 'btn btn-success btn-sm', onClick: this.props.resetConditions },
-	              'Reset'
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'pull-left' },
-	            _react2.default.createElement(_Dropdown2.default, { small: true, label: sortLabel, options: sortby })
-	          ),
-	          activeButton,
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'row', style: {
-	                marginTop: '1em'
-	              } },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'col-sm-12 text-center' },
-	              _react2.default.createElement(
-	                'button',
-	                { className: 'btn btn-default btn-sm', onClick: this.togglePanel },
-	                panelButton
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            _reactAddonsCssTransitionGroup2.default,
-	            {
-	              transitionName: 'trans',
-	              transitionEnterTimeout: 500,
-	              transitionLeaveTimeout: 300 },
-	            this.state.fullSize === true ? _react2.default.createElement(
-	              'div',
-	              null,
-	              _react2.default.createElement(_Amenities2.default, { toggle: this.props.toggle, searchVars: this.props.searchVars }),
+	              { className: 'pull-left', style: searchStyle },
 	              _react2.default.createElement(
 	                'div',
-	                { className: 'text-center' },
+	                { className: 'input-group' },
+	                _react2.default.createElement('input', {
+	                  ref: 'propertySearch',
+	                  className: 'form-control input-sm',
+	                  type: 'text',
+	                  placeholder: 'Search...',
+	                  onChange: this.props.updateSearchString }),
 	                _react2.default.createElement(
-	                  'button',
-	                  { className: 'btn btn-success', onClick: this.props.clearAmenities },
-	                  'Uncheck above'
+	                  'span',
+	                  { className: 'input-group-btn' },
+	                  _react2.default.createElement(
+	                    'button',
+	                    {
+	                      className: 'btn btn-default btn-sm',
+	                      type: 'button',
+	                      onClick: this.clearSearch },
+	                    'Clear'
+	                  )
 	                )
 	              )
-	            ) : null
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'pull-left' },
+	              _react2.default.createElement(_Dropdown2.default, { small: true, label: bedLabel, options: beds })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'pull-left' },
+	              _react2.default.createElement(_Dropdown2.default, { small: true, label: bathLabel, options: baths })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'pull-left' },
+	              _react2.default.createElement(_Dropdown2.default, { small: true, label: minpriceLabel, options: minprice })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'pull-left' },
+	              _react2.default.createElement(_Dropdown2.default, { small: true, label: maxpriceLabel, options: maxprice })
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'pull-left' },
+	              _react2.default.createElement(
+	                'button',
+	                { className: 'btn btn-success btn-sm', onClick: this.props.resetConditions },
+	                'Reset'
+	              )
+	            ),
+	            activeButton,
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'row', style: {
+	                  marginTop: '1em'
+	                } },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-sm-12 text-center' },
+	                _react2.default.createElement(
+	                  'button',
+	                  { className: 'btn btn-default btn-sm', onClick: this.togglePanel },
+	                  panelButton
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactAddonsCssTransitionGroup2.default,
+	              {
+	                transitionName: 'trans',
+	                transitionEnterTimeout: 500,
+	                transitionLeaveTimeout: 300 },
+	              this.state.fullSize === true ? _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(_Amenities2.default, { toggle: this.props.toggle, searchVars: this.props.searchVars }),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'text-center' },
+	                  _react2.default.createElement(
+	                    'button',
+	                    { className: 'btn btn-success', onClick: this.props.clearAmenities },
+	                    'Uncheck above'
+	                  )
+	                )
+	              ) : null
+	            )
 	          )
-	        )
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(_Dropdown2.default, { label: sortLabel, options: sortby })
+	        ),
+	        _react2.default.createElement('hr', null)
 	      );
 	    }
 	  }]);
@@ -3975,7 +3986,6 @@ webpackJsonp([8],{
 	    _this.state = {};
 	    _this.offset = 0;
 	    _this.delay;
-	    _this.sortBy;
 	    _this.searchVars = {
 	      beds: '1',
 	      baths: '1',
