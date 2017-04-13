@@ -159,9 +159,9 @@ export default class SearchBar extends React.Component {
         <i className="fa fa-caret-down"></i>
       </span>
 
-    let sortLabel = 'Sort by'
+    let sortLabel = 'Sort results by...'
     if (this.props.searchVars.sortBy) {
-      sortLabel = 'Sort by: ' + this.sortTypes[this.props.searchVars.sortBy]
+      sortLabel = 'Sort results by: ' + this.sortTypes[this.props.searchVars.sortBy]
     }
 
     const sortby = [
@@ -192,65 +192,74 @@ export default class SearchBar extends React.Component {
     let activeButton
     if (this.props.showActiveButton) {
       if (this.props.searchVars.showinactive === true) {
-        activeButton = <button className="btn btn-info btn-sm" onClick={this.props.updateSearchVars.bind(null, 'showinactive', false)}>Hide inactive</button>
+        activeButton = <button
+          className="btn btn-info btn-sm marginLeft"
+          onClick={this.props.updateSearchVars.bind(null, 'showinactive', false)}>Hide inactive</button>
       } else {
-        activeButton = <button className="btn btn-info btn-sm" onClick={this.props.updateSearchVars.bind(null, 'showinactive', true)}>Show inactive</button>
+        activeButton = <button
+          className="btn btn-info btn-sm marginLeft"
+          onClick={this.props.updateSearchVars.bind(null, 'showinactive', true)}>Show inactive</button>
       }
     }
 
+    const searchStyle = {
+      maxWidth: '300px'
+    }
+
     return (
-      <div className="panel panel-default marginBottom">
-        <div className="panel-body">
-          <div className="pull-left" style={{
-            maxWidth: '300px'
-          }}>
-            <div className="input-group">
-              <input
-                ref="propertySearch"
-                className="form-control input-sm"
-                type="text"
-                placeholder="Search..."
-                onChange={this.props.updateSearchString}/>
-              <span className="input-group-btn">
-                <button
-                  className="btn btn-default btn-sm"
-                  type="button"
-                  onClick={this.clearSearch}>Clear</button>
-              </span>
+      <div>
+        <div className="panel panel-default marginBottom">
+          <div className="panel-body">
+            <div className="pull-left" style={searchStyle}>
+              <div className="input-group">
+                <input
+                  ref="propertySearch"
+                  className="form-control input-sm"
+                  type="text"
+                  placeholder="Search..."
+                  onChange={this.props.updateSearchString}/>
+                <span className="input-group-btn">
+                  <button
+                    className="btn btn-default btn-sm"
+                    type="button"
+                    onClick={this.clearSearch}>Clear</button>
+                </span>
+              </div>
             </div>
-          </div>
-          <div className="pull-left"><Dropdown small={true} label={bedLabel} options={beds}/></div>
-          <div className="pull-left"><Dropdown small={true} label={bathLabel} options={baths}/></div>
-          <div className="pull-left"><Dropdown small={true} label={minpriceLabel} options={minprice}/></div>
-          <div className="pull-left"><Dropdown small={true} label={maxpriceLabel} options={maxprice}/></div>
-          <div className="pull-left">
-            <button className="btn btn-success btn-sm" onClick={this.props.resetConditions}>Reset</button>
-          </div>
-          <div className="pull-left"><Dropdown small={true} label={sortLabel} options={sortby}/></div>
-          {activeButton}
-          <div className="row" style={{
-            marginTop: '1em'
-          }}>
-            <div className="col-sm-12 text-center">
-              <button className="btn btn-default btn-sm" onClick={this.togglePanel}>{panelButton}</button>
+            <div className="pull-left"><Dropdown small={true} label={bedLabel} options={beds}/></div>
+            <div className="pull-left"><Dropdown small={true} label={bathLabel} options={baths}/></div>
+            <div className="pull-left"><Dropdown small={true} label={minpriceLabel} options={minprice}/></div>
+            <div className="pull-left"><Dropdown small={true} label={maxpriceLabel} options={maxprice}/></div>
+            <div className="pull-left">
+              <button className="btn btn-success btn-sm" onClick={this.props.resetConditions}>Reset</button>
             </div>
-          </div>
-          <ReactCSSTransitionGroup
-            transitionName="trans"
-            transitionEnterTimeout={500}
-            transitionLeaveTimeout={300}>
-            {this.state.fullSize === true
-              ? (
-                <div>
-                  <Amenities toggle={this.props.toggle} searchVars={this.props.searchVars}/>
-                  <div className="text-center">
-                    <button className="btn btn-success" onClick={this.props.clearAmenities}>Uncheck above</button>
+            {activeButton}
+            <div className="row" style={{
+              marginTop: '1em'
+            }}>
+              <div className="col-sm-12 text-center">
+                <button className="btn btn-default btn-sm" onClick={this.togglePanel}>{panelButton}</button>
+              </div>
+            </div>
+            <ReactCSSTransitionGroup
+              transitionName="trans"
+              transitionEnterTimeout={500}
+              transitionLeaveTimeout={300}>
+              {this.state.fullSize === true
+                ? (
+                  <div>
+                    <Amenities toggle={this.props.toggle} searchVars={this.props.searchVars}/>
+                    <div className="text-center">
+                      <button className="btn btn-success" onClick={this.props.clearAmenities}>Uncheck above</button>
+                    </div>
                   </div>
-                </div>
-              )
-              : null}
-          </ReactCSSTransitionGroup>
+                )
+                : null}
+            </ReactCSSTransitionGroup>
+          </div>
         </div>
+        <div><Dropdown label={sortLabel} options={sortby}/></div>
+        <hr />
       </div>
     )
   }

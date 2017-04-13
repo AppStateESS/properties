@@ -10,7 +10,6 @@ export default class Base extends React.Component {
     this.state = {}
     this.offset = 0
     this.delay
-    this.sortBy
     this.searchVars = {
       beds: '1',
       baths: '1',

@@ -45,7 +45,7 @@ abstract class Listing
     public $duplex = 0;
     public $more_rows = true;
     public $show_inactive = false;
-    public $sort_by = null;
+    public $sort_by = 'updated';
 
     /**
      * @var \phpws2\Database\DB

@@ -67,38 +67,37 @@ class Listing extends \properties\Factory\Listing
             $this->data_table->addFieldConditional('contact_id',
                     $this->manager_id);
         }
-        if ($this->sort_by) {
-            switch ($this->sort_by) {
-                case 'rentall':
-                    $this->data_table->addOrderBy('monthly_rent');
-                    break;
-                
-                case 'rentunit':
-                    $this->data_table->addOrderBy('lease_type', 'asc');
-                    $this->data_table->addOrderBy('monthly_rent');
-                    break;
-                
-                case 'rentindiv':
-                    $this->data_table->addOrderBy('lease_type', 'desc');
-                    $this->data_table->addOrderBy('monthly_rent');
-                    break;
-                
-                case 'alpha':
-                    $this->data_table->addOrderBy('name');
-                    break;
-                
-                case 'creatednew':
-                    $this->data_table->addOrderBy('created', 'desc');
-                    break;
-                
-                case 'createdold':
-                    $this->data_table->addOrderBy('created', 'asc');
-                    break;
-                
-                case 'updated':
-                    $this->data_table->addOrderBy('updated', 'desc');
-                    break;
-            }
+        switch ($this->sort_by) {
+            case 'rentall':
+                $this->data_table->addOrderBy('monthly_rent');
+                break;
+
+            case 'rentunit':
+                $this->data_table->addOrderBy('lease_type', 'asc');
+                $this->data_table->addOrderBy('monthly_rent');
+                break;
+
+            case 'rentindiv':
+                $this->data_table->addOrderBy('lease_type', 'desc');
+                $this->data_table->addOrderBy('monthly_rent');
+                break;
+
+            case 'alpha':
+                $this->data_table->addOrderBy('name');
+                break;
+
+            case 'creatednew':
+                $this->data_table->addOrderBy('created', 'desc');
+                break;
+
+            case 'createdold':
+                $this->data_table->addOrderBy('created', 'asc');
+                break;
+
+            case 'updated':
+            default:
+                $this->data_table->addOrderBy('updated', 'desc');
+                break;
         }
         $this->data_table->addOrderBy('lease_type', 'asc');
         $this->data_table->addOrderBy('monthly_rent');
