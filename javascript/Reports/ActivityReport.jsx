@@ -97,6 +97,7 @@ export default class ActivityReport extends React.Component {
 
     $.when.apply(null, holdEvent).done(function () {
       this.load()
+      this.selected = false
     }.bind(this))
   }
 
@@ -133,7 +134,7 @@ export default class ActivityReport extends React.Component {
             <tr>
               <th style={{
                 width: '100px'
-              }}><input type="checkbox" onChange={this.toggleAll}/></th>
+              }}><input type="checkbox" onChange={this.toggleAll} checked={this.selected}/></th>
               <th>Active</th>
               <th>Company</th>
               <th>Last logged</th>
@@ -149,6 +150,7 @@ export default class ActivityReport extends React.Component {
 
   setActivityDate(value) {
     this.setState({activityDate: value})
+    this.load()
   }
 
   load() {
