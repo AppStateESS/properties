@@ -1,17 +1,10 @@
 'use strict'
 import React from 'react'
 import moment from 'moment'
-import bindMethods from '../Mixin/Helper/Bind.js'
 
 export default class ManagerRow extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {checked: false}
-    bindMethods(['toggleAll'], this)
-  }
-
-  toggleAll() {
-    this.setState({checked: !this.state.checked})
   }
 
   render() {
@@ -35,10 +28,5 @@ export default class ManagerRow extends React.Component {
 
 ManagerRow.propTypes = {
   value: React.PropTypes.object,
-  toggle: React.PropTypes.func,
-  checked: React.PropTypes.bool
-}
-
-ManagerRow.defaultProps = {
-  checked : false
+  toggle: React.PropTypes.func
 }
