@@ -43,11 +43,16 @@ abstract class PicBase extends Base
         $this->porder = new \phpws2\Variable\SmallInteger(0, 'porder');
     }
 
-    public function delete()
+    public function delete($resort = true)
     {
-        unlink($this->path);
-        unlink($this->getThumbnail());
-        parent::delete();
+        if (is_file($this->path)) {
+            unlink($this->path);
+        }
+        $thumb = $this->getThumbnail();
+        if (is_file($thumb)) {
+            unlink($this->getThumbnail());
+        }
+        parent::delete($resort);
     }
 
     public function getThumbnail()
