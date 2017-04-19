@@ -38,8 +38,20 @@ class Admin extends \properties\Controller\SubController
 
     protected function inactivityJsonCommand(Request $request)
     {
-        $json['list'] = $this->factory->getInactiveManagers($request->pullGetString('date'));
+        $json['list'] = $this->factory->getInactiveManagers($request);
         return $json;
+    }
+    
+    protected function studentsJsonCommand(Request $request)
+    {
+        $json['list'] = $this->factory->getStudents($request);
+        return $json;
+    }
+    
+    protected function deleteCommand(Request $request)
+    {
+        $this->factory->deleteStudent($this->id);
+        return array('success'=>true);
     }
 
 }
