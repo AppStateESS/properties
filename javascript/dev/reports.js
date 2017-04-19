@@ -23,6 +23,10 @@ webpackJsonp([11],[
 	
 	var _ActivityReport2 = _interopRequireDefault(_ActivityReport);
 	
+	var _StudentReport = __webpack_require__(/*! ./StudentReport.jsx */ 576);
+	
+	var _StudentReport2 = _interopRequireDefault(_StudentReport);
+	
 	var _Bind = __webpack_require__(/*! ../Mixin/Helper/Bind.js */ 189);
 	
 	var _Bind2 = _interopRequireDefault(_Bind);
@@ -68,6 +72,9 @@ webpackJsonp([11],[
 	      return [{
 	        label: 'Inactive managers',
 	        handleClick: this.pickReport.bind(this, 'inactiveManagers')
+	      }, {
+	        label: 'Student report',
+	        handleClick: this.pickReport.bind(this, 'studentReport')
 	      }];
 	    }
 	  }, {
@@ -79,6 +86,9 @@ webpackJsonp([11],[
 	
 	        case 'inactiveManagers':
 	          return _react2.default.createElement(_ActivityReport2.default, null);
+	
+	        case 'studentReport':
+	          return _react2.default.createElement(_StudentReport2.default, null);
 	      }
 	    }
 	  }, {
@@ -29468,6 +29478,7 @@ webpackJsonp([11],[
 	
 	      $.when.apply(null, holdEvent).done(function () {
 	        this.load();
+	        this.selected = false;
 	      }.bind(this));
 	    }
 	  }, {
@@ -29518,7 +29529,7 @@ webpackJsonp([11],[
 	                { style: {
 	                    width: '100px'
 	                  } },
-	                _react2.default.createElement('input', { type: 'checkbox', onChange: this.toggleAll })
+	                _react2.default.createElement('input', { type: 'checkbox', onChange: this.toggleAll, checked: this.selected })
 	              ),
 	              _react2.default.createElement(
 	                'th',
@@ -29549,6 +29560,7 @@ webpackJsonp([11],[
 	    key: 'setActivityDate',
 	    value: function setActivityDate(value) {
 	      this.setState({ activityDate: value });
+	      this.load();
 	    }
 	  }, {
 	    key: 'load',
@@ -29641,10 +29653,6 @@ webpackJsonp([11],[
 	
 	var _moment2 = _interopRequireDefault(_moment);
 	
-	var _Bind = __webpack_require__(/*! ../Mixin/Helper/Bind.js */ 189);
-	
-	var _Bind2 = _interopRequireDefault(_Bind);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -29659,19 +29667,10 @@ webpackJsonp([11],[
 	  function ManagerRow(props) {
 	    _classCallCheck(this, ManagerRow);
 	
-	    var _this = _possibleConstructorReturn(this, (ManagerRow.__proto__ || Object.getPrototypeOf(ManagerRow)).call(this, props));
-	
-	    _this.state = { checked: false };
-	    (0, _Bind2.default)(['toggleAll'], _this);
-	    return _this;
+	    return _possibleConstructorReturn(this, (ManagerRow.__proto__ || Object.getPrototypeOf(ManagerRow)).call(this, props));
 	  }
 	
 	  _createClass(ManagerRow, [{
-	    key: 'toggleAll',
-	    value: function toggleAll() {
-	      this.setState({ checked: !this.state.checked });
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var value = this.props.value;
@@ -29729,12 +29728,354 @@ webpackJsonp([11],[
 	
 	ManagerRow.propTypes = {
 	  value: _react2.default.PropTypes.object,
-	  toggle: _react2.default.PropTypes.func,
-	  checked: _react2.default.PropTypes.bool
+	  toggle: _react2.default.PropTypes.func
 	};
+
+/***/ },
+/* 576 */
+/*!**********************************************!*\
+  !*** ./javascript/Reports/StudentReport.jsx ***!
+  \**********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
 	
-	ManagerRow.defaultProps = {
-	  checked: false
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _moment = __webpack_require__(/*! moment */ 238);
+	
+	var _moment2 = _interopRequireDefault(_moment);
+	
+	var _reactDatePicker = __webpack_require__(/*! react-date-picker */ 235);
+	
+	var _Waiting = __webpack_require__(/*! ../Mixin/Html/Waiting.jsx */ 188);
+	
+	var _Waiting2 = _interopRequireDefault(_Waiting);
+	
+	var _Bind = __webpack_require__(/*! ../Mixin/Helper/Bind.js */ 189);
+	
+	var _Bind2 = _interopRequireDefault(_Bind);
+	
+	var _StudentRow = __webpack_require__(/*! ./StudentRow.jsx */ 577);
+	
+	var _StudentRow2 = _interopRequireDefault(_StudentRow);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	/* global $ */
+	
+	var StudentReport = function (_React$Component) {
+	  _inherits(StudentReport, _React$Component);
+	
+	  function StudentReport(props) {
+	    _classCallCheck(this, StudentReport);
+	
+	    var _this = _possibleConstructorReturn(this, (StudentReport.__proto__ || Object.getPrototypeOf(StudentReport)).call(this, props));
+	
+	    _this.selected = false;
+	    _this.state = {
+	      searchDate: (0, _moment2.default)().subtract(1, 'year').format('YYYY-MM-DD'),
+	      listing: null,
+	      checkAll: false
+	    };
+	    var methods = ['setSearchDate', 'load', 'getListing', 'toggleAll', 'getRows', 'setSearchDate', 'toggle', 'showActions', 'deleteStudent'];
+	    (0, _Bind2.default)(methods, _this);
+	    return _this;
+	  }
+	
+	  _createClass(StudentReport, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.load();
+	    }
+	  }, {
+	    key: 'toggle',
+	    value: function toggle(key) {
+	      var listing = this.state.listing;
+	      if (listing[key].checked === undefined || listing[key].checked === false) {
+	        listing[key].checked = true;
+	        this.selected = true;
+	      } else {
+	        listing[key].checked = false;
+	        this.showActions();
+	      }
+	      this.setState({ listing: listing });
+	    }
+	  }, {
+	    key: 'toggleAll',
+	    value: function toggleAll() {
+	      var listing = this.state.listing;
+	      var checkAll = !this.state.checkAll;
+	      listing.map(function (value) {
+	        value.checked = checkAll;
+	      });
+	      this.setState({ listing: listing, checkAll: checkAll });
+	      this.showActions();
+	    }
+	  }, {
+	    key: 'showActions',
+	    value: function showActions() {
+	      this.selected = this.state.listing.some(function (value) {
+	        return value.checked === true;
+	      });
+	    }
+	  }, {
+	    key: 'load',
+	    value: function load() {
+	      $.getJSON('./properties/Reports/students', { date: this.state.searchDate }).done(function (data) {
+	        this.setState({ listing: data.list });
+	      }.bind(this));
+	    }
+	  }, {
+	    key: 'delete',
+	    value: function _delete(value) {
+	      return $.ajax({
+	        url: 'properties/Reports/' + value.id + '/student',
+	        dataType: 'json',
+	        type: 'delete'
+	      });
+	    }
+	  }, {
+	    key: 'deleteStudent',
+	    value: function deleteStudent() {
+	      if (this.state.listing === null || this.state.listing[0] === null) {
+	        return;
+	      }
+	      var holdEvent = [];
+	
+	      this.state.listing.forEach(function (value) {
+	        if (value.checked === true) {
+	          holdEvent.push(this.delete(value));
+	        }
+	      }.bind(this));
+	
+	      $.when.apply(null, holdEvent).done(function () {
+	        this.selected = false;
+	        this.load();
+	      }.bind(this));
+	    }
+	  }, {
+	    key: 'getListing',
+	    value: function getListing() {
+	      switch (this.state.listing) {
+	        case null:
+	          return _react2.default.createElement(_Waiting2.default, { label: 'students' });
+	
+	        case 0:
+	          return _react2.default.createElement(
+	            'p',
+	            null,
+	            'Choose a date and refresh the listing.'
+	          );
+	
+	        default:
+	          return this.getRows();
+	      }
+	    }
+	  }, {
+	    key: 'setSearchDate',
+	    value: function setSearchDate(value) {
+	      this.setState({ searchDate: value });
+	      this.load();
+	    }
+	  }, {
+	    key: 'getRows',
+	    value: function getRows() {
+	      var listing = void 0;
+	      listing = this.state.listing.map(function (value, key) {
+	        return _react2.default.createElement(_StudentRow2.default, { value: value, key: key, toggle: this.toggle.bind(this, key) });
+	      }.bind(this));
+	
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'scroll-table' },
+	        _react2.default.createElement(
+	          'table',
+	          { className: 'table table-striped' },
+	          _react2.default.createElement(
+	            'thead',
+	            null,
+	            _react2.default.createElement(
+	              'tr',
+	              null,
+	              _react2.default.createElement(
+	                'th',
+	                { style: {
+	                    width: '100px'
+	                  } },
+	                _react2.default.createElement('input', { type: 'checkbox', onChange: this.toggleAll, checked: this.selected })
+	              ),
+	              _react2.default.createElement(
+	                'th',
+	                null,
+	                'User name'
+	              ),
+	              _react2.default.createElement(
+	                'th',
+	                null,
+	                'Last logged'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'tbody',
+	            null,
+	            listing
+	          )
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var actions = void 0;
+	      if (this.selected) {
+	        actions = _react2.default.createElement(
+	          'span',
+	          null,
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'marginLeft btn btn-danger', onClick: this.deleteStudent },
+	            'Delete'
+	          )
+	        );
+	      }
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_reactDatePicker.DateField, {
+	          dateFormat: 'YYYY-MM-DD',
+	          onChange: this.setSearchDate,
+	          value: this.state.searchDate }),
+	        _react2.default.createElement(
+	          'button',
+	          { className: 'marginLeft btn btn-primary', onClick: this.load },
+	          'Refresh listing'
+	        ),
+	        actions,
+	        _react2.default.createElement('hr', null),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'student-listing' },
+	          this.getListing()
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return StudentReport;
+	}(_react2.default.Component);
+	
+	exports.default = StudentReport;
+	
+	
+	StudentReport.propTypes = {};
+
+/***/ },
+/* 577 */
+/*!*******************************************!*\
+  !*** ./javascript/Reports/StudentRow.jsx ***!
+  \*******************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _moment = __webpack_require__(/*! moment */ 238);
+	
+	var _moment2 = _interopRequireDefault(_moment);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var StudentRow = function (_React$Component) {
+	  _inherits(StudentRow, _React$Component);
+	
+	  function StudentRow(props) {
+	    _classCallCheck(this, StudentRow);
+	
+	    var _this = _possibleConstructorReturn(this, (StudentRow.__proto__ || Object.getPrototypeOf(StudentRow)).call(this, props));
+	
+	    _this.state = {};
+	    return _this;
+	  }
+	
+	  _createClass(StudentRow, [{
+	    key: 'render',
+	    value: function render() {
+	      var value = this.props.value;
+	
+	      var lastLog = void 0;
+	      if (value.last_logged === '0') {
+	        lastLog = 'Never';
+	      } else {
+	        lastLog = (0, _moment2.default)(value.last_logged * 1000).format('YYYY-MM-DD');
+	      }
+	      return _react2.default.createElement(
+	        'tr',
+	        null,
+	        _react2.default.createElement(
+	          'td',
+	          { style: {
+	              width: '100px'
+	            } },
+	          _react2.default.createElement('input', {
+	            type: 'checkbox',
+	            onClick: this.props.toggle,
+	            value: '1',
+	            checked: value.checked })
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          value.username
+	        ),
+	        _react2.default.createElement(
+	          'td',
+	          null,
+	          lastLog
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return StudentRow;
+	}(_react2.default.Component);
+	
+	exports.default = StudentRow;
+	
+	
+	StudentRow.propTypes = {
+	  value: _react2.default.PropTypes.object,
+	  toggle: _react2.default.PropTypes.func
 	};
 
 /***/ }
