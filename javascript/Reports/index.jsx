@@ -3,6 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import 'react-date-picker/index.css'
 import ActivityReport from './ActivityReport.jsx'
+import StudentReport from './StudentReport.jsx'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import Dropdown from '../Mixin/Form/Dropdown.jsx'
 
@@ -28,6 +29,10 @@ class Reports extends React.Component {
       {
         label: 'Inactive managers',
         handleClick: this.pickReport.bind(this, 'inactiveManagers')
+      },
+      {
+        label: 'Student report',
+        handleClick: this.pickReport.bind(this, 'studentReport')
       }
     ]
   }
@@ -39,6 +44,9 @@ class Reports extends React.Component {
 
       case 'inactiveManagers':
         return <ActivityReport/>
+
+      case 'studentReport':
+        return <StudentReport/>
     }
   }
 
