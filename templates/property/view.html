@@ -46,7 +46,7 @@
                     <?php if (!empty($company_url)):?>
                     <p style="width: 100%;overflow: hidden;white-space:nowrap"><a href="<?=$company_url?>" target="_blank"><i class="fa fa-external-link"></i>&nbsp;<?=preg_replace('/^http:\/\//', '', $company_url)?></a></p>
                     <?php endif;?>
-                    <p><a href="tel:<?=$phone?>" target="_blank"><i class="fa fa-phone"></i>&nbsp;<?=$phone?></a></p>
+                    <p><a href="<?=$phone_tel?>" target="_blank"><i class="fa fa-phone"></i>&nbsp;<?=$phone?></a></p>
                     <p><a href="mailto:<?=$email_address?>" target="_blank"><i class="fa fa-envelope"></i>&nbsp;<?=$email_address?></a></p>
                     <?php if (!empty($company_address)):?>
                     <p><a href="<?=$company_map_address?>" target="_blank"><i class="fa fa-map"></i>&nbsp;<?=$company_address?></a></p>
