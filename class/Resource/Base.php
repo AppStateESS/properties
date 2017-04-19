@@ -14,7 +14,7 @@ class Base extends \phpws2\Resource
 
     public function __set($name, $value)
     {
-        if ((!$this->$name->allowNull() || 
+        if ((!$this->$name->allowNull() ||
                 (method_exists($this->$name, 'allowEmpty') && !$this->$name->allowEmpty())) &&
                 ( (is_string($value) && $value === '') || is_null($value))) {
             throw new \properties\Exception\MissingInput("$name may not be empty");
@@ -39,13 +39,28 @@ class Base extends \phpws2\Resource
         $url = preg_replace('/\+{2,}/', '+', $url);
         return sprintf('http://maps.google.com/maps?q=%s', $url);
     }
-    
-    public function delete()
+
+    public function delete($resort = true)
     {
+
         $db = Database::getDB();
         $tbl = $db->addTable($this->table);
         $tbl->addFieldConditional('id', $this->getId());
-        return $db->delete();
+        $result = $db->delete();
+        if ($result) {
+            if ($resort) {
+                $position = $this->porder;
+                $db->clearConditional();
+                $db = Database::getDB();
+                $tbl = $db->addTable('prop_photo');
+                $exp = new \phpws2\Database\Expression($tbl->getField('porder') . '-1');
+                $tbl->addValue('porder', $exp);
+                $tbl->addFieldConditional('pid', $this->pid);
+                $tbl->addFieldConditional('porder', $position, '>');
+                $db->update();
+            }
+            return $result;
+        }
     }
 
 }
