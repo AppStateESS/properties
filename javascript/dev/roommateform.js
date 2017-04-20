@@ -29561,7 +29561,7 @@ webpackJsonp([12],[
 	      message: null
 	    };
 	
-	    (0, _Bind2.default)(['setValue', 'setError', 'save', 'setMoveIn', 'checkName', 'checkEmail', 'checkPhone', 'checkErrors', 'checkFacebook', 'checkInstagram', 'checkDescription', 'checkTwitter'], _this);
+	    (0, _Bind2.default)(['activate', 'deactivate', 'setValue', 'setError', 'save', 'setMoveIn', 'checkName', 'checkEmail', 'checkPhone', 'checkErrors', 'checkFacebook', 'checkInstagram', 'checkDescription', 'checkTwitter'], _this);
 	    return _this;
 	  }
 	
@@ -29789,6 +29789,32 @@ webpackJsonp([12],[
 	      }
 	    }
 	  }, {
+	    key: 'activate',
+	    value: function activate() {
+	      this.sendActive('1');
+	    }
+	  }, {
+	    key: 'deactivate',
+	    value: function deactivate() {
+	      this.sendActive('0');
+	    }
+	  }, {
+	    key: 'sendActive',
+	    value: function sendActive(value) {
+	      $.ajax({
+	        url: './properties/Roommate/' + this.state.roommate.id,
+	        data: {
+	          varname: 'active',
+	          value: value
+	        },
+	        dataType: 'json',
+	        type: 'patch',
+	        success: function () {
+	          this.setValue('active', value);
+	        }.bind(this)
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var roommate = this.state.roommate;
@@ -29804,18 +29830,23 @@ webpackJsonp([12],[
 	        )
 	      );
 	
-	      var reactivate = void 0;
-	      if (roommate.active === '0') {
-	        reactivate = _react2.default.createElement(
-	          'div',
-	          { className: 'text-align marginBottom' },
-	          _react2.default.createElement(
-	            'button',
-	            { type: 'button', className: 'btn btn-lg btn-warning', onClick: this.save },
-	            _react2.default.createElement('i', { className: 'fa fa-power-off' }),
-	            '\xA0Reactivate my roommate request'
-	          )
-	        );
+	      var activateButton = void 0;
+	      if (roommate.id > 0) {
+	        if (roommate.active === '0') {
+	          activateButton = _react2.default.createElement(
+	            'div',
+	            { onClick: this.activate, className: 'lead pointer text-muted' },
+	            _react2.default.createElement('i', { className: 'fa fa-toggle-off' }),
+	            'Roommate request off'
+	          );
+	        } else {
+	          activateButton = _react2.default.createElement(
+	            'div',
+	            { onClick: this.deactivate, className: 'lead pointer text-success' },
+	            _react2.default.createElement('i', { className: 'fa fa-toggle-on' }),
+	            'Roommate request on'
+	          );
+	        }
 	      }
 	
 	      var message = void 0;
@@ -29835,7 +29866,11 @@ webpackJsonp([12],[
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'roommate-form' },
-	        reactivate,
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'text-align marginBottom' },
+	          activateButton
+	        ),
 	        _react2.default.createElement(
 	          'p',
 	          { className: 'alert alert-info' },
