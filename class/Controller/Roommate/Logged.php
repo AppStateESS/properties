@@ -21,6 +21,14 @@ namespace properties\Controller\Roommate;
 class Logged extends User
 {
 
+    protected $user_roommate;
+
+    public function __construct($role)
+    {
+        parent::__construct($role);
+        $this->user_roommate = $this->getUserRoommate();
+    }
+
     protected function getUserRoommate()
     {
         $roommate = $this->factory->getUserRoommate($this->role->getId());
@@ -29,8 +37,7 @@ class Logged extends User
 
     protected function listHtmlCommand(\Canopy\Request $request)
     {
-        $roommate = $this->getUserRoommate();
-        if ($roommate) {
+        if ($this->user_roommate) {
             $button = $this->updateButton();
         } else {
             $button = $this->createButton();
@@ -48,26 +55,24 @@ class Logged extends User
 
     protected function selfJsonCommand()
     {
-        $roommate = $this->factory->getUserRoommate($this->role->getId());
-        if (empty($roommate)) {
+        if (empty($this->user_roommate)) {
             return array('roommate' => null);
         } else {
-            $json['roommate'] = $roommate->view(false);
+            $json['roommate'] = $this->user_roommate->view(false);
             return $json;
         }
     }
 
     protected function viewHtmlCommand(\Canopy\Request $request)
     {
-        $roommate = $this->getUserRoommate();
-        if ($roommate) {
+        if ($this->user_roommate) {
             $admin = true;
             $button = $this->updateButton();
         } else {
             $admin = false;
             $button = $this->createButton();
         }
-        
+
         \properties\Factory\NavBar::addItem($button);
         return $this->factory->view($this->id, true, $admin);
     }
@@ -88,9 +93,8 @@ class Logged extends User
 
     private function showRoommateViewLink()
     {
-        $roommate = $this->factory->getUserRoommate($this->role->getId());
-        if ($roommate) {
-            $rm_id = $roommate->getId();
+        if ($this->user_roommate) {
+            $rm_id = $this->user_roommate->getId();
             $link = "<button onClick='location.href=\"./properties/Roommate/$rm_id\"' class='btn btn-default navbar-btn btn-sm'><i class='fa fa-undo'></i>&nbsp;Back to my listing</button>";
             \properties\Factory\NavBar::addItem($link);
         }
@@ -109,17 +113,20 @@ class Logged extends User
 
     protected function updatePutCommand(\Canopy\Request $request)
     {
-        $roommate = $this->factory->load($request->pullPutInteger('id'));
-        if (!$this->factory->isOwner($roommate, $this->role->getId())) {
-            return array('error' => 'You do not own this roommate record');
-        }
         try {
-            $roommate = $this->factory->put($request, $roommate);
+            $roommate = $this->factory->put($request, $this->user_roommate);
             $roommate->active = true;
             return array('id' => $this->factory->save($roommate));
         } catch (\properties\Exception\RoommateSaveFailure $e) {
             return array('error' => $e->getMessage());
         }
+    }
+
+    protected function jsonPatchCommand(\Canopy\Request $request)
+    {
+        return array('success' => $this->factory->patch($this->user_roommate->id,
+                    $request->pullPatchString('varname'),
+                    $request->pullPatchBoolean('value')));
     }
 
     private function updateButton()
