@@ -96,14 +96,13 @@ class Property extends Base
         $r = new Resource;
         try {
             $r->loadPostByType($request,
-                    array('active', 'approved', 'company_name', 'heat_type', 'created', 'updated', 'thumbnail', 'timeout'));
+                    array('active', 'company_name', 'heat_type', 'created', 'updated', 'thumbnail', 'timeout'));
             $heat_type = $request->pullPostVar('heat_type');
             if (empty($heat_type)) {
                 $heat_type = array();
             }
             $r->heat_type = $heat_type;
             $r->active = true;
-            $r->approved = true;
             $r->created = time();
             $r->updated = time();
         } catch (\Exception $e) {
@@ -159,7 +158,7 @@ class Property extends Base
 
         try {
             $r->loadPutByType($request,
-                    array('active', 'approved', 'company_name', 'heat_type', 'created', 'updated', 'thumbnail', 'timeout'));
+                    array('active', 'company_name', 'heat_type', 'created', 'updated', 'thumbnail', 'timeout'));
             $heat_type = $request->pullPutVar('heat_type');
             if (empty($heat_type)) {
                 $heat_type = array();
@@ -286,7 +285,7 @@ EOF;
             $manager = $managerFactory->load($manager_id);
             $property->company_name = $manager->company_name;
             $property_json = json_encode($property->getVariablesAsValue(true,
-                            array('approved', 'active'), true));
+                            array('active'), true));
         } else {
             throw new \properties\Exception\ResourceNotFound;
         }
