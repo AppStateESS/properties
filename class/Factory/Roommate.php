@@ -38,6 +38,20 @@ class Roommate extends Base
         return $listing->get();
     }
 
+    public function patch($id, $param, $value)
+    {
+        static $allowed_params = array('active');
+
+        if (!in_array($param, $allowed_params)) {
+            throw new \Exception('Parameter may not be patched');
+        }
+        $roommate = $this->load($id);
+        $roommate->$param = $value;
+        $roommate->updated = time();
+        $this->saveResource($roommate);
+        return true;
+    }
+
     public function post(\Canopy\Request $request)
     {
         $r = new Resource;
@@ -94,7 +108,7 @@ class Roommate extends Base
         return ((int) $roommate->uid === (int) $uid && !empty($uid));
     }
 
-    public function view($id, $contact_allowed, $admin=false)
+    public function view($id, $contact_allowed, $admin = false)
     {
         \Layout::addStyle('properties', 'roommate/view.css');
         $roommate = $this->load($id);
@@ -107,10 +121,11 @@ class Roommate extends Base
         } else {
             $tpl['login'] = 'index.php?module=users&action=user&command=login_page';
         }
-        
+
         $template = new \phpws2\Template;
         if (!$roommate->active && !$admin) {
-            $template->setModuleTemplate('properties', 'errorpage/ResourceNotFound.html');
+            $template->setModuleTemplate('properties',
+                    'errorpage/ResourceNotFound.html');
         } else {
             $template->addVariables($tpl);
             $template->setModuleTemplate('properties', 'roommate/view.html');
