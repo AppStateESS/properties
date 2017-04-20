@@ -26,6 +26,8 @@ export default class RoommateForm extends React.Component {
     }
 
     bindMethods([
+      'activate',
+      'deactivate',
       'setValue',
       'setError',
       'save',
@@ -248,6 +250,30 @@ export default class RoommateForm extends React.Component {
     }
   }
 
+  activate() {
+    this.sendActive('1')
+  }
+
+  deactivate() {
+    this.sendActive('0')
+  }
+
+  sendActive(value)
+  {
+    $.ajax({
+      url: './properties/Roommate/' + this.state.roommate.id,
+      data: {
+        varname: 'active',
+        value: value
+      },
+      dataType: 'json',
+      type: 'patch',
+      success: function () {
+        this.setValue('active', value)
+      }.bind(this)
+    })
+  }
+
   render() {
     const {roommate} = this.state
     const saveButton = (
@@ -257,14 +283,21 @@ export default class RoommateForm extends React.Component {
       </div>
     )
 
-    let reactivate
-    if (roommate.active === '0') {
-      reactivate = (
-        <div className="text-align marginBottom">
-          <button type="button" className="btn btn-lg btn-warning" onClick={this.save}>
-            <i className="fa fa-power-off"></i>&nbsp;Reactivate my roommate request</button>
-        </div>
-      )
+    let activateButton
+    if (roommate.id > 0) {
+      if (roommate.active === '0') {
+        activateButton = (
+          <div onClick={this.activate} className="lead pointer text-muted">
+            <i className="fa fa-toggle-off"></i>
+            Roommate request off</div>
+        )
+      } else {
+        activateButton = (
+          <div onClick={this.deactivate} className="lead pointer text-success">
+            <i className="fa fa-toggle-on"></i>
+            Roommate request on</div>
+        )
+      }
     }
 
     let message
@@ -279,7 +312,9 @@ export default class RoommateForm extends React.Component {
 
     return (
       <div className="roommate-form">
-        {reactivate}
+        <div className="text-align marginBottom">
+          {activateButton}
+        </div>
         <p className="alert alert-info">This service is for students looking to meet
           others to share a residence. If you are looking for someone to assume a
           sublease, please use our&nbsp;<strong>
