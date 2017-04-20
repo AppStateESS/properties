@@ -67,6 +67,11 @@ class User extends \properties\Controller\SubController
         \Current_User::requireLogin();
     }
 
+    protected function editHtmlCommand(\Canopy\Request $request)
+    {
+        \Current_User::requireLogin();
+    }
+
     protected function createButton()
     {
         return '<button class="btn btn-primary btn-sm navbar-btn" onClick="window.location.href=\'./properties/Roommate/create\'"><i class="fa fa-bullhorn"></i>&nbsp;Add Roommate request</button>';
