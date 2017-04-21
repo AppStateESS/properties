@@ -8,6 +8,7 @@
     let subleaseId = <?=$id?>
 </script>
 <div class="sublease-view">
+    <?=$inactive_warning ? '<div class="alert alert-danger"><i class="fa fa-ban"></i> Notice: this property is currently not active. Update your sublease to enable it.</div>':null?>
     <div class="row">
         <div class="col-sm-8 header">
             <h2 class="sublease-title">Sublease: <?=$name?></h2>
