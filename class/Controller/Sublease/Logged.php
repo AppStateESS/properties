@@ -69,8 +69,7 @@ class Logged extends User
         if (empty($this->user_sublease)) {
             $json['sublease'] = null;
         } else {
-            $json['sublease'] = $this->user_sublease->getVariablesAsValue(true,
-                    array('active'));
+            $json['sublease'] = $this->user_sublease->getVariablesAsValue(true);
         }
         $json['email'] = \Current_User::getEmail();
         return $json;
