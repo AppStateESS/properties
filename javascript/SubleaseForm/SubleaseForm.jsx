@@ -276,7 +276,10 @@ export default class SubleaseForm extends Base {
     }
     return (
       <div ref="PageTop" className="sublease-form">
-        <h2>{sublease.id > 0 ? 'Update' : 'Create'} my sublease</h2>
+        <h2>{sublease.id > 0
+            ? 'Update '
+            : 'Create '}
+          my sublease</h2>
         {message}
         <div className="row">
           <div className="col-sm-6">
@@ -344,7 +347,7 @@ export default class SubleaseForm extends Base {
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-4">
+          <div className="col-sm-6 col-md-4">
             <div style={{
               maxWidth: '200px'
             }}>
@@ -365,8 +368,8 @@ export default class SubleaseForm extends Base {
                 required={true}/>
             </div>
           </div>
-          <div className="col-sm-4">
-            <label>Subleasing tenant or unit</label><Help title="Are you subleasing a tenant's portion or the entire unit?"/>
+          <div className="col-sm-6 col-md-4">
+            <label>Subleasing tenant or unit</label><Help title="Are you subleasing a tenant's portion or the entire unit?"/><br/>
             <ButtonGroup
               name="lease_type"
               buttons={this.getLeaseType()}
@@ -374,7 +377,7 @@ export default class SubleaseForm extends Base {
               handle={this.setValue.bind(this, 'lease_type')}
               activeColor="success"/>
           </div>
-          <div className="col-sm-4">
+          <div className="col-sm-12 col-md-4">
             <label>Additional fees</label>
             <textarea
               className="form-control"
@@ -446,7 +449,7 @@ export default class SubleaseForm extends Base {
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-4">
+          <div className="col-sm-6 col-md-4">
             <div>
               <BigCheckbox
                 handle={this.setIntegerValue.bind(this, 'smoking_allowed')}
@@ -464,7 +467,7 @@ export default class SubleaseForm extends Base {
               <Help title="You may put pet details in the description"/>
             </div>
           </div>
-          <div className="col-sm-4">
+          <div className="col-sm-6 col-md-4">
             <div>
               <BigCheckbox
                 handle={this.setIntegerValue.bind(this, 'dishwasher')}
@@ -478,7 +481,7 @@ export default class SubleaseForm extends Base {
                 label="Furnished"/>
             </div>
           </div>
-          <div className="col-sm-4">
+          <div className="col-sm-6 col-md-4">
             <div>
               <BigCheckbox
                 handle={this.setIntegerValue.bind(this, 'utilities_inc')}
@@ -536,14 +539,12 @@ export default class SubleaseForm extends Base {
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-6">
+          <div className="col-sm-12">
             <BigCheckbox
               checked={sublease.landlord_perm}
               handle={this.setIntegerValue.bind(this, 'landlord_perm')}
               label="My landlord is aware I am subleasing"/>
-          </div>
-          <div className="col-sm-6">
-            {landlordWarning}
+              {landlordWarning}
           </div>
         </div>
         <SubmitForm check={this.checkForm} saving={this.state.saving} label="Sublease"/>
