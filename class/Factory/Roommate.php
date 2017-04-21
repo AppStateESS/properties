@@ -79,10 +79,10 @@ class Roommate extends Base
         return $roommate;
     }
 
-    public function save(Resource $roommate)
+    public function save(\properties\Resource\Roommate $roommate)
     {
         $roommate->updated = time();
-        $roommate->timeout = time() + 2592000;
+        $roommate->forwardTimeout();
         self::saveResource($roommate);
         return $roommate->id;
     }
@@ -150,7 +150,7 @@ class Roommate extends Base
      */
     public function updateRoommateTimeout()
     {
-        Settings::set('properties', 'roommate_timeout', time() + 2592000);
+        Settings::set('properties', 'roommate_timeout', time() + PROPERTIES_FORWARD_TIMEOUT);
     }
 
     /**

@@ -411,4 +411,10 @@ class Roommate extends Base
         return $focus[$this->focus->get()];
     }
 
+    public function forwardTimeout()
+    {
+        $forward = time() + PROPERTIES_FORWARD_TIMEOUT;
+        $this->timeout->set($forward);
+    }
+
 }

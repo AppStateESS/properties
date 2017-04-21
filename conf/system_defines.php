@@ -13,21 +13,21 @@ define('TRASH_ON_PREMISES_WITH_RECYCLE', 3);
 define('NO_LIMIT_PARKING', 99);
 
 
-define('C_MONTHLY',      1);
-define('C_SIX_MONTH',    2);
-define('C_YEARLY',       3);
-define('C_SUMMER',       4);
-define('C_SEMESTER',     5);
+define('C_MONTHLY', 1);
+define('C_SIX_MONTH', 2);
+define('C_YEARLY', 3);
+define('C_SUMMER', 4);
+define('C_SEMESTER', 5);
 define('C_TWO_SEMESTER', 6);
-define('C_TEN_MONTH',    7);
-define('C_FIVE_MONTH',   8);
+define('C_TEN_MONTH', 7);
+define('C_FIVE_MONTH', 8);
 
 // heating type
-define('HT_HVAC',      1);
-define('HT_OIL',       2);
-define('HT_PROPANE',   3);
+define('HT_HVAC', 1);
+define('HT_OIL', 2);
+define('HT_PROPANE', 3);
 define('HT_ELEC_BASE', 4);
-define('HT_KEROSENE',  5);
+define('HT_KEROSENE', 5);
 define('HT_WOODSTOVE', 6);
 define('HT_GAS', 7);
 
@@ -35,18 +35,18 @@ define('HT_GAS', 7);
 define('PROP_THUMBNAIL_WIDTH', 100);
 //define('PROP_THUMBNAIL_HEIGHT', 100);
 
-define('TV_NONE',      0);
-define('TV_CABLE',     1);
+define('TV_NONE', 0);
+define('TV_CABLE', 1);
 define('TV_SATELLITE', 2);
 define('TV_FIBER', 3);
 
-define('NET_DIALUP',    1);
-define('NET_DSL',       2);
-define('NET_WIRELESS',  3);
+define('NET_DIALUP', 1);
+define('NET_DSL', 2);
+define('NET_WIRELESS', 3);
 define('NET_SATELLITE', 4);
-define('NET_CABLE',     5);
-define('NET_BOTH',      6);
-define('NET_FIBER',     7);
+define('NET_CABLE', 5);
+define('NET_BOTH', 6);
+define('NET_FIBER', 7);
 
 define('PROP_TYPE_APARTMENT', 0);
 define('PROP_TYPE_EFFICIENCY', 1);
@@ -58,7 +58,7 @@ define('PROP_TYPE_DUPLEX', 5);
 define('PANEL_WIDTH', 400);
 define('PANEL_HEIGHT', 300);
 
-define('GENDER_MALE',   1);
+define('GENDER_MALE', 1);
 define('GENDER_FEMALE', 2);
 
 define('JOINT_LEASE', 0);
@@ -73,3 +73,6 @@ define('SMOKER', 2);
 
 define('PROP_MAX_IMAGE_WIDTH', 1200);
 define('PROP_MAX_IMAGE_HEIGHT', 1000);
+
+// 30 days
+define('PROPERTIES_FORWARD_TIMEOUT', 2592000);

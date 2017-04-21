@@ -127,7 +127,7 @@ class Property extends Base
      */
     public function updatePropertyTimeout()
     {
-        Settings::set('properties', 'property_timeout', time() + 2592000);
+        Settings::set('properties', 'property_timeout', time() + PROPERTIES_FORWARD_TIMEOUT);
     }
 
     /**
@@ -145,7 +145,7 @@ class Property extends Base
 
     public function save(Resource $property)
     {
-        $property->timeout = time() + 2592000;
+        $property->forwardTimeout();
         $property->updated = time();
         self::saveResource($property);
         return $property->id;

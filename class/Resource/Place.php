@@ -269,4 +269,9 @@ abstract class Place extends Base
         return $view;
     }
 
+    public function forwardTimeout()
+    {
+        $forward = time() + PROPERTIES_FORWARD_TIMEOUT;
+        $this->timeout->set($forward);
+    }
 }

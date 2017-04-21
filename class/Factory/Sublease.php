@@ -58,21 +58,21 @@ class Sublease extends Base
     public function save(Resource $sublease)
     {
         $sublease->updated = time();
-        $sublease->timeout = time() + 2592000;
+        $sublease->forwardTimeout();
         self::saveResource($sublease);
         return $sublease->id;
     }
 
     public function post(\Canopy\Request $request, $user_id)
     {
-        $r = new Resource;
-        $r->user_id = $user_id;
+        $sublease = new Resource;
+        $sublease->user_id = $user_id;
         try {
-            $r->loadPostByType($request,
-                    array('active', 'created', 'updated', 'user_id', 'id', 'thumbnail'));
-            $r->active = true;
-            $r->created = time();
-            return array('id' => $this->save($r));
+            $sublease->loadPostByType($request,
+                    array('active', 'timeout', 'created', 'updated', 'user_id', 'id', 'thumbnail'));
+            $sublease->active = true;
+            $sublease->created = time();
+            return array('id' => $this->save($sublease));
         } catch (\Exception $e) {
             throw new \properties\Exception\PropertySaveFailure($e->getMessage());
         }
@@ -99,13 +99,12 @@ class Sublease extends Base
         return $template->get();
     }
 
-    public function put(\Canopy\Request $request, $user_id)
+    public function put(\Canopy\Request $request, Resource $sublease)
     {
-        $r = $this->getSubleaseByUser($user_id);
         try {
-            $r->loadPutByType($request,
+            $sublease->loadPutByType($request,
                     array('active', 'created', 'updated', 'user_id', 'id'));
-            return array('id' => $this->save($r));
+            return array('id' => $this->save($sublease));
         } catch (\Exception $e) {
             throw new \properties\Exception\PropertySaveFailure($e->getMessage());
         }
