@@ -103,6 +103,13 @@ class Logged extends User
                                 $this->role->getId()));
     }
 
+    protected function jsonPatchCommand(\Canopy\Request $request)
+    {
+        return array('success' => $this->factory->patch($this->user_sublease->id,
+                    $request->pullPatchString('varname'),
+                    $request->pullPatchBoolean('value')));
+    }
+
     public function ownerOptions($photo = false, $show_create = true)
     {
         if ($this->user_sublease) {
