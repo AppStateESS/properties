@@ -26,13 +26,12 @@ class Logged extends User
     public function __construct($role)
     {
         parent::__construct($role);
-        $this->user_roommate = $this->getUserRoommate();
+        $this->loadUserRoommate();
     }
-
-    protected function getUserRoommate()
+    
+    protected function loadUserRoommate()
     {
-        $roommate = $this->factory->getUserRoommate($this->role->getId());
-        return $roommate;
+        $this->user_roommate = $this->factory->getUserRoommate($this->role->getId());
     }
 
     protected function listHtmlCommand(\Canopy\Request $request)
