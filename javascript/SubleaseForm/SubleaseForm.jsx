@@ -293,7 +293,7 @@ export default class SubleaseForm extends Base {
 
     let activateButton
     if (sublease.id > 0) {
-      if (sublease.active === '0') {
+      if (empty(sublease.active)) {
         activateButton = (
           <div onClick={this.activate} className="lead pointer text-muted">
             <i className="fa fa-toggle-off"></i>&nbsp;
