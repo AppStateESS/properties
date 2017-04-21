@@ -471,15 +471,6 @@ class PropertyUpgrade
             $dt->add();
         }
 
-        /*
-          $tbl = $db->addTable('prop_sub_photo');
-          if (!$tbl->columnExists('porder')) {
-          $dt = $tbl->addDataType('porder', 'int');
-          $dt->setDefault(1);
-          $dt->add();
-          }
-          $changes[] = 'Added porder to prop_sub_photo';
-         */
         $db = \phpws2\Database::getDB();
         $tbl = $db->addTable('prop_photo');
         $photos = $db->select();
