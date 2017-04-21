@@ -30,6 +30,8 @@ export default class SubleaseForm extends Base {
       saving: false
     }
     const methods = [
+      'activate',
+      'deactivate',
       'setValue',
       'setIntegerValue',
       'checkForm',
@@ -37,7 +39,8 @@ export default class SubleaseForm extends Base {
       'updateRent',
       'setMoveIn',
       'setMoveOut',
-      'updateParking'
+      'updateParking',
+      'sendActive'
     ]
     bindMethods(methods, this)
   }
@@ -250,6 +253,30 @@ export default class SubleaseForm extends Base {
     this.setValue('monthly_rent', rent)
   }
 
+  activate() {
+    this.sendActive('1')
+  }
+
+  deactivate() {
+    this.sendActive('0')
+  }
+
+  sendActive(value)
+  {
+    $.ajax({
+      url: './properties/Sublease/' + this.state.sublease.id,
+      data: {
+        varname: 'active',
+        value: value
+      },
+      dataType: 'json',
+      type: 'patch',
+      success: function () {
+        this.setValue('active', value)
+      }.bind(this)
+    })
+  }
+
   render() {
     if (this.state.sublease === null) {
       return <Waiting message="Checking for previous sublease..."/>
@@ -263,6 +290,24 @@ export default class SubleaseForm extends Base {
         type={this.state.message.type}
         onClose={this.unsetMessage}/>
     }
+
+    let activateButton
+    if (sublease.id > 0) {
+      if (sublease.active === '0') {
+        activateButton = (
+          <div onClick={this.activate} className="lead pointer text-muted">
+            <i className="fa fa-toggle-off"></i>&nbsp;
+            Sublease inactive</div>
+        )
+      } else {
+        activateButton = (
+          <div onClick={this.deactivate} className="lead pointer text-success">
+            <i className="fa fa-toggle-on"></i>&nbsp;
+            Sublease active</div>
+        )
+      }
+    }
+
 
     let landlordWarning
     if (this.state.errors.landlord_perm === true) {
@@ -281,6 +326,9 @@ export default class SubleaseForm extends Base {
             : 'Create '}
           my sublease</h2>
         {message}
+        <div className="text-align marginBottom">
+          {activateButton}
+        </div>
         <div className="row">
           <div className="col-sm-6">
             <InputField
