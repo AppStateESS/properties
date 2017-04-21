@@ -30695,8 +30695,8 @@ webpackJsonp([16],[
 	        _react2.default.createElement(
 	          'h2',
 	          null,
-	          sublease.id > 0 ? 'Update' : 'Create',
-	          ' my sublease'
+	          sublease.id > 0 ? 'Update ' : 'Create ',
+	          'my sublease'
 	        ),
 	        message,
 	        _react2.default.createElement(
@@ -30791,7 +30791,7 @@ webpackJsonp([16],[
 	          { className: 'row' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'col-sm-4' },
+	            { className: 'col-sm-6 col-md-4' },
 	            _react2.default.createElement(
 	              'div',
 	              { style: {
@@ -30819,13 +30819,14 @@ webpackJsonp([16],[
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'col-sm-4' },
+	            { className: 'col-sm-6 col-md-4' },
 	            _react2.default.createElement(
 	              'label',
 	              null,
 	              'Subleasing tenant or unit'
 	            ),
 	            _react2.default.createElement(_Help2.default, { title: 'Are you subleasing a tenant\'s portion or the entire unit?' }),
+	            _react2.default.createElement('br', null),
 	            _react2.default.createElement(_ButtonGroup2.default, {
 	              name: 'lease_type',
 	              buttons: this.getLeaseType(),
@@ -30835,7 +30836,7 @@ webpackJsonp([16],[
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'col-sm-4' },
+	            { className: 'col-sm-12 col-md-4' },
 	            _react2.default.createElement(
 	              'label',
 	              null,
@@ -30958,7 +30959,7 @@ webpackJsonp([16],[
 	          { className: 'row' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'col-sm-4' },
+	            { className: 'col-sm-6 col-md-4' },
 	            _react2.default.createElement(
 	              'div',
 	              null,
@@ -30983,7 +30984,7 @@ webpackJsonp([16],[
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'col-sm-4' },
+	            { className: 'col-sm-6 col-md-4' },
 	            _react2.default.createElement(
 	              'div',
 	              null,
@@ -31003,7 +31004,7 @@ webpackJsonp([16],[
 	          ),
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'col-sm-4' },
+	            { className: 'col-sm-6 col-md-4' },
 	            _react2.default.createElement(
 	              'div',
 	              null,
@@ -31105,15 +31106,11 @@ webpackJsonp([16],[
 	          { className: 'row' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'col-sm-6' },
+	            { className: 'col-sm-12' },
 	            _react2.default.createElement(_BigCheckbox2.default, {
 	              checked: sublease.landlord_perm,
 	              handle: this.setIntegerValue.bind(this, 'landlord_perm'),
-	              label: 'My landlord is aware I am subleasing' })
-	          ),
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'col-sm-6' },
+	              label: 'My landlord is aware I am subleasing' }),
 	            landlordWarning
 	          )
 	        ),
