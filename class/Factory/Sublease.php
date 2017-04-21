@@ -88,14 +88,21 @@ class Sublease extends Base
         } elseif (!is_a($sublease, 'properties\Resource\Sublease')) {
             throw new \properties\Exception\ResourceNotFound;
         }
-        $tpl = $sublease->view();
 
-        $tpl['photo'] = $this->reactView('subleasephoto');
-        $tpl['photoupdate'] = $admin ? $this->reactView('subleaseimage') : null;
-        $photoFactory = new Photo;
-        $tpl['current_photos'] = json_encode($photoFactory->thumbs($sublease->id));
-        $template = new \phpws2\Template($tpl);
-        $template->setModuleTemplate('properties', 'sublease/view.html');
+        if (!$sublease->active && !$admin) {
+            $template = new \phpws2\Template();
+            $template->setModuleTemplate('properties',
+                    'errorpage/ResourceNotFound.html');
+        } else {
+            $tpl = $sublease->view();
+            $tpl['inactive_warning'] = $sublease->active == 0;
+            $tpl['photo'] = $this->reactView('subleasephoto');
+            $tpl['photoupdate'] = $admin ? $this->reactView('subleaseimage') : null;
+            $photoFactory = new Photo;
+            $tpl['current_photos'] = json_encode($photoFactory->thumbs($sublease->id));
+            $template = new \phpws2\Template($tpl);
+            $template->setModuleTemplate('properties', 'sublease/view.html');
+        }
         return $template->get();
     }
 
@@ -146,6 +153,20 @@ class Sublease extends Base
         $tbl->addFieldConditional('active', 1);
         $tbl->addValue('active', 0);
         $db->update();
+    }
+
+    public function patch($id, $param, $value)
+    {
+        static $allowed_params = array('active');
+
+        if (!in_array($param, $allowed_params)) {
+            throw new \Exception('Parameter may not be patched');
+        }
+        $sublease = $this->load($id);
+        $sublease->$param = $value;
+        $sublease->updated = time();
+        $this->saveResource($sublease);
+        return true;
     }
 
 }
