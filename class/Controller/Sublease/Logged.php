@@ -23,9 +23,17 @@ use properties\Factory\NavBar;
 class Logged extends User
 {
 
+    protected $user_sublease;
+
     public function __construct($role)
     {
         parent::__construct($role);
+        $this->loadUserSublease();
+    }
+
+    protected function loadUserSublease()
+    {
+        $this->user_sublease = $this->factory->getSubleaseByUser($this->role->getId());
     }
 
     /**
@@ -33,7 +41,7 @@ class Logged extends User
      */
     public function createHtmlCommand(\Canopy\Request $request)
     {
-        $this->ownerOptions();
+        $this->ownerOptions(false, false);
         \Layout::addStyle('properties', 'sublease/form.css');
         return $this->factory->reactView('subleaseform');
     }
@@ -43,7 +51,7 @@ class Logged extends User
      */
     public function editHtmlCommand(\Canopy\Request $request)
     {
-        $this->ownerOptions();
+        $this->ownerOptions(false, false);
         \Layout::addStyle('properties', 'sublease/form.css');
         return $this->factory->reactView('subleaseform');
     }
@@ -58,11 +66,10 @@ class Logged extends User
 
     public function ownerJsonCommand()
     {
-        $sublease = $this->factory->getSubleaseByUser($this->role->getId());
-        if (empty($sublease)) {
+        if (empty($this->user_sublease)) {
             $json['sublease'] = null;
         } else {
-            $json['sublease'] = $sublease->getVariablesAsValue(true,
+            $json['sublease'] = $this->user_sublease->getVariablesAsValue(true,
                     array('active'));
         }
         $json['email'] = \Current_User::getEmail();
@@ -81,7 +88,7 @@ class Logged extends User
     public function updatePutCommand(\Canopy\Request $request)
     {
         try {
-            return $this->factory->put($request, $this->role->getId());
+            return $this->factory->put($request, $this->user_sublease);
         } catch (\properties\Exception\PropertySaveFailure $e) {
             return array('error' => $e->getMessage());
         }
@@ -96,17 +103,16 @@ class Logged extends User
                                 $this->role->getId()));
     }
 
-    public function ownerOptions($photo=false)
+    public function ownerOptions($photo = false, $show_create = true)
     {
-        $sublease = $this->factory->getSubleaseByUser($this->role->getId());
-        if ($sublease) {
+        if ($this->user_sublease) {
             NavBar::setTitle('My Sublease');
-            NavBar::addOption('<a href="./properties/Sublease/' . $sublease->getId() . '"><i class="fa fa-building-o"></i>&nbsp;View my sublease</a>');
+            NavBar::addOption('<a href="./properties/Sublease/' . $this->user_sublease->getId() . '"><i class="fa fa-building-o"></i>&nbsp;View my sublease</a>');
             NavBar::addOption('<a href="./properties/Sublease/edit"><i class="fa fa-edit"></i>&nbsp;Update my sublease</a>');
             if ($photo) {
                 NavBar::addOption('<a onClick="editPhotos.callback()" class="pointer"><i class="fa fa-camera"></i>&nbsp;Edit photos</a>');
             }
-        } else {
+        } elseif ($show_create) {
             $this->createButton();
         }
     }
