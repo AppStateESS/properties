@@ -30699,7 +30699,7 @@ webpackJsonp([16],[
 	
 	      var activateButton = void 0;
 	      if (sublease.id > 0) {
-	        if (sublease.active === '0') {
+	        if ((0, _Empty2.default)(sublease.active)) {
 	          activateButton = _react2.default.createElement(
 	            'div',
 	            { onClick: this.activate, className: 'lead pointer text-muted' },
