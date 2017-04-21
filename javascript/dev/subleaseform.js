@@ -30422,7 +30422,7 @@ webpackJsonp([16],[
 	      message: null,
 	      saving: false
 	    };
-	    var methods = ['setValue', 'setIntegerValue', 'checkForm', 'checkPhone', 'updateRent', 'setMoveIn', 'setMoveOut', 'updateParking'];
+	    var methods = ['activate', 'deactivate', 'setValue', 'setIntegerValue', 'checkForm', 'checkPhone', 'updateRent', 'setMoveIn', 'setMoveOut', 'updateParking', 'sendActive'];
 	    (0, _Bind2.default)(methods, _this);
 	    return _this;
 	  }
@@ -30655,6 +30655,32 @@ webpackJsonp([16],[
 	      this.setValue('monthly_rent', rent);
 	    }
 	  }, {
+	    key: 'activate',
+	    value: function activate() {
+	      this.sendActive('1');
+	    }
+	  }, {
+	    key: 'deactivate',
+	    value: function deactivate() {
+	      this.sendActive('0');
+	    }
+	  }, {
+	    key: 'sendActive',
+	    value: function sendActive(value) {
+	      $.ajax({
+	        url: './properties/Sublease/' + this.state.sublease.id,
+	        data: {
+	          varname: 'active',
+	          value: value
+	        },
+	        dataType: 'json',
+	        type: 'patch',
+	        success: function () {
+	          this.setValue('active', value);
+	        }.bind(this)
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      if (this.state.sublease === null) {
@@ -30669,6 +30695,25 @@ webpackJsonp([16],[
 	          message: this.state.message.text,
 	          type: this.state.message.type,
 	          onClose: this.unsetMessage });
+	      }
+	
+	      var activateButton = void 0;
+	      if (sublease.id > 0) {
+	        if (sublease.active === '0') {
+	          activateButton = _react2.default.createElement(
+	            'div',
+	            { onClick: this.activate, className: 'lead pointer text-muted' },
+	            _react2.default.createElement('i', { className: 'fa fa-toggle-off' }),
+	            '\xA0 Sublease inactive'
+	          );
+	        } else {
+	          activateButton = _react2.default.createElement(
+	            'div',
+	            { onClick: this.deactivate, className: 'lead pointer text-success' },
+	            _react2.default.createElement('i', { className: 'fa fa-toggle-on' }),
+	            '\xA0 Sublease active'
+	          );
+	        }
 	      }
 	
 	      var landlordWarning = void 0;
@@ -30699,6 +30744,11 @@ webpackJsonp([16],[
 	          'my sublease'
 	        ),
 	        message,
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'text-align marginBottom' },
+	          activateButton
+	        ),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'row' },
