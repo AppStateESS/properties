@@ -95,7 +95,7 @@ class Sublease extends Base
                     'errorpage/ResourceNotFound.html');
         } else {
             $tpl = $sublease->view();
-            $tpl['inactive_warning'] = $sublease->active == 0;
+            $tpl['inactive_warning'] = $sublease->active ? false : true;
             $tpl['photo'] = $this->reactView('subleasephoto');
             $tpl['photoupdate'] = $admin ? $this->reactView('subleaseimage') : null;
             $photoFactory = new Photo;
