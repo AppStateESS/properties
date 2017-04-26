@@ -20,6 +20,7 @@ namespace properties\Factory;
 
 abstract class Listing
 {
+
     public $search_string;
     public $limit = 20;
     public $offset = 0;
@@ -56,6 +57,7 @@ abstract class Listing
      * @var \phpws2\Database\Table
      */
     protected $data_table; //tbl
+    protected $photo_table;
 
     public function __construct()
     {
@@ -168,6 +170,7 @@ abstract class Listing
                         PROP_TYPE_DUPLEX);
             }
 
+
             foreach ($prop_cond as $cond) {
                 if (empty($final_cond)) {
                     $final_cond = $cond;
@@ -176,8 +179,16 @@ abstract class Listing
                             $cond, 'or');
                 }
             }
+
             $this->db->addConditional($final_cond);
         }
+        $photo_cond1 = $this->db->createConditional($this->photo_table->getField('porder'),
+                1);
+        $photo_cond2 = $this->db->createConditional($this->photo_table->getField('porder'),
+                null);
+        $final_photo = $this->db->createConditional($photo_cond1, $photo_cond2,
+                'or');
+        $this->db->addConditional($final_photo);
     }
 
     protected function addSearch()
