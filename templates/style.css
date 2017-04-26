@@ -71,3 +71,12 @@ div.alert a {
     color: inherit;
     font-weight: bold;
 }
+
+.navbar-nav a.navbar-btn {
+    padding : 6px 12px;
+    margin : 8px 0px;
+}
+
+.dropdown-toggle {
+    z-index: 100;
+}
