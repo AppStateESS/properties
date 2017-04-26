@@ -47,12 +47,7 @@ class Admin extends User
 
     public function getHtml(Request $request)
     {
-        $our_email = \phpws2\Settings::get('properties', 'our_email');
-        if (empty($our_email)) {
-            $this->addEmailWarning();
-        } else {
-            $this->addApprovalLink();
-        }
+        $this->adminButtons();
         return parent::getHtml($request);
     }
 
