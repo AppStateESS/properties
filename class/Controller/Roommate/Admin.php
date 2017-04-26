@@ -17,18 +17,25 @@
  */
 
 namespace properties\Controller\Roommate;
+use Canopy\Request;
 
-class Admin extends Logged
+class Admin extends User
 {
 
-    protected function viewHtmlCommand(\Canopy\Request $request)
+    protected function viewHtmlCommand(Request $request)
     {
         return $this->factory->view($this->id, true);
     }
 
-    protected function listHtmlCommand(\Canopy\Request $request)
+    protected function listHtmlCommand(Request $request)
     {
         return $this->factory->reactView('roommatelist');
+    }
+
+    public function getHtml(Request $request)
+    {
+        $this->adminButtons();
+        return parent::getHtml($request);
     }
 
 }
