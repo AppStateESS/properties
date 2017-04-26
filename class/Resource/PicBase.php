@@ -17,16 +17,16 @@
  */
 
 namespace properties\Resource;
+use phpws2\Database;
 
 abstract class PicBase extends Base
 {
-
     protected $width;
     protected $height;
     protected $path;
     protected $title;
-    protected $main_pic;
     protected $porder;
+    protected $item_column;
 
     public function __construct()
     {
@@ -39,8 +39,8 @@ abstract class PicBase extends Base
         $this->path->setLimit(255);
         $this->title = new \phpws2\Variable\StringVar(null, 'title');
         $this->title->setLimit(255);
-        $this->main_pic = new \phpws2\Variable\BooleanVar(false, 'main_pic');
         $this->porder = new \phpws2\Variable\SmallInteger(0, 'porder');
+        $this->doNotSave('item_column');
     }
 
     public function delete($resort = true)
@@ -52,7 +52,29 @@ abstract class PicBase extends Base
         if (is_file($thumb)) {
             unlink($this->getThumbnail());
         }
-        parent::delete($resort);
+        $this->deleteRow($resort);
+    }
+    
+    protected function deleteRow($resort = true)
+    {
+        $db = Database::getDB();
+        $tbl = $db->addTable($this->table);
+        $tbl->addFieldConditional('id', $this->getId());
+        $result = $db->delete();
+        if ($result) {
+            if ($resort) {
+                $position = $this->porder;
+                $db->clearConditional();
+                $db = Database::getDB();
+                $tbl = $db->addTable($this->table);
+                $exp = new \phpws2\Database\Expression($tbl->getField('porder') . '-1');
+                $tbl->addValue('porder', $exp);
+                $tbl->addFieldConditional($this->item_column, $this->{$this->item_column});
+                $tbl->addFieldConditional('porder', $position, '>');
+                $db->update();
+            }
+            return $result;
+        }
     }
 
     public function getThumbnail()
