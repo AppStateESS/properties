@@ -20,4 +20,17 @@ namespace properties\Controller\SubleasePhoto;
 
 class Admin extends User
 {
+
+    protected function deleteCommand(\Canopy\Request $request)
+    {
+        $photo = $this->factory->load($this->id);
+        $this->factory->delete($photo);
+        return array('success' => true);
+    }
+
+    protected function savePostCommand(\Canopy\Request $request)
+    {
+        return $this->factory->post($request);
+    }
+
 }
