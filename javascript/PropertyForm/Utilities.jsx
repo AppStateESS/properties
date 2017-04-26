@@ -1,11 +1,12 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import ButtonGroup from '../Mixin/Form/ButtonGroup.jsx'
 import UtilityImbursement from './UtilityImbursement.jsx'
 import UtilityFunctions from '../Mixin/Edit/UtilityFunctions.js'
 
-export default class Utilities extends React.Component {
+export default class Utilities extends Component {
   constructor(props) {
     super(props)
     this.state = {}
@@ -120,7 +121,7 @@ export default class Utilities extends React.Component {
 }
 
 Utilities.propTypes = {
-  property: React.PropTypes.object,
-  setIntegerValue: React.PropTypes.func,
-  setValue: React.PropTypes.func
+  property: PropTypes.object,
+  setIntegerValue: PropTypes.func,
+  setValue: PropTypes.func
 }

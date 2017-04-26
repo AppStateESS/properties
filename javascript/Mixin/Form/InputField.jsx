@@ -1,12 +1,13 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 
 /**
  * When using errorMessage with required, be sure to clear
  * the errorMessage prop on successful input
  */
 
-export default class InputField extends React.Component {
+export default class InputField extends Component {
   constructor(props) {
     super(props)
 
@@ -129,25 +130,25 @@ InputField.defaultProps = {
 }
 
 InputField.propTypes = {
-  name: React.PropTypes.string,
-  label: React.PropTypes.string,
-  type: React.PropTypes.string,
-  value: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
-  change: React.PropTypes.func,
-  blur: React.PropTypes.func,
-  placeholder: React.PropTypes.string,
-  errorMessage: React.PropTypes.string,
-  iid: React.PropTypes.string,
-  autocomplete: React.PropTypes.bool,
-  required: React.PropTypes.bool,
-  disabled: React.PropTypes.bool,
-  size: React.PropTypes.number,
-  maxLength: React.PropTypes.number,
-  wrap: React.PropTypes.func,
-  selectOnClick: React.PropTypes.bool,
-  onEmpty: React.PropTypes.func,
-  flagEmpty: React.PropTypes.bool,
-  disableRequireCheck: React.PropTypes.bool
+  name: PropTypes.string,
+  label: PropTypes.string,
+  type: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  change: PropTypes.func,
+  blur: PropTypes.func,
+  placeholder: PropTypes.string,
+  errorMessage: PropTypes.string,
+  iid: PropTypes.string,
+  autocomplete: PropTypes.bool,
+  required: PropTypes.bool,
+  disabled: PropTypes.bool,
+  size: PropTypes.number,
+  maxLength: PropTypes.number,
+  wrap: PropTypes.func,
+  selectOnClick: PropTypes.bool,
+  onEmpty: PropTypes.func,
+  flagEmpty: PropTypes.bool,
+  disableRequireCheck: PropTypes.bool
 }
 
 export const RequiredIcon = () => {

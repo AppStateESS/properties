@@ -1,7 +1,8 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 
-class ErrorPage extends React.Component {
+class ErrorPage extends Component {
   constructor(props) {
     super(props)
     this.state = {}
@@ -17,7 +18,7 @@ class ErrorPage extends React.Component {
 }
 
 ErrorPage.propTypes = {
-  message : React.PropTypes.string
+  message : PropTypes.string
 }
 
 export default ErrorPage

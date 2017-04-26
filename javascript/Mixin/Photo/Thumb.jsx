@@ -1,8 +1,9 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {SortableElement, SortableHandle} from 'react-sortable-hoc'
 
-export default class Thumb extends React.Component {
+export default class Thumb extends Component {
   constructor(props) {
     super(props)
     this.deletePhoto = this.deletePhoto.bind(this)
@@ -24,10 +25,10 @@ export default class Thumb extends React.Component {
 }
 
 Thumb.propTypes = {
-  thumbnail: React.PropTypes.string,
-  id: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.string]),
-  deletePhoto: React.PropTypes.func,
-  index: React.PropTypes.number
+  thumbnail: PropTypes.string,
+  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  deletePhoto: PropTypes.func,
+  index: PropTypes.number
 }
 
 Thumb.defaultProps = {

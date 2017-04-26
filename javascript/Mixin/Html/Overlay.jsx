@@ -1,7 +1,8 @@
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 /* global $ */
 
-export default class Overlay extends React.Component {
+export default class Overlay extends Component {
   constructor(props) {
     super(props)
     this.state = {}
@@ -92,7 +93,7 @@ export default class Overlay extends React.Component {
 }
 
 Overlay.propTypes = {
-  children: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]),
-  close: React.PropTypes.func,
-  title: React.PropTypes.string
+  children: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  close: PropTypes.func,
+  title: PropTypes.string
 }

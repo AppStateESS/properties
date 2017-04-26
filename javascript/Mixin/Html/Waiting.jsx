@@ -1,6 +1,7 @@
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 
-class Waiting extends React.Component {
+class Waiting extends Component {
   render() {
     let message
     if (this.props.message.length === 0) {
@@ -21,8 +22,8 @@ Waiting.defaultProps = {
 }
 
 Waiting.propTypes = {
-  label: React.PropTypes.string,
-  message : React.PropTypes.string
+  label: PropTypes.string,
+  message : PropTypes.string
 }
 
 Waiting.defaultProps = {

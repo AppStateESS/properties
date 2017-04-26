@@ -4,4 +4,4 @@ import ReactDOM from 'react-dom'
 import Property from './Property.jsx'
 
 ReactDOM.render(
-    <Property/>, document.getElementById('property'))
+  <Property/>, document.getElementById('property'))

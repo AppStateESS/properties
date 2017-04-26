@@ -1,9 +1,10 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import InputField from '../Mixin/Form/InputField.jsx'
 import Dollarize from '../Mixin/Form/Dollarize.jsx'
 
-export default class UtilityImbursement extends React.Component {
+export default class UtilityImbursement extends Component {
   constructor(props) {
     super(props)
     this.state = {}
@@ -85,6 +86,6 @@ export default class UtilityImbursement extends React.Component {
   }
 }
 UtilityImbursement.propTypes = {
-  property: React.PropTypes.object,
-  setValue: React.PropTypes.func
+  property: PropTypes.object,
+  setValue: PropTypes.func
 }

@@ -1,9 +1,10 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 
 /* global $ */
 
-export default class ImageFrame extends React.Component {
+export default class ImageFrame extends Component {
   constructor(props) {
     super(props)
   }
@@ -68,6 +69,6 @@ export default class ImageFrame extends React.Component {
 }
 
 ImageFrame.propTypes = {
-  image: React.PropTypes.object,
-  status: React.PropTypes.bool
+  image: PropTypes.object,
+  status: PropTypes.bool
 }

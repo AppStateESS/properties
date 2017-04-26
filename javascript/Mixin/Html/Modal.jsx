@@ -1,8 +1,9 @@
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 
 /* global $ */
 
-class Modal extends React.Component {
+class Modal extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -54,11 +55,11 @@ Modal.defaultProps = {
 }
 
 Modal.propTypes = {
-  header: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]),
-  body: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]),
-  footer: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]),
-  modalId: React.PropTypes.string,
-  onClose: React.PropTypes.func
+  header: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  body: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  footer: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  modalId: PropTypes.string,
+  onClose: PropTypes.func
 }
 
 export default Modal

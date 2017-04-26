@@ -1,6 +1,7 @@
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 
-class Dropdown extends React.Component {
+class Dropdown extends Component {
   constructor(props) {
     super(props)
   }
@@ -19,7 +20,7 @@ class Dropdown extends React.Component {
         } else {
           label = <a>{value.icon}{value.label}</a>
         }
-        return <li onClick={value.handleClick} key={key} role="button">{label}</li>
+        return <li role="button" onClick={value.handleClick} key={key} role="button">{label}</li>
       })
       optionList = <ul className="dropdown-menu">{options}</ul>
     } else {
@@ -30,7 +31,7 @@ class Dropdown extends React.Component {
       buttonClass = buttonClass.concat(' btn-sm')
     }
     return (
-      <div className="dropdown">
+      <div className="btn-group">
         <button
           className={buttonClass}
           type="button"
@@ -47,9 +48,9 @@ class Dropdown extends React.Component {
 }
 
 Dropdown.propTypes = {
-  label: React.PropTypes.string,
-  options: React.PropTypes.array,
-  small: React.PropTypes.bool
+  label: PropTypes.string,
+  options: PropTypes.array,
+  small: PropTypes.bool
 }
 
 Dropdown.defaultProps = {

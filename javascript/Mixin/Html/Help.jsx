@@ -1,31 +1,32 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
+import ReactTooltip from 'react-tooltip'
 
-/* global $ */
-
-export default class Help extends React.Component {
+export default class Help extends Component {
   constructor(props) {
     super(props)
   }
 
   componentDidMount() {
-    $('.help').tooltip()
   }
 
   render() {
     return (
+      <span>
       <i
         className="fa fa-question-circle text-primary help pointer"
-        data-toggle="tooltip"
-        data-placement={this.props.placement}
-        title={this.props.title}></i>
+        data-tip={this.props.title}
+        data-placement={this.props.placement}></i>
+        <ReactTooltip type="info" />
+      </span>
     )
   }
 }
 
 Help.propTypes = {
-  placement: React.PropTypes.string,
-  title: React.PropTypes.string.isRequired
+  placement: PropTypes.string,
+  title: PropTypes.string.isRequired
 }
 
 Help.defaultProps = {

@@ -1,5 +1,6 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import Listing from './Listing.jsx'
 import SearchBar from '../Mixin/List/SearchBar.jsx'

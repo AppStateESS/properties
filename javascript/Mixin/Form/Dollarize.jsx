@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 
 const Dollarize = ({children}) => {
   return (
@@ -11,7 +12,7 @@ const Dollarize = ({children}) => {
 }
 
 Dollarize.propTypes = {
-  children: React.PropTypes.oneOfType([React.PropTypes.string,React.PropTypes.element])
+  children: PropTypes.oneOfType([PropTypes.string,PropTypes.element])
 }
 
 export default Dollarize

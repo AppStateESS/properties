@@ -1,8 +1,9 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import moment from 'moment'
 
-export default class StudentRow extends React.Component {
+export default class StudentRow extends Component {
   constructor(props) {
     super(props)
     this.state = {}
@@ -33,6 +34,6 @@ export default class StudentRow extends React.Component {
 }
 
 StudentRow.propTypes = {
-  value: React.PropTypes.object,
-  toggle: React.PropTypes.func
+  value: PropTypes.object,
+  toggle: PropTypes.func
 }

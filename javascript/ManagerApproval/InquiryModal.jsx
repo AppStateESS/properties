@@ -1,7 +1,8 @@
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import Modal from '../Mixin/Html/Modal.jsx'
 
-export default class InquiryModal extends React.Component {
+export default class InquiryModal extends Component {
   constructor(props) {
     super(props)
   }
@@ -24,6 +25,11 @@ export default class InquiryModal extends React.Component {
           className="btn btn-primary"
           onClick={this.props.inquiry}
           data-inquiry-type="information">Need more property information</button>
+        <button
+          style={spacing}
+          className="btn btn-primary"
+          onClick={this.props.inquiry}
+          data-inquiry-type="phone_number">Out of state phone number</button>
       </div>
     )
     return (<Modal body={body} header={header}/>)
@@ -31,6 +37,6 @@ export default class InquiryModal extends React.Component {
 }
 
 InquiryModal.propTypes = {
-  inquiry: React.PropTypes.func,
-  manager : React.PropTypes.object
+  inquiry: PropTypes.func,
+  manager: PropTypes.object
 }

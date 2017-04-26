@@ -1,5 +1,6 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import RoommateRow from './RoommateRow.jsx'
 import Waiting from '../Mixin/Html/Waiting.jsx'
 import SearchBar from './SearchBar.jsx'
@@ -8,7 +9,7 @@ import {profileLabel} from '../Mixin/Objects/ProfileData.js'
 
 /* global $ */
 
-export default class RoommateList extends React.Component {
+export default class RoommateList extends Component {
   constructor(props) {
     super(props)
     this.state = {

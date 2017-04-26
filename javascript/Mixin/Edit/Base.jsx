@@ -1,8 +1,9 @@
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import moment from 'moment'
 import Dollarize from '../Form/Dollarize.jsx'
 
-export default class Base extends React.Component {
+export default class Base extends Component {
 
   dollarize(input) {
     return <Dollarize>{input}</Dollarize>

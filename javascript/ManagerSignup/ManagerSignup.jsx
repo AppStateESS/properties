@@ -1,5 +1,6 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import InputField from '../Mixin/Form/InputField.jsx'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import empty from '../Mixin/Helper/Empty.js'
@@ -8,7 +9,7 @@ import CheckValues from '../Mixin/Helper/CheckValues.js'
 
 /* global $ */
 
-export default class ManagerSignin extends React.Component {
+export default class ManagerSignin extends Component {
   constructor(props) {
     super(props)
 

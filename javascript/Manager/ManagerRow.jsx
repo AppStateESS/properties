@@ -1,10 +1,11 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import Dropdown from '../Mixin/Form/Dropdown.jsx'
 
 /* global $ */
 
-class ManagerRow extends React.Component {
+class ManagerRow extends Component {
   constructor(props) {
     super(props)
     this.delete = this.delete.bind(this)
@@ -101,7 +102,7 @@ class ManagerRow extends React.Component {
     }
 
     let properties = <div>
-      <em>None</em>
+      <button className="btn btn-default" disabled={true}>No properties found</button>
     </div>
     const propertyCount = this.props.property_count
     if (propertyCount > 0) {
@@ -118,25 +119,27 @@ class ManagerRow extends React.Component {
     const email = 'mailto:' + this.props.email_address
     const viewLink = `./properties/Manager/${this.props.id}/view`
     return (
-      <tr className={this.props.active === '0'
-        ? 'bg-danger'
-        : ''}>
-        <td className="company-column">
+      <div className={this.props.active === '0'
+        ? 'bg-danger row managerRow '
+        : 'row managerRow '}>
+        <div className="col-sm-8">
           <span className="company-name"><a href={viewLink}>{this.props.company_name}</a></span><br/>{co}
+          <div>
           <LinkToButton url={this.props.phone_tel} icon="fa-phone" label={this.props.phone}/>
           <Website url={this.props.company_url}/>
           <LinkToButton
             url={email}
             icon="fa-envelope-o"
             label={this.props.email_address}/>
-        </td>
-        <td>
+          </div>
+        </div>
+        <div className="col-sm-3">
           {properties}
-        </td>
+        </div>
         {this.props.admin === true
-          ? <td>{optionList}</td>
+          ? <div className="col-sm-1">{optionList}</div>
           : null}
-      </tr>
+      </div>
     )
   }
 }
@@ -153,26 +156,26 @@ ManagerRow.defaultProps = {
 }
 
 ManagerRow.propTypes = {
-  property_count: React.PropTypes.string,
-  email_address: React.PropTypes.string,
-  company_name: React.PropTypes.string,
-  showProperties: React.PropTypes.func,
-  company_url: React.PropTypes.string,
-  first_name: React.PropTypes.string,
-  last_name: React.PropTypes.string,
-  phone_tel: React.PropTypes.string,
-  last_log: React.PropTypes.string,
-  fillForm: React.PropTypes.func,
-  active: React.PropTypes.string,
-  message: React.PropTypes.func,
-  phone: React.PropTypes.string,
-  remove: React.PropTypes.func,
-  reload: React.PropTypes.func,
-  admin: React.PropTypes.bool,
-  id: React.PropTypes.string
+  property_count: PropTypes.string,
+  email_address: PropTypes.string,
+  company_name: PropTypes.string,
+  showProperties: PropTypes.func,
+  company_url: PropTypes.string,
+  first_name: PropTypes.string,
+  last_name: PropTypes.string,
+  phone_tel: PropTypes.string,
+  last_log: PropTypes.string,
+  fillForm: PropTypes.func,
+  active: PropTypes.string,
+  message: PropTypes.func,
+  phone: PropTypes.string,
+  remove: PropTypes.func,
+  reload: PropTypes.func,
+  admin: PropTypes.bool,
+  id: PropTypes.string
 }
 
-class Website extends React.Component {
+class Website extends Component {
   render() {
     if (this.props.url.length > 0) {
       return (<LinkToButton url={this.props.url} label={this.props.url} icon="fa-link"/>)
@@ -183,12 +186,12 @@ class Website extends React.Component {
 }
 
 Website.propTypes = {
-  url: React.PropTypes.string
+  url: PropTypes.string
 }
 
-class LinkToButton extends React.Component {
+class LinkToButton extends Component {
   render() {
-    const bigIconClass = 'fa fa-2x ' + this.props.icon
+    const bigIconClass = 'fa fa-lg ' + this.props.icon
     const smallIconClass = 'fa ' + this.props.icon
     return (
       <span>
@@ -209,9 +212,9 @@ class LinkToButton extends React.Component {
   }
 }
 LinkToButton.propTypes = {
-  url: React.PropTypes.string,
-  icon: React.PropTypes.string,
-  label: React.PropTypes.string
+  url: PropTypes.string,
+  icon: PropTypes.string,
+  label: PropTypes.string
 }
 
 export default ManagerRow

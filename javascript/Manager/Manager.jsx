@@ -1,5 +1,6 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import ListManagers from './ListManagers.jsx'
 import ManagerForm from './ManagerForm.jsx'
 import Message from '../Mixin/Html/Message.jsx'
@@ -9,7 +10,7 @@ import ManagerObject from '../Mixin/Objects/ManagerObject.js'
 
 /* global $ */
 
-class Manager extends React.Component {
+class Manager extends Component {
   constructor(props) {
     super(props)
     this.delay

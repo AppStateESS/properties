@@ -1,5 +1,6 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import Waiting from '../Mixin/Html/Waiting.jsx'
 import Message from '../Mixin/Html/Message.jsx'
 import empty from '../Mixin/Helper/Empty.js'
@@ -7,7 +8,7 @@ import PropertyListing from './PropertyListing.jsx'
 
 /* global $ */
 
-export default class ManagerDesktop extends React.Component {
+export default class ManagerDesktop extends Component {
   constructor(props) {
     super(props)
     this.state = {

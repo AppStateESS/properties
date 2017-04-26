@@ -1,8 +1,9 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import moment from 'moment'
 
-export default class ManagerRow extends React.Component {
+export default class ManagerRow extends Component {
   constructor(props) {
     super(props)
   }
@@ -27,6 +28,6 @@ export default class ManagerRow extends React.Component {
 }
 
 ManagerRow.propTypes = {
-  value: React.PropTypes.object,
-  toggle: React.PropTypes.func
+  value: PropTypes.object,
+  toggle: PropTypes.func
 }

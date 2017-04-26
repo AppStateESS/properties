@@ -1,12 +1,13 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import ImageOverlay from '../Mixin/Photo/ImageOverlay.jsx'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import {arrayMove} from 'react-sortable-hoc'
 
 /* global $, subleaseId, loadPhotos, editPhotos, currentPhotos */
 
-export default class SubleaseImage extends React.Component {
+export default class SubleaseImage extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -45,6 +46,7 @@ export default class SubleaseImage extends React.Component {
     $.each(photos, function (key, value) {
       let formData = new FormData()
       formData.append('photo', value)
+      formData.append('subleaseId', subleaseId)
       $.ajax({
         url: './properties/SubleasePhoto',
         type: 'POST',
@@ -57,6 +59,9 @@ export default class SubleaseImage extends React.Component {
           currentPhotos = this.state.currentPhotos
           if (data.success === true) {
             currentPhotos.push(data.photo)
+          } else if (data.success === false) {
+            alert('A server error prevented uploading of your image. Contact the site administrators')
+            return
           }
           newPhotos.push(data.photo)
           status[key] = data.success
@@ -80,9 +85,9 @@ export default class SubleaseImage extends React.Component {
     loadPhotos.callback()
   }
 
-  delete(id, key) {
+  delete(photo, key) {
     $.ajax({
-      url: './properties/SubleasePhoto/' + id,
+      url: './properties/SubleasePhoto/' + photo.id,
       dataType: 'json',
       method: 'DELETE',
       success: function (data) {
@@ -141,5 +146,5 @@ export default class SubleaseImage extends React.Component {
 }
 
 SubleaseImage.propTypes = {
-  current: React.PropTypes.array
+  current: PropTypes.array
 }

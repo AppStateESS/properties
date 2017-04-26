@@ -1,5 +1,5 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
 import 'react-date-picker/index.css'
 import ActivityReport from './ActivityReport.jsx'
@@ -7,7 +7,7 @@ import StudentReport from './StudentReport.jsx'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import Dropdown from '../Mixin/Form/Dropdown.jsx'
 
-class Reports extends React.Component {
+class Reports extends Component {
   constructor(props) {
     super(props)
 

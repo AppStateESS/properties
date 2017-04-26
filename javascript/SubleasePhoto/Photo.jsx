@@ -1,12 +1,13 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 require('react-image-gallery/styles/css/image-gallery.css')
 import ImageGallery from 'react-image-gallery'
 import Waiting from '../Mixin/Html/Waiting.jsx'
 
 /* global $, require, subleaseId, loadPhotos, currentPhotos */
 
-export default class Photo extends React.Component {
+export default class Photo extends Component {
   constructor() {
     super()
     this.state = {

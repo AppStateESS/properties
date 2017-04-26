@@ -1,5 +1,6 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import RefuseModal from './RefuseModal.jsx'
 import InquiryModal from './InquiryModal.jsx'
 import empty from '../Mixin/Helper/Empty.js'
@@ -9,7 +10,7 @@ import Waiting from '../Mixin/Html/Waiting.jsx'
 
 /* global $ */
 
-export default class ManagerApproval extends React.Component {
+export default class ManagerApproval extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -106,10 +107,7 @@ export default class ManagerApproval extends React.Component {
   removeManager(key)
   {
     let managers = this.state.managers
-    delete(managers[key])
-    if (managers.length === 0) {
-      managers = null
-    }
+    managers.splice(key, 1)
     this.setState({managers: managers})
   }
 
@@ -193,8 +191,9 @@ export default class ManagerApproval extends React.Component {
     let listing
     let companyAddress
     let websiteAddress
+    console.log(this.state.managers)
     if (this.state.managers === null) {
-      return <Waiting label="Loading managers..."/>
+      return <Waiting label="managers"/>
     } else if (this.state.managers.length === 0 || this.state.managers[0] === undefined) {
       return <div>No managers need approving.</div>
     }

@@ -1,10 +1,11 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import Dropdown from '../Form/Dropdown.jsx'
 import Amenities from '../Edit/Amenities.jsx'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
-export default class SearchBar extends React.Component {
+export default class SearchBar extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -266,13 +267,13 @@ export default class SearchBar extends React.Component {
 }
 
 SearchBar.propTypes = {
-  updateSearchString: React.PropTypes.func,
-  clear: React.PropTypes.func,
-  updateSearchVars: React.PropTypes.func,
-  searchVars: React.PropTypes.object,
-  toggle: React.PropTypes.func,
-  clearAmenities: React.PropTypes.func,
-  updateSortBy: React.PropTypes.func,
-  resetConditions: React.PropTypes.func,
-  showActiveButton: React.PropTypes.bool
+  updateSearchString: PropTypes.func,
+  clear: PropTypes.func,
+  updateSearchVars: PropTypes.func,
+  searchVars: PropTypes.object,
+  toggle: PropTypes.func,
+  clearAmenities: PropTypes.func,
+  updateSortBy: PropTypes.func,
+  resetConditions: PropTypes.func,
+  showActiveButton: PropTypes.bool
 }

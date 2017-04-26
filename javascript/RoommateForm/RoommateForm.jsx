@@ -1,5 +1,6 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import InputField from '../Mixin/Form/InputField.jsx'
 import {DateField} from 'react-date-picker'
 import RoommateObject from '../Mixin/Objects/RoommateObject.js'
@@ -14,7 +15,7 @@ import Message from '../Mixin/Html/Message.jsx'
 
 /* global $ */
 
-export default class RoommateForm extends React.Component {
+export default class RoommateForm extends Component {
   constructor(props) {
     super(props)
     let roommate = RoommateObject

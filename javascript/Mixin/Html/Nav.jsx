@@ -1,8 +1,9 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import classnames from 'classnames'
 
-export default class Nav extends React.Component {
+export default class Nav extends Component {
   constructor(props) {
     super(props)
     this.state = {}
@@ -44,10 +45,10 @@ export default class Nav extends React.Component {
 }
 
 Nav.propTypes = {
-  active: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.string]),
-  buttons: React.PropTypes.array,
-  click: React.PropTypes.func,
-  disable: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.array])
+  active: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  buttons: PropTypes.array,
+  click: PropTypes.func,
+  disable: PropTypes.oneOfType([PropTypes.number, PropTypes.array])
 }
 
 Nav.defaultProp = {

@@ -1,4 +1,5 @@
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 
 const SubmitForm = ({check, saving, label}) => {
   if (saving) {
@@ -19,9 +20,9 @@ const SubmitForm = ({check, saving, label}) => {
 }
 
 SubmitForm.propTypes = {
-  check: React.PropTypes.func,
-  saving: React.PropTypes.bool,
-  label: React.PropTypes.string,
+  check: PropTypes.func,
+  saving: PropTypes.bool,
+  label: PropTypes.string,
 }
 
 export default SubmitForm

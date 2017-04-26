@@ -1,5 +1,6 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import InputField from '../Mixin/Form/InputField.jsx'
 import Modal from '../Mixin/Html/Modal.jsx'
 import CheckValues from '../Mixin/Helper/CheckValues'
@@ -7,7 +8,7 @@ import ManagerObject from '../Mixin/Objects/ManagerObject.js'
 
 /* global $ */
 
-class ManagerForm extends React.Component {
+class ManagerForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -381,8 +382,8 @@ class ManagerForm extends React.Component {
 }
 
 ManagerForm.propTypes = {
-  reload: React.PropTypes.func,
-  manager: React.PropTypes.object
+  reload: PropTypes.func,
+  manager: PropTypes.object
 }
 
 export default ManagerForm

@@ -1,8 +1,9 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import empty from '../Helper/Empty.js'
 
-export default class BigCheckbox extends React.Component {
+export default class BigCheckbox extends Component {
   constructor(props) {
     super(props)
     this.handle = this.handle.bind(this)
@@ -41,9 +42,9 @@ export default class BigCheckbox extends React.Component {
 }
 
 BigCheckbox.propTypes = {
-  label: React.PropTypes.string,
-  checked: React.PropTypes.oneOfType([React.PropTypes.bool,React.PropTypes.string,React.PropTypes.number]),
-  handle: React.PropTypes.func.isRequired
+  label: PropTypes.string,
+  checked: PropTypes.oneOfType([PropTypes.bool,PropTypes.string,PropTypes.number]),
+  handle: PropTypes.func.isRequired
 }
 
 BigCheckbox.defaultProps = {

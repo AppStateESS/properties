@@ -1,11 +1,12 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import ButtonGroup from '../Form/ButtonGroup.jsx'
 import Range from '../Helper/Range.js'
 import classnames from 'classnames'
 import bindMethods from '../Helper/Bind.js'
 
-export default class Rooms extends React.Component {
+export default class Rooms extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -96,7 +97,7 @@ export default class Rooms extends React.Component {
 }
 
 Rooms.propTypes = {
-  property: React.PropTypes.object,
-  setValue: React.PropTypes.func,
-  bg : React.PropTypes.bool
+  property: PropTypes.object,
+  setValue: PropTypes.func,
+  bg : PropTypes.bool
 }

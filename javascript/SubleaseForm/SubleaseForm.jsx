@@ -1,6 +1,7 @@
 'use strict'
-import React from 'react'
-import SubleaseObject from '../Mixin/Objects/SubleaseObject.js'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
+//import SubleaseObject from '../Mixin/Objects/SubleaseObject.js'
 import empty from '../Mixin/Helper/Empty.js'
 import Waiting from '../Mixin/Html/Waiting.jsx'
 import InputField from '../Mixin/Form/InputField.jsx'
@@ -18,7 +19,7 @@ import moment from 'moment'
 import Help from '../Mixin/Html/Help.jsx'
 import UtilityFunctions from '../Mixin/Edit/UtilityFunctions.js'
 import 'react-date-picker/index.css'
-/* global $ */
+/* global $, subleaseCurrent */
 
 export default class SubleaseForm extends Base {
   constructor(props) {
@@ -46,7 +47,8 @@ export default class SubleaseForm extends Base {
   }
 
   componentDidMount() {
-    this.loadCurrent()
+    this.setState({sublease: subleaseCurrent})
+    //this.loadCurrent()
   }
 
   setMessage(text, type) {
@@ -133,7 +135,7 @@ export default class SubleaseForm extends Base {
     let url = './properties/Sublease'
     if (sublease.id > 0) {
       methodName = 'PUT'
-      url = url + '/' + + this.state.sublease.id
+      url = url + '/' + this.state.sublease.id
     }
     $.ajax({
       url: url,
@@ -156,21 +158,6 @@ export default class SubleaseForm extends Base {
 
   scrollUp() {
     this.refs.PageTop.scrollIntoView()
-  }
-
-  loadCurrent()
-  {
-    $.getJSON('./properties/Sublease/owner').done(function (data) {
-      if (!empty(data.sublease)) {
-        this.setState({sublease: data.sublease})
-      } else {
-        let sublease = SubleaseObject
-        sublease.move_in_date = String(moment().format('X'))
-        sublease.move_out_date = String(moment().add(1, 'years').format('X'))
-        sublease.contact_email = data['email']
-        this.setState({sublease: sublease})
-      }
-    }.bind(this))
   }
 
   setValue(varname, value) {

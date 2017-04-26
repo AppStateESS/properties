@@ -1,7 +1,8 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 
-class BooleanButton extends React.Component {
+class BooleanButton extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -97,12 +98,12 @@ BooleanButton.defaultProps = {
 }
 
 BooleanButton.propTypes = {
-  label: React.PropTypes.array,
-  icon: React.PropTypes.oneOfType([React.PropTypes.array, React.PropTypes.bool]),
-  handleClick: React.PropTypes.func,
-  current: React.PropTypes.oneOfType([React.PropTypes.bool, React.PropTypes.string]),
-  name: React.PropTypes.string,
-  small : React.PropTypes.bool
+  label: PropTypes.array,
+  icon: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  handleClick: PropTypes.func,
+  current: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  name: PropTypes.string,
+  small : PropTypes.bool
 }
 
 BooleanButton.defaultProps = {

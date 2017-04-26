@@ -1,5 +1,6 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import empty from '../Mixin/Helper/Empty.js'
 
@@ -19,7 +20,7 @@ import 'react-date-picker/index.css'
 
 /* global $, property, deleteProperty */
 
-export default class PropertyForm extends React.Component {
+export default class PropertyForm extends Component {
   constructor() {
     super()
 
@@ -322,10 +323,10 @@ export default class PropertyForm extends React.Component {
   }
 }
 PropertyForm.propTypes = {
-  address: React.PropTypes.string
+  address: PropTypes.string
 }
 
-class DeleteQuestion extends React.Component {
+class DeleteQuestion extends Component {
   constructor(props) {
     super(props)
   }
@@ -353,6 +354,6 @@ class DeleteQuestion extends React.Component {
 }
 
 DeleteQuestion.propTypes = {
-  close: React.PropTypes.func,
-  delete: React.PropTypes.func
+  close: PropTypes.func,
+  delete: PropTypes.func
 }

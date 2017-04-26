@@ -1,8 +1,9 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import classnames from 'classnames'
 
-class ButtonGroup extends React.Component {
+class ButtonGroup extends Component {
   constructor(props) {
     super(props)
   }
@@ -55,12 +56,12 @@ class ButtonGroup extends React.Component {
 }
 
 ButtonGroup.propTypes = {
-  buttons: React.PropTypes.array.isRequired,
-  handle: React.PropTypes.func.isRequired,
-  activeColor: React.PropTypes.string,
-  match: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number, React.PropTypes.array]),
-  vertical: React.PropTypes.bool,
-  name: React.PropTypes.string
+  buttons: PropTypes.array.isRequired,
+  handle: PropTypes.func.isRequired,
+  activeColor: PropTypes.string,
+  match: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array]),
+  vertical: PropTypes.bool,
+  name: PropTypes.string
 }
 
 ButtonGroup.defaultProp = {

@@ -1,7 +1,8 @@
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import Modal from '../Mixin/Html/Modal.jsx'
 
-export default class RefuseModal extends React.Component {
+export default class RefuseModal extends Component {
   constructor(props) {
     super(props)
   }
@@ -38,6 +39,6 @@ export default class RefuseModal extends React.Component {
 }
 
 RefuseModal.propTypes = {
-  reason: React.PropTypes.func,
-  manager: React.PropTypes.object
+  reason: PropTypes.func,
+  manager: PropTypes.object
 }

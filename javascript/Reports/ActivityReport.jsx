@@ -1,5 +1,6 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import moment from 'moment'
 import {DateField} from 'react-date-picker'
 import Waiting from '../Mixin/Html/Waiting.jsx'
@@ -8,7 +9,7 @@ import ManagerRow from './ManagerRow.jsx'
 
 /* global $ */
 
-export default class ActivityReport extends React.Component {
+export default class ActivityReport extends Component {
   constructor(props) {
     super(props)
     this.selected = false

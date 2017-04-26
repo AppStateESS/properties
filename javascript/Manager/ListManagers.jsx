@@ -1,8 +1,9 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import ManagerRow from './ManagerRow.jsx'
 
-class ListManagers extends React.Component {
+class ListManagers extends Component {
   constructor(props) {
     super(props)
   }
@@ -25,30 +26,19 @@ class ListManagers extends React.Component {
       }.bind(this))
     }
     return (
-      <table className="table">
-        <thead>
-          <tr>
-            <th style={{width:'40%'}}>Manager</th>
-            <th>Properties</th>
-            {this.props.admin === true ? <th>Options</th>:null}
-          </tr>
-        </thead>
-        <tbody>
-          {listRows}
-        </tbody>
-      </table>
+      <div>{listRows}</div>
     )
   }
 }
 
 ListManagers.propTypes = {
-  managers: React.PropTypes.array,
-  fillForm: React.PropTypes.func,
-  reload: React.PropTypes.func,
-  showProperties: React.PropTypes.func,
-  message: React.PropTypes.func,
-  remove: React.PropTypes.func,
-  admin: React.PropTypes.bool
+  managers: PropTypes.array,
+  fillForm: PropTypes.func,
+  reload: PropTypes.func,
+  showProperties: PropTypes.func,
+  message: PropTypes.func,
+  remove: PropTypes.func,
+  admin: PropTypes.bool
 }
 
 export default ListManagers

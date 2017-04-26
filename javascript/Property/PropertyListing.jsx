@@ -1,11 +1,12 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import PropertyRow from './PropertyRow.jsx'
 import Waiting from '../Mixin/Html/Waiting.jsx'
 
 /* global $ */
 
-export default class PropertyListing extends React.Component {
+export default class PropertyListing extends Component {
   constructor(props) {
     super(props)
   }
@@ -39,6 +40,6 @@ export default class PropertyListing extends React.Component {
 }
 
 PropertyListing.propTypes = {
-  list: React.PropTypes.array,
-  search: React.PropTypes.bool
+  list: PropTypes.array,
+  search: PropTypes.bool
 }

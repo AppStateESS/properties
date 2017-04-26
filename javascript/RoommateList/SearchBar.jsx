@@ -1,8 +1,9 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import Dropdown from '../Mixin/Form/Dropdown.jsx'
 
-export default class SearchBar extends React.Component {
+export default class SearchBar extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -156,8 +157,8 @@ export default class SearchBar extends React.Component {
 }
 
 SearchBar.propTypes = {
-  updateSearchVars: React.PropTypes.func,
-  searchVars: React.PropTypes.object,
-  reset: React.PropTypes.func,
-  labels: React.PropTypes.object
+  updateSearchVars: PropTypes.func,
+  searchVars: PropTypes.object,
+  reset: PropTypes.func,
+  labels: PropTypes.object
 }

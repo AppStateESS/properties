@@ -1,5 +1,6 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import {DateField} from 'react-date-picker'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import Rooms from '../Mixin/Form/Rooms.jsx'
@@ -234,9 +235,9 @@ export default class Basic extends Base {
 }
 
 Basic.propTypes = {
-  property: React.PropTypes.object,
-  setValue: React.PropTypes.func,
-  setError: React.PropTypes.func,
-  setIntegerValue: React.PropTypes.func,
-  errors: React.PropTypes.object
+  property: PropTypes.object,
+  setValue: PropTypes.func,
+  setError: PropTypes.func,
+  setIntegerValue: PropTypes.func,
+  errors: PropTypes.object
 }

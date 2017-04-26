@@ -1,12 +1,13 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import Overlay from '../Html/Overlay.jsx'
 import Dropzone from 'react-dropzone'
 import Thumb from './Thumb.jsx'
 import ImageFrame from './ImageFrame.jsx'
 import {SortableContainer} from 'react-sortable-hoc'
 
-export default class ImageOverlay extends React.Component {
+export default class ImageOverlay extends Component {
   constructor(props) {
     super(props)
   }
@@ -64,14 +65,14 @@ export default class ImageOverlay extends React.Component {
 }
 
 ImageOverlay.propTypes = {
-  close: React.PropTypes.func,
-  update: React.PropTypes.func,
-  deletePhoto: React.PropTypes.func,
-  clear: React.PropTypes.func,
-  newPhotos: React.PropTypes.array,
-  currentPhotos: React.PropTypes.array,
-  status: React.PropTypes.array,
-  onSortEnd: React.PropTypes.func,
+  close: PropTypes.func,
+  update: PropTypes.func,
+  deletePhoto: PropTypes.func,
+  clear: PropTypes.func,
+  newPhotos: PropTypes.array,
+  currentPhotos: PropTypes.array,
+  status: PropTypes.array,
+  onSortEnd: PropTypes.func,
 }
 
 const SortableList = SortableContainer(({items, deletePhoto}) => {

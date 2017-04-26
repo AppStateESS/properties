@@ -1,6 +1,7 @@
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 
-class Message extends React.Component {
+class Message extends Component {
   constructor(props) {
     super(props)
   }
@@ -44,9 +45,9 @@ class Message extends React.Component {
 }
 
 Message.propTypes = {
-  type: React.PropTypes.string,
-  message: React.PropTypes.oneOfType([React.PropTypes.string,React.PropTypes.element]),
-  onClose: React.PropTypes.func
+  type: PropTypes.string,
+  message: PropTypes.oneOfType([PropTypes.string,PropTypes.element]),
+  onClose: PropTypes.func
 }
 
 Message.defaultProps = {

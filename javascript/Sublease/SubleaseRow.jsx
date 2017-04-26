@@ -1,11 +1,11 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import Row from '../Mixin/List/Row.jsx'
 
 export default class SubleaseRow extends Row {
   constructor(props) {
     super(props)
-    this.state = {}
   }
 
   getRent() {
@@ -29,6 +29,14 @@ export default class SubleaseRow extends Row {
         No photos available
       </div>
     )
+
+    let titleClass
+    if (sublease.active !== undefined && sublease.active === '0') {
+      titleClass= 'title deactive'
+    } else {
+      titleClass='title active'
+    }
+
     if (sublease.thumbnail !== '') {
       image = <img src={sublease.thumbnail} className="img-responsive"/>
     }
@@ -38,24 +46,22 @@ export default class SubleaseRow extends Row {
           <a href={link}>{image}</a>
         </div>
         <div className="col-sm-9 col-md-9">
-          <h4 className="title">
+          <h4 className={titleClass}>
             <a href={link}>{sublease.name}</a>
           </h4>
           <div className="row">
-            <div className="col-sm-4">
+            <div className="col-sm-7 col-md-8">
               <div className="rent">{this.getRent()}</div>
               <div className="room-bath">{sublease.proptype}&nbsp; - {sublease.bedroom_no}&nbsp;Bed, {sublease.bathroom_no}&nbsp;Bath
               </div>
-            </div>
-            <div className="col-sm-4">
               <div className="availability">
-                <strong>Availability:</strong>
+                <strong>Availability:</strong>&nbsp;
                 {sublease.move_in_date}</div>
               <div className="end-date">
-                <strong>Sublease end date:</strong>
+                <strong>Sublease end date:</strong>&nbsp;
                 {sublease.move_out_date}</div>
             </div>
-            <div className="col-sm-4">
+            <div className="col-sm-5 col-md-4">
               {this.petsAllowed(sublease.pets_allowed)}
               {this.furnished(sublease.furnished)}
               {this.airconditioner(sublease.airconditioning)}
@@ -72,5 +78,5 @@ export default class SubleaseRow extends Row {
 }
 
 SubleaseRow.propTypes = {
-  sublease: React.PropTypes.object
+  sublease: PropTypes.object
 }

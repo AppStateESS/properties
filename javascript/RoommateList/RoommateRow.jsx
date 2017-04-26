@@ -1,8 +1,9 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import empty from '../Mixin/Helper/Empty.js'
 
-export default class RoommateRow extends React.Component {
+export default class RoommateRow extends Component {
   constructor(props) {
     super(props)
     this.state = {}
@@ -52,5 +53,5 @@ export default class RoommateRow extends React.Component {
 }
 
 RoommateRow.propTypes = {
-  roommate: React.PropTypes.object
+  roommate: PropTypes.object
 }

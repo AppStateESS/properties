@@ -1,7 +1,8 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 
-export default class Row extends React.Component {
+export default class Row extends Component {
   constructor(props) {
     super(props)
   }
@@ -10,7 +11,7 @@ export default class Row extends React.Component {
     if (petsAllowed === '1') {
       return (
         <span
-          className="fa-stack fa-lg text-success"
+          className="fa-stack fa-lg"
           data-toggle="tooltip"
           data-placement="top"
           title="Pet friendly">
@@ -25,7 +26,7 @@ export default class Row extends React.Component {
     if (furnished === '1') {
       return (
         <span
-          className="fa-stack fa-lg text-success"
+          className="fa-stack fa-lg"
           data-toggle="tooltip"
           data-placement="top"
           title="Furnished">
@@ -40,7 +41,7 @@ export default class Row extends React.Component {
     if (close === true) {
       return (
         <span
-          className="fa-stack fa-lg text-success"
+          className="fa-stack fa-lg"
           data-toggle="tooltip"
           data-placement="top"
           title="Close to campus">
@@ -56,7 +57,7 @@ export default class Row extends React.Component {
     if (appalcart === '1') {
       return (
         <span
-          className="fa-stack fa-lg text-success"
+          className="fa-stack fa-lg"
           data-toggle="tooltip"
           data-placement="top"
           title="On AppalCART route">
@@ -71,7 +72,7 @@ export default class Row extends React.Component {
     if (dishwasher === '1') {
       return (
         <span
-          className="fa-stack fa-lg text-success"
+          className="fa-stack fa-lg"
           data-toggle="tooltip"
           data-placement="top"
           title="Dishwasher">
@@ -86,7 +87,7 @@ export default class Row extends React.Component {
     if (washer === true) {
       return (
         <span
-          className="fa-stack fa-lg text-success"
+          className="fa-stack fa-lg"
           data-toggle="tooltip"
           data-placement="top"
           title="Washer/Dryer in unit">
@@ -101,7 +102,7 @@ export default class Row extends React.Component {
     if (included === '1') {
       return (
         <span
-          className="fa-stack fa-lg text-success"
+          className="fa-stack fa-lg"
           data-toggle="tooltip"
           data-placement="top"
           title="Utilities included in rent">
@@ -116,7 +117,7 @@ export default class Row extends React.Component {
     if (airconditioning === '1') {
       return (
         <span
-          className="fa-stack fa-lg text-success"
+          className="fa-stack fa-lg"
           data-toggle="tooltip"
           data-placement="top"
           title="Air conditioning in unit">

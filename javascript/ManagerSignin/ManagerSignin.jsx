@@ -1,10 +1,11 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import InputField from '../Mixin/Form/InputField.jsx'
 import empty from '../Mixin/Helper/Empty.js'
 import DecodeUrl from '../Mixin/Helper/DecodeUrl.js'
 
-export default class ManagerSignin extends React.Component {
+export default class ManagerSignin extends Component {
   constructor(props) {
     super(props)
     this.state = {

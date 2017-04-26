@@ -1,8 +1,9 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import BigCheckbox from '../Mixin/Form/BigCheckbox.jsx'
 
-export default class Features extends React.Component {
+export default class Features extends Component {
   constructor(props) {
     super(props)
     this.state = {}
@@ -73,6 +74,6 @@ export default class Features extends React.Component {
 }
 
 Features.propTypes = {
-  property: React.PropTypes.object,
-  setValue: React.PropTypes.func
+  property: PropTypes.object,
+  setValue: PropTypes.func
 }

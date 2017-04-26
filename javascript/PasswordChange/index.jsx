@@ -1,12 +1,12 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
 import bindMethod from '../Mixin/Helper/Bind.js'
 import Message from '../Mixin/Html/Message.jsx'
 
 /* global $, hash */
 
-class PasswordChange extends React.Component {
+class PasswordChange extends Component {
   constructor(props) {
     super(props)
     this.state = {

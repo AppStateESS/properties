@@ -1,7 +1,8 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 
-export default class Amenities extends React.Component {
+export default class Amenities extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -119,6 +120,6 @@ export default class Amenities extends React.Component {
 }
 
 Amenities.propTypes = {
-  toggle: React.PropTypes.func,
-  searchVars: React.PropTypes.object
+  toggle: PropTypes.func,
+  searchVars: PropTypes.object
 }

@@ -1,9 +1,10 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import Waiting from '../Mixin/Html/Waiting.jsx'
 import SubleaseRow from './SubleaseRow.jsx'
 
-export default class Listing extends React.Component {
+export default class Listing extends Component {
   constructor(props) {
     super(props)
     this.state = {}
@@ -36,6 +37,6 @@ export default class Listing extends React.Component {
 }
 
 Listing.propTypes = {
-  subleases: React.PropTypes.array,
-  search: React.PropTypes.bool
+  subleases: PropTypes.array,
+  search: PropTypes.bool
 }

@@ -1,5 +1,6 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import Row from '../Mixin/List/Row.jsx'
 
 export default class PropertyRow extends Row {
@@ -101,5 +102,5 @@ export default class PropertyRow extends Row {
 }
 
 PropertyRow.propTypes = {
-  property: React.PropTypes.object
+  property: PropTypes.object
 }

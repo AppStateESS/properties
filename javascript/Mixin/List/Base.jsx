@@ -1,10 +1,11 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import bindMethods from '../Helper/Bind.js'
 import DecodeUrl from '../Helper/DecodeUrl.js'
 import setIfDefined from '../Helper/setIfDefined.js'
 
-export default class Base extends React.Component {
+export default class Base extends Component {
   constructor(props) {
     super(props)
     this.state = {}

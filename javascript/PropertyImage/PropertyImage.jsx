@@ -1,12 +1,13 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
+import PropTypes from 'prop-types'
 import ImageOverlay from '../Mixin/Photo/ImageOverlay.jsx'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import {arrayMove} from 'react-sortable-hoc'
 
 /* global $, propertyId, loadPhotos, editPhotos, currentPhotos */
 
-export default class PropertyImage extends React.Component {
+export default class PropertyImage extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -148,5 +149,5 @@ export default class PropertyImage extends React.Component {
 }
 
 PropertyImage.propTypes = {
-  current: React.PropTypes.array
+  current: PropTypes.array
 }

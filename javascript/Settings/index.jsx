@@ -1,5 +1,5 @@
 'use strict'
-import React from 'react'
+import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
 import InputField from '../Mixin/Form/InputField.jsx'
 import CheckValues from '../Mixin/Helper/CheckValues.js'
@@ -9,7 +9,7 @@ import BooleanButton from '../Mixin/Form/BooleanButton.jsx'
 
 /* global $ */
 
-export default class Settings extends React.Component {
+export default class Settings extends Component {
   constructor() {
     super()
     this.state = {
@@ -219,7 +219,6 @@ export default class Settings extends React.Component {
     )
   }
 }
-Settings.propTypes = {}
 
 ReactDOM.render(
   <Settings/>, document.getElementById('settings'))
