@@ -18,18 +18,69 @@
 
 namespace properties\Controller\Sublease;
 
+use properties\Factory\NavBar;
+use Canopy\Request;
+
 class Admin extends User
 {
 
-    public function createHtmlCommand(\Canopy\Request $request)
+    public function createHtmlCommand(Request $request)
     {
         return '<p>Site admins may not create subleases.</p>';
     }
 
-    public function listHtmlCommand(\Canopy\Request $request)
+    public function listHtmlCommand(Request $request)
     {
         \Layout::addStyle('properties', 'sublease/list.css');
         return $this->factory->reactView('sublease');
+    }
+
+    public function getHtml(Request $request)
+    {
+        $this->adminButtons();
+        return parent::getHtml($request);
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function editHtmlCommand(Request $request)
+    {
+        $sublease = $this->factory->load($this->id);
+        $back = <<<EOF
+<a class="btn btn-default navbar-btn" href="./properties/Sublease/{$this->id}"><i class="fa fa-undo"></i> Back to view</a>
+EOF;
+        Navbar::addItem($back);
+        return $this->factory->edit($sublease);
+    }
+
+    public function viewHtmlCommand(Request $request)
+    {
+        $link = <<<EOF
+<a href="./properties/Sublease/{$this->id}/edit"><i class="fa fa-edit"></i>&nbsp;Update this sublease</a>
+EOF;
+        \Layout::addStyle('properties', 'sublease/view.css');
+        NavBar::addOption($link);
+        NavBar::addOption('<a onClick="editPhotos.callback()" class="pointer"><i class="fa fa-camera"></i>&nbsp;Edit photos</a>');
+        return $this->factory->view($this->id, true);
+    }
+
+    protected function jsonPatchCommand(Request $request)
+    {
+        $sublease = $this->factory->load($this->id);
+        return array('success' => $this->factory->patch($sublease,
+                    $request->pullPatchString('varname'),
+                    $request->pullPatchBoolean('value')));
+    }
+
+    public function updatePutCommand(Request $request)
+    {
+        try {
+            $sublease = $this->factory->load($this->id);
+            return $this->factory->put($request, $sublease);
+        } catch (\properties\Exception\PropertySaveFailure $e) {
+            return array('error' => $e->getMessage());
+        }
     }
 
 }
