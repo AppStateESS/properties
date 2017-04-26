@@ -20,7 +20,8 @@ namespace properties\Controller;
 
 use properties\Exception\BadCommand;
 use properties\Factory\NavBar;
-use \phpws2\Database;
+use phpws2\Database;
+use Canopy\Request;
 
 abstract class SubController extends Base
 {
@@ -37,7 +38,7 @@ abstract class SubController extends Base
         $this->role = $role;
     }
 
-    protected function pullGetCommand(\Canopy\Request $request)
+    protected function pullGetCommand(Request $request)
     {
         $command = $request->shiftCommand();
         if (is_numeric($command)) {
@@ -55,7 +56,7 @@ abstract class SubController extends Base
         return $command;
     }
 
-    public function post(\Canopy\Request $request)
+    public function post(Request $request)
     {
         $command = $request->shiftCommand();
 
@@ -77,7 +78,7 @@ abstract class SubController extends Base
         }
     }
 
-    public function put(\Canopy\Request $request)
+    public function put(Request $request)
     {
         $command = $request->shiftCommand();
 
@@ -104,7 +105,7 @@ abstract class SubController extends Base
         }
     }
 
-    public function getHtml(\Canopy\Request $request)
+    public function getHtml(Request $request)
     {
         $command = $this->pullGetCommand($request);
 
@@ -126,7 +127,7 @@ abstract class SubController extends Base
         return $this->htmlResponse($content);
     }
 
-    public function getJson(\Canopy\Request $request)
+    public function getJson(Request $request)
     {
         $command = $this->pullGetCommand($request);
 
@@ -144,7 +145,7 @@ abstract class SubController extends Base
         return $this->jsonResponse($json);
     }
 
-    public function patch(\Canopy\Request $request)
+    public function patch(Request $request)
     {
         $id = $request->shiftCommand();
 
@@ -152,7 +153,7 @@ abstract class SubController extends Base
             throw new BadCommand('Empty command or missing id');
         }
         $this->id = $id;
-        
+
         $patch_command = $request->shiftCommand();
         if (empty($patch_command)) {
             $patch_command = $request->isAjax() ? 'jsonPatchCommand' : 'htmlPatchCommand';
@@ -168,7 +169,7 @@ abstract class SubController extends Base
         return $this->jsonResponse($json);
     }
 
-    public function delete(\Canopy\Request $request)
+    public function delete(Request $request)
     {
         $id = $request->shiftCommand();
 
@@ -186,7 +187,7 @@ abstract class SubController extends Base
         return $this->jsonResponse($content);
     }
 
-    public function getResponse($content, \Canopy\Request $request)
+    public function getResponse($content, Request $request)
     {
         return $request->isAjax() ? $this->jsonResponse($content) : $this->htmlResponse($content);
     }
@@ -204,6 +205,7 @@ abstract class SubController extends Base
 
         $signout = '<a href="./properties/Manager/signout"><i class="fa fa-sign-out"></i>&nbsp;Sign out</a>';
         \properties\Factory\NavBar::addOption($signout);
+        \properties\Factory\NavBar::setTitle('My options');
     }
 
     protected function addEmailWarning()
@@ -211,7 +213,17 @@ abstract class SubController extends Base
         $link = "<button onClick=\"window.location.href='./properties/Settings'\" class=\"btn btn-danger navbar-btn\">The site email address must be set.</button>";
         NavBar::addItem($link);
     }
-    
+
+    protected function adminButtons()
+    {
+        $our_email = \phpws2\Settings::get('properties', 'our_email');
+        if (empty($our_email)) {
+            $this->addEmailWarning();
+        } else {
+            $this->addApprovalLink();
+        }
+    }
+
     protected function addApprovalLink()
     {
         $needApproval = $this->needApproval();
