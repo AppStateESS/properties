@@ -42,8 +42,13 @@ class Logged extends User
     public function createHtmlCommand(\Canopy\Request $request)
     {
         $this->ownerOptions(false, false);
-        \Layout::addStyle('properties', 'sublease/form.css');
-        return $this->factory->reactView('subleaseform');
+        if ($this->user_sublease) {
+            $sublease = $this->user_sublease;
+        } else {
+            $sublease = $this->factory->build();
+            $sublease->user_id = \Current_User::getId();
+        }
+        return $this->factory->edit($sublease);
     }
 
     /**
@@ -52,8 +57,7 @@ class Logged extends User
     public function editHtmlCommand(\Canopy\Request $request)
     {
         $this->ownerOptions(false, false);
-        \Layout::addStyle('properties', 'sublease/form.css');
-        return $this->factory->reactView('subleaseform');
+        return $this->factory->edit($this->user_sublease, \Current_User::getId());
     }
 
     public function listHtmlCommand(\Canopy\Request $request)
@@ -104,7 +108,7 @@ class Logged extends User
 
     protected function jsonPatchCommand(\Canopy\Request $request)
     {
-        return array('success' => $this->factory->patch($this->user_sublease->id,
+        return array('success' => $this->factory->patch($this->user_sublease,
                     $request->pullPatchString('varname'),
                     $request->pullPatchBoolean('value')));
     }
