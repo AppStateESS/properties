@@ -23,12 +23,17 @@ class Logged extends User
 
     protected function savePostCommand(\Canopy\Request $request)
     {
-        return $this->factory->post($request, $this->role->getId());
+        $sublease_id = $request->pullPostInteger('subleaseId');
+        $subleaseFactory = new \properties\Factory\Sublease;
+        $sublease = $subleaseFactory->load($sublease_id);
+        if ($sublease->user_id != $this->role->getId()) {
+            throw new \properties\Exception\PrivilegeMissing;
+        }
+        return $this->factory->post($sublease);
     }
 
     protected function jsonPatchCommand(\Canopy\Request $request)
     {
-
         $photo = $this->factory->load($this->id);
         $variableName = $request->pullPatchString('varname');
         switch ($variableName) {
@@ -37,6 +42,16 @@ class Logged extends User
                         $request->pullPatchInteger('newPosition'));
                 break;
         }
+        return array('success' => true);
+    }
+    
+    protected function deleteCommand(\Canopy\Request $request)
+    {
+        $photo = $this->factory->load($this->id);
+        if ($photo->uid != $this->role->getId()) {
+            throw new \properties\Exception\PrivilegeMissing;
+        }
+        $this->factory->delete($photo);
         return array('success' => true);
     }
 
