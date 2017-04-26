@@ -30,6 +30,8 @@ class Photo extends PicBase
      * @var phpws2\Variable\Integer
      */
     protected $pid;
+    
+    protected $item_column = 'pid';
 
     protected $table = 'prop_photo';
             
