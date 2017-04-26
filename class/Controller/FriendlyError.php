@@ -27,7 +27,7 @@ class FriendlyError extends \phpws2\Http\Controller
         if ($request->isAjax()) {
             throw new \Exception(PROPERTIES_FRIENDLY_MESSAGE);
         }
-        parent::execute($request);
+        return parent::execute($request);
     }
     
     public function get(\Canopy\Request $request)
