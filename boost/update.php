@@ -497,6 +497,7 @@ class PropertyUpgrade
             }
             $db->update();
         }
+        $tbl->dropColumn('main_pic');
     }
 
     private function addContent(&$content, $version, array $changes)
