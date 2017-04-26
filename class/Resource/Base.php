@@ -40,27 +40,4 @@ class Base extends \phpws2\Resource
         return sprintf('http://maps.google.com/maps?q=%s', $url);
     }
 
-    public function delete($resort = true)
-    {
-
-        $db = Database::getDB();
-        $tbl = $db->addTable($this->table);
-        $tbl->addFieldConditional('id', $this->getId());
-        $result = $db->delete();
-        if ($result) {
-            if ($resort) {
-                $position = $this->porder;
-                $db->clearConditional();
-                $db = Database::getDB();
-                $tbl = $db->addTable('prop_photo');
-                $exp = new \phpws2\Database\Expression($tbl->getField('porder') . '-1');
-                $tbl->addValue('porder', $exp);
-                $tbl->addFieldConditional('pid', $this->pid);
-                $tbl->addFieldConditional('porder', $position, '>');
-                $db->update();
-            }
-            return $result;
-        }
-    }
-
 }
