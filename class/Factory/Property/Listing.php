@@ -32,7 +32,7 @@ class Listing extends \properties\Factory\Listing
     /**
      * @var \phpws2\Database\Table
      */
-    private $photo_table; //tbl3
+    protected $photo_table; //tbl3
 
     public function __construct()
     {
