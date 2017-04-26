@@ -215,6 +215,7 @@ class Property extends Base
                     true);
             NavBar::addOption("<a onClick='editPhotos.callback();return false' href='#'><i class='fa fa-camera'></i>&nbsp;Edit photos</a>",
                     true);
+            NavBar::setTitle('Property options');
             $tpl['photoupdate'] = $this->reactView('propertyimage');
             $tpl['property_edit_button'] = null;
         }
@@ -243,25 +244,6 @@ EOF;
         $property->updated = time();
         $this->saveResource($property);
         return true;
-    }
-
-    /**
-     * Not used
-     * @param integer $property_id
-     * @return string
-     */
-    private function updateButton($property_id)
-    {
-        return <<<EOF
-<button class="btn btn-primary btn-sm navbar-btn" onclick="window.location.href='./properties/Property/$property_id/edit'" style="margin-right:6px"><i class="fa fa-edit"></i>&nbsp;Update property</button>
-EOF;
-    }
-
-    private function deleteButton($property_id)
-    {
-        return <<<EOF
-<button class="btn btn-danger btn-sm navbar-btn" data-property-id="$property_id" title="Delete property" onClick="deleteProperty.callback()" style="margin-right:6px"><i class="fa fa-trash-o"></i>&nbsp;Delete property</button>
-EOF;
     }
 
     private function addManagerInfo(array $tpl,
