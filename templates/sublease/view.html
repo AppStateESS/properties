@@ -8,7 +8,9 @@
     let subleaseId = <?=$id?>
 </script>
 <div class="sublease-view">
-    <?=$inactive_warning ? '<div class="alert alert-danger"><i class="fa fa-ban"></i> Notice: this property is currently not active. Update your sublease to enable it.</div>':null?>
+    <?php if($inactive_warning):?>
+    <div class="alert alert-danger">Your sublease is disabled and no one can view it. <a href="./properties/Sublease/<?=$id?>/edit">Update your sublease to enable it.</a></div>
+    <?php endif;?>
     <div class="row">
         <div class="col-sm-8 header">
             <h2 class="sublease-title">Sublease: <?=$name?></h2>
