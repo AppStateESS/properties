@@ -257,15 +257,15 @@ class Manager extends Base
         $subject = 'Property manager application declined';
         switch ($reason) {
             case 'duplicate':
-                $refusalLetter = 'duplicate.html';
+                $refusalLetter = 'refuse/duplicate.html';
                 break;
 
             case 'bad_data':
-                $refusalLetter = 'bad_data.html';
+                $refusalLetter = 'refuse/bad_data.html';
                 break;
 
             case 'no_response':
-                $refusalLetter = 'no_response.html';
+                $refusalLetter = 'refuse/no_response.html';
                 break;
 
             default:
@@ -302,11 +302,15 @@ class Manager extends Base
         $subject = 'Manager account inquiry';
         switch ($type) {
             case 'sublease':
-                $inquiryLetter = 'sublease.html';
+                $inquiryLetter = 'inquiry/sublease.html';
                 break;
 
             case 'information':
-                $inquiryLetter = 'more_information.html';
+                $inquiryLetter = 'inquiry/more_information.html';
+                break;
+
+            case 'phone_number':
+                $inquiryLetter = 'inquiry/phone_number.html';
                 break;
 
             default:
