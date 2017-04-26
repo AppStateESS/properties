@@ -46,16 +46,13 @@ class Photo extends \properties\Factory\Photo
         }
     }
 
-    public function post(\Canopy\Request $request, $user_id)
+    public function post(\properties\Resource\Sublease $sublease)
     {
-        $subleaseFactory = new \properties\Factory\Sublease;
-        $sublease = $subleaseFactory->getSubleaseByUser($user_id);
-
         $photo = $this->build();
-        $photo->uid = $user_id;
+        $photo->uid = $sublease->user_id;
         $photo->sid = $sublease->id;
 
-        $result = $this->handlePhotoPost($photo, $sublease->id, $user_id);
+        $result = $this->handlePhotoPost($photo, $sublease->id, $sublease->user_id);
 
         return $result;
     }
