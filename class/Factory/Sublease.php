@@ -155,18 +155,30 @@ class Sublease extends Base
         $db->update();
     }
 
-    public function patch($id, $param, $value)
+    public function patch(\properties\Resource\Sublease $sublease, $param, $value)
     {
         static $allowed_params = array('active');
 
         if (!in_array($param, $allowed_params)) {
             throw new \Exception('Parameter may not be patched');
         }
-        $sublease = $this->load($id);
         $sublease->$param = $value;
         $sublease->updated = time();
         $this->saveResource($sublease);
         return true;
+    }
+
+    public function edit(\properties\Resource\Sublease $sublease)
+    {
+        $sublease_json = json_encode($sublease->getVariablesAsValue(true, null,
+                        true));
+
+        $content[] = <<<EOF
+<script type="text/javascript">const subleaseCurrent = $sublease_json;</script>
+EOF;
+        \Layout::addStyle('properties', 'sublease/form.css');
+        $content[] = $this->reactView('subleaseform');
+        return implode('', $content);
     }
 
 }
