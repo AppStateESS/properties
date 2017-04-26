@@ -48,11 +48,11 @@ abstract class Photo extends Base
 
     public function delete($photo)
     {
-        if (!is_a($photo, 'properties\Resource\Photo')) {
+        if (!is_object($photo)) {
             if (is_numeric($photo) && !empty($photo)) {
                 $photo = $this->load($photo);
             } else {
-                throw \Exception('Empty photo id');
+                throw new \properties\Exception\ResourceNotFound;
             }
         }
         $photo->delete();
