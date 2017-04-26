@@ -8,21 +8,16 @@ module.exports = {
     path: setup.path.join(setup.APP_DIR, "dev"),
     filename: "[name].js"
   },
-  plugins: [new webpack.optimize.CommonsChunkPlugin("vendor", "vendor.js")],
+  plugins: [new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.js'})],
   module: {
-    preLoaders: [
-      {
-        test: /\.jsx?$/,
-        loader: 'jshint-loader',
-        exclude: '/node_modules/',
-        include: setup.APP_DIR + "/dev"
-      }
-    ],
     loaders: [
       {
         test: /\.jsx?/,
         include: setup.APP_DIR,
-        loader: 'babel'
+        loader: 'babel-loader',
+        query: {
+          presets: ['es2015', 'react']
+        }
       }, {
         test: /\.css$/,
         loader: "style-loader!css-loader"
