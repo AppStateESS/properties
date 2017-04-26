@@ -65,11 +65,8 @@ class Listing extends \properties\Factory\Listing
 
         $c1 = $this->db->createConditional($this->data_table->getField('id'),
                 $this->photo_table->getField('sid'));
-        $c2 = $this->db->createConditional($this->photo_table->getField('main_pic'),
-                1);
-        $c3 = $this->db->createConditional($c1, $c2, 'and');
 
-        $this->db->joinResources($this->data_table, $this->photo_table, $c3,
+        $this->db->joinResources($this->data_table, $this->photo_table, $c1,
                 'left');
 
         $this->addConditionals();
