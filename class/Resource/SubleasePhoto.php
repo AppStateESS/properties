@@ -20,12 +20,14 @@ namespace properties\Resource;
 
 class SubleasePhoto extends PicBase
 {
+
     /**
      * Id of sublease photo is associated to
      * @var \phpws2\Variable\IntegerVar
      */
     protected $sid;
     protected $uid;
+    protected $item_column = 'sid';
     protected $table = 'prop_sub_photo';
 
     public function __construct()
@@ -34,4 +36,5 @@ class SubleasePhoto extends PicBase
         $this->uid = new \phpws2\Variable\IntegerVar(0, 'uid');
         $this->sid = new \phpws2\Variable\IntegerVar(0, 'sid');
     }
+
 }
