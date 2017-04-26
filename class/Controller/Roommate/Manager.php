@@ -20,5 +20,21 @@ namespace properties\Controller\Roommate;
 
 class Manager extends User
 {
-    
+
+    protected function viewHtmlCommand(\Canopy\Request $request)
+    {
+        return $this->factory->view($this->id, false);
+    }
+
+    protected function listHtmlCommand(\Canopy\Request $request)
+    {
+        return $this->factory->reactView('roommatelist');
+    }
+
+    public function getHtml(\Canopy\Request $request)
+    {
+        $this->managerButtons();
+        return parent::getHtml($request);
+    }
+
 }
