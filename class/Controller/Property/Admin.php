@@ -19,29 +19,30 @@
 namespace properties\Controller\Property;
 
 use properties\Resource\Property as Resource;
+use Canopy\Request;
 
 class Admin extends User
 {
 
-    protected function viewHtmlCommand(\Canopy\Request $request)
+    protected function viewHtmlCommand(Request $request)
     {
         \Layout::addStyle('properties', 'property/view.css');
         return $this->factory->view($this->id, true);
     }
 
-    protected function editHtmlCommand(\Canopy\Request $request)
+    protected function editHtmlCommand(Request $request)
     {
         \Layout::addStyle('properties', 'property/form.css');
         return $this->factory->edit($this->id);
     }
 
-    protected function createHtmlCommand(\Canopy\Request $request)
+    protected function createHtmlCommand(Request $request)
     {
         \Layout::addStyle('properties', 'property/form.css');
         return $this->factory->edit(0, $request->pullGetInteger('managerId'));
     }
 
-    protected function savePostCommand(\Canopy\Request $request)
+    protected function savePostCommand(Request $request)
     {
         try {
             $property = $this->factory->post($request);
@@ -51,7 +52,7 @@ class Admin extends User
         }
     }
 
-    protected function updatePutCommand(\Canopy\Request $request)
+    protected function updatePutCommand(Request $request)
     {
         try {
             return $this->factory->put($request);
@@ -60,25 +61,25 @@ class Admin extends User
         }
     }
 
-    protected function listJsonCommand(\Canopy\Request $request)
+    protected function listJsonCommand(Request $request)
     {
         return $this->getPropertyRows($request, true);
     }
 
-    protected function deleteCommand(\Canopy\Request $request)
+    protected function deleteCommand(Request $request)
     {
         $property = $this->factory->load($this->id);
         $this->factory->delete($property);
         return array('success' => true);
     }
 
-    public function getHtml(\Canopy\Request $request)
+    public function getHtml(Request $request)
     {
-        $this->addApprovalLink();
+        $this->adminButtons();
         return parent::getHtml($request);
     }
 
-    protected function jsonPatchCommand(\Canopy\Request $request)
+    protected function jsonPatchCommand(Request $request)
     {
         if ($request->patchVarIsset('values')) {
             $values = $request->pullPatchVar('values');
