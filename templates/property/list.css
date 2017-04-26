@@ -54,3 +54,8 @@
     opacity: 0.01;
     transition: opacity 300ms ease-in;
 }
+
+
+div.property-row span.fa-stack {
+    color : #3C763D;
+}
