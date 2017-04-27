@@ -10,7 +10,14 @@ module.exports = {
   },
   plugins: [new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.js'})],
   module: {
-    loaders: [
+    rules: [
+      {
+        test: /\.jsx?$/,
+        enforce: 'pre',
+        loader: 'jshint-loader',
+        exclude: '/node_modules/',
+        include: setup.APP_DIR + "/dev"
+      },
       {
         test: /\.jsx?/,
         include: setup.APP_DIR,
@@ -22,7 +29,7 @@ module.exports = {
         test: /\.css$/,
         loader: "style-loader!css-loader"
       }
-    ]
+    ],
   },
   devtool: 'source-map'
 }

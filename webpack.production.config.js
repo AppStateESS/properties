@@ -11,7 +11,7 @@ module.exports = {
   },
   plugins: [new webpack.optimize.CommonsChunkPlugin({name: 'vendor', filename: 'vendor.js'})],
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?/,
         include: setup.APP_DIR,
