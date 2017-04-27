@@ -19,6 +19,7 @@
 namespace properties\Controller\Property;
 
 use properties\Resource\Property as Resource;
+use properties\Factory\NavBar;
 
 class User extends \properties\Controller\SubController
 {
@@ -46,6 +47,9 @@ class User extends \properties\Controller\SubController
 
     protected function viewHtmlCommand(\Canopy\Request $request)
     {
+        if (isset($_SERVER['HTTP_REFERER']) && stristr($_SERVER['HTTP_REFERER'], 'properties/Property/list')) {
+            NavBar::addItem('<button class="btn btn-default navbar-btn" onClick="window.history.back()"><i class="fa fa-list"></i>&nbsp;Back to list</button>');
+        }
         \Layout::addStyle('properties', 'property/view.css');
         return $this->factory->view($this->id, false);
     }
