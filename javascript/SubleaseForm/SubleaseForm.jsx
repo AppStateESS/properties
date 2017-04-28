@@ -37,6 +37,7 @@ export default class SubleaseForm extends Base {
       'setIntegerValue',
       'checkForm',
       'checkPhone',
+      'checkEmail',
       'updateRent',
       'setMoveIn',
       'setMoveOut',
@@ -126,6 +127,10 @@ export default class SubleaseForm extends Base {
 
   checkPhone() {
     this.setError('contact_phone', !CheckValues.isPhone(this.state.sublease.contact_phone))
+  }
+
+  checkEmail() {
+    this.setError('contact_email', !CheckValues.isEmail(this.state.sublease.contact_email))
   }
 
   save() {
@@ -313,6 +318,7 @@ export default class SubleaseForm extends Base {
             : 'Create '}
           my sublease</h2>
         {message}
+        <div className="alert alert-info"><strong>Notice:</strong> a sublease listing requires contact information.<br />Use our <a href="./properties/Roommate">roommate section</a> if you want to keep your contact information available only to other students.</div>
         <div className="text-align marginBottom">
           {activateButton}
         </div>
@@ -376,8 +382,12 @@ export default class SubleaseForm extends Base {
             <InputField
               name="contact_email"
               label="Contact email address"
+              errorMessage={this.state.errors.contact_email
+              ? 'Check your email address formatting'
+              : null}
               value={sublease.contact_email}
               change={this.setValue.bind(this, 'contact_email')}
+              blur={this.checkEmail}
               required={true}/>
           </div>
         </div>
