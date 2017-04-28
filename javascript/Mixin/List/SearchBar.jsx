@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Dropdown from '../Form/Dropdown.jsx'
 import Amenities from '../Edit/Amenities.jsx'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 
 export default class SearchBar extends Component {
   constructor(props) {
@@ -242,7 +242,7 @@ export default class SearchBar extends Component {
                 <button className="btn btn-default btn-sm" onClick={this.togglePanel}>{panelButton}</button>
               </div>
             </div>
-            <ReactCSSTransitionGroup
+            <CSSTransitionGroup
               transitionName="trans"
               transitionEnterTimeout={500}
               transitionLeaveTimeout={300}>
@@ -256,7 +256,7 @@ export default class SearchBar extends Component {
                   </div>
                 )
                 : null}
-            </ReactCSSTransitionGroup>
+            </CSSTransitionGroup>
           </div>
         </div>
         <div><Dropdown label={sortLabel} options={sortby}/></div>

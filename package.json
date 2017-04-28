@@ -16,7 +16,7 @@
     "moment": "^2.15.1",
     "prop-types": "^15.5.8",
     "react": "^15.3.0",
-    "react-addons-css-transition-group": "^15.3.0",
+    "react-date-picker": "^5.3.28",
     "react-dom": "^15.3.0",
     "react-dropzone": "^3.6.0",
     "react-image-gallery": "^0.7.3",
@@ -24,6 +24,7 @@
     "react-sortable-hoc": "^0.6.2",
     "react-sticky": "^5.0.5",
     "react-tooltip": "^3.3.0",
+    "react-transition-group": "^1.1.2",
     "strip-loader": "^0.1.2",
     "style-loader": "^0.16.1",
     "webpack": "^2.4.1"
