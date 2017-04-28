@@ -41,7 +41,7 @@ class Sublease extends Place
         $this->contact_phone->formatNumber(true);
         $this->contact_email = new Variable\Email(null, 'contact_email');
         $this->landlord_perm = new Variable\BooleanVar(false, 'landlord_perm');
-        $this->move_out_date = new Variable\DateVar(0, 'move_out_date');
+        $this->move_out_date = new Variable\DateVar(time() + 86400*180, 'move_out_date');
         $this->user_id = new Variable\IntegerVar(0, 'user_id');
     }
 
