@@ -66,9 +66,17 @@ class User extends \properties\Controller\SubController
     protected function createButton()
     {
         $button = <<<EOF
-<button onClick="window.location.href='./properties/Sublease/create'" class="btn btn-primary btn-sm navbar-btn">Create my sublease</button>
+<button onClick="window.location.href='./properties/Sublease/create'" class="btn btn-primary btn-sm navbar-btn"><i class="fa fa-plus"></i>&nbsp;Create my sublease</button>
 EOF;
         \properties\Factory\NavBar::addItem($button);
+    }
+
+    protected function backToList()
+    {
+        if (isset($_SERVER['HTTP_REFERER']) && stristr($_SERVER['HTTP_REFERER'],
+                        'properties/Sublease/list')) {
+            \properties\Factory\NavBar::addItem('<button class="btn btn-default navbar-btn" style="margin-right: 5px;" onClick="window.history.back()"><i class="fa fa-list"></i>&nbsp;Back to list</button>');
+        }
     }
 
     protected function updateTimeouts()

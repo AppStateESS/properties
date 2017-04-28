@@ -38,11 +38,20 @@ class User extends \properties\Controller\SubController
 
     protected function viewHtmlCommand(\Canopy\Request $request)
     {
+        $this->backToList();
         $button = $this->createButton();
         \properties\Factory\NavBar::addItem($button);
         return $this->factory->view($this->id, false);
     }
 
+    protected function backToList()
+    {
+        if (isset($_SERVER['HTTP_REFERER']) && stristr($_SERVER['HTTP_REFERER'],
+                        'properties/Roommate/list')) {
+            \properties\Factory\NavBar::addItem('<button class="btn btn-default navbar-btn" style="margin-right: 5px;" onClick="window.history.back()"><i class="fa fa-list"></i>&nbsp;Back to list</button>');
+        }
+    }
+    
     protected function listHtmlCommand(\Canopy\Request $request)
     {
         if ($this->factory->roommateTimeoutPast()) {
@@ -74,7 +83,7 @@ class User extends \properties\Controller\SubController
 
     protected function createButton()
     {
-        return '<button class="btn btn-primary btn-sm navbar-btn" onClick="window.location.href=\'./properties/Roommate/create\'"><i class="fa fa-bullhorn"></i>&nbsp;Add Roommate request</button>';
+        return '<button class="btn btn-primary btn-sm navbar-btn" onClick="window.location.href=\'./properties/Roommate/create\'"><i class="fa fa-bullhorn"></i>&nbsp;Create roommate request</button>';
     }
 
 }

@@ -71,7 +71,7 @@ class Logged extends User
             $admin = false;
             $button = $this->createButton();
         }
-
+        $this->backToList();
         \properties\Factory\NavBar::addItem($button);
         return $this->factory->view($this->id, true, $admin);
     }

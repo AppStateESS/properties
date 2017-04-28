@@ -33,4 +33,9 @@ class Manager extends User
         return $this->factory->reactView('sublease');
     }
 
+    protected function viewHtmlCommand(\Canopy\Request $request)
+    {
+        return $this->factory->view($this->id, false);
+    }
+
 }

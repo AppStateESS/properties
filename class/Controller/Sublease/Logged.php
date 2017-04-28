@@ -41,6 +41,7 @@ class Logged extends User
      */
     public function createHtmlCommand(\Canopy\Request $request)
     {
+        
         $this->ownerOptions(false, false);
         if ($this->user_sublease) {
             $sublease = $this->user_sublease;
@@ -60,6 +61,12 @@ class Logged extends User
         return $this->factory->edit($this->user_sublease, \Current_User::getId());
     }
 
+    public function getHtml(\Canopy\Request $request)
+    {
+        $this->backToList();
+        return parent::getHtml($request);
+    }
+    
     public function listHtmlCommand(\Canopy\Request $request)
     {
         $this->ownerOptions();
