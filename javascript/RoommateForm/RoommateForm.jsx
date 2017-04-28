@@ -422,7 +422,7 @@ export default class RoommateForm extends Component {
           </div>
           <p className="alert alert-info">Contact information will be shown to other
             logged in students only. If you wish for people to have contact information
-            without logging in, put it in the "About me" section below.</p>
+            without logging in, put it in the "Introduction" section above.</p>
           {saveButton}
         </fieldset>
         <fieldset>
