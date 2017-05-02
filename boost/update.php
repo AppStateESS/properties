@@ -229,6 +229,9 @@ class PropertyUpgrade
             $this->updatePropertyPhotos();
             $updates[] = 'Property photos may now be ordered.';
             
+            $this->createBanTable();
+            $updates[] = 'Added Ban Table';
+            
             $this->updateSequences();
 
             $db->commit();
@@ -239,6 +242,16 @@ class PropertyUpgrade
         $this->addContent($content, '2.0.0', $updates);
     }
 
+    private function createBanTable()
+    {
+        $db = Database::getDB();
+        $tbl = $db->buildTable('prop_banned');
+        $tbl->addPrimaryIndexId();
+        $dt2 = $tbl->addDataType('user_id', 'varchar');
+        $dt3 = $tbl->addDataType('reason', 'varchar');
+        $tbl->create();
+    }
+    
     private function updateSequences()
     {
         $tables = array('prop_contacts', 'prop_messages', 'prop_photo',

@@ -28,10 +28,10 @@ class Logged extends User
         parent::__construct($role);
         $this->loadUserRoommate();
     }
-    
+
     protected function loadUserRoommate()
     {
-        $this->user_roommate = $this->factory->getUserRoommate($this->role->getId());
+        $this->user_roommate = $this->factory->getRoommateByUser($this->role->getId());
     }
 
     protected function listHtmlCommand(\Canopy\Request $request)
@@ -78,6 +78,9 @@ class Logged extends User
 
     protected function editHtmlCommand(\Canopy\Request $request)
     {
+        if ($this->checkBan()) {
+            return $this->showBan();
+        }
         $this->showRoommateViewLink();
         \Layout::addStyle('properties', 'roommate/form.css');
         return $this->factory->reactView('roommateform');
@@ -85,6 +88,9 @@ class Logged extends User
 
     protected function createHtmlCommand(\Canopy\Request $request)
     {
+        if ($this->checkBan()) {
+            return $this->showBan();
+        }
         $this->showRoommateViewLink();
         \Layout::addStyle('properties', 'roommate/form.css');
         return $this->factory->reactView('roommateform');

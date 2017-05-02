@@ -258,4 +258,24 @@ abstract class SubController extends Base
         return true;
     }
 
+    protected function showBan()
+    {
+        $vars['reason'] = $this->ban->reason;
+        $template = new \phpws2\Template($vars);
+        $template->setModuleTemplate('properties', 'errorpage/Banned.html');
+        return $template->get();
+    }
+
+    protected function checkBan()
+    {
+        $banFactory = new \properties\Factory\BanUser;
+        $ban = $banFactory->getCurrentUserBanned();
+        if (empty($ban)) {
+            return false;
+        } else {
+            $this->ban = $ban;
+            return true;
+        }
+    }
+
 }

@@ -48,7 +48,7 @@ class Admin extends User
     {
         $sublease = $this->factory->load($this->id);
         $back = <<<EOF
-<a class="btn btn-default navbar-btn" href="./properties/Sublease/{$this->id}"><i class="fa fa-undo"></i> Back to view</a>
+<a class="btn btn-default navbar-btn" href="./properties/Sublease/{$this->id}"><i class="fa fa-undo"></i>&nbsp;Back to view</a>
 EOF;
         Navbar::addItem($back);
         return $this->factory->edit($sublease);
@@ -62,6 +62,10 @@ EOF;
         \Layout::addStyle('properties', 'sublease/view.css');
         NavBar::addOption($link);
         NavBar::addOption('<a onClick="editPhotos.callback()" class="pointer"><i class="fa fa-camera"></i>&nbsp;Edit photos</a>');
+        $deleteLink = <<<EOF
+<a onClick="banUser.callback()" class="pointer"><i class="fa fa-ban"></i>&nbsp;Delete and ban user</a>
+EOF;
+        NavBar::addOption($deleteLink);
         return $this->factory->view($this->id, true);
     }
 

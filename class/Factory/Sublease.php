@@ -31,6 +31,13 @@ class Sublease extends Base
         return new Resource;
     }
 
+    public function delete(Resource $sublease)
+    {
+        $photo = new Photo;
+        $photo->removeBySublease($sublease->id);
+        self::deleteResource($sublease);
+    }
+
     public function listing(\Canopy\Request $request)
     {
         $listing = new Sublease\Listing();
@@ -100,6 +107,12 @@ class Sublease extends Base
             $tpl['photoupdate'] = $admin ? $this->reactView('subleaseimage') : null;
             $photoFactory = new Photo;
             $tpl['current_photos'] = json_encode($photoFactory->thumbs($sublease->id));
+            if (\Current_User::isDeity()) {
+                $tpl['ban_user'] = $this->reactView('banuser');
+                $tpl['user_id'] = $sublease->user_id;
+            } else {
+                $tpl['ban_user'] = $tpl['user_id'] = null;
+            }
             $template = new \phpws2\Template($tpl);
             $template->setModuleTemplate('properties', 'sublease/view.html');
         }
@@ -155,7 +168,8 @@ class Sublease extends Base
         $db->update();
     }
 
-    public function patch(\properties\Resource\Sublease $sublease, $param, $value)
+    public function patch(\properties\Resource\Sublease $sublease, $param,
+            $value)
     {
         static $allowed_params = array('active');
 

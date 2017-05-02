@@ -24,9 +24,11 @@ class Logged extends User
 {
 
     protected $user_sublease;
+    protected $ban;
 
     public function __construct($role)
     {
+        $this->checkBan();
         parent::__construct($role);
         $this->loadUserSublease();
     }
@@ -41,7 +43,9 @@ class Logged extends User
      */
     public function createHtmlCommand(\Canopy\Request $request)
     {
-        
+        if ($this->checkBan()) {
+            return $this->showBan();
+        }
         $this->ownerOptions(false, false);
         if ($this->user_sublease) {
             $sublease = $this->user_sublease;
@@ -57,6 +61,9 @@ class Logged extends User
      */
     public function editHtmlCommand(\Canopy\Request $request)
     {
+        if ($this->checkBan()) {
+            return $this->showBan();
+        }
         $this->ownerOptions(false, false);
         return $this->factory->edit($this->user_sublease, \Current_User::getId());
     }
@@ -66,7 +73,7 @@ class Logged extends User
         $this->backToList();
         return parent::getHtml($request);
     }
-    
+
     public function listHtmlCommand(\Canopy\Request $request)
     {
         $this->ownerOptions();
@@ -88,6 +95,9 @@ class Logged extends User
 
     public function savePostCommand(\Canopy\Request $request)
     {
+        if ($this->checkBan()) {
+            throw new \properties\Exception\PrivilegeMissing;
+        }
         try {
             return $this->factory->post($request, $this->role->getId());
         } catch (\properties\Exception\PropertySaveFailure $e) {
@@ -97,6 +107,9 @@ class Logged extends User
 
     public function updatePutCommand(\Canopy\Request $request)
     {
+        if ($this->checkBan()) {
+            throw new \properties\Exception\PrivilegeMissing;
+        }
         try {
             return $this->factory->put($request, $this->user_sublease);
         } catch (\properties\Exception\PropertySaveFailure $e) {
@@ -115,6 +128,9 @@ class Logged extends User
 
     protected function jsonPatchCommand(\Canopy\Request $request)
     {
+        if ($this->checkBan()) {
+            throw new \properties\Exception\PrivilegeMissing;
+        }
         return array('success' => $this->factory->patch($this->user_sublease,
                     $request->pullPatchString('varname'),
                     $request->pullPatchBoolean('value')));
@@ -122,7 +138,7 @@ class Logged extends User
 
     public function ownerOptions($photo = false, $show_create = true)
     {
-        if ($this->user_sublease) {
+        if (!$this->checkBan() && $this->user_sublease) {
             NavBar::setTitle('My Sublease');
             NavBar::addOption('<a href="./properties/Sublease/' . $this->user_sublease->getId() . '"><i class="fa fa-building-o"></i>&nbsp;View my sublease</a>');
             NavBar::addOption('<a href="./properties/Sublease/edit"><i class="fa fa-edit"></i>&nbsp;Update my sublease</a>');
