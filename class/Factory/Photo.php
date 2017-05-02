@@ -28,6 +28,7 @@ abstract class Photo extends Base
     protected $item_column;
     protected $owner_column;
     protected $save_directory;
+    protected $class_name;
 
     public function load($id)
     {
@@ -104,7 +105,7 @@ abstract class Photo extends Base
             throw new \Exception('Photo owner not specified.');
         }
         if ($as_resource) {
-            return $db->selectAsResources('\properties\Resource\Photo');
+            return $db->selectAsResources($this->class_name);
         } else {
             return $db->select();
         }
