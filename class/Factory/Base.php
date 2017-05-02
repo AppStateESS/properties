@@ -4,6 +4,7 @@ namespace properties\Factory;
 
 use properties\Exception\ResourceNotFound;
 use phpws2\Settings;
+use phpws2\Database;
 /**
  *
  * @author Matthew McNaney <mcnaneym@appstate.edu>
