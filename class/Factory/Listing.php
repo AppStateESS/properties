@@ -170,7 +170,6 @@ abstract class Listing
                         PROP_TYPE_DUPLEX);
             }
 
-
             foreach ($prop_cond as $cond) {
                 if (empty($final_cond)) {
                     $final_cond = $cond;
@@ -185,7 +184,7 @@ abstract class Listing
         $photo_cond1 = $this->db->createConditional($this->photo_table->getField('porder'),
                 1);
         $photo_cond2 = $this->db->createConditional($this->photo_table->getField('porder'),
-                null);
+                null, 'is');
         $final_photo = $this->db->createConditional($photo_cond1, $photo_cond2,
                 'or');
         $this->db->addConditional($final_photo);
