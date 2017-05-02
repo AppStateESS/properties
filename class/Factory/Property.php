@@ -68,7 +68,7 @@ class Property extends Base
     {
         $photo = new Photo;
         $photo->removeByProperty($property->id);
-        $property->delete();
+        self::deleteResource($property);
     }
 
     public function listing(\Canopy\Request $request, $view = false,
