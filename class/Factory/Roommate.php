@@ -87,7 +87,7 @@ class Roommate extends Base
         return $roommate->id;
     }
 
-    public function getUserRoommate($uid)
+    public function getRoommateByUser($uid)
     {
         $db = \phpws2\Database::getDB();
         $tbl = $db->addTable('prop_roommate');
@@ -150,7 +150,8 @@ class Roommate extends Base
      */
     public function updateRoommateTimeout()
     {
-        Settings::set('properties', 'roommate_timeout', time() + PROPERTIES_FORWARD_TIMEOUT);
+        Settings::set('properties', 'roommate_timeout',
+                time() + PROPERTIES_FORWARD_TIMEOUT);
     }
 
     /**
@@ -164,6 +165,11 @@ class Roommate extends Base
         $tbl->addFieldConditional('active', 1);
         $tbl->addValue('active', 0);
         $db->update();
+    }
+
+    public function delete(Resource $roommate)
+    {
+        self::deleteResource($sublease);
     }
 
 }
