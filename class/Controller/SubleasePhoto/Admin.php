@@ -30,7 +30,10 @@ class Admin extends User
 
     protected function savePostCommand(\Canopy\Request $request)
     {
-        return $this->factory->post($request);
+        $sublease_id = $request->pullPostInteger('subleaseId');
+        $subleaseFactory = new \properties\Factory\Sublease;
+        $sublease = $subleaseFactory->load($sublease_id);
+        return $this->factory->post($sublease);
     }
 
 }
