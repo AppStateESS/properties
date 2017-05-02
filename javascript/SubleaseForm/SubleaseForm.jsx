@@ -49,7 +49,6 @@ export default class SubleaseForm extends Base {
 
   componentDidMount() {
     this.setState({sublease: subleaseCurrent})
-    //this.loadCurrent()
   }
 
   setMessage(text, type) {
@@ -288,18 +287,26 @@ export default class SubleaseForm extends Base {
       if (empty(sublease.active)) {
         activateButton = (
           <div onClick={this.activate} className="lead pointer text-muted">
-            <i className="fa fa-toggle-off"></i>&nbsp;
-            Sublease inactive</div>
+            <i className="fa fa-toggle-off"></i>&nbsp; Sublease inactive</div>
         )
       } else {
         activateButton = (
           <div onClick={this.deactivate} className="lead pointer text-success">
-            <i className="fa fa-toggle-on"></i>&nbsp;
-            Sublease active</div>
+            <i className="fa fa-toggle-on"></i>&nbsp; Sublease active</div>
         )
       }
     }
 
+    let contactAlert
+    if (this.state.sublease.id === 0) {
+      contactAlert = (
+        <div className="alert alert-info">
+          <strong>Notice:</strong>&nbsp;
+          a sublease listing requires contact information.<br/>Use our
+          <a href="./properties/Roommate">roommate section</a>
+          if you want to keep your contact information available only to other students.</div>
+      )
+    }
 
     let landlordWarning
     if (this.state.errors.landlord_perm === true) {
@@ -318,7 +325,7 @@ export default class SubleaseForm extends Base {
             : 'Create '}
           my sublease</h2>
         {message}
-        <div className="alert alert-info"><strong>Notice:</strong> a sublease listing requires contact information.<br />Use our <a href="./properties/Roommate">roommate section</a> if you want to keep your contact information available only to other students.</div>
+        {contactAlert}
         <div className="text-align marginBottom">
           {activateButton}
         </div>
@@ -588,8 +595,7 @@ export default class SubleaseForm extends Base {
             <BigCheckbox
               checked={sublease.landlord_perm}
               handle={this.setIntegerValue.bind(this, 'landlord_perm')}
-              label="My landlord is aware I am subleasing"/>
-              {landlordWarning}
+              label="My landlord is aware I am subleasing"/> {landlordWarning}
           </div>
         </div>
         <SubmitForm check={this.checkForm} saving={this.state.saving} label="Sublease"/>
