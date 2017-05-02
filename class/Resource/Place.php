@@ -105,6 +105,7 @@ abstract class Place extends Base
         $this->utilities_inc = new \phpws2\Variable\BooleanVar(false,
                 'utilities_inc');
         $this->thumbnail = new Variable\StringVar(null, 'thumbnail');
+        $this->thumbnail->setIsTableColumn(false);
         $this->doNotSave('thumbnail');
     }
 
