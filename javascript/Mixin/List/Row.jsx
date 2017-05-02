@@ -10,11 +10,7 @@ export default class Row extends Component {
   petsAllowed(petsAllowed) {
     if (petsAllowed === '1') {
       return (
-        <span
-          className="fa-stack fa-lg"
-          data-toggle="tooltip"
-          data-placement="top"
-          title="Pet friendly">
+        <span className="fa-stack fa-lg" data-placement="top" data-tip="Pet friendly">
           <i className="fa fa-square fa-stack-2x"></i>
           <i className="fa fa-paw fa-stack-1x fa-inverse"></i>
         </span>
@@ -25,11 +21,7 @@ export default class Row extends Component {
   furnished(furnished) {
     if (furnished === '1') {
       return (
-        <span
-          className="fa-stack fa-lg"
-          data-toggle="tooltip"
-          data-placement="top"
-          title="Furnished">
+        <span className="fa-stack fa-lg" data-placement="top" data-tip="Furnished">
           <i className="fa fa-square fa-stack-2x"></i>
           <i className="fa fa-bed fa-stack-1x fa-inverse"></i>
         </span>
@@ -42,9 +34,8 @@ export default class Row extends Component {
       return (
         <span
           className="fa-stack fa-lg"
-          data-toggle="tooltip"
           data-placement="top"
-          title="Close to campus">
+          data-tip="Close to campus">
           <i className="fa fa-square fa-stack-2x"></i>
           <i className="fa fa-bicycle fa-stack-1x fa-inverse"></i>
         </span>
@@ -58,9 +49,8 @@ export default class Row extends Component {
       return (
         <span
           className="fa-stack fa-lg"
-          data-toggle="tooltip"
           data-placement="top"
-          title="On AppalCART route">
+          data-tip="On AppalCART route">
           <i className="fa fa-square fa-stack-2x"></i>
           <i className="fa fa-bus fa-stack-1x fa-inverse"></i>
         </span>
@@ -71,11 +61,7 @@ export default class Row extends Component {
   dishwasher(dishwasher) {
     if (dishwasher === '1') {
       return (
-        <span
-          className="fa-stack fa-lg"
-          data-toggle="tooltip"
-          data-placement="top"
-          title="Dishwasher">
+        <span className="fa-stack fa-lg" data-placement="top" data-tip="Dishwasher">
           <i className="fa fa-square fa-stack-2x"></i>
           <i className="fa fa-cutlery fa-stack-1x fa-inverse"></i>
         </span>
@@ -88,9 +74,8 @@ export default class Row extends Component {
       return (
         <span
           className="fa-stack fa-lg"
-          data-toggle="tooltip"
           data-placement="top"
-          title="Washer/Dryer in unit">
+          data-tip="Washer/Dryer in unit">
           <i className="fa fa-square fa-stack-2x"></i>
           <i className="fa fa-archive fa-stack-1x fa-inverse"></i>
         </span>
@@ -103,9 +88,8 @@ export default class Row extends Component {
       return (
         <span
           className="fa-stack fa-lg"
-          data-toggle="tooltip"
           data-placement="top"
-          title="Utilities included in rent">
+          data-tip="Utilities included in rent">
           <i className="fa fa-square fa-stack-2x"></i>
           <i className="fa fa-plug fa-stack-1x fa-inverse"></i>
         </span>
@@ -118,9 +102,8 @@ export default class Row extends Component {
       return (
         <span
           className="fa-stack fa-lg"
-          data-toggle="tooltip"
           data-placement="top"
-          title="Air conditioning in unit">
+          data-tip="Air conditioning in unit">
           <i className="fa fa-square fa-stack-2x"></i>
           <i className="fa fa-snowflake-o fa-stack-1x fa-inverse"></i>
         </span>

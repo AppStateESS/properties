@@ -3,6 +3,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Row from '../Mixin/List/Row.jsx'
 
+
 export default class PropertyRow extends Row {
   constructor(props) {
     super(props)
@@ -18,9 +19,8 @@ export default class PropertyRow extends Row {
       return (
         <span
           className="fa-stack fa-lg text-success"
-          data-toggle="tooltip"
           data-placement="top"
-          title="Workout room on premises">
+          data-tip="Workout room on premises">
           <i className="fa fa-square fa-stack-2x"></i>
           <i className="fa fa-heartbeat fa-stack-1x fa-inverse"></i>
         </span>
@@ -31,13 +31,14 @@ export default class PropertyRow extends Row {
   clubhouse() {
     if (this.props.property.clubhouse === '1') {
       return (
-        <span
-          className="fa-stack fa-lg text-success"
-          data-toggle="tooltip"
-          data-placement="top"
-          title="Clubhouse on premises">
-          <i className="fa fa-square fa-stack-2x"></i>
-          <i className="fa fa-coffee fa-stack-1x fa-inverse"></i>
+        <span>
+          <span
+            className="fa-stack fa-lg text-success"
+            data-placement="top"
+            data-tip="Clubhouse on premises">
+            <i className="fa fa-square fa-stack-2x"></i>
+            <i className="fa fa-coffee fa-stack-1x fa-inverse"></i>
+          </span>
         </span>
       )
     }
@@ -61,9 +62,9 @@ export default class PropertyRow extends Row {
 
     let titleClass
     if (property.active !== undefined && property.active === '0') {
-      titleClass= 'title deactive'
+      titleClass = 'title deactive'
     } else {
-      titleClass='title active'
+      titleClass = 'title active'
     }
 
     return (

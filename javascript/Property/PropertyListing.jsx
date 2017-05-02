@@ -3,16 +3,11 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import PropertyRow from './PropertyRow.jsx'
 import Waiting from '../Mixin/Html/Waiting.jsx'
-
-/* global $ */
+import ReactTooltip from 'react-tooltip'
 
 export default class PropertyListing extends Component {
   constructor(props) {
     super(props)
-  }
-
-  componentDidUpdate() {
-    $('[data-toggle="tooltip"]').tooltip()
   }
 
   render() {
@@ -33,7 +28,10 @@ export default class PropertyListing extends Component {
         return <PropertyRow property={value} key={key}/>
       }.bind(this))
       return (
-        <div>{rows}</div>
+        <div>{rows}
+          <ReactTooltip type="light" border={true} effect="solid"/>
+        </div>
+
       )
     }
   }
