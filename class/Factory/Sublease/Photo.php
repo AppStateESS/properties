@@ -28,6 +28,7 @@ class Photo extends \properties\Factory\Photo
     protected $item_column = 'sid'; // sublease id
     protected $owner_column = 'uid'; // user id
     protected $save_directory = 'images/properties/u';
+    protected $class_name = '\\properties\\Resource\\SubleasePhoto';
 
     public function build()
     {

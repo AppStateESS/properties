@@ -28,6 +28,7 @@ class Photo extends \properties\Factory\Photo
     protected $item_column = 'pid'; // property id
     protected $owner_column = 'cid'; // manager/contact id
     protected $save_directory = 'images/properties/c';
+    protected $class_name = '\\properties\\Resource\\Photo';
 
     public function build()
     {
