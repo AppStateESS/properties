@@ -81,6 +81,30 @@ class Reports extends Base
         $db->delete();
     }
     
+    protected function deleteUserSublease($user_id)
+    {
+        $factory = new \properties\Factory\Sublease;
+        $sublease = $factory->getSubleaseByUser($user_id);
+        if ($sublease) {
+            $factory->delete($sublease);
+        }
+    }
+
+    protected function deleteUserRoommate($user_id)
+    {
+        $factory = new \properties\Factory\Roommate;
+        $roommate = $factory->getRoommateByUser($user_id);
+        if ($roommate) {
+            $factory->delete($roommate);
+        }
+    }
+    
+    protected function deleteUserBan($user_id)
+    {
+        $factory = new \properties\Factory\BanUser;
+        $factory->removeBanByUser($user_id);
+    }
+    
     public function deleteStudent($user_id)
     {
         $db = Database::getDB();
@@ -90,6 +114,9 @@ class Reports extends Base
         $db->delete();
         
         $this->deleteUserGroup($user_id);
+        $this->deleteUserSublease($user_id);
+        $this->deleteUserRoommate($user_id);
+        $this->deleteUserBan($user_id);
     }
 
 }
