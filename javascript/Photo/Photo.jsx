@@ -29,7 +29,7 @@ export default class Photo extends Component {
 
   load() {
     $.getJSON('./properties/Photo/list', {propertyId: propertyId}).done(function (data) {
-      currentPhotos = data
+      //currentPhotos = data
       this.setState({photos: data})
     }.bind(this))
   }

@@ -1,6 +1,5 @@
 'use strict'
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
 require('react-image-gallery/styles/css/image-gallery.css')
 import ImageGallery from 'react-image-gallery'
 import Waiting from '../Mixin/Html/Waiting.jsx'
@@ -24,7 +23,7 @@ export default class Photo extends Component {
 
   load() {
     $.getJSON('./properties/SubleasePhoto/list', {subleaseId: subleaseId }).done(function (data) {
-      currentPhotos = data
+      //currentPhotos = data
       this.setState({photos: data})
     }.bind(this))
   }
