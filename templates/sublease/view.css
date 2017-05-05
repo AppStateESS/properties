@@ -1,6 +1,6 @@
 .contact-info.bg-primary {
     padding: 4px 14px;
-    border: 2px solid #337AB7;
+    border: 2px solid #566e3d;
     border-radius : 6px;
     color : white;
 }
@@ -18,27 +18,24 @@
     text-decoration: none;
 }
 
-.contact-link {
-    border : 2px solid #337AB7;
-    border-radius: 4px;
-    padding : 2px;
-}
-
-.contact-link:hover {
-    background-color : #6DB3F0;
-    border : 2px solid #6DB3F0;
-    cursor:pointer;
-}
-
-.contact-link a {
-    cursor:pointer;
-}
-
 .sublease-view .contact-info h4 {
     font-size : 22px;
     color : white;
     margin:0px;
     border: none;
+}
+
+.sublease-view .panel {
+    border-color :  #708758;
+}
+
+.sublease-view .panel-heading {
+    background-color : #708758;
+    color : white;
+}
+
+.sublease-view .panel-heading a h4{
+    color : white;
 }
 
 .sublease-view .header {
@@ -52,22 +49,31 @@
 .sublease-view h4 {
     margin-top : 1em;
     padding-bottom : 6px;
-    border-bottom : 1px solid #337AB7;
-    color : #337AB7;
+    border-bottom : 1px solid #566e3d;
+    color : #566e3d;
 }
 
 .sublease-view .description {
     margin-top : 1em;
 }
 
-h3.property-address {
-    border-bottom : 1px solid #337AB7;
+h3.sublease-address {
+    border-bottom : 1px solid #566e3d;
     padding-bottom: 8px;
     margin-bottom: 12px;
 }
 
-h2.property-title, h3.property-address {
+h2.sublease-title, h3.sublease-address {
     margin : 0px 0px 5px 0px;
+}
+
+h2.sublease-title {
+    font-size : 26px;
+    background-color : #566e3d;
+    color : white;
+    padding : 6px 8px;
+    border : 1px solid white;
+    border-radius : 4px;
 }
 
 #photo .image-gallery-fullscreen-button, #photo .image-gallery-play-button {

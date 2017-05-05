@@ -21,10 +21,12 @@
             <div>Availability: <?=$move_in_date?></div>
         </div>
         <div class="col-sm-4">
-            <div class="contact-info bg-primary">
-                <h3>Contact information</h3>
-                <div class="contact-link"><a href="tel:<?=$contact_phone_tel?>" target="_blank"><i class="fa fa-phone"></i>&nbsp;<?=$contact_phone?></a></div>
-                <div class="contact-link"><a href="mailto:<?=$contact_email?>" target="_blank"><i class="fa fa-envelope"></i>&nbsp;Email</a></div>
+            <div class="panel panel-success">
+                <div class="panel-heading">Contact information</div>
+                <div class="panel-body">
+                    <a href="tel:<?=$contact_phone_tel?>" target="_blank"><i class="fa fa-phone"></i>&nbsp;<?=$contact_phone?></a><br />
+                    <a href="mailto:<?=$contact_email?>" target="_blank"><i class="fa fa-envelope"></i>&nbsp;Email</a>
+                </div>
             </div>
         </div>
     </div>

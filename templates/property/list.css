@@ -1,7 +1,7 @@
 .property-row {
     margin-bottom : 1em;
     padding-bottom : 1em;
-    border-bottom: 1px solid #3C763D;
+    border-bottom: 1px solid #185B80;
 }
 .property-row .title, .property-row .rent {
     font-size : 1.4em;
@@ -12,7 +12,7 @@
 }
 
 .property-row .title.active {
-    background-color : #3C763D;
+    background-color : #185B80;
 }
 
 .property-row .title.deactive {
@@ -57,5 +57,5 @@
 
 
 div.property-row span.fa-stack {
-    color : #3C763D;
+    color : #185B80;
 }

@@ -1,7 +1,7 @@
 .sublease-row {
     margin-bottom : 1em;
     padding: 0px;
-    border-bottom: 1px solid #2A48AE;
+    border-bottom: 1px solid #566e3d;
 }
 .sublease-row h4.title {
     font-size : 1.4em;
@@ -13,7 +13,7 @@
 }
 
 .sublease-row .title.active {
-    background-color : #2A48AE;
+    background-color : #566e3d;
 }
 
 .sublease-row .title.deactive {
@@ -73,5 +73,5 @@
 }
 
 div.sublease-row span.fa-stack {
-    color : #2A48AE;
+    color : #566e3d;
 }

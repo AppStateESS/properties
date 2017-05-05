@@ -2,6 +2,7 @@
     const propertyId = <?=$id?>;
     let loadPhotos = () => {}
     let editPhotos = () => {}
+    let deleteProperty = () => {}
     let currentPhotos = <?=$current_photos?>
 
     const activate = function() {
@@ -38,7 +39,7 @@
         </div>
 
         <div class="col-md-5 contact-info col-lg-4">
-            <div class="panel panel-success">
+            <div class="panel">
                 <div class="panel-heading">
                     <a href="./properties/Manager/<?=$contact_id?>/view"><h4><?=$company_name?></h4></a>
                 </div>
@@ -118,7 +119,7 @@
             <?php if (empty($pet_type) && empty($pet_fee) && empty($pet_deposit)): ?>
             <p>Contact our office for details.</p>
             <?php endif;?>
-            <table class="table table-striped">
+            <table class="table table-striped info-table">
                 <?php if (!empty($pet_type)):?>
                 <tr>
                     <th>Allowed pet types</th>
@@ -149,7 +150,7 @@
                     <i class="fa fa-circle fa-stack-2x"></i>
                     <i class="fa fa-check fa-stack-1x fa-inverse"></i>
                 </span> Other information</h4>
-            <table class="table table-striped">
+            <table class="table table-striped info-table">
                 <tr>
                     <th>Distance to campus</th>
                     <td>
@@ -186,7 +187,7 @@
                     <i class="fa fa-circle fa-stack-2x"></i>
                     <i class="fa fa-money fa-stack-1x fa-inverse"></i>
                 </span> Expenses</h4>
-            <table class="table table-striped">
+            <table class="table table-striped info-table">
                 <?php if ($admin_fee_amt > 0):?>
                 <tr>
                     <th>Administrative</th>
@@ -230,7 +231,7 @@
                     <i class="fa fa-plug fa-stack-1x fa-inverse"></i>
                 </span>
                 Utilities</h4>
-            <table class="table table-striped">
+            <table class="table table-striped info-table">
                 <tr>
                     <th>Laundry</th>
                     <td><?=$laundry_type?>
@@ -264,7 +265,7 @@
                     <i class="fa fa-credit-card fa-stack-1x fa-inverse"></i>
                 </span>Utility imbursing
             </h4>
-            <table class="table table-striped">
+            <table class="table table-striped info-table">
                 <?php if ($util_water > 0):?>
                 <tr><th style="width:20%">Water</th><td>$<?=$util_water?></td></tr>
                 <?php endif; ?>
@@ -291,5 +292,5 @@
         </div>
     </div>
 </div>
-
+<?=$delete?>
 <?=$photoupdate?>
