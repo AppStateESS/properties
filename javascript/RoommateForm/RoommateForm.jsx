@@ -1,6 +1,5 @@
 'use strict'
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
 import InputField from '../Mixin/Form/InputField.jsx'
 import {DateField} from 'react-date-picker'
 import RoommateObject from '../Mixin/Objects/RoommateObject.js'
@@ -284,6 +283,13 @@ export default class RoommateForm extends Component {
       </div>
     )
 
+    const saveContinue = (
+      <div className="text-center">
+        <button type="button" className="btn btn-lg btn-primary" onClick={this.save}>
+          <i className="fa fa-save"></i>&nbsp;Save or enter more information below</button>
+      </div>
+    )
+
     let activateButton
     if (roommate.id > 0) {
       if (roommate.active === '0') {
@@ -423,7 +429,7 @@ export default class RoommateForm extends Component {
           <p className="alert alert-info">Contact information will be shown to other
             logged in students only. If you wish for people to have contact information
             without logging in, put it in the "Introduction" section above.</p>
-          {saveButton}
+          {saveContinue}
         </fieldset>
         <fieldset>
           <legend>About me</legend>
