@@ -21,29 +21,6 @@ namespace properties\Factory\Sublease;
 class Listing extends \properties\Factory\Listing
 {
 
-    public $search_string;
-    public $limit = 100;
-    public $beds = 1;
-    public $baths = 1;
-    public $minprice = 0;
-    public $maxprice = 0;
-    public $furnished = 0;
-    public $pets = 0;
-    public $appalcart = 0;
-    public $campus = 0; // within 5 miles of campus
-    public $utils = 0; // utilities comped
-    public $airconditioning = 0;
-    public $dishwasher = 0;
-    public $laundry = 0; // washer/dryer in unit
-    public $clubhouse = 0;
-    public $workout = 0;
-    public $efficiency = 0;
-    public $apartment = 0;
-    public $house = 0;
-    public $condo = 0;
-    public $townhouse = 0;
-    public $duplex = 0;
-
     public function __construct()
     {
         parent::__construct();
@@ -54,14 +31,7 @@ class Listing extends \properties\Factory\Listing
 
     public function get($view = false)
     {
-        if ((int) $this->limit <= 0) {
-            $this->limit = 100;
-        }
-
-        $this->db->setLimit($this->limit);
-        $this->addSearch();
-
-        $this->data_table->addOrderBy('updated', 'desc');
+        $this->prepare();
 
         $c1 = $this->db->createConditional($this->data_table->getField('id'),
                 $this->photo_table->getField('sid'));
@@ -72,15 +42,21 @@ class Listing extends \properties\Factory\Listing
         $this->addConditionals();
         if ($view) {
             $result = $this->db->selectAsResources('\properties\Resource\Sublease');
+            if (count($result) < $this->limit) {
+                $this->more_rows = false;
+            }
             if (empty($result)) {
                 return array();
             }
-            foreach ($result as $sublease) {
-                $listing[] = $sublease->view();
+            foreach ($result as $prop) {
+                $listing[] = $prop->view();
             }
             return $listing;
         } else {
             $result = $this->db->select();
+            if (count($result) < $this->limit) {
+                $this->more_rows = false;
+            }
             return $result;
         }
     }
