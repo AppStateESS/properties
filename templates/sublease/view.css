@@ -61,6 +61,7 @@ h3.sublease-address {
     border-bottom : 1px solid #566e3d;
     padding-bottom: 8px;
     margin-bottom: 12px;
+    font-size: 20px;
 }
 
 h2.sublease-title, h3.sublease-address {

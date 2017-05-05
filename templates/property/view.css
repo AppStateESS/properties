@@ -37,6 +37,13 @@
     color : black;
 }
 
+.property-view h4 {
+    margin-top : 1em;
+    padding-bottom : 6px;
+    border-bottom : 1px solid #185B80;
+    color : #185B80;
+}
+
 h3.property-address {
     border-bottom : 1px solid #185B80;
     padding-bottom: 8px;
