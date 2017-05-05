@@ -98,14 +98,15 @@ export default class Property extends Base {
         {message}
         <h3><a href="./properties/Property/list/">Properties:</a> {manager}</h3>
         <SearchBar
-          showActiveButton={this.showActiveButton}
           updateSearchString={this.updateSearchString}
           clear={this.clearSearch}
           updateSearchVars={this.updateSearchVars}
-          updateSortBy={this.updateSortBy}
           searchVars={this.searchVars}
           clearAmenities={this.clearAmenities}
           resetConditions={this.resetConditions}
+          showActiveButton={this.showActiveButton}
+          updateSortBy={this.updateSortBy}
+          sortType={this.sortType}
           toggle={this.toggle}/>
         <PropertyListing list={this.state.properties} search={!empty(this.search)}/>
         {this.state.moreRows === true ?
