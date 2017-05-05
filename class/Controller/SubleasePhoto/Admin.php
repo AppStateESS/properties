@@ -36,4 +36,17 @@ class Admin extends User
         return $this->factory->post($sublease);
     }
 
+    protected function jsonPatchCommand(\Canopy\Request $request)
+    {
+        $photo = $this->factory->load($this->id);
+        $variableName = $request->pullPatchString('varname');
+        switch ($variableName) {
+            case 'move':
+                $this->factory->sort($photo,
+                        $request->pullPatchInteger('newPosition'));
+                break;
+        }
+        return array('success' => true);
+    }
+
 }
