@@ -3,12 +3,15 @@
     padding-bottom : 1em;
     border-bottom: 1px solid #185B80;
 }
-.property-row .title, .property-row .rent {
+.property-row .title {
+    margin : 0px;
+    margin-bottom : 8px;
     font-size : 1.4em;
+    padding : .4em;
 }
 
-.property-row .title {
-    padding : .4em;
+.property-row .rent {
+    font-size : 1.3em;
 }
 
 .property-row .title.active {

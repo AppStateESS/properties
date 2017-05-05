@@ -73,9 +73,9 @@ export default class PropertyRow extends Row {
           <a href={link}>{image}</a>
         </div>
         <div className="col-sm-9 col-md-9">
-          <div className={titleClass}>
+          <h4 className={titleClass}>
             <a href={link}>{property.name}</a>
-          </div>
+          </h4>
           <div className="row">
             <div className="col-sm-7 col-md-8">
               <div className="rent">{this.getRent()}</div>

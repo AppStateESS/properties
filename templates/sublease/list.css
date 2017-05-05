@@ -1,15 +1,17 @@
 .sublease-row {
     margin-bottom : 1em;
-    padding: 0px;
+    padding-bottom : 1em;
     border-bottom: 1px solid #566e3d;
 }
 .sublease-row h4.title {
     font-size : 1.4em;
     margin : 0px;
+    margin-bottom : 8px;
+    padding : .4em;
 }
 
-.sublease-row .title {
-    padding : .4em;
+.sublease-row .rent {
+    font-size : 1.3em;
 }
 
 .sublease-row .title.active {
@@ -24,12 +26,8 @@
     color : white;
 }
 
-.sublease-row .rent {
-    font-size : 1.5em;
-}
-
-.sublease-row .title {
-    font-size : 1.4em;
+.room-bath {
+    font-size : 1.3em;
 }
 
 .sublease-row .availability {
@@ -38,10 +36,6 @@
 
 .sublease-row .end-date {
     font-size : 1.1em;
-}
-
-.room-bath {
-    font-size : 1.3em;
 }
 
 .dropdown-item {
