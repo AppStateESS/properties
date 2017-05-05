@@ -1,6 +1,5 @@
 'use strict'
-import React, {Component} from 'react'
-import PropTypes from 'prop-types'
+import {Component} from 'react'
 import bindMethods from '../Helper/Bind.js'
 import DecodeUrl from '../Helper/DecodeUrl.js'
 import setIfDefined from '../Helper/setIfDefined.js'
