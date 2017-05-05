@@ -35,6 +35,9 @@ class Logged extends User
     protected function jsonPatchCommand(\Canopy\Request $request)
     {
         $photo = $this->factory->load($this->id);
+        if ($photo->uid != $this->role->getId()) {
+            throw new \properties\Exception\PrivilegeMissing;
+        }
         $variableName = $request->pullPatchString('varname');
         switch ($variableName) {
             case 'move':
@@ -44,7 +47,7 @@ class Logged extends User
         }
         return array('success' => true);
     }
-    
+
     protected function deleteCommand(\Canopy\Request $request)
     {
         $photo = $this->factory->load($this->id);
