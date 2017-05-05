@@ -54,53 +54,11 @@ class Listing extends \properties\Factory\Listing
 
     public function get($view = false)
     {
-        if ((int) $this->limit <= 0 || (int) $this->limit > 20) {
-            $this->limit = 20;
-        }
-
-        $offset = $this->offset * $this->limit;
-
-        $this->db->setLimit($this->limit, $offset);
-        $this->addSearch();
-
+        $this->prepare();
         if ($this->manager_id) {
             $this->data_table->addFieldConditional('contact_id',
                     $this->manager_id);
         }
-        switch ($this->sort_by) {
-            case 'rentall':
-                $this->data_table->addOrderBy('monthly_rent');
-                break;
-
-            case 'rentunit':
-                $this->data_table->addOrderBy('lease_type', 'asc');
-                $this->data_table->addOrderBy('monthly_rent');
-                break;
-
-            case 'rentindiv':
-                $this->data_table->addOrderBy('lease_type', 'desc');
-                $this->data_table->addOrderBy('monthly_rent');
-                break;
-
-            case 'alpha':
-                $this->data_table->addOrderBy('name');
-                break;
-
-            case 'creatednew':
-                $this->data_table->addOrderBy('created', 'desc');
-                break;
-
-            case 'createdold':
-                $this->data_table->addOrderBy('created', 'asc');
-                break;
-
-            case 'updated':
-            default:
-                $this->data_table->addOrderBy('updated', 'desc');
-                break;
-        }
-        $this->data_table->addOrderBy('lease_type', 'asc');
-        $this->data_table->addOrderBy('monthly_rent');
 
         $c1 = $this->db->createConditional($this->data_table->getField('id'),
                 $this->photo_table->getField('pid'));
