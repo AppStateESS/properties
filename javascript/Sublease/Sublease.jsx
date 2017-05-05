@@ -1,6 +1,5 @@
 'use strict'
-import React, {Component} from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import Listing from './Listing.jsx'
 import SearchBar from '../Mixin/List/SearchBar.jsx'
@@ -21,11 +20,23 @@ export default class Property extends Base {
   }
 
   load() {
-    $.getJSON('./properties/Sublease/list', {
-      sortType: this.sortType,
-      offset: this.offset
-    }).done(function (data) {
-      this.setState({subleases: data.subleases})
+    const sendData = this.searchVars
+    sendData.managerId = this.managerId
+    if (this.offset > 0) {
+      sendData.offset = this.offset
+    }
+    $.getJSON('./properties/Sublease', sendData).done(function (data) {
+      if (data.active_button !== undefined) {
+        this.showActiveButton = data.active_button
+      }
+      if (this.offset > 0) {
+        this.setState({subleases: this.state.subleases.concat(data.subleases), moreRows: data.more_rows})
+      } else {
+        this.setState({subleases: data.subleases, moreRows: data.more_rows})
+      }
+    }.bind(this)).fail(function () {
+      this.setState({loading: false})
+      this.setMessage('Error: failure pulling subleases')
     }.bind(this))
   }
 
@@ -49,6 +60,7 @@ export default class Property extends Base {
           resetConditions={this.resetConditions}
           updateSortBy={this.updateSortBy}
           sortType={this.sortType}
+          facilities={false}
           toggle={this.toggle}/>
         <Listing subleases={this.state.subleases}/>
       </div>
