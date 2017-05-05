@@ -1,5 +1,6 @@
 'use strict'
 import React from 'react'
+import empty from '../Mixin/Helper/Empty.js'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import Listing from './Listing.jsx'
 import SearchBar from '../Mixin/List/SearchBar.jsx'
@@ -10,7 +11,8 @@ export default class Property extends Base {
   constructor(props) {
     super(props)
     this.state = {
-      subleases: null
+      subleases: null,
+      moreRows : true,
     }
     bindMethods(['load'], this)
   }
@@ -62,7 +64,9 @@ export default class Property extends Base {
           sortType={this.sortType}
           facilities={false}
           toggle={this.toggle}/>
-        <Listing subleases={this.state.subleases}/>
+        <Listing subleases={this.state.subleases} search={!empty(this.search)}/>
+        {this.state.moreRows === true ?
+        <div className="text-center"><button className="btn btn-primary" onClick={this.showMore}>Show more results</button></div> : null}
       </div>
     )
   }
