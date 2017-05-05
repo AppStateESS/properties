@@ -249,8 +249,8 @@ export default class SearchBar extends Component {
               {this.state.fullSize === true
                 ? (
                   <div>
-                    <Amenities toggle={this.props.toggle} searchVars={this.props.searchVars}/>
-                    <div className="text-center">
+                    <Amenities toggle={this.props.toggle} searchVars={this.props.searchVars} facilities={this.props.facilities}/>
+                    <div className="text-center marginTop">
                       <button className="btn btn-success" onClick={this.props.clearAmenities}>Uncheck above</button>
                     </div>
                   </div>
@@ -275,5 +275,6 @@ SearchBar.propTypes = {
   clearAmenities: PropTypes.func,
   updateSortBy: PropTypes.func,
   resetConditions: PropTypes.func,
-  showActiveButton: PropTypes.bool
+  showActiveButton: PropTypes.bool,
+  facilities: PropTypes.bool
 }
