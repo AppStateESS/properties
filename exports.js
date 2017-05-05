@@ -22,5 +22,6 @@ exports.entry = {
   reports: exports.APP_DIR+ '/Reports/index.jsx',
   passwordchange: exports.APP_DIR + '/PasswordChange/index.jsx',
   banuser: exports.APP_DIR +  '/BanUser/index.jsx',
+  propertydelete: exports.APP_DIR + '/PropertyDelete/index.jsx',
   vendor: ['react', 'react-dom']
 }

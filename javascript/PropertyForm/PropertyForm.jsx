@@ -12,13 +12,12 @@ import Pets from './Pets.jsx'
 import Fees from './Fees.jsx'
 import Features from './Features.jsx'
 import Utilities from './Utilities.jsx'
-import Overlay from '../Mixin/Html/Overlay.jsx'
 import SubmitForm from '../Mixin/Form/SubmitForm.jsx'
 import {StickyContainer, Sticky} from 'react-sticky'
 
 import 'react-date-picker/index.css'
 
-/* global $, property, deleteProperty */
+/* global $, property */
 
 export default class PropertyForm extends Component {
   constructor() {
@@ -29,35 +28,19 @@ export default class PropertyForm extends Component {
       property: property,
       errors: {},
       activeTab: 0,
-      saving: false,
-      deleteOverlay: false
+      saving: false
     }
     const methods = [
-      'delete',
       'setTab',
       'setValue',
       'setError',
       'activate',
       'deactivate',
       'checkForm',
-      'openDelete',
-      'closeDelete',
       'unsetMessage',
       'setIntegerValue'
     ]
     bindMethods(methods, this)
-  }
-
-  componentDidMount() {
-    deleteProperty.callback = this.openDelete
-  }
-
-  openDelete() {
-    this.setState({deleteOverlay: true})
-  }
-
-  closeDelete() {
-    this.setState({deleteOverlay: false})
   }
 
   setValue(varname, value) {
@@ -150,20 +133,6 @@ export default class PropertyForm extends Component {
     }
   }
 
-  delete() {
-    $.ajax({
-      url: './properties/Property/' + this.state.property.id,
-      dataType: 'json',
-      method: 'DELETE',
-      success: function () {
-        window.location.href = './properties/Property/'
-      }.bind(this),
-      error: function () {
-        this.setMessage('Sorry, something went wrong and the property was not deleted.', 'danger')
-        this.closeDelete()
-      }.bind(this)
-    })
-  }
   activate() {
     $.ajax({
       url: './properties/Property/' + this.state.property.id,
@@ -238,10 +207,6 @@ export default class PropertyForm extends Component {
 
   render() {
     const property = this.state.property
-    let deleteForm
-    if (this.state.deleteOverlay === true) {
-      deleteForm = <Overlay close={this.closeDelete} title="Delete this property"><DeleteQuestion close={this.closeDelete} delete={this.delete}/></Overlay>
-    }
 
     let section
     switch (this.state.activeTab) {
@@ -281,32 +246,33 @@ export default class PropertyForm extends Component {
         onClose={this.unsetMessage}/>
     }
 
-    let deleteButton
     let activateButton
-    let goBack = <a className="btn btn-sm btn-default"href={`./properties/Property/${this.state.property.id}`}><i className="fa fa-undo"></i>&nbsp;Back to view</a>
 
     if (property.id > 0) {
       if (property.active) {
-        activateButton = <button className="btn btn-sm btn-warning" onClick={this.deactivate}>
-          <i className="fa fa-ban"></i>&nbsp;Deactivate</button>
+        activateButton = (
+          <div onClick={this.deactivate} className="lead pointer text-success">
+            <i className="fa fa-toggle-on"></i>&nbsp; Property active
+          </div>
+        )
       } else {
-        activateButton = <button className="btn btn-sm btn-success" onClick={this.activate}>
-          <i className="fa fa-check"></i>&nbsp;Activate</button>
+        activateButton = (
+          <div onClick={this.activate} className="lead pointer text-muted">
+            <i className="fa fa-toggle-off"></i>&nbsp; Property inactive
+          </div>
+        )
       }
-      deleteButton = (
-        <button className="btn btn-sm btn-danger" onClick={this.openDelete}>
-          <i className="fa fa-trash-o"></i>&nbsp;Delete property</button>
-      )
     }
 
     return (
       <StickyContainer>
         <div ref="PageTop" className="property-form">
-          {deleteForm}
           {message}
           <h2>Property for {this.state.property.company_name}</h2>
-          <div>{goBack}&nbsp;{activateButton}&nbsp;{deleteButton}</div>
-          <Sticky style={{zIndex:'100'}}>
+          <div>{activateButton}</div>
+          <Sticky style={{
+            zIndex: '100'
+          }}>
             <Nav
               buttons={this.navButtons()}
               active={this.state.activeTab}
@@ -315,7 +281,7 @@ export default class PropertyForm extends Component {
               : [1, 2, 3, 4]}
               click={this.setTab}/>
           </Sticky>
-            {section}
+          {section}
           <SubmitForm check={this.checkForm} saving={this.state.saving} label="Property"/>
         </div>
       </StickyContainer>
@@ -324,36 +290,4 @@ export default class PropertyForm extends Component {
 }
 PropertyForm.propTypes = {
   address: PropTypes.string
-}
-
-class DeleteQuestion extends Component {
-  constructor(props) {
-    super(props)
-  }
-
-  render() {
-    return (
-      <div>
-        <h2>Are you sure you want to delete this property?</h2>
-        <p>All images associated with this property will also be deleted.</p>
-        <div style={{
-          marginBottom: '1em'
-        }}>
-          <button
-            className="btn btn-default btn-lg btn-danger"
-            onClick={this.props.delete}>Yes, delete this property and all associated images.</button>
-        </div>
-        <div>
-          <button
-            className="btn btn-default btn-lg btn-default"
-            onClick={this.props.close}>No, I changed my mind</button>
-        </div>
-      </div>
-    )
-  }
-}
-
-DeleteQuestion.propTypes = {
-  close: PropTypes.func,
-  delete: PropTypes.func
 }

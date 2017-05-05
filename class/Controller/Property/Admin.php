@@ -20,6 +20,7 @@ namespace properties\Controller\Property;
 
 use properties\Resource\Property as Resource;
 use Canopy\Request;
+use properties\Factory\NavBar;
 
 class Admin extends User
 {
@@ -32,6 +33,10 @@ class Admin extends User
 
     protected function editHtmlCommand(Request $request)
     {
+        $back = <<<EOF
+<a class="btn btn-default navbar-btn" href="./properties/Property/{$this->id}"><i class="fa fa-undo"></i>&nbsp;Back to view</a>
+EOF;
+        Navbar::addItem($back);
         \Layout::addStyle('properties', 'property/form.css');
         return $this->factory->edit($this->id);
     }
