@@ -32,7 +32,7 @@ class Admin extends User
     public function listHtmlCommand(Request $request)
     {
         \Layout::addStyle('properties', 'sublease/list.css');
-        return $this->factory->reactView('sublease');
+        return $this->factory->reactView('sublease', true);
     }
 
     public function getHtml(Request $request)

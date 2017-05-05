@@ -26,6 +26,8 @@ use phpws2\Settings;
 class Sublease extends Base
 {
 
+    public $more_rows = true;
+
     public function build()
     {
         return new Resource;
@@ -38,11 +40,24 @@ class Sublease extends Base
         self::deleteResource($sublease);
     }
 
-    public function listing(\Canopy\Request $request)
+    public function listing(\Canopy\Request $request, $admin=false)
     {
         $listing = new Sublease\Listing();
+        /*
+        if ($admin) {
+            $show_inactive = $request->pullGetBoolean('showinactive', true);
+            if ($show_inactive === null || $show_inactive === false) {
+                $listing->show_inactive = false;
+            } else {
+                $listing->show_inactive = true;
+            }
+        }
+         * 
+         */
         $listing->pullVariables($request);
-        return $listing->get(true);
+        $result = $listing->get(true);
+        $this->more_rows = $listing->more_rows;
+        return $result;
     }
 
     public function getSubleaseByUser($user_id)

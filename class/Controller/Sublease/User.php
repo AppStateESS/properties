@@ -53,10 +53,17 @@ class User extends \properties\Controller\SubController
 
     public function listJsonCommand(\Canopy\Request $request)
     {
-        $json['subleases'] = $this->factory->listing($request);
-        return $json;
+        return $this->getSubleaseRows($request);
     }
 
+    protected function getSubleaseRows($request, $admin=false)
+    {
+        $json['active_button'] = $admin;
+        $json['subleases'] = $this->factory->listing($request, $admin);
+        $json['more_rows'] = $this->factory->more_rows;
+        return $json;
+    }
+    
     public function viewHtmlCommand(\Canopy\Request $request)
     {
         \Layout::addStyle('properties', 'sublease/view.css');

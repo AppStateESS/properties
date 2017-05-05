@@ -42,14 +42,15 @@ class Listing extends \properties\Factory\Listing
         $this->addConditionals();
         if ($view) {
             $result = $this->db->selectAsResources('\properties\Resource\Sublease');
+            if (empty($result)) {
+                $this->more_rows = false;
+                return array();
+            }
             if (count($result) < $this->limit) {
                 $this->more_rows = false;
             }
-            if (empty($result)) {
-                return array();
-            }
-            foreach ($result as $prop) {
-                $listing[] = $prop->view();
+            foreach ($result as $sublease) {
+                $listing[] = $sublease->view();
             }
             return $listing;
         } else {

@@ -77,7 +77,7 @@ class User extends \properties\Controller\SubController
             }
         }
         $json['active_button'] = $admin;
-        $json['properties'] = $this->factory->listing($request, true, $admin);
+        $json['properties'] = $this->factory->listing($request, $admin);
         $json['more_rows'] = $this->factory->more_rows;
         return $json;
     }
