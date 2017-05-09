@@ -52,12 +52,13 @@ const SortableItem = SortableElement(({value, deletePhoto}) => {
     listStyleType: 'none',
     zIndex: 1000,
     width: '150px',
-    height: '177px',
+    height: '188px',
     border: '1px solid #c3c3c3',
     backgroundColor: '#e3e3e3',
     verticalAlign: 'top',
     margin: '0px 8px 8px 0',
-    textAlign: 'center'
+    textAlign: 'center',
+    overflow: 'hidden'
   }
 
   const deleteButton = {
