@@ -114,4 +114,47 @@ class Manager extends User
         return $this->factory->managerUpdate($request);
     }
 
+    protected function changePasswordHtmlCommand(Request $request)
+    {
+        $managerId = $this->role->getId();
+        $header = <<<EOF
+<script>const managerId = '$managerId';</script>
+EOF;
+        return $header . $this->factory->reactView('managerpasswordchange');
+    }
+    
+    /**
+     * @param Request $request
+     * @return string
+     * @throws BadCommand
+     */
+    public function patch(Request $request)
+    {
+        $patch_command = $request->shiftCommand();
+        if (empty($patch_command)) {
+            $patch_command = $request->isAjax() ? 'jsonPatchCommand' : 'htmlPatchCommand';
+        } else {
+            $patch_command .= 'PatchCommand';
+        }
+        if (!method_exists($this, $patch_command)) {
+            throw new BadCommand($patch_command);
+        }
+
+        $json = $this->$patch_command($request);
+        return $this->jsonResponse($json);
+    }
+    
+    protected function changePasswordPatchCommand(Request $request)
+    {
+        $new_password = $request->pullPatchString('password');
+        $current_password = $request->pullPatchString('currentPassword');
+        $manager = $this->factory->load($this->role->getId());
+        if (!password_verify($current_password, $manager->password)) {
+            return array('success'=>false, 'error'=>'Current password is incorrect');
+        }
+        
+        $this->factory->patch($this->role->getId(), 'password', password_hash($new_password,PASSWORD_DEFAULT));
+        return array('success'=>true);
+    }
+
 }

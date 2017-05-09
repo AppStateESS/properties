@@ -200,7 +200,7 @@ abstract class SubController extends Base
         $editInfo = '<a href="./properties/Manager/edit"><i class="fa fa-pencil-square-o"></i>&nbsp;Update my information</a>';
         \properties\Factory\NavBar::addOption($editInfo);
 
-        $passInfo = '<a href="./properties/Manager/changepw"><i class="fa fa-key"></i>&nbsp;Change my password</a>';
+        $passInfo = '<a href="./properties/Manager/changePassword"><i class="fa fa-key"></i>&nbsp;Change my password</a>';
         \properties\Factory\NavBar::addOption($passInfo);
 
         $signout = '<a href="./properties/Manager/signout"><i class="fa fa-sign-out"></i>&nbsp;Sign out</a>';

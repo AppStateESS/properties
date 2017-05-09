@@ -4,50 +4,51 @@ import ReactDOM from 'react-dom'
 import bindMethod from '../Mixin/Helper/Bind.js'
 import Message from '../Mixin/Html/Message.jsx'
 
-/* global $, hash */
+/* global $, managerId */
 
-class PasswordChange extends Component {
-  constructor(props) {
-    super(props)
+export default class ManagerPasswordChange extends Component {
+  constructor() {
+    super()
     this.state = {
       password: '',
       passwordCheck: '',
-      username: '',
       passwordError: null,
-      usernameError: null,
-      message: null
+      currentPassword: '',
+      currentPasswordCheck: '',
+      currentPasswordError: null,
+      message: null,
+      complete: false
     }
     bindMethod([
-      'updateUsername',
       'updatePassword',
       'updatePasswordCheck',
+      'updateCurrentPassword',
+      'checkCurrentPassword',
       'checkPassword',
-      'checkUsername',
       'disabled',
       'save'
     ], this)
   }
 
   save() {
-    let {password, username} = this.state
-    $.post('./properties/Manager/changepw', {
-      password: password,
-      username: username,
-      hash: hash
-    }, null, 'json').done(function (data) {
-      if (data.success === false) {
-        this.setState({message: data.error})
-      } else {
-        window.location.href = './properties/Manager/passwordChangeComplete'
-      }
-    }.bind(this)).fail(function () {
-      this.setState({message: 'There was an error during your password update.'})
-    })
-  }
+    let {password, currentPassword} = this.state
 
-  updateUsername(e) {
-    const username = e.target.value
-    this.setState({username: username})
+    $.ajax({
+      url: './properties/Manager/changePassword',
+      data: {
+        currentPassword: currentPassword,
+        password: password
+      },
+      dataType: 'json',
+      type: 'patch',
+      success: function (data) {
+        if (data.success === false) {
+          this.setState({message: data.error})
+        } else {
+          this.setState({complete : true})
+        }
+      }.bind(this)
+    })
   }
 
   updatePassword(e) {
@@ -60,20 +61,30 @@ class PasswordChange extends Component {
     this.setState({passwordCheck: password})
   }
 
+  updateCurrentPassword(e) {
+    const password = e.target.value
+    this.setState({currentPassword: password})
+  }
+
+  updateCurrentPasswordCheck(e) {
+    const password = e.target.value
+    this.setState({currentPasswordCheck: password})
+  }
+
   passwordError() {
     if (this.state.passwordError) {
       return <span className="label label-danger">{this.state.passwordError}</span>
     }
   }
 
-  usernameError() {
-    if (this.state.usernameError) {
-      return <span className="label label-danger">{this.state.usernameError}</span>
+  currentPasswordError() {
+    if (this.state.currentPasswordError) {
+      return <span className="label label-danger">{this.state.currentPasswordError}</span>
     }
   }
 
   disabled() {
-    return this.state.password.length < 8 || this.state.password !== this.state.passwordCheck
+    return this.state.password.length < 8 || this.state.password !== this.state.passwordCheck || this.state.currentPassword == 0
   }
 
   checkPassword() {
@@ -86,15 +97,18 @@ class PasswordChange extends Component {
     this.setState({passwordError: errorMessage})
   }
 
-  checkUsername() {
+  checkCurrentPassword() {
     let errorMessage
-    if (this.state.username.length === 0) {
-      errorMessage = 'Username may not be empty'
+    if (this.state.currentPassword.length == 0) {
+      errorMessage = 'Current password must not be empty'
     }
-    this.setState({usernameError: errorMessage})
+    this.setState({currentPasswordError: errorMessage})
   }
 
   render() {
+    if (this.state.complete) {
+      return <div><h2>Password change complete</h2><p>You may continue working or log out.</p></div>
+    }
     let message
     if (this.state.message) {
       message = <Message type="danger" message={this.state.message}/>
@@ -103,30 +117,23 @@ class PasswordChange extends Component {
       <div>
         <h2>Password change</h2>
         {message}
-        <p>This form will change your sign in password. Enter your current user name and
-          new password.</p>
+        <p>This form will change your sign-in password.</p>
         <form>
           <div className="row">
             <div className="col-sm-6">
               <div className="form-group">
-                <label htmlFor="username">Username</label>
+                <label htmlFor="currentPassword">Current password</label>
                 <input
-                  id="username"
-                  type="text"
-                  name="username"
-                  value={this.state.username}
+                  type="password"
+                  name="currentPassword"
+                  value={this.state.currentPassword}
                   className="form-control"
-                  onBlur={this.checkUsername}
-                  onChange={this.updateUsername}/>{this.usernameError()}
+                  onBlur={this.checkCurrentPassword}
+                  onChange={this.updateCurrentPassword}/> {this.currentPasswordError()}
               </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-sm-6">
               <div className="form-group">
                 <label htmlFor="password">New password</label>
                 <input
-                  id="password"
                   type="password"
                   name="password1"
                   value={this.state.password}
@@ -138,7 +145,6 @@ class PasswordChange extends Component {
               <div className="form-group">
                 <label htmlFor="password2">Verify password</label>
                 <input
-                  id="password2"
                   type="password"
                   name="password2"
                   className="form-control"
@@ -158,6 +164,5 @@ class PasswordChange extends Component {
     )
   }
 }
-
 ReactDOM.render(
-  <PasswordChange/>, document.getElementById('passwordchange'))
+  <ManagerPasswordChange/>, document.getElementById('managerpasswordchange'))
