@@ -61,6 +61,7 @@ class Manager extends Base
         $this->company_address->allowNull(true);
         $this->company_url = new Variable\Url(null, 'company_url');
         $this->company_url->allowNull(true);
+        $this->company_url->setPrependHttp(true);
         $this->times_available = new Variable\TextOnly(null, 'times_available');
         $this->times_available->allowNull(true);
         $this->last_log = new Variable\IntegerVar(time(), 'last_log');
