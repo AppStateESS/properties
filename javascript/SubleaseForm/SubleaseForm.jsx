@@ -506,7 +506,7 @@ export default class SubleaseForm extends Base {
               <BigCheckbox
                 handle={this.setIntegerValue.bind(this, 'smoking_allowed')}
                 checked={sublease.smoking_allowed}
-                label="No smoking preferences"/>
+                label="No preference for smoking"/>
               &nbsp;
               <Help
                 title="Regardless of landlord's allowance, the other tenant's wishes should be respected."/>

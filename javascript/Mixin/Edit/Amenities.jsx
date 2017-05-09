@@ -86,7 +86,7 @@ export default class Amenities extends Component {
                 <label><input
                   type="checkbox"
                   checked={searchVars.smoking_allowed === '1'}
-                  onChange={this.props.toggle.bind(null, 'smoking_allowed')}/>&nbsp; No smoking preference</label>
+                  onChange={this.props.toggle.bind(null, 'smoking_allowed')}/>&nbsp; No preference for smoking</label>
               </li>
             </ul>
           </div>

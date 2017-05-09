@@ -225,7 +225,7 @@ abstract class Place extends Base
 
     public function getSmokingAllowed()
     {
-        return $this->smoking_allowed ? 'No smoking preference' : 'Smoking prohibited';
+        return $this->smoking_allowed ? 'No preference for smoking' : 'Smoking prohibited';
     }
 
     public function getTrashType()
