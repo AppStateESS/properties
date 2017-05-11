@@ -53,6 +53,7 @@ class Reports extends Base
     public function getStudents(\Canopy\Request $request)
     {
         $this->pullVariables($request);
+        
         if ((int) $this->limit <= 0 || (int) $this->limit > 50) {
             $this->limit = 50;
         }
@@ -60,7 +61,7 @@ class Reports extends Base
         $offset = $this->offset * $this->limit;
 
         $db = Database::getDB();
-        $db->setLimit($this->limit, $offset);
+        //$db->setLimit($this->limit, $offset);
         $tbl = $db->addTable('users');
         $tbl->addField('id');
         $tbl->addField('username');
