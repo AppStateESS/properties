@@ -5,11 +5,10 @@ php:
 - hhvm
 
 install:
-- nvm install 6
 - npm install
 
-#script:
-#- ".travis-build/phplint ."
+script:
+- ".travis-build/phplint ."
 #- phpunit
 
 after_success:
