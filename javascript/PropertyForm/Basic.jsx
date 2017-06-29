@@ -1,5 +1,5 @@
 'use strict'
-import React, {Component} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import {DateField} from 'react-date-picker'
 import bindMethods from '../Mixin/Helper/Bind.js'
@@ -178,7 +178,7 @@ export default class Basic extends Base {
         <Rooms property={property} setValue={this.props.setValue}/>
 
         <div className="row">
-          <div className="col-sm-6">
+          <div className="col-sm-5">
             <div className="pull-left">
               <label>Parking spaces per unit</label>
               <input
@@ -196,7 +196,7 @@ export default class Basic extends Base {
               handle={this.updateParking}
               activeColor="success"/>
           </div>
-          <div className="col-sm-6">
+          <div className="col-sm-7">
             <label>Miles from campus</label><br/>
             <ButtonGroup
               name="campus_distance"
