@@ -34,7 +34,7 @@ class ManagerRow extends Component {
       type: 'patch',
       data: {
         varname: 'active',
-        value: true,
+        value: true
       }
     }).done(function () {
       this.props.message(this.props.company_name + ' activated')
@@ -48,7 +48,7 @@ class ManagerRow extends Component {
       type: 'patch',
       data: {
         varname: 'active',
-        value: false,
+        value: false
       }
     }).done(function () {
       this.props.message(this.props.company_name + ' deactivated')
@@ -102,14 +102,22 @@ class ManagerRow extends Component {
     }
 
     let properties = <div>
-      <button className="btn btn-default" disabled={true}>No properties found</button>
+      <button
+        className="btn btn-default"
+        style={{
+        display: 'inline'
+      }}
+        disabled={true}>No properties found</button>
     </div>
     const propertyCount = this.props.property_count
     if (propertyCount > 0) {
-      const label = propertyCount > 1 ? `View ${this.props.property_count} properties` : 'View property'
+      const label = propertyCount > 1
+        ? `View ${this.props.property_count} properties`
+        : 'View property'
       properties = <a
         href={`./properties/Property/?managerId=${this.props.id}`}
-        className="btn btn-default"><i className="fa fa-building-o"></i>&nbsp;{label}</a>
+        className="btn btn-default">
+        <i className="fa fa-building-o"></i>&nbsp;{label}</a>
     }
 
     let co = null
@@ -119,26 +127,32 @@ class ManagerRow extends Component {
     const email = 'mailto:' + this.props.email_address
     const viewLink = `./properties/Manager/${this.props.id}/view`
     return (
-      <div className={this.props.active === '0'
+      <div
+        className={this.props.active === '0'
         ? 'bg-danger row managerRow '
         : 'row managerRow '}>
-        <div className="col-sm-8">
-          <span className="company-name"><a href={viewLink}>{this.props.company_name}</a></span><br/>{co}
+        <div className="col-sm-6">
+          <span className="company-name">
+            <a href={viewLink}>{this.props.company_name}</a>
+          </span><br/>{co}
           <div>
-          <LinkToButton url={this.props.phone_tel} icon="fa-phone" label={this.props.phone}/>
-          <Website url={this.props.company_url}/>
-          <LinkToButton
-            url={email}
-            icon="fa-envelope-o"
-            label={this.props.email_address}/>
+            <LinkToButton
+              url={this.props.phone_tel}
+              icon="fa-phone"
+              label={this.props.phone}/>
+            <Website url={this.props.company_url}/>
+            <LinkToButton
+              url={email}
+              icon="fa-envelope-o"
+              label={this.props.email_address}/>
+              {this.props.admin === true
+               ? optionList
+               : null}
           </div>
         </div>
-        <div className="col-sm-3">
+        <div className="col-sm-6">
           {properties}
         </div>
-        {this.props.admin === true
-          ? <div className="col-sm-1">{optionList}</div>
-          : null}
       </div>
     )
   }
