@@ -74,7 +74,7 @@ export default class Amenities extends Component {
                 <label><input
                   type="checkbox"
                   checked={searchVars.campus === '1'}
-                  onChange={this.props.toggle.bind(null, 'campus')}/>&nbsp; Close to campus</label>
+                  onChange={this.props.toggle.bind(null, 'campus')}/>&nbsp; Walking distance to campus</label>
               </li>
               <li>
                 <label><input

@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
 import moment from 'moment'
 import Dollarize from '../Form/Dollarize.jsx'
 
@@ -17,8 +16,13 @@ export default class Base extends Component {
     return [
       {
         value: '0',
-        label: '0 to 5'
-      }, {
+        label: 'Less than one'
+      },
+      {
+        value: '1',
+        label: '1 to 5'
+      },
+      {
         value: '5',
         label: '5 to 10'
       }, {

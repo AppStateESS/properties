@@ -35,9 +35,9 @@ export default class Row extends Component {
         <span
           className="fa-stack fa-lg"
           data-placement="top"
-          data-tip="Close to campus">
+          data-tip="Walking distance to campus">
           <i className="fa fa-square fa-stack-2x"></i>
-          <i className="fa fa-bicycle fa-stack-1x fa-inverse"></i>
+          <i className="fa fa-street-view fa-stack-1x fa-inverse"></i>
         </span>
       )
 
