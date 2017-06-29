@@ -1,7 +1,5 @@
 'use strict'
-import React, {Component} from 'react'
-import PropTypes from 'prop-types'
-//import SubleaseObject from '../Mixin/Objects/SubleaseObject.js'
+import React from 'react'
 import empty from '../Mixin/Helper/Empty.js'
 import Waiting from '../Mixin/Html/Waiting.jsx'
 import InputField from '../Mixin/Form/InputField.jsx'
@@ -603,5 +601,3 @@ export default class SubleaseForm extends Base {
     )
   }
 }
-
-SubleaseForm.propTypes = {}
