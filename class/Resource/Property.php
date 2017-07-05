@@ -32,6 +32,7 @@ class Property extends Place
     protected $pet_dep_refund;
     protected $pet_fee;
     protected $pet_type;
+    protected $pool;
     protected $proptype;
     protected $security_amt;
     protected $security_refund;
@@ -68,6 +69,7 @@ class Property extends Place
         $this->pet_dep_refund = new Variable\BooleanVar(false, 'pet_dep_refund');
         $this->pet_fee = new Variable\IntegerVar(0, 'pet_fee');
         $this->pet_type = new Variable\StringVar('', 'pet_type');
+        $this->pool = new Variable\BooleanVar(false, 'pool');
         $this->security_amt = new Variable\IntegerVar(0, 'security_amt');
         $this->security_refund = new Variable\BooleanVar(false,
                 'security_refund');
@@ -158,10 +160,10 @@ class Property extends Place
         $view['heat_type'] = $this->getHeatTypes();
         $view['contract_length'] = $this->getContractLength();
 
-        if ($this->isCloseToCampus() || $this->furnished->get() || 
-                $this->airconditioning->get() ||
-                $this->isHighSpeed() || $this->dishwasher->get() ||
-                $this->utilities_inc->get() || $this->clubhouse->get() ||
+        if ($this->isCloseToCampus() || $this->furnished->get() ||
+                $this->airconditioning->get() || $this->isHighSpeed() || 
+                $this->dishwasher->get() || $this->utilities_inc->get() || 
+                $this->clubhouse->get() || $this->pool->get() || 
                 $this->appalcart->get() || $this->workout_room->get() ||
                 $this->pets_allowed->get()) {
             $view['has_amenities'] = true;

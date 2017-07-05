@@ -38,6 +38,7 @@ abstract class Listing
     public $laundry = 0; // washer/dryer in unit
     public $clubhouse = 0;
     public $workout = 0;
+    public $pool = 0;
     public $efficiency = 0;
     public $apartment = 0;
     public $house = 0;
@@ -138,6 +139,9 @@ abstract class Listing
         }
         if ($this->clubhouse) {
             $this->data_table->addFieldConditional('clubhouse', 1);
+        }
+        if ($this->pool) {
+            $this->data_table->addFieldConditional('pool', 1);
         }
         if ($this->workout) {
             $this->data_table->addFieldConditional('workout_room', 1);

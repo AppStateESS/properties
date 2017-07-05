@@ -24,6 +24,7 @@ class Listing extends \properties\Factory\Listing
     public $manager_id;
     public $clubhouse = 0;
     public $workout = 0;
+    public $pool = 0;
 
     /**
      * @var \phpws2\Database\Table
@@ -50,6 +51,7 @@ class Listing extends \properties\Factory\Listing
         $this->manager_id = $request->pullGetInteger('managerId', true);
         $this->clubhouse = $request->pullGetBoolean('clubhouse', true);
         $this->workout = $request->pullGetBoolean('workout', true);
+        $this->pool = $request->pullGetBoolean('pool', true);
     }
 
     public function get($view = false)

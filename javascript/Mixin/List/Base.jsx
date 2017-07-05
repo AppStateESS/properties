@@ -67,6 +67,7 @@ export default class Base extends Component {
     this.searchVars.dishwasher = null
     this.searchVars.laundry = null
     this.searchVars.clubhouse = null
+    this.searchVars.pool = null
     this.searchVars.efficiency = null
     this.searchVars.apartment = null
     this.searchVars.house = null
@@ -129,6 +130,7 @@ export default class Base extends Component {
       dishwasher: setIfDefined(url.values, 'dishwasher', '0'),
       laundry: setIfDefined(url.values, 'laundry', '0'),
       clubhouse: setIfDefined(url.values, 'clubhouse', '0'),
+      pool: setIfDefined(url.values, 'pool', '0'),
       efficiency: setIfDefined(url.values, 'efficiency', '0'),
       apartment: setIfDefined(url.values, 'apartment', '0'),
       house: setIfDefined(url.values, 'house', '0'),
