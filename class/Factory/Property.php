@@ -141,7 +141,7 @@ class Property extends Base
         $tbl->addFieldConditional('timeout', time(), '<');
         $tbl->addFieldConditional('active', 1);
         $tbl->addValue('active', 0);
-        $db->update();
+        return $db->update();
     }
 
     public function save(Resource $property)
