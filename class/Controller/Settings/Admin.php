@@ -44,5 +44,13 @@ class Admin extends \properties\Controller\SubController
     {
         return $this->factory->view();
     }
+    
+    protected function inactivePutCommand(\Canopy\Request $request)
+    {
+        $propertyFactory = new \properties\Factory\Property;
+        $updated = $propertyFactory->flipPropertyTimeout();
+        $propertyFactory->updatePropertyTimeout();
+        return array('success'=>true, 'updated'=>$updated);
+    }
 
 }

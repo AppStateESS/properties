@@ -19,6 +19,7 @@
 namespace properties\Factory;
 
 use phpws2\Database;
+use Canopy\Request;
 
 class Reports extends Base
 {
@@ -33,7 +34,7 @@ class Reports extends Base
         
     }
 
-    public function getInactiveManagers(\Canopy\Request $request)
+    public function getInactiveManagers(Request $request)
     {
         $this->pullVariables($request);
         $db = Database::getDB();
@@ -44,13 +45,13 @@ class Reports extends Base
         return $result;
     }
 
-    protected function pullVariables(\Canopy\Request $request)
+    protected function pullVariables(Request $request)
     {
         $this->date = strtotime($request->pullGetString('date'));
         $this->offset = $request->pullGetInteger('offset', true);
     }
 
-    public function getStudents(\Canopy\Request $request)
+    public function getStudents(Request $request)
     {
         $this->pullVariables($request);
         
@@ -61,7 +62,7 @@ class Reports extends Base
         $offset = $this->offset * $this->limit;
 
         $db = Database::getDB();
-        //$db->setLimit($this->limit, $offset);
+        $db->setLimit($this->limit, $offset);
         $tbl = $db->addTable('users');
         $tbl->addField('id');
         $tbl->addField('username');
@@ -118,6 +119,14 @@ class Reports extends Base
         $this->deleteUserSublease($user_id);
         $this->deleteUserRoommate($user_id);
         $this->deleteUserBan($user_id);
+    }
+    
+    public function getOverview(Request $request)
+    {
+        $db = Database::getDB();
+        $tbl = $db->addTable('properties');
+        $id = $tbl->getField('id');
+        $exp = $db->getExpression("count($id)");
     }
 
 }

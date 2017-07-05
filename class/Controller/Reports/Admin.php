@@ -18,7 +18,6 @@
 
 namespace properties\Controller\Reports;
 
-use properties\Resource\Property as Resource;
 use Canopy\Request;
 
 class Admin extends \properties\Controller\SubController
@@ -45,6 +44,12 @@ class Admin extends \properties\Controller\SubController
     protected function studentsJsonCommand(Request $request)
     {
         $json['list'] = $this->factory->getStudents($request);
+        return $json;
+    }
+    
+    protected function overviewJsonCommand(Request $request)
+    {
+        $json['list'] = $this->factory->getOverview($request);
         return $json;
     }
     

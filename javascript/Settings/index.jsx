@@ -6,6 +6,7 @@ import CheckValues from '../Mixin/Helper/CheckValues.js'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import Message from '../Mixin/Html/Message.jsx'
 import BooleanButton from '../Mixin/Form/BooleanButton.jsx'
+import moment from 'moment'
 
 /* global $ */
 
@@ -19,6 +20,7 @@ export default class Settings extends Component {
         approval_email: '',
         our_name: '',
         our_phone: '',
+        last_timeout: 0,
         front_buttons: true
       },
       errors: {
@@ -35,7 +37,8 @@ export default class Settings extends Component {
       'clearMessage',
       'checkSiteEmail',
       'checkApprovalEmail',
-      'checkPhone'
+      'checkPhone',
+      'inactiveCheck'
     ], this)
   }
 
@@ -126,12 +129,26 @@ export default class Settings extends Component {
     }.bind(this))
   }
 
+  inactiveCheck() {
+    $.ajax({
+      url: './properties/Settings/inactive',
+      dataType: 'json',
+      type: 'put',
+      success: function (data) {
+        if (data.success !== undefined) {
+          this.setState({message : `Deactivated ${data.updated} properties`})
+        }
+      }.bind(this),
+      error: function () {}.bind(this)})
+  }
+
   clearMessage() {
     this.setState({message: null})
   }
 
   render() {
     let message
+    const {settings} = this.state
     if (this.state.message !== null) {
       message = <Message message={this.state.message} onClose={this.clearMessage}/>
     }
@@ -141,12 +158,12 @@ export default class Settings extends Component {
         {message}
         <form>
           <div className="row">
-            <div className="col-sm-6">
+            <div className="col-sm-6 col-md-3">
               <div className="form-group">
                 <InputField
                   label="Approval email"
                   name="approval_email"
-                  value={this.state.settings.approval_email}
+                  value={settings.approval_email}
                   placeholder="This email address will receive new manager notifications."
                   required={true}
                   change={this.setValue.bind(this, 'approval_email')}
@@ -156,12 +173,12 @@ export default class Settings extends Component {
                   blur={this.checkApprovalEmail}/>
               </div>
             </div>
-            <div className="col-sm-6">
+            <div className="col-sm-6 col-md-3">
               <div className="form-group">
                 <InputField
                   label="Site email"
                   name="our_email"
-                  value={this.state.settings.our_email}
+                  value={settings.our_email}
                   required={true}
                   placeholder="This is the from/reply-to address from this site."
                   change={this.setValue.bind(this, 'our_email')}
@@ -171,24 +188,22 @@ export default class Settings extends Component {
                   blur={this.checkSiteEmail}/>
               </div>
             </div>
-          </div>
-          <div className="row">
-            <div className="col-sm-6">
+            <div className="col-sm-6 col-md-3">
               <div className="form-group">
                 <InputField
                   label="Contact name"
                   name="our_name"
-                  value={this.state.settings.our_name}
+                  value={settings.our_name}
                   placeholder="The contact name on outgoing email."
                   change={this.setValue.bind(this, 'our_name')}/>
               </div>
             </div>
-            <div className="col-sm-6">
+            <div className="col-sm-6 col-md-3">
               <div className="form-group">
                 <InputField
                   label="Contact phone"
                   name="our_phone"
-                  value={this.state.settings.our_phone}
+                  value={settings.our_phone}
                   placeholder="The contact phone number on outgoing email."
                   change={this.setValue.bind(this, 'our_phone')}
                   errorMessage={this.state.errors.our_phone
@@ -198,23 +213,28 @@ export default class Settings extends Component {
               </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col-sm-6">
-              <BooleanButton
-                label={['Show front page buttons', 'Do not show front page buttons']}
-                icon={true}
-                current={this.state.settings.front_buttons}
-                handleClick={this.setValue.bind(this, 'front_buttons')}/>
-            </div>
-            <div className="col-sm-6"></div>
-          </div>
-          <hr />
           <button
             type="button"
             className="btn btn-primary"
             disabled={!this.errorFree()}
             onClick={this.save}>Save settings</button>
         </form>
+        <hr/>
+        <div className="row">
+          <div className="col-sm-6">
+            <BooleanButton
+              label={['Show front page buttons', 'Do not show front page buttons']}
+              icon={true}
+              current={settings.front_buttons}
+              handleClick={this.setValue.bind(this, 'front_buttons')}/>
+          </div>
+          <div className="col-sm-6">
+            <button className="btn btn-primary" onClick={this.inactiveCheck}>Force inactivity check</button>
+            <p>
+              <em>Next inactivity check: {moment(settings.last_timeout * 1000).format('MM-DD-YYYY')}</em>
+            </p>
+          </div>
+        </div>
       </div>
     )
   }
