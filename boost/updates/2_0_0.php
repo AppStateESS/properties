@@ -154,7 +154,7 @@ class update_2_0_0
         $dt->setDefault(0);
         $dt->add();
 
-        $dt = $tbl->addDataType('smoking_allowed', 'smallint');
+        $dt = $tbl->addDataType('no_smoking', 'smallint');
         $dt->setDefault(0);
         $dt->add();
 
