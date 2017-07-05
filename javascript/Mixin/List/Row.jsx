@@ -1,6 +1,5 @@
 'use strict'
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
 
 export default class Row extends Component {
   constructor(props) {
@@ -92,6 +91,20 @@ export default class Row extends Component {
           data-tip="Utilities included in rent">
           <i className="fa fa-square fa-stack-2x"></i>
           <i className="fa fa-plug fa-stack-1x fa-inverse"></i>
+        </span>
+      )
+    }
+  }
+
+  smoking(smoke_free) {
+    if (smoke_free === true) {
+      return (
+        <span
+          className="fa-stack fa-lg text-success"
+          data-placement="top"
+          data-tip="Smoke free">
+          <i className="fa fa-square fa-stack-2x"></i>
+          <i className="fa fa-fire-extinguisher fa-stack-1x fa-inverse"></i>
         </span>
       )
     }

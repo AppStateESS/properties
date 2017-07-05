@@ -4,7 +4,7 @@
     let editPhotos = () => {}
     let deleteProperty = () => {}
     let currentPhotos = <?=$current_photos?>
-
+    
     const activate = function() {
             $.ajax({
             url: './properties/Property/' + propertyId,
@@ -81,6 +81,9 @@
                     <?php if ($close_to_campus):?>
                     <li>Walking distance to campus</li>
                     <?php endif; ?>
+                    <?php if ($no_smoking):?>
+                    <li>Smoke free</li>
+                    <?php endif;?>
                     <?php if ($furnished):?>
                     <li>Furnished</li>
                     <?php endif; ?>
@@ -104,6 +107,9 @@
                     <?php endif; ?>
                     <?php if ($workout_room):?>
                     <li>Workout room</li>
+                    <?php endif;?>
+                    <?php if ($pool):?>
+                    <li>Pool</li>
                     <?php endif;?>
                     <?php if ($pets_allowed === '1'): ?>
                     <li>Pets allowed</li>
@@ -178,7 +184,7 @@
                 <tr>
                     <th>Smoking</th>
                     <td>
-                        <?=$smoking_allowed?>
+                        <?=$no_smoking?>
                     </td>
                 </tr>
             </table>

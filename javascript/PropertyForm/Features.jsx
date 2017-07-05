@@ -62,9 +62,15 @@ export default class Features extends Component {
             </div>
             <div>
               <BigCheckbox
-                label="No preference for smoking"
-                checked={property.smoking_allowed}
-                handle={this.props.setValue.bind(this, 'smoking_allowed')}/>
+                label="Pool"
+                checked={property.pool}
+                handle={this.props.setValue.bind(this, 'pool')}/>
+            </div>
+            <div>
+              <BigCheckbox
+                label="Smoke free"
+                checked={property.no_smoking}
+                handle={this.props.setValue.bind(this, 'no_smoking')}/>
             </div>
           </div>
         </div>

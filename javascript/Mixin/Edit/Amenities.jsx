@@ -38,6 +38,12 @@ export default class Amenities extends Component {
           <li>
             <label><input
               type="checkbox"
+              checked={searchVars.pool === '1'}
+              onChange={this.props.toggle.bind(null, 'pool')}/>&nbsp; Swimming Pool</label>
+          </li>
+          <li>
+            <label><input
+              type="checkbox"
               checked={searchVars.workout === '1'}
               onChange={this.props.toggle.bind(null, 'workout')}/>&nbsp; Workout Room</label>
           </li>
@@ -85,8 +91,8 @@ export default class Amenities extends Component {
               <li>
                 <label><input
                   type="checkbox"
-                  checked={searchVars.smoking_allowed === '1'}
-                  onChange={this.props.toggle.bind(null, 'smoking_allowed')}/>&nbsp; No preference for smoking</label>
+                  checked={searchVars.no_smoking === '1'}
+                  onChange={this.props.toggle.bind(null, 'no_smoking')}/>&nbsp; Smoke free</label>
               </li>
             </ul>
           </div>

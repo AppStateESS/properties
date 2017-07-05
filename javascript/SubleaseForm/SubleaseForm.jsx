@@ -502,9 +502,9 @@ export default class SubleaseForm extends Base {
           <div className="col-sm-6 col-md-4">
             <div>
               <BigCheckbox
-                handle={this.setIntegerValue.bind(this, 'smoking_allowed')}
-                checked={sublease.smoking_allowed}
-                label="No preference for smoking"/>
+                handle={this.setIntegerValue.bind(this, 'no_smoking')}
+                checked={sublease.no_smoking}
+                label="Smoke free"/>
               &nbsp;
               <Help
                 title="Regardless of landlord's allowance, the other tenant's wishes should be respected."/>

@@ -43,6 +43,22 @@ export default class PropertyRow extends Row {
     }
   }
 
+  pool() {
+    if (this.props.property.pool === '1') {
+      return (
+        <span>
+          <span
+            className="fa-stack fa-lg text-success"
+            data-placement="top"
+            data-tip="Swimming pool on premises">
+            <i className="fa fa-square fa-stack-2x"></i>
+            <i className="fa fa-life-ring fa-stack-1x fa-inverse"></i>
+          </span>
+        </span>
+      )
+    }
+  }
+
   render() {
     const {property} = this.props
     const link = `./properties/Property/${property.id}/${this.urlTitle(property.name)}`
@@ -83,6 +99,7 @@ export default class PropertyRow extends Row {
               <div className="availability">Availability: {property.move_in_date}</div>
             </div>
             <div className="col-sm-5 col-md-4">
+              {this.smoking(property.smoke_free)}
               {this.closeToCampus(property.close_to_campus)}
               {this.petsAllowed(property.pets_allowed)}
               {this.furnished(property.furnished)}
@@ -91,6 +108,7 @@ export default class PropertyRow extends Row {
               {this.utilities(property.utilities_inc)}
               {this.workout()}
               {this.clubhouse()}
+              {this.pool()}
               {this.appalcart(property.appalcart)}
               {this.washer(property.washer)}
             </div>

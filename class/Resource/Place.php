@@ -49,7 +49,7 @@ abstract class Place extends Base
     protected $parking_per_unit;
     protected $pets_allowed;
     protected $proptype;
-    protected $smoking_allowed;
+    protected $no_smoking;
     protected $timeout;
     protected $trash_type;
     protected $tv_type;
@@ -95,8 +95,8 @@ abstract class Place extends Base
                 'pets_allowed');
         $this->proptype = new \phpws2\Variable\SmallInteger(0, 'proptype');
         $this->proptype->setRange(0, 20);
-        $this->smoking_allowed = new \phpws2\Variable\BooleanVar(false,
-                'smoking_allowed');
+        $this->no_smoking = new \phpws2\Variable\BooleanVar(false,
+                'no_smoking');
         $this->timeout = new Variable\IntegerVar(time(), 'timeout');
         $this->trash_type = new \phpws2\Variable\SmallInteger(0, 'trash_type');
         $this->tv_type = new \phpws2\Variable\SmallInteger(0, 'tv_type');
@@ -113,6 +113,8 @@ abstract class Place extends Base
     {
         switch ($this->campus_distance->get()) {
             case '0':
+                return 'Within a mile';
+            case '1':
                 return 'Less than five miles';
             case '5':
                 return 'Between five and ten miles';
@@ -225,7 +227,7 @@ abstract class Place extends Base
 
     public function getSmokingAllowed()
     {
-        return $this->smoking_allowed ? 'No preference for smoking' : 'Smoking prohibited';
+        return $this->no_smoking ? 'Smoke free' : 'Smoking allowed';
     }
 
     public function getTrashType()
@@ -266,7 +268,8 @@ abstract class Place extends Base
         $view['property_map_address'] = $this->googleMapUrl($this->address);
         $view['high_speed'] = $this->isHighSpeed();
         $view['proptype'] = $this->getPropType();
-        $view['smoking_allowed'] = $this->getSmokingAllowed();
+        $view['no_smoking'] = $this->getSmokingAllowed();
+        $view['smoke_free'] = ($this->no_smoking->get() == 1);
         return $view;
     }
 
