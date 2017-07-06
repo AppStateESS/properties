@@ -7,6 +7,8 @@ import StudentReport from './StudentReport.jsx'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import Dropdown from '../Mixin/Form/Dropdown.jsx'
 
+/* global $ */
+
 class Reports extends Component {
   constructor(props) {
     super(props)
@@ -14,10 +16,24 @@ class Reports extends Component {
     this.state = {
       report: null,
       activityDate: this.today,
-      inactiveList: 0
+      inactiveList: 0,
+      propertyCount: 0,
+      managerCount: 0,
+      subleaseCount: 0,
+      roommateCount: 0,
     }
-    const methods = ['getReportList', 'showReport']
+    const methods = ['getReportList', 'showReport',]
     bindMethods(methods, this)
+  }
+
+  componentDidMount() {
+    this.load()
+  }
+
+  load() {
+    $.getJSON('./properties/Reports/overview').done(function (data) {
+      this.setState({propertyCount: data.property_count, managerCount: data.manager_count, subleaseCount: data.sublease_count, roommateCount: data.roommate_count})
+    }.bind(this))
   }
 
   pickReport(report) {
@@ -27,13 +43,12 @@ class Reports extends Component {
   getReportList() {
     return [
       {
-        label: 'Inactive managers',
+        label: 'Manager activity',
         handleClick: this.pickReport.bind(this, 'inactiveManagers')
-      },
-      {
-        label: 'Student report',
+      }, {
+        label: 'Student activity',
         handleClick: this.pickReport.bind(this, 'studentReport')
-      }
+      },
     ]
   }
 
@@ -53,6 +68,23 @@ class Reports extends Component {
   render() {
     return (
       <div className="reports">
+        <h2>Reports</h2>
+        <div className="alert alert-info">
+          <div className="row">
+            <div className="col-sm-3 col-xs-6">
+              <strong>Total active properties:</strong> {this.state.propertyCount}
+            </div>
+            <div className="col-sm-3 col-xs-6">
+              <strong>Total active managers:</strong> {this.state.managerCount}
+            </div>
+            <div className="col-sm-3 col-xs-6">
+              <strong>Total active subleases:</strong> {this.state.subleaseCount}
+            </div>
+            <div className="col-sm-3 col-xs-6">
+              <strong>Total active roommates:</strong> {this.state.roommateCount}
+            </div>
+          </div>
+        </div>
         <Dropdown label="Choose report" options={this.getReportList()}/>
         <hr/> {this.showReport()}
       </div>
