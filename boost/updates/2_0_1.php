@@ -24,7 +24,8 @@ class update_2_0_1
         $updates = array();
         $updates[] = 'Added "Walking distance to campus" distance option';
 
-        $this->changeSmokingColumn();
+        $this->changePropertySmokingColumn();
+        $this->changeSubleaseSmokingColumn();
         $updates[] = 'Smoking allowed changed to contrasting no_smoking column';
 
         $this->addPool();
@@ -33,10 +34,26 @@ class update_2_0_1
         return $updates;
     }
 
-    private function changeSmokingColumn()
+    private function changePropertySmokingColumn()
     {
         $db = \phpws2\Database::getDB();
         $tbl = $db->addTable('properties');
+
+        if (!$tbl->columnExists('no_smoking')) {
+            $dt = $tbl->addDataType('no_smoking', 'smallint');
+            $dt->setDefault(0);
+            $dt->add();
+        }
+
+        if ($tbl->columnExists('smoking_allowed')) {
+            $tbl->dropColumn('smoking_allowed');
+        }
+    }
+
+    private function changeSubleaseSmokingColumn()
+    {
+        $db = \phpws2\Database::getDB();
+        $tbl = $db->addTable('prop_sublease');
 
         if (!$tbl->columnExists('no_smoking')) {
             $dt = $tbl->addDataType('no_smoking', 'smallint');
