@@ -18,7 +18,11 @@ export default class PropertyListing extends Component {
     } else {
       let rows
       rows = list.map(function (value, key) {
-        return <PropertyRow property={value} key={key}/>
+        return <PropertyRow
+          property={value}
+          key={key}
+          showTimeout={true}
+          reactivate={this.props.reactivate.bind(this, value.id)}/>
       }.bind(this))
       return (
         <div>{rows}</div>
@@ -29,5 +33,6 @@ export default class PropertyListing extends Component {
 
 PropertyListing.propTypes = {
   list: PropTypes.array,
-  search: PropTypes.bool
+  search: PropTypes.bool,
+  reactivate: PropTypes.func,
 }

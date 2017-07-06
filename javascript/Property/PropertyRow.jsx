@@ -2,6 +2,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Row from '../Mixin/List/Row.jsx'
+import moment from 'moment'
 
 export default class PropertyRow extends Row {
   constructor(props) {
@@ -75,10 +76,26 @@ export default class PropertyRow extends Row {
       image = <img src={property.thumbnail} className="img-responsive"/>
     }
 
+    let timeout
     let titleClass
     if (property.active !== undefined && property.active === '0') {
       titleClass = 'title deactive'
+      if (this.props.showTimeout) {
+        timeout = (
+          <button className="btn btn-primary" onClick={this.props.reactivate}>Reactivate</button>
+        )
+      }
     } else {
+      if (this.props.showTimeout) {
+        const inactiveDate = moment(property.timeout * 1000).format('MMM D, YYYY')
+        timeout = (
+          <div className="marginTop">
+            <p>
+              <em>This property will be flagged inactive after {inactiveDate}. Update to reset timer.</em>
+            </p>
+          </div>
+        )
+      }
       titleClass = 'title active'
     }
 
@@ -113,6 +130,7 @@ export default class PropertyRow extends Row {
               {this.washer(property.washer)}
             </div>
           </div>
+          {timeout}
         </div>
       </div>
     )
@@ -120,5 +138,7 @@ export default class PropertyRow extends Row {
 }
 
 PropertyRow.propTypes = {
-  property: PropTypes.object
+  property: PropTypes.object.isRequired,
+  showTimeout: PropTypes.bool,
+  reactivate: PropTypes.func
 }

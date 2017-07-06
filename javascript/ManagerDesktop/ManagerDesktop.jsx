@@ -1,6 +1,5 @@
 'use strict'
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
 import Waiting from '../Mixin/Html/Waiting.jsx'
 import Message from '../Mixin/Html/Message.jsx'
 import empty from '../Mixin/Helper/Empty.js'
@@ -19,6 +18,23 @@ export default class ManagerDesktop extends Component {
     }
     this.load()
     this.managerId = 1
+    this.reactivate = this.reactivate.bind(this)
+  }
+
+  reactivate(propertyId) {
+    $.ajax({
+      url: 'properties/Property/' + propertyId,
+      data: {
+        varname: 'active',
+        value: 1,
+      },
+      dataType: 'json',
+      type: 'patch',
+      success: function () {
+        this.load()
+      }.bind(this),
+      error: function () {}.bind(this),
+    })
   }
 
   load() {
@@ -44,7 +60,7 @@ export default class ManagerDesktop extends Component {
     if (this.state.properties === null) {
       propertyList = <Waiting label="your properties"/>
     } else if (this.state.properties.length > 0) {
-      propertyList = <PropertyListing list={this.state.properties}/>
+      propertyList = <PropertyListing list={this.state.properties} reactivate={this.reactivate}/>
     } else {
       propertyList = <p className="text-center">
         No properties found. <a href="./properties/Property/create">Click here to create a new property.</a>
@@ -64,5 +80,3 @@ export default class ManagerDesktop extends Component {
     )
   }
 }
-
-ManagerDesktop.propTypes = {}
