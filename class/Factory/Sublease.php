@@ -40,18 +40,18 @@ class Sublease extends Base
         self::deleteResource($sublease);
     }
 
-    public function listing(\Canopy\Request $request, $admin=false)
+    public function listing(\Canopy\Request $request, $admin = false)
     {
         $listing = new Sublease\Listing();
         /*
-        if ($admin) {
-            $show_inactive = $request->pullGetBoolean('showinactive', true);
-            if ($show_inactive === null || $show_inactive === false) {
-                $listing->show_inactive = false;
-            } else {
-                $listing->show_inactive = true;
-            }
-        }
+          if ($admin) {
+          $show_inactive = $request->pullGetBoolean('showinactive', true);
+          if ($show_inactive === null || $show_inactive === false) {
+          $listing->show_inactive = false;
+          } else {
+          $listing->show_inactive = true;
+          }
+          }
          * 
          */
         $listing->pullVariables($request);
@@ -127,6 +127,17 @@ class Sublease extends Base
                 $tpl['user_id'] = $sublease->user_id;
             } else {
                 $tpl['ban_user'] = $tpl['user_id'] = null;
+            }
+            $seconds_left = $sublease->timeout - time();
+            if ($admin){
+                if ($seconds_left > 0) {
+                    $days_left = floor($seconds_left / 86400);
+                    $tpl['inactive_notice'] = "This sublease will remain active for $days_left more days.";
+                } else {
+                    $tpl['inactive_notice'] = "This sublease is schedule to be deactivated. <a href='./properties/Sublease/edit'>Update</a> to increase timeout.";
+                }
+            } else {
+                $tpl['inactive_notice'] = null;
             }
             $template = new \phpws2\Template($tpl);
             $template->setModuleTemplate('properties', 'sublease/view.html');
@@ -208,6 +219,17 @@ EOF;
         \Layout::addStyle('properties', 'sublease/form.css');
         $content[] = $this->reactView('subleaseform');
         return implode('', $content);
+    }
+
+    public function activeCount()
+    {
+        $db = Database::getDB();
+        $tbl = $db->addTable('prop_sublease');
+        $id = $tbl->getField('id');
+        $exp = $db->getExpression("count($id)", 'sublease_count');
+        $tbl->addFieldConditional('active', 1);
+        $tbl->addField($exp);
+        return $db->selectColumn();
     }
 
 }
