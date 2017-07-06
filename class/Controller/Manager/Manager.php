@@ -108,10 +108,15 @@ class Manager extends User
 
     protected function updatePutCommand(Request $request)
     {
-        if ($request->pullPutInteger('id') != $this->getCurrentLoggedManager()) {
+        $this->testIsManager($request->pullPutInteger('id'));
+        return $this->factory->managerUpdate($request);
+    }
+    
+    protected function testIsManager($id)
+    {
+        if ($id != $this->id) {
             throw new \properties\Exception\PrivilegeMissing;
         }
-        return $this->factory->managerUpdate($request);
     }
 
     protected function changePasswordHtmlCommand(Request $request)
@@ -122,7 +127,7 @@ class Manager extends User
 EOF;
         return $header . $this->factory->reactView('managerpasswordchange');
     }
-    
+
     /**
      * @param Request $request
      * @return string
@@ -143,18 +148,19 @@ EOF;
         $json = $this->$patch_command($request);
         return $this->jsonResponse($json);
     }
-    
+
     protected function changePasswordPatchCommand(Request $request)
     {
         $new_password = $request->pullPatchString('password');
         $current_password = $request->pullPatchString('currentPassword');
         $manager = $this->factory->load($this->role->getId());
         if (!password_verify($current_password, $manager->password)) {
-            return array('success'=>false, 'error'=>'Current password is incorrect');
+            return array('success' => false, 'error' => 'Current password is incorrect');
         }
-        
-        $this->factory->patch($this->role->getId(), 'password', password_hash($new_password,PASSWORD_DEFAULT));
-        return array('success'=>true);
+
+        $this->factory->patch($this->role->getId(), 'password',
+                password_hash($new_password, PASSWORD_DEFAULT));
+        return array('success' => true);
     }
 
 }
