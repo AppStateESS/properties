@@ -44,13 +44,13 @@ class Admin extends \properties\Controller\SubController
     protected function studentsJsonCommand(Request $request)
     {
         $json['list'] = $this->factory->getStudents($request);
+        $json['more_rows'] = $this->factory->more_rows;
         return $json;
     }
     
     protected function overviewJsonCommand(Request $request)
     {
-        $json['list'] = $this->factory->getOverview($request);
-        return $json;
+        return $this->factory->getOverview($request);
     }
     
     protected function deleteCommand(Request $request)
