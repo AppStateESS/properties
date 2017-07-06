@@ -19,6 +19,9 @@
             <h3 class="sublease-address"><a href="<?=$property_map_address?>" target="_blank"><?=$address?>&nbsp;<i class="fa fa-map"></i></a></h3>
             <div><?=$bedroom_no?> bed, <?=$bathroom_no?> bath <?=$proptype?> - <?= '$', $monthly_rent, ' ', $lease_type?></div>
             <div>Availability: <?=$move_in_date?></div>
+            <?php if (!empty($inactive_notice)): ?>
+            <div class="label label-default"><small><em><?=$inactive_notice?></em></small></div>
+            <?php endif; ?>
         </div>
         <div class="col-sm-4">
             <div class="panel panel-success">
