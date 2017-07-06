@@ -26,7 +26,7 @@ class Reports extends Base
 
     public $date;
     public $more_rows = true;
-    public $limit = 50;
+    public $limit = 20;
     public $offset = 0;
 
     protected function build()
@@ -54,9 +54,9 @@ class Reports extends Base
     public function getStudents(Request $request)
     {
         $this->pullVariables($request);
-        
-        if ((int) $this->limit <= 0 || (int) $this->limit > 50) {
-            $this->limit = 50;
+
+        if ((int) $this->limit <= 0 || (int) $this->limit > 20) {
+            $this->limit = 20;
         }
 
         $offset = $this->offset * $this->limit;
@@ -72,9 +72,12 @@ class Reports extends Base
         $tbl->addFieldConditional('deity', 0);
         $tbl->addOrderBy('last_logged', 'asc');
         $result = $db->select();
+        if (count($result) < $this->limit) {
+            $this->more_rows = false;
+        }
         return $result;
     }
-    
+
     protected function deleteUserGroup($user_id)
     {
         $db = Database::getDB();
@@ -82,7 +85,7 @@ class Reports extends Base
         $tbl->addFieldConditional('user_id', $user_id);
         $db->delete();
     }
-    
+
     protected function deleteUserSublease($user_id)
     {
         $factory = new \properties\Factory\Sublease;
@@ -100,13 +103,13 @@ class Reports extends Base
             $factory->delete($roommate);
         }
     }
-    
+
     protected function deleteUserBan($user_id)
     {
         $factory = new \properties\Factory\BanUser;
         $factory->removeBanByUser($user_id);
     }
-    
+
     public function deleteStudent($user_id)
     {
         $db = Database::getDB();
@@ -114,19 +117,28 @@ class Reports extends Base
         $tbl->addFieldConditional('deity', 0);
         $tbl->addFieldConditional('id', $user_id);
         $db->delete();
-        
+
         $this->deleteUserGroup($user_id);
         $this->deleteUserSublease($user_id);
         $this->deleteUserRoommate($user_id);
         $this->deleteUserBan($user_id);
     }
-    
+
     public function getOverview(Request $request)
     {
-        $db = Database::getDB();
-        $tbl = $db->addTable('properties');
-        $id = $tbl->getField('id');
-        $exp = $db->getExpression("count($id)");
+        $propertyFactory = new Property;
+        $counts['property_count'] = $propertyFactory->activeCount();
+
+        $managerFactory = new Manager;
+        $counts['manager_count'] = $managerFactory->activeCount();
+
+        $subleaseFactory = new Sublease;
+        $counts['sublease_count'] = $subleaseFactory->activeCount();
+
+        $roommateFactory = new Roommate;
+        $counts['roommate_count'] = $roommateFactory->activeCount();
+
+        return $counts;
     }
 
 }
