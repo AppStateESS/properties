@@ -53,6 +53,8 @@ class Settings extends Base
                         'approval_email');
         $settings['front_buttons'] = (bool) \phpws2\Settings::get('properties',
                         'front_buttons');
+        $settings['last_timeout'] = \phpws2\Settings::get('properties',
+                        'property_timeout');
         return $settings;
     }
 
