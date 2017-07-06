@@ -172,4 +172,15 @@ class Roommate extends Base
         self::deleteResource($sublease);
     }
 
+    public function activeCount()
+    {
+        $db = Database::getDB();
+        $tbl = $db->addTable('prop_roommate');
+        $id = $tbl->getField('id');
+        $exp = $db->getExpression("count($id)", 'roommate_count');
+        $tbl->addFieldConditional('active', 1);
+        $tbl->addField($exp);
+        return $db->selectColumn();
+    }
+
 }
