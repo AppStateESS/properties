@@ -798,4 +798,15 @@ EOF;
         return array('success' => true);
     }
 
+    public function activeCount()
+    {
+        $db = Database::getDB();
+        $tbl = $db->addTable('prop_contacts');
+        $id = $tbl->getField('id');
+        $exp = $db->getExpression("count($id)", 'manager_count');
+        $tbl->addFieldConditional('active', 1);
+        $tbl->addField($exp);
+        return $db->selectColumn();
+    }
+
 }
