@@ -166,7 +166,7 @@ class Property extends Base
             }
             $r->heat_type = $heat_type;
 
-            self::saveResource($r);
+            self::save($r);
             return array('id' => $r->getId());
         } catch (\Exception $e) {
             throw new \properties\Exception\PropertySaveFailure($e->getMessage());
@@ -212,7 +212,8 @@ class Property extends Base
         $tpl['photo_edit_button'] = null;
         if ($admin) {
             $property_id = $property->id;
-            NavBar::addOption('<a onClick="deleteProperty.callback()" class="pointer"><i class="fa fa-trash-o"></i>&nbsp;Delete property</a>', true);
+            NavBar::addOption('<a onClick="deleteProperty.callback()" class="pointer"><i class="fa fa-trash-o"></i>&nbsp;Delete property</a>',
+                    true);
             NavBar::addOption("<a href='./properties/Property/$property_id/edit'><i class='fa fa-edit'></i>&nbsp;Edit property</a>",
                     true);
             NavBar::addOption("<a onClick='editPhotos.callback();return false' href='#'><i class='fa fa-camera'></i>&nbsp;Edit photos</a>",
@@ -244,7 +245,7 @@ EOF;
         $property = $this->load($id, $manager_id);
         $property->$param = $value;
         $property->updated = time();
-        $this->saveResource($property);
+        $this->save($property);
         return true;
     }
 
@@ -279,6 +280,17 @@ EOF;
 EOF;
         $content[] = $this->reactView('propertyform');
         return implode('', $content);
+    }
+
+    public function activeCount()
+    {
+        $db = Database::getDB();
+        $tbl = $db->addTable('properties');
+        $id = $tbl->getField('id');
+        $exp = $db->getExpression("count($id)", 'property_count');
+        $tbl->addFieldConditional('active', 1);
+        $tbl->addField($exp);
+        return $db->selectColumn();
     }
 
 }
