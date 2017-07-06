@@ -28,6 +28,11 @@ abstract class SubController extends Base
 
     protected $factory;
     protected $role;
+    /**
+     * The purpose of the id changes depending on the child class
+     * Can be the manager id, property id, etc.
+     * @var integer
+     */
     protected $id;
 
     abstract protected function loadFactory();
