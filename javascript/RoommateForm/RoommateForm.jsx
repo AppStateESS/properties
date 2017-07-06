@@ -22,7 +22,7 @@ export default class RoommateForm extends Component {
     this.state = {
       roommate: RoommateObject,
       errors: {},
-      message: null
+      message: null,
     }
 
     bindMethods([
@@ -39,7 +39,7 @@ export default class RoommateForm extends Component {
       'checkFacebook',
       'checkInstagram',
       'checkDescription',
-      'checkTwitter'
+      'checkTwitter',
     ], this)
   }
 
@@ -86,7 +86,7 @@ export default class RoommateForm extends Component {
   setMessage(text, type) {
     const message = {
       text: text,
-      type: type
+      type: type,
     }
     this.setState({message: message})
   }
@@ -111,7 +111,7 @@ export default class RoommateForm extends Component {
         }.bind(this),
         error: function () {
           this.setMessage('A server error prevented this property from saving.', 'danger')
-        }.bind(this)
+        }.bind(this),
       })
     } else {
       $('html, body').animate({
@@ -264,13 +264,13 @@ export default class RoommateForm extends Component {
       url: './properties/Roommate/' + this.state.roommate.id,
       data: {
         varname: 'active',
-        value: value
+        value: value,
       },
       dataType: 'json',
       type: 'patch',
       success: function () {
         this.setValue('active', value)
-      }.bind(this)
+      }.bind(this),
     })
   }
 
@@ -286,7 +286,10 @@ export default class RoommateForm extends Component {
     const saveContinue = (
       <div className="text-center">
         <button type="button" className="btn btn-lg btn-primary" onClick={this.save}>
-          <i className="fa fa-save"></i>&nbsp;Save or enter more information below</button>
+          <i className="fa fa-save"></i>&nbsp;Save</button>
+        <div>
+          <em>or enter more information below</em>
+        </div>
       </div>
     )
 
@@ -331,7 +334,8 @@ export default class RoommateForm extends Component {
         {message}
         <div className="row marginBottom">
           <div className="col-sm-6">
-            <label>Date when you want to move in</label>
+            <label>I am ready to be a roommate after
+            </label>
             <DateField
               dateFormat="YYYY-MM-DD"
               onChange={this.setMoveIn}
