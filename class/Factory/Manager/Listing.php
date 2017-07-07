@@ -40,6 +40,7 @@ class Listing
     public $full_search = false;
     public $must_have_property = false;
     public $more_rows = true;
+    public $unlimited = false;
 
     public function get()
     {
@@ -47,11 +48,10 @@ class Listing
             $this->limit = 20;
         }
 
-
         $groups = array();
         $db = Database::getDB();
 
-        if ($this->limit) {
+        if ($this->limit && $this->unlimited === false) {
             $offset = $this->offset * $this->limit;
             $db->setLimit($this->limit, $offset);
         }
@@ -121,7 +121,6 @@ class Listing
         if ($this->orderby) {
             $tbl->addOrderBy($this->orderby, $this->orderby_dir);
         }
-
         if ($this->view) {
             $result = $db->selectAsResources('\properties\Resource\Manager');
             if (empty($result)) {

@@ -78,7 +78,7 @@ class Manager extends Base
      * @param string $search
      * @return array
      */
-    public function adminList(Request $request)
+    public function adminList(Request $request, $unlimited = false)
     {
         $listing = new Manager\Listing;
         $listing->active = null;
@@ -92,6 +92,9 @@ class Manager extends Base
         $listing->include_inquiry = true;
         $listing->search = $request->pullGetString('search', true);
         $listing->must_have_property = false;
+        if ($unlimited) {
+            $listing->unlimited = true;
+        }
         $result = $listing->get();
         $this->more_rows = $listing->more_rows;
         if (empty($result)) {

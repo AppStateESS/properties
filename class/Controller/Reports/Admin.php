@@ -19,6 +19,7 @@
 namespace properties\Controller\Reports;
 
 use Canopy\Request;
+use properties\Factory\Manager as managerFactory;
 
 class Admin extends \properties\Controller\SubController
 {
@@ -57,6 +58,45 @@ class Admin extends \properties\Controller\SubController
     {
         $this->factory->deleteStudent($this->id);
         return array('success'=>true);
+    }
+    
+    protected function downloadHtmlCommand(Request $request)
+    {
+        $stamp = strftime('%F-%H%M');
+        $managerFactory = new managerFactory;
+        $unused_values = array('last_log', 'private', 'pw_timeout', 'pw_hash', 'company_map_address', 'admin', 'phone_tel');
+        
+        $listing = $managerFactory->adminList($request, true);
+        if (empty($listing)) {
+            return 'Sorry! No managers found in the system.';
+        }
+        $filepath = '/tmp/' . time() . rand(0, 10) . '.csv';
+        $file = fopen($filepath, 'w');
+        $keys = array_diff($unused_values, array_keys($listing[0]));
+        fputcsv($file, $keys);
+        foreach ($listing as $row) {
+            // these variables aren't needed in a report
+            foreach ($unused_values as $v) {
+                unset($row[$v]);
+                
+            }
+            fputcsv($file, $row);
+        }
+        fclose($file);
+
+        if (is_file($filepath)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: text/csv');
+            header("Content-Disposition: attachment; filename=Current-managers-$stamp.csv");
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: no-cache');
+            header('Content-Length: ' . filesize($filepath));
+            readfile($filepath);
+            exit;
+        } else {
+            return 'Sorry! An error occurred while creating your file.';
+        }
     }
 
 }

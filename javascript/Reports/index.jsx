@@ -22,7 +22,7 @@ class Reports extends Component {
       subleaseCount: 0,
       roommateCount: 0,
     }
-    const methods = ['getReportList', 'showReport',]
+    const methods = ['getReportList', 'showReport', 'managerReportForward']
     bindMethods(methods, this)
   }
 
@@ -40,6 +40,10 @@ class Reports extends Component {
     this.setState({report: report})
   }
 
+  managerReportForward() {
+    window.location.href = './properties/Reports/download'
+  }
+
   getReportList() {
     return [
       {
@@ -48,6 +52,9 @@ class Reports extends Component {
       }, {
         label: 'Student activity',
         handleClick: this.pickReport.bind(this, 'studentReport')
+      }, {
+        label: <span>Manager information&nbsp;<i className="fa fa-table"></i></span>,
+        handleClick: this.managerReportForward
       },
     ]
   }
