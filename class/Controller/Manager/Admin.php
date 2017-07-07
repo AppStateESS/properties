@@ -124,7 +124,7 @@ class Admin extends User
         return $json;
     }
 
-    protected function signinHtmlCommand(\Canopy\Request $request)
+    protected function signinHtmlCommand(Request $request)
     {
         return '<p>Logout of your administrator account to sign in as a manager</p>';
     }
@@ -133,5 +133,4 @@ class Admin extends User
     {
         return '<p>Logout of your administrator account to sign in as a manager</p>';
     }
-
 }
