@@ -64,7 +64,7 @@ class update_2_0_0
 
     private function createBanTable()
     {
-        $db = Database::getDB();
+        $db = \phpws2\Database::getDB();
         $tbl = $db->buildTable('prop_banned');
         $tbl->addPrimaryIndexId();
         $dt2 = $tbl->addDataType('user_id', 'varchar');
@@ -77,7 +77,7 @@ class update_2_0_0
         $tables = array('prop_contacts', 'prop_messages', 'prop_photo',
             'prop_report', 'properties');
         foreach ($tables as $tbl_name) {
-            $db = Database::getDB();
+            $db = \phpws2\Database::getDB();
             $tbl = $db->addTable($tbl_name);
             $tbl->serializePrimaryKey();
             $seq = $db->addTable($tbl_name . '_seq');
@@ -127,7 +127,7 @@ class update_2_0_0
      */
     private function updateContactsTable()
     {
-        $db = Database::getDB();
+        $db = \phpws2\Database::getDB();
         $tbl = $db->addTable('prop_contacts');
         if ($tbl->columnExists('default_active')) {
             $tbl->dropColumn('default_active');
@@ -148,7 +148,7 @@ class update_2_0_0
      */
     private function updatePropertyColumns()
     {
-        $db = Database::getDB();
+        $db = \phpws2\Database::getDB();
         $tbl = $db->addTable('properties');
         $dt = $tbl->addDataType('proptype', 'smallint');
         $dt->setDefault(0);
@@ -173,7 +173,7 @@ class update_2_0_0
      */
     private function adjustAmounts()
     {
-        $db = Database::getDB();
+        $db = \phpws2\Database::getDB();
         $tbl = $db->addTable('properties');
 
         /** reduce fee values * */
@@ -257,7 +257,7 @@ class update_2_0_0
      */
     private function updatePassword()
     {
-        $db = Database::getDB();
+        $db = \phpws2\Database::getDB();
         $tbl = $db->addTable('prop_contacts');
         $newdt = new \phpws2\Database\Datatype\Varchar($tbl, 'password', 255);
         $tbl->alter($tbl->getDataType('password'), $newdt);
