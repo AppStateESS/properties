@@ -66,7 +66,7 @@ class NavBar
         if (preg_match('/Roommate/', $url)) {
             return '<i class="fa fa-comments-o"></i>&nbsp;Roommates';
         } elseif (preg_match('/Manager/', $url)) {
-            return '<i class="fa fa-users"></i>&nbsp;Managers';
+            return '<i class="fa fa-users"></i>&nbsp;Landlords';
         } elseif (preg_match('/Sublease/', $url)) {
             return '<i class="fa fa-suitcase"></i>&nbsp;Subleases';
         } elseif (preg_match('/Property/', $url)) {

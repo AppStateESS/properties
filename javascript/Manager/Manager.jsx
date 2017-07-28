@@ -126,7 +126,7 @@ class Manager extends Component {
       managerForm = <ManagerForm manager={this.state.currentManager} reload={this.load} message={this.setMessage}/>
     }
     if (this.state.managers === null) {
-      return (<Waiting label="managers"/>)
+      return (<Waiting label="landlords"/>)
     } else {
       return (
         <div>
@@ -139,7 +139,7 @@ class Manager extends Component {
                   ref="managerSearch"
                   className="form-control"
                   type="text"
-                  placeholder="Search for managers..."
+                  placeholder="Search for landlords..."
                   onChange={this.searchManager}/>
                 <span className="input-group-btn">
                   <button className="btn btn-default" type="button" onClick={this.clearSearch}>Clear</button>

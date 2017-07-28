@@ -79,6 +79,10 @@ class PropertyUpgrade
             case $this->compare('2.0.1'):
                 $methodName = $this->getMethodName('2.0.1');
                 $this->$methodName($content);
+
+            case $this->compare('2.0.2'):
+                $methodName = $this->getMethodName('2.0.2');
+                $this->$methodName($content);
         }
         return $content;
     }
@@ -200,13 +204,19 @@ class PropertyUpgrade
         $updates = $update->run();
         $this->addContent($content, '2.0.0', $updates);
     }
-    
+
     public function v2_0_1(&$content)
     {
         require_once PHPWS_SOURCE_DIR . 'mod/properties/boost/updates/2_0_1.php';
         $update = new update_2_0_1($content);
         $updates = $update->run();
         $this->addContent($content, '2.0.1', $updates);
+    }
+    
+    public function v2_0_2(&$content)
+    {
+        $updates = array('Changed the word manager to landlord');
+        $this->addContent($content, '2.0.2', $updates);
     }
 
     private function addContent(&$content, $version, array $changes)

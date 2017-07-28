@@ -193,7 +193,7 @@ export default class ManagerApproval extends Component {
     let websiteAddress
     console.log(this.state.managers)
     if (this.state.managers === null) {
-      return <Waiting label="managers"/>
+      return <Waiting label="landlords"/>
     } else if (this.state.managers.length === 0 || this.state.managers[0] === undefined) {
       return <div>No managers need approving.</div>
     }

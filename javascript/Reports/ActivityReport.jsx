@@ -41,7 +41,7 @@ export default class ActivityReport extends Component {
   getListing() {
     switch (this.state.listing) {
       case null:
-        return <Waiting label="managers"/>
+        return <Waiting label="landlords"/>
 
       case 0:
         return <p>Choose a date and refresh the listing.</p>
