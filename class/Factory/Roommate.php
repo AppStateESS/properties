@@ -117,7 +117,7 @@ class Roommate extends Base
 
         $auth = \Current_User::getAuthorization();
         if (!empty($auth->login_link)) {
-            $tpl['login'] = $auth->login_link;
+            $tpl['login'] = PHPWS_HOME_HTTP . $auth->login_link;
         } else {
             $tpl['login'] = 'index.php?module=users&action=user&command=login_page';
         }
