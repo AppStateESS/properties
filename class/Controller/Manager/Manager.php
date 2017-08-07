@@ -111,7 +111,7 @@ class Manager extends User
         $this->testIsManager($request->pullPutInteger('id'));
         return $this->factory->managerUpdate($request);
     }
-    
+
     protected function testIsManager($id)
     {
         if ($id != $this->id) {
@@ -154,12 +154,23 @@ EOF;
         $new_password = $request->pullPatchString('password');
         $current_password = $request->pullPatchString('currentPassword');
         $manager = $this->factory->load($this->role->getId());
-        if (!password_verify($current_password, $manager->password)) {
+
+        /*
+          if (!password_verify($current_password, $manager->password)) {
+          return array('success' => false, 'error' => 'Current password is incorrect');
+          }
+          $this->factory->patch($this->role->getId(), 'password',
+          password_hash($new_password, PASSWORD_DEFAULT));
+         * 
+         */
+
+        $hasher = $this->factory->getHasher();
+        if (!$hasher->CheckPassword($current_password, $manager->password)) {
             return array('success' => false, 'error' => 'Current password is incorrect');
         }
-
         $this->factory->patch($this->role->getId(), 'password',
-                password_hash($new_password, PASSWORD_DEFAULT));
+                $hasher->HashPassword($new_password));
+
         return array('success' => true);
     }
 

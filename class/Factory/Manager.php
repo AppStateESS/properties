@@ -14,6 +14,9 @@ use properties\Exception\MissingInput;
 use properties\Exception\PrivilegeMissing;
 use Canopy\Request;
 
+require_once PHPWS_SOURCE_DIR . 'mod/properties/class/PasswordHash.php';
+
+// do not uncomment below in production
 //require_once 'mod/properties/class/FakeSwiftMailer.php';
 
 /**
@@ -417,7 +420,9 @@ class Manager extends Base
                 if (strlen($password) < 8) {
                     $errors['passwordShort'] = true;
                 } else {
-                    $r->password = password_hash($password, PASSWORD_DEFAULT);
+                    $hasher = $this->getHasher();
+                    //$r->password = password_hash($password, PASSWORD_DEFAULT);
+                    $r->password = $hasher->HashPassword($password);
                 }
             }
 
@@ -593,7 +598,9 @@ class Manager extends Base
 
         $tbl->addFieldConditional('username', $username);
         $row = $db->selectOneRow();
-        if ($row !== false && password_verify($password, $row['password'])) {
+        $hasher = $this->getHasher();
+        //if ($row !== false && password_verify($password, $row['password'])) {
+        if ($row !== false && $hasher->CheckPassword($password, $row['password'])) {
             $manager = $this->build();
             $manager->setVars($row);
             return $manager;
@@ -794,7 +801,9 @@ EOF;
         }
         $manager = $this->build();
         $manager->setVars($row);
-        $manager->password = password_hash($password, PASSWORD_DEFAULT);
+        //$manager->password = password_hash($password, PASSWORD_DEFAULT);
+        $hasher = $this->getHasher();
+        $manager->password = $hasher->HashPassword($password);
         $manager->pw_hash = null;
         $manager->pw_timeout = 0;
         self::saveResource($manager);
@@ -810,6 +819,14 @@ EOF;
         $tbl->addFieldConditional('active', 1);
         $tbl->addField($exp);
         return $db->selectColumn();
+    }
+
+    public function getHasher()
+    {
+        $hash_cost = 8;
+        $hash_portable = FALSE;
+        $hasher = new \PasswordHash($hash_cost, $hash_portable);
+        return $hasher;
     }
 
 }
