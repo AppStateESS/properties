@@ -85,7 +85,11 @@ class PropertyUpgrade
                 $this->$methodName($content);
                 
             case $this->compare('2.0.3'):
-                $methodName = $this->getMethodName('2.0.2');
+                $methodName = $this->getMethodName('2.0.3');
+                $this->$methodName($content);
+
+            case $this->compare('2.0.4'):
+                $methodName = $this->getMethodName('2.0.4');
                 $this->$methodName($content);
         }
         return $content;
@@ -227,6 +231,12 @@ class PropertyUpgrade
     {
         $updates = array('Added backward compatible (< 5.5) password hasher.');
         $this->addContent($content, '2.0.3', $updates);
+    }
+
+    public function v2_0_4(&$content)
+    {
+        $updates = array('Signin button fix for phones.', 'Manager letter fix', 'Authorization link fix');
+        $this->addContent($content, '2.0.4', $updates);
     }
 
     private function addContent(&$content, $version, array $changes)
