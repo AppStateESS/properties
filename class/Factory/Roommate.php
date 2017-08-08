@@ -111,13 +111,17 @@ class Roommate extends Base
     public function view($id, $contact_allowed, $admin = false)
     {
         \Layout::addStyle('properties', 'roommate/view.css');
+        try {
         $roommate = $this->load($id);
+        } catch (\properties\Exception\ResourceNotFound $e) {
+            \phpws2\Error::errorPage('404');
+        }
         $tpl = $roommate->view(true);
         $tpl['contact_allowed'] = $contact_allowed;
 
         $auth = \Current_User::getAuthorization();
         if (!empty($auth->login_link)) {
-            $tpl['login'] = PHPWS_HOME_HTTP . $auth->login_link;
+            $tpl['login'] = $auth->login_link;
         } else {
             $tpl['login'] = 'index.php?module=users&action=user&command=login_page';
         }
@@ -169,7 +173,7 @@ class Roommate extends Base
 
     public function delete(Resource $roommate)
     {
-        self::deleteResource($sublease);
+        self::deleteResource($roommate);
     }
 
     public function activeCount()
