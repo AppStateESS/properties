@@ -18,11 +18,15 @@
 
 namespace properties\Controller\Sublease;
 
+use Canopy\Request;
 use properties\Factory\NavBar;
 
 class Logged extends User
 {
-
+    /**
+     * Current user's sublease object. NULL if does not exist.
+     * @var \properties\Resource\Sublease $user_sublease
+     */
     protected $user_sublease;
     protected $ban;
 
@@ -39,9 +43,9 @@ class Logged extends User
     }
 
     /**
-     * @param \Canopy\Request $request
+     * @param Request $request
      */
-    public function createHtmlCommand(\Canopy\Request $request)
+    public function createHtmlCommand(Request $request)
     {
         if ($this->checkBan()) {
             return $this->showBan();
@@ -57,9 +61,9 @@ class Logged extends User
     }
 
     /**
-     * @param \Canopy\Request $request
+     * @param Request $request
      */
-    public function editHtmlCommand(\Canopy\Request $request)
+    public function editHtmlCommand(Request $request)
     {
         if ($this->checkBan()) {
             return $this->showBan();
@@ -68,13 +72,13 @@ class Logged extends User
         return $this->factory->edit($this->user_sublease, \Current_User::getId());
     }
 
-    public function getHtml(\Canopy\Request $request)
+    public function getHtml(Request $request)
     {
         $this->backToList();
         return parent::getHtml($request);
     }
 
-    public function listHtmlCommand(\Canopy\Request $request)
+    public function listHtmlCommand(Request $request)
     {
         $this->ownerOptions();
 
@@ -93,7 +97,7 @@ class Logged extends User
         return $json;
     }
 
-    public function savePostCommand(\Canopy\Request $request)
+    public function savePostCommand(Request $request)
     {
         if ($this->checkBan()) {
             throw new \properties\Exception\PrivilegeMissing;
@@ -105,7 +109,7 @@ class Logged extends User
         }
     }
 
-    public function updatePutCommand(\Canopy\Request $request)
+    public function updatePutCommand(Request $request)
     {
         if ($this->checkBan()) {
             throw new \properties\Exception\PrivilegeMissing;
@@ -117,7 +121,7 @@ class Logged extends User
         }
     }
 
-    public function viewHtmlCommand(\Canopy\Request $request)
+    public function viewHtmlCommand(Request $request)
     {
         $this->ownerOptions(true);
         \Layout::addStyle('properties', 'sublease/view.css');
@@ -126,7 +130,7 @@ class Logged extends User
                                 $this->role->getId()));
     }
 
-    protected function jsonPatchCommand(\Canopy\Request $request)
+    protected function jsonPatchCommand(Request $request)
     {
         if ($this->checkBan()) {
             throw new \properties\Exception\PrivilegeMissing;
@@ -148,6 +152,18 @@ class Logged extends User
         } elseif ($show_create) {
             $this->createButton();
         }
+    }
+    
+    public function extendHtmlCommand(Request $request)
+    {
+        if (!$this->checkBan() && $this->user_sublease) {
+            $this->user_sublease->forwardTimeout();
+            $this->factory->save($this->user_sublease);
+            \Canopy\Server::forward('./properties/Sublease/' . $this->user_sublease->id);
+        } else {
+            throw new \properties\Exception\PrivilegeMissing;
+        }
+        
     }
 
 }
