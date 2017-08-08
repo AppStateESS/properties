@@ -43,17 +43,6 @@ class Sublease extends Base
     public function listing(\Canopy\Request $request, $admin = false)
     {
         $listing = new Sublease\Listing();
-        /*
-          if ($admin) {
-          $show_inactive = $request->pullGetBoolean('showinactive', true);
-          if ($show_inactive === null || $show_inactive === false) {
-          $listing->show_inactive = false;
-          } else {
-          $listing->show_inactive = true;
-          }
-          }
-         * 
-         */
         $listing->pullVariables($request);
         $result = $listing->get(true);
         $this->more_rows = $listing->more_rows;
@@ -134,7 +123,7 @@ class Sublease extends Base
                     $days_left = floor($seconds_left / 86400);
                     $tpl['inactive_notice'] = "This sublease will remain active for $days_left more days.";
                 } else {
-                    $tpl['inactive_notice'] = "This sublease is schedule to be deactivated. <a href='./properties/Sublease/edit'>Update</a> to increase timeout.";
+                    $tpl['inactive_notice'] = "This sublease is scheduled to be deactivated. <a href='./properties/Sublease/extend' style='color:black'>Click here to extend your deadline.</a>";
                 }
             } else {
                 $tpl['inactive_notice'] = null;
