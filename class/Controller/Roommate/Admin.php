@@ -17,6 +17,7 @@
  */
 
 namespace properties\Controller\Roommate;
+
 use Canopy\Request;
 
 class Admin extends User
@@ -24,18 +25,41 @@ class Admin extends User
 
     protected function viewHtmlCommand(Request $request)
     {
-        return $this->factory->view($this->id, true);
+        $this->backToList();
+        $button = $this->addButtons();
+        $react = $this->factory->reactView('roommatedelete');
+        return $this->factory->view($this->id, true) . $react;
     }
 
     protected function listHtmlCommand(Request $request)
     {
         return $this->factory->reactView('roommatelist');
     }
+    
+    protected function deleteCommand(Request $request)
+    {
+        $roommate = $this->factory->load($this->id);
+        return $this->factory->delete($roommate);
+    }
+    
 
     public function getHtml(Request $request)
     {
         $this->adminButtons();
         return parent::getHtml($request);
+    }
+
+    private function addButtons()
+    {
+        $button = $this->deleteButton();
+        \properties\Factory\NavBar::addItem($button);
+    }
+    
+    private function deleteButton()
+    {   $id = $this->id;
+        return <<<EOF
+<button class="btn btn-danger btn-sm navbar-btn" data-id="$id" id="delete-roommate"><i class="fa fa-times"></i>&nbsp;Delete</button>
+EOF;
     }
 
 }
