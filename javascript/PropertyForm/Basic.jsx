@@ -130,6 +130,7 @@ export default class Basic extends Base {
               name="monthly_rent"
               type="type"
               label="Monthly rent"
+              maxLength={4}
               wrap={this.dollarize}
               errorMessage={this.props.errors.monthly_rent
               ? 'Rent amount may not be empty'
