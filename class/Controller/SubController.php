@@ -199,6 +199,9 @@ abstract class SubController extends Base
 
     protected function managerButtons()
     {
+        $myprops = '<a href="./properties/Property/create"><i class="fa fa-plus"></i>&nbsp;Add a new property</a>';
+        \properties\Factory\NavBar::addOption($myprops);
+        
         $myprops = '<a href="./properties/Manager/desktop"><i class="fa fa-list"></i>&nbsp;View my properties</a>';
         \properties\Factory\NavBar::addOption($myprops);
 
