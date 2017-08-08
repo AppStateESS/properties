@@ -18,6 +18,7 @@ exports.entry = {
   manageredit: exports.APP_DIR + '/ManagerEdit/index.jsx',
   roommatelist: exports.APP_DIR + '/RoommateList/index.jsx',
   roommateform: exports.APP_DIR + '/RoommateForm/index.jsx',
+  roommatedelete: exports.APP_DIR + '/RoommateDelete/index.js',
   settings: exports.APP_DIR + '/Settings/index.jsx',
   reports: exports.APP_DIR+ '/Reports/index.jsx',
   passwordchange: exports.APP_DIR + '/PasswordChange/index.jsx',
