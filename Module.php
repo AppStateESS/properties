@@ -72,7 +72,7 @@ class Module extends \Canopy\Module implements \Canopy\SettingDefaults
                 if (!\Current_User::isLogged()) {
                     $auth = \Current_User::getAuthorization();
                     if (!empty($auth->login_link)) {
-                        $url = PHPWS_HOME_HTTP . $auth->login_link;
+                        $url = $auth->login_link;
                     } else {
                         $url = 'index.php?module=users&action=user&command=login_page';
                     }
