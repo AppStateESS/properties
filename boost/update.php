@@ -91,6 +91,14 @@ class PropertyUpgrade
             case $this->compare('2.0.4'):
                 $methodName = $this->getMethodName('2.0.4');
                 $this->$methodName($content);
+                
+            case $this->compare('2.0.5'):
+                $methodName = $this->getMethodName('2.0.5');
+                $this->$methodName($content);
+
+            case $this->compare('2.0.6'):
+                $methodName = $this->getMethodName('2.0.6');
+                $this->$methodName($content);
         }
         return $content;
     }
@@ -237,6 +245,18 @@ class PropertyUpgrade
     {
         $updates = array('Signin button fix for phones.', 'Manager letter fix', 'Authorization link fix');
         $this->addContent($content, '2.0.4', $updates);
+    }
+
+    public function v2_0_5(&$content)
+    {
+        $updates = array('Admin can now delete subleases', 'Users can extend their sublease deadlines', 'Other small fixes');
+        $this->addContent($content, '2.0.5', $updates);
+    }
+
+    public function v2_0_6(&$content)
+    {
+        $updates = array('Added missing creation button', 'Put 4 character limit on rent');
+        $this->addContent($content, '2.0.6', $updates);
     }
 
     private function addContent(&$content, $version, array $changes)
