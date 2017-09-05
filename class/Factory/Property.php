@@ -11,7 +11,7 @@ namespace properties\Factory;
 use phpws2\Database;
 use phpws2\Settings;
 use properties\Resource\Property as Resource;
-use properties\Factory\Property\Photo as Photo;
+use properties\Factory\Property\Photo as PropPhoto;
 use properties\Factory\Manager;
 use properties\Controller\Property as Controller;
 use properties\Exception\MissingInput;
@@ -66,7 +66,7 @@ class Property extends Base
 
     public function delete(Resource $property)
     {
-        $photo = new Photo;
+        $photo = new PropPhoto;
         $photo->removeByProperty($property->id);
         self::deleteResource($property);
     }
@@ -201,7 +201,7 @@ class Property extends Base
             }
         }
 
-        $photoFactory = new Photo;
+        $photoFactory = new PropPhoto;
         $tpl['inactive_warning'] = $property->active == 0;
 
         $tpl['current_photos'] = json_encode($photoFactory->thumbs($property->id));
