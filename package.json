@@ -46,7 +46,7 @@
   ],
   "homepage": "https://github.com/AppStateESS/properties#readme",
   "author": "Matt McNaney <mcnaneym@appstate.edu>",
-  "license": "BSD-2-Clause",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/AppStateESS/properties/issues"
   }
