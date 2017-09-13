@@ -719,7 +719,7 @@ class Manager extends Base
 
         $tpl['reset_link'] = $link;
 
-        $timeout = time() + 1800;
+        $timeout = time() + 3600;
         $tpl['timeout'] = strftime('%B %e, %Y at %l:%M%P', $timeout);
 
         $manager->pw_timeout = $timeout;
