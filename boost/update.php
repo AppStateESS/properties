@@ -99,6 +99,10 @@ class PropertyUpgrade
             case $this->compare('2.0.6'):
                 $methodName = $this->getMethodName('2.0.6');
                 $this->$methodName($content);
+
+            case $this->compare('2.0.7'):
+                $methodName = $this->getMethodName('2.0.7');
+                $this->$methodName($content);
         }
         return $content;
     }
@@ -257,6 +261,13 @@ class PropertyUpgrade
     {
         $updates = array('Added missing creation button', 'Put 4 character limit on rent');
         $this->addContent($content, '2.0.6', $updates);
+    }
+
+    public function v2_0_7(&$content)
+    {
+        $updates = array('Changed class name to prevent conflicting class name error.',
+            'Increase password timeout to one hour.','Rewroding to sublease tile');
+        $this->addContent($content, '2.0.7', $updates);
     }
 
     private function addContent(&$content, $version, array $changes)
