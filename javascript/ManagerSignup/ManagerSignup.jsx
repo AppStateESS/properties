@@ -278,12 +278,12 @@ export default class ManagerSignin extends Component {
     return (
       <div>
         {message}
-        <h2>Sign up for Manager Account</h2>
+        <h2>Sign up for Property Manager Account</h2>
         <p>
-          Manager accounts are for people who rent property to tenants only.
+          Property manager accounts are for property owners and rental companies only.
         </p>
         <p>
-          If you need to sublease your current residence, head over to our&nbsp;
+          If you are a tenant who needs to sublease your current rental unit, head over to our&nbsp;
           <a href="./properties/Sublease">sublease page.</a>
         </p>
         <h3>Contact information</h3>
