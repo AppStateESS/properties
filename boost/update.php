@@ -83,7 +83,7 @@ class PropertyUpgrade
             case $this->compare('2.0.2'):
                 $methodName = $this->getMethodName('2.0.2');
                 $this->$methodName($content);
-                
+
             case $this->compare('2.0.3'):
                 $methodName = $this->getMethodName('2.0.3');
                 $this->$methodName($content);
@@ -91,7 +91,7 @@ class PropertyUpgrade
             case $this->compare('2.0.4'):
                 $methodName = $this->getMethodName('2.0.4');
                 $this->$methodName($content);
-                
+
             case $this->compare('2.0.5'):
                 $methodName = $this->getMethodName('2.0.5');
                 $this->$methodName($content);
@@ -102,6 +102,10 @@ class PropertyUpgrade
 
             case $this->compare('2.0.7'):
                 $methodName = $this->getMethodName('2.0.7');
+                $this->$methodName($content);
+
+            case $this->compare('2.0.8'):
+                $methodName = $this->getMethodName('2.0.8');
                 $this->$methodName($content);
         }
         return $content;
@@ -232,13 +236,13 @@ class PropertyUpgrade
         $updates = $update->run();
         $this->addContent($content, '2.0.1', $updates);
     }
-    
+
     public function v2_0_2(&$content)
     {
         $updates = array('Changed the word manager to landlord');
         $this->addContent($content, '2.0.2', $updates);
     }
-    
+
     public function v2_0_3(&$content)
     {
         $updates = array('Added backward compatible (< 5.5) password hasher.');
@@ -266,7 +270,14 @@ class PropertyUpgrade
     public function v2_0_7(&$content)
     {
         $updates = array('Changed class name to prevent conflicting class name error.',
-            'Increase password timeout to one hour.','Rewroding to sublease tile');
+            'Increase password timeout to one hour.', 'Rewording to sublease tile');
+        $this->addContent($content, '2.0.7', $updates);
+    }
+
+    public function v2_0_8(&$content)
+    {
+        $updates = array('Changed wording on manager page',
+            'Added additional manager log-in link and changed sign in to Student sign in');
         $this->addContent($content, '2.0.7', $updates);
     }
 
