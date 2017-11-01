@@ -32,14 +32,18 @@
                 </ul> 
             </li>
 
-
             <?php if ($items !== null):?>
             <li class="navbar-text">|
             </li>
-            <?php foreach($items as $item):?>
+            <?php foreach($items as $item):
+            if ($item == '|'):?>
+            <li class="navbar-text">|
+            </li>
+            <?php else: ?>
             <li>
                 <?=$item?>
             </li>
+            <?php endif;?>
             <?php endforeach;?>
             <?php endif;?>
             <?php if ($options !== null):?>
