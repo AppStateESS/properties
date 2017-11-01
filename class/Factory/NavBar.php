@@ -80,6 +80,11 @@ class NavBar
     {
         self::$items[] = $item;
     }
+    
+    public static function addDivider()
+    {
+        self::$items[] = '|';
+    }
 
     public static function addOption($option, $unshift=false)
     {
