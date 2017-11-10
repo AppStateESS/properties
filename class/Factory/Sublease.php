@@ -19,7 +19,7 @@
 namespace properties\Factory;
 
 use properties\Resource\Sublease as Resource;
-use properties\Factory\Sublease\Photo as Photo;
+use properties\Factory\Sublease\Photo as SubPhoto;
 use phpws2\Database;
 use phpws2\Settings;
 
@@ -35,7 +35,7 @@ class Sublease extends Base
 
     public function delete(Resource $sublease)
     {
-        $photo = new Photo;
+        $photo = new SubPhoto;
         $photo->removeBySublease($sublease->id);
         self::deleteResource($sublease);
     }
@@ -109,7 +109,7 @@ class Sublease extends Base
             $tpl['inactive_warning'] = $sublease->active ? false : true;
             $tpl['photo'] = $this->reactView('subleasephoto');
             $tpl['photoupdate'] = $admin ? $this->reactView('subleaseimage') : null;
-            $photoFactory = new Photo;
+            $photoFactory = new SubPhoto;
             $tpl['current_photos'] = json_encode($photoFactory->thumbs($sublease->id));
             if (\Current_User::isDeity()) {
                 $tpl['ban_user'] = $this->reactView('banuser');
