@@ -1,6 +1,5 @@
 'use strict'
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
 import RoommateRow from './RoommateRow.jsx'
 import Waiting from '../Mixin/Html/Waiting.jsx'
 import SearchBar from './SearchBar.jsx'
@@ -12,6 +11,7 @@ import {profileLabel} from '../Mixin/Objects/ProfileData.js'
 export default class RoommateList extends Component {
   constructor(props) {
     super(props)
+    this.error = false
     this.state = {
       roommates: null,
       labels: {
@@ -84,11 +84,19 @@ export default class RoommateList extends Component {
       } else {
         this.setState({roommates: []})
       }
+    }.bind(this)).fail(function(){
+      this.error = true
+      this.setState({roommates: []})
     }.bind(this))
   }
 
   render() {
     let rows
+
+    let message
+    if (this.error) {
+      message = <div className="alert alert-warning">An error occurred when trying to access the roommate list. Please contact the site administrators.</div>
+    }
 
     if (this.state.roommates === null) {
       return <Waiting label="Roommates"/>
@@ -105,6 +113,7 @@ export default class RoommateList extends Component {
     return (
       <div>
         <h2>Roommate listing</h2>
+        {message}
         <SearchBar
           updateSearchVars={this.updateSearchVars}
           searchVars={this.state.searchVars}
