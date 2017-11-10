@@ -71,7 +71,7 @@ class Roommate extends Base
         $this->twitter->allowNull(true);
         $this->politics = new \phpws2\Variable\Alphanumeric(null, 'politics', 50);
         $this->politics->allowNull(true);
-        $this->major = new \phpws2\Variable\TextOnly(null, 'major', 50);
+        $this->major = new \phpws2\Variable\TextOnly(null, 'major');
         $this->major->allowNull(true);
         $this->focus = new \phpws2\Variable\Alphanumeric(null, 'focus', 50);
         $this->focus->allowNull(true);
