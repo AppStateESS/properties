@@ -107,6 +107,10 @@ class PropertyUpgrade
             case $this->compare('2.0.8'):
                 $methodName = $this->getMethodName('2.0.8');
                 $this->$methodName($content);
+
+            case $this->compare('2.0.9'):
+                $methodName = $this->getMethodName('2.0.9');
+                $this->$methodName($content);
         }
         return $content;
     }
@@ -278,8 +282,16 @@ class PropertyUpgrade
     {
         $updates = array('Changed wording on manager page',
             'Added additional manager log-in link and changed sign in to Student sign in');
-        $this->addContent($content, '2.0.7', $updates);
+        $this->addContent($content, '2.0.8', $updates);
     }
+
+    public function v2_0_9(&$content)
+    {
+        $updates = array('Removed major text limit', 'Added warning message when sublease lease fails.', 'Changed SubleasePhoto use name to prevent compile error.');
+        $this->addContent($content, '2.0.9', $updates);
+    }
+    
+    
 
     private function addContent(&$content, $version, array $changes)
     {
