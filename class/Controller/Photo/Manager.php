@@ -19,11 +19,12 @@
 namespace properties\Controller\Photo;
 
 use properties\Resource\Photo;
+use Canopy\Request;
 
 class Manager extends User
 {
 
-    protected function deleteCommand(\Canopy\Request $request)
+    protected function deleteCommand(Request $request)
     {
         $this->checkPropertyOwnership($request->pullDeleteInteger('propertyId'),
                 $this->getCurrentLoggedManager());
@@ -35,7 +36,7 @@ class Manager extends User
         return array('success' => true);
     }
 
-    protected function savePostCommand(\Canopy\Request $request)
+    protected function savePostCommand(Request $request)
     {
         $this->checkPropertyOwnership($request->pullPostInteger('propertyId'),
                 $this->getCurrentLoggedManager());
@@ -43,7 +44,7 @@ class Manager extends User
         return $this->factory->post($request);
     }
 
-    protected function jsonPatchCommand(\Canopy\Request $request)
+    protected function jsonPatchCommand(Request $request)
     {
         $this->checkPropertyOwnership($request->pullPatchInteger('propertyId'),
                 $this->getCurrentLoggedManager());
@@ -56,6 +57,13 @@ class Manager extends User
                 break;
         }
         return array('success' => true);
+    }
+
+    protected function rotatePutCommand(Request $request)
+    {
+        $photo = $this->factory->load($this->id);
+        $this->factory->rotate($photo, $request->pullPutInteger('direction'));
+        return array('success' => 1);
     }
 
 }

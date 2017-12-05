@@ -18,10 +18,12 @@
 
 namespace properties\Controller\SubleasePhoto;
 
+use Canopy\Request;
+
 class Logged extends User
 {
 
-    protected function savePostCommand(\Canopy\Request $request)
+    protected function savePostCommand(Request $request)
     {
         $sublease_id = $request->pullPostInteger('subleaseId');
         $subleaseFactory = new \properties\Factory\Sublease;
@@ -32,7 +34,7 @@ class Logged extends User
         return $this->factory->post($sublease);
     }
 
-    protected function jsonPatchCommand(\Canopy\Request $request)
+    protected function jsonPatchCommand(Request $request)
     {
         $photo = $this->factory->load($this->id);
         if ($photo->uid != $this->role->getId()) {
@@ -48,7 +50,7 @@ class Logged extends User
         return array('success' => true);
     }
 
-    protected function deleteCommand(\Canopy\Request $request)
+    protected function deleteCommand(Request $request)
     {
         $photo = $this->factory->load($this->id);
         if ($photo->uid != $this->role->getId()) {
@@ -56,6 +58,13 @@ class Logged extends User
         }
         $this->factory->delete($photo);
         return array('success' => true);
+    }
+    
+    protected function rotatePutCommand(Request $request)
+    {
+        $photo = $this->factory->load($this->id);
+        $this->factory->rotate($photo, $request->pullPutInteger('direction'));
+        return array('success'=>1);
     }
 
 }

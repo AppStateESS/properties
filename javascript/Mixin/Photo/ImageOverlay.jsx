@@ -13,10 +13,11 @@ export default class ImageOverlay extends Component {
   }
 
   render() {
+    const paddingTop = {
+      paddingTop: '2%'
+    }
     let photos = (
-      <div style={{
-        paddingTop: '2%'
-      }}>
+      <div style={paddingTop}>
         <i className="fa fa-camera fa-5x"></i><br/>
         <h4>Click to browse<br/>- or -<br/>drag image(s) here</h4>
       </div>
@@ -33,9 +34,15 @@ export default class ImageOverlay extends Component {
 
     let currentImages
     if (this.props.currentPhotos.length > 0) {
-      currentImages = <SortableList helperClass="sortableHelper"
-        items={this.props.currentPhotos} axis={'xy'} loadToContainerEdges={true}
-        onSortEnd={this.props.onSortEnd} deletePhoto={this.props.deletePhoto} useDragHandle={true}/>
+      currentImages = <SortableList
+        helperClass="sortableHelper"
+        items={this.props.currentPhotos}
+        axis={'xy'}
+        loadToContainerEdges={true}
+        onSortEnd={this.props.onSortEnd}
+        deletePhoto={this.props.deletePhoto}
+        rotate={this.props.rotate}
+        useDragHandle={true}/>
     }
 
     return (
@@ -51,9 +58,7 @@ export default class ImageOverlay extends Component {
             <button className="btn btn-default" onClick={this.props.clear}>Clear</button>
           </div>
           <hr/>
-          <div style={{
-            clear: 'both'
-          }}></div>
+          <div className="clearfix"></div>
           <div>
             <h4>Current</h4>
             {currentImages}
@@ -68,6 +73,7 @@ ImageOverlay.propTypes = {
   close: PropTypes.func,
   update: PropTypes.func,
   deletePhoto: PropTypes.func,
+  rotate: PropTypes.func,
   clear: PropTypes.func,
   newPhotos: PropTypes.array,
   currentPhotos: PropTypes.array,
@@ -75,10 +81,22 @@ ImageOverlay.propTypes = {
   onSortEnd: PropTypes.func,
 }
 
-const SortableList = SortableContainer(({items, deletePhoto}) => {
+const SortableList = SortableContainer(({items, deletePhoto, rotate}) => {
+  const valign = {
+    verticalAlign: 'top'
+  }
   return (
-    <ul style={{verticalAlign : 'top'}}>
-      {items.map((value, index) => <Thumb {...value} index={index} key={`item-${index}`} deletePhoto={deletePhoto.bind(this, value, index)}/>)}
+    <ul style={valign}>
+      {
+        items.map((value, index) => {
+          return <Thumb
+            {...value}
+            index={index}
+            key={`item-${index}`}
+            rotate={rotate.bind(this, value, index)}
+            deletePhoto={deletePhoto.bind(this, value, index)}/>
+        })
+      }
     </ul>
   )
 })

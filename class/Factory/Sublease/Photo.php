@@ -53,7 +53,8 @@ class Photo extends \properties\Factory\Photo
         $photo->uid = $sublease->user_id;
         $photo->sid = $sublease->id;
 
-        $result = $this->handlePhotoPost($photo, $sublease->id, $sublease->user_id);
+        $result = $this->handlePhotoPost($photo, $sublease->id,
+                $sublease->user_id);
 
         return $result;
     }

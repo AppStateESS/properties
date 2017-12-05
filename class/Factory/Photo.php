@@ -82,8 +82,9 @@ abstract class Photo extends Base
         $tbl->addOrderBy('porder');
         $db->loadSelectStatement();
         while ($row = $db->fetch()) {
-            $row['thumbnail'] = $this->thumbnailed($row['path']);
-            $row['original'] = $row['path'];
+            $stamp = '?x=' . time();
+            $row['thumbnail'] = $this->thumbnailed($row['path']) . $stamp;
+            $row['original'] = $row['path'] . $stamp;
             $rows[] = $row;
         }
         return $rows;
@@ -239,6 +240,44 @@ abstract class Photo extends Base
         $max_column = $tbl->getField('porder');
         $db->addExpression('max(' . $max_column . ')', 'max');
         return (int) $db->selectColumn();
+    }
+
+    public function rotate($photo, $direction) {
+        $this->rotateImage($photo->path, $direction);
+        $this->rotateImage($this->thumbnailed($photo->path), $direction);
+    }
+    
+    public function rotateImage($imageFile, $direction)
+    {
+        if (!is_file($imageFile)) {
+            throw new \Exception('File not found: ' . $imageFile);
+        }
+        $type = exif_imagetype($imageFile);
+
+        $degrees = $direction == 1 ? 270 : 90;
+        switch ($type) {
+            case IMAGETYPE_GIF:
+                $file = imagecreatefromgif($imageFile);
+                $rotated = imagerotate($file, $degrees, 0);
+                $result = imagegif($rotated, $imageFile);
+                break;
+
+            case IMAGETYPE_JPEG:
+                $file = imagecreatefromjpeg($imageFile);
+                $rotated = imagerotate($file, $degrees, 0);
+                $result = imagejpeg($rotated, $imageFile);
+                break;
+
+            case IMAGETYPE_PNG:
+                $file = imagecreatefrompng($imageFile);
+                $rotated = imagerotate($file, $degrees, 0);
+                $result = imagepng($rotated, $imageFile);
+                break;
+
+            default:
+                throw new \Exception('File type not accepted');
+        }
+        imagedestroy($rotated);
     }
 
 }

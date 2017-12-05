@@ -22,7 +22,8 @@ export default class PropertyImage extends Component {
       'addPhotos',
       'clearNewPhotos',
       'deletePhoto',
-      'onSortEnd'
+      'onSortEnd',
+      'rotate',
     ]
     bindMethods(methods, this)
   }
@@ -127,10 +128,26 @@ export default class PropertyImage extends Component {
     })
   }
 
+  rotate(photo, key, direction) {
+    $.ajax({
+      url: './properties/Photo/' + photo.id + '/rotate',
+      data: {
+        direction: direction
+      },
+      dataType: 'json',
+      type: 'put',
+      success: function () {
+        this.forceUpdate()
+      }.bind(this),
+      error: function () {}.bind(this),
+    })
+  }
+
   render() {
     let overlay
     if (this.state.show) {
       overlay = (<ImageOverlay
+        rotate={this.rotate}
         deletePhoto={this.deletePhoto}
         close={this.overlayOff}
         clear={this.clearNewPhotos}

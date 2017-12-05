@@ -14,7 +14,7 @@ export default class SubleaseImage extends Component {
       show: false,
       newPhotos: [],
       currentPhotos: [],
-      status: []
+      status: [],
     }
     const methods = [
       'overlayOn',
@@ -22,7 +22,8 @@ export default class SubleaseImage extends Component {
       'addPhotos',
       'clearNewPhotos',
       'delete',
-      'onSortEnd'
+      'onSortEnd',
+      'rotate',
     ]
     bindMethods(methods, this)
   }
@@ -60,18 +61,23 @@ export default class SubleaseImage extends Component {
           if (data.success === true) {
             currentPhotos.push(data.photo)
           } else if (data.success === false) {
-            alert('A server error prevented uploading of your image. Contact the site administrators')
+            alert(
+              'A server error prevented uploading of your image. Contact the site administrat' +
+              'ors'
+            )
             return
           }
           newPhotos.push(data.photo)
           status[key] = data.success
-          this.setState({status: status, currentPhotos: currentPhotos, newPhotos: newPhotos})
+          this.setState(
+            {status: status, currentPhotos: currentPhotos, newPhotos: newPhotos,}
+          )
         }.bind(this),
         failure: function (data) {
           newPhotos.push(data.photo)
           status[key] = false
-          this.setState({status: status, newPhotos: newPhotos})
-        }.bind(this)
+          this.setState({status: status, newPhotos: newPhotos,})
+        }.bind(this),
       })
     }.bind(this))
   }
@@ -81,8 +87,23 @@ export default class SubleaseImage extends Component {
   }
 
   overlayOff() {
-    this.setState({show: false, newPhotos: []})
+    this.setState({show: false, newPhotos: [],})
     loadPhotos.callback()
+  }
+
+  rotate(photo, key, direction) {
+    $.ajax({
+      url: './properties/SubleasePhoto/' + photo.id + '/rotate',
+      data: {
+        direction: direction
+      },
+      dataType: 'json',
+      type: 'put',
+      success: function () {
+        this.forceUpdate()
+      }.bind(this),
+      error: function () {}.bind(this),
+    })
   }
 
   delete(photo, key) {
@@ -97,13 +118,12 @@ export default class SubleaseImage extends Component {
         }
         this.setState({currentPhotos: photos})
       }.bind(this),
-      error: function () {}.bind(this)
+      error: function () {}.bind(this),
     })
   }
 
-  onSortEnd(movement)
-  {
-    const {oldIndex, newIndex} = movement
+  onSortEnd(movement) {
+    const {oldIndex, newIndex,} = movement
     const newPosition = this.state.currentPhotos[newIndex].porder
     const movingPhotoId = this.state.currentPhotos[oldIndex].id
     $.ajax({
@@ -111,10 +131,10 @@ export default class SubleaseImage extends Component {
       data: {
         subleaseId: subleaseId,
         varname: 'move',
-        newPosition: newPosition
+        newPosition: newPosition,
       },
       dataType: 'json',
-      type: 'patch'
+      type: 'patch',
     }).done(function (data) {
       if (data.success) {
         this.setState({
@@ -127,21 +147,22 @@ export default class SubleaseImage extends Component {
   render() {
     let overlay
     if (this.state.show) {
-      overlay = (<ImageOverlay
-        deletePhoto={this.delete}
-        close={this.overlayOff}
-        clear={this.clearNewPhotos}
-        update={this.addPhotos}
-        newPhotos={this.state.newPhotos}
-        currentPhotos={this.state.currentPhotos}
-        onSortEnd={this.onSortEnd}
-        status={this.state.status}/>)
+      overlay = (
+        <ImageOverlay
+          deletePhoto={this.delete}
+          rotate={this.rotate}
+          close={this.overlayOff}
+          clear={this.clearNewPhotos}
+          update={this.addPhotos}
+          newPhotos={this.state.newPhotos}
+          currentPhotos={this.state.currentPhotos}
+          onSortEnd={this.onSortEnd}
+          status={this.state.status}/>
+      )
     }
-    return (
-      <div>
-        {overlay}
-      </div>
-    )
+    return (<div>
+      {overlay}
+    </div>)
   }
 }
 
