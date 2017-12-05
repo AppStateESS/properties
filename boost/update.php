@@ -111,6 +111,10 @@ class PropertyUpgrade
             case $this->compare('2.0.9'):
                 $methodName = $this->getMethodName('2.0.9');
                 $this->$methodName($content);
+
+            case $this->compare('2.1.0'):
+                $methodName = $this->getMethodName('2.1.0');
+                $this->$methodName($content);
         }
         return $content;
     }
@@ -290,9 +294,12 @@ class PropertyUpgrade
         $updates = array('Removed major text limit', 'Added warning message when sublease lease fails.', 'Changed SubleasePhoto use name to prevent compile error.');
         $this->addContent($content, '2.0.9', $updates);
     }
-    
-    
 
+    public function v2_1_0(&$content) {
+        $updates = array('Added image rotation ability', 'Updated javascript libraries');
+        $this->addContent($content, '2.1.0', $updates);
+    }
+    
     private function addContent(&$content, $version, array $changes)
     {
         $changes_string = implode("\n+", $changes);
