@@ -80,7 +80,7 @@ export default class InputField extends Component {
       size={this.props.size}
       maxLength={this.props.maxLength}
       placeholder={this.props.placeholder}
-      autoComplete={this.props.autocomplete}/>)
+      autoComplete={this.props.autocomplete ? 'true' : 'false'}/>)
 
     if (this.props.wrap) {
       input = this.props.wrap(input)
