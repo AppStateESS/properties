@@ -1,23 +1,26 @@
 'use strict'
 import React from 'react'
 import PropTypes from 'prop-types'
-import {DateField} from 'react-date-picker'
+import DatePicker from 'react-date-picker'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import Rooms from '../Mixin/Form/Rooms.jsx'
 import InputField from '../Mixin/Form/InputField.jsx'
 import ButtonGroup from '../Mixin/Form/ButtonGroup.jsx'
 import Base from '../Mixin/Edit/Base.jsx'
-
 import Range from '../Mixin/Helper/Range.js'
-import moment from 'moment'
 import empty from '../Mixin/Helper/Empty.js'
+import './style.css'
 
 export default class Basic extends Base {
   constructor(props) {
     super(props)
-
+    this.state = {hasError : false}
     const methods = ['setMoveIn', 'updateParking', 'updateRent']
     bindMethods(methods, this)
+  }
+
+  componentDidCatch(error, info) {
+    this.setState({hasError: true})
   }
 
   updateParking(parking) {
@@ -32,7 +35,7 @@ export default class Basic extends Base {
   }
 
   setMoveIn(a) {
-    let date = String(moment(a).format('X'))
+    const date = new Date(a).getTime()/1000
     this.props.setValue('move_in_date', date)
   }
 
@@ -73,6 +76,9 @@ export default class Basic extends Base {
   }
 
   render() {
+    if (this.state.hasError == true) {
+      return <div>Basic form component experiencing errors.</div>
+    }
     const {property} = this.props
     let parking = Range(property.parking_per_unit)
     const buttonspace = {
@@ -169,8 +175,7 @@ export default class Basic extends Base {
           </div>
           <div className="col-sm-6">
             <label>Move-in date</label><br/>
-            <DateField
-              dateFormat="YYYY-MM-DD"
+            <DatePicker
               onChange={this.setMoveIn}
               value={this.formatDate(property.move_in_date)}/>
           </div>

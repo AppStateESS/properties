@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import moment from 'moment'
 import Dollarize from '../Form/Dollarize.jsx'
 
 export default class Base extends Component {
@@ -9,7 +8,8 @@ export default class Base extends Component {
   }
 
   formatDate(datenum) {
-    return String(moment(datenum * 1000).format('YYYY-MM-DD'))
+    const date = new Date(datenum * 1000)
+    return date
   }
 
   campusDistance() {

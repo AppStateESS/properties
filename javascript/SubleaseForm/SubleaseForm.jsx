@@ -6,7 +6,7 @@ import InputField from '../Mixin/Form/InputField.jsx'
 import ButtonGroup from '../Mixin/Form/ButtonGroup.jsx'
 import Rooms from '../Mixin/Form/Rooms.jsx'
 import bindMethods from '../Mixin/Helper/Bind.js'
-import {DateField} from 'react-date-picker'
+import DatePicker from 'react-date-picker'
 import Range from '../Mixin/Helper/Range.js'
 import Base from '../Mixin/Edit/Base.jsx'
 import BigCheckbox from '../Mixin/Form/BigCheckbox.jsx'
@@ -16,7 +16,8 @@ import CheckValues from '../Mixin/Helper/CheckValues.js'
 import moment from 'moment'
 import Help from '../Mixin/Html/Help.jsx'
 import UtilityFunctions from '../Mixin/Edit/UtilityFunctions.js'
-import 'react-date-picker/index.css'
+import './style.css'
+
 /* global $, subleaseCurrent */
 
 export default class SubleaseForm extends Base {
@@ -190,7 +191,7 @@ export default class SubleaseForm extends Base {
   }
 
   setMoveIn(a) {
-    let date = String(moment(a).format('X'))
+    const date = new Date(a).getTime()/1000
     this.setValue('move_in_date', date)
   }
 
@@ -206,8 +207,7 @@ export default class SubleaseForm extends Base {
   }
 
   setMoveOut(a) {
-    let date = String(moment(a).format('X'))
-    this.checkMoveOutDate(a, this.state.move_in_date)
+    const date = new Date(a).getTime()/1000
     this.setValue('move_out_date', date)
   }
 
@@ -441,15 +441,13 @@ export default class SubleaseForm extends Base {
         <div className="row">
           <div className="col-sm-6">
             <label>Move-in date</label><br/>
-            <DateField
-              dateFormat="YYYY-MM-DD"
+            <DatePicker
               onChange={this.setMoveIn}
               value={this.formatDate(sublease.move_in_date)}/>
           </div>
           <div className="col-sm-6">
             <label>Sublease end date</label><br/>
-            <DateField
-              dateFormat="YYYY-MM-DD"
+            <DatePicker
               onChange={this.setMoveOut}
               value={this.formatDate(sublease.move_out_date)}/> {moveOutError}
           </div>

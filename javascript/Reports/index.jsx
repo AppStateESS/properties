@@ -1,7 +1,6 @@
 'use strict'
 import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
-import 'react-date-picker/index.css'
 import ActivityReport from './ActivityReport.jsx'
 import StudentReport from './StudentReport.jsx'
 import bindMethods from '../Mixin/Helper/Bind.js'
