@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import empty from '../Mixin/Helper/Empty.js'
-
+import Sticky from 'react-stickynode'
 import Dollarize from '../Mixin/Form/Dollarize.jsx'
 import Message from '../Mixin/Html/Message.jsx'
 import Nav from '../Mixin/Html/Nav.jsx'
@@ -13,9 +13,6 @@ import Fees from './Fees.jsx'
 import Features from './Features.jsx'
 import Utilities from './Utilities.jsx'
 import SubmitForm from '../Mixin/Form/SubmitForm.jsx'
-import {StickyContainer, Sticky} from 'react-sticky'
-
-import 'react-date-picker/index.css'
 
 /* global $, property */
 
@@ -38,7 +35,7 @@ export default class PropertyForm extends Component {
       'deactivate',
       'checkForm',
       'unsetMessage',
-      'setIntegerValue'
+      'setIntegerValue',
     ]
     bindMethods(methods, this)
   }
@@ -96,7 +93,13 @@ export default class PropertyForm extends Component {
   }
 
   navButtons() {
-    return ['Basic', 'Utilities', 'Features', 'Pets', 'Deposits and Fees']
+    return [
+      'Basic',
+      'Utilities',
+      'Features',
+      'Pets',
+      'Deposits and Fees',
+    ]
   }
 
   checkForm(e) {
@@ -168,7 +171,7 @@ export default class PropertyForm extends Component {
     let url = './properties/Property'
     if (property.id > 0) {
       methodName = 'PUT'
-      url = url + '/' + + this.state.property.id
+      url = url + '/' + +this.state.property.id
     }
 
     $.ajax({
@@ -184,7 +187,10 @@ export default class PropertyForm extends Component {
         }
       }.bind(this),
       error: function () {
-        this.setMessage('A server error prevented this property from saving.', 'danger')
+        this.setMessage(
+          'A server error prevented this property from saving.',
+          'danger'
+        )
       }.bind(this)
     })
   }
@@ -202,7 +208,9 @@ export default class PropertyForm extends Component {
   }
 
   basicComplete() {
-    return (!empty(this.state.property.name) && !empty(this.state.property.address) && !empty(this.state.property.monthly_rent))
+    return (
+      !empty(this.state.property.name) && !empty(this.state.property.address) && !empty(this.state.property.monthly_rent)
+    )
   }
 
   render() {
@@ -265,26 +273,22 @@ export default class PropertyForm extends Component {
     }
 
     return (
-      <StickyContainer>
-        <div ref="PageTop" className="property-form">
-          {message}
-          <h2>Property for {this.state.property.company_name}</h2>
-          <div>{activateButton}</div>
-          <Sticky style={{
-            zIndex: '100'
-          }}>
-            <Nav
-              buttons={this.navButtons()}
-              active={this.state.activeTab}
-              disable={this.basicComplete()
-              ? null
-              : [1, 2, 3, 4]}
-              click={this.setTab}/>
-          </Sticky>
+      <div ref="PageTop" className="property-form">
+        {message}
+        <h2>Property for {this.state.property.company_name}</h2>
+        <div>{activateButton}</div>
+        <Sticky innerZ="100">
+        <Nav
+          buttons={this.navButtons()}
+          active={this.state.activeTab}
+          disable={this.basicComplete()
+            ? null
+            : [1, 2, 3, 4,]}
+          click={this.setTab}/>
+        </Sticky>
           {section}
-          <SubmitForm check={this.checkForm} saving={this.state.saving} label="Property"/>
-        </div>
-      </StickyContainer>
+        <SubmitForm check={this.checkForm} saving={this.state.saving} label="Property"/>
+      </div>
     )
   }
 }
