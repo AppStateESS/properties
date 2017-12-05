@@ -1,16 +1,16 @@
 'use strict'
 import React, {Component} from 'react'
 import InputField from '../Mixin/Form/InputField.jsx'
-import {DateField} from 'react-date-picker'
+import DatePicker from 'react-date-picker'
 import RoommateObject from '../Mixin/Objects/RoommateObject.js'
 import moment from 'moment'
-import 'react-date-picker/index.css'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import Select from 'react-select'
 import 'react-select/dist/react-select.css'
 import ProfileData from '../Mixin/Objects/ProfileData.js'
 import CheckValues from '../Mixin/Helper/CheckValues.js'
 import Message from '../Mixin/Html/Message.jsx'
+import './style.css'
 
 /* global $ */
 
@@ -121,7 +121,7 @@ export default class RoommateForm extends Component {
   }
 
   setMoveIn(a) {
-    let date = String(moment(a).format('X'))
+    const date = new Date(a).getTime()/1000
     this.setValue('move_in_date', date)
   }
 
@@ -144,7 +144,8 @@ export default class RoommateForm extends Component {
   }
 
   formatDate(datenum) {
-    return String(moment(datenum * 1000).format('YYYY-MM-DD'))
+    const date = new Date(datenum * 1000)
+    return date
   }
 
   checkEmail() {
@@ -336,8 +337,7 @@ export default class RoommateForm extends Component {
           <div className="col-sm-6">
             <label>I am ready to be a roommate after
             </label>
-            <DateField
-              dateFormat="YYYY-MM-DD"
+            <DatePicker
               onChange={this.setMoveIn}
               value={this.formatDate(roommate.move_in_date)}/>
           </div>

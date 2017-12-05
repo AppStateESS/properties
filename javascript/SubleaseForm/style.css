@@ -1,0 +1,9 @@
+.react-date-picker__button {
+  border-radius : 6px;
+  padding: 3px;
+  background-color : white;
+}
+
+.react-date-picker__calendar {
+  z-index : 100;
+}
