@@ -120,8 +120,13 @@ abstract class Photo extends Base
 
     protected function resize($file)
     {
-        return \phpws\PHPWS_File::scaleImage($file, $file, PROP_MAX_IMAGE_WIDTH,
-                        PROP_MAX_IMAGE_HEIGHT);
+        if (PROP_CROP_IMAGES) {
+            return \phpws\PHPWS_File::cropImage($file, $file,
+                            PROP_MAX_IMAGE_WIDTH, PROP_MAX_IMAGE_HEIGHT);
+        } else {
+            return \phpws\PHPWS_File::scaleImage($file, $file,
+                            PROP_MAX_IMAGE_WIDTH, PROP_MAX_IMAGE_HEIGHT);
+        }
     }
 
     public function moveImage($pic, $owner_id)
@@ -242,11 +247,12 @@ abstract class Photo extends Base
         return (int) $db->selectColumn();
     }
 
-    public function rotate($photo, $direction) {
+    public function rotate($photo, $direction)
+    {
         $this->rotateImage($photo->path, $direction);
         $this->rotateImage($this->thumbnailed($photo->path), $direction);
     }
-    
+
     public function rotateImage($imageFile, $direction)
     {
         if (!is_file($imageFile)) {

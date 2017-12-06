@@ -73,6 +73,8 @@ define('SMOKER', 2);
 
 define('PROP_MAX_IMAGE_WIDTH', 1200);
 define('PROP_MAX_IMAGE_HEIGHT', 1000);
+// Crops oversized images over just resizing.
+define('PROP_CROP_IMAGES', true);
 
 // 30 days
 define('PROPERTIES_FORWARD_TIMEOUT', 2592000);
