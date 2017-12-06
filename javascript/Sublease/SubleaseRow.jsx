@@ -38,14 +38,15 @@ export default class SubleaseRow extends Row {
     }
 
     if (sublease.thumbnail !== '') {
-      image = <img src={sublease.thumbnail} className="img-responsive"/>
+      const thumbStyle = {backgroundImage : `url('${sublease.thumbnail}')`}
+      image = <div className="property-thumbnail" style={thumbStyle}></div>
     }
     return (
       <div className="row sublease-row">
-        <div className="col-sm-3 col-md-3 text-center">
+        <div className="col-sm-4 img-column">
           <a href={link}>{image}</a>
         </div>
-        <div className="col-sm-9 col-md-9">
+        <div className="col-sm-8">
           <h4 className={titleClass}>
             <a href={link}>{sublease.name}</a>
           </h4>

@@ -73,7 +73,8 @@ export default class PropertyRow extends Row {
       </div>
     )
     if (property.thumbnail !== '') {
-      image = <img src={property.thumbnail} className="img-responsive"/>
+      const thumbStyle = {backgroundImage : `url('${property.thumbnail}')`}
+      image = <div className="property-thumbnail" style={thumbStyle}></div>
     }
 
     let timeout
@@ -101,10 +102,10 @@ export default class PropertyRow extends Row {
 
     return (
       <div className="row property-row">
-        <div className="col-sm-3 col-md-3 text-center">
+        <div className="col-sm-4 img-column">
           <a href={link}>{image}</a>
         </div>
-        <div className="col-sm-9 col-md-9">
+        <div className="col-sm-8">
           <h4 className={titleClass}>
             <a href={link}>{property.name}</a>
           </h4>

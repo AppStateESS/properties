@@ -84,3 +84,23 @@ div.alert a {
 .list-unstyled {
     margin : 0px;
 }
+
+.property-thumbnail {
+    display: block;
+    height: 100%;
+    margin-bottom: 6px;
+    border: 1px solid transparent;
+    background-position: 50% 50%;
+    background-size : cover;
+    background-repeat: no-repeat;
+}
+
+.img-column {
+    height : 200px;
+}
+
+@media screen and (max-width: 768px) {
+    .img-column {
+        height : 280px;
+    }
+}
