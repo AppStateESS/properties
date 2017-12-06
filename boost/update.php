@@ -119,6 +119,10 @@ class PropertyUpgrade
             case $this->compare('2.1.1'):
                 $methodName = $this->getMethodName('2.1.1');
                 $this->$methodName($content);
+
+            case $this->compare('2.1.2'):
+                $methodName = $this->getMethodName('2.1.2');
+                $this->$methodName($content);
         }
         return $content;
     }
@@ -309,6 +313,12 @@ class PropertyUpgrade
     {
         $updates = array('Fixed tooltips not working on updated list items', 'Photo cropping option added and made default.', 'Row thumbnail responsively sized.');
         $this->addContent($content, '2.1.1', $updates);
+    }
+
+    public function v2_1_2(&$content)
+    {
+        $updates = array('Production javascript hashes added.');
+        $this->addContent($content, '2.1.2', $updates);
     }
 
     private function addContent(&$content, $version, array $changes)
