@@ -7,6 +7,7 @@ import SearchBar from '../Mixin/List/SearchBar.jsx'
 import DecodeUrl from '../Mixin/Helper/DecodeUrl.js'
 import PropertyListing from './PropertyListing.jsx'
 import Base from '../Mixin/List/Base.jsx'
+import ReactTooltip from 'react-tooltip'
 
 /* global $ */
 
@@ -74,6 +75,7 @@ export default class Property extends Base {
       } else {
         this.setState({properties: data.properties, manager: data.manager, moreRows: data.more_rows})
       }
+      ReactTooltip.rebuild()
     }.bind(this)).fail(function () {
       this.setState({managers: null, loading: false})
       this.setMessage('Error: failure pulling properties')

@@ -5,6 +5,8 @@ import bindMethods from '../Mixin/Helper/Bind.js'
 import Listing from './Listing.jsx'
 import SearchBar from '../Mixin/List/SearchBar.jsx'
 import Base from '../Mixin/List/Base.jsx'
+import ReactTooltip from 'react-tooltip'
+
 /* global $ */
 
 export default class Property extends Base {
@@ -36,6 +38,7 @@ export default class Property extends Base {
       } else {
         this.setState({subleases: data.subleases, moreRows: data.more_rows})
       }
+      ReactTooltip.rebuild()
     }.bind(this)).fail(function () {
       this.setState({loading: false})
       this.setMessage('Error: failure pulling subleases')
