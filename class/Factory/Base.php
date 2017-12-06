@@ -73,10 +73,24 @@ abstract class Base extends \phpws2\ResourceFactory
         if (PROPERTIES_REACT_DEV) {
             $path = "dev/$filename.js";
         } else {
-            $path = "build/$filename.js";
+            $path = 'build/' . $this->getAssetPath($filename);
         }
         $script = "<script type='text/javascript' src='{$root_directory}$path'></script>";
         return $script;
+    }
+    
+    private function getAssetPath($scriptName)
+    {
+        $rootDirectory = PHPWS_SOURCE_DIR . 'mod/properties/';
+        if (!is_file($rootDirectory . 'assets.json')) {
+            exit('Missing assets.json file. Run npm run prod in stories directory.');
+        }
+        $jsonRaw = file_get_contents($rootDirectory . 'assets.json');
+        $json = json_decode($jsonRaw, true);
+        if (!isset($json[$scriptName]['js'])) {
+            throw new \Exception('Script file not found among assets.');
+        }
+        return $json[$scriptName]['js'];
     }
 
     public function reactView($view_name)

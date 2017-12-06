@@ -1,0 +1,74 @@
+{
+  "propertyform": {
+    "js": "propertyform.77ed39e5.min.js"
+  },
+  "subleaseform": {
+    "js": "subleaseform.9b5eb963.min.js"
+  },
+  "roommateform": {
+    "js": "roommateform.c8e44491.min.js"
+  },
+  "reports": {
+    "js": "reports.d89eb95a.min.js"
+  },
+  "subleaseimage": {
+    "js": "subleaseimage.d8038f87.min.js"
+  },
+  "propertyimage": {
+    "js": "propertyimage.70f98d7b.min.js"
+  },
+  "property": {
+    "js": "property.6e7bacdf.min.js"
+  },
+  "managerdesktop": {
+    "js": "managerdesktop.82803337.min.js"
+  },
+  "settings": {
+    "js": "settings.5f6d259a.min.js"
+  },
+  "sublease": {
+    "js": "sublease.ad8620d8.min.js"
+  },
+  "propertydelete": {
+    "js": "propertydelete.919816d3.min.js"
+  },
+  "banuser": {
+    "js": "banuser.34cbe79a.min.js"
+  },
+  "subleasephoto": {
+    "js": "subleasephoto.2dd3e8b1.min.js"
+  },
+  "photo": {
+    "js": "photo.8e27f3d3.min.js"
+  },
+  "manager": {
+    "js": "manager.0d0d3dca.min.js"
+  },
+  "roommatelist": {
+    "js": "roommatelist.bf3fc3cb.min.js"
+  },
+  "managerapproval": {
+    "js": "managerapproval.c9068fa9.min.js"
+  },
+  "managersignup": {
+    "js": "managersignup.9db68718.min.js"
+  },
+  "managersignin": {
+    "js": "managersignin.f349ec00.min.js"
+  },
+  "manageredit": {
+    "js": "manageredit.17067822.min.js"
+  },
+  "passwordchange": {
+    "js": "passwordchange.923fa3e0.min.js"
+  },
+  "managerpasswordchange": {
+    "js": "managerpasswordchange.281a62fb.min.js"
+  },
+  "roommatedelete": {
+    "js": "roommatedelete.0ce4563d.min.js"
+  },
+  "vendor": {
+    "js": "vendor.37709b63.js"
+  }
+}
