@@ -8,6 +8,17 @@ export default class Fees extends Component {
   constructor(props) {
     super(props)
     this.state = {}
+    this.setToZero = this.setToZero.bind(this)
+  }
+
+  setToZero(varname) {
+    let value = this.props.property[varname]
+
+    value = value.replace(/[^\d]/g, '')
+    if (value == '') {
+      value = '0'
+    }
+    this.props.setValue(varname, value)
   }
 
   render() {
@@ -21,7 +32,7 @@ export default class Fees extends Component {
             <BooleanButton
               name="security_refund"
               current={property.security_refund}
-              label={['Deposit refunded', 'Nonrefundable']}
+              label={['Deposit refunded', 'Nonrefundable',]}
               handleClick={this.props.setValue.bind(this, 'security_refund')}/>
             <div className="input-group">
               <span className="input-group-addon">$</span>
@@ -30,6 +41,7 @@ export default class Fees extends Component {
                 type="text"
                 maxLength={6}
                 value={property.security_amt}
+                blur={this.setToZero.bind(this, 'security_amt')}
                 change={this.props.setValue.bind(this, 'security_amt')}/>
               <span className="input-group-addon">.00</span>
             </div>
@@ -40,13 +52,14 @@ export default class Fees extends Component {
               name="admin_fee_refund"
               handleClick={this.props.setValue.bind(this, 'admin_fee_refund')}
               current={property.admin_fee_refund}
-              label={['Admin fee refunded', 'Nonrefundable']}/>
+              label={['Admin fee refunded', 'Nonrefundable',]}/>
             <div className="input-group">
               <span className="input-group-addon">$</span>
               <InputField
                 name="admin_fee_amt"
                 maxLength={6}
                 type="text"
+                blur={this.setToZero.bind(this, 'admin_fee_amt')}
                 value={property.admin_fee_amt}
                 change={this.props.setValue.bind(this, 'admin_fee_amt')}/>
               <span className="input-group-addon">.00</span>
@@ -58,7 +71,7 @@ export default class Fees extends Component {
               name="clean_fee_refund"
               handleClick={this.props.setValue.bind(this, 'clean_fee_refund')}
               current={property.clean_fee_refund}
-              label={['Fee refunded', 'Nonrefundable']}/>
+              label={['Fee refunded', 'Nonrefundable',]}/>
             <div className="input-group">
               <span className="input-group-addon">$</span>
               <InputField
@@ -66,6 +79,7 @@ export default class Fees extends Component {
                 type="text"
                 maxLength={6}
                 value={property.clean_fee_amt}
+                blur={this.setToZero.bind(this, 'clean_fee_amt')}
                 change={this.props.setValue.bind(this, 'clean_fee_amt')}/>
               <span className="input-group-addon">.00</span>
             </div>
@@ -79,6 +93,7 @@ export default class Fees extends Component {
                 maxLength={6}
                 type="text"
                 value={property.parking_fee}
+                blur={this.setToZero.bind(this, 'parking_fee')}
                 change={this.props.setValue.bind(this, 'parking_fee')}/>
               <span className="input-group-addon">.00</span>
             </div>

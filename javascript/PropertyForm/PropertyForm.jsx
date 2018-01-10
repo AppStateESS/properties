@@ -204,6 +204,7 @@ export default class PropertyForm extends Component {
     if (property.heat_type.length === 0) {
       property.heat_type = ''
     }
+
     return property
   }
 

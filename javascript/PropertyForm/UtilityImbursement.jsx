@@ -7,7 +7,17 @@ import Dollarize from '../Mixin/Form/Dollarize.jsx'
 export default class UtilityImbursement extends Component {
   constructor(props) {
     super(props)
-    this.state = {}
+    this.setToZero = this.setToZero.bind(this)
+  }
+
+  setToZero(varname) {
+    let value = this.props.property[varname]
+
+    value = value.replace(/[^\d]/g, '')
+    if (value == '') {
+      value = '0'
+    }
+    this.props.setValue(varname, value)
   }
 
   render() {
@@ -23,6 +33,7 @@ export default class UtilityImbursement extends Component {
               <InputField
                 name="util_cable"
                 value={property.util_cable}
+                blur={this.setToZero.bind(this, 'util_cable')}
                 change={this.props.setValue.bind(this, 'util_cable')}/>
             </Dollarize>
           </div>
@@ -32,6 +43,7 @@ export default class UtilityImbursement extends Component {
               <InputField
                 name="util_fuel"
                 value={property.util_fuel}
+                blur={this.setToZero.bind(this, 'util_fuel')}
                 change={this.props.setValue.bind(this, 'util_fuel')}/>
             </Dollarize>
           </div>
@@ -41,6 +53,7 @@ export default class UtilityImbursement extends Component {
               <InputField
                 name="util_internet"
                 value={property.util_internet}
+                blur={this.setToZero.bind(this, 'util_internet')}
                 change={this.props.setValue.bind(this, 'util_internet')}/>
             </Dollarize>
           </div>
@@ -50,6 +63,7 @@ export default class UtilityImbursement extends Component {
               <InputField
                 name="util_phone"
                 value={property.util_phone}
+                blur={this.setToZero.bind(this, 'util_phone')}
                 change={this.props.setValue.bind(this, 'util_phone')}/>
             </Dollarize>
           </div>
@@ -59,6 +73,7 @@ export default class UtilityImbursement extends Component {
               <InputField
                 name="util_power"
                 value={property.util_power}
+                blur={this.setToZero.bind(this, 'util_power')}
                 change={this.props.setValue.bind(this, 'util_power')}/>
             </Dollarize>
           </div>
@@ -68,6 +83,7 @@ export default class UtilityImbursement extends Component {
               <InputField
                 name="util_trash"
                 value={property.util_trash}
+                blur={this.setToZero.bind(this, 'util_trash')}
                 change={this.props.setValue.bind(this, 'util_trash')}/>
             </Dollarize>
           </div>
@@ -77,6 +93,7 @@ export default class UtilityImbursement extends Component {
               <InputField
                 name="util_water"
                 value={property.util_water}
+                blur={this.setToZero.bind(this, 'util_water')}
                 change={this.props.setValue.bind(this, 'util_water')}/>
             </Dollarize>
           </div>

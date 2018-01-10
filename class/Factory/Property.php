@@ -158,14 +158,15 @@ class Property extends Base
         $r = $this->load($request->pullPutInteger('id'), $manager_id);
 
         try {
-            $r->loadPutByType($request,
-                    array('active', 'company_name', 'heat_type', 'created', 'updated', 'thumbnail', 'timeout'));
+            $hide = array('active', 'company_name', 'heat_type', 'created',
+                'updated', 'thumbnail', 'timeout');
+            
+            $r->loadPutByType($request,$hide);
             $heat_type = $request->pullPutVar('heat_type');
             if (empty($heat_type)) {
                 $heat_type = array();
             }
             $r->heat_type = $heat_type;
-
             self::save($r);
             return array('id' => $r->getId());
         } catch (\Exception $e) {
@@ -212,7 +213,7 @@ class Property extends Base
         $tpl['photo_edit_button'] = null;
         if ($admin) {
             $property_id = $property->id;
-            NavBar::addOption('<hr />', true);
+            //NavBar::addOption('<hr />', true);
             NavBar::addOption('<a onClick="deleteProperty.callback()" class="pointer"><i class="fa fa-trash-o"></i>&nbsp;Delete property</a>',
                     true);
             NavBar::addOption("<a href='./properties/Property/$property_id/edit'><i class='fa fa-edit'></i>&nbsp;Edit property</a>",

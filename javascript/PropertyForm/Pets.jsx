@@ -17,6 +17,16 @@ export default class Pets extends Component {
     }
   }
 
+  setToZero(varname) {
+    let value = this.props.property[varname]
+
+    value = value.replace(/[^\d]/g, '')
+    if (value == '') {
+      value = '0'
+    }
+    this.props.setValue(varname, value)
+  }
+
   togglePets(allowed) {
     this.props.setValue('pets_allowed', allowed)
   }
@@ -51,6 +61,7 @@ export default class Pets extends Component {
                   name="pet_deposit"
                   type="text"
                   value={property.pet_deposit}
+                  blur={this.setToZero.bind(this, 'pet_deposit')}
                   disabled={!property.pets_allowed}
                   change={this.props.setValue.bind(this, 'pet_deposit')}/>
                 <span className="input-group-addon">.00</span>
@@ -65,6 +76,7 @@ export default class Pets extends Component {
                   type="text"
                   disabled={!property.pets_allowed}
                   value={property.pet_fee}
+                  blur={this.setToZero.bind(this, 'pet_fee')}
                   change={this.props.setValue.bind(this, 'pet_fee')}/>
                 <span className="input-group-addon">.00</span>
               </div>
