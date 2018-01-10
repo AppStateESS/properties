@@ -127,6 +127,10 @@ class PropertyUpgrade
             case $this->compare('2.1.3'):
                 $methodName = $this->getMethodName('2.1.3');
                 $this->$methodName($content);
+
+            case $this->compare('2.1.4'):
+                $methodName = $this->getMethodName('2.1.4');
+                $this->$methodName($content);
         }
         return $content;
     }
@@ -329,6 +333,12 @@ class PropertyUpgrade
     {
         $updates = array('Fixed admin unable to rotate sublease images.');
         $this->addContent($content, '2.1.3', $updates);
+    }
+
+    public function v2_1_4(&$content)
+    {
+        $updates = array('Fixed empty property fees causing save errors.');
+        $this->addContent($content, '2.1.4', $updates);
     }
 
     private function addContent(&$content, $version, array $changes)
