@@ -8,7 +8,6 @@ export default class Base extends Component {
   constructor(props) {
     super(props)
     this.state = {}
-    this.offset = 0
     this.delay
     this.searchVars = {
       beds: '1',
@@ -16,6 +15,7 @@ export default class Base extends Component {
       minprice: '0',
       maxprice: '0',
       search: '',
+      offset: 0,
       showinactive: null
     }
     this.loadAmenities()
@@ -34,7 +34,7 @@ export default class Base extends Component {
 
   clearSearch() {
     this.searchVars.search = ''
-    this.offset = 0
+    this.searchVars.offset = 0
     this.load()
     this.updateLink()
   }
@@ -50,9 +50,9 @@ export default class Base extends Component {
       beds: '1',
       baths: '1',
       minprice: '0',
-      maxprice: '0'
+      maxprice: '0',
+      offset: 0
     }
-    this.offset = 0
     this.load()
     this.updateLink()
   }
@@ -75,7 +75,7 @@ export default class Base extends Component {
     this.searchVars.townhouse = null
     this.searchVars.duplex = null
     this.searchVars.workout = null
-    this.offset = 0
+    this.searchVars.offset = 0
     this.load()
     this.updateLink()
   }
@@ -88,7 +88,7 @@ export default class Base extends Component {
     }
     this.delay = setTimeout(function () {
       this.searchVars.search = search
-      this.offset = 0
+      this.searchVars.offset = 0
       this.load()
       this.updateLink()
     }.bind(this, search), 500)
@@ -97,7 +97,7 @@ export default class Base extends Component {
   updateSearchVars(varname, value)
   {
     this.searchVars[varname] = value
-    this.offset = 0
+    this.searchVars.offset = 0
     this.load()
     this.updateLink()
   }
@@ -109,7 +109,7 @@ export default class Base extends Component {
   }
 
   showMore() {
-    this.offset = this.offset + 1
+    this.searchVars.offset = parseInt(this.searchVars.offset) + 1
     this.load()
   }
 
@@ -138,6 +138,7 @@ export default class Base extends Component {
       townhouse: setIfDefined(url.values, 'townhouse', '0'),
       duplex: setIfDefined(url.values, 'duplex', '0'),
       sortBy: setIfDefined(url.values, 'sortBy'),
+      offset: setIfDefined(url.values, 'offset', 0),
       search: setIfDefined(url.values, 'search')
     }
   }

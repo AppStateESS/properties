@@ -58,8 +58,8 @@ export default class Property extends Base {
   load() {
     const sendData = this.searchVars
     sendData.managerId = this.managerId
-    if (this.offset > 0) {
-      sendData.offset = this.offset
+    if (this.searchVars.offset > 0) {
+      sendData.offset = this.searchVars.offset
     }
     $.getJSON('./properties/Property', sendData).done(function (data) {
       // bad manager id
@@ -70,7 +70,7 @@ export default class Property extends Base {
       if (data.active_button !== undefined) {
         this.showActiveButton = data.active_button
       }
-      if (this.offset > 0) {
+      if (this.searchVars.offset > 0) {
         this.setState({properties: this.state.properties.concat(data.properties), manager: data.manager, moreRows: data.more_rows})
       } else {
         this.setState({properties: data.properties, manager: data.manager, moreRows: data.more_rows})
