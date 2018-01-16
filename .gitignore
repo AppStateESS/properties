@@ -1,5 +1,6 @@
 *~
 /.babelrc
+/assets.json
 /.idea/
 /nbproject/private/
 /node_modules/
