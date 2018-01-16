@@ -131,6 +131,10 @@ class PropertyUpgrade
             case $this->compare('2.1.4'):
                 $methodName = $this->getMethodName('2.1.4');
                 $this->$methodName($content);
+
+            case $this->compare('2.1.5'):
+                $methodName = $this->getMethodName('2.1.5');
+                $this->$methodName($content);
         }
         return $content;
     }
@@ -339,6 +343,12 @@ class PropertyUpgrade
     {
         $updates = array('Fixed empty property fees causing save errors.');
         $this->addContent($content, '2.1.4', $updates);
+    }
+
+    public function v2_1_5(&$content)
+    {
+        $updates = array('Fixed Show more logic breaking searching.');
+        $this->addContent($content, '2.1.5', $updates);
     }
 
     private function addContent(&$content, $version, array $changes)
