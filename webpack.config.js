@@ -9,6 +9,11 @@ module.exports = {
     path: setup.path.join(setup.APP_DIR, "dev"),
     filename: "[name].js",
   },
+  resolve: {
+    extensions: [
+      '.js', '.jsx',
+    ],
+  },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin(
       {name: 'vendor', filename: 'vendor.js',}

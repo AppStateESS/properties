@@ -11,6 +11,11 @@ module.exports = {
     filename: '[name].[chunkhash:8].min.js',
     chunkFilename: '[name].[chunkhash:8].chunk.js',
   },
+  resolve: {
+    extensions: [
+      '.js', '.jsx',
+    ],
+  },
   module: {
     rules: [
       {
