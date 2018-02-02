@@ -14,8 +14,9 @@ export default class Property extends Base {
     super(props)
     this.state = {
       subleases: null,
-      moreRows : true,
+      moreRows: true
     }
+    this.loadAmenities()
     bindMethods(['load'], this)
   }
 
@@ -34,9 +35,12 @@ export default class Property extends Base {
         this.showActiveButton = data.active_button
       }
       if (this.offset > 0) {
-        this.setState({subleases: this.state.subleases.concat(data.subleases), moreRows: data.more_rows})
+        this.setState({
+          subleases: this.state.subleases.concat(data.subleases),
+          moreRows: data.more_rows,
+        })
       } else {
-        this.setState({subleases: data.subleases, moreRows: data.more_rows})
+        this.setState({subleases: data.subleases, moreRows: data.more_rows,})
       }
       ReactTooltip.rebuild()
     }.bind(this)).fail(function () {
@@ -67,9 +71,13 @@ export default class Property extends Base {
           sortType={this.sortType}
           facilities={false}
           toggle={this.toggle}/>
-        <Listing subleases={this.state.subleases} search={!empty(this.search)}/>
-        {this.state.moreRows === true ?
-        <div className="text-center"><button className="btn btn-primary" onClick={this.showMore}>Show more results</button></div> : null}
+        <Listing subleases={this.state.subleases} search={!empty(this.search)}/> {
+          this.state.moreRows === true
+            ? <div className="text-center">
+                <button className="btn btn-primary" onClick={this.showMore}>Show more results</button>
+              </div>
+            : null
+        }
       </div>
     )
   }

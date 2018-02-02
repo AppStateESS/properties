@@ -19,8 +19,9 @@ export default class Property extends Base {
       manager: null,
       message: '',
       type: null,
-      moreRows : true,
+      moreRows: true,
     }
+    this.loadAmenities()
     this.showActiveButton = false
     this.managerId = 0
     bindMethods(['load'], this)
@@ -64,16 +65,27 @@ export default class Property extends Base {
     $.getJSON('./properties/Property', sendData).done(function (data) {
       // bad manager id
       if (data.manager === false) {
-        this.setState({properties: [], manager: null, moreRows:false})
+        this.setState({properties: [], manager: null, moreRows: false})
         return
       }
       if (data.active_button !== undefined) {
         this.showActiveButton = data.active_button
       }
+      // offset is > 0 but there aren't any rows
       if (this.searchVars.offset > 0) {
-        this.setState({properties: this.state.properties.concat(data.properties), manager: data.manager, moreRows: data.more_rows})
+        if (data.properties.length == 0) {
+          this.clearSearch()
+          return
+        }
+        this.setState({
+          properties: this.state.properties.concat(data.properties),
+          manager: data.manager,
+          moreRows: data.more_rows
+        })
       } else {
-        this.setState({properties: data.properties, manager: data.manager, moreRows: data.more_rows})
+        this.setState(
+          {properties: data.properties, manager: data.manager, moreRows: data.more_rows}
+        )
       }
       ReactTooltip.rebuild()
     }.bind(this)).fail(function () {
@@ -98,7 +110,9 @@ export default class Property extends Base {
     return (
       <div>
         {message}
-        <h3><a href="./properties/Property/list/">Properties:</a> {manager}</h3>
+        <h3>
+          <a href="./properties/Property/list/">Properties:</a>
+          {manager}</h3>
         <SearchBar
           updateSearchString={this.updateSearchString}
           clear={this.clearSearch}
@@ -110,9 +124,13 @@ export default class Property extends Base {
           updateSortBy={this.updateSortBy}
           sortType={this.sortType}
           toggle={this.toggle}/>
-        <PropertyListing list={this.state.properties} search={!empty(this.search)}/>
-        {this.state.moreRows === true ?
-        <div className="text-center"><button className="btn btn-primary" onClick={this.showMore}>Show more results</button></div> : null}
+        <PropertyListing list={this.state.properties} search={!empty(this.search)}/> {
+          this.state.moreRows === true
+            ? <div className="text-center">
+                <button className="btn btn-primary" onClick={this.showMore}>Show more results</button>
+              </div>
+            : null
+        }
       </div>
     )
   }
