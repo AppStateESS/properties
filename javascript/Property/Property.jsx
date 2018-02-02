@@ -73,7 +73,7 @@ export default class Property extends Base {
       }
       // offset is > 0 but there aren't any rows
       if (this.searchVars.offset > 0) {
-        if (data.properties.length == 0) {
+        if (data.properties.length == 0 || this.state.properties == null) {
           this.clearSearch()
           return
         }
