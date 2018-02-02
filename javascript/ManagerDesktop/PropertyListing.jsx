@@ -22,7 +22,7 @@ export default class PropertyListing extends Component {
           property={value}
           key={key}
           showTimeout={true}
-          reactivate={this.props.reactivate.bind(this, value.id)}/>
+          reactivate={this.props.reactivate.bind(this, key)}/>
       }.bind(this))
       return (
         <div>{rows}</div>
