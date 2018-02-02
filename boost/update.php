@@ -135,6 +135,10 @@ class PropertyUpgrade
             case $this->compare('2.1.5'):
                 $methodName = $this->getMethodName('2.1.5');
                 $this->$methodName($content);
+
+            case $this->compare('2.1.6'):
+                $methodName = $this->getMethodName('2.1.6');
+                $this->$methodName($content);
         }
         return $content;
     }
@@ -350,10 +354,16 @@ class PropertyUpgrade
         $updates = array('Fixed Show more logic breaking searching.');
         $this->addContent($content, '2.1.5', $updates);
     }
+    
+    public function v2_1_6(&$content)
+    {
+        $updates = array('Added search bar to manager desktop', 'Added sort options to manager desktop', 'Fixed Show more button on manager desktop');
+        $this->addContent($content, '2.1.6', $updates);
+    }
 
     private function addContent(&$content, $version, array $changes)
     {
-        $changes_string = implode("\n+", $changes);
+        $changes_string = implode("\n+ ", $changes);
         $content[] = <<<EOF
 <pre>
 Version $version
