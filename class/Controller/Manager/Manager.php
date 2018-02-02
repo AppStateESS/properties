@@ -46,8 +46,13 @@ class Manager extends User
     {
         $listing = new Listing;
         $listing->show_inactive = true;
+        $listing->offset = $request->pullGetString('offset');
         $listing->manager_id = $this->id;
+        $listing->search_string = $request->pullGetString('search', true);
+        $listing->sort_by = $request->pullGetString('sortBy', true);
+
         $json['properties'] = $listing->get(true);
+        $json['more_rows'] = $listing->more_rows;
         return $json;
     }
 
