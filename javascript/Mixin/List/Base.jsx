@@ -18,7 +18,6 @@ export default class Base extends Component {
       offset: 0,
       showinactive: null
     }
-    this.loadAmenities()
 
     bindMethods([
       'toggle',
@@ -38,9 +37,10 @@ export default class Base extends Component {
     this.load()
     this.updateLink()
   }
-
+  
   updateSortBy(type) {
     this.searchVars.sortBy = type
+    this.searchVars.offset = 0
     this.load()
     this.updateLink()
   }
