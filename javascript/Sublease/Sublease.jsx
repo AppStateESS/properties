@@ -27,14 +27,18 @@ export default class Property extends Base {
   load() {
     const sendData = this.searchVars
     sendData.managerId = this.managerId
-    if (this.offset > 0) {
-      sendData.offset = this.offset
+    if (this.searchVars.offset > 0) {
+      sendData.offset = this.searchVars.offset
     }
     $.getJSON('./properties/Sublease', sendData).done(function (data) {
       if (data.active_button !== undefined) {
         this.showActiveButton = data.active_button
       }
-      if (this.offset > 0) {
+      if (this.searchVars.offset > 0) {
+        if (data.subleases.length == 0 || this.state.subleases == null) {
+          this.clearSearch()
+          return
+        }
         this.setState({
           subleases: this.state.subleases.concat(data.subleases),
           moreRows: data.more_rows,
