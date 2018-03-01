@@ -121,12 +121,31 @@ abstract class Photo extends Base
     protected function resize($file)
     {
         if (PROP_CROP_IMAGES) {
-            return \phpws\PHPWS_File::cropImage($file, $file,
-                            PROP_MAX_IMAGE_WIDTH, PROP_MAX_IMAGE_HEIGHT);
+            return $this->cropImage($file);
         } else {
             return \phpws\PHPWS_File::scaleImage($file, $file,
                             PROP_MAX_IMAGE_WIDTH, PROP_MAX_IMAGE_HEIGHT);
         }
+    }
+
+    private function cropImage($file)
+    {
+        list($current_width, $current_height) = getimagesize($file);
+        $ratio = round($current_width / $current_height, 1);
+
+        if ($current_width >= $current_height) {
+            $scale_width = floor(PROP_MAX_IMAGE_WIDTH * $ratio);
+            $scale_height = PROP_MAX_IMAGE_HEIGHT;
+        } else {
+            $scale_width = PROP_MAX_IMAGE_WIDTH;
+            $scale_height = floor(PROP_MAX_IMAGE_HEIGHT / $ratio);
+        }
+
+        \phpws\PHPWS_File::scaleImage($file, $file, $scale_width,
+                $scale_height);
+
+        return \phpws\PHPWS_File::cropImage($file, $file, PROP_MAX_IMAGE_WIDTH,
+                PROP_MAX_IMAGE_HEIGHT);
     }
 
     public function moveImage($pic, $owner_id)
