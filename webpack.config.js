@@ -4,9 +4,7 @@ var Promise = require('es6-promise').polyfill()
 var BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 
 module.exports = {
-  entry: [
-    'babel-polyfill', setup.entry,
-  ],
+  entry: setup.entry,
   output: {
     path: setup.path.join(setup.APP_DIR, "dev"),
     filename: "[name].js",
