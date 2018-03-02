@@ -15,7 +15,7 @@ class PasswordChange extends Component {
       username: '',
       passwordError: null,
       usernameError: null,
-      message: null
+      message: null,
     }
     bindMethod([
       'updateUsername',
@@ -24,16 +24,16 @@ class PasswordChange extends Component {
       'checkPassword',
       'checkUsername',
       'disabled',
-      'save'
+      'save',
     ], this)
   }
 
   save() {
-    let {password, username} = this.state
+    let {password, username,} = this.state
     $.post('./properties/Manager/changepw', {
       password: password,
       username: username,
-      hash: hash
+      hash: hash,
     }, null, 'json').done(function (data) {
       if (data.success === false) {
         this.setState({message: data.error})
@@ -105,59 +105,56 @@ class PasswordChange extends Component {
         {message}
         <p>This form will change your sign in password. Enter your current user name and
           new password.</p>
-        <form>
-          <div className="row">
-            <div className="col-sm-6">
-              <div className="form-group">
-                <label htmlFor="username">Username</label>
-                <input
-                  id="username"
-                  type="text"
-                  name="username"
-                  value={this.state.username}
-                  className="form-control"
-                  onBlur={this.checkUsername}
-                  onChange={this.updateUsername}/>{this.usernameError()}
-              </div>
+        <div className="row">
+          <div className="col-sm-6">
+            <div className="form-group">
+              <label htmlFor="username">Username</label>
+              <input
+                id="username"
+                type="text"
+                name="username"
+                value={this.state.username}
+                className="form-control"
+                onBlur={this.checkUsername}
+                onChange={this.updateUsername}/>{this.usernameError()}
             </div>
           </div>
-          <div className="row">
-            <div className="col-sm-6">
-              <div className="form-group">
-                <label htmlFor="password">New password</label>
-                <input
-                  id="password"
-                  type="password"
-                  name="password1"
-                  value={this.state.password}
-                  className="form-control"
-                  onBlur={this.checkPassword}
-                  placeholder="Eight characters or longer"
-                  onChange={this.updatePassword}/> {this.passwordError()}
-              </div>
-              <div className="form-group">
-                <label htmlFor="password2">Verify password</label>
-                <input
-                  id="password2"
-                  type="password"
-                  name="password2"
-                  className="form-control"
-                  value={this.state.passwordCheck}
-                  onBlur={this.checkPassword}
-                  onChange={this.updatePasswordCheck}/>
-              </div>
+        </div>
+        <div className="row">
+          <div className="col-sm-6">
+            <div className="form-group">
+              <label htmlFor="password">New password</label>
+              <input
+                id="password"
+                type="password"
+                name="password1"
+                value={this.state.password}
+                className="form-control"
+                onBlur={this.checkPassword}
+                placeholder="Eight characters or longer"
+                onChange={this.updatePassword}/> {this.passwordError()}
+            </div>
+            <div className="form-group">
+              <label htmlFor="password2">Verify password</label>
+              <input
+                id="password2"
+                type="password"
+                name="password2"
+                className="form-control"
+                value={this.state.passwordCheck}
+                onBlur={this.checkPassword}
+                onChange={this.updatePasswordCheck}/>
             </div>
           </div>
-          <button
-            type="button"
-            className="btn btn-primary"
-            disabled={this.disabled()}
-            onClick={this.save}>Update password</button>
-        </form>
+        </div>
+        <button
+          type="button"
+          className="btn btn-primary"
+          disabled={this.disabled()}
+          onClick={this.save}>Update password</button>
       </div>
     )
   }
 }
 
-ReactDOM.render(
-  <PasswordChange/>, document.getElementById('passwordchange'))
+ReactDOM.render(<PasswordChange/>, document.getElementById('passwordchange'))
