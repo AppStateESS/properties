@@ -38,7 +38,7 @@ class PasswordChange extends Component {
       if (data.success === false) {
         this.setState({message: data.error})
       } else {
-        window.location.href = './properties/Manager/passwordChangeComplete'
+        window.location.href = 'properties/Manager/passwordChangeComplete'
       }
     }.bind(this)).fail(function () {
       this.setState({message: 'There was an error during your password update.'})

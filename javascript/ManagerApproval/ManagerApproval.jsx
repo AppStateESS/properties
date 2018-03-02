@@ -1,6 +1,5 @@
 'use strict'
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
 import RefuseModal from './RefuseModal.jsx'
 import InquiryModal from './InquiryModal.jsx'
 import empty from '../Mixin/Helper/Empty.js'
@@ -156,7 +155,7 @@ export default class ManagerApproval extends Component {
     }).done(function () {
       this.closeModal()
       if (this.state.managers.length === 1) {
-        window.location.href = './properties/Manager/'
+        window.location.href = 'properties/Manager/'
       } else {
         this.removeManager(this.currentKey)
         this.resetCurrentManager()
@@ -191,7 +190,6 @@ export default class ManagerApproval extends Component {
     let listing
     let companyAddress
     let websiteAddress
-    console.log(this.state.managers)
     if (this.state.managers === null) {
       return <Waiting label="landlords"/>
     } else if (this.state.managers.length === 0 || this.state.managers[0] === undefined) {

@@ -55,7 +55,7 @@ export default class PropertyDelete extends Component {
       dataType: 'json',
       type: 'patch'
     }).done(function () {
-      window.location.href='./properties/Property/' + propertyId
+      window.location.href='properties/Property/' + propertyId
     }.bind(this))
   }
 
@@ -65,7 +65,7 @@ export default class PropertyDelete extends Component {
       dataType: 'json',
       method: 'DELETE',
       success: function () {
-        window.location.href = './properties/Property/'
+        window.location.href = 'properties/Property/'
       }.bind(this),
       error: function () {
         this.setMessage('Sorry, something went wrong and the property was not deleted.', 'danger')

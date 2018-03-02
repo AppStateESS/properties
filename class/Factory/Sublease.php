@@ -123,7 +123,7 @@ class Sublease extends Base
                     $days_left = floor($seconds_left / 86400);
                     $tpl['inactive_notice'] = "This sublease will remain active for $days_left more days.";
                 } else {
-                    $tpl['inactive_notice'] = "This sublease is scheduled to be deactivated. <a href='./properties/Sublease/extend' style='color:black'>Click here to extend your deadline.</a>";
+                    $tpl['inactive_notice'] = "This sublease is scheduled to be deactivated. <a href='properties/Sublease/extend' style='color:black'>Click here to extend your deadline.</a>";
                 }
             } else {
                 $tpl['inactive_notice'] = null;

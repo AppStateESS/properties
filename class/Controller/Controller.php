@@ -37,7 +37,7 @@ class Controller extends Base
                 FILTER_SANITIZE_STRING);
 
         if (empty($major_controller)) {
-            \Canopy\Server::forward('./properties/Property/list/');
+            \Canopy\Server::forward('properties/Property/list/');
         }
 
         if (empty($major_controller)) {

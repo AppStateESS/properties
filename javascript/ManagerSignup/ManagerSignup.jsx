@@ -257,7 +257,7 @@ export default class ManagerSignin extends Component {
       data: values,
       success: function (data) {
         if (data.status) {
-          window.location.href = './properties/Manager/success'
+          window.location.href = 'properties/Manager/success'
         }
       }.bind(this),
       failure: function () {

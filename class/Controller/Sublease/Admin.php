@@ -48,7 +48,7 @@ class Admin extends User
     {
         $sublease = $this->factory->load($this->id);
         $back = <<<EOF
-<a class="btn btn-default navbar-btn" href="./properties/Sublease/{$this->id}"><i class="fa fa-undo"></i>&nbsp;Back to view</a>
+<a class="btn btn-default navbar-btn" href="properties/Sublease/{$this->id}"><i class="fa fa-undo"></i>&nbsp;Back to view</a>
 EOF;
         Navbar::addItem($back);
         return $this->factory->edit($sublease);
@@ -57,7 +57,7 @@ EOF;
     public function viewHtmlCommand(Request $request)
     {
         $link = <<<EOF
-<a href="./properties/Sublease/{$this->id}/edit"><i class="fa fa-edit"></i>&nbsp;Update this sublease</a>
+<a href="properties/Sublease/{$this->id}/edit"><i class="fa fa-edit"></i>&nbsp;Update this sublease</a>
 EOF;
         \Layout::addStyle('properties', 'sublease/view.css');
         NavBar::addOption($link);

@@ -183,7 +183,7 @@ export default class PropertyForm extends Component {
         if (data.error !== undefined) {
           this.setMessage(data.error, 'danger')
         } else {
-          window.location.href = './properties/Property/' + data.id
+          window.location.href = 'properties/Property/' + data.id
         }
       }.bind(this),
       error: function () {

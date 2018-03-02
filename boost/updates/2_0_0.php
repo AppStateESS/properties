@@ -218,7 +218,7 @@ class update_2_0_0
         $db = \phpws2\Database::getDB();
         $tbl = $db->addTable('controlpanel_link');
         $tbl->addFieldConditional('itemname', 'properties');
-        $tbl->addValue('url', './properties/');
+        $tbl->addValue('url', 'properties/');
         $db->update();
     }
 

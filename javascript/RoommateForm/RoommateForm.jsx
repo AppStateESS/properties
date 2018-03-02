@@ -106,7 +106,7 @@ export default class RoommateForm extends Component {
           if (data.error !== undefined) {
             this.setMessage(data.error, 'danger')
           } else {
-            window.location.href = './properties/Roommate/' + data.id
+            window.location.href = 'properties/Roommate/' + data.id
           }
         }.bind(this),
         error: function () {

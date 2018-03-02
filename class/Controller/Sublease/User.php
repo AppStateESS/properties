@@ -73,7 +73,7 @@ class User extends \properties\Controller\SubController
     protected function createButton()
     {
         $button = <<<EOF
-<button onClick="window.location.href='./properties/Sublease/create'" class="btn btn-primary btn-sm navbar-btn"><i class="fa fa-plus"></i>&nbsp;Create my sublease</button>
+<button onClick="window.location.href='properties/Sublease/create'" class="btn btn-primary btn-sm navbar-btn"><i class="fa fa-plus"></i>&nbsp;Create my sublease</button>
 EOF;
         \properties\Factory\NavBar::addItem($button);
     }

@@ -32,7 +32,7 @@ class Manager extends User
 
     protected function signinHtmlCommand(Request $request)
     {
-        return \PHPWS_Core::reroute('./properties/Manager/desktop');
+        return \PHPWS_Core::reroute('properties/Manager/desktop');
     }
 
     protected function desktopHtmlCommand(Request $request)

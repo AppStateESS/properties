@@ -688,7 +688,7 @@ class Manager extends Base
         if ($manager !== null) {
             $this->sendForgotEmail($manager);
         }
-        \Canopy\Server::forward('./properties/Manager/passwordSent?email=' . $email_address);
+        \Canopy\Server::forward('properties/Manager/passwordSent?email=' . $email_address);
     }
 
     public function getManagerByEmail($email_address)

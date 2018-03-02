@@ -40,7 +40,7 @@ class Reports extends Component {
   }
 
   managerReportForward() {
-    window.location.href = './properties/Reports/download'
+    window.location.href = 'properties/Reports/download'
   }
 
   getReportList() {

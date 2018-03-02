@@ -144,8 +144,8 @@ class Logged extends User
     {
         if (!$this->checkBan() && $this->user_sublease) {
             NavBar::setTitle('My Sublease');
-            NavBar::addOption('<a href="./properties/Sublease/' . $this->user_sublease->getId() . '"><i class="fa fa-building-o"></i>&nbsp;View my sublease</a>');
-            NavBar::addOption('<a href="./properties/Sublease/edit"><i class="fa fa-edit"></i>&nbsp;Update my sublease</a>');
+            NavBar::addOption('<a href="properties/Sublease/' . $this->user_sublease->getId() . '"><i class="fa fa-building-o"></i>&nbsp;View my sublease</a>');
+            NavBar::addOption('<a href="properties/Sublease/edit"><i class="fa fa-edit"></i>&nbsp;Update my sublease</a>');
             if ($photo) {
                 NavBar::addOption('<a onClick="editPhotos.callback()" class="pointer"><i class="fa fa-camera"></i>&nbsp;Edit photos</a>');
             }
@@ -159,7 +159,7 @@ class Logged extends User
         if (!$this->checkBan() && $this->user_sublease) {
             $this->user_sublease->forwardTimeout();
             $this->factory->save($this->user_sublease);
-            \Canopy\Server::forward('./properties/Sublease/' . $this->user_sublease->id);
+            \Canopy\Server::forward('properties/Sublease/' . $this->user_sublease->id);
         } else {
             throw new \properties\Exception\PrivilegeMissing;
         }

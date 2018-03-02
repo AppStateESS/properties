@@ -61,23 +61,23 @@ class User extends \properties\Controller\SubController
         $username = $request->pullPostString('manager_username');
         $password = $request->pullPostString('manager_password');
         if (empty($username) || empty($password)) {
-            \PHPWS_Core::reroute('./properties/Manager/signin?error=login');
+            \PHPWS_Core::reroute('properties/Manager/signin?error=login');
         }
         $manager = $this->factory->signin($username, $password);
         if ($manager) {
             if (!$manager->approved) {
-                \PHPWS_Core::reroute('./properties/Manager/notApproved');
+                \PHPWS_Core::reroute('properties/Manager/notApproved');
             } elseif (!$manager->active) {
-                \PHPWS_Core::reroute('./properties/Manager/notActive');
+                \PHPWS_Core::reroute('properties/Manager/notActive');
             } else {
                 $session = \phpws2\Session::getInstance();
                 $session->property_manager_id = $manager->id;
                 $manager->stamp();
                 $this->factory->saveResource($manager);
-                \PHPWS_Core::reroute('./properties/Manager/desktop');
+                \PHPWS_Core::reroute('properties/Manager/desktop');
             }
         } else {
-            \PHPWS_Core::reroute('./properties/Manager/signin?error=not_found&username=' . $username);
+            \PHPWS_Core::reroute('properties/Manager/signin?error=not_found&username=' . $username);
         }
     }
     

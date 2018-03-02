@@ -125,7 +125,7 @@ class ManagerForm extends Component {
       if (data.status === 'error') {
         this.postErrors(data)
       } else {
-        window.location.href = './properties/Manager/desktop'
+        window.location.href = 'properties/Manager/desktop'
       }
     }.bind(this))
   }

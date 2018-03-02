@@ -100,7 +100,7 @@ class Logged extends User
     {
         if ($this->user_roommate) {
             $rm_id = $this->user_roommate->getId();
-            $link = "<button onClick='location.href=\"./properties/Roommate/$rm_id\"' class='btn btn-default navbar-btn btn-sm'><i class='fa fa-undo'></i>&nbsp;Back to view</button>";
+            $link = "<button onClick='location.href=\"properties/Roommate/$rm_id\"' class='btn btn-default navbar-btn btn-sm'><i class='fa fa-undo'></i>&nbsp;Back to view</button>";
             \properties\Factory\NavBar::addItem($link);
         }
     }
@@ -136,7 +136,7 @@ class Logged extends User
 
     private function updateButton()
     {
-        return '<button class="btn btn-primary btn-sm navbar-btn" onClick="window.location.href=\'./properties/Roommate/edit\'"><i class="fa fa-bullhorn"></i>&nbsp;Update my roommate request</button>';
+        return '<button class="btn btn-primary btn-sm navbar-btn" onClick="window.location.href=\'properties/Roommate/edit\'"><i class="fa fa-bullhorn"></i>&nbsp;Update my roommate request</button>';
     }
 
 }

@@ -216,7 +216,7 @@ class Property extends Base
             //NavBar::addOption('<hr />', true);
             NavBar::addOption('<a onClick="deleteProperty.callback()" class="pointer"><i class="fa fa-trash-o"></i>&nbsp;Delete property</a>',
                     true);
-            NavBar::addOption("<a href='./properties/Property/$property_id/edit'><i class='fa fa-edit'></i>&nbsp;Edit property</a>",
+            NavBar::addOption("<a href='properties/Property/$property_id/edit'><i class='fa fa-edit'></i>&nbsp;Edit property</a>",
                     true);
             NavBar::addOption("<a onClick='editPhotos.callback();return false' href='#'><i class='fa fa-camera'></i>&nbsp;Edit photos</a>",
                     true);

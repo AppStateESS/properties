@@ -12,7 +12,7 @@ const deleteRoommate = function () {
       dataType: 'json',
       type: 'delete',
       success: function () {
-        window.location.href('./properties/Roommate/list')
+        window.location.href('properties/Roommate/list')
       }.bind(this),
       error: function () {}.bind(this),
     })

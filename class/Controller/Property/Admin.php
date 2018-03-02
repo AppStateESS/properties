@@ -34,7 +34,7 @@ class Admin extends User
     protected function editHtmlCommand(Request $request)
     {
         $back = <<<EOF
-<a class="btn btn-default navbar-btn" href="./properties/Property/{$this->id}"><i class="fa fa-undo"></i>&nbsp;Back to view</a>
+<a class="btn btn-default navbar-btn" href="properties/Property/{$this->id}"><i class="fa fa-undo"></i>&nbsp;Back to view</a>
 EOF;
         Navbar::addItem($back);
         \Layout::addStyle('properties', 'property/form.css');

@@ -150,7 +150,7 @@ export default class SubleaseForm extends Base {
           this.setMessage(data.error, 'danger')
           this.setState({saving: false})
         } else {
-          window.location.href = './properties/Sublease/' + data.id
+          window.location.href = 'properties/Sublease/' + data.id
         }
       }.bind(this),
       error: function () {
