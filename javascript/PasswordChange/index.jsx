@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom'
 import bindMethod from '../Mixin/Helper/Bind.js'
 import Message from '../Mixin/Html/Message.jsx'
 
-/* global $, hash */
+/* global $, hash, url */
 
 class PasswordChange extends Component {
   constructor(props) {
@@ -38,7 +38,7 @@ class PasswordChange extends Component {
       if (data.success === false) {
         this.setState({message: data.error})
       } else {
-        window.location.href = 'properties/Manager/passwordChangeComplete'
+        window.location.replace(url + 'properties/Manager/passwordChangeComplete')
       }
     }.bind(this)).fail(function () {
       this.setState({message: 'There was an error during your password update.'})
@@ -58,6 +58,10 @@ class PasswordChange extends Component {
   updatePasswordCheck(e) {
     const password = e.target.value
     this.setState({passwordCheck: password})
+    
+    if (password == this.state.password) {
+      this.setState({passwordError: null})
+    }
   }
 
   passwordError() {

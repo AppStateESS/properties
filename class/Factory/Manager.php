@@ -777,9 +777,11 @@ class Manager extends Base
             $tpl->add('reason', 'your request timed out');
             return $tpl->get();
         }
+        $url = \Canopy\Server::getSiteUrl();
         $content = <<<EOF
 <script>
-const hash = '$hash'
+const hash = '$hash';
+const url = '$url';
 </script>
 EOF;
         return $content . $this->reactView('passwordchange');
@@ -801,7 +803,6 @@ EOF;
         }
         $manager = $this->build();
         $manager->setVars($row);
-        //$manager->password = password_hash($password, PASSWORD_DEFAULT);
         $hasher = $this->getHasher();
         $manager->password = $hasher->HashPassword($password);
         $manager->pw_hash = null;
