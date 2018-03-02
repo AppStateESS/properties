@@ -32,7 +32,7 @@ class Manager extends User
 
     protected function signinHtmlCommand(Request $request)
     {
-        return \PHPWS_Core::reroute('properties/Manager/desktop');
+        return \Canopy\Server::forward('properties/Manager/desktop');
     }
 
     protected function desktopHtmlCommand(Request $request)
@@ -71,6 +71,7 @@ class Manager extends User
 
     protected function editHtmlCommand(Request $request)
     {
+        
         return $this->factory->reactView('manageredit');
     }
 
@@ -159,15 +160,6 @@ EOF;
         $new_password = $request->pullPatchString('password');
         $current_password = $request->pullPatchString('currentPassword');
         $manager = $this->factory->load($this->role->getId());
-
-        /*
-          if (!password_verify($current_password, $manager->password)) {
-          return array('success' => false, 'error' => 'Current password is incorrect');
-          }
-          $this->factory->patch($this->role->getId(), 'password',
-          password_hash($new_password, PASSWORD_DEFAULT));
-         * 
-         */
 
         $hasher = $this->factory->getHasher();
         if (!$hasher->CheckPassword($current_password, $manager->password)) {
