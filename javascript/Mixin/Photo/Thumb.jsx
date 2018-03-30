@@ -85,7 +85,7 @@ const SortableItem = SortableElement(({value, deletePhoto,rotate}) => {
         style={marginTop}
         className="btn btn-sm btn-danger"
         onClick={deletePhoto}>
-        <i className="fa fa-trash-o"></i>&nbsp;Delete</button>
+        <i className="far fa-trash-alt"></i>&nbsp;Delete</button>
     </li>
   )
 })
