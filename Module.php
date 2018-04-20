@@ -114,6 +114,7 @@ class Module extends \Canopy\Module implements \Canopy\SettingDefaults
     {
         $template = new \phpws2\Template();
         $template->setModuleTemplate('properties', 'home.html');
+        \Layout::addToStyleList('mod/properties/css/home.css');
         return $template->get();
     }
 
