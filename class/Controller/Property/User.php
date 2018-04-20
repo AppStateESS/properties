@@ -41,14 +41,14 @@ class User extends \properties\Controller\SubController
             $this->factory->flipPropertyTimeout();
             $this->factory->updatePropertyTimeout();
         }
-        \Layout::addStyle('properties', 'property/list.css');
+        \Layout::addToStyleList('mod/properties/css/property/list.css');
         return $this->factory->reactView('property');
     }
 
     protected function viewHtmlCommand(\Canopy\Request $request)
     {
         if (isset($_SERVER['HTTP_REFERER']) && stristr($_SERVER['HTTP_REFERER'], 'properties/Property/list')) {
-            NavBar::addItem('<button class="btn btn-default navbar-btn" onClick="window.history.back()"><i class="fa fa-list"></i>&nbsp;Back to list</button>');
+            NavBar::addItem('<button class="btn btn-outline-secondary navbar-btn" onClick="window.history.back()"><i class="fa fa-list"></i>&nbsp;Back to list</button>');
         }
         \Layout::addStyle('properties', 'property/view.css');
         return $this->factory->view($this->id, false);
