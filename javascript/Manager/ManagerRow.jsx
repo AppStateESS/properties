@@ -82,11 +82,11 @@ class ManagerRow extends Component {
       const options = [
         {
           label: 'Edit',
-          icon: <i className="fa fa-pencil-square-o"></i>,
+          icon: <i className="fas fa-pencil-alt-square-o"></i>,
           handleClick: this.props.fillForm
         }, {
           label: 'Add property',
-          icon: <i className="fa fa-building-o"></i>,
+          icon: <i className="far fa-building"></i>,
           link: './properties/Property/create/?managerId=' + this.props.id
         }, {
           label: alabel,
@@ -103,7 +103,7 @@ class ManagerRow extends Component {
 
     let properties = <div>
       <button
-        className="btn btn-default"
+        className="btn btn-outline-secondary"
         style={{
         display: 'inline'
       }}
@@ -116,8 +116,8 @@ class ManagerRow extends Component {
         : 'View property'
       properties = <a
         href={`./properties/Property/?managerId=${this.props.id}`}
-        className="btn btn-default">
-        <i className="fa fa-building-o"></i>&nbsp;{label}</a>
+        className="btn btn-outline-secondary">
+        <i className="far fa-building"></i>&nbsp;{label}</a>
     }
 
     let co = null

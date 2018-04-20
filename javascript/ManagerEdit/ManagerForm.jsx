@@ -201,7 +201,7 @@ class ManagerForm extends Component {
 
   render() {
     let button = <button className="btn btn-success" onClick={this.save}>
-      <i className="fa fa-floppy-o"></i>&nbsp;Save</button>
+      <i className="far fa-save"></i>&nbsp;Save</button>
 
     const manager = this.state.manager
     const errors = this.state.errors
@@ -297,7 +297,7 @@ class ManagerForm extends Component {
           </div>
           <div className="text-center">
             <button type="button" className="btn btn-primary btn-lg" onClick={this.save}>
-              <i className="fa fa-floppy-o"></i>&nbsp;Save</button>
+              <i className="far fa-save"></i>&nbsp;Save</button>
           </div>
         </form>
       </div>

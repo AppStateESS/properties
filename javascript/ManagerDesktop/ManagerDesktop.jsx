@@ -144,7 +144,7 @@ export default class ManagerDesktop extends Base {
       <div>
         <h2>My properties</h2>
         {message}
-        <div className="row marginBottom">
+        <div className="row mb-1">
           <div className="col-sm-4">
             <div className="input-group">
               <input
@@ -154,7 +154,7 @@ export default class ManagerDesktop extends Base {
                 placeholder="Search..."
                 onChange={this.updateSearchString}/>
               <span className="input-group-btn">
-                <button className="btn btn-default btn-sm" type="button" onClick={this.clear}>Clear</button>
+                <button className="btn btn-outline-secondary btn-sm" type="button" onClick={this.clear}>Clear</button>
               </span>
             </div>
           </div>

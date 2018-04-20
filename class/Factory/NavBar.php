@@ -64,7 +64,7 @@ class NavBar
     {
         $url = $request->getUrl();
         if (preg_match('/Roommate/', $url)) {
-            return '<i class="fa fa-comments-o"></i>&nbsp;Roommates';
+            return '<i class="far fa-comments"></i>&nbsp;Roommates';
         } elseif (preg_match('/Manager/', $url)) {
             return '<i class="fa fa-users"></i>&nbsp;Landlords';
         } elseif (preg_match('/Sublease/', $url)) {

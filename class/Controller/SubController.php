@@ -205,13 +205,13 @@ abstract class SubController extends Base
         $myprops = '<a href="properties/Manager/desktop"><i class="fa fa-list"></i>&nbsp;View my properties</a>';
         \properties\Factory\NavBar::addOption($myprops);
 
-        $editInfo = '<a href="properties/Manager/edit"><i class="fa fa-pencil-square-o"></i>&nbsp;Update my information</a>';
+        $editInfo = '<a href="properties/Manager/edit"><i class="far fa-edit"></i>&nbsp;Update my information</a>';
         \properties\Factory\NavBar::addOption($editInfo);
 
         $passInfo = '<a href="properties/Manager/changePassword"><i class="fa fa-key"></i>&nbsp;Change my password</a>';
         \properties\Factory\NavBar::addOption($passInfo);
 
-        $signout = '<a href="properties/Manager/signout"><i class="fa fa-sign-out"></i>&nbsp;Sign out</a>';
+        $signout = '<a href="properties/Manager/signout"><i class="fas sign-out-alt"></i>&nbsp;Sign out</a>';
         \properties\Factory\NavBar::addOption($signout);
         \properties\Factory\NavBar::setTitle('My options');
     }
@@ -239,7 +239,7 @@ abstract class SubController extends Base
             return;
         }
         $label = ($needApproval == 1) ? "$needApproval manager needs approval" : "$needApproval managers need approval";
-        $link = "<button onClick=\"window.location.href='properties/Manager/approval'\" class=\"btn btn-default navbar-btn\">$label</button>";
+        $link = "<button onClick=\"window.location.href='properties/Manager/approval'\" class=\"btn btn-outline-secondary navbar-btn\">$label</button>";
         NavBar::addItem($link);
     }
 

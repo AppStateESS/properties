@@ -15,13 +15,6 @@ export default class BigCheckbox extends Component {
   }
 
   render() {
-    const mute = {
-      color: '#666'
-    }
-    const point = {
-      cursor: 'pointer',
-      display: 'inline-block'
-    }
     const labelText = {
       fontSize : '20px',
       display: 'inline-block',
@@ -29,9 +22,9 @@ export default class BigCheckbox extends Component {
     }
 
     return (
-      <div onClick={this.handle} style={point} className="big-checkbox">
+      <div onClick={this.handle} style={point} className="big-checkbox pointer d-inline-block">
         <div className="fa-stack fa-lg pull-left">
-          <i className="fa fa-square-o fa-stack-2x" style={mute}></i>
+          <i className="far fa-square fa-stack-2x text-muted"></i>
           {empty(this.props.checked) ? null :
           <i className="fa fa-check text-success fa-stack-2x"></i>}
         </div>&nbsp;

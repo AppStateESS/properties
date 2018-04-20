@@ -10,16 +10,16 @@
     font-size : 16px;
 }
 
-.property-view .panel {
+.property-view .card {
     border-color :  #247099;
 }
 
-.property-view .panel-heading {
+.property-view .card-heading {
     background-color : #247099;
     color : white;
 }
 
-.property-view .panel-heading a h4 {
+.property-view .card-heading a h4 {
     color : white;
 }
 
@@ -42,7 +42,6 @@
 .property-view h4 {
     margin-top : 1em;
     padding-bottom : 6px;
-    border-bottom : 1px solid #185B80;
     color : #185B80;
 }
 
@@ -85,7 +84,7 @@ h3.property-address {
     overflow: auto;
 }
 
-.description .panel-body {
+.description .card-body {
     overflow : auto;
     max-height : 300px;
 }

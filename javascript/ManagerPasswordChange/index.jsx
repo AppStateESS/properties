@@ -73,13 +73,13 @@ export default class ManagerPasswordChange extends Component {
 
   passwordError() {
     if (this.state.passwordError) {
-      return <span className="label label-danger">{this.state.passwordError}</span>
+      return <span className="badge badge-danger">{this.state.passwordError}</span>
     }
   }
 
   currentPasswordError() {
     if (this.state.currentPasswordError) {
-      return <span className="label label-danger">{this.state.currentPasswordError}</span>
+      return <span className="badge badge-danger">{this.state.currentPasswordError}</span>
     }
   }
 

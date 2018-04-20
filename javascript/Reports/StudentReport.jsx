@@ -165,7 +165,7 @@ export default class StudentReport extends Component {
     if (this.selected) {
       actions = (
         <span>
-          <button className="marginLeft btn btn-danger" onClick={this.deleteStudent}>Delete</button>
+          <button className="ml-1 btn btn-danger" onClick={this.deleteStudent}>Delete</button>
         </span>
       )
     }
@@ -176,7 +176,7 @@ export default class StudentReport extends Component {
           dateFormat="YYYY-MM-DD"
           onChange={this.setSearchDate}
           value={this.state.searchDate}/>
-        <button className="marginLeft btn btn-primary" onClick={this.load}>Refresh listing</button>
+        <button className="ml-1 btn btn-primary" onClick={this.load}>Refresh listing</button>
         {actions}{deleteAll}
         <hr/>
         <div className="student-listing">

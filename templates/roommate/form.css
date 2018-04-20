@@ -8,7 +8,7 @@ and open the template in the editor.
     Author     : matt
 */
 
-div.roommate-form div.marginBottom {
+div.roommate-form div.mb-1 {
     margin-bottom : 1em;
 }
 

@@ -125,8 +125,8 @@ export default class SearchBar extends Component {
     }
 
     return (
-      <div className="panel panel-default marginBottom">
-        <div className="panel-body">
+      <div className="card card-default mb-1">
+        <div className="card-body">
           <div>
             <div className="pull-left" style={margin}>
               <Dropdown small={true} label={labels.focus} options={focus}/>

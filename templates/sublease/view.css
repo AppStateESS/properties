@@ -25,16 +25,16 @@
     border: none;
 }
 
-.sublease-view .panel {
+.sublease-view .card {
     border-color :  #708758;
 }
 
-.sublease-view .panel-heading {
+.sublease-view .card-heading {
     background-color : #708758;
     color : white;
 }
 
-.sublease-view .panel-heading a h4{
+.sublease-view .card-heading a h4{
     color : white;
 }
 

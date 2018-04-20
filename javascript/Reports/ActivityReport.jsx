@@ -165,8 +165,8 @@ export default class ActivityReport extends Component {
     if (this.selected) {
       actions = (
         <span>
-          <button className="marginLeft btn btn-danger" onClick={this.deleteManager}>Delete</button>
-          <button className="marginLeft btn btn-warning" onClick={this.deactivateManager}>Deactivate</button>
+          <button className="ml-1 btn btn-danger" onClick={this.deleteManager}>Delete</button>
+          <button className="ml-1 btn btn-warning" onClick={this.deactivateManager}>Deactivate</button>
         </span>
       )
     }
@@ -178,7 +178,7 @@ export default class ActivityReport extends Component {
           dateFormat="YYYY-MM-DD"
           onChange={this.setActivityDate}
           value={this.state.activityDate}/>
-        <button className="marginLeft btn btn-primary" onClick={this.load}>Refresh listing</button>
+        <button className="ml-1 btn btn-primary" onClick={this.load}>Refresh listing</button>
         {actions}
         <hr/>
         <div className="activity-listing">

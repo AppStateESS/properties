@@ -93,7 +93,7 @@ export default class BanUser extends Component {
                 change={this.setBanReason}/>
               <button className="btn btn-danger" onClick={this.banUser}>
                 <i className="fa fa-ban"></i>&nbsp;Ban this user</button>&nbsp;
-              <button className="btn btn-default" onClick={this.closeModal}>
+              <button className="btn btn-outline-secondary" onClick={this.closeModal}>
                 <i className="fa fa-times"></i>&nbsp;Cancel</button>
             </div>
           </div>

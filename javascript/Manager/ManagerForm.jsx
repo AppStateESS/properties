@@ -258,7 +258,7 @@ class ManagerForm extends Component {
 
   render() {
     let button = <button className="btn btn-success" onClick={this.save}>
-      <i className="fa fa-floppy-o"></i>&nbsp;Save</button>
+      <i className="far fa-save"></i>&nbsp;Save</button>
 
     let footer = <span>{button}&nbsp;</span>
     const manager = this.state.manager

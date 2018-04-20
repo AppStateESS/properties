@@ -16,17 +16,17 @@ class Dropdown extends Component {
           return <hr key={key}/>
         }
         if (value.link !== null) {
-          label = <a href={value.link}>{value.icon} {value.label}</a>
+          label = <a className="nav-link pointer" href={value.link}>{value.icon} {value.label}</a>
         } else {
-          label = <a>{value.icon}{value.label}</a>
+          label = <a className="nav-link pointer">{value.icon}{value.label}</a>
         }
-        return <li role="button" onClick={value.handleClick} key={key} role="button">{label}</li>
+        return <li role="button" onClick={value.handleClick} key={key}>{label}</li>
       })
       optionList = <ul className="dropdown-menu">{options}</ul>
     } else {
       optionList = null
     }
-    let buttonClass = 'btn btn-default dropdown-toggle'
+    let buttonClass = 'btn btn-outline-secondary dropdown-toggle'
     if (this.props.small) {
       buttonClass = buttonClass.concat(' btn-sm')
     }

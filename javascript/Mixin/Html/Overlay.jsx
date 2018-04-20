@@ -54,7 +54,6 @@ export default class Overlay extends Component {
     const headerStyle = {
       backgroundColor: '#F2F2F2',
       border: '1px solid #D9D9D9',
-      marginBottom: '1em',
       height: '40px'
     }
 
@@ -74,7 +73,7 @@ export default class Overlay extends Component {
     }
     return (
       <div style={overlayStyle}>
-        <div style={headerStyle}>
+        <div className="mb-1" style={headerStyle}>
           <div
             ref="closebutton"
             style={closeButton}

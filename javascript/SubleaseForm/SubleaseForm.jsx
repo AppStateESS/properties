@@ -314,7 +314,7 @@ export default class SubleaseForm extends Base {
 
     let moveOutError
     if (this.state.errors.move_out_date) {
-      moveOutError = <span className="label label-danger">Move out date must be after move in date and the current date.</span>
+      moveOutError = <span className="badge badge-danger">Move out date must be after move in date and the current date.</span>
     }
     return (
       <div ref="PageTop" className="sublease-form">
@@ -324,7 +324,7 @@ export default class SubleaseForm extends Base {
           my sublease</h2>
         {message}
         {contactAlert}
-        <div className="text-align marginBottom">
+        <div className="text-align mb-1">
           {activateButton}
         </div>
         <div className="row">
