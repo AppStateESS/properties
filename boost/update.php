@@ -143,6 +143,10 @@ class PropertyUpgrade
             case $this->compare('2.1.7'):
                 $methodName = $this->getMethodName('2.1.7');
                 $this->$methodName($content);
+
+            case $this->compare('2.1.8'):
+                $methodName = $this->getMethodName('2.1.8');
+                $this->$methodName($content);
         }
         return $content;
     }
@@ -369,6 +373,12 @@ class PropertyUpgrade
     {
         $updates = array('Update Babel library.', 'Rewrote photo crop logic.', 'Fixed IE problems with rerouting.');
         $this->addContent($content, '2.1.7', $updates);
+    }
+
+    public function v2_1_8(&$content)
+    {
+        $updates = array('Hard-coding redirect url to get around IE problem.', 'Password change warning goes away faster.');
+        $this->addContent($content, '2.1.8', $updates);
     }
 
     private function addContent(&$content, $version, array $changes)
