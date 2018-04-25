@@ -202,28 +202,27 @@ class Property extends Base
             }
         }
 
+        $this->includeVendor();
         $photoFactory = new PropPhoto;
         $tpl['inactive_warning'] = $property->active == 0;
-
         $tpl['current_photos'] = json_encode($photoFactory->thumbs($property->id));
-        $tpl['photo'] = $this->reactView('photo');
         $tpl['id'] = $property->id;
         $tpl['photoupdate'] = null;
         $tpl['delete'] = null;
         $tpl['photo_edit_button'] = null;
         if ($admin) {
             $property_id = $property->id;
-            //NavBar::addOption('<hr />', true);
-            NavBar::addOption('<a onClick="deleteProperty.callback()" class="pointer"><i class="fa fa-trash-o"></i>&nbsp;Delete property</a>',
+            NavBar::addOption('<a class="dropdown-item" id="delete-property-button"><i class="far fa-trash-alt"></i>&nbsp;Delete property</a>',
                     true);
-            NavBar::addOption("<a href='properties/Property/$property_id/edit'><i class='fa fa-edit'></i>&nbsp;Edit property</a>",
+            NavBar::addOption("<a class='dropdown-item' href='properties/Property/$property_id/edit'><i class='fa fa-edit'></i>&nbsp;Edit property</a>",
                     true);
-            NavBar::addOption("<a onClick='editPhotos.callback();return false' href='#'><i class='fa fa-camera'></i>&nbsp;Edit photos</a>",
+            NavBar::addOption('<a id="edit-photo-button" class="dropdown-item pointer"><i class="fa fa-camera"></i>&nbsp;Edit photos</a>',
                     true);
             NavBar::setTitle('Property options');
-            $tpl['photoupdate'] = $this->reactView('propertyimage');
-            $tpl['delete'] = $this->reactView('propertydelete');
+            $tpl['photoupdate'] = $this->reactView('propertyimage', false);
+            $tpl['delete'] = $this->reactView('propertydelete', false);
         }
+        $tpl['photo'] = $this->reactView('photo', false);
 
         $template = new \phpws2\Template($tpl);
         $template->setModuleTemplate('properties', 'property/view.html');
@@ -233,7 +232,7 @@ class Property extends Base
     private function photoButton($property_id)
     {
         return <<<EOF
-<button class="btn btn-primary btn-sm navbar-btn" data-property-id="$property_id" title="Update photos" onClick="editPhotos.callback()" style="margin-right:6px"><i class="fa fa-camera"></i>&nbsp;Edit photos</button>
+<button id="edit-photo-button" class="btn btn-primary btn-sm navbar-btn mr-1" data-property-id="$property_id" title="Update photos"><i class="fa fa-camera"></i>&nbsp;Edit photos</button>
 EOF;
     }
 
@@ -278,7 +277,7 @@ EOF;
         }
 
         $content[] = <<<EOF
-<script type="text/javascript">const property = $property_json;let deleteProperty = () => {};let activate = () => {};let deactivate = () => {}</script>
+<script type="text/javascript">const property = $property_json;let activate = () => {};let deactivate = () => {}</script>
 EOF;
         $content[] = $this->reactView('propertyform');
         return implode('', $content);
