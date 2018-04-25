@@ -82,7 +82,7 @@ class Logged extends User
     {
         $this->ownerOptions();
 
-        \Layout::addStyle('properties', 'sublease/list.css');
+        \Layout::addToStyleList('mod/properties/css/sublease/list.css');
         return $this->factory->reactView('sublease');
     }
 
@@ -144,10 +144,10 @@ class Logged extends User
     {
         if (!$this->checkBan() && $this->user_sublease) {
             NavBar::setTitle('My Sublease');
-            NavBar::addOption('<a href="properties/Sublease/' . $this->user_sublease->getId() . '"><i class="fa fa-building-o"></i>&nbsp;View my sublease</a>');
-            NavBar::addOption('<a href="properties/Sublease/edit"><i class="fa fa-edit"></i>&nbsp;Update my sublease</a>');
+            NavBar::addOption('<a class="dropdown-item" href="properties/Sublease/' . $this->user_sublease->getId() . '"><i class="far fa-building"></i>&nbsp;View my sublease</a>');
+            NavBar::addOption('<a class="dropdown-item" href="properties/Sublease/edit"><i class="fa fa-edit"></i>&nbsp;Update my sublease</a>');
             if ($photo) {
-                NavBar::addOption('<a onClick="editPhotos.callback()" class="pointer"><i class="fa fa-camera"></i>&nbsp;Edit photos</a>');
+                NavBar::addOption('<a class="dropdown-item" id="edit-photo-button" class="pointer"><i class="fa fa-camera"></i>&nbsp;Edit photos</a>');
             }
         } elseif ($show_create) {
             $this->createButton();

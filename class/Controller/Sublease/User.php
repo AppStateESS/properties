@@ -47,7 +47,7 @@ class User extends \properties\Controller\SubController
         $this->updateTimeouts();
         $this->createButton();
 
-        \Layout::addStyle('properties', 'sublease/list.css');
+        \Layout::addToStyleList('mod/properties/css/sublease/list.css');
         return $this->factory->reactView('sublease');
     }
 
@@ -73,7 +73,7 @@ class User extends \properties\Controller\SubController
     protected function createButton()
     {
         $button = <<<EOF
-<button onClick="window.location.href='properties/Sublease/create'" class="btn btn-primary btn-sm navbar-btn"><i class="fa fa-plus"></i>&nbsp;Create my sublease</button>
+<button onClick="window.location.href='properties/Sublease/create'" class="btn btn-outline-secondary"><i class="fa fa-plus"></i>&nbsp;Create my sublease</button>
 EOF;
         \properties\Factory\NavBar::addItem($button);
     }

@@ -1,43 +1,51 @@
-$property-color: #185B80;
+$sublease-color: #566e3d;
 
-.property-row {
+.sublease-row {
   margin-bottom: 1em;
   padding-bottom: 1em;
-  border-bottom: 1px solid $property-color;
+  border-bottom: 1px solid $sublease-color;
 
-  .title {
-    margin: 0 0 8px;
+  h4.title {
     font-size: 1.4em;
+    margin: 0 0 8px;
     padding: 0.4em;
+
+    &.active {
+      background-color: $sublease-color;
+    }
+
+    &.deactive {
+      background-color: #FF4242;
+    }
+
+    a {
+      color: white;
+    }
   }
 
   .icon-listing {
     line-height: 2px;
   }
-
-  .amenity-icon {
-    color: $property-color;
-    margin-right: 4px;
-  }
-
+  
   .rent {
     font-size: 1.3em;
   }
 
-  .title.active {
-    background-color: $property-color;
-  }
-
-  .title.deactive {
-    background-color: #FF4242;
-  }
-
-  .title a {
-    color: white;
-  }
-
   .room-bath {
     font-size: 1.3em;
+  }
+
+  .availability {
+    font-size: 1.1em;
+  }
+
+  .end-date {
+    font-size: 1.1em;
+  }
+
+  .amenity-icon {
+    color: $sublease-color;
+    margin-right: 4px;
   }
 }
 

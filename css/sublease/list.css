@@ -1,0 +1,51 @@
+.sublease-row {
+  margin-bottom: 1em;
+  padding-bottom: 1em;
+  border-bottom: 1px solid #566e3d; }
+  .sublease-row h4.title {
+    font-size: 1.4em;
+    margin: 0 0 8px;
+    padding: 0.4em; }
+    .sublease-row h4.title.active {
+      background-color: #566e3d; }
+    .sublease-row h4.title.deactive {
+      background-color: #FF4242; }
+    .sublease-row h4.title a {
+      color: white; }
+  .sublease-row .icon-listing {
+    line-height: 2px; }
+  .sublease-row .rent {
+    font-size: 1.3em; }
+  .sublease-row .room-bath {
+    font-size: 1.3em; }
+  .sublease-row .availability {
+    font-size: 1.1em; }
+  .sublease-row .end-date {
+    font-size: 1.1em; }
+  .sublease-row .amenity-icon {
+    color: #566e3d;
+    margin-right: 4px; }
+
+.dropdown-item {
+  padding: 3px 20px; }
+
+.dropdown-item label {
+  font-weight: normal;
+  margin: 0;
+  cursor: pointer; }
+
+.trans-enter {
+  opacity: 0.01; }
+
+.trans-enter.trans-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in; }
+
+.trans-leave {
+  opacity: 1; }
+
+.trans-leave.trans-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in; }
+
+/*# sourceMappingURL=list.css.map */

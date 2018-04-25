@@ -38,7 +38,7 @@ class Manager extends User
     protected function desktopHtmlCommand(Request $request)
     {
         \Layout::addStyle('properties');
-        \Layout::addStyle('properties', 'property/list.css');
+        \Layout::addToStyleList('mod/properties/css/property/list.css');
         return $this->factory->reactView('managerdesktop');
     }
 
@@ -71,7 +71,7 @@ class Manager extends User
 
     protected function editHtmlCommand(Request $request)
     {
-        
+
         return $this->factory->reactView('manageredit');
     }
 
