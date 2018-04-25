@@ -94,6 +94,11 @@ abstract class Base extends \phpws2\ResourceFactory
         return $json[$scriptName]['js'];
     }
 
+    public function includeVendor()
+    {
+        \Layout::addJSHeader($this->getScript('vendor'));
+    }
+
     public function getVendor()
     {
         return $this->getScript('vendor');
