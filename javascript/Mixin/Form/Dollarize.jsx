@@ -1,12 +1,16 @@
-import React, {Component} from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 const Dollarize = ({children}) => {
   return (
     <div className="input-group">
-      <span className="input-group-addon">$</span>
+      <div className="input-group-prepend">
+        <div className="input-group-text">$</div>
+      </div>
       {children}
-      <span className="input-group-addon">.00</span>
+      <div className="input-group-append">
+        <div className="input-group-text">.00</div>
+      </div>
     </div>
   )
 }

@@ -199,19 +199,19 @@ abstract class SubController extends Base
 
     protected function managerButtons()
     {
-        $myprops = '<a href="properties/Property/create"><i class="fa fa-plus"></i>&nbsp;Add a new property</a>';
+        $myprops = '<a class="dropdown-item" href="properties/Property/create"><i class="fas fa-plus"></i>&nbsp;Add a new property</a>';
         \properties\Factory\NavBar::addOption($myprops);
         
-        $myprops = '<a href="properties/Manager/desktop"><i class="fa fa-list"></i>&nbsp;View my properties</a>';
+        $myprops = '<a class="dropdown-item" href="properties/Manager/desktop"><i class="fas fa-list"></i>&nbsp;View my properties</a>';
         \properties\Factory\NavBar::addOption($myprops);
 
-        $editInfo = '<a href="properties/Manager/edit"><i class="far fa-edit"></i>&nbsp;Update my information</a>';
+        $editInfo = '<a class="dropdown-item" href="properties/Manager/edit"><i class="fas fa-edit"></i>&nbsp;Update my information</a>';
         \properties\Factory\NavBar::addOption($editInfo);
 
-        $passInfo = '<a href="properties/Manager/changePassword"><i class="fa fa-key"></i>&nbsp;Change my password</a>';
+        $passInfo = '<a class="dropdown-item" href="properties/Manager/changePassword"><i class="fas fa-key"></i>&nbsp;Change my password</a>';
         \properties\Factory\NavBar::addOption($passInfo);
 
-        $signout = '<a href="properties/Manager/signout"><i class="fas sign-out-alt"></i>&nbsp;Sign out</a>';
+        $signout = '<a class="dropdown-item" href="properties/Manager/signout"><i class="fas sign-out-alt"></i>&nbsp;Sign out</a>';
         \properties\Factory\NavBar::addOption($signout);
         \properties\Factory\NavBar::setTitle('My options');
     }

@@ -21,6 +21,7 @@ export default class Nav extends Component {
     let cn
     let tabs = this.props.buttons.map(function (value, key) {
       cn = classnames({
+        'nav-link': true,
         active: this.props.active === key,
         disabled: disabled.indexOf(key) !== -1,
         pointer: true

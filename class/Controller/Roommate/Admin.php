@@ -58,7 +58,7 @@ class Admin extends User
     private function deleteButton()
     {   $id = $this->id;
         return <<<EOF
-<button class="btn btn-danger btn-sm navbar-btn" data-id="$id" id="delete-roommate"><i class="fa fa-times"></i>&nbsp;Delete</button>
+<button class="btn btn-outline-danger" data-id="$id" id="delete-roommate"><i class="fa fa-times"></i>&nbsp;Delete roommate request</button>
 EOF;
     }
 

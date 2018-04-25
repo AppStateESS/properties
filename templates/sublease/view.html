@@ -1,145 +1,144 @@
 <script type="text/javascript">
-    let loadPhotos = () => {
-    }
-    let banUser = () => {
-    }
-    let currentPhotos = <?=$current_photos?>;
-    const userId = '<?=$user_id?>';
-    const subleaseId = '<?=$id?>';
+  let loadPhotos = () => {
+  }
+  let banUser = () => {
+  }
+  let currentPhotos = <?=$current_photos?>;
+  const userId = '<?=$user_id?>';
+  const subleaseId = '<?=$id?>';
 </script>
 <div class="sublease-view">
-    <?php if($inactive_warning):?>
-    <div class="alert alert-danger">Your sublease is disabled and no one can view it. <a href="./properties/Sublease/<?=$id?>/edit">Update your sublease to enable it.</a></div>
-    <?php endif;?>
-    <div class="row">
-        <div class="col-sm-8 header">
-            <h2 class="sublease-title">Sublease: <?=$name?></h2>
-            <h3 class="sublease-address"><a href="<?=$property_map_address?>" target="_blank"><?=$address?>&nbsp;<i class="fa fa-map"></i></a></h3>
-            <div><?=$bedroom_no?> bed, <?=$bathroom_no?> bath <?=$proptype?> - <?= '$', $monthly_rent, ' ', $lease_type?></div>
-            <div>Availability: <?=$move_in_date?></div>
-            <?php if (!empty($inactive_notice)): ?>
-            <div class="badge badge-info"><small><em><?=$inactive_notice?></em></small></div>
-            <?php endif; ?>
-        </div>
-        <div class="col-sm-4">
-            <div class="card card-success">
-                <div class="card-heading">Contact information</div>
-                <div class="card-body">
-                    <a href="tel:<?=$contact_phone_tel?>" target="_blank"><i class="fa fa-phone"></i>&nbsp;<?=$contact_phone?></a><br />
-                    <a href="mailto:<?=$contact_email?>" target="_blank"><i class="far fa-envelope"></i>&nbsp;Email</a>
-                </div>
-            </div>
-        </div>
+  <?php if($inactive_warning):?>
+  <div class="alert alert-danger">Your sublease is disabled and no one can view it. <a href="./properties/Sublease/<?=$id?>/edit">Update your sublease to enable it.</a></div>
+  <?php endif;?>
+  <div class="row">
+    <div class="col-sm-8 header">
+      <h2 class="sublease-title">Sublease: <?=$name?></h2>
+      <h3 class="sublease-address"><a href="<?=$property_map_address?>" target="_blank"><?=$address?>&nbsp;<i class="fa fa-map"></i></a></h3>
+      <div><?=$bedroom_no?> bed, <?=$bathroom_no?> bath <?=$proptype?> - <?= '$', $monthly_rent, ' ', $lease_type?></div>
+      <div>Availability: <?=$move_in_date?></div>
+      <?php if (!empty($inactive_notice)): ?>
+      <div class="badge badge-info"><small><em><?=$inactive_notice?></em></small></div>
+      <?php endif; ?>
     </div>
-    <?php if (!empty($description)):?>
-    <div class="description card card-primary">
+    <div class="col-sm-4">
+      <div class="card card-success">
+        <div class="card-heading">Contact information</div>
         <div class="card-body">
-            <?=$description?>
+          <a href="tel:<?=$contact_phone_tel?>" target="_blank"><i class="fa fa-phone"></i>&nbsp;<?=$contact_phone?></a><br />
+          <a href="mailto:<?=$contact_email?>" target="_blank"><i class="far fa-envelope"></i>&nbsp;Email</a>
         </div>
+      </div>
     </div>
-    <?php endif; ?>
-    <hr />
-    <div class="row">
-        <div class="col-sm-7">
-            <h4><span class="fa-stack">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-check fa-stack-1x fa-inverse"></i>
-                </span> Other information</h4>
-            <table class="table table-striped">
-                <tr>
-                    <th>Distance from campus:</th>
-                    <td><?=$campus_distance?></td>
-                </tr>
-                <tr>
-                    <th>Sublease ends:</th>
-                    <td><?=$move_out_date?></td>
-                </tr>
-                <tr>
-                    <th>Parking per unit</th>
-                    <td><?=$parking_per_unit?></td>
-                </tr>
-                <tr>
-                    <th>Smoking</th>
-                    <td><?=$no_smoking?></td>
-                </tr>
-                <tr>
-                    <th>Pets allowed</th>
-                    <td><?=$pets_allowed ? 'Yes':'No'?></td>
-                </tr>
-                <?php if(!empty($additional_fees)):?>
-                <tr>
-                    <th>Additional fees</th>
-                    <td><?=$additional_fees?></td>
-                </tr>
-                <?php endif;?>
-            </table>
-            <h4>
-                <span class="fa-stack">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="fa fa-plug fa-stack-1x fa-inverse"></i>
-                </span>
-                Utilities</h4>
-            <table class="table table-striped">
-                <tr>
-                    <th>Laundry</th>
-                    <td><?=$laundry_type?>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Internet</th>
-                    <td><?=$internet_type?>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Trash</th>
-                    <td><?=$trash_type?>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Television</th>
-                    <td><?=$tv_type?>
-                    </td>
-                </tr>
-            </table>
-            <?php if ($has_amenities): ?>
-            <h4>
-                <span class="fa-stack">
-                    <i class="fa fa-circle fa-stack-2x"></i>
-                    <i class="far fa-gem fa-stack-1x fa-inverse"></i>
-                </span>
-                Amenities/Features</h4>
-            <ul>
-                <?php if ($close_to_campus):?>
-                <li>Walking distance to campus</li>
-                <?php endif; ?>
-                <?php if ($furnished):?>
-                <li>Furnished</li>
-                <?php endif; ?>
-                <?php if ($high_speed):?>
-                <li>High speed Internet</li>
-                <?php endif;?>
-                <?php if ($airconditioning):?>
-                <li>Air conditioning</li>
-                <?php endif;?>
-                <?php if ($dishwasher === '1'):?>
-                <li>Dishwasher</li>
-                <?php endif; ?>
-                <?php if ($utilities_inc):?>
-                <li>Utilities included</li>
-                <?php endif;?>
-                <?php if ($appalcart === '1'):?>
-                <li>AppalCART</li>
-                <?php endif; ?>
-                <?php if ($pets_allowed === '1'): ?>
-                <li>Pets allowed</li>
-                <?php endif;?>
-            </ul>
-            <?php endif;// has_amenities?>
-        </div>
-        <div class="col-sm-5">
-            <?=$photo?>
-        </div>
+  </div>
+  <?php if (!empty($description)):?>
+  <div class="description card card-primary">
+    <div class="card-body">
+      <?=$description?>
     </div>
+  </div>
+  <?php endif; ?>
+  <hr />
+  <div class="row">
+    <div class="col-sm-7">
+      <h4>
+        <span class="fa-lg">
+          <i class="fas fa-check" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+        </span>
+        Other information</h4>
+      <table class="table table-striped">
+        <tr>
+          <th>Distance from campus:</th>
+          <td><?=$campus_distance?></td>
+        </tr>
+        <tr>
+          <th>Sublease ends:</th>
+          <td><?=$move_out_date?></td>
+        </tr>
+        <tr>
+          <th>Parking per unit</th>
+          <td><?=$parking_per_unit?></td>
+        </tr>
+        <tr>
+          <th>Smoking</th>
+          <td><?=$no_smoking?></td>
+        </tr>
+        <tr>
+          <th>Pets allowed</th>
+          <td><?=$pets_allowed ? 'Yes':'No'?></td>
+        </tr>
+        <?php if(!empty($additional_fees)):?>
+        <tr>
+          <th>Additional fees</th>
+          <td><?=$additional_fees?></td>
+        </tr>
+        <?php endif;?>
+      </table>
+      <h4>
+        <span class="fa-lg">
+          <i class="fas fa-plug" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+        </span>
+        Utilities</h4>
+      <table class="table table-striped">
+        <tr>
+          <th>Laundry</th>
+          <td><?=$laundry_type?>
+          </td>
+        </tr>
+        <tr>
+          <th>Internet</th>
+          <td><?=$internet_type?>
+          </td>
+        </tr>
+        <tr>
+          <th>Trash</th>
+          <td><?=$trash_type?>
+          </td>
+        </tr>
+        <tr>
+          <th>Television</th>
+          <td><?=$tv_type?>
+          </td>
+        </tr>
+      </table>
+      <?php if ($has_amenities): ?>
+      <h4>
+        <span class="fa-lg">
+          <i class="fas fa-gem" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+        </span>
+        Amenities/Features</h4>
+      <ul>
+        <?php if ($close_to_campus):?>
+        <li>Walking distance to campus</li>
+        <?php endif; ?>
+        <?php if ($furnished):?>
+        <li>Furnished</li>
+        <?php endif; ?>
+        <?php if ($high_speed):?>
+        <li>High speed Internet</li>
+        <?php endif;?>
+        <?php if ($airconditioning):?>
+        <li>Air conditioning</li>
+        <?php endif;?>
+        <?php if ($dishwasher === '1'):?>
+        <li>Dishwasher</li>
+        <?php endif; ?>
+        <?php if ($utilities_inc):?>
+        <li>Utilities included</li>
+        <?php endif;?>
+        <?php if ($appalcart === '1'):?>
+        <li>AppalCART</li>
+        <?php endif; ?>
+        <?php if ($pets_allowed === '1'): ?>
+        <li>Pets allowed</li>
+        <?php endif;?>
+      </ul>
+      <?php endif;// has_amenities?>
+    </div>
+    <div class="col-sm-5">
+      <?=$photo?>
+    </div>
+  </div>
 </div>
 <?=$photoupdate?>
 <?=$ban_user?>
