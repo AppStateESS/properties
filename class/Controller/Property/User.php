@@ -47,10 +47,11 @@ class User extends \properties\Controller\SubController
 
     protected function viewHtmlCommand(\Canopy\Request $request)
     {
-        if (isset($_SERVER['HTTP_REFERER']) && stristr($_SERVER['HTTP_REFERER'], 'properties/Property/list')) {
-            NavBar::addItem('<button class="btn btn-outline-secondary navbar-btn" onClick="window.history.back()"><i class="fa fa-list"></i>&nbsp;Back to list</button>');
+        if (isset($_SERVER['HTTP_REFERER']) && stristr($_SERVER['HTTP_REFERER'],
+                        'properties/Property/list')) {
+            NavBar::addItem('<button class="btn btn-outline-dark navbar-btn" onClick="window.history.back()"><i class="fa fa-list"></i>&nbsp;Back to list</button>');
         }
-        \Layout::addStyle('properties', 'property/view.css');
+        \Layout::addToStyleList('mod/properties/css/property/view.css');
         return $this->factory->view($this->id, false);
     }
 

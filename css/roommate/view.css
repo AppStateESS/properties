@@ -1,0 +1,16 @@
+.roommate-view {
+  font-size: 16px; }
+  .roommate-view a.social:hover {
+    text-decoration: none; }
+  .roommate-view .contact-info {
+    font-size: 1.5em; }
+  .roommate-view h2 {
+    margin: 0 0 0.5em; }
+  .roommate-view fieldset {
+    margin-bottom: 2em; }
+
+.bullet {
+  color: #c3c3c3;
+  margin: 0 1em; }
+
+/*# sourceMappingURL=view.css.map */

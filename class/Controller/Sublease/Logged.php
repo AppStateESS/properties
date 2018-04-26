@@ -23,6 +23,7 @@ use properties\Factory\NavBar;
 
 class Logged extends User
 {
+
     /**
      * Current user's sublease object. NULL if does not exist.
      * @var \properties\Resource\Sublease $user_sublease
@@ -124,7 +125,7 @@ class Logged extends User
     public function viewHtmlCommand(Request $request)
     {
         $this->ownerOptions(true);
-        \Layout::addStyle('properties', 'sublease/view.css');
+        \Layout::addToStyleList('mod/properties/css/sublease/view.css');
         return $this->factory->view($this->id,
                         $this->factory->loggedIsOwner($this->id,
                                 $this->role->getId()));
@@ -153,7 +154,7 @@ class Logged extends User
             $this->createButton();
         }
     }
-    
+
     public function extendHtmlCommand(Request $request)
     {
         if (!$this->checkBan() && $this->user_sublease) {
@@ -163,7 +164,6 @@ class Logged extends User
         } else {
             throw new \properties\Exception\PrivilegeMissing;
         }
-        
     }
 
 }

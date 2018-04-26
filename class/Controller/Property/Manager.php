@@ -25,7 +25,7 @@ class Manager extends User
     {
         $property = $this->factory->load($this->id);
         $admin = $property->contact_id == $this->getCurrentLoggedManager();
-        \Layout::addStyle('properties', 'property/view.css');
+        \Layout::addToStyleList('mod/properties/css/property/view.css');
         return $this->factory->view($property, $admin);
     }
 

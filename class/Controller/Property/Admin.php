@@ -27,7 +27,7 @@ class Admin extends User
 
     protected function viewHtmlCommand(Request $request)
     {
-        \Layout::addStyle('properties', 'property/view.css');
+        \Layout::addToStyleList('mod/properties/css/property/view.css');
         return $this->factory->view($this->id, true);
     }
 

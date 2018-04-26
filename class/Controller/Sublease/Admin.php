@@ -59,7 +59,7 @@ EOF;
         $link = <<<EOF
 <a href="properties/Sublease/{$this->id}/edit"><i class="fa fa-edit"></i>&nbsp;Update this sublease</a>
 EOF;
-        \Layout::addStyle('properties', 'sublease/view.css');
+        \Layout::addToStyleList('mod/properties/css/sublease/view.css');
         NavBar::addOption($link);
         NavBar::addOption('<a class="dropdown-item" id="edit-photo-button" class="pointer"><i class="fa fa-camera"></i>&nbsp;Edit photos</a>');
         $deleteLink = <<<EOF

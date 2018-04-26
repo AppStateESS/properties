@@ -110,7 +110,7 @@ class Roommate extends Base
 
     public function view($id, $contact_allowed, $admin = false)
     {
-        \Layout::addStyle('properties', 'roommate/view.css');
+        \Layout::addToStyleList('mod/properties/css/roommate/view.css');
         try {
         $roommate = $this->load($id);
         } catch (\properties\Exception\ResourceNotFound $e) {

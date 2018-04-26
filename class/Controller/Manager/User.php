@@ -44,7 +44,7 @@ class User extends \properties\Controller\SubController
 
     protected function listHtmlCommand(Request $request)
     {
-        \Layout::addStyle('properties', 'manager/list.css');
+        \Layout::addToStyleList('mod/properties/css/manager/list.css');
         return $this->factory->reactView('manager');
     }
 
