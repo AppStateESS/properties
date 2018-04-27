@@ -154,7 +154,7 @@ export default class ManagerDesktop extends Base {
                 placeholder="Search..."
                 onChange={this.updateSearchString}/>
               <span className="input-group-btn">
-                <button className="btn btn-outline-secondary btn-sm" type="button" onClick={this.clear}>Clear</button>
+                <button className="btn btn-outline-dark btn-sm" type="button" onClick={this.clear}>Clear</button>
               </span>
             </div>
           </div>

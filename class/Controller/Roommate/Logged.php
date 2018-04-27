@@ -100,7 +100,7 @@ class Logged extends User
     {
         if ($this->user_roommate) {
             $rm_id = $this->user_roommate->getId();
-            $link = "<button onClick='location.href=\"properties/Roommate/$rm_id\"' class='btn btn-outline-secondary navbar-btn btn-sm'><i class='fa fa-undo'></i>&nbsp;Back to view</button>";
+            $link = "<button onClick='location.href=\"properties/Roommate/$rm_id\"' class='btn btn-outline-dark navbar-btn btn-sm'><i class='fa fa-undo'></i>&nbsp;Back to view</button>";
             \properties\Factory\NavBar::addItem($link);
         }
     }

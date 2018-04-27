@@ -19,12 +19,12 @@ export default class DeleteQuestion extends Component {
         </div>
         <div className="mb-1">
           <button
-            className="btn btn-outline-secondary btn-lg btn-warning"
+            className="btn btn-outline-dark btn-lg btn-warning"
             onClick={this.props.deactivate}>Just deactivate it for now</button>
         </div>
         <div className="mb-1">
           <button
-            className="btn btn-outline-secondary btn-lg"
+            className="btn btn-outline-dark btn-lg"
             onClick={this.props.close}>No, I changed my mind</button>
         </div>
       </div>

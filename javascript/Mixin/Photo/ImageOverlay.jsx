@@ -55,7 +55,7 @@ export default class ImageOverlay extends Component {
             {photos}
           </Dropzone>
           <div>
-            <button className="btn btn-outline-secondary" onClick={this.props.clear}>Clear</button>
+            <button className="btn btn-outline-dark" onClick={this.props.clear}>Clear</button>
           </div>
           <hr/>
           <div className="clearfix"></div>

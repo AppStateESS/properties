@@ -239,7 +239,7 @@ abstract class SubController extends Base
             return;
         }
         $label = ($needApproval == 1) ? "$needApproval manager needs approval" : "$needApproval managers need approval";
-        $link = "<button onClick=\"window.location.href='properties/Manager/approval'\" class=\"btn btn-outline-secondary navbar-btn\">$label</button>";
+        $link = "<button onClick=\"window.location.href='properties/Manager/approval'\" class=\"btn btn-outline-dark navbar-btn\">$label</button>";
         NavBar::addItem($link);
     }
 

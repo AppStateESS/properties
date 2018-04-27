@@ -53,7 +53,7 @@ export default class Rooms extends Component {
     let bedrooms = Range(property.bedroom_no)
     const halfcn = classnames('ml-1', 'btn', this.state.half
       ? 'btn-success'
-      : 'btn-outline-secondary')
+      : 'btn-outline-dark')
     return (
       <div className="row">
         <div className="col-sm-6">
