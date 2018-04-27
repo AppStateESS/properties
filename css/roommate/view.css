@@ -2,12 +2,22 @@
   font-size: 16px; }
   .roommate-view a.social:hover {
     text-decoration: none; }
+  .roommate-view h3 {
+    margin: 14px auto; }
   .roommate-view .contact-info {
     font-size: 1.5em; }
   .roommate-view h2 {
     margin: 0 0 0.5em; }
   .roommate-view fieldset {
     margin-bottom: 2em; }
+  .roommate-view .about-me {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; }
+    .roommate-view .about-me fieldset {
+      width: 350px; }
+      .roommate-view .about-me fieldset legend {
+        border-bottom: 1px solid black; }
 
 .bullet {
   color: #c3c3c3;
