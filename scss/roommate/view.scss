@@ -5,6 +5,9 @@
     text-decoration: none;
   }
 
+  h3 {
+    margin : 14px auto;
+  }
   .contact-info {
     font-size: 1.5em;
   }
@@ -15,6 +18,20 @@
 
   fieldset {
     margin-bottom: 2em;
+  }
+  
+  .about-me {
+    display:flex;
+    flex-wrap : wrap;
+    justify-content: space-between;
+    
+    fieldset {
+      width : 350px;
+      
+      legend {
+        border-bottom : 1px solid black;
+      }
+    }
   }
 }
 

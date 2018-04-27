@@ -3,10 +3,9 @@
   padding-bottom: 1em;
   border-bottom: 1px solid #185B80; }
   .property-row .title {
-    margin: 0px;
-    margin-bottom: 8px;
+    margin: 0 0 8px;
     font-size: 1.4em;
-    padding: .4em; }
+    padding: 0.4em; }
   .property-row .icon-listing {
     line-height: 2px; }
   .property-row .amenity-icon {
@@ -20,16 +19,15 @@
     background-color: #FF4242; }
   .property-row .title a {
     color: white; }
-
-.room-bath {
-  font-size: 1.3em; }
+  .property-row .room-bath {
+    font-size: 1.3em; }
 
 .dropdown-item {
   padding: 3px 20px; }
 
 .dropdown-item label {
   font-weight: normal;
-  margin: 0px;
+  margin: 0;
   cursor: pointer; }
 
 .trans-enter {
