@@ -11,6 +11,16 @@ module.exports = {
     filename: '[name].[chunkhash:8].min.js',
     chunkFilename: '[name].[chunkhash:8].chunk.js',
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          name: "vendor",
+          chunks: "all",
+        }
+      }
+    }
+  },
   resolve: {
     extensions: [
       '.js', '.jsx',
@@ -27,7 +37,7 @@ module.exports = {
         }
       }, {
         test: [
-          /\.js$/, /\.es6$/, /\.jsx$/,
+          /\.js$/, /\.jsx$/,
         ],
         exclude: /node_modules/,
         loader: WebpackStripLoader.loader('console.log')
