@@ -22,7 +22,9 @@ class BooleanButton extends Component {
 
   componentWillUpdate(props) {
     if (props.current !== this.state.status) {
-      this.setState({status : !this.state.status})
+      this.setState({
+        status: !this.state.status
+      })
     }
   }
 
@@ -35,8 +37,9 @@ class BooleanButton extends Component {
   }
 
   positiveIcon() {
+    let className = 'fas fa-check'
     if (this.props.icon === true) {
-      return 'fa fa-check'
+      return className
     } else if (this.props.icon !== null && typeof this.props.icon === 'object') {
       return this.props.icon[0]
     } else {
@@ -45,8 +48,9 @@ class BooleanButton extends Component {
   }
 
   negativeIcon() {
+    let className = 'fas fa-times'
     if (this.props.icon === true) {
-      return 'fa fa-times'
+      return className
     } else if (this.props.icon !== null && typeof this.props.icon === 'object') {
       return this.props.icon[1]
     } else {
@@ -55,18 +59,34 @@ class BooleanButton extends Component {
   }
 
   getIcon() {
-    return this.state.status ? this.positiveIcon() : this.negativeIcon()
+    return this.positiveIcon() + this.negativeIcon()
   }
 
   getLabel() {
-    return this.state.status ? this.props.label[0] : this.props.label[1]
+    return this.state.status
+      ? this.props.label[0]
+      : this.props.label[1]
   }
 
   render() {
     let label = this.getLabel()
     if (this.props.icon) {
-      label = <span>
-        <i className={this.getIcon()}></i>&nbsp;{label}</span>
+      label = (
+        <span>
+          <span
+            className={this.state.status
+              ? 'd-none'
+              : null}>
+            <i className={this.negativeIcon()}></i>
+          </span>
+          <span
+            className={this.state.status
+              ? null
+              : 'd-none'}>
+            <i className={this.positiveIcon()}></i>
+          </span>&nbsp;{label}
+        </span>
+      )
     }
     let className = this.state.status
       ? 'btn btn-success'
@@ -92,23 +112,23 @@ class BooleanButton extends Component {
 
 BooleanButton.defaultProps = {
   label: [
-    'Yes', 'No'
+    'Yes', 'No',
   ],
   icon: null
 }
 
 BooleanButton.propTypes = {
   label: PropTypes.array,
-  icon: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
+  icon: PropTypes.oneOfType([PropTypes.array, PropTypes.bool,]),
   handleClick: PropTypes.func,
-  current: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
+  current: PropTypes.oneOfType([PropTypes.bool, PropTypes.string,]),
   name: PropTypes.string,
-  small : PropTypes.bool
+  small: PropTypes.bool
 }
 
 BooleanButton.defaultProps = {
   name: null,
-  small : false
+  small: false
 }
 
 export default BooleanButton
