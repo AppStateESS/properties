@@ -11,7 +11,7 @@ class ButtonGroup extends Component {
   render() {
     let buttons = this.props.buttons.map(function (value, key) {
       const activeColor = 'btn-' + this.props.activeColor
-      let cn = classnames('btn', 'btn-outline-secondary')
+      let cn = classnames('btn', 'btn-outline-dark')
       if (this.props.match !== null && this.props.match !== undefined) {
         if (this.props.match.constructor === Array && (this.props.match.indexOf(value.value) !== -1)) {
           cn = classnames('btn', 'active', activeColor)
