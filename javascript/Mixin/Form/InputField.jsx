@@ -142,7 +142,7 @@ InputField.propTypes = {
   autocomplete: PropTypes.bool,
   required: PropTypes.bool,
   disabled: PropTypes.bool,
-  size: PropTypes.number,
+  size: PropTypes.oneOfType([PropTypes.number,PropTypes.string,]),
   maxLength: PropTypes.number,
   wrap: PropTypes.func,
   selectOnClick: PropTypes.bool,
