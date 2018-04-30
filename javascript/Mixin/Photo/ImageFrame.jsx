@@ -19,8 +19,7 @@ export default class ImageFrame extends Component {
     const divStyle = {
       width: '152px',
       textAlign: 'center',
-      height: '152px',
-      backgroundColor: '#B9B9B9',
+      backgroundColor: '#c6c6c6',
       marginBottom: '4px',
       border: '1px solid black'
     }
