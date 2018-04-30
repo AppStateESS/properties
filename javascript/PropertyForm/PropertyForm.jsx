@@ -3,7 +3,6 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import empty from '../Mixin/Helper/Empty.js'
-import Sticky from 'react-stickynode'
 import Dollarize from '../Mixin/Form/Dollarize.jsx'
 import Message from '../Mixin/Html/Message.jsx'
 import Nav from '../Mixin/Html/Nav.jsx'
@@ -25,7 +24,7 @@ export default class PropertyForm extends Component {
       property: property,
       errors: {},
       activeTab: 0,
-      saving: false
+      saving: false,
     }
     const methods = [
       'setTab',
@@ -82,7 +81,7 @@ export default class PropertyForm extends Component {
   setMessage(text, type) {
     const message = {
       text: text,
-      type: type
+      type: type,
     }
     this.setState({message: message})
     this.scrollUp()
@@ -129,7 +128,7 @@ export default class PropertyForm extends Component {
     }
 
     if (errorFound) {
-      this.setState({errors: errors, activeTab: 0})
+      this.setState({errors: errors, activeTab: 0,})
       this.scrollUp()
     } else {
       this.save()
@@ -141,10 +140,10 @@ export default class PropertyForm extends Component {
       url: './properties/Property/' + this.state.property.id,
       data: {
         varname: 'active',
-        value: 1
+        value: 1,
       },
       dataType: 'json',
-      type: 'patch'
+      type: 'patch',
     }).done(function () {
       this.setValue('active', true)
     }.bind(this))
@@ -155,10 +154,10 @@ export default class PropertyForm extends Component {
       url: './properties/Property/' + this.state.property.id,
       data: {
         varname: 'active',
-        value: 0
+        value: 0,
       },
       dataType: 'json',
-      type: 'patch'
+      type: 'patch',
     }).done(function () {
       this.setValue('active', false)
     }.bind(this))
@@ -191,7 +190,7 @@ export default class PropertyForm extends Component {
           'A server error prevented this property from saving.',
           'danger'
         )
-      }.bind(this)
+      }.bind(this),
     })
   }
 
@@ -256,38 +255,44 @@ export default class PropertyForm extends Component {
     }
 
     let activateButton
+    let deactivateButton
 
     if (property.id > 0) {
-      if (property.active) {
-        activateButton = (
-          <div onClick={this.deactivate} className="lead pointer text-success">
-            <i className="fa fa-toggle-on"></i>&nbsp; Property active
-          </div>
-        )
-      } else {
-        activateButton = (
-          <div onClick={this.activate} className="lead pointer text-muted">
-            <i className="fa fa-toggle-off"></i>&nbsp; Property inactive
-          </div>
-        )
+      let successClass = "lead pointer text-success"
+      if (!property.active) {
+        successClass = successClass + ' d-none'
       }
+      activateButton = (
+        <div onClick={this.deactivate} className={successClass}>
+          <i className="fa fa-toggle-on"></i>&nbsp; Property active
+        </div>
+      )
+      let muteClass = "lead pointer text-muted"
+      if (property.active) {
+        muteClass = muteClass + ' d-none'
+      }
+      deactivateButton = (
+        <div onClick={this.activate} className={muteClass}>
+          <i className="fa fa-toggle-off"></i>&nbsp; Property inactive
+        </div>
+      )
     }
 
     return (
       <div ref="PageTop" className="property-form">
         {message}
         <h2>Property for {this.state.property.company_name}</h2>
-        <div>{activateButton}</div>
-        <Sticky innerZ="100">
-        <Nav
-          buttons={this.navButtons()}
-          active={this.state.activeTab}
-          disable={this.basicComplete()
-            ? null
-            : [1, 2, 3, 4,]}
-          click={this.setTab}/>
-        </Sticky>
-          {section}
+        <div>{activateButton}{deactivateButton}</div>
+        <div className="sticky-top">
+          <Nav
+            buttons={this.navButtons()}
+            active={this.state.activeTab}
+            disable={this.basicComplete()
+              ? null
+              : [1, 2, 3, 4,]}
+            click={this.setTab}/>
+        </div>
+        {section}
         <SubmitForm check={this.checkForm} saving={this.state.saving} label="Property"/>
       </div>
     )
