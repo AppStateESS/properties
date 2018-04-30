@@ -218,12 +218,17 @@ abstract class Photo extends Base
 
     protected function handlePhotoPost($photo, $item_id, $owner_id)
     {
+        static $imageTypes = array('image/jpeg', 'image/png', 'image/gif');
         if (!isset($_FILES) || empty($_FILES)) {
             return array('error' => 'No files uploaded');
         }
+        
         $pic = $_FILES['photo'];
 
         try {
+            if (!in_array($pic['type'], $imageTypes)) {
+                throw new \properties\Exception\WrongImageType;
+            }
             $this->resize($pic['tmp_name']);
             $title = $this->createTitleFromFileName($pic['tmp_name']);
             $size = getimagesize($pic['tmp_name']);
