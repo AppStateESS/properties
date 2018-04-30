@@ -5,7 +5,7 @@ import ImageOverlay from '../Mixin/Photo/ImageOverlay.jsx'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import {arrayMove} from 'react-sortable-hoc'
 
-/* global $, subleaseId, loadPhotos, editPhotos, currentPhotos */
+/* global $, subleaseId, loadPhotos, currentPhotos */
 
 export default class SubleaseImage extends Component {
   constructor(props) {
@@ -29,7 +29,7 @@ export default class SubleaseImage extends Component {
   }
 
   componentDidMount() {
-    editPhotos.callback = this.overlayOn
+    $('#edit-photo-button').click(()=>this.overlayOn())
     if (currentPhotos.length > 0) {
       this.setState({currentPhotos: currentPhotos})
     }
