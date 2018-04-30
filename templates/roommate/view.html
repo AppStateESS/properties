@@ -1,171 +1,164 @@
 <div class="roommate-view container">
+  <?php if ($contact_allowed):?>
+  <div class="contact-info <?=$active? 'card' : 'alert alert-danger'?>">
+    <h2 class="text-center"><?=$name?></h2>
     <div class="row">
-        <?php if ($contact_allowed):?>
-        <div class="contact-info <?=$active? 'well' : 'alert alert-danger'?> col-sm-12">
-            <h2 class="text-center"><?=$name?></h2>
-            <div class="row">
-                <div class="<?=$social_media ? 'col-sm-4' : 'col-sm-6'?> text-center">
-                    <span class="email">
-                        <a href="mailto:<?=$email?>"><i class="far fa-envelope"></i>&nbsp;<?=$email?></a>
-                    </span>
-                </div>
-                <div class="<?=$social_media ? 'col-sm-4' : 'col-sm-6'?> text-center">
-                    <span class="phone">
-                        <a href="tel:+1<?=$phone?>"><i class="fa fa-phone"></i>&nbsp;<?=$phone_format?></a>
-                    </span>
-                </div>
-                <?php if($social_media): ?>
-                <div class="col-sm-4 text-center">
-                    <?php if (!empty($facebook)):?>
-                    <a class="social" href="<?=$facebook?>">
-                        <span class="fa-stack">
-                            <i class="far fa-square fa-stack-2x"></i>
-                            <i class="fab fa-facebook fa-stack-1x"></i>
-                        </span>
-                    </a>
-                    <?php endif;?>
-                    <?php if (!empty($twitter)):?>
-                    <a class="social" href="<?=$twitter?>">
-                        <span class="fa-stack">
-                            <i class="far fa-square fa-stack-2x"></i>
-                            <i class="fab fa-twitter fa-stack-1x"></i>
-                        </span>
-                    </a>
-                    <?php endif;?>
-                    <?php if (!empty($instagram)):?>
-                    <a class="social" href="<?=$instagram?>">
-                        <span class="fa-stack">
-                            <i class="far fa-square fa-stack-2x"></i>
-                            <i class="fab fa-instagram fa-stack-1x"></i>
-                        </span>
-                    </a>
-                    <?php endif;?>
-                </div>
-                <?php endif;?>
-            </div>
-            <?php endif;?>
-            <?php if (!$contact_allowed):?>
-            <div class="contact-info well col-sm-12">
-                <p>You will need to <a href="<?=$login?>">log-in</a> to get contact information for this roommate!</p>
-            </div>
-            <?php endif;?>
-        </div>
-        <?=$active ? null : '<div class="text-center alert alert-danger">Your request is disabled and no one can view it. <a href="./properties/Roommate/edit">Update your roommate request</a> to enable</div>'?>
-        <h3>
-            Ready to move: <?=$move_in_date?>
-        </h3>
-        <?php if ($college_life || $living_habits):?>
-        <div class="about-me">
-            <?php if ($college_life):?>
-            <fieldset>
-                <legend>College life</legend>
-                <?php if (!empty($major)):?>
-                <p>
-                    <strong>My major...</strong><br />
-                    <?=$major?>
-                </p>
-                <?php endif;?>
-                <?php if (!empty($focus)):?>
-                <p>
-                    <strong>My focus...</strong><br />
-                    <?=$focus?>
-                </p>
-                <?php endif;?>
-                <?php if (!empty($wake_time)):?>
-                <p>
-                    <strong>I tend to wake up around...</strong><br />
-                    <?=$wake_time?>
-                </p>
-                <?php endif;?>
-                <?php if (!empty($sleep_time)):?>
-                <p>
-                    <strong>I tend to go to bed around...</strong><br />
-                    <?=$sleep_time?>
-                </p>
-                <?php endif;?>
-                <?php if (!empty($study_time)):?>
-                <p>
-                    <strong>I tend to study...</strong><br />
-                    <?=$study_time?>
-                </p>
-                <?php endif;?>
-            </fieldset>
-            <?php endif;?>
-            <?php if($living_habits):?>
-            <fieldset>
-                <legend>Living habits</legend>
-                <?php if (!empty($overnighter)):?>
-                <p>
-                    <strong>Late guests...</strong><br />
-                    <?=$overnighter?>
-                </p>
-                <?php endif;?>
-                <?php if (!empty($cleanliness)):?>
-                <p>
-                    <strong>Cleanliness...</strong><br />
-                    <?=$cleanliness?>
-                </p>
-                <?php endif;?>
-                <?php if (!empty($smoking)):?>
-                <p>
-                    <strong>Smoking:</strong><br />
-                    <?=$smoking?>
-                </p>
-                <?php endif;?>
-                <?php if (!empty($pets)):?>
-                <p>
-                    <strong>Pets:</strong><br />
-                    <?=$pets?>
-                </p>
-                <?php endif;?>
-            </fieldset>
-            <?php endif;?>
-        </div>
+      <div class="<?=$social_media ? 'col-md-4' : 'col-sm-6'?> text-center">
+        <span class="email">
+          <a href="mailto:<?=$email?>">
+            <i class="far fa-envelope"></i>&nbsp;<?=$email?></a>
+        </span>
+      </div>
+      <div class="<?=$social_media ? 'col-md-4' : 'col-sm-6'?> text-center">
+        <span class="phone">
+          <a href="tel:+1<?=$phone?>">
+            <i class="fa fa-phone"></i>&nbsp;<?=$phone_format?>
+          </a>
+        </span>
+      </div>
+      <?php if($social_media): ?>
+      <div class="col-md-4 text-center">
+        <?php if (!empty($facebook)):?>
+        <a class="social" href="<?=$facebook?>">
+            <i class="fab fa-facebook fa-2x"></i>
+        </a>
         <?php endif;?>
-        <fieldset>
-            <legend>About me</legend>
-            <?php if (!empty($politics)):?>
-            <p>
-                <strong>My politics lean towards...</strong><br />
-                <?=$politics?>
-            </p>
-            <?php endif;?>
-            <?php if (!empty($free_time)):?>
-            <p>
-                <strong>In my free time:</strong><br />
-                <?=$free_time?>
-            </p>
-            <?php endif;?>
-            <?php if (!empty($loudness)):?>
-            <p>
-                <strong>I'd describe my volume as...</strong><br />
-                <?=$loudness?>
-            </p>
-            <?php endif;?>
-            <?php if (!empty($music)):?>
-            <p>
-                <strong>Music I enjoy:</strong><br />
-                <?=implode(', ', $music)?>
-            </p>
-            <?php endif;?>
-            <?php if (!empty($languages)):?>
-            <p>
-                <strong>The languages I speak:</strong><br />
-                <?=implode(', ', $languages)?>
-            </p>
-            <?php endif;?>
-            <?php if (!empty($hobbies)):?>
-            <p>
-                <strong>My hobbies include...</strong><br />
-                <?=implode(', ', $hobbies)?>
-            </p>
-            <?php endif;?>
-            <?php if (!empty($description)):?>
-            <p>
-                <strong>Other information about me...</strong><br />
-                <?=$description?>
-            </p>
-            <?php endif;?>
-        </fieldset>
+        <?php if (!empty($twitter)):?>
+        <a class="social" href="<?=$twitter?>">
+            <i class="fab fa-twitter fa-2x"></i>
+        </a>
+        <?php endif;?>
+        <?php if (!empty($instagram)):?>
+        <a class="social" href="<?=$instagram?>">
+            <i class="fab fa-instagram fa-2x"></i>
+        </a>
+        <?php endif;?>
+      </div>
+      <?php endif;?>
+    </div>
+    <?php endif;?>
+    <?php if (!$contact_allowed):?>
+    <div class="contact-info card">
+      <p>You will need to <a href="<?=$login?>">log-in</a> to get contact information for this roommate!</p>
+    </div>
+    <?php endif;?>
+  </div>
+  <?=$active ? null : '<div class="text-center alert alert-danger">Your request is disabled and no one can view it. <a href="./properties/Roommate/edit">Update your roommate request</a> to enable</div>'?>
+    <h3>
+      Ready to move: <?=$move_in_date?>
+    </h3>
+    <div class="about-me">
+      <fieldset>
+        <legend>About me</legend>
+        <?php if (!empty($politics)):?>
+        <p>
+          <strong>My politics lean towards...</strong><br />
+          <?=$politics?>
+        </p>
+        <?php endif;?>
+        <?php if (!empty($free_time)):?>
+        <p>
+          <strong>In my free time:</strong><br />
+          <?=$free_time?>
+        </p>
+        <?php endif;?>
+        <?php if (!empty($loudness)):?>
+        <p>
+          <strong>I'd describe my volume as...</strong><br />
+          <?=$loudness?>
+        </p>
+        <?php endif;?>
+        <?php if (!empty($music)):?>
+        <p>
+          <strong>Music I enjoy:</strong><br />
+          <?=implode(', ', $music)?>
+        </p>
+        <?php endif;?>
+        <?php if (!empty($languages)):?>
+        <p>
+          <strong>The languages I speak:</strong><br />
+          <?=implode(', ', $languages)?>
+        </p>
+        <?php endif;?>
+        <?php if (!empty($hobbies)):?>
+        <p>
+          <strong>My hobbies include...</strong><br />
+          <?=implode(', ', $hobbies)?>
+        </p>
+        <?php endif;?>
+        <?php if (!empty($description)):?>
+        <p>
+          <strong>Other information about me...</strong><br />
+          <?=$description?>
+        </p>
+        <?php endif;?>
+      </fieldset>
+      <?php if ($college_life || $living_habits):?>
+      <?php if ($college_life):?>
+      <fieldset>
+        <legend>College life</legend>
+        <?php if (!empty($major)):?>
+        <p>
+          <strong>My major...</strong><br />
+          <?=$major?>
+        </p>
+        <?php endif;?>
+        <?php if (!empty($focus)):?>
+        <p>
+          <strong>My focus...</strong><br />
+          <?=$focus?>
+        </p>
+        <?php endif;?>
+        <?php if (!empty($wake_time)):?>
+        <p>
+          <strong>I tend to wake up around...</strong><br />
+          <?=$wake_time?>
+        </p>
+        <?php endif;?>
+        <?php if (!empty($sleep_time)):?>
+        <p>
+          <strong>I tend to go to bed around...</strong><br />
+          <?=$sleep_time?>
+        </p>
+        <?php endif;?>
+        <?php if (!empty($study_time)):?>
+        <p>
+          <strong>I tend to study...</strong><br />
+          <?=$study_time?>
+        </p>
+        <?php endif;?>
+      </fieldset>
+      <?php endif;?>
+      <?php if($living_habits):?>
+      <fieldset>
+        <legend>Living habits</legend>
+        <?php if (!empty($overnighter)):?>
+        <p>
+          <strong>Late guests...</strong><br />
+          <?=$overnighter?>
+        </p>
+        <?php endif;?>
+        <?php if (!empty($cleanliness)):?>
+        <p>
+          <strong>Cleanliness...</strong><br />
+          <?=$cleanliness?>
+        </p>
+        <?php endif;?>
+        <?php if (!empty($smoking)):?>
+        <p>
+          <strong>Smoking:</strong><br />
+          <?=$smoking?>
+        </p>
+        <?php endif;?>
+        <?php if (!empty($pets)):?>
+        <p>
+          <strong>Pets:</strong><br />
+          <?=$pets?>
+        </p>
+        <?php endif;?>
+      </fieldset>
+      <?php endif;?>
+      <?php endif;?>
+      
     </div>
 </div>
