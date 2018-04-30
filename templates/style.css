@@ -23,26 +23,6 @@
     margin-right : 5px;
 }
 
-label, input {
-    margin-right : 5px;
-}
-
-.marginTop {
-    margin-top : 1em;
-}
-
-.marginBottom {
-    margin-bottom : 1em;
-}
-
-.marginRight {
-    margin-right : 1em;
-}
-
-.marginLeft {
-    margin-left : 1em;
-}
-
 .pointer {
     cursor:pointer;
 }
