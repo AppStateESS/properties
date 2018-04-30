@@ -1,4 +1,5 @@
 'use strict'
+import $ from 'jquery'
 import React from 'react'
 import empty from '../Mixin/Helper/Empty.js'
 import bindMethods from '../Mixin/Helper/Bind.js'
@@ -8,8 +9,6 @@ import DecodeUrl from '../Mixin/Helper/DecodeUrl.js'
 import PropertyListing from './PropertyListing.jsx'
 import Base from '../Mixin/List/Base.jsx'
 import ReactTooltip from 'react-tooltip'
-
-/* global $ */
 
 export default class Property extends Base {
   constructor(props) {
