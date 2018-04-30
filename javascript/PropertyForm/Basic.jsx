@@ -19,7 +19,7 @@ export default class Basic extends Base {
     bindMethods(methods, this)
   }
 
-  componentDidCatch(error, info) {
+  componentDidCatch() {
     this.setState({hasError: true})
   }
 
@@ -122,6 +122,7 @@ export default class Basic extends Base {
           <div className="col-sm-12">
             <label>Description</label>
             <textarea
+              rows="5"
               className="form-control"
               placeholder="Description is not searchable. Be sure to use other settings as well."
               name="description"
@@ -136,6 +137,7 @@ export default class Basic extends Base {
               name="monthly_rent"
               type="type"
               label="Monthly rent"
+              size={4}
               maxLength={4}
               wrap={this.dollarize}
               errorMessage={this.props.errors.monthly_rent
