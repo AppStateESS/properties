@@ -1,8 +1,9 @@
 'use strict'
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import InputField from '../Mixin/Form/InputField.jsx'
-import BooleanButton from '../Mixin/Form/BooleanButton.jsx'
+import InputField from '../Mixin/Form/InputField'
+import BooleanButton from '../Mixin/Form/BooleanButton'
+import Dollarize from '../Mixin/Form/Dollarize'
 
 export default class Pets extends Component {
   constructor(props) {
@@ -42,44 +43,42 @@ export default class Pets extends Component {
         <h3>Pets</h3>
         <BooleanButton
           name="pets_allowed"
-          label={['Pets allowed', 'Pets not allowed']}
-          icon={['fa fa-check', 'fa fa-times']}
+          label={['Pets allowed', 'Pets not allowed',]}
+          icon={['fa fa-check', 'fa fa-times',]}
           handleClick={this.togglePets.bind(this, !property.pets_allowed)}
           current={property.pets_allowed}/>
         <div style={this.obscurePetForm()}>
           <div className="row">
             <div className="col-sm-6">
-              <label>Deposit</label>
+              <div>Deposit</div>
               <BooleanButton
                 name="pet_dep_refund"
                 current={property.pet_dep_refund}
                 handleClick={this.togglePetDep.bind(this, !property.pet_dep_refund)}
-                label={['Deposit refunded', 'Nonrefundable']}/>
-              <div className="input-group">
-                <span className="input-group-addon">$</span>
+                label={['Deposit refunded', 'Nonrefundable',]}/>
+              <Dollarize>
                 <InputField
                   name="pet_deposit"
                   type="text"
+                  size="8"
                   value={property.pet_deposit}
                   blur={this.setToZero.bind(this, 'pet_deposit')}
                   disabled={!property.pets_allowed}
                   change={this.props.setValue.bind(this, 'pet_deposit')}/>
-                <span className="input-group-addon">.00</span>
-              </div>
+              </Dollarize>
             </div>
             <div className="col-sm-6">
               <label>Monthly fee</label>
-              <div className="input-group">
-                <span className="input-group-addon">$</span>
+              <Dollarize>
                 <InputField
                   name="pet_fee"
                   type="text"
+                  size="8"
                   disabled={!property.pets_allowed}
                   value={property.pet_fee}
                   blur={this.setToZero.bind(this, 'pet_fee')}
                   change={this.props.setValue.bind(this, 'pet_fee')}/>
-                <span className="input-group-addon">.00</span>
-              </div>
+              </Dollarize>
             </div>
           </div>
           <div className="row">
