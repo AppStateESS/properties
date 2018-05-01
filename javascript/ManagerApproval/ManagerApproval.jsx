@@ -223,7 +223,7 @@ export default class ManagerApproval extends Component {
             <span style={{
               fontSize: '2em'
             }}>{value.company_name}</span>
-            <div className="pull-right">
+            <div className="float-right">
               <button
                 className="btn btn-success"
                 disabled={this.state.emailWarning}
