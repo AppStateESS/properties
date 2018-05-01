@@ -61,10 +61,7 @@ export default class SubleaseImage extends Component {
           if (data.success === true) {
             currentPhotos.push(data.photo)
           } else if (data.success === false) {
-            alert(
-              'A server error prevented uploading of your image. Contact the site administrat' +
-              'ors'
-            )
+            alert(data.error)
             return
           }
           newPhotos.push(data.photo)
@@ -73,10 +70,8 @@ export default class SubleaseImage extends Component {
             {status: status, currentPhotos: currentPhotos, newPhotos: newPhotos,}
           )
         }.bind(this),
-        failure: function (data) {
-          newPhotos.push(data.photo)
-          status[key] = false
-          this.setState({status: status, newPhotos: newPhotos,})
+        error: function () {
+          alert('Sorry but your file is unacceptable. It may be of the wrong type or too large. Please try again.')
         }.bind(this),
       })
     }.bind(this))
