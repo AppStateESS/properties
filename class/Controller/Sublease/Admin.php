@@ -57,13 +57,13 @@ EOF;
     public function viewHtmlCommand(Request $request)
     {
         $link = <<<EOF
-<a href="properties/Sublease/{$this->id}/edit"><i class="fa fa-edit"></i>&nbsp;Update this sublease</a>
+<a class="dropdown-item" href="properties/Sublease/{$this->id}/edit"><i class="fas fa-edit"></i>&nbsp;Update this sublease</a>
 EOF;
         \Layout::addToStyleList('mod/properties/css/sublease/view.css');
         NavBar::addOption($link);
         NavBar::addOption('<a class="dropdown-item" id="edit-photo-button" class="pointer"><i class="fa fa-camera"></i>&nbsp;Edit photos</a>');
         $deleteLink = <<<EOF
-<a onClick="banUser.callback()" class="pointer"><i class="fa fa-ban"></i>&nbsp;Delete and ban user</a>
+<a onClick="banUser.callback()" class="pointer dropdown-item"><i class="fa fa-ban"></i>&nbsp;Delete and ban user</a>
 EOF;
         NavBar::addOption($deleteLink);
         return $this->factory->view($this->id, true);
