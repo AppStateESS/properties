@@ -13,7 +13,7 @@ export default class Rooms extends Component {
       half: false
     }
     bindMethods([
-      'updateBathroom', 'updateBedroom', 'half'
+      'updateBathroom', 'updateBedroom', 'half',
     ], this)
 
   }
@@ -25,7 +25,7 @@ export default class Rooms extends Component {
     if (!this.state.half) {
       this.updateBathroom(`${this.props.property.bathroom_no}.5`)
     } else {
-      this.updateBathroom(this.props.property.bathroom_no.substr(0,1))
+      this.updateBathroom(this.props.property.bathroom_no.substr(0, 1))
     }
   }
 
@@ -51,13 +51,17 @@ export default class Rooms extends Component {
     const {property} = this.props
     let bathrooms = Range(property.bathroom_no, this.state.half)
     let bedrooms = Range(property.bedroom_no)
-    const halfcn = classnames('ml-1', 'btn', this.state.half
-      ? 'btn-success'
-      : 'btn-outline-dark')
+    const halfcn = classnames(
+      'ml-1',
+      'btn',
+      this.state.half
+        ? 'btn-success'
+        : 'btn-outline-dark'
+    )
     return (
       <div className="row">
         <div className="col-sm-6">
-          <label>Bedrooms</label>
+          <label className="mr-1">Bedrooms</label>
           <input
             type="text"
             size="1"
@@ -74,7 +78,7 @@ export default class Rooms extends Component {
         </div>
         <div className="col-sm-6">
           <div>
-            <label>Bathrooms</label>
+            <label className="mr-1">Bathrooms</label>
             <input
               type="text"
               size="3"
@@ -83,13 +87,15 @@ export default class Rooms extends Component {
               value={property.bathroom_no}
               className="single-input"/>
           </div>
-          <ButtonGroup
-            buttons={bathrooms}
-            name="bathroom_no"
-            match={property.bathroom_no}
-            handle={this.updateBathroom}
-            activeColor="success"/>
-          <button className={halfcn} onClick={this.half}>1/2</button>
+          <div className="btn-toolbar">
+            <ButtonGroup
+              buttons={bathrooms}
+              name="bathroom_no"
+              match={property.bathroom_no}
+              handle={this.updateBathroom}
+              activeColor="success"/>
+            <button className={halfcn} onClick={this.half}>1/2</button>
+          </div>
         </div>
       </div>
     )
@@ -99,5 +105,5 @@ export default class Rooms extends Component {
 Rooms.propTypes = {
   property: PropTypes.object,
   setValue: PropTypes.func,
-  bg : PropTypes.bool
+  bg: PropTypes.bool,
 }
