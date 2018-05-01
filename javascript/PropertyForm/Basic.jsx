@@ -158,7 +158,7 @@ export default class Basic extends Base {
         </div>
         <div className="row">
           <div className="col-sm-6 form-inline">
-            <label htmlFor="contract-length">Contract length</label>
+            <label htmlFor="contract-length" className="mr-1">Contract length</label>
             <select
               name="contract_length"
               id="contract-length"
@@ -176,7 +176,7 @@ export default class Basic extends Base {
             </select>
           </div>
           <div className="col-sm-6">
-            <label>Move-in date</label><br/>
+            <label className="mr-1">Move-in date</label><br/>
             <DatePicker
               onChange={this.setMoveIn}
               value={this.formatDate(property.move_in_date)}/>
@@ -187,8 +187,8 @@ export default class Basic extends Base {
 
         <div className="row">
           <div className="col-sm-5">
-            <div className="pull-left">
-              <label>Parking spaces per unit</label>
+            <div className="float-left">
+              <label className="mr-1">Parking spaces per unit</label>
               <input
                 name="parking_per_unit"
                 type="text"
@@ -205,7 +205,7 @@ export default class Basic extends Base {
               activeColor="success"/>
           </div>
           <div className="col-sm-7">
-            <label>Miles from campus</label><br/>
+            <label className="mr-1">Miles from campus</label><br/>
             <ButtonGroup
               name="campus_distance"
               buttons={this.campusDistance()}
@@ -216,7 +216,7 @@ export default class Basic extends Base {
         </div>
         <div className="row">
           <div className="col-sm-12">
-            <label>Property type</label><br/>
+            <label className="mr-1">Property type</label><br/>
             <ButtonGroup
               name="proptype"
               buttons={this.propertyType()}
@@ -227,8 +227,7 @@ export default class Basic extends Base {
         </div>
         <div className="row">
           <div className="col-sm-12">
-            <label>Student preference</label>
-            <br/>
+            <label className="mr-1">Student preference</label>
             <ButtonGroup
               name="student_type"
               buttons={this.studentType()}
