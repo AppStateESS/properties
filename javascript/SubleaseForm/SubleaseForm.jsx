@@ -306,8 +306,8 @@ export default class SubleaseForm extends Base {
     if (this.state.sublease.id === 0) {
       contactAlert = (
         <div className="alert alert-info">
-          <strong>Notice:</strong>&nbsp; a sublease listing requires contact information.<br/>Use our
-          <a href="./properties/Roommate">roommate section</a>
+          <strong>Notice:</strong>&nbsp; a sublease listing requires contact information.<br/>
+          Use our&nbsp;<a href="./properties/Roommate">roommate section</a>&nbsp;
           if you want to keep your contact information available only to other students.</div>
       )
     }
@@ -315,7 +315,7 @@ export default class SubleaseForm extends Base {
     let landlordWarning
     if (this.state.errors.landlord_perm === true) {
       landlordWarning = <div className="alert alert-danger">
-        <i className="fa fa-exclamation-triangle"></i>&nbsp;You should not sublease without notifying your landlord</div>
+        <i className="fas fa-exclamation-triangle"></i>&nbsp;You should not sublease without notifying your landlord</div>
     }
 
     let moveOutError
@@ -408,9 +408,7 @@ export default class SubleaseForm extends Base {
         </div>
         <div className="row">
           <div className="col-sm-6 col-md-4">
-            <div style={{
-                maxWidth: '200px'
-              }}>
+            <div>
               <label>Monthly rent</label>
               <i className="fa fa-asterisk text-danger"></i>&nbsp;
               <Help
@@ -429,7 +427,7 @@ export default class SubleaseForm extends Base {
             </div>
           </div>
           <div className="col-sm-6 col-md-4">
-            <label>Subleasing tenant or unit</label><Help title="Are you subleasing a tenant's portion or the entire unit?"/><br/>
+            <label>Subleasing tenant or unit</label><Help classes="ml-1" title="Are you subleasing a tenant's portion or the entire unit?"/><br/>
             <ButtonGroup
               name="lease_type"
               buttons={this.getLeaseType()}
@@ -464,7 +462,7 @@ export default class SubleaseForm extends Base {
         </div>
         <div className="row">
           <div className="col-sm-6">
-            <div className="float-left">
+            <div>
               <label>Parking spaces per unit</label>
               <input
                 name="parking_per_unit"
@@ -517,12 +515,12 @@ export default class SubleaseForm extends Base {
                 classes="ml-1"
                 title="Regardless of landlord's allowance, the other tenant's wishes should be respected."/>
             </div>
-            <div>
+            <div className="d-flex align-items-center">
               <BigCheckbox
                 handle={this.setIntegerValue.bind(this, 'pets_allowed')}
                 checked={sublease.pets_allowed}
-                label="Pets allowed"/>&nbsp;
-              <Help title="You may put pet details in the description"/>
+                label="Pets allowed"/>
+              <Help classes="ml-1" title="You may put pet details in the description"/>
             </div>
           </div>
           <div className="col-sm-6 col-md-4">
@@ -540,11 +538,12 @@ export default class SubleaseForm extends Base {
             </div>
           </div>
           <div className="col-sm-6 col-md-4">
-            <div>
+            <div className="d-flex align-items-center">
               <BigCheckbox
                 handle={this.setIntegerValue.bind(this, 'utilities_inc')}
                 checked={sublease.utilities_inc}
-                label="Utilities included"/>&nbsp;<Help title="Check this box if the unit's utilities are included in the rent."/>
+                label="Utilities included"/>
+                <Help classes="ml-1" title="Check this box if the unit's utilities are included in the rent."/>
             </div>
             <div>
               <BigCheckbox
