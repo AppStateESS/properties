@@ -50,7 +50,7 @@ export default class Pets extends Component {
         <div style={this.obscurePetForm()}>
           <div className="row">
             <div className="col-sm-6">
-              <div>Deposit</div>
+              <label className="mr-1">Deposit</label>
               <BooleanButton
                 name="pet_dep_refund"
                 current={property.pet_dep_refund}
@@ -87,6 +87,7 @@ export default class Pets extends Component {
               <textarea
                 disabled={!property.pets_allowed}
                 className="form-control"
+                rows="4"
                 id="pet-type"
                 value={property.pet_type}
                 onChange={this.props.setValue.bind(this, 'pet_type')}></textarea>
