@@ -83,7 +83,7 @@ class User extends \properties\Controller\SubController
 
     protected function createButton()
     {
-        return '<button class="btn btn-primary btn-sm navbar-btn" onClick="window.location.href=\'properties/Roommate/create\'"><i class="fa fa-plus"></i>&nbsp;Create roommate request</button>';
+        return '<button class="btn btn-outline-dark btn-sm navbar-btn" onClick="window.location.href=\'properties/Roommate/create\'"><i class="fa fa-plus"></i>&nbsp;Create roommate request</button>';
     }
 
 }
