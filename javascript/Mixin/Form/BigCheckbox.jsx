@@ -23,7 +23,7 @@ const BigCheckbox = ({handle, checked, label,}) => {
     <span className={parseInt(checked) == 1
         ? 'd-none'
         : 'd-inline'}>
-      <i className="far fa-2x fa-square mr-1"></i>
+      <i className="far fa-2x fa-square mr-1 text-muted"></i>
     </span>
   )
 
