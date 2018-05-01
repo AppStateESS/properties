@@ -28,7 +28,7 @@ const BigCheckbox = ({handle, checked, label,}) => {
   )
 
   return (
-    <div onClick={handleIt} className="pointer d-flex align-items-center h-100">
+    <div onClick={handleIt} className="pointer d-flex align-items-center">
       {checkBox}{uncheckBox}
       <span
         className={!empty(checked)
