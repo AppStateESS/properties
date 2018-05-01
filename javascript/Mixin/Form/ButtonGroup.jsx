@@ -47,8 +47,10 @@ class ButtonGroup extends Component {
     }
 
     return (
-      <div className={buttonClass} role="group">
-        {buttons}
+      <div>
+        <div className={buttonClass} role="group">
+          {buttons}
+        </div>
         {hidden}
       </div>
     )
@@ -59,7 +61,9 @@ ButtonGroup.propTypes = {
   buttons: PropTypes.array.isRequired,
   handle: PropTypes.func.isRequired,
   activeColor: PropTypes.string,
-  match: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array]),
+  match: PropTypes.oneOfType(
+    [PropTypes.string, PropTypes.number, PropTypes.array,]
+  ),
   vertical: PropTypes.bool,
   name: PropTypes.string
 }
