@@ -19,7 +19,7 @@
 </script>
   <?=$delete?>
     <?=$photoupdate?>
-      <?=$inactive_warning ? '<div class="alert alert-danger"><i class="fa fa-ban"></i> Notice: this property is currently not active. <button onClick="activate()" class="pull-right btn btn-success btn-sm">Reactivate</button></div>' : null;?>
+      <?=$inactive_warning ? '<div class="alert alert-danger"><i class="fa fa-ban"></i> Notice: this property is currently not active. <button onClick="activate()" class="float-right btn btn-success btn-sm">Reactivate</button></div>' : null;?>
         <?= isset($manager_warning) ? '<div class="alert alert-danger">' . $manager_warning . '</div>' : null;?>
           <div class="property-view">
             <div class="row">
