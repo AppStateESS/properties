@@ -52,6 +52,7 @@ class Logged extends User
     protected function listJsonCommand(Request $request)
     {
         $json['roommates'] = $this->factory->listing($request, true);
+        $json['more_rows'] = $this->factory->more_rows;
         return $json;
     }
 

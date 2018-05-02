@@ -24,7 +24,8 @@ use phpws2\Database;
 
 class Roommate extends Base
 {
-
+    public $more_rows = true;
+    
     protected function build()
     {
         return new \properties\Resource\Roommate;
@@ -35,7 +36,9 @@ class Roommate extends Base
         $listing = new Roommate\Listing;
         $listing->identify = $identify;
         $listing->pullVariables($request);
-        return $listing->get();
+        $result = $listing->get();
+        $this->more_rows = $listing->more_rows;
+        return $result;
     }
 
     public function patch($id, $param, $value)

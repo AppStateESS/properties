@@ -45,7 +45,7 @@ export default class RoommateRow extends Component {
           </div>
         </div>
         <div className="card-footer text-center">
-          <a className="btn btn-primary" href={`./properties/Roommate/${roommate.id}`}>Full details</a>
+          <a className="btn btn-info" href={`./properties/Roommate/${roommate.id}`}>Full details</a>
         </div>
       </div>
     )
