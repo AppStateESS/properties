@@ -1,7 +1,7 @@
 'use strict'
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import InputField from '../Mixin/Form/InputField.jsx'
+import InputField from 'canopy-react-inputfield'
 import Dollarize from '../Mixin/Form/Dollarize.jsx'
 
 export default class UtilityImbursement extends Component {
@@ -31,7 +31,7 @@ export default class UtilityImbursement extends Component {
         <h3>Utility imbursement</h3>
         <p>If you pay a portion of utilities, please enter that amount below.</p>
         <div className="row">
-          <div className="col-xs-6 col-sm-4 col-md-3">
+          <div className="col-6 col-sm-4 col-md-3">
             <label>Cable</label>
             <InputField
               name="util_cable"
@@ -40,7 +40,7 @@ export default class UtilityImbursement extends Component {
               blur={this.setToZero.bind(this, 'util_cable')}
               change={this.props.setValue.bind(this, 'util_cable')}/>
           </div>
-          <div className="col-xs-6 col-sm-4 col-md-3">
+          <div className="col-6 col-sm-4 col-md-3">
             <label>Fuel/Gas</label>
             <InputField
               name="util_fuel"
@@ -49,7 +49,7 @@ export default class UtilityImbursement extends Component {
               blur={this.setToZero.bind(this, 'util_fuel')}
               change={this.props.setValue.bind(this, 'util_fuel')}/>
           </div>
-          <div className="col-xs-6 col-sm-4 col-md-3">
+          <div className="col-6 col-sm-4 col-md-3">
             <label>Internet</label>
             <InputField
               name="util_internet"
@@ -58,7 +58,7 @@ export default class UtilityImbursement extends Component {
               blur={this.setToZero.bind(this, 'util_internet')}
               change={this.props.setValue.bind(this, 'util_internet')}/>
           </div>
-          <div className="col-xs-6 col-sm-4 col-md-3">
+          <div className="col-6 col-sm-4 col-md-3">
             <label>Phone</label>
             <InputField
               name="util_phone"
@@ -67,7 +67,7 @@ export default class UtilityImbursement extends Component {
               blur={this.setToZero.bind(this, 'util_phone')}
               change={this.props.setValue.bind(this, 'util_phone')}/>
           </div>
-          <div className="col-xs-6 col-sm-4 col-md-3">
+          <div className="col-6 col-sm-4 col-md-3">
             <label>Power</label>
             <InputField
               name="util_power"
@@ -76,7 +76,7 @@ export default class UtilityImbursement extends Component {
               blur={this.setToZero.bind(this, 'util_power')}
               change={this.props.setValue.bind(this, 'util_power')}/>
           </div>
-          <div className="col-xs-6 col-sm-4 col-md-3">
+          <div className="col-6 col-sm-4 col-md-3">
             <label>Trash</label>
             <InputField
               name="util_trash"
@@ -85,7 +85,7 @@ export default class UtilityImbursement extends Component {
               blur={this.setToZero.bind(this, 'util_trash')}
               change={this.props.setValue.bind(this, 'util_trash')}/>
           </div>
-          <div className="col-xs-6 col-sm-4 col-md-3">
+          <div className="col-6 col-sm-4 col-md-3">
             <label>Water</label>
             <InputField
               name="util_water"
