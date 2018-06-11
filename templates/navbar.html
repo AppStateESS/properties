@@ -1,9 +1,8 @@
 <nav class="navbar navbar-expand-md navbar-light bg-light" role="navigation">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav">
       <li class="nav-item">
@@ -46,7 +45,8 @@
       <?php if ($logged):?>
       <li class="nav-item dropdown">
         <a class="dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-          <?=$username ?></a>
+          <?=$username ?>
+        </a>
         <div class="dropdown-menu">
           <?php if ($admin): ?>
           <a class="dropdown-item" href="index.php?module=controlpanel"><i class="fas fa-cog"></i> Control panel</a>
@@ -54,8 +54,9 @@
           <a class="dropdown-item" href="properties/Reports"><i class="fa fa-list"></i> Property reports</a>
           <?php endif;?>
           <a class="dropdown-item" href="<?=$logout_uri?>"><i class="fas fa-sign-out-alt"></i> Sign out</a>
-          <?php endif; ?>
         </div>
       </li>
+      <?php endif; ?>
+    </ul>
   </div>
 </nav>
