@@ -23,9 +23,9 @@ export default class StudentRow extends Component {
           width: '100px'
         }}><input
           type="checkbox"
-          onClick={this.props.toggle}
-          value="1"
-          checked={value.checked}/></td>
+          defaultValue="1"
+          onChange={this.props.toggle}
+          defaultChecked={value.checked}/></td>
         <td>{value.username}</td>
         <td>{lastLog}</td>
       </tr>
