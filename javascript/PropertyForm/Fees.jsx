@@ -1,7 +1,7 @@
 'use strict'
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import InputField from '../Mixin/Form/InputField.jsx'
+import InputField from 'canopy-react-inputfield'
 import BooleanButton from '../Mixin/Form/BooleanButton.jsx'
 import Dollarize from '../Mixin/Form/Dollarize'
 
@@ -32,7 +32,7 @@ export default class Fees extends Component {
       <div>
         <h3>Deposits and Fees</h3>
         <div className="row">
-          <div className="col-xs-6 col-sm-4">
+          <div className="col-6 col-sm-4">
             <div>Security deposit</div>
             <BooleanButton
               name="security_refund"
@@ -49,7 +49,7 @@ export default class Fees extends Component {
               blur={this.setToZero.bind(this, 'security_amt')}
               change={this.props.setValue.bind(this, 'security_amt')}/>
           </div>
-          <div className="col-xs-6 col-sm-4">
+          <div className="col-6 col-sm-4">
             <div>Administrative Fee</div>
             <BooleanButton
               name="admin_fee_refund"
@@ -68,7 +68,7 @@ export default class Fees extends Component {
                 change={this.props.setValue.bind(this, 'admin_fee_amt')}/>
             </div>
           </div>
-          <div className="col-xs-6 col-sm-4">
+          <div className="col-6 col-sm-4">
             <div>Cleaning fee</div>
             <BooleanButton
               name="clean_fee_refund"
@@ -85,7 +85,7 @@ export default class Fees extends Component {
               blur={this.setToZero.bind(this, 'clean_fee_amt')}
               change={this.props.setValue.bind(this, 'clean_fee_amt')}/>
           </div>
-          <div className="col-xs-6 col-sm-4">
+          <div className="col-6 col-sm-4">
             <label>Parking Fee</label>
             <InputField
               name="parking_fee"
