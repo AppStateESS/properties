@@ -2,9 +2,9 @@
 import React, {Component} from 'react'
 import Modal from 'react-modal'
 import bindMethods from '../Mixin/Helper/Bind.js'
-import InputField from '../Mixin/Form/InputField.jsx'
+import InputField from 'canopy-react-inputfield'
 
-/* global $, banUser, userId */
+/* global banUser, userId */
 const modalStyle = {
   overlay: {
     position: 'fixed',

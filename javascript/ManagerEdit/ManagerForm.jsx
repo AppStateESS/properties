@@ -1,10 +1,8 @@
 'use strict'
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import InputField from '../Mixin/Form/InputField.jsx'
+import InputField from 'canopy-react-inputfield'
 import CheckValues from '../Mixin/Helper/CheckValues'
-
-/* global $ */
 
 class ManagerForm extends Component {
   constructor(props) {

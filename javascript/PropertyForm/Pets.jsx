@@ -1,7 +1,7 @@
 'use strict'
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import InputField from '../Mixin/Form/InputField'
+import InputField from 'canopy-react-inputfield'
 import BooleanButton from '../Mixin/Form/BooleanButton'
 import Dollarize from '../Mixin/Form/Dollarize'
 

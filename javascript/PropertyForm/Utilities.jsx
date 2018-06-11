@@ -2,7 +2,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import bindMethods from '../Mixin/Helper/Bind.js'
-import ButtonGroup from '../Mixin/Form/ButtonGroup.jsx'
+import ButtonGroup from 'canopy-react-buttongroup'
 import UtilityImbursement from './UtilityImbursement.jsx'
 import UtilityFunctions from '../Mixin/Edit/UtilityFunctions.js'
 
