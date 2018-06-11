@@ -96,7 +96,7 @@ export default class PropertyRow extends Row {
       if (this.props.showTimeout) {
         const inactiveDate = moment(property.timeout * 1000).format('MMM D, YYYY')
         timeout = (
-          <div className="mt-1">
+          <div className="mt-2">
             <p>
               <em>This property will be flagged inactive after {inactiveDate}. Update to reset timer.</em>
             </p>
