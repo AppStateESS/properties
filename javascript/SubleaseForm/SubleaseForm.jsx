@@ -2,8 +2,8 @@
 import React from 'react'
 import empty from '../Mixin/Helper/Empty.js'
 import Waiting from '../Mixin/Html/Waiting.jsx'
-import InputField from '../Mixin/Form/InputField.jsx'
-import ButtonGroup from '../Mixin/Form/ButtonGroup.jsx'
+import InputField from 'canopy-react-inputfield'
+import ButtonGroup from 'canopy-react-buttongroup'
 import Rooms from '../Mixin/Form/Rooms.jsx'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import DatePicker from 'react-date-picker'
@@ -554,7 +554,7 @@ export default class SubleaseForm extends Base {
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-6">
+          <div className="col-md-8 col-sm-12">
             <label>Internet</label><br/>
             <ButtonGroup
               name="internet_type"
@@ -563,7 +563,7 @@ export default class SubleaseForm extends Base {
               handle={this.setIntegerValue.bind(this, 'internet_type')}
               activeColor="success"/>
           </div>
-          <div className="col-sm-6">
+          <div className="col-md-4 col-sm-12">
             <label>Television</label><br/>
             <ButtonGroup
               name="tv_type"
