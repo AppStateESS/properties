@@ -1,7 +1,7 @@
 'use strict'
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import ButtonGroup from '../Form/ButtonGroup.jsx'
+import ButtonGroup from 'canopy-react-buttongroup'
 import Range from '../Helper/Range.js'
 import classnames from 'classnames'
 import bindMethods from '../Helper/Bind.js'
