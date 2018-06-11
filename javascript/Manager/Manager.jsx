@@ -156,7 +156,7 @@ class Manager extends Component {
                 ) : null}
             </div>
           </div>
-          <div className="row mt-1">
+          <div className="row mt-2">
             <div className="col-sm-12 text-center">
               <button className="btn btn-sm btn-outline-dark" onClick={this.searchLetter.bind(this, null)}>All</button>
               <button className="btn btn-sm btn-outline-dark" onClick={this.searchLetter.bind(this, 'a')}>A</button>
