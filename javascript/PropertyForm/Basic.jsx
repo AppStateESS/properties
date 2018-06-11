@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import DatePicker from 'react-date-picker'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import Rooms from '../Mixin/Form/Rooms.jsx'
-import InputField from '../Mixin/Form/InputField.jsx'
-import ButtonGroup from '../Mixin/Form/ButtonGroup.jsx'
+import InputField from 'canopy-react-inputfield'
+import ButtonGroup from 'canopy-react-buttongroup'
 import Base from '../Mixin/Edit/Base.jsx'
 import Range from '../Mixin/Helper/Range.js'
 import empty from '../Mixin/Helper/Empty.js'
@@ -131,7 +131,7 @@ export default class Basic extends Base {
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-5 col-xs-7">
+          <div className="col-sm-5 col-7">
             <InputField
               ref="monthlyRent"
               name="monthly_rent"
@@ -147,7 +147,7 @@ export default class Basic extends Base {
               change={this.updateRent}
               required={true}/>
           </div>
-          <div className="col-sm-7 col-xs-5" style={buttonspace}>
+          <div className="col-sm-7 col-5" style={buttonspace}>
             <ButtonGroup
               name="lease_type"
               buttons={this.getLeaseType()}
