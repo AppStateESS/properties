@@ -1,5 +1,4 @@
 'use strict'
-import $ from 'jquery'
 import React from 'react'
 import empty from '../Mixin/Helper/Empty.js'
 import bindMethods from '../Mixin/Helper/Bind.js'
