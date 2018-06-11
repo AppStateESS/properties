@@ -215,7 +215,7 @@ export default class SearchBar extends Component {
             toggle={this.props.toggle}
             searchVars={this.props.searchVars}
             facilities={this.props.facilities}/>
-          <div className="text-center mt-1">
+          <div className="text-center mt-2">
             <button className="btn btn-success" onClick={this.props.clearAmenities}>Uncheck above</button>
           </div>
         </div>
