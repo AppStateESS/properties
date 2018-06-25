@@ -7,3 +7,5 @@
 /conf/defines.php
 /javascript/build/
 /javascript/dev/
+/.sass-cache/
+/.tags

@@ -1,7 +1,7 @@
 'use strict'
 import React, {Component} from 'react'
 import moment from 'moment'
-import {DateField} from 'react-date-picker'
+import DatePicker from 'react-date-picker'
 import Waiting from '../Mixin/Html/Waiting.jsx'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import StudentRow from './StudentRow.jsx'
@@ -146,7 +146,7 @@ export default class StudentReport extends Component {
             <tr>
               <th style={{
                 width: '100px'
-              }}><input type="checkbox" onChange={this.toggleAll} checked={this.selected}/></th>
+              }}><input type="checkbox" defaultValue="1" onChange={this.toggleAll} defaultChecked={this.selected}/></th>
               <th>User name</th>
               <th>Last logged</th>
             </tr>
@@ -165,18 +165,19 @@ export default class StudentReport extends Component {
     if (this.selected) {
       actions = (
         <span>
-          <button className="marginLeft btn btn-danger" onClick={this.deleteStudent}>Delete</button>
+          <button className="ml-1 btn btn-danger" onClick={this.deleteStudent}>Delete</button>
         </span>
       )
     }
+    const searchDate = new Date(this.state.searchDate)
     return (
       <div>
         <h2>Student report</h2>
-        <DateField
+        <DatePicker
           dateFormat="YYYY-MM-DD"
           onChange={this.setSearchDate}
-          value={this.state.searchDate}/>
-        <button className="marginLeft btn btn-primary" onClick={this.load}>Refresh listing</button>
+          value={searchDate}/>
+        <button className="ml-1 btn btn-primary" onClick={this.load}>Refresh listing</button>
         {actions}{deleteAll}
         <hr/>
         <div className="student-listing">

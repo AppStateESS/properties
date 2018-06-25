@@ -76,9 +76,8 @@ class Module extends \Canopy\Module implements \Canopy\SettingDefaults
                     } else {
                         $url = 'index.php?module=users&action=user&command=login_page';
                     }
-                    NavBar::addItem("<a href='$url'>Student Sign in</a>");
-                    NavBar::addDivider();
-                    NavBar::addItem('<a href="properties/Manager/signin">Manager Sign in</a>');
+                    NavBar::addItem("<a class='nav-link' href='$url'>Student Sign in</a>");
+                    NavBar::addItem('<a class="nav-link" href="properties/Manager/signin">Manager Sign in</a>');
                 }
                 \properties\Factory\NavBar::view($request);
             }
@@ -114,6 +113,7 @@ class Module extends \Canopy\Module implements \Canopy\SettingDefaults
     {
         $template = new \phpws2\Template();
         $template->setModuleTemplate('properties', 'home.html');
+        \Layout::addToStyleList('mod/properties/css/home.css');
         return $template->get();
     }
 

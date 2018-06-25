@@ -9,28 +9,29 @@ module.exports = {
     path: setup.path.join(setup.APP_DIR, "dev"),
     filename: "[name].js",
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          name: "vendor",
+          chunks: "all",
+        }
+      }
+    }
+  },
   resolve: {
     extensions: [
       '.js', '.jsx',
     ],
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin(
-      {name: 'vendor', filename: 'vendor.js',}
-    ),
     new BrowserSyncPlugin(
-      {host: 'localhost', port: 3000, files: ['./javascript/dev/*.js'], proxy: 'localhost/phpwebsite',}
+      {host: 'localhost', notify: false, port: 3000, files: ['./javascript/dev/*.js'], proxy: 'localhost/canopy',}
     ),
   ],
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
-        enforce: 'pre',
-        loader: 'jshint-loader',
-        exclude: '/node_modules/',
-        include: setup.APP_DIR + "/dev",
-      }, {
         test: /\.jsx?/,
         include: setup.APP_DIR,
         loader: 'babel-loader',

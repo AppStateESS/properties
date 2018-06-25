@@ -1,7 +1,7 @@
 'use strict'
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import Overlay from '../Html/Overlay.jsx'
+import Overlay from 'canopy-react-overlay'
 import Dropzone from 'react-dropzone'
 import Thumb from './Thumb.jsx'
 import ImageFrame from './ImageFrame.jsx'
@@ -55,7 +55,7 @@ export default class ImageOverlay extends Component {
             {photos}
           </Dropzone>
           <div>
-            <button className="btn btn-default" onClick={this.props.clear}>Clear</button>
+            <button className="btn btn-outline-dark" onClick={this.props.clear}>Clear</button>
           </div>
           <hr/>
           <div className="clearfix"></div>

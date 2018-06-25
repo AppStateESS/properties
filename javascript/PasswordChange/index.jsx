@@ -66,13 +66,13 @@ class PasswordChange extends Component {
 
   passwordError() {
     if (this.state.passwordError) {
-      return <span className="label label-danger">{this.state.passwordError}</span>
+      return <span className="badge badge-danger">{this.state.passwordError}</span>
     }
   }
 
   usernameError() {
     if (this.state.usernameError) {
-      return <span className="label label-danger">{this.state.usernameError}</span>
+      return <span className="badge badge-danger">{this.state.usernameError}</span>
     }
   }
 

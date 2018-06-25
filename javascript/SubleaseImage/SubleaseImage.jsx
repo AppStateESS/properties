@@ -5,7 +5,7 @@ import ImageOverlay from '../Mixin/Photo/ImageOverlay.jsx'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import {arrayMove} from 'react-sortable-hoc'
 
-/* global $, subleaseId, loadPhotos, editPhotos, currentPhotos */
+/* global $, subleaseId, loadPhotos, currentPhotos */
 
 export default class SubleaseImage extends Component {
   constructor(props) {
@@ -29,7 +29,7 @@ export default class SubleaseImage extends Component {
   }
 
   componentDidMount() {
-    editPhotos.callback = this.overlayOn
+    $('#edit-photo-button').click(()=>this.overlayOn())
     if (currentPhotos.length > 0) {
       this.setState({currentPhotos: currentPhotos})
     }
@@ -61,10 +61,7 @@ export default class SubleaseImage extends Component {
           if (data.success === true) {
             currentPhotos.push(data.photo)
           } else if (data.success === false) {
-            alert(
-              'A server error prevented uploading of your image. Contact the site administrat' +
-              'ors'
-            )
+            alert(data.error)
             return
           }
           newPhotos.push(data.photo)
@@ -73,10 +70,8 @@ export default class SubleaseImage extends Component {
             {status: status, currentPhotos: currentPhotos, newPhotos: newPhotos,}
           )
         }.bind(this),
-        failure: function (data) {
-          newPhotos.push(data.photo)
-          status[key] = false
-          this.setState({status: status, newPhotos: newPhotos,})
+        error: function () {
+          alert('Sorry but your file is unacceptable. It may be of the wrong type or too large. Please try again.')
         }.bind(this),
       })
     }.bind(this))

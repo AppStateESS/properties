@@ -1,7 +1,7 @@
 'use strict'
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import BigCheckbox from '../Mixin/Form/BigCheckbox.jsx'
+import BigCheckbox from 'canopy-react-bigcheckbox'
 
 export default class Features extends Component {
   constructor(props) {

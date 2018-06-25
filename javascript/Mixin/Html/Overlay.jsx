@@ -12,7 +12,7 @@ export default class Overlay extends Component {
     this.close = this.close.bind(this)
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.lockBody()
   }
 
@@ -25,11 +25,11 @@ export default class Overlay extends Component {
   }
 
   normal() {
-    this.refs.closebutton.style.backgroundColor = 'inherit'
+    this.refs.closebutton.style.color = 'inherit'
   }
 
   lighten() {
-    this.refs.closebutton.style.backgroundColor = '#e3e3e3'
+    this.refs.closebutton.style.color = '#ff3737'
   }
 
   close() {
@@ -54,8 +54,7 @@ export default class Overlay extends Component {
     const headerStyle = {
       backgroundColor: '#F2F2F2',
       border: '1px solid #D9D9D9',
-      marginBottom: '1em',
-      height: '40px'
+      height: '45px'
     }
 
     const titleStyle = {
@@ -70,17 +69,18 @@ export default class Overlay extends Component {
     }
 
     const childrenStyle = {
-      paddingBottom : '50px'
+      paddingBottom: '50px'
     }
     return (
       <div style={overlayStyle}>
-        <div style={headerStyle}>
+        <div className="mb-1" style={headerStyle}>
           <div
             ref="closebutton"
             style={closeButton}
             onMouseEnter={this.lighten}
-            onMouseLeave={this.normal}>
-            <i className=" fa fa-2x fa-times pointer" onClick={this.close}></i>
+            onMouseLeave={this.normal}
+            onClick={this.close}>
+            <i className="fas fa-2x fa-times pointer"></i>
           </div>
           <div style={titleStyle}>{this.props.title}</div>
         </div>
@@ -93,7 +93,7 @@ export default class Overlay extends Component {
 }
 
 Overlay.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
+  children: PropTypes.oneOfType([PropTypes.string, PropTypes.element,]),
   close: PropTypes.func,
   title: PropTypes.string
 }

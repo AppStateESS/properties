@@ -29,7 +29,7 @@ class Manager extends User
 
     public function listHtmlCommand(\Canopy\Request $request)
     {
-        \Layout::addStyle('properties', 'sublease/list.css');
+        \Layout::addToStyleList('mod/properties/css/sublease/list.css');
         return $this->factory->reactView('sublease');
     }
 

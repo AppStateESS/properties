@@ -1,7 +1,7 @@
 'use strict'
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import InputField from '../Mixin/Form/InputField.jsx'
+import InputField from 'canopy-react-inputfield'
 import empty from '../Mixin/Helper/Empty.js'
 import DecodeUrl from '../Mixin/Helper/DecodeUrl.js'
 
@@ -52,12 +52,12 @@ export default class ManagerSignin extends Component {
               <li>Has your account been approved?</li>
               <li>
                 <a href="./properties/Manager/signup">Have you applied for an account yet?
-                  <i className="fa fa-external-link"></i>
+                  <i className="fas fa-link"></i>
                 </a>
               </li>
               <li>
                 <a href="./properties/Manager/forgot">Did you forget your password?
-                  <i className="fa fa-external-link"></i>
+                  <i className="fas fa-link"></i>
                 </a>
               </li>
             </ul>
@@ -96,7 +96,7 @@ export default class ManagerSignin extends Component {
           </div>
           <button className="btn btn-primary" disabled={disabled} onClick={this.submit}>Log in</button>
         </form>
-        <div className="well marginTop lead">
+        <div className="well mt-2 lead">
           <a href="./properties/Manager/forgot">Forgot password?</a><br/>
           <a href="./properties/Manager/signup">Request a manager account.</a>
         </div>

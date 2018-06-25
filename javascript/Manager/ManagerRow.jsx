@@ -14,8 +14,10 @@ class ManagerRow extends Component {
   }
 
   delete() {
-    if (prompt("Deleting this manager will remove their account and all their properties.\nType " +
-        "'DELETE' to confirm") === 'DELETE') {
+    if (prompt(
+      "Deleting this manager will remove their account and all their properties.\nTyp" +
+      "e 'DELETE' to confirm"
+    ) === 'DELETE') {
       $.ajax({
         url: './properties/Manager/' + this.props.id,
         dataType: 'json',
@@ -57,67 +59,70 @@ class ManagerRow extends Component {
   }
 
   render() {
-    let alabel = null
-    let aicon = null
-    let ahandle = null
-
-    if (this.props.active === '1') {
-      alabel = 'Deactivate'
-      aicon = <i
-        className="text-danger fa fa-lg fa-times-circle"
-        role="button"
-        title="Click to deactivate"></i>
-      ahandle = this.deactivate
-    } else {
-      alabel = 'Activate'
-      aicon = <i
-        className="text-success fa fa-lg fa-check-circle"
-        role="button"
-        title="Click to activate"></i>
-      ahandle = this.activate
-    }
-
     let optionList = null
     if (this.props.admin) {
       const options = [
         {
           label: 'Edit',
-          icon: <i className="fa fa-pencil-square-o"></i>,
+          icon: <i className="fas fa-edit"></i>,
           handleClick: this.props.fillForm
         }, {
           label: 'Add property',
-          icon: <i className="fa fa-building-o"></i>,
+          icon: <i className="far fa-building"></i>,
           link: './properties/Property/create/?managerId=' + this.props.id
         }, {
-          label: alabel,
-          icon: aicon,
-          handleClick: ahandle
+          label: 'Activate',
+          icon: (
+            <i
+              className="text-success fa fa-check-circle"
+              role="button"
+              title="Click to enable"></i>
+          ),
+          handleClick: this.activate,
+          hidden: this.props.active === '1',
+        }, {
+          label: 'Disable',
+          icon: <i
+            className="text-danger fa fa-times-circle"
+            role="button"
+            title="Click to disable"></i>,
+          handleClick: this.deactivate,
+          hidden: this.props.active === '0',
         }, {
           label: 'Delete',
-          icon: <i className="fa fa-trash"></i>,
+          icon: <i className="far fa-trash-alt"></i>,
           handleClick: this.delete
-        }
+        },
       ]
-      optionList = <Dropdown options={options} label="Options"/>
+      optionList = <Dropdown
+        options={options}
+        label="Options"
+        color={this.props.active === '0'
+          ? 'light'
+          : null}/>
     }
 
-    let properties = <div>
-      <button
-        className="btn btn-default"
-        style={{
-        display: 'inline'
-      }}
-        disabled={true}>No properties found</button>
-    </div>
+    let buttonClass = 'btn btn-outline-dark'
+    if (this.props.active === '0') {
+      buttonClass = 'btn btn-light'
+    }
+
+    let properties = (
+      <div>
+        <button className={buttonClass} disabled={true}>No properties found</button>
+      </div>
+    )
     const propertyCount = this.props.property_count
     if (propertyCount > 0) {
       const label = propertyCount > 1
         ? `View ${this.props.property_count} properties`
         : 'View property'
-      properties = <a
-        href={`./properties/Property/?managerId=${this.props.id}`}
-        className="btn btn-default">
-        <i className="fa fa-building-o"></i>&nbsp;{label}</a>
+      properties = (
+        <a
+          href={`./properties/Property/?managerId=${this.props.id}`}
+          className={buttonClass}>
+          <i className="far fa-building"></i>&nbsp;{label}</a>
+      )
     }
 
     let co = null
@@ -129,28 +134,26 @@ class ManagerRow extends Component {
     return (
       <div
         className={this.props.active === '0'
-        ? 'bg-danger row managerRow '
-        : 'row managerRow '}>
-        <div className="col-sm-6">
-          <span className="company-name">
+          ? 'bg-danger row managerRow '
+          : 'row managerRow '}>
+        <div className="col-sm-8">
+          <h4 className="company-name">
             <a href={viewLink}>{this.props.company_name}</a>
-          </span><br/>{co}
+          </h4>{co}
           <div>
             <LinkToButton
               url={this.props.phone_tel}
               icon="fa-phone"
               label={this.props.phone}/>
             <Website url={this.props.company_url}/>
-            <LinkToButton
-              url={email}
-              icon="fa-envelope-o"
-              label={this.props.email_address}/>
-              {this.props.admin === true
-               ? optionList
-               : null}
+            <LinkToButton url={email} icon="fa-envelope" label={this.props.email_address}/> {
+              this.props.admin === true
+                ? optionList
+                : null
+            }
           </div>
         </div>
-        <div className="col-sm-6">
+        <div className="col-sm-4">
           {properties}
         </div>
       </div>
@@ -189,13 +192,11 @@ ManagerRow.propTypes = {
   id: PropTypes.string
 }
 
-class Website extends Component {
-  render() {
-    if (this.props.url.length > 0) {
-      return (<LinkToButton url={this.props.url} label={this.props.url} icon="fa-link"/>)
-    } else {
-      return null
-    }
+const Website = (props) => {
+  if (props.url.length > 0) {
+    return (<LinkToButton url={props.url} label={props.url} icon="fa-link"/>)
+  } else {
+    return null
   }
 }
 
@@ -203,28 +204,24 @@ Website.propTypes = {
   url: PropTypes.string
 }
 
-class LinkToButton extends Component {
-  render() {
-    const bigIconClass = 'fa fa-lg ' + this.props.icon
-    const smallIconClass = 'fa ' + this.props.icon
-    return (
-      <span>
-        <a
-          href={this.props.url}
-          target="_blank"
-          className="link-button visible-xs-inline-block btn btn-primary">
-          <i className={bigIconClass}></i>
-        </a>
-        <a
-          href={this.props.url}
-          className="visible-sm visible-md visible-lg"
-          target="_blank">
-          <i className={smallIconClass}></i>&nbsp;{this.props.label}
-        </a>
-      </span>
-    )
-  }
+const LinkToButton = (props) => {
+  const bigIconClass = 'fas fa-lg ' + props.icon
+  const smallIconClass = 'fas ' + props.icon
+  return (
+    <span>
+      <a
+        href={props.url}
+        target="_blank"
+        className="link-button d-block d-sm-none btn btn-outline-dark mb-1">
+        <i className={bigIconClass}></i>
+      </a>
+      <a href={props.url} className="d-none d-sm-block" target="_blank">
+        <i className={smallIconClass}></i>&nbsp;{props.label}
+      </a>
+    </span>
+  )
 }
+
 LinkToButton.propTypes = {
   url: PropTypes.string,
   icon: PropTypes.string,

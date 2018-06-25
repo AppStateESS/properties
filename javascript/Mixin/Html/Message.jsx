@@ -14,7 +14,7 @@ class Message extends Component {
         break
 
       case 'success':
-        icon = 'fa fa-thumbs-o-up'
+        icon = 'far fa-thumbs-up'
         break
 
       case 'info':
@@ -22,7 +22,7 @@ class Message extends Component {
         break
 
       case 'warning':
-        icon = 'fa fa-hand-paper-o'
+        icon = 'far fa-hand-paper'
         break
     }
 

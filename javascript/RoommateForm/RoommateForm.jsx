@@ -1,6 +1,6 @@
 'use strict'
 import React, {Component} from 'react'
-import InputField from '../Mixin/Form/InputField.jsx'
+import InputField from 'canopy-react-inputfield'
 import DatePicker from 'react-date-picker'
 import RoommateObject from '../Mixin/Objects/RoommateObject.js'
 import moment from 'moment'
@@ -319,11 +319,11 @@ export default class RoommateForm extends Component {
         onClose={this.unsetMessage}/>
     }
 
-    let descriptionError = <div className="label label-danger">{this.state.errors.description}</div>
+    let descriptionError = <div className="badge badge-danger">{this.state.errors.description}</div>
 
     return (
       <div className="roommate-form">
-        <div className="text-align marginBottom">
+        <div className="text-align mb-1">
           {activateButton}
         </div>
         <p className="alert alert-info">This service is for students looking to meet
@@ -333,7 +333,7 @@ export default class RoommateForm extends Component {
           </strong>&nbsp;instead.
         </p>
         {message}
-        <div className="row marginBottom">
+        <div className="row mb-1">
           <div className="col-sm-6">
             <label>I am ready to be a roommate after
             </label>
@@ -347,7 +347,7 @@ export default class RoommateForm extends Component {
           <legend>Introduction
             <i className="fa fa-asterisk text-danger"></i>
           </legend>
-          <div className="row marginBottom">
+          <div className="row mb-1">
             <div className="col-sm-12">
               <div className="alert alert-info">Give a brief introduction of your ideal
                 roommate. Leave out any information repeated below and any contact information
@@ -364,7 +364,7 @@ export default class RoommateForm extends Component {
         </fieldset>
         <fieldset>
           <legend>Contact information</legend>
-          <div className="marginBottom">
+          <div className="mb-1">
             <i className="fa fa-asterisk text-danger"></i>
             Required information</div>
           <div className="row">
@@ -440,7 +440,7 @@ export default class RoommateForm extends Component {
           <p className="alert alert-info">The information you enter below will help people
             with similar interests find you. Nothing below is required.</p>
           <div className="row">
-            <div className="col-sm-12 marginBottom">
+            <div className="col-sm-12 mb-1">
               <label>My focus while attending college is
               </label>
               <Select
@@ -453,7 +453,7 @@ export default class RoommateForm extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="col-sm-6 marginBottom">
+            <div className="col-sm-6 mb-1">
               <InputField
                 name="major"
                 label={'My major'}
@@ -461,7 +461,7 @@ export default class RoommateForm extends Component {
                 value={roommate.major}
                 change={this.setValue.bind(this, 'major')}/>
             </div>
-            <div className="col-sm-6 marginBottom">
+            <div className="col-sm-6 mb-1">
               <label>In my free time I like to...</label>
               <Select
                 name="free_time"
@@ -473,7 +473,7 @@ export default class RoommateForm extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="col-sm-6 marginBottom">
+            <div className="col-sm-6 mb-1">
               <label>Hobbies</label>
               <Select
                 name="hobbies"
@@ -484,7 +484,7 @@ export default class RoommateForm extends Component {
                 simpleValue={true}
                 onChange={this.setValue.bind(this, 'hobbies')}/>
             </div>
-            <div className="col-sm-6 marginBottom">
+            <div className="col-sm-6 mb-1">
               <label>Personal politics</label>
               <Select
                 name="politics"
@@ -496,7 +496,7 @@ export default class RoommateForm extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="col-sm-6 marginBottom">
+            <div className="col-sm-6 mb-1">
               <label>Music preferences</label>
               <Select
                 name="music"
@@ -507,7 +507,7 @@ export default class RoommateForm extends Component {
                 simpleValue={true}
                 onChange={this.setValue.bind(this, 'music')}/>
             </div>
-            <div className="col-sm-6 marginBottom">
+            <div className="col-sm-6 mb-1">
               <label>Spoken languages</label>
               <Select
                 name="languages"
@@ -520,7 +520,7 @@ export default class RoommateForm extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="col-sm-6 marginBottom">
+            <div className="col-sm-6 mb-1">
               <label>Compared to most people
               </label>
               <Select
@@ -531,7 +531,7 @@ export default class RoommateForm extends Component {
                 simpleValue={true}
                 onChange={this.setValue.bind(this, 'loudness')}/>
             </div>
-            <div className="col-sm-6 marginBottom">
+            <div className="col-sm-6 mb-1">
               <label>I keep my living area
               </label>
               <Select
@@ -544,7 +544,7 @@ export default class RoommateForm extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="col-sm-6 marginBottom">
+            <div className="col-sm-6 mb-1">
               <label>Smoking
               </label>
               <Select
@@ -555,7 +555,7 @@ export default class RoommateForm extends Component {
                 placeholder="Select from below or leave blank"
                 onChange={this.setValue.bind(this, 'smoking')}/>
             </div>
-            <div className="col-sm-6 marginBottom">
+            <div className="col-sm-6 mb-1">
               <label>Pets
               </label>
               <Select
@@ -571,7 +571,7 @@ export default class RoommateForm extends Component {
         <fieldset>
           <legend>My schedule</legend>
           <div className="row">
-            <div className="col-sm-6 col-lg-3 marginBottom">
+            <div className="col-sm-6 col-lg-3 mb-1">
               <label>I wake up around</label>
               <Select
                 name="wake_time"
@@ -581,7 +581,7 @@ export default class RoommateForm extends Component {
                 placeholder="Select from below or leave blank"
                 onChange={this.setValue.bind(this, 'wake_time')}/>
             </div>
-            <div className="col-sm-6 col-lg-3 marginBottom">
+            <div className="col-sm-6 col-lg-3 mb-1">
               <label>And go to sleep around</label>
               <Select
                 name="sleep_time"
@@ -591,7 +591,7 @@ export default class RoommateForm extends Component {
                 placeholder="Select from below or leave blank"
                 onChange={this.setValue.bind(this, 'sleep_time')}/>
             </div>
-            <div className="col-sm-6 col-lg-3 marginBottom">
+            <div className="col-sm-6 col-lg-3 mb-1">
               <label>I tend to study</label>
               <Select
                 name="study_time"
@@ -600,7 +600,7 @@ export default class RoommateForm extends Component {
                 simpleValue={true}
                 placeholder="Select from below or leave blank"
                 onChange={this.setValue.bind(this, 'study_time')}/></div>
-            <div className="col-sm-6 col-lg-3 marginBottom">
+            <div className="col-sm-6 col-lg-3 mb-1">
               <label>I have overnight guests</label>
               <Select
                 name="overnighter"

@@ -9,8 +9,6 @@ import PropertyListing from './PropertyListing.jsx'
 import Base from '../Mixin/List/Base.jsx'
 import ReactTooltip from 'react-tooltip'
 
-/* global $ */
-
 export default class Property extends Base {
   constructor(props) {
     super(props)

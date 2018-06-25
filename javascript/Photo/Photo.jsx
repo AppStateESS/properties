@@ -1,11 +1,10 @@
 'use strict'
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
 require('react-image-gallery/styles/css/image-gallery.css')
 import ImageGallery from 'react-image-gallery'
 import Waiting from '../Mixin/Html/Waiting.jsx'
 
-/* global $, require, propertyId, loadPhotos, currentPhotos, editPhotos */
+/* global $, require, propertyId, currentPhotos */
 
 export default class Photo extends Component {
   constructor() {
@@ -19,17 +18,11 @@ export default class Photo extends Component {
 
   componentDidMount() {
     this.setState({photos: currentPhotos})
-    loadPhotos.callback = this.load.bind(this)
-  }
-
-  editPhotos()
-  {
-    editPhotos.callback()
+    window.loadPhotos = () => {this.load()}
   }
 
   load() {
     $.getJSON('./properties/Photo/list', {propertyId: propertyId}).done(function (data) {
-      //currentPhotos = data
       this.setState({photos: data})
     }.bind(this))
   }

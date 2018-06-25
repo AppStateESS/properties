@@ -1,7 +1,7 @@
 'use strict'
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import InputField from '../Mixin/Form/InputField.jsx'
+import InputField from 'canopy-react-inputfield'
 import Dollarize from '../Mixin/Form/Dollarize.jsx'
 
 export default class UtilityImbursement extends Component {
@@ -20,6 +20,10 @@ export default class UtilityImbursement extends Component {
     this.props.setValue(varname, value)
   }
 
+  dollarize(input) {
+    return <Dollarize>{input}</Dollarize>
+  }
+
   render() {
     const property = this.props.property
     return (
@@ -27,75 +31,68 @@ export default class UtilityImbursement extends Component {
         <h3>Utility imbursement</h3>
         <p>If you pay a portion of utilities, please enter that amount below.</p>
         <div className="row">
-          <div className="col-xs-6 col-sm-4 col-md-3">
+          <div className="col-6 col-sm-4 col-md-3">
             <label>Cable</label>
-            <Dollarize>
-              <InputField
-                name="util_cable"
-                value={property.util_cable}
-                blur={this.setToZero.bind(this, 'util_cable')}
-                change={this.props.setValue.bind(this, 'util_cable')}/>
-            </Dollarize>
+            <InputField
+              name="util_cable"
+              wrap={this.dollarize}
+              value={property.util_cable}
+              blur={this.setToZero.bind(this, 'util_cable')}
+              change={this.props.setValue.bind(this, 'util_cable')}/>
           </div>
-          <div className="col-xs-6 col-sm-4 col-md-3">
+          <div className="col-6 col-sm-4 col-md-3">
             <label>Fuel/Gas</label>
-            <Dollarize>
-              <InputField
-                name="util_fuel"
-                value={property.util_fuel}
-                blur={this.setToZero.bind(this, 'util_fuel')}
-                change={this.props.setValue.bind(this, 'util_fuel')}/>
-            </Dollarize>
+            <InputField
+              name="util_fuel"
+              wrap={this.dollarize}
+              value={property.util_fuel}
+              blur={this.setToZero.bind(this, 'util_fuel')}
+              change={this.props.setValue.bind(this, 'util_fuel')}/>
           </div>
-          <div className="col-xs-6 col-sm-4 col-md-3">
+          <div className="col-6 col-sm-4 col-md-3">
             <label>Internet</label>
-            <Dollarize>
-              <InputField
-                name="util_internet"
-                value={property.util_internet}
-                blur={this.setToZero.bind(this, 'util_internet')}
-                change={this.props.setValue.bind(this, 'util_internet')}/>
-            </Dollarize>
+            <InputField
+              name="util_internet"
+              wrap={this.dollarize}
+              value={property.util_internet}
+              blur={this.setToZero.bind(this, 'util_internet')}
+              change={this.props.setValue.bind(this, 'util_internet')}/>
           </div>
-          <div className="col-xs-6 col-sm-4 col-md-3">
+          <div className="col-6 col-sm-4 col-md-3">
             <label>Phone</label>
-            <Dollarize>
-              <InputField
-                name="util_phone"
-                value={property.util_phone}
-                blur={this.setToZero.bind(this, 'util_phone')}
-                change={this.props.setValue.bind(this, 'util_phone')}/>
-            </Dollarize>
+            <InputField
+              name="util_phone"
+              wrap={this.dollarize}
+              value={property.util_phone}
+              blur={this.setToZero.bind(this, 'util_phone')}
+              change={this.props.setValue.bind(this, 'util_phone')}/>
           </div>
-          <div className="col-xs-6 col-sm-4 col-md-3">
+          <div className="col-6 col-sm-4 col-md-3">
             <label>Power</label>
-            <Dollarize>
-              <InputField
-                name="util_power"
-                value={property.util_power}
-                blur={this.setToZero.bind(this, 'util_power')}
-                change={this.props.setValue.bind(this, 'util_power')}/>
-            </Dollarize>
+            <InputField
+              name="util_power"
+              wrap={this.dollarize}
+              value={property.util_power}
+              blur={this.setToZero.bind(this, 'util_power')}
+              change={this.props.setValue.bind(this, 'util_power')}/>
           </div>
-          <div className="col-xs-6 col-sm-4 col-md-3">
+          <div className="col-6 col-sm-4 col-md-3">
             <label>Trash</label>
-            <Dollarize>
-              <InputField
-                name="util_trash"
-                value={property.util_trash}
-                blur={this.setToZero.bind(this, 'util_trash')}
-                change={this.props.setValue.bind(this, 'util_trash')}/>
-            </Dollarize>
+            <InputField
+              name="util_trash"
+              wrap={this.dollarize}
+              value={property.util_trash}
+              blur={this.setToZero.bind(this, 'util_trash')}
+              change={this.props.setValue.bind(this, 'util_trash')}/>
           </div>
-          <div className="col-xs-6 col-sm-4 col-md-3">
+          <div className="col-6 col-sm-4 col-md-3">
             <label>Water</label>
-            <Dollarize>
-              <InputField
-                name="util_water"
-                value={property.util_water}
-                blur={this.setToZero.bind(this, 'util_water')}
-                change={this.props.setValue.bind(this, 'util_water')}/>
-            </Dollarize>
+            <InputField
+              name="util_water"
+              wrap={this.dollarize}
+              value={property.util_water}
+              blur={this.setToZero.bind(this, 'util_water')}
+              change={this.props.setValue.bind(this, 'util_water')}/>
           </div>
         </div>
       </div>

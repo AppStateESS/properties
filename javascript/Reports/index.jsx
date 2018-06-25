@@ -77,16 +77,16 @@ class Reports extends Component {
         <h2>Reports</h2>
         <div className="alert alert-info">
           <div className="row">
-            <div className="col-sm-3 col-xs-6">
+            <div className="col-sm-3 col-6">
               <strong>Total active properties:</strong> {this.state.propertyCount}
             </div>
-            <div className="col-sm-3 col-xs-6">
+            <div className="col-sm-3 col-6">
               <strong>Total active managers:</strong> {this.state.managerCount}
             </div>
-            <div className="col-sm-3 col-xs-6">
+            <div className="col-sm-3 col-6">
               <strong>Total active subleases:</strong> {this.state.subleaseCount}
             </div>
-            <div className="col-sm-3 col-xs-6">
+            <div className="col-sm-3 col-6">
               <strong>Total active roommates:</strong> {this.state.roommateCount}
             </div>
           </div>

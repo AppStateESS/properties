@@ -218,12 +218,12 @@ export default class ManagerApproval extends Component {
         : <a href={value.company_url} target="_index">{value.company_url}</a>
       const email = `mailto:${value.email_address}`
       return (
-        <div className="panel panel-info" key={key}>
-          <div className="panel-heading">
+        <div className="card card-info" key={key}>
+          <div className="card-heading">
             <span style={{
               fontSize: '2em'
             }}>{value.company_name}</span>
-            <div className="pull-right">
+            <div className="float-right">
               <button
                 className="btn btn-success"
                 disabled={this.state.emailWarning}
@@ -240,7 +240,7 @@ export default class ManagerApproval extends Component {
                 <i className="fa fa-ban"></i>&nbsp;Refuse</button>
             </div>
           </div>
-          <div className="panel-body">
+          <div className="card-body">
             <div className="row">
               <div className="col-sm-4">
                 <h4>Company</h4>
@@ -264,7 +264,7 @@ export default class ManagerApproval extends Component {
             </div>
           </div>
           {value.inquiry_date
-            ? <div className="panel-footer">
+            ? <div className="card-footer">
                 <strong>
                   <i className="fa fa-exclamation-circle"></i>&nbsp; {this.inquiryTypeOptions(value)}&nbsp;{value.inquiry_date}
                 </strong>

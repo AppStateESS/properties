@@ -27,14 +27,14 @@ class Admin extends User
 
     protected function viewHtmlCommand(Request $request)
     {
-        \Layout::addStyle('properties', 'property/view.css');
+        \Layout::addToStyleList('mod/properties/css/property/view.css');
         return $this->factory->view($this->id, true);
     }
 
     protected function editHtmlCommand(Request $request)
     {
         $back = <<<EOF
-<a class="btn btn-default navbar-btn" href="properties/Property/{$this->id}"><i class="fa fa-undo"></i>&nbsp;Back to view</a>
+<a class="nav-link" href="properties/Property/{$this->id}"><i class="fa fa-undo"></i>&nbsp;Back to view</a>
 EOF;
         Navbar::addItem($back);
         \Layout::addStyle('properties', 'property/form.css');

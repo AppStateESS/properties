@@ -335,16 +335,18 @@ class Manager extends Base
         $template->setModuleTemplate('properties', "emails/$email_template");
         $content = $template->get();
 
-
-        $transport = \Swift_MailTransport::newInstance();
-        //$transport = \Swift_SendmailTransport::newInstance();
+        if (SWIFT_MAIL_TRANSPORT_TYPE == 1) {
+            $transport = new \Swift_SmtpTransport(SWIFT_MAIL_TRANSPORT_PARAMETER);
+        } else {
+            $transport = new \Swift_SendmailTransport(SWIFT_MAIL_TRANSPORT_PARAMETER);
+        }
 
         $message = \Swift_Message::newInstance();
         $message->setSubject($subject);
         $message->setFrom($contact_info['our_email']);
         $message->setTo($manager->email_address);
         $message->setBody($content, 'text/html');
-        $mailer = \Swift_Mailer::newInstance($transport);
+        $mailer = new \Swift_Mailer($transport);
         $mailer->send($message);
     }
 

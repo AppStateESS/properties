@@ -2,14 +2,14 @@
 import React from 'react'
 import empty from '../Mixin/Helper/Empty.js'
 import Waiting from '../Mixin/Html/Waiting.jsx'
-import InputField from '../Mixin/Form/InputField.jsx'
-import ButtonGroup from '../Mixin/Form/ButtonGroup.jsx'
+import InputField from 'canopy-react-inputfield'
+import ButtonGroup from 'canopy-react-buttongroup'
 import Rooms from '../Mixin/Form/Rooms.jsx'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import DatePicker from 'react-date-picker'
 import Range from '../Mixin/Helper/Range.js'
 import Base from '../Mixin/Edit/Base.jsx'
-import BigCheckbox from '../Mixin/Form/BigCheckbox.jsx'
+import BigCheckbox from 'canopy-react-bigcheckbox'
 import Message from '../Mixin/Html/Message.jsx'
 import SubmitForm from '../Mixin/Form/SubmitForm.jsx'
 import CheckValues from '../Mixin/Helper/CheckValues.js'
@@ -27,7 +27,7 @@ export default class SubleaseForm extends Base {
       sublease: null,
       errors: {},
       message: null,
-      saving: false
+      saving: false,
     }
     const methods = [
       'activate',
@@ -41,7 +41,7 @@ export default class SubleaseForm extends Base {
       'setMoveIn',
       'setMoveOut',
       'updateParking',
-      'sendActive'
+      'sendActive',
     ]
     bindMethods(methods, this)
   }
@@ -53,7 +53,7 @@ export default class SubleaseForm extends Base {
   setMessage(text, type) {
     const message = {
       text: text,
-      type: type
+      type: type,
     }
     this.setState({message: message})
     this.scrollUp()
@@ -116,7 +116,7 @@ export default class SubleaseForm extends Base {
 
     if (errorFound) {
       this.setMessage('Check below for errors before saving', 'danger')
-      this.setState({errors: errors, activeTab: 0})
+      this.setState({errors: errors, activeTab: 0,})
       this.scrollUp()
     } else {
       this.save()
@@ -124,11 +124,17 @@ export default class SubleaseForm extends Base {
   }
 
   checkPhone() {
-    this.setError('contact_phone', !CheckValues.isPhone(this.state.sublease.contact_phone))
+    this.setError(
+      'contact_phone',
+      !CheckValues.isPhone(this.state.sublease.contact_phone)
+    )
   }
 
   checkEmail() {
-    this.setError('contact_email', !CheckValues.isEmail(this.state.sublease.contact_email))
+    this.setError(
+      'contact_email',
+      !CheckValues.isEmail(this.state.sublease.contact_email)
+    )
   }
 
   save() {
@@ -154,8 +160,11 @@ export default class SubleaseForm extends Base {
         }
       }.bind(this),
       error: function () {
-        this.setMessage('A server error prevented this sublease from saving.', 'danger')
-      }.bind(this)
+        this.setMessage(
+          'A server error prevented this sublease from saving.',
+          'danger'
+        )
+      }.bind(this),
     })
   }
 
@@ -191,12 +200,11 @@ export default class SubleaseForm extends Base {
   }
 
   setMoveIn(a) {
-    const date = new Date(a).getTime()/1000
+    const date = new Date(a).getTime() / 1000
     this.setValue('move_in_date', date)
   }
 
-  checkMoveOutDate(out_date, in_date)
-  {
+  checkMoveOutDate(out_date, in_date) {
     if (out_date < moment().unix() || out_date <= in_date) {
       this.setError('move_out_date', true)
       return false
@@ -207,7 +215,7 @@ export default class SubleaseForm extends Base {
   }
 
   setMoveOut(a) {
-    const date = new Date(a).getTime()/1000
+    const date = new Date(a).getTime() / 1000
     this.setValue('move_out_date', date)
   }
 
@@ -227,12 +235,12 @@ export default class SubleaseForm extends Base {
       {
         value: '0',
         label: <span>
-            <i className="fa fa-user"></i>&nbsp; Tenant</span>
+          <i className="fa fa-user"></i>&nbsp; Tenant</span>,
       }, {
         value: '1',
         label: <span>
-            <i className="fa fa-building"></i>&nbsp; Unit</span>
-      }
+          <i className="fa fa-building"></i>&nbsp; Unit</span>,
+      },
     ]
   }
 
@@ -250,19 +258,18 @@ export default class SubleaseForm extends Base {
     this.sendActive('0')
   }
 
-  sendActive(value)
-  {
+  sendActive(value) {
     $.ajax({
       url: './properties/Sublease/' + this.state.sublease.id,
       data: {
         varname: 'active',
-        value: value
+        value: value,
       },
       dataType: 'json',
       type: 'patch',
       success: function () {
         this.setValue('active', value)
-      }.bind(this)
+      }.bind(this),
     })
   }
 
@@ -299,9 +306,8 @@ export default class SubleaseForm extends Base {
     if (this.state.sublease.id === 0) {
       contactAlert = (
         <div className="alert alert-info">
-          <strong>Notice:</strong>&nbsp;
-          a sublease listing requires contact information.<br/>Use our
-          <a href="./properties/Roommate">roommate section</a>
+          <strong>Notice:</strong>&nbsp; a sublease listing requires contact information.<br/>
+          Use our&nbsp;<a href="./properties/Roommate">roommate section</a>&nbsp;
           if you want to keep your contact information available only to other students.</div>
       )
     }
@@ -309,22 +315,24 @@ export default class SubleaseForm extends Base {
     let landlordWarning
     if (this.state.errors.landlord_perm === true) {
       landlordWarning = <div className="alert alert-danger">
-        <i className="fa fa-exclamation-triangle"></i>&nbsp;You should not sublease without notifying your landlord</div>
+        <i className="fas fa-exclamation-triangle"></i>&nbsp;You should not sublease without notifying your landlord</div>
     }
 
     let moveOutError
     if (this.state.errors.move_out_date) {
-      moveOutError = <span className="label label-danger">Move out date must be after move in date and the current date.</span>
+      moveOutError = <span className="badge badge-danger">Move out date must be after move in date and the current date.</span>
     }
     return (
       <div ref="PageTop" className="sublease-form">
-        <h2>{sublease.id > 0
-            ? 'Update '
-            : 'Create '}
+        <h2>{
+            sublease.id > 0
+              ? 'Update '
+              : 'Create '
+          }
           my sublease</h2>
         {message}
         {contactAlert}
-        <div className="text-align marginBottom">
+        <div className="text-align mb-1">
           {activateButton}
         </div>
         <div className="row">
@@ -334,8 +342,8 @@ export default class SubleaseForm extends Base {
               label="Title"
               value={sublease.name}
               errorMessage={this.state.errors.name
-              ? 'Title may not be empty'
-              : null}
+                ? 'Title may not be empty'
+                : null}
               change={this.setValue.bind(this, 'name')}
               required={true}/>
           </div>
@@ -346,16 +354,18 @@ export default class SubleaseForm extends Base {
               type="text"
               placeholder="Street, City, State, Zip code"
               errorMessage={this.state.errors.address
-              ? 'Address may not be empty'
-              : null}
+                ? 'Address may not be empty'
+                : null}
               value={sublease.address}
               change={this.setValue.bind(this, 'address')}
-              required={true}/> {(sublease.address.length > 10)
-              ? <small>
-                  <a href={this.googleize(sublease.address)} target="_blank">View on Google Maps</a>&nbsp;<Help
-                    title="If Google Maps can't find the location, you may want to refine the address"/>
-                </small>
-              : null}
+              required={true}/> {
+              (sublease.address.length > 10)
+                ? <small>
+                    <a href={this.googleize(sublease.address)} target="_blank">View on Google Maps</a>&nbsp;<Help
+                      title="If Google Maps can't find the location, you may want to refine the address"/>
+                  </small>
+                : null
+            }
           </div>
         </div>
         <div className="row">
@@ -376,8 +386,8 @@ export default class SubleaseForm extends Base {
               label="Contact phone number"
               value={sublease.contact_phone}
               errorMessage={this.state.errors.contact_phone
-              ? 'Phone number must be 10 digits'
-              : null}
+                ? 'Phone number must be 10 digits'
+                : null}
               change={this.setValue.bind(this, 'contact_phone')}
               placeholder="###-###-####"
               blur={this.checkPhone}
@@ -388,8 +398,8 @@ export default class SubleaseForm extends Base {
               name="contact_email"
               label="Contact email address"
               errorMessage={this.state.errors.contact_email
-              ? 'Check your email address formatting'
-              : null}
+                ? 'Check your email address formatting'
+                : null}
               value={sublease.contact_email}
               change={this.setValue.bind(this, 'contact_email')}
               blur={this.checkEmail}
@@ -398,9 +408,7 @@ export default class SubleaseForm extends Base {
         </div>
         <div className="row">
           <div className="col-sm-6 col-md-4">
-            <div style={{
-              maxWidth: '200px'
-            }}>
+            <div>
               <label>Monthly rent</label>
               <i className="fa fa-asterisk text-danger"></i>&nbsp;
               <Help
@@ -411,15 +419,15 @@ export default class SubleaseForm extends Base {
                 type="type"
                 wrap={this.dollarize}
                 errorMessage={this.state.errors.monthly_rent
-                ? 'Rent amount may not be empty'
-                : null}
+                  ? 'Rent amount may not be empty'
+                  : null}
                 value={sublease.monthly_rent}
                 change={this.updateRent}
                 required={true}/>
             </div>
           </div>
           <div className="col-sm-6 col-md-4">
-            <label>Subleasing tenant or unit</label><Help title="Are you subleasing a tenant's portion or the entire unit?"/><br/>
+            <label>Subleasing tenant or unit</label><Help classes="ml-1" title="Are you subleasing a tenant's portion or the entire unit?"/><br/>
             <ButtonGroup
               name="lease_type"
               buttons={this.getLeaseType()}
@@ -454,7 +462,7 @@ export default class SubleaseForm extends Base {
         </div>
         <div className="row">
           <div className="col-sm-6">
-            <div className="pull-left">
+            <div>
               <label>Parking spaces per unit</label>
               <input
                 name="parking_per_unit"
@@ -498,21 +506,21 @@ export default class SubleaseForm extends Base {
         </div>
         <div className="row">
           <div className="col-sm-6 col-md-4">
-            <div>
+            <div className="d-flex align-items-center">
               <BigCheckbox
                 handle={this.setIntegerValue.bind(this, 'no_smoking')}
                 checked={sublease.no_smoking}
                 label="Smoke free"/>
-              &nbsp;
               <Help
+                classes="ml-1"
                 title="Regardless of landlord's allowance, the other tenant's wishes should be respected."/>
             </div>
-            <div>
+            <div className="d-flex align-items-center">
               <BigCheckbox
                 handle={this.setIntegerValue.bind(this, 'pets_allowed')}
                 checked={sublease.pets_allowed}
-                label="Pets allowed"/>&nbsp;
-              <Help title="You may put pet details in the description"/>
+                label="Pets allowed"/>
+              <Help classes="ml-1" title="You may put pet details in the description"/>
             </div>
           </div>
           <div className="col-sm-6 col-md-4">
@@ -530,11 +538,12 @@ export default class SubleaseForm extends Base {
             </div>
           </div>
           <div className="col-sm-6 col-md-4">
-            <div>
+            <div className="d-flex align-items-center">
               <BigCheckbox
                 handle={this.setIntegerValue.bind(this, 'utilities_inc')}
                 checked={sublease.utilities_inc}
-                label="Utilities included"/>&nbsp;<Help title="Check this box if the unit's utilities are included in the rent."/>
+                label="Utilities included"/>
+                <Help classes="ml-1" title="Check this box if the unit's utilities are included in the rent."/>
             </div>
             <div>
               <BigCheckbox
@@ -545,7 +554,7 @@ export default class SubleaseForm extends Base {
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-6">
+          <div className="col-md-8 col-sm-12">
             <label>Internet</label><br/>
             <ButtonGroup
               name="internet_type"
@@ -554,7 +563,7 @@ export default class SubleaseForm extends Base {
               handle={this.setIntegerValue.bind(this, 'internet_type')}
               activeColor="success"/>
           </div>
-          <div className="col-sm-6">
+          <div className="col-md-4 col-sm-12">
             <label>Television</label><br/>
             <ButtonGroup
               name="tv_type"

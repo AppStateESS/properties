@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import DatePicker from 'react-date-picker'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import Rooms from '../Mixin/Form/Rooms.jsx'
-import InputField from '../Mixin/Form/InputField.jsx'
-import ButtonGroup from '../Mixin/Form/ButtonGroup.jsx'
+import InputField from 'canopy-react-inputfield'
+import ButtonGroup from 'canopy-react-buttongroup'
 import Base from '../Mixin/Edit/Base.jsx'
 import Range from '../Mixin/Helper/Range.js'
 import empty from '../Mixin/Helper/Empty.js'
@@ -19,7 +19,7 @@ export default class Basic extends Base {
     bindMethods(methods, this)
   }
 
-  componentDidCatch(error, info) {
+  componentDidCatch() {
     this.setState({hasError: true})
   }
 
@@ -122,6 +122,7 @@ export default class Basic extends Base {
           <div className="col-sm-12">
             <label>Description</label>
             <textarea
+              rows="5"
               className="form-control"
               placeholder="Description is not searchable. Be sure to use other settings as well."
               name="description"
@@ -130,12 +131,13 @@ export default class Basic extends Base {
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-5 col-xs-7">
+          <div className="col-sm-5 col-7">
             <InputField
               ref="monthlyRent"
               name="monthly_rent"
               type="type"
               label="Monthly rent"
+              size={4}
               maxLength={4}
               wrap={this.dollarize}
               errorMessage={this.props.errors.monthly_rent
@@ -145,7 +147,7 @@ export default class Basic extends Base {
               change={this.updateRent}
               required={true}/>
           </div>
-          <div className="col-sm-7 col-xs-5" style={buttonspace}>
+          <div className="col-sm-7 col-5" style={buttonspace}>
             <ButtonGroup
               name="lease_type"
               buttons={this.getLeaseType()}
@@ -156,7 +158,7 @@ export default class Basic extends Base {
         </div>
         <div className="row">
           <div className="col-sm-6 form-inline">
-            <label htmlFor="contract-length">Contract length</label>
+            <label htmlFor="contract-length" className="mr-1">Contract length</label>
             <select
               name="contract_length"
               id="contract-length"
@@ -174,7 +176,7 @@ export default class Basic extends Base {
             </select>
           </div>
           <div className="col-sm-6">
-            <label>Move-in date</label><br/>
+            <label className="mr-1">Move-in date</label><br/>
             <DatePicker
               onChange={this.setMoveIn}
               value={this.formatDate(property.move_in_date)}/>
@@ -185,8 +187,8 @@ export default class Basic extends Base {
 
         <div className="row">
           <div className="col-sm-5">
-            <div className="pull-left">
-              <label>Parking spaces per unit</label>
+            <div className="float-left">
+              <label className="mr-1">Parking spaces per unit</label>
               <input
                 name="parking_per_unit"
                 type="text"
@@ -203,7 +205,7 @@ export default class Basic extends Base {
               activeColor="success"/>
           </div>
           <div className="col-sm-7">
-            <label>Miles from campus</label><br/>
+            <label className="mr-1">Miles from campus</label><br/>
             <ButtonGroup
               name="campus_distance"
               buttons={this.campusDistance()}
@@ -214,7 +216,7 @@ export default class Basic extends Base {
         </div>
         <div className="row">
           <div className="col-sm-12">
-            <label>Property type</label><br/>
+            <label className="mr-1">Property type</label><br/>
             <ButtonGroup
               name="proptype"
               buttons={this.propertyType()}
@@ -225,8 +227,7 @@ export default class Basic extends Base {
         </div>
         <div className="row">
           <div className="col-sm-12">
-            <label>Student preference</label>
-            <br/>
+            <label className="mr-1">Student preference</label>
             <ButtonGroup
               name="student_type"
               buttons={this.studentType()}

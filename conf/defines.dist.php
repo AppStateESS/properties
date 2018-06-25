@@ -1,8 +1,8 @@
 <?php
 // 1 : smtp
 // 2 : sendmail
-// 3 : Mail
-define('SWIFT_MAIL_TRANSPORT_TYPE', 3);
+// 3 : was mail and is deprecated, do not use
+define('SWIFT_MAIL_TRANSPORT_TYPE', 2);
 
 // depends on the choice above
 // 1 : server location

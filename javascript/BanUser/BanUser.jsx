@@ -2,9 +2,9 @@
 import React, {Component} from 'react'
 import Modal from 'react-modal'
 import bindMethods from '../Mixin/Helper/Bind.js'
-import InputField from '../Mixin/Form/InputField.jsx'
+import InputField from 'canopy-react-inputfield'
 
-/* global $, banUser, userId */
+/* global banUser, userId */
 const modalStyle = {
   overlay: {
     position: 'fixed',
@@ -93,7 +93,7 @@ export default class BanUser extends Component {
                 change={this.setBanReason}/>
               <button className="btn btn-danger" onClick={this.banUser}>
                 <i className="fa fa-ban"></i>&nbsp;Ban this user</button>&nbsp;
-              <button className="btn btn-default" onClick={this.closeModal}>
+              <button className="btn btn-outline-dark" onClick={this.closeModal}>
                 <i className="fa fa-times"></i>&nbsp;Cancel</button>
             </div>
           </div>

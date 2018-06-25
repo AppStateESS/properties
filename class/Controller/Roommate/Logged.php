@@ -17,6 +17,7 @@
  */
 
 namespace properties\Controller\Roommate;
+use Canopy\Request;
 
 class Logged extends User
 {
@@ -34,21 +35,24 @@ class Logged extends User
         $this->user_roommate = $this->factory->getRoommateByUser($this->role->getId());
     }
 
-    protected function listHtmlCommand(\Canopy\Request $request)
+    protected function listHtmlCommand(Request $request)
     {
+        $react = null;
         if ($this->user_roommate) {
-            $button = $this->updateButton();
+            \properties\Factory\NavBar::addItem($this->updateButton());
+            \properties\Factory\NavBar::addItem($this->deleteButton());
+            $react = $this->factory->reactView('roommatedelete');
         } else {
-            $button = $this->createButton();
+            \properties\Factory\NavBar::addItem($this->createButton());
         }
-        \properties\Factory\NavBar::addItem($button);
 
-        return $this->factory->reactView('roommatelist');
+        return $this->factory->reactView('roommatelist') . $react;
     }
 
-    protected function listJsonCommand(\Canopy\Request $request)
+    protected function listJsonCommand(Request $request)
     {
         $json['roommates'] = $this->factory->listing($request, true);
+        $json['more_rows'] = $this->factory->more_rows;
         return $json;
     }
 
@@ -62,21 +66,23 @@ class Logged extends User
         }
     }
 
-    protected function viewHtmlCommand(\Canopy\Request $request)
+    protected function viewHtmlCommand(Request $request)
     {
+        $react = null;
         if ($this->user_roommate) {
             $admin = true;
-            $button = $this->updateButton();
+            \properties\Factory\NavBar::addItem($this->updateButton());
+            \properties\Factory\NavBar::addItem($this->deleteButton());
+            $react = $this->factory->reactView('roommatedelete');
         } else {
             $admin = false;
-            $button = $this->createButton();
+            \properties\Factory\NavBar::addItem($this->createButton());
         }
         $this->backToList();
-        \properties\Factory\NavBar::addItem($button);
-        return $this->factory->view($this->id, true, $admin);
+        return $this->factory->view($this->id, true, $admin) . $react;
     }
 
-    protected function editHtmlCommand(\Canopy\Request $request)
+    protected function editHtmlCommand(Request $request)
     {
         if ($this->checkBan()) {
             return $this->showBan();
@@ -86,7 +92,7 @@ class Logged extends User
         return $this->factory->reactView('roommateform');
     }
 
-    protected function createHtmlCommand(\Canopy\Request $request)
+    protected function createHtmlCommand(Request $request)
     {
         if ($this->checkBan()) {
             return $this->showBan();
@@ -100,12 +106,12 @@ class Logged extends User
     {
         if ($this->user_roommate) {
             $rm_id = $this->user_roommate->getId();
-            $link = "<button onClick='location.href=\"properties/Roommate/$rm_id\"' class='btn btn-default navbar-btn btn-sm'><i class='fa fa-undo'></i>&nbsp;Back to view</button>";
+            $link = "<button onClick='location.href=\"properties/Roommate/$rm_id\"' class='btn btn-outline-dark navbar-btn btn-sm'><i class='fa fa-undo'></i>&nbsp;Back to view</button>";
             \properties\Factory\NavBar::addItem($link);
         }
     }
 
-    protected function savePostCommand(\Canopy\Request $request)
+    protected function savePostCommand(Request $request)
     {
         try {
             $roommate = $this->factory->post($request);
@@ -116,7 +122,7 @@ class Logged extends User
         }
     }
 
-    protected function updatePutCommand(\Canopy\Request $request)
+    protected function updatePutCommand(Request $request)
     {
         try {
             $roommate = $this->factory->put($request, $this->user_roommate);
@@ -127,7 +133,12 @@ class Logged extends User
         }
     }
 
-    protected function jsonPatchCommand(\Canopy\Request $request)
+    protected function deleteCommand(Request $request)
+    {
+        return $this->factory->delete($this->user_roommate);
+    }
+
+    protected function jsonPatchCommand(Request $request)
     {
         return array('success' => $this->factory->patch($this->user_roommate->id,
                     $request->pullPatchString('varname'),
@@ -136,7 +147,15 @@ class Logged extends User
 
     private function updateButton()
     {
-        return '<button class="btn btn-primary btn-sm navbar-btn" onClick="window.location.href=\'properties/Roommate/edit\'"><i class="fa fa-bullhorn"></i>&nbsp;Update my roommate request</button>';
+        return '<button class="btn btn-outline-dark btn-sm mr-1 navbar-btn" onClick="window.location.href=\'properties/Roommate/edit\'"><i class="fa fa-bullhorn"></i>&nbsp;Update my request</button>';
+    }
+
+    private function deleteButton()
+    {
+        $id = $this->user_roommate->id;
+        return <<<EOF
+<button class="btn btn-sm btn-outline-danger" data-id="$id" id="delete-roommate"><i class="fa fa-times"></i>&nbsp;Delete my request</button>
+EOF;
     }
 
 }

@@ -5,6 +5,7 @@ namespace properties\Factory;
 use properties\Exception\ResourceNotFound;
 use phpws2\Settings;
 use phpws2\Database;
+
 /**
  *
  * @author Matthew McNaney <mcnaneym@appstate.edu>
@@ -78,7 +79,7 @@ abstract class Base extends \phpws2\ResourceFactory
         $script = "<script type='text/javascript' src='{$root_directory}$path'></script>";
         return $script;
     }
-    
+
     private function getAssetPath($scriptName)
     {
         $rootDirectory = PHPWS_SOURCE_DIR . 'mod/properties/';
@@ -93,19 +94,30 @@ abstract class Base extends \phpws2\ResourceFactory
         return $json[$scriptName]['js'];
     }
 
-    public function reactView($view_name)
+    public function includeVendor()
+    {
+        \Layout::addJSHeader($this->getScript('vendor'));
+    }
+
+    public function getVendor()
+    {
+        return $this->getScript('vendor');
+    }
+
+    public function reactView($view_name, $includeVendor = true)
     {
         static $vendor_included = false;
-        if (!$vendor_included) {
+        if (!$vendor_included && $includeVendor) {
             $script[] = $this->getScript('vendor');
             $vendor_included = true;
         }
         $script[] = $this->getScript($view_name);
         $react = implode("\n", $script);
+        \Layout::addJSHeader($react);
         $content = <<<EOF
 <div id="$view_name"></div>
-$react
 EOF;
         return $content;
     }
+
 }

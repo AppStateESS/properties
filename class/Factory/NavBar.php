@@ -42,9 +42,9 @@ class NavBar
         if (!empty(self::$items)) {
             $vars['items'] = self::$items;
         }
-        
+
         if (!empty(self::$options)) {
-            $vars['options'] = implode('</li><li>', self::$options);
+            $vars['options'] = implode('', self::$options);
         }
 
         $vars['is_deity'] = \Current_User::isDeity();
@@ -64,7 +64,7 @@ class NavBar
     {
         $url = $request->getUrl();
         if (preg_match('/Roommate/', $url)) {
-            return '<i class="fa fa-comments-o"></i>&nbsp;Roommates';
+            return '<i class="far fa-comments"></i>&nbsp;Roommates';
         } elseif (preg_match('/Manager/', $url)) {
             return '<i class="fa fa-users"></i>&nbsp;Landlords';
         } elseif (preg_match('/Sublease/', $url)) {
@@ -75,28 +75,24 @@ class NavBar
             return 'Main menu';
         }
     }
-    
+
     public static function addItem($item)
     {
         self::$items[] = $item;
     }
-    
-    public static function addDivider()
-    {
-        self::$items[] = '|';
-    }
 
-    public static function addOption($option, $unshift=false)
+    public static function addOption($option, $unshift = false)
     {
         if ($unshift && !empty(self::$options)) {
-            array_unshift(self::$options,$option);
+            array_unshift(self::$options, $option);
         } else {
             self::$options[] = $option;
         }
     }
-    
+
     public static function setTitle($title)
     {
         self::$title = $title;
     }
+
 }

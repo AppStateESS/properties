@@ -1,0 +1,52 @@
+a.option-block {
+  display: block;
+  padding: 0.5em 1em;
+  font-size: 20px;
+  font-weight: bold;
+  border: #1d3557 3px;
+  border-radius: 8px;
+  color: white;
+  text-decoration: none;
+  margin-bottom: 1em;
+  min-height: 68px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+  a.option-block.rent {
+    background-color: #185B80; }
+  a.option-block.rent:hover {
+    background-color: #247099; }
+  a.option-block.need-sub {
+    background-color: #566e3d; }
+  a.option-block.need-sub:hover {
+    background-color: #708758; }
+  a.option-block.sub-place {
+    background-color: #fa7921; }
+  a.option-block.sub-place:hover {
+    background-color: #FF8F42; }
+  a.option-block.roommate {
+    background-color: #DC4057; }
+  a.option-block.roommate:hover {
+    background-color: #DC5C6F; }
+
+.option-text {
+  margin-top: 10px; }
+
+@media screen and (min-width: 768px) {
+  .prop-icon {
+    display: block;
+    float: none;
+    font-size: 110px;
+    margin: 0 0 10px; }
+
+  a.option-block {
+    text-align: center;
+    width: 45%;
+    min-height: 245px;
+    float: left;
+    margin: 2%;
+    padding: 2.4em 1.5em 1em; }
+    a.option-block.sub-place {
+      font-size: 20px; } }
+
+/*# sourceMappingURL=home.css.map */

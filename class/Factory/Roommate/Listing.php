@@ -30,9 +30,12 @@ class Listing
     public $smoking;
     public $show_inactive = false;
     public $more_rows = true;
+    public $limit = 10;
+    public $offset = 0;
 
     public function pullVariables(\Canopy\Request $request)
     {
+        $this->offset = $request->pullGetInteger('offset', true);
         $this->focus = $request->pullGetString('focus', true);
         $this->wake_time = $request->pullGetString('wake_time', true);
         $this->sleep_time = $request->pullGetString('sleep_time', true);
@@ -45,6 +48,12 @@ class Listing
     {
         $db = \phpws2\Database::getDB();
         $tbl = $db->addTable('prop_roommate');
+
+        if ((int) $this->limit <= 0 || (int) $this->limit > 10) {
+            $this->limit = 10;
+        }
+        $offset = $this->offset * $this->limit;
+        $db->setLimit($this->limit, $offset);
 
         if ($this->identify) {
             $tbl->addField('email');
@@ -79,6 +88,11 @@ class Listing
         $this->addConditionals($tbl);
 
         $result = $db->selectAsResources('\properties\Resource\Roommate');
+
+        if (count($result) < $this->limit) {
+            $this->more_rows = false;
+        }
+
         if (empty($result)) {
             return array();
         }

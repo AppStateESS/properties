@@ -29,7 +29,7 @@ const modalStyle = {
   }
 }
 
-/* global $, deleteProperty, propertyId */
+/* global $, propertyId */
 
 export default class PropertyDelete extends Component {
   constructor(props) {
@@ -42,7 +42,7 @@ export default class PropertyDelete extends Component {
   }
 
   componentDidMount() {
-    deleteProperty.callback = this.openDelete
+    $('#delete-property-button').click(()=>this.openDelete())
   }
 
   deactivate() {

@@ -47,7 +47,7 @@ const DragTag = () => {
   }
   return (
     <div style={margin} className="handle">
-      <i className="fa fa-arrows"></i>&nbsp;Sort
+      <i className="fas fa-arrows-alt"></i>&nbsp;Sort
     </div>
   )
 }
@@ -58,7 +58,7 @@ const SortableItem = SortableElement(({value, deletePhoto,rotate}) => {
     listStyleType: 'none',
     zIndex: 1000,
     width: '150px',
-    height: '210px',
+    height: '230px',
     border: '1px solid #c3c3c3',
     backgroundColor: '#e3e3e3',
     verticalAlign: 'top',
@@ -75,10 +75,10 @@ const SortableItem = SortableElement(({value, deletePhoto,rotate}) => {
       <DragHandle/> {value}
       <div style={marginTop}>
         <button onClick={rotate.bind(null, -1)}>
-          <i className="fa fa-undo"></i>
+          <i className="fas fa-undo"></i>
         </button>
         <button onClick={rotate.bind(null, 1)}>
-          <i className="fa fa-repeat"></i>
+          <i className="fas fa-redo"></i>
         </button>
       </div>
       <button

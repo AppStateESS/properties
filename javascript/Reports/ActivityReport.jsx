@@ -1,8 +1,7 @@
 'use strict'
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
 import moment from 'moment'
-import {DateField} from 'react-date-picker'
+import DatePicker from 'react-date-picker'
 import Waiting from '../Mixin/Html/Waiting.jsx'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import ManagerRow from './ManagerRow.jsx'
@@ -165,20 +164,21 @@ export default class ActivityReport extends Component {
     if (this.selected) {
       actions = (
         <span>
-          <button className="marginLeft btn btn-danger" onClick={this.deleteManager}>Delete</button>
-          <button className="marginLeft btn btn-warning" onClick={this.deactivateManager}>Deactivate</button>
+          <button className="ml-1 btn btn-danger" onClick={this.deleteManager}>Delete</button>
+          <button className="ml-1 btn btn-warning" onClick={this.deactivateManager}>Deactivate</button>
         </span>
       )
     }
+    const activityDate = new Date(this.state.activityDate)
     return (
       <div>
         <h2>Manager activity</h2>
         <label>Show before:</label>
-        <DateField
+        <DatePicker
           dateFormat="YYYY-MM-DD"
           onChange={this.setActivityDate}
-          value={this.state.activityDate}/>
-        <button className="marginLeft btn btn-primary" onClick={this.load}>Refresh listing</button>
+          value={activityDate}/>
+        <button className="ml-1 btn btn-primary" onClick={this.load}>Refresh listing</button>
         {actions}
         <hr/>
         <div className="activity-listing">

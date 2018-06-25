@@ -18,11 +18,13 @@ export default class PropertyRow extends Row {
     if (this.props.property.workout_room === '1') {
       return (
         <span
-          className="fa-stack fa-lg text-success"
+          className="fa-3x amenity-icon"
           data-placement="top"
           data-tip="Workout room on premises">
-          <i className="fa fa-square fa-stack-2x"></i>
-          <i className="fa fa-heartbeat fa-stack-1x fa-inverse"></i>
+          <i
+            className="fas fa-heartbeat"
+            data-fa-transform="shrink-8"
+            data-fa-mask="fas fa-square"></i>
         </span>
       )
     }
@@ -31,14 +33,14 @@ export default class PropertyRow extends Row {
   clubhouse() {
     if (this.props.property.clubhouse === '1') {
       return (
-        <span>
-          <span
-            className="fa-stack fa-lg text-success"
-            data-placement="top"
-            data-tip="Clubhouse on premises">
-            <i className="fa fa-square fa-stack-2x"></i>
-            <i className="fa fa-coffee fa-stack-1x fa-inverse"></i>
-          </span>
+        <span
+          className="fa-3x amenity-icon"
+          data-placement="top"
+          data-tip="Clubhouse on premises">
+          <i
+            className="fas fa-coffee"
+            data-fa-transform="shrink-8"
+            data-fa-mask="fas fa-square"></i>
         </span>
       )
     }
@@ -47,14 +49,14 @@ export default class PropertyRow extends Row {
   pool() {
     if (this.props.property.pool === '1') {
       return (
-        <span>
-          <span
-            className="fa-stack fa-lg text-success"
-            data-placement="top"
-            data-tip="Swimming pool on premises">
-            <i className="fa fa-square fa-stack-2x"></i>
-            <i className="fa fa-life-ring fa-stack-1x fa-inverse"></i>
-          </span>
+        <span
+          className="fa-3x amenity-icon"
+          data-placement="top"
+          data-tip="Swimming pool on premises">
+          <i
+            className="fas fa-life-ring"
+            data-fa-transform="shrink-8"
+            data-fa-mask="fas fa-square"></i>
         </span>
       )
     }
@@ -62,18 +64,22 @@ export default class PropertyRow extends Row {
 
   render() {
     const {property} = this.props
-    const link = `./properties/Property/${property.id}/${this.urlTitle(property.name)}`
+    const link = `./properties/Property/${property.id}/${this.urlTitle(
+      property.name
+    )}`
     let image = (
-      <div className="text-muted" style={{
-        padding: '6px'
-      }}>
-        <i className="fa fa-camera fa-5x"></i>
-        <br/>
-        No photos available
+      <div
+        className="text-muted d-flex align-items-center flex-column justify-content-center h-100">
+        <div>
+          <i className="fa fa-camera fa-5x"></i>
+        </div>
+        <div>No photos available</div>
       </div>
     )
     if (property.thumbnail !== '') {
-      const thumbStyle = {backgroundImage : `url('${property.thumbnail}')`}
+      const thumbStyle = {
+        backgroundImage: `url('${property.thumbnail}')`
+      }
       image = <div className="property-thumbnail" style={thumbStyle}></div>
     }
 
@@ -90,7 +96,7 @@ export default class PropertyRow extends Row {
       if (this.props.showTimeout) {
         const inactiveDate = moment(property.timeout * 1000).format('MMM D, YYYY')
         timeout = (
-          <div className="marginTop">
+          <div className="mt-2">
             <p>
               <em>This property will be flagged inactive after {inactiveDate}. Update to reset timer.</em>
             </p>
@@ -110,25 +116,27 @@ export default class PropertyRow extends Row {
             <a href={link}>{property.name}</a>
           </h4>
           <div className="row">
-            <div className="col-sm-7 col-md-8">
+            <div className="col-md-8">
               <div className="rent">{this.getRent()}</div>
               <div className="room-bath">{property.proptype}&nbsp; - {property.bedroom_no}&nbsp;Bed, {property.bathroom_no}&nbsp;Bath
               </div>
               <div className="availability">Availability: {property.move_in_date}</div>
             </div>
-            <div className="col-sm-5 col-md-4">
-              {this.smoking(property.smoke_free)}
-              {this.closeToCampus(property.close_to_campus)}
-              {this.petsAllowed(property.pets_allowed)}
-              {this.furnished(property.furnished)}
-              {this.airconditioner(property.airconditioning)}
-              {this.dishwasher(property.dishwasher)}
-              {this.utilities(property.utilities_inc)}
-              {this.workout()}
-              {this.clubhouse()}
-              {this.pool()}
-              {this.appalcart(property.appalcart)}
-              {this.washer(property.washer)}
+            <div className="col-md-4">
+              <div className="icon-listing">
+                {this.smoking(property.smoke_free)}
+                {this.closeToCampus(property.close_to_campus)}
+                {this.petsAllowed(property.pets_allowed)}
+                {this.furnished(property.furnished)}
+                {this.airconditioner(property.airconditioning)}
+                {this.dishwasher(property.dishwasher)}
+                {this.utilities(property.utilities_inc)}
+                {this.workout()}
+                {this.clubhouse()}
+                {this.pool()}
+                {this.appalcart(property.appalcart)}
+                {this.washer(property.washer)}
+              </div>
             </div>
           </div>
           {timeout}
@@ -141,5 +149,5 @@ export default class PropertyRow extends Row {
 PropertyRow.propTypes = {
   property: PropTypes.object.isRequired,
   showTimeout: PropTypes.bool,
-  reactivate: PropTypes.func
+  reactivate: PropTypes.func,
 }

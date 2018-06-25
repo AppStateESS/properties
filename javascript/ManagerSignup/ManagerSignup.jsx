@@ -1,13 +1,11 @@
 'use strict'
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import InputField from '../Mixin/Form/InputField.jsx'
+import InputField from 'canopy-react-inputfield'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import empty from '../Mixin/Helper/Empty.js'
 import Message from '../Mixin/Html/Message.jsx'
 import CheckValues from '../Mixin/Helper/CheckValues.js'
-
-/* global $ */
 
 export default class ManagerSignin extends Component {
   constructor(props) {
@@ -168,7 +166,7 @@ export default class ManagerSignin extends Component {
   urlWrap(input) {
     return (
       <div className="input-group">
-        <span className="input-group-addon">http://</span>
+        <span className="input-group-append">http://</span>
         {input}
       </div>
     )

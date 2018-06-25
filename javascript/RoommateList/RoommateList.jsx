@@ -28,11 +28,13 @@ export default class RoommateList extends Component {
         sleep_time: null,
         pets: null,
         smoking: null,
-        free_time: null
-      }
+        free_time: null,
+        offset: 0,
+      },
+      moreRows: true,
     }
     bindMethods([
-      'updateSearchVars', 'reset'
+      'updateSearchVars', 'reset', 'showMore'
     ], this)
   }
 
@@ -44,6 +46,13 @@ export default class RoommateList extends Component {
     this.defaultLabels()
     this.clearVars()
   }
+  
+  showMore() {
+    const searchVars = this.state.searchVars
+    searchVars.offset = parseInt(searchVars.offset) + 1
+    this.setState({searchVars : searchVars})
+    this.load()
+  }
 
   clearVars() {
     const searchVars = {
@@ -52,7 +61,8 @@ export default class RoommateList extends Component {
       sleep_time: null,
       pets: null,
       smoking: null,
-      free_time: null
+      free_time: null,
+      offset: 0,
     }
     this.setState({searchVars: searchVars}, this.load)
   }
@@ -78,11 +88,24 @@ export default class RoommateList extends Component {
   }
 
   load() {
-    $.getJSON('./properties/Roommate/list', this.state.searchVars).done(function (data) {
-      if (data.roommates) {
-        this.setState({roommates: data.roommates})
+    const sendData = this.state.searchVars
+    if (this.state.searchVars.offset > 0) {
+      sendData.offset = this.state.searchVars.offset
+    }
+    $.getJSON('./properties/Roommate/list', sendData).done(function (data) {
+      if (this.state.searchVars.offset > 0) {
+        if (data.roommates.length == 0 || this.state.roommates == null) {
+          this.clearVars()
+          return
+        }
+        this.setState({
+          roommates: this.state.roommates.concat(data.roommates),
+          moreRows: data.more_rows
+        })
       } else {
-        this.setState({roommates: []})
+        this.setState(
+          {roommates: data.roommates, manager: data.manager, moreRows: data.more_rows}
+        )
       }
     }.bind(this)).fail(function(){
       this.error = true
@@ -120,6 +143,13 @@ export default class RoommateList extends Component {
           labels={this.state.labels}
           reset={this.reset}/>
         <div>{rows}</div>
+        {
+          this.state.moreRows === true
+            ? <div className="text-center">
+                <button className="btn btn-primary" onClick={this.showMore}>Show more results</button>
+              </div>
+            : null
+        }
       </div>
     )
   }

@@ -3,6 +3,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Dropdown from '../Form/Dropdown.jsx'
 import Amenities from '../Edit/Amenities.jsx'
+import './style.css'
 
 export default class SearchBar extends Component {
   constructor(props) {
@@ -193,11 +194,11 @@ export default class SearchBar extends Component {
     if (this.props.showActiveButton) {
       if (this.props.searchVars.showinactive === true) {
         activeButton = <button
-          className="btn btn-info btn-sm marginLeft"
+          className="btn btn-info btn-sm ml-1"
           onClick={this.props.updateSearchVars.bind(null, 'showinactive', false)}>Hide inactive</button>
       } else {
         activeButton = <button
-          className="btn btn-info btn-sm marginLeft"
+          className="btn btn-info btn-sm ml-1"
           onClick={this.props.updateSearchVars.bind(null, 'showinactive', true)}>Show inactive</button>
       }
     }
@@ -214,46 +215,44 @@ export default class SearchBar extends Component {
             toggle={this.props.toggle}
             searchVars={this.props.searchVars}
             facilities={this.props.facilities}/>
-          <div className="text-center marginTop">
+          <div className="text-center mt-2">
             <button className="btn btn-success" onClick={this.props.clearAmenities}>Uncheck above</button>
           </div>
         </div>
       )
     }
 
-    const mt = {marginTop : '1em'}
-
     return (
       <div>
-        <div className="panel panel-default marginBottom">
-          <div className="panel-body">
-            <div className="pull-left" style={searchStyle}>
-              <div className="input-group">
-                <input
-                  ref="propertySearch"
-                  className="form-control input-sm"
-                  type="text"
-                  placeholder="Search..."
-                  onChange={this.props.updateSearchString}/>
-                <span className="input-group-btn">
-                  <button
-                    className="btn btn-default btn-sm"
-                    type="button"
-                    onClick={this.clearSearch}>Clear</button>
-                </span>
+        <div className="card mb-1">
+          <div className="card-body">
+            <div className="d-flex flex-wrap">
+              <div style={searchStyle}>
+                <div className="input-group">
+                  <input
+                    ref="propertySearch"
+                    className="form-control input-sm"
+                    type="text"
+                    placeholder="Search..."
+                    onChange={this.props.updateSearchString}/>
+                  <span className="input-group-btn">
+                    <button
+                      className="btn btn-outline-dark btn-sm"
+                      type="button"
+                      onClick={this.clearSearch}>Clear</button>
+                  </span>
+                </div>
               </div>
-            </div>
-            <div className="pull-left"><Dropdown small={true} label={bedLabel} options={beds}/></div>
-            <div className="pull-left"><Dropdown small={true} label={bathLabel} options={baths}/></div>
-            <div className="pull-left"><Dropdown small={true} label={minpriceLabel} options={minprice}/></div>
-            <div className="pull-left"><Dropdown small={true} label={maxpriceLabel} options={maxprice}/></div>
-            <div className="pull-left">
-              <button className="btn btn-success btn-sm" onClick={this.props.resetConditions}>Reset</button>
-            </div>
-            {activeButton}
-            <div className="row" style={mt}>
-              <div className="col-sm-12 text-center">
-                <button className="btn btn-default btn-sm" onClick={this.togglePanel}>{panelButton}</button>
+              <div><Dropdown small={true} label={bedLabel} options={beds}/></div>
+              <div><Dropdown small={true} label={bathLabel} options={baths}/></div>
+              <div><Dropdown small={true} label={minpriceLabel} options={minprice}/></div>
+              <div><Dropdown small={true} label={maxpriceLabel} options={maxprice}/></div>
+              <div>
+                <button className="btn btn-success btn-sm" onClick={this.props.resetConditions}>Reset</button>
+              </div>
+              <div>{activeButton}</div>
+              <div>
+                <button className="btn btn-outline-dark btn-sm" onClick={this.togglePanel}>{panelButton}</button>
               </div>
             </div>
             {amenities}

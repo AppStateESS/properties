@@ -8,17 +8,13 @@ export default class Help extends Component {
     super(props)
   }
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   render() {
     return (
-      <span>
-      <i
-        className="fa fa-question-circle text-primary help pointer"
-        data-tip={this.props.title}
-        data-placement={this.props.placement}></i>
-        <ReactTooltip type="info" />
+      <span data-tip={this.props.title} data-placement={this.props.placement} className={this.props.classes}>
+        <i className="fas fa-question-circle text-info help pointer"></i>
+        <ReactTooltip type="info"/>
       </span>
     )
   }
@@ -26,9 +22,11 @@ export default class Help extends Component {
 
 Help.propTypes = {
   placement: PropTypes.string,
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
+  classes: PropTypes.string,
 }
 
 Help.defaultProps = {
-  placement: 'right'
+  placement: 'right',
+  classes : ''
 }

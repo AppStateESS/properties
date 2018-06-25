@@ -48,7 +48,7 @@ class User extends \properties\Controller\SubController
     {
         if (isset($_SERVER['HTTP_REFERER']) && stristr($_SERVER['HTTP_REFERER'],
                         'properties/Roommate/list')) {
-            \properties\Factory\NavBar::addItem('<button class="btn btn-default navbar-btn" style="margin-right: 5px;" onClick="window.history.back()"><i class="fa fa-list"></i>&nbsp;Back to list</button>');
+            \properties\Factory\NavBar::addItem('<button class="btn btn-outline-dark btn-sm navbar-btn mr-1" onClick="window.history.back()"><i class="fa fa-list"></i>&nbsp;Back to list</button>');
         }
     }
     
@@ -68,6 +68,7 @@ class User extends \properties\Controller\SubController
     protected function listJsonCommand(\Canopy\Request $request)
     {
         $json['roommates'] = $this->factory->listing($request, false);
+        $json['more_rows'] = $this->factory->more_rows;
         return $json;
     }
 
@@ -83,7 +84,7 @@ class User extends \properties\Controller\SubController
 
     protected function createButton()
     {
-        return '<button class="btn btn-primary btn-sm navbar-btn" onClick="window.location.href=\'properties/Roommate/create\'"><i class="fa fa-plus"></i>&nbsp;Create roommate request</button>';
+        return '<button class="btn btn-outline-dark btn-sm navbar-btn" onClick="window.location.href=\'properties/Roommate/create\'"><i class="fa fa-plus"></i>&nbsp;Create roommate request</button>';
     }
 
 }

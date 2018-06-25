@@ -12,19 +12,19 @@ export default class DeleteQuestion extends Component {
       <div>
         <h3>Are you sure you want to delete this property?</h3>
         <p>All images associated with this property will also be deleted.</p>
-        <div className="marginBottom">
+        <div className="mb-1">
           <button
             className="btn btn-lg btn-danger"
             onClick={this.props.delete}>Yes, delete this property and all associated images.</button>
         </div>
-        <div className="marginBottom">
+        <div className="mb-1">
           <button
-            className="btn btn-default btn-lg btn-warning"
+            className="btn btn-outline-dark btn-lg btn-warning"
             onClick={this.props.deactivate}>Just deactivate it for now</button>
         </div>
-        <div className="marginBottom">
+        <div className="mb-1">
           <button
-            className="btn btn-default btn-lg"
+            className="btn btn-outline-dark btn-lg"
             onClick={this.props.close}>No, I changed my mind</button>
         </div>
       </div>

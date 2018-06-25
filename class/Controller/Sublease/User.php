@@ -47,7 +47,7 @@ class User extends \properties\Controller\SubController
         $this->updateTimeouts();
         $this->createButton();
 
-        \Layout::addStyle('properties', 'sublease/list.css');
+        \Layout::addToStyleList('mod/properties/css/sublease/list.css');
         return $this->factory->reactView('sublease');
     }
 
@@ -66,14 +66,14 @@ class User extends \properties\Controller\SubController
     
     public function viewHtmlCommand(\Canopy\Request $request)
     {
-        \Layout::addStyle('properties', 'sublease/view.css');
+        \Layout::addToStyleList('mod/properties/css/sublease/view.css');
         return $this->factory->view($this->id);
     }
 
     protected function createButton()
     {
         $button = <<<EOF
-<button onClick="window.location.href='properties/Sublease/create'" class="btn btn-primary btn-sm navbar-btn"><i class="fa fa-plus"></i>&nbsp;Create my sublease</button>
+<button onClick="window.location.href='properties/Sublease/create'" class="btn btn-outline-dark"><i class="fa fa-plus"></i>&nbsp;Create my sublease</button>
 EOF;
         \properties\Factory\NavBar::addItem($button);
     }
@@ -82,7 +82,7 @@ EOF;
     {
         if (isset($_SERVER['HTTP_REFERER']) && stristr($_SERVER['HTTP_REFERER'],
                         'properties/Sublease/list')) {
-            \properties\Factory\NavBar::addItem('<button class="btn btn-default navbar-btn" style="margin-right: 5px;" onClick="window.history.back()"><i class="fa fa-list"></i>&nbsp;Back to list</button>');
+            \properties\Factory\NavBar::addItem('<button class="btn btn-outline-dark navbar-btn mr-1" onClick="window.history.back()"><i class="fa fa-list"></i>&nbsp;Back to list</button>');
         }
     }
 

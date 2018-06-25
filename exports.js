@@ -25,5 +25,4 @@ exports.entry = {
   banuser: exports.APP_DIR +  '/BanUser/index.jsx',
   propertydelete: exports.APP_DIR + '/PropertyDelete/index.jsx',
   managerpasswordchange : exports.APP_DIR + '/ManagerPasswordChange/index.jsx',
-  vendor: ['react', 'react-dom']
 }

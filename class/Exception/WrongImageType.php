@@ -22,6 +22,6 @@ class WrongImageType extends \Exception
 {
     public function __construct()
     {
-        $this->message = 'Wrong file type';
+        $this->message = 'Wrong image file type';
     }
 }

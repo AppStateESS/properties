@@ -19,26 +19,30 @@ export default class SubleaseRow extends Row {
 
   render() {
     const {sublease} = this.props
-    const link = `./properties/Sublease/${sublease.id}/${this.urlTitle(sublease.name)}`
+    const link = `./properties/Sublease/${sublease.id}/${this.urlTitle(
+      sublease.name
+    )}`
     let image = (
-      <div className="text-muted" style={{
-        padding: '6px'
-      }}>
-        <i className="fa fa-camera fa-5x"></i>
-        <br/>
-        No photos available
+      <div
+        className="text-muted d-flex align-items-center flex-column justify-content-center h-100">
+        <div>
+          <i className="fa fa-camera fa-5x"></i>
+        </div>
+        <div>No photos available</div>
       </div>
     )
 
     let titleClass
     if (sublease.active !== undefined && sublease.active === '0') {
-      titleClass= 'title deactive'
+      titleClass = 'title deactive'
     } else {
-      titleClass='title active'
+      titleClass = 'title active'
     }
 
     if (sublease.thumbnail !== '') {
-      const thumbStyle = {backgroundImage : `url('${sublease.thumbnail}')`}
+      const thumbStyle = {
+        backgroundImage: `url('${sublease.thumbnail}')`
+      }
       image = <div className="property-thumbnail" style={thumbStyle}></div>
     }
     return (
@@ -56,20 +60,20 @@ export default class SubleaseRow extends Row {
               <div className="room-bath">{sublease.proptype}&nbsp; - {sublease.bedroom_no}&nbsp;Bed, {sublease.bathroom_no}&nbsp;Bath
               </div>
               <div className="availability">
-                <strong>Availability:</strong>&nbsp;
-                {sublease.move_in_date}</div>
+                <strong>Availability:</strong>&nbsp; {sublease.move_in_date}</div>
               <div className="end-date">
-                <strong>Sublease end date:</strong>&nbsp;
-                {sublease.move_out_date}</div>
+                <strong>Sublease end date:</strong>&nbsp; {sublease.move_out_date}</div>
             </div>
             <div className="col-sm-5 col-md-4">
-              {this.petsAllowed(sublease.pets_allowed)}
-              {this.furnished(sublease.furnished)}
-              {this.airconditioner(sublease.airconditioning)}
-              {this.dishwasher(sublease.dishwasher)}
-              {this.utilities(sublease.utilities_inc)}
-              {this.appalcart(sublease.appalcart)}
-              {this.washer(sublease.washer)}
+              <div className="icon-listing">
+                {this.petsAllowed(sublease.pets_allowed)}
+                {this.furnished(sublease.furnished)}
+                {this.airconditioner(sublease.airconditioning)}
+                {this.dishwasher(sublease.dishwasher)}
+                {this.utilities(sublease.utilities_inc)}
+                {this.appalcart(sublease.appalcart)}
+                {this.washer(sublease.washer)}
+              </div>
             </div>
           </div>
         </div>

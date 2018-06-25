@@ -8,27 +8,20 @@ export default class RefuseModal extends Component {
   }
 
   render() {
-    const spacing = {
-      marginBottom: '10px',
-      display: 'block'
-    }
     const header = `Refuse manager request for: ${this.props.manager.company_name}`
     const body = (
       <div>
         <button
-          style={spacing}
-          className="btn btn-primary"
+          className="btn btn-primary mb-1 d-block"
           onClick={this.props.reason}
           data-reason="duplicate">Using duplicate company name</button>
         <button
-          style={spacing}
-          className="btn btn-primary"
+          className="btn btn-primary mb-1 d-block"
           onClick={this.props.reason}
           data-reason="bad_data">Improper information</button>
         {this.props.manager.inquiry_date !== null
           ? <button
-              style={spacing}
-              className="btn btn-primary"
+              className="btn btn-primary mb-1 d-block"
               onClick={this.props.reason}
               data-reason="no_response">No response to inquiry since {this.props.manager.inquiry_date}</button>
           : null}
