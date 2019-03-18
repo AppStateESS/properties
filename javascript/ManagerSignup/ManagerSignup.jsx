@@ -1,7 +1,7 @@
 'use strict'
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import InputField from 'canopy-react-inputfield'
+import InputField from '@essappstate/canopy-react-inputfield'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import empty from '../Mixin/Helper/Empty.js'
 import Message from '../Mixin/Html/Message.jsx'

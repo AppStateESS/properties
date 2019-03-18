@@ -2,7 +2,7 @@
 import React, {Component} from 'react'
 import Modal from 'react-modal'
 import bindMethods from '../Mixin/Helper/Bind.js'
-import InputField from 'canopy-react-inputfield'
+import InputField from '@essappstate/canopy-react-inputfield'
 
 /* global banUser, userId */
 const modalStyle = {

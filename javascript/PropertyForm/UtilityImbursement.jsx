@@ -1,7 +1,7 @@
 'use strict'
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import InputField from 'canopy-react-inputfield'
+import InputField from '@essappstate/canopy-react-inputfield'
 import Dollarize from '../Mixin/Form/Dollarize.jsx'
 
 export default class UtilityImbursement extends Component {

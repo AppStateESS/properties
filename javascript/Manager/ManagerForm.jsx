@@ -1,7 +1,7 @@
 'use strict'
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import InputField from 'canopy-react-inputfield'
+import InputField from '@essappstate/canopy-react-inputfield'
 import Modal from '../Mixin/Html/Modal.jsx'
 import CheckValues from '../Mixin/Helper/CheckValues'
 import ManagerObject from '../Mixin/Objects/ManagerObject.js'

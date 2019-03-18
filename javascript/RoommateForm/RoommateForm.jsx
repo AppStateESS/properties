@@ -1,6 +1,6 @@
 'use strict'
 import React, {Component} from 'react'
-import InputField from 'canopy-react-inputfield'
+import InputField from '@essappstate/canopy-react-inputfield'
 import DatePicker from 'react-date-picker'
 import RoommateObject from '../Mixin/Objects/RoommateObject.js'
 import moment from 'moment'

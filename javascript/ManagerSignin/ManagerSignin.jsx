@@ -1,7 +1,7 @@
 'use strict'
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
-import InputField from 'canopy-react-inputfield'
+import InputField from '@essappstate/canopy-react-inputfield'
 import empty from '../Mixin/Helper/Empty.js'
 import DecodeUrl from '../Mixin/Helper/DecodeUrl.js'
 
