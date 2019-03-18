@@ -71,6 +71,7 @@ class Manager extends Base
         $this->property_count = new Variable\IntegerVar(0, 'properties_count');
         $this->property_count->setIsTableColumn(false);
         $this->inquiry_date = new Variable\IntegerVar(0, 'inquiry_date');
+        $this->inquiry_date->allowNull(true);
         $this->inquiry_type = new Variable\Attribute(null, 'inquiry_type');
         $this->inquiry_type->allowNull(true);
         $this->pw_timeout = new Variable\IntegerVar(0, 'pw_timeout');
