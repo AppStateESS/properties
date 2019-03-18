@@ -18,10 +18,10 @@ class Manager extends Component {
     this.state = {
       managers: null,
       message: null,
+      search: '',
       currentManager: ManagerObject,
       moreRows : true
     }
-    this.search = ''
     const bindable = [
       'clearSearch',
       'dropManager',
@@ -31,7 +31,8 @@ class Manager extends Component {
       'searchManager',
       'setMessage',
       'updateManager',
-      'showMore'
+      'showMore',
+      'refresh'
     ]
 
     bindMethods(bindable, this)
@@ -66,8 +67,8 @@ class Manager extends Component {
     this.load()
   }
 
-  load() {
-    $.getJSON('properties/Manager', {search: this.search, offset: this.offset}).done(function (data) {
+  load(search='') {
+    $.getJSON('properties/Manager', {search: search, offset: this.offset}).done(function (data) {
       this.admin = data.admin
       if (this.offset > 0) {
         this.setState({managers: this.state.managers.concat(data.managerList), moreRows: data.more_rows})
@@ -96,26 +97,28 @@ class Manager extends Component {
   }
 
   searchLetter(letter) {
-    this.search = letter
-    this.refs.managerSearch.value = ''
-    this.load()
+    this.clearSearch()
+    this.load(letter)
   }
 
   searchManager(e) {
     clearTimeout(this.delay)
     const search = e.target.value
-    if (search.length < 3 && search.length > 0) {
-      return
-    }
+    this.setState({search})
     this.delay = setTimeout(function () {
-      this.search = search
-      this.load()
+      if (search.length < 3 && search.length > 0) {
+        return
+      }
+      this.load(search)
     }.bind(this, search), 500)
   }
 
   clearSearch() {
-    this.refs.managerSearch.value = ''
-    this.search = ''
+    this.setState({search: ''})
+  }
+  
+  refresh() {
+    this.clearSearch()
     this.load()
   }
 
@@ -136,17 +139,17 @@ class Manager extends Component {
             <div className="col-sm-6">
               <div className="input-group">
                 <input
-                  ref="managerSearch"
                   className="form-control"
                   type="text"
+                  value={this.state.search}
                   placeholder="Search for landlords..."
                   onChange={this.searchManager}/>
                 <span className="input-group-btn">
-                  <button className="btn btn-outline-dark" type="button" onClick={this.clearSearch}>Clear</button>
+                  <button className="btn btn-outline-secondary" type="button" onClick={this.refresh}>Clear</button>
                 </span>
               </div>
             </div>
-            <div className="col-sm-2">
+            <div className="col-sm-6">
               {this.admin
                 ? (<button
                     className="btn btn-success"
@@ -158,31 +161,31 @@ class Manager extends Component {
           </div>
           <div className="row mt-2">
             <div className="col-sm-12 text-center">
-              <button className="btn btn-sm btn-outline-dark" onClick={this.searchLetter.bind(this, null)}>All</button>
-              <button className="btn btn-sm btn-outline-dark" onClick={this.searchLetter.bind(this, 'a')}>A</button>
-              <button className="btn btn-sm btn-outline-dark" onClick={this.searchLetter.bind(this, 'b')}>B</button>
-              <button className="btn btn-sm btn-outline-dark" onClick={this.searchLetter.bind(this, 'c')}>C</button>
-              <button className="btn btn-sm btn-outline-dark" onClick={this.searchLetter.bind(this, 'd')}>D</button>
-              <button className="btn btn-sm btn-outline-dark" onClick={this.searchLetter.bind(this, 'e')}>E</button>
-              <button className="btn btn-sm btn-outline-dark" onClick={this.searchLetter.bind(this, 'f')}>F</button>
-              <button className="btn btn-sm btn-outline-dark" onClick={this.searchLetter.bind(this, 'g')}>G</button>
-              <button className="btn btn-sm btn-outline-dark" onClick={this.searchLetter.bind(this, 'h')}>H</button>
-              <button className="btn btn-sm btn-outline-dark" onClick={this.searchLetter.bind(this, 'i')}>I</button>
-              <button className="btn btn-sm btn-outline-dark" onClick={this.searchLetter.bind(this, 'j')}>J</button>
-              <button className="btn btn-sm btn-outline-dark" onClick={this.searchLetter.bind(this, 'k')}>K</button>
-              <button className="btn btn-sm btn-outline-dark" onClick={this.searchLetter.bind(this, 'l')}>L</button>
-              <button className="btn btn-sm btn-outline-dark" onClick={this.searchLetter.bind(this, 'm')}>M</button>
-              <button className="btn btn-sm btn-outline-dark" onClick={this.searchLetter.bind(this, 'n')}>N</button>
-              <button className="btn btn-sm btn-outline-dark" onClick={this.searchLetter.bind(this, 'o')}>O</button>
-              <button className="btn btn-sm btn-outline-dark" onClick={this.searchLetter.bind(this, 'p')}>P</button>
-              <button className="btn btn-sm btn-outline-dark" onClick={this.searchLetter.bind(this, 'q')}>Q</button>
-              <button className="btn btn-sm btn-outline-dark" onClick={this.searchLetter.bind(this, 'r')}>R</button>
-              <button className="btn btn-sm btn-outline-dark" onClick={this.searchLetter.bind(this, 's')}>S</button>
-              <button className="btn btn-sm btn-outline-dark" onClick={this.searchLetter.bind(this, 't')}>T</button>
-              <button className="btn btn-sm btn-outline-dark" onClick={this.searchLetter.bind(this, 'u')}>U</button>
-              <button className="btn btn-sm btn-outline-dark" onClick={this.searchLetter.bind(this, 'v')}>V</button>
-              <button className="btn btn-sm btn-outline-dark" onClick={this.searchLetter.bind(this, 'w')}>W</button>
-              <button className="btn btn-sm btn-outline-dark" onClick={this.searchLetter.bind(this, 'xyz')}>XYZ</button>
+              <button className="btn btn-sm btn-outline-secondary" onClick={this.searchLetter.bind(this, null)}>All</button>
+              <button className="btn btn-sm btn-outline-secondary" onClick={this.searchLetter.bind(this, 'a')}>A</button>
+              <button className="btn btn-sm btn-outline-secondary" onClick={this.searchLetter.bind(this, 'b')}>B</button>
+              <button className="btn btn-sm btn-outline-secondary" onClick={this.searchLetter.bind(this, 'c')}>C</button>
+              <button className="btn btn-sm btn-outline-secondary" onClick={this.searchLetter.bind(this, 'd')}>D</button>
+              <button className="btn btn-sm btn-outline-secondary" onClick={this.searchLetter.bind(this, 'e')}>E</button>
+              <button className="btn btn-sm btn-outline-secondary" onClick={this.searchLetter.bind(this, 'f')}>F</button>
+              <button className="btn btn-sm btn-outline-secondary" onClick={this.searchLetter.bind(this, 'g')}>G</button>
+              <button className="btn btn-sm btn-outline-secondary" onClick={this.searchLetter.bind(this, 'h')}>H</button>
+              <button className="btn btn-sm btn-outline-secondary" onClick={this.searchLetter.bind(this, 'i')}>I</button>
+              <button className="btn btn-sm btn-outline-secondary" onClick={this.searchLetter.bind(this, 'j')}>J</button>
+              <button className="btn btn-sm btn-outline-secondary" onClick={this.searchLetter.bind(this, 'k')}>K</button>
+              <button className="btn btn-sm btn-outline-secondary" onClick={this.searchLetter.bind(this, 'l')}>L</button>
+              <button className="btn btn-sm btn-outline-secondary" onClick={this.searchLetter.bind(this, 'm')}>M</button>
+              <button className="btn btn-sm btn-outline-secondary" onClick={this.searchLetter.bind(this, 'n')}>N</button>
+              <button className="btn btn-sm btn-outline-secondary" onClick={this.searchLetter.bind(this, 'o')}>O</button>
+              <button className="btn btn-sm btn-outline-secondary" onClick={this.searchLetter.bind(this, 'p')}>P</button>
+              <button className="btn btn-sm btn-outline-secondary" onClick={this.searchLetter.bind(this, 'q')}>Q</button>
+              <button className="btn btn-sm btn-outline-secondary" onClick={this.searchLetter.bind(this, 'r')}>R</button>
+              <button className="btn btn-sm btn-outline-secondary" onClick={this.searchLetter.bind(this, 's')}>S</button>
+              <button className="btn btn-sm btn-outline-secondary" onClick={this.searchLetter.bind(this, 't')}>T</button>
+              <button className="btn btn-sm btn-outline-secondary" onClick={this.searchLetter.bind(this, 'u')}>U</button>
+              <button className="btn btn-sm btn-outline-secondary" onClick={this.searchLetter.bind(this, 'v')}>V</button>
+              <button className="btn btn-sm btn-outline-secondary" onClick={this.searchLetter.bind(this, 'w')}>W</button>
+              <button className="btn btn-sm btn-outline-secondary" onClick={this.searchLetter.bind(this, 'xyz')}>XYZ</button>
             </div>
           </div>
           <hr />
