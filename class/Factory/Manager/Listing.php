@@ -124,6 +124,7 @@ class Listing
         if ($this->view) {
             $result = $db->selectAsResources('\properties\Resource\Manager');
             if (empty($result)) {
+                $this->more_rows = false;
                 return array();
             }
             if (count($result) < $this->limit) {
