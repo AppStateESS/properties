@@ -52,7 +52,9 @@ export default class ManagerApproval extends Component {
 
   load() {
     $.getJSON('properties/Manager/approval').done(function (data) {
-      this.setState({managers: data['managerList'], emailWarning: data['email_warning']})
+      this.setState(
+        {managers: data['managerList'], emailWarning: data['email_warning']}
+      )
     }.bind(this)).fail(function (data) {
       this.setState({managers: null})
       this.setState({'errorPage': data.responseText})
@@ -103,8 +105,7 @@ export default class ManagerApproval extends Component {
     }.bind(this))
   }
 
-  removeManager(key)
-  {
+  removeManager(key) {
     let managers = this.state.managers
     managers.splice(key, 1)
     this.setState({managers: managers})
@@ -126,20 +127,22 @@ export default class ManagerApproval extends Component {
     const type = e.target.dataset.inquiryType
     $.ajax({
       url: `./properties/Manager/inquiry/`,
+      dataType: 'json',
+      type: 'put',
       data: {
         managerId: this.currentManager.id,
         inquiryType: type
       },
-      dataType: 'json',
-      type: 'put'
-    }).done(function () {
-      this.closeModal()
-      this.load()
-      this.setMessage('Inquiry sent')
-    }.bind(this)).error(function (data) {
-      this.closeModal()
-      this.setState({'errorPage': data.responseText})
-    }.bind(this))
+      success: () => {
+        this.closeModal()
+        this.load()
+        this.setMessage('Inquiry sent')
+      },
+      error: (data) => {
+        this.closeModal()
+        this.setState({'errorPage': data.responseText})
+      }
+    })
   }
 
   refuseReason(e) {
@@ -187,7 +190,6 @@ export default class ManagerApproval extends Component {
   }
 
   listing() {
-    let listing
     let companyAddress
     let websiteAddress
     if (this.state.managers === null) {
@@ -196,7 +198,7 @@ export default class ManagerApproval extends Component {
       return <div>No managers need approving.</div>
     }
 
-    listing = this.state.managers.map(function (value, key) {
+    let listing = this.state.managers.map(function (value, key) {
       companyAddress = empty(value.company_address)
         ? <em>No physical address</em>
         : (
@@ -207,47 +209,62 @@ export default class ManagerApproval extends Component {
           </span>
         )
 
-      const searchLink = `https://www.google.com/search?q=${value.company_name.replace(/ /g, '+')}`
-      websiteAddress = empty(value.company_url)
-        ? <span>
-            <em>No website address</em>&nbsp;
-            <a target="_index" href={searchLink}>
-              <i className="fa fa-search"></i>
-            </a>
-          </span>
-        : <a href={value.company_url} target="_index">{value.company_url}</a>
+      if (empty(value.company_url)) {
+        websiteAddress = <span>
+          <em>No website address</em>&nbsp;
+          <a target="_index" href={searchLink}>
+            <i className="fa fa-search"></i>
+          </a>
+        </span>
+      } else {
+        websiteAddress = <a href={value.company_url} target="_index">{value.company_url}</a>
+      }
+
+      const searchLink = `https://www.google.com/search?q=${value.company_name.replace(
+        / /g,
+        '+'
+      )}`
+
       const email = `mailto:${value.email_address}`
       return (
         <div className="card card-info" key={key}>
-          <div className="card-heading">
-            <span style={{
-              fontSize: '2em'
-            }}>{value.company_name}</span>
+          <div className="card-header">
+            <span className="lead">{value.company_name}</span>
             <div className="float-right">
               <button
                 className="btn btn-success"
                 disabled={this.state.emailWarning}
                 onClick={this.approve.bind(this, value.id, key)}>
-                <i className="fa fa-check"></i>&nbsp;Accept</button>&nbsp;{value.inquiry_date
-                ? null
-                : (
-                  <span>
-                    <button disabled={this.state.emailWarning} className="btn btn-info" onClick={this.inquiry.bind(this, value, key)}>
-                      <i className="fa fa-question"></i>&nbsp;Inquiry</button>&nbsp;
-                  </span>
-                )}
-              <button className="btn btn-danger" onClick={this.refuse.bind(this, value, key)} disabled={this.state.emailWarning}>
+                <i className="fa fa-check"></i>&nbsp;Accept</button>&nbsp;{
+                value.inquiry_date
+                  ? null
+                  : (
+                    <span>
+                      <button
+                        disabled={this.state.emailWarning}
+                        className="btn btn-info"
+                        onClick={this.inquiry.bind(this, value, key)}>
+                        <i className="fa fa-question"></i>&nbsp;Inquiry</button>&nbsp;
+                    </span>
+                  )
+              }
+              <button
+                className="btn btn-danger"
+                onClick={this.refuse.bind(this, value, key)}
+                disabled={this.state.emailWarning}>
                 <i className="fa fa-ban"></i>&nbsp;Refuse</button>
             </div>
           </div>
           <div className="card-body">
-            <div className="row">
+            <div className="row card-text">
               <div className="col-sm-4">
                 <h4>Company</h4>
                 {websiteAddress}
-                <br/> {empty(value.times_available)
-                  ? <em>No contact times given</em>
-                  : <div>{value.times_available}</div>}
+                <br/> {
+                  empty(value.times_available)
+                    ? <em>No contact times given</em>
+                    : <div>{value.times_available}</div>
+                }
                 <div>{companyAddress}</div>
               </div>
               <div className="col-sm-4">
@@ -263,13 +280,15 @@ export default class ManagerApproval extends Component {
               </div>
             </div>
           </div>
-          {value.inquiry_date
-            ? <div className="card-footer">
-                <strong>
-                  <i className="fa fa-exclamation-circle"></i>&nbsp; {this.inquiryTypeOptions(value)}&nbsp;{value.inquiry_date}
-                </strong>
-              </div>
-            : null}
+          {
+            value.inquiry_date
+              ? <div className="card-footer">
+                  <strong>
+                    <i className="fa fa-exclamation-circle"></i>&nbsp; {this.inquiryTypeOptions(value)}&nbsp;{value.inquiry_date}
+                  </strong>
+                </div>
+              : null
+          }
         </div>
       )
     }.bind(this))
