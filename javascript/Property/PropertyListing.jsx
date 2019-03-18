@@ -2,7 +2,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import PropertyRow from './PropertyRow.jsx'
-import Waiting from '../Mixin/Html/Waiting.jsx'
 import ReactTooltip from 'react-tooltip'
 
 export default class PropertyListing extends Component {
@@ -12,9 +11,7 @@ export default class PropertyListing extends Component {
 
   render() {
     const list = this.props.list
-    if (list === null) {
-      return <Waiting label="properties"/>
-    } else if (list.length === 0) {
+    if (list.length === 0) {
       if (this.props.search === true) {
         return (
           <div className="lead">No properties found. Try a different search?</div>
@@ -31,7 +28,6 @@ export default class PropertyListing extends Component {
         <div>{rows}
           <ReactTooltip type="light" border={true} effect="solid"/>
         </div>
-
       )
     }
   }

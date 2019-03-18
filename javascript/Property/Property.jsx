@@ -8,16 +8,21 @@ import DecodeUrl from '../Mixin/Helper/DecodeUrl.js'
 import PropertyListing from './PropertyListing.jsx'
 import Base from '../Mixin/List/Base.jsx'
 import ReactTooltip from 'react-tooltip'
+import Waiting from '../Mixin/Html/Waiting.jsx'
+
+/* global $ */
 
 export default class Property extends Base {
   constructor(props) {
     super(props)
     this.state = {
-      properties: null,
+      properties: [],
       manager: null,
       message: '',
       type: null,
       moreRows: true,
+      loading: true,
+      error: false
     }
     this.loadAmenities()
     this.showActiveButton = false
@@ -60,36 +65,44 @@ export default class Property extends Base {
     if (this.searchVars.offset > 0) {
       sendData.offset = this.searchVars.offset
     }
-    $.getJSON('./properties/Property', sendData).done(function (data) {
-      // bad manager id
-      if (data.manager === false) {
-        this.setState({properties: [], manager: null, moreRows: false})
-        return
-      }
-      if (data.active_button !== undefined) {
-        this.showActiveButton = data.active_button
-      }
-      // offset is > 0 but there aren't any rows
-      if (this.searchVars.offset > 0) {
-        if (data.properties.length == 0 || this.state.properties == null) {
-          this.clearSearch()
+
+    $.ajax({
+      url: './properties/Property',
+      data: sendData,
+      dataType: 'json',
+      type: 'get',
+      success: (data) => {
+        if (data.manager === false) {
+          this.setState({properties: [], manager: null, moreRows: false})
           return
         }
-        this.setState({
-          properties: this.state.properties.concat(data.properties),
-          manager: data.manager,
-          moreRows: data.more_rows
-        })
-      } else {
-        this.setState(
-          {properties: data.properties, manager: data.manager, moreRows: data.more_rows}
-        )
+        if (data.active_button !== undefined) {
+          this.showActiveButton = data.active_button
+        }
+        // offset is > 0 but there aren't any rows
+        if (this.searchVars.offset > 0) {
+          if (data.properties.length == 0 || this.state.properties == null) {
+            this.clearSearch()
+            return
+          }
+          this.setState({
+            loading: false,
+            properties: this.state.properties.concat(data.properties),
+            manager: data.manager,
+            moreRows: data.more_rows
+          })
+        } else {
+          this.setState(
+            {loading: false, properties: data.properties, manager: data.manager, moreRows: data.more_rows}
+          )
+        }
+        ReactTooltip.rebuild()
+      },
+      error: () => {
+        this.setState({managers: null, loading: false, moreRows: false, error: true})
+        this.setMessage('Error: failure pulling properties')
       }
-      ReactTooltip.rebuild()
-    }.bind(this)).fail(function () {
-      this.setState({managers: null, loading: false})
-      this.setMessage('Error: failure pulling properties')
-    }.bind(this))
+    })
   }
 
   render() {
@@ -105,12 +118,30 @@ export default class Property extends Base {
     if (this.state.message.length > 0) {
       message = <Message message={this.state.message} type={this.state.type}/>
     }
+
+    let moreRowsButton = null
+    if (this.state.moreRows === true) {
+      moreRowsButton = (
+        <div className="text-center">
+          <button className="btn btn-primary" onClick={this.showMore}>Show more results</button>
+        </div>
+      )
+    }
+
+    let content
+    if (this.state.loading === true) {
+      content = <Waiting label="properties"/>
+    } else if (this.state.error === false) {
+      content = (
+        <PropertyListing list={this.state.properties} search={!empty(this.search)}/>
+      )
+    }
+
     return (
       <div>
         {message}
         <h3>
-          <a href="./properties/Property/list/">Properties:</a>
-          {manager}</h3>
+          <a href="./properties/Property/list/">Properties:</a>&nbsp; {manager}</h3>
         <SearchBar
           updateSearchString={this.updateSearchString}
           clear={this.clearSearch}
@@ -122,13 +153,8 @@ export default class Property extends Base {
           updateSortBy={this.updateSortBy}
           sortType={this.sortType}
           toggle={this.toggle}/>
-        <PropertyListing list={this.state.properties} search={!empty(this.search)}/> {
-          this.state.moreRows === true
-            ? <div className="text-center">
-                <button className="btn btn-primary" onClick={this.showMore}>Show more results</button>
-              </div>
-            : null
-        }
+        <div>{content}</div>
+        <div>{moreRowsButton}</div>
       </div>
     )
   }
