@@ -77,7 +77,7 @@ class Listing extends \properties\Factory\Listing
         $this->addConditionals();
         if ($view) {
             $result = $this->db->selectAsResources('\properties\Resource\Property');
-            if (count($result) < $this->limit) {
+            if (is_null($result) || count($result) < $this->limit) {
                 $this->more_rows = false;
             }
             if (empty($result)) {
