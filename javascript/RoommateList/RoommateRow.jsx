@@ -28,16 +28,16 @@ export default class RoommateRow extends Component {
 
     return (
       <div className="card card-default">
-        <div className="card-heading">
+        <div className="card-header">
           <div>
-            <strong>Move in:</strong>&nbsp;
-            {roommate.move_in_date}</div>
-            <div>
-              <strong>Created:</strong>&nbsp;
-              {roommate.created}</div>
+            <strong>Move in:</strong>&nbsp; {roommate.move_in_date}
+          </div>
+          <div>
+            <strong>Created:</strong>&nbsp; {roommate.created}
+          </div>
         </div>
         <div className="card-body">
-          <div className="row">
+          <div className="row card-text">
             <div className="col-sm-6">
               {para(description, 'Description: ')}
             </div>

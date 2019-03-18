@@ -38,8 +38,12 @@
     </div>
     <?php endif;?>
     <?php if (!$contact_allowed):?>
-    <div class="contact-info card">
-      <p>You will need to <a href="<?=$login?>">log-in</a> to get contact information for this roommate!</p>
+    <div class="contact-info card mb-4">
+      <div class="card-body">
+        <div class="card-text">
+          <div>You will need to <a href="<?=$login?>">log-in</a> to get contact information for this roommate!</div>
+        </div>
+      </div>
     </div>
     <?php endif;?>
   </div>
