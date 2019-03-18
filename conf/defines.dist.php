@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * This is the default defines file for properties. You should make a copy
+ * (defines.php) and save it in the properties/conf/ directory. Change your
+ * settings within it.
+ * 
+ * Updates to properties will overwrite this file.
+ */
+
 // 1 : smtp
 // 2 : sendmail
 // 3 : was mail and is deprecated, do not use
