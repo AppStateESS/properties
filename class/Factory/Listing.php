@@ -45,6 +45,7 @@ abstract class Listing
     public $condo = 0;
     public $townhouse = 0;
     public $duplex = 0;
+    public $no_smoking = false;
     public $more_rows = true;
     public $show_inactive = false;
     public $sort_by = 'updated';
@@ -87,6 +88,7 @@ abstract class Listing
         $this->condo = $request->pullGetBoolean('condo', true);
         $this->townhouse = $request->pullGetBoolean('townhouse', true);
         $this->duplex = $request->pullGetBoolean('duplex', true);
+        $this->no_smoking = $request->pullGetBoolean('no_smoking', true);
         $this->sort_by = $request->pullGetString('sortBy', true);
     }
 
@@ -145,6 +147,9 @@ abstract class Listing
         }
         if ($this->workout) {
             $this->data_table->addFieldConditional('workout_room', 1);
+        }
+        if ($this->no_smoking) {
+            $this->data_table->addFieldConditional('no_smoking', 1);
         }
 
         if ($this->efficiency || $this->apartment || $this->house || $this->condo || $this->townhouse || $this->duplex) {
