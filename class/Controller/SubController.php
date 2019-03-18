@@ -211,7 +211,7 @@ abstract class SubController extends Base
         $passInfo = '<a class="dropdown-item" href="properties/Manager/changePassword"><i class="fas fa-key"></i>&nbsp;Change my password</a>';
         \properties\Factory\NavBar::addOption($passInfo);
 
-        $signout = '<a class="dropdown-item" href="properties/Manager/signout"><i class="fas sign-out-alt"></i>&nbsp;Sign out</a>';
+        $signout = '<a class="dropdown-item" href="properties/Manager/signout"><i class="fas fa-sign-out-alt"></i>&nbsp;Sign out</a>';
         \properties\Factory\NavBar::addOption($signout);
         \properties\Factory\NavBar::setTitle('My options');
     }
