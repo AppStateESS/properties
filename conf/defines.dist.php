@@ -17,7 +17,7 @@ define('SWIFT_MAIL_TRANSPORT_TYPE', 2);
 // 1 : server location
 // 2 : location of sendmail
 // http://swiftmailer.org/docs/sending.html
-define('SWIFT_MAIL_TRANSPORT_PARAMETER', 'localhost');
+define('SWIFT_MAIL_TRANSPORT_PARAMETER', '/usr/sbin/sendmail -bs');
 
 define('PROPERTIES_REACT_DEV', false);
 
