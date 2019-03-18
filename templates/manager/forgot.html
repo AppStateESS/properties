@@ -1,9 +1,22 @@
-<h2>Forgot password?</h2>
-<p>Enter the email address you used to register your account and we will send you a notice to change it.</p>
-<form method="post" action="./properties/Manager/forgot" class="form-inline">
-    <div class="form-group">
-        <label for="manager-forgot-email">Enter your email address:</label>
-        <input type="text" name="email" class="form-control" id="manager-forgot-email"/>
+<form method="post" action="./properties/Manager/forgot">
+  <div class="row">
+    <div class="col-sm-6 mx-auto">
+      <div class="card">
+        <div class="card-header">
+          <h2>Forgot password?</h2>
+        </div>
+        <div class="card-body">
+          <p class="card-text">Enter the email address you used to register your account and we will send you
+            a notice to change it.</p>
+          <div class="form-group">
+            <label for="manager-forgot-email">Enter your email address:</label>&nbsp;
+            <input type="text" name="email" class="form-control" id="manager-forgot-email"/>
+          </div>
+          <div class="text-center">
+            <input type="submit" class="btn btn-primary" value="Change my password"/>
+          </div>
+        </div>
+      </div>
     </div>
-    <input type="submit" class="btn btn-primary" value="Change my password"/>
+  </div>
 </form>
