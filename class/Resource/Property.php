@@ -92,7 +92,9 @@ class Property extends Place
         $this->util_phone->setRange(-1, 2000);
         $this->workout_room = new Variable\BooleanVar(false, 'workout_room');
         $this->company_name = new Variable\StringVar('', 'company_name');
-        $this->doNotSave('company_name');
+        $this->thumbnail = new Variable\StringVar(null, 'thumbnail');
+        $this->thumbnail->allowNull(true);
+        $this->doNotSave('company_name', 'thumbnail');
     }
 
     public function getStudentType()
