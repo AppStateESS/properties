@@ -231,13 +231,13 @@ export default class SearchBar extends Component {
                 <div className="input-group">
                   <input
                     ref="propertySearch"
-                    className="form-control input-sm"
+                    className="form-control-sm"
                     type="text"
                     placeholder="Search..."
                     onChange={this.props.updateSearchString}/>
                   <span className="input-group-btn">
                     <button
-                      className="btn btn-outline-dark btn-sm"
+                      className="btn btn-outline-secondary btn-sm"
                       type="button"
                       onClick={this.clearSearch}>Clear</button>
                   </span>
@@ -252,7 +252,7 @@ export default class SearchBar extends Component {
               </div>
               <div>{activeButton}</div>
               <div>
-                <button className="btn btn-outline-dark btn-sm" onClick={this.togglePanel}>{panelButton}</button>
+                <button className="btn btn-outline-secondary btn-sm" onClick={this.togglePanel}>{panelButton}</button>
               </div>
             </div>
             {amenities}

@@ -149,7 +149,7 @@ export default class ManagerDesktop extends Base {
             <div className="input-group">
               <input
                 ref="propertySearch"
-                className="form-control input-sm"
+                className="form-control-sm"
                 type="text"
                 placeholder="Search..."
                 onChange={this.updateSearchString}/>
