@@ -88,14 +88,15 @@ class Listing
         $this->addConditionals($tbl);
 
         $result = $db->selectAsResources('\properties\Resource\Roommate');
-
+        if (empty($result)) {
+            $this->more_rows = false;
+            return array();
+        }
+            
         if (count($result) < $this->limit) {
             $this->more_rows = false;
         }
 
-        if (empty($result)) {
-            return array();
-        }
         foreach ($result as $rm) {
             /* @var $rm \properties\Resource\Roommate */
             $listing[] = $rm->view(true, true);
