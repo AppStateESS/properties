@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author Matthew McNaney <mcnaneym at appstate dot edu>
  */
@@ -9,7 +10,12 @@ use properties\Factory\NavBar;
 
 require_once PHPWS_SOURCE_DIR . 'src/Module.php';
 require_once PHPWS_SOURCE_DIR . 'mod/properties/conf/system_defines.php';
-require_once PHPWS_SOURCE_DIR . 'mod/properties/conf/defines.php';
+$defines = PHPWS_SOURCE_DIR . 'mod/properties/conf/defines.php';
+if (is_file($defines)) {
+    require_once $defines;
+} else {
+    require_once PHPWS_SOURCE_DIR . 'mod/properties/conf/defines.dist.php';
+}
 
 class Module extends \Canopy\Module implements \Canopy\SettingDefaults
 {
@@ -34,7 +40,7 @@ class Module extends \Canopy\Module implements \Canopy\SettingDefaults
         $settings['roommate_timeout'] = time() - 86400;
         return $settings;
     }
-    
+
     public function getController(\Canopy\Request $request)
     {
         try {
@@ -65,7 +71,8 @@ class Module extends \Canopy\Module implements \Canopy\SettingDefaults
     public function runTime(\Canopy\Request $request)
     {
         if ($request->isGet() && !$request->isAjax()) {
-            if (\phpws\PHPWS_Core::atHome() && \phpws2\Settings::get('properties', 'front_buttons')) {
+            if (\phpws\PHPWS_Core::atHome() && \phpws2\Settings::get('properties',
+                            'front_buttons')) {
                 \Layout::add($this->home());
             }
             if (!preg_match('/^properties/', \Canopy\Server::getCurrentUrl())) {
