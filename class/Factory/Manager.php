@@ -329,8 +329,7 @@ class Manager extends Base
     private function sendEmail($manager, $email_template, $subject)
     {
         $contact_info = $this->contactInformation();
-        $vars = $manager->view(false);
-        $vars = array_merge($contact_info, $vars);
+        $vars = array_merge($contact_info, $manager->view(false));
         $template = new \phpws2\Template($vars);
         $template->setModuleTemplate('properties', "emails/$email_template");
         $content = $template->get();
