@@ -1,0 +1,77 @@
+@import '../defines';
+
+.property-view {
+    font-size : 16px;
+    
+  .contact-info {
+    a {
+      text-decoration: none;
+      color : $property-color;
+    }
+    
+    h4 {
+        margin : 0px;
+    }
+  }
+  
+  .header {
+      font-size : 20px;
+  }
+  
+  .card {
+      border-color :  #247099;
+  }
+
+  .description {
+      margin-top : 1em;
+  }
+  
+  h4 {
+      color : $property-color;
+  }
+
+}
+
+h3.property-address {
+    border-bottom : 1px solid $property-color;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+}
+
+h2.property-title, h3.property-address {
+    margin : 0px 0px 5px 0px;
+}
+
+h2.property-title {
+    font-size : 26px;
+    background-color : $property-color;
+    color : white;
+    padding : 6px 8px;
+    border : 1px solid white;
+    border-radius : 4px;
+}
+
+h3.property-address {
+    font-size : 20px;
+}
+
+#photo .image-gallery-fullscreen-button, #photo .image-gallery-play-button {
+    z-index : 5;
+}
+
+.dropzone {
+    border-style: dashed;
+    border-radius: 6px;
+    min-height: 220px;
+    max-height : 440px;
+    overflow: auto;
+}
+
+.description .card-body {
+    overflow : auto;
+    max-height : 300px;
+}
+
+table.info-table th {
+    width : 40%;
+}

@@ -1,0 +1,70 @@
+@import '../defines';
+
+.property-row {
+  margin-bottom: 1em;
+  padding-bottom: 1em;
+  border-bottom: 1px solid $property-color;
+
+  .title {
+    margin: 0 0 8px;
+    font-size: 1.4em;
+    padding: 0.4em;
+  }
+
+  .icon-listing {
+    line-height: 2px;
+  }
+
+  .amenity-icon {
+    color: $property-color;
+    margin-right: 4px;
+  }
+
+  .rent {
+    font-size: 1.3em;
+  }
+
+  .title.active {
+    background-color: $property-color;
+  }
+
+  .title.deactive {
+    background-color: #FF4242;
+  }
+
+  .title a {
+    color: white;
+  }
+
+  .room-bath {
+    font-size: 1.3em;
+  }
+}
+
+.dropdown-item {
+  padding: 3px 20px;
+}
+
+.dropdown-item label {
+  font-weight: normal;
+  margin: 0;
+  cursor: pointer;
+}
+
+.trans-enter {
+  opacity: 0.01;
+}
+
+.trans-enter.trans-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.trans-leave {
+  opacity: 1;
+}
+
+.trans-leave.trans-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}

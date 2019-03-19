@@ -1,0 +1,90 @@
+@import '../defines';
+
+.sublease-view {
+  font-size: 16px;
+
+  .contact-info {
+    &.bg-primary {
+      padding: 4px 14px;
+      border: 2px solid $sublease-color;
+      border-radius: 6px;
+      color: white;
+
+      a {
+        color: white;
+        font-size: 16px;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+
+      h3 {
+        margin: 0;
+      }
+
+      h4 {
+        font-size: 22px;
+        color: white;
+        margin: 0;
+      }
+    }
+  }
+
+  .card {
+    border-color: #708758;
+  }
+
+  .card-heading {
+    background-color: #708758;
+    color: white;
+
+    a h4 {
+      color: white;
+    }
+  }
+
+  .header {
+    font-size: 20px;
+  }
+
+  h4 {
+    margin-bottom: 0;
+    color: #566e3d;
+  }
+
+  .description {
+    margin-top: 1em;
+  }
+}
+
+h3.sublease-address {
+  border-bottom: 1px solid $sublease-color;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+  font-size: 20px;
+  margin: 0 0 5px;
+}
+
+h2.sublease-title {
+  font-size: 26px;
+  background-color: $sublease-color;
+  color: white;
+  padding: 6px 8px;
+  border: 1px solid white;
+  border-radius: 4px;
+  margin: 0 0 5px;
+}
+
+#photo .image-gallery-fullscreen-button,
+#photo .image-gallery-play-button {
+  z-index: 5;
+}
+
+.dropzone {
+  border-style: dashed;
+  border-radius: 6px;
+  min-height: 220px;
+  max-height: 440px;
+  overflow: auto;
+}
