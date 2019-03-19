@@ -1,13 +1,14 @@
 'use strict'
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
 import InputField from '@essappstate/canopy-react-inputfield'
 import bindMethods from '../Mixin/Helper/Bind.js'
 import empty from '../Mixin/Helper/Empty.js'
 import Message from '../Mixin/Html/Message.jsx'
 import CheckValues from '../Mixin/Helper/CheckValues.js'
 
-export default class ManagerSignin extends Component {
+/* global $ */
+
+export default class ManagerSignup extends Component {
   constructor(props) {
     super(props)
 
@@ -39,19 +40,22 @@ export default class ManagerSignin extends Component {
         email_address: null,
         first_name: null,
         last_name: null,
-        company_name: null
+        company_name: null,
+        company_url: null
       }
     }
     bindMethods([
       'submit',
       'resetMessage',
       'updateUsername',
+      'checkAllDuplicates',
       'checkUsernameAjax',
       'checkEmailAjax',
       'checkCompanyName',
       'checkPassword',
       'checkEmail',
       'checkPhone',
+      'checkUrl',
       'post'
     ], this)
   }
@@ -61,7 +65,9 @@ export default class ManagerSignin extends Component {
     let value = typeof event === 'object'
       ? event.target.value
       : event
-    this.empty[varname] = empty(value)
+    if (typeof this.empty[varname] !== 'undefined') {
+      this.empty[varname] = empty(value)
+    }
     this.setState({[varname]: value})
   }
 
@@ -88,10 +94,16 @@ export default class ManagerSignin extends Component {
         callback()
       }
     } else {
-      $.getJSON('./properties/Manager/checkUsername', {username: this.state.username}).done(function (data) {
-        this.setError('username', data.duplicate
-          ? 'Please use try a different username'
-          : null)
+      $.getJSON(
+        './properties/Manager/checkUsername',
+        {username: this.state.username}
+      ).done(function (data) {
+        this.setError(
+          'username',
+          data.duplicate
+            ? 'Please use try a different username'
+            : null
+        )
         if (callback !== null) {
           callback()
         }
@@ -105,10 +117,16 @@ export default class ManagerSignin extends Component {
         callback()
       }
     } else {
-      $.getJSON('./properties/Manager/checkEmail', {email_address: this.state.email_address}).done(function (data) {
-        this.setError('email_address', data.duplicate
-          ? 'Email address already in use'
-          : null)
+      $.getJSON(
+        './properties/Manager/checkEmail',
+        {email_address: this.state.email_address}
+      ).done(function (data) {
+        this.setError(
+          'email_address',
+          data.duplicate
+            ? 'Email address already in use'
+            : null
+        )
         if (callback !== null) {
           callback()
         }
@@ -122,10 +140,16 @@ export default class ManagerSignin extends Component {
         callback()
       }
     } else {
-      $.getJSON('./properties/Manager/checkCompanyName', {company_name: this.state.company_name}).done(function (data) {
-        this.setError('company_name', data.duplicate
-          ? 'Company name already in use'
-          : null)
+      $.getJSON(
+        './properties/Manager/checkCompanyName',
+        {company_name: this.state.company_name}
+      ).done(function (data) {
+        this.setError(
+          'company_name',
+          data.duplicate
+            ? 'Company name already in use'
+            : null
+        )
         if (callback !== null) {
           callback()
         }
@@ -135,17 +159,37 @@ export default class ManagerSignin extends Component {
 
   checkPassword() {
     const status = this.state.password.length >= 8
-    this.setError('password', status
-      ? null
-      : 'Password must be 8 characters or more')
+    this.setError(
+      'password',
+      status
+        ? null
+        : 'Password must be 8 characters or more'
+    )
     return status
   }
 
   checkPhone() {
     const status = CheckValues.isPhone(this.state.phone)
-    this.setError('phone', status
-      ? null
-      : 'Phone number must be 10 digits')
+    this.setError(
+      'phone',
+      status
+        ? null
+        : 'Phone number must be 10 digits'
+    )
+    return status
+  }
+
+  checkUrl() {
+    if (this.state.company_url.length === 0) {
+      return true
+    }
+    const status = CheckValues.isUrl(this.state.company_url)
+    this.setError(
+      'company_url',
+      status
+        ? null
+        : 'URL is not formatted properly.'
+    )
     return status
   }
 
@@ -157,16 +201,21 @@ export default class ManagerSignin extends Component {
 
   checkEmailStructure() {
     const status = CheckValues.isEmail(this.state.email_address)
-    this.setError('email_address', status
-      ? null
-      : 'Email poorly formatted')
+    this.setError(
+      'email_address',
+      status
+        ? null
+        : 'Email poorly formatted'
+    )
     return status
   }
 
   urlWrap(input) {
     return (
       <div className="input-group">
-        <span className="input-group-append">http://</span>
+        <div className="input-group-prepend">
+          <span className="input-group-text">http://</span>
+        </div>
         {input}
       </div>
     )
@@ -183,7 +232,10 @@ export default class ManagerSignin extends Component {
 
     for (let vname in this.empty) {
       if (this.empty[vname] === true) {
-        this.setError(vname, `${vname.charAt(0).toUpperCase()}${vname.replace(/_/, ' ').substr(1)} may not be empty`)
+        this.setError(
+          vname,
+          `${vname.charAt(0).toUpperCase()}${vname.replace(/_/, ' ').substr(1)} may not be empty`
+        )
         empty = true
       }
       if (empty === true) {
@@ -197,6 +249,10 @@ export default class ManagerSignin extends Component {
     }
 
     if (!this.checkPhone()) {
+      allowSubmit = false
+    }
+
+    if (!this.checkUrl()) {
       allowSubmit = false
     }
 
@@ -216,7 +272,9 @@ export default class ManagerSignin extends Component {
 
     if (this.empty.company_name) {
       if (!this.empty.first_name && !this.empty.last_name) {
-        this.setState({company_name: `${this.state.first_name} ${this.state.last_name}`, message: 'Company name is required. Using your first and last name.'})
+        this.setState(
+          {company_name: `${this.state.first_name} ${this.state.last_name}`, message: 'Company name is required. Using your first and last name.'}
+        )
         this.empty.company_name = false
         this.setError('company_name', '')
       } else {
@@ -244,22 +302,27 @@ export default class ManagerSignin extends Component {
   }
 
   post() {
-    let values = this.state
+    let values = Object.assign({}, this.state)
     delete values.message
     delete values.errors
-
     $.ajax({
-      method: 'POST',
+      method: 'post',
       url: './properties/Manager/apply',
       dataType: 'json',
       data: values,
-      success: function (data) {
-        if (data.status) {
-          window.location.href = 'properties/Manager/success'
+      success: (data) => {
+        if (data.status === 'success') {
+          location.href = 'properties/Manager/success'
+        } else {
+          this.setState(
+            {message: 'Error: there was a problem with your application. Please contact us.'}
+          )
         }
-      }.bind(this),
-      failure: function () {
-        this.setState({message: 'Error: there was a problem with your application. Please contact us.'})
+      },
+      error: () => {
+        this.setState(
+          {message: 'Error: there was a problem with your application. Please contact us.'}
+        )
       }
     })
   }
@@ -272,7 +335,6 @@ export default class ManagerSignin extends Component {
         type="danger"
         onClose={this.resetMessage}/>
     }
-
     return (
       <div>
         {message}
@@ -281,13 +343,15 @@ export default class ManagerSignin extends Component {
           Property manager accounts are for property owners and rental companies only.
         </p>
         <p>
-          If you are a tenant who needs to sublease your current rental unit, head over to our&nbsp;
+          If you are a tenant who needs to sublease your current rental unit, head over to
+          our&nbsp;
           <a href="./properties/Sublease">sublease page.</a>
         </p>
         <h3>Contact information</h3>
         <div className="row">
           <div className="col-sm-6">
             <InputField
+              name="username"
               label="Username"
               required={true}
               change={this.updateUsername}
@@ -298,6 +362,7 @@ export default class ManagerSignin extends Component {
           </div>
           <div className="col-sm-6">
             <InputField
+              name="password"
               type="Password"
               required={true}
               change={this.updateState.bind(this, 'password')}
@@ -312,6 +377,7 @@ export default class ManagerSignin extends Component {
         <div className="row">
           <div className="col-sm-6">
             <InputField
+              name="first_name"
               required={true}
               change={this.updateState.bind(this, 'first_name')}
               errorMessage={this.state.errors.first_name}
@@ -321,6 +387,7 @@ export default class ManagerSignin extends Component {
           </div>
           <div className="col-sm-6">
             <InputField
+              name="last_name"
               required={true}
               change={this.updateState.bind(this, 'last_name')}
               errorMessage={this.state.errors.last_name}
@@ -333,6 +400,7 @@ export default class ManagerSignin extends Component {
         <div className="row">
           <div className="col-sm-6">
             <InputField
+              name="email_address"
               required={true}
               change={this.updateState.bind(this, 'email_address')}
               blur={this.checkEmail}
@@ -343,6 +411,7 @@ export default class ManagerSignin extends Component {
           </div>
           <div className="col-sm-6">
             <InputField
+              name="phone"
               required={true}
               blur={this.checkPhone}
               placeholder="xxx-xxx-xxxx"
@@ -356,6 +425,7 @@ export default class ManagerSignin extends Component {
         <div className="row">
           <div className="col-sm-6">
             <InputField
+              name="company_name"
               required={true}
               blur={this.checkCompanyName}
               change={this.updateState.bind(this, 'company_name')}
@@ -366,7 +436,11 @@ export default class ManagerSignin extends Component {
           </div>
           <div className="col-sm-6">
             <InputField
+              name="company_url"
               wrap={this.urlWrap}
+              blur={this.checkUrl}
+              required={false}
+              errorMessage={this.state.errors.company_url}
               change={this.updateState.bind(this, 'company_url')}
               value={this.state.company_url}
               label="Company url"/>
@@ -375,6 +449,7 @@ export default class ManagerSignin extends Component {
         <div className="row">
           <div className="col-sm-12">
             <InputField
+              name="company_address"
               change={this.updateState.bind(this, 'company_address')}
               value={this.state.company_address}
               label="Company address"/>
@@ -385,4 +460,3 @@ export default class ManagerSignin extends Component {
     )
   }
 }
-ManagerSignin.propTypes = {}
