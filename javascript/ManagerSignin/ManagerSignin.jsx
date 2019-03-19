@@ -69,35 +69,39 @@ export default class ManagerSignin extends Component {
     const disabled = empty(this.state.username) || empty(this.state.password)
     return (
       <div>
-        <h2>Manager sign in</h2>
-        {this.checkError()}
-        <form action="./properties/Manager/signin" method="post">
-          <div className="row">
-            <div className="col-sm-6">
-              <InputField
-                name="manager_username"
-                label="Username"
-                value={this.state.username}
-                change={this.updateUsername}
-                autocomplete={false}
-                required={true}/>
-            </div>
-            <div className="col-sm-6">
-              <InputField
-                name="manager_password"
-                type="password"
-                label="Password"
-                value={this.state.password}
-                change={this.updatePassword}
-                autocomplete={false}
-                required={true}/>
+        <div className="row">
+          <div className="col-sm-8 col-md-6 mx-auto">
+            <div className="card">
+              <div className="card-header">
+                <h2>Manager sign in</h2>
+              </div>
+              <div className="card-body">
+                {this.checkError()}
+                <form action="./properties/Manager/signin" method="post">
+                  <InputField
+                    name="manager_username"
+                    label="Username"
+                    value={this.state.username}
+                    change={this.updateUsername}
+                    autocomplete={false}
+                    required={true}/>
+                  <InputField
+                    name="manager_password"
+                    type="password"
+                    label="Password"
+                    value={this.state.password}
+                    change={this.updatePassword}
+                    autocomplete={false}
+                    required={true}/>
+                  <button className="btn btn-primary" disabled={disabled} onClick={this.submit}>Log in</button>
+                </form>
+                <div className="text-center">
+                  <a className="card-link" href="./properties/Manager/forgot">Forgot password?</a><br/>
+                  <a className="card-link" href="./properties/Manager/signup">Request a manager account.</a>
+                </div>
+              </div>
             </div>
           </div>
-          <button className="btn btn-primary" disabled={disabled} onClick={this.submit}>Log in</button>
-        </form>
-        <div className="well mt-2 lead">
-          <a href="./properties/Manager/forgot">Forgot password?</a><br/>
-          <a href="./properties/Manager/signup">Request a manager account.</a>
         </div>
       </div>
     )

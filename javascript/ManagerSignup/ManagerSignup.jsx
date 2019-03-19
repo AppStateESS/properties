@@ -336,126 +336,134 @@ export default class ManagerSignup extends Component {
         onClose={this.resetMessage}/>
     }
     return (
-      <div>
-        {message}
-        <h2>Sign up for Property Manager Account</h2>
-        <p>
-          Property manager accounts are for property owners and rental companies only.
-        </p>
-        <p>
-          If you are a tenant who needs to sublease your current rental unit, head over to
-          our&nbsp;
-          <a href="./properties/Sublease">sublease page.</a>
-        </p>
-        <h3>Contact information</h3>
-        <div className="row">
-          <div className="col-sm-6">
-            <InputField
-              name="username"
-              label="Username"
-              required={true}
-              change={this.updateUsername}
-              errorMessage={this.state.errors.username}
-              blur={this.checkUsernameAjax}
-              onEmpty={this.setEmpty.bind(this, 'username')}
-              value={this.state.username}/>
-          </div>
-          <div className="col-sm-6">
-            <InputField
-              name="password"
-              type="Password"
-              required={true}
-              change={this.updateState.bind(this, 'password')}
-              errorMessage={this.state.errors.password}
-              blur={this.checkPassword}
-              placeholder="8 character minimum"
-              value={this.state.password}
-              onEmpty={this.setEmpty.bind(this, 'password')}
-              label="Password"/>
+      <div className="row">
+        <div className="col-sm-10 col-md-8 mx-auto">
+          <div className="card">
+            <div className="card-header">
+              <h2 className="m-0">Sign up for Property Manager Account</h2>
+            </div>
+            <div className="card-body">
+              {message}
+              <p className="card-text">
+                Property manager accounts are for property owners and rental companies only.
+              </p>
+              <p className="card-text">
+                If you are a tenant who needs to sublease your current rental unit, head over to
+                our&nbsp;
+                <a href="./properties/Sublease">sublease page.</a>
+              </p>
+              <h3>Contact information</h3>
+              <div className="row">
+                <div className="col-sm-6">
+                  <InputField
+                    name="username"
+                    label="Username"
+                    required={true}
+                    change={this.updateUsername}
+                    errorMessage={this.state.errors.username}
+                    blur={this.checkUsernameAjax}
+                    onEmpty={this.setEmpty.bind(this, 'username')}
+                    value={this.state.username}/>
+                </div>
+                <div className="col-sm-6">
+                  <InputField
+                    name="password"
+                    type="Password"
+                    required={true}
+                    change={this.updateState.bind(this, 'password')}
+                    errorMessage={this.state.errors.password}
+                    blur={this.checkPassword}
+                    placeholder="8 character minimum"
+                    value={this.state.password}
+                    onEmpty={this.setEmpty.bind(this, 'password')}
+                    label="Password"/>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-sm-6">
+                  <InputField
+                    name="first_name"
+                    required={true}
+                    change={this.updateState.bind(this, 'first_name')}
+                    errorMessage={this.state.errors.first_name}
+                    onEmpty={this.setEmpty.bind(this, 'first_name')}
+                    value={this.state.first_name}
+                    label="First name"/>
+                </div>
+                <div className="col-sm-6">
+                  <InputField
+                    name="last_name"
+                    required={true}
+                    change={this.updateState.bind(this, 'last_name')}
+                    errorMessage={this.state.errors.last_name}
+                    onEmpty={this.setEmpty.bind(this, 'last_name')}
+                    value={this.state.last_name}
+                    label="Last name"/>
+                </div>
+              </div>
+              <h3>Company Information</h3>
+              <div className="row">
+                <div className="col-sm-6">
+                  <InputField
+                    name="email_address"
+                    required={true}
+                    change={this.updateState.bind(this, 'email_address')}
+                    blur={this.checkEmail}
+                    errorMessage={this.state.errors.email_address}
+                    onEmpty={this.setEmpty.bind(this, 'email_address')}
+                    value={this.state.email_address}
+                    label="Email address"/>
+                </div>
+                <div className="col-sm-6">
+                  <InputField
+                    name="phone"
+                    required={true}
+                    blur={this.checkPhone}
+                    placeholder="xxx-xxx-xxxx"
+                    change={this.updateState.bind(this, 'phone')}
+                    onEmpty={this.setEmpty.bind(this, 'phone')}
+                    errorMessage={this.state.errors.phone}
+                    value={this.state.phone}
+                    label="Phone number"/>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-sm-6">
+                  <InputField
+                    name="company_name"
+                    required={true}
+                    blur={this.checkCompanyName}
+                    change={this.updateState.bind(this, 'company_name')}
+                    value={this.state.company_name}
+                    errorMessage={this.state.errors.company_name}
+                    onEmpty={this.setEmpty.bind(this, 'company_name')}
+                    label="Company name"/>
+                </div>
+                <div className="col-sm-6">
+                  <InputField
+                    name="company_url"
+                    wrap={this.urlWrap}
+                    blur={this.checkUrl}
+                    required={false}
+                    errorMessage={this.state.errors.company_url}
+                    change={this.updateState.bind(this, 'company_url')}
+                    value={this.state.company_url}
+                    label="Company url"/>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-sm-12">
+                  <InputField
+                    name="company_address"
+                    change={this.updateState.bind(this, 'company_address')}
+                    value={this.state.company_address}
+                    label="Company address"/>
+                </div>
+              </div>
+              <div className="text-center"><button type="button" className="btn btn-success" onClick={this.submit}>Submit request</button></div>
+            </div>
           </div>
         </div>
-        <div className="row">
-          <div className="col-sm-6">
-            <InputField
-              name="first_name"
-              required={true}
-              change={this.updateState.bind(this, 'first_name')}
-              errorMessage={this.state.errors.first_name}
-              onEmpty={this.setEmpty.bind(this, 'first_name')}
-              value={this.state.first_name}
-              label="First name"/>
-          </div>
-          <div className="col-sm-6">
-            <InputField
-              name="last_name"
-              required={true}
-              change={this.updateState.bind(this, 'last_name')}
-              errorMessage={this.state.errors.last_name}
-              onEmpty={this.setEmpty.bind(this, 'last_name')}
-              value={this.state.last_name}
-              label="Last name"/>
-          </div>
-        </div>
-        <h3>Company Information</h3>
-        <div className="row">
-          <div className="col-sm-6">
-            <InputField
-              name="email_address"
-              required={true}
-              change={this.updateState.bind(this, 'email_address')}
-              blur={this.checkEmail}
-              errorMessage={this.state.errors.email_address}
-              onEmpty={this.setEmpty.bind(this, 'email_address')}
-              value={this.state.email_address}
-              label="Email address"/>
-          </div>
-          <div className="col-sm-6">
-            <InputField
-              name="phone"
-              required={true}
-              blur={this.checkPhone}
-              placeholder="xxx-xxx-xxxx"
-              change={this.updateState.bind(this, 'phone')}
-              onEmpty={this.setEmpty.bind(this, 'phone')}
-              errorMessage={this.state.errors.phone}
-              value={this.state.phone}
-              label="Phone number"/>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-6">
-            <InputField
-              name="company_name"
-              required={true}
-              blur={this.checkCompanyName}
-              change={this.updateState.bind(this, 'company_name')}
-              value={this.state.company_name}
-              errorMessage={this.state.errors.company_name}
-              onEmpty={this.setEmpty.bind(this, 'company_name')}
-              label="Company name"/>
-          </div>
-          <div className="col-sm-6">
-            <InputField
-              name="company_url"
-              wrap={this.urlWrap}
-              blur={this.checkUrl}
-              required={false}
-              errorMessage={this.state.errors.company_url}
-              change={this.updateState.bind(this, 'company_url')}
-              value={this.state.company_url}
-              label="Company url"/>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-sm-12">
-            <InputField
-              name="company_address"
-              change={this.updateState.bind(this, 'company_address')}
-              value={this.state.company_address}
-              label="Company address"/>
-          </div>
-        </div>
-        <button type="button" className="btn btn-success" onClick={this.submit}>Submit request</button>
       </div>
     )
   }
