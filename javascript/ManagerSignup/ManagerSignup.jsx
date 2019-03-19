@@ -337,7 +337,7 @@ export default class ManagerSignup extends Component {
     }
     return (
       <div className="row">
-        <div className="col-sm-10 col-md-8 mx-auto">
+        <div className="col-sm-10 col-md-9 mx-auto">
           <div className="card">
             <div className="card-header">
               <h2 className="m-0">Sign up for Property Manager Account</h2>
