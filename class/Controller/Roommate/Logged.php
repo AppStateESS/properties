@@ -147,14 +147,14 @@ class Logged extends User
 
     private function updateButton()
     {
-        return '<button class="btn btn-outline-dark btn-sm mr-1 navbar-btn" onClick="window.location.href=\'properties/Roommate/edit\'"><i class="fa fa-bullhorn"></i>&nbsp;Update my request</button>';
+        return '<button class="btn btn-outline-secondary btn-sm mr-1 navbar-btn" onClick="window.location.href=\'properties/Roommate/edit\'"><i class="fas fa-bullhorn"></i>&nbsp;Update my request</button>';
     }
 
     private function deleteButton()
     {
         $id = $this->user_roommate->id;
         return <<<EOF
-<button class="btn btn-sm btn-outline-danger" data-id="$id" id="delete-roommate"><i class="fa fa-times"></i>&nbsp;Delete my request</button>
+<button class="btn btn-sm btn-outline-danger mr-1" data-id="$id" id="delete-roommate"><i class="fas fa-times"></i>&nbsp;Delete my request</button>
 EOF;
     }
 
