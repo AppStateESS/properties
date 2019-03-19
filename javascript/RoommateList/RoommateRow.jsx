@@ -29,9 +29,9 @@ export default class RoommateRow extends Component {
     return (
       <div className="card card-default mb-3">
         <div className="card-header">
-          <h4 className="mb-0">
+          <a href={`./properties/Roommate/${roommate.id}`}><h4 className="mb-0">
             <strong>Move in:</strong>&nbsp; {roommate.move_in_date}
-          </h4>
+          </h4></a>
         </div>
         <div className="card-body">
           <div className="card-text">
