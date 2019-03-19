@@ -31,6 +31,7 @@ class Listing
     public $show_inactive = false;
     public $more_rows = true;
     public $limit = 10;
+    public $moveinnow = false;
     public $offset = 0;
 
     public function pullVariables(\Canopy\Request $request)
@@ -42,6 +43,7 @@ class Listing
         $this->free_time = $request->pullGetString('free_time', true);
         $this->pets = $request->pullGetString('pets', true);
         $this->smoking = $request->pullGetString('smoking', true);
+        $this->moveinnow = $request->pullGetBoolean('moveinnow', true);
     }
 
     public function get()
@@ -136,6 +138,10 @@ class Listing
 
         if ($this->smoking) {
             $tbl->addFieldConditional('smoking', $this->smoking);
+        }
+        
+        if ($this->moveinnow) {
+            $tbl->addFieldConditional('move_in_date', time(), '<');
         }
     }
 

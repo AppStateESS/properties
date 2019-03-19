@@ -27,25 +27,20 @@ export default class RoommateRow extends Component {
     }
 
     return (
-      <div className="card card-default">
+      <div className="card card-default mb-3">
         <div className="card-header">
-          <div>
+          <h4 className="mb-0">
             <strong>Move in:</strong>&nbsp; {roommate.move_in_date}
-          </div>
-          <div>
-            <strong>Created:</strong>&nbsp; {roommate.created}
-          </div>
+          </h4>
         </div>
         <div className="card-body">
-          <div className="row card-text">
-            <div className="col-sm-6">
-              {para(description, 'Description: ')}
-            </div>
-            <div className="col-sm-6">{para(roommate.major, 'Major: ')}{para(roommate.study_time, 'Study time: ')}{para(roommate.focus, 'Focus: ')}</div>
+          <div className="card-text">
+            {para(description, 'Description: ')}
+            {para(roommate.study_time, 'Study time: ')}{para(roommate.focus, 'Focus: ')}
           </div>
-        </div>
-        <div className="card-footer text-center">
-          <a className="btn btn-info" href={`./properties/Roommate/${roommate.id}`}>Full details</a>
+          <div className="text-right">
+            <a className="btn btn-info btn-sm" href={`./properties/Roommate/${roommate.id}`}>More details</a>
+          </div>
         </div>
       </div>
     )

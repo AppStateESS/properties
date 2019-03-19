@@ -20,7 +20,8 @@ export default class RoommateList extends Component {
         pets: 'Pets',
         free_time: 'Spends free time',
         sleep_time: 'Bed time preference',
-        smoking: 'Smoking'
+        smoking: 'Smoking',
+        moveinnow: ''
       },
       searchVars: {
         focus: null,
@@ -29,12 +30,13 @@ export default class RoommateList extends Component {
         pets: null,
         smoking: null,
         free_time: null,
-        offset: 0,
+        moveinnow: 0,
+        offset: 0
       },
-      moreRows: true,
+      moreRows: true
     }
     bindMethods([
-      'updateSearchVars', 'reset', 'showMore'
+      'updateSearchVars', 'reset', 'showMore', 'updateMoveIn'
     ], this)
   }
 
@@ -46,11 +48,11 @@ export default class RoommateList extends Component {
     this.defaultLabels()
     this.clearVars()
   }
-  
+
   showMore() {
     const searchVars = this.state.searchVars
     searchVars.offset = parseInt(searchVars.offset) + 1
-    this.setState({searchVars : searchVars})
+    this.setState({searchVars: searchVars})
     this.load()
   }
 
@@ -62,9 +64,11 @@ export default class RoommateList extends Component {
       pets: null,
       smoking: null,
       free_time: null,
-      offset: 0,
+      offset: 0
     }
-    this.setState({searchVars: searchVars}, this.load)
+    this.setState({
+      searchVars: searchVars
+    }, this.load)
   }
 
   defaultLabels() {
@@ -84,7 +88,16 @@ export default class RoommateList extends Component {
     let labels = this.state.labels
     searchVars[varname] = value
     labels[varname] = profileLabel[varname][value]
-    this.setState({searchVars: searchVars, labels: labels}, this.load)
+    this.setState({
+      searchVars: searchVars,
+      labels: labels
+    }, this.load)
+  }
+
+  updateMoveIn(value) {
+    let searchVars = this.state.searchVars
+    searchVars.moveinnow = value
+    this.setState({searchVars}, this.load())
   }
 
   load() {
@@ -107,7 +120,7 @@ export default class RoommateList extends Component {
           {roommates: data.roommates, manager: data.manager, moreRows: data.more_rows}
         )
       }
-    }.bind(this)).fail(function(){
+    }.bind(this)).fail(function () {
       this.error = true
       this.setState({roommates: []})
     }.bind(this))
@@ -118,7 +131,8 @@ export default class RoommateList extends Component {
 
     let message
     if (this.error) {
-      message = <div className="alert alert-warning">An error occurred when trying to access the roommate list. Please contact the site administrators.</div>
+      message = <div className="alert alert-warning">An error occurred when trying to access the
+        roommate list. Please contact the site administrators.</div>
     }
 
     if (this.state.roommates === null) {
@@ -133,23 +147,25 @@ export default class RoommateList extends Component {
       })
     }
 
+    let moreRows
+    if (this.state.moreRows === true) {
+      moreRows = <div className="text-center">
+        <button className="btn btn-primary" onClick={this.showMore}>Show more results</button>
+      </div>
+    }
+
     return (
       <div>
         <h2>Roommate listing</h2>
         {message}
         <SearchBar
+          updateMoveIn={this.updateMoveIn}
           updateSearchVars={this.updateSearchVars}
           searchVars={this.state.searchVars}
           labels={this.state.labels}
           reset={this.reset}/>
         <div>{rows}</div>
-        {
-          this.state.moreRows === true
-            ? <div className="text-center">
-                <button className="btn btn-primary" onClick={this.showMore}>Show more results</button>
-              </div>
-            : null
-        }
+        {moreRows}
       </div>
     )
   }
