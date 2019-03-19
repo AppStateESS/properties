@@ -29,18 +29,20 @@
       </a>
       <?php endif; //instagram?>
       <?php endif;//social_media?>
-      <?php endif;//contact_allowed?>
-      <?php if (!$contact_allowed):?>
-      <div class="contact-info card mb-3">
-        <div class="card-body">
-          <div class="card-text">
-            <div>You will need to <a href="<?=$login?>">log-in</a> to get contact information for this roommate!</div>
-          </div>
-        </div>
-      </div>
-      <?php endif;//!contact_allowed?>
     </div>
   </div>
+  <?php endif;//contact_allowed?>
+
+  <?php if (!$contact_allowed):?>
+  <div class="contact-info card mb-3">
+    <div class="card-body">
+      <div class="card-text">
+        <div>You will need to <a href="<?=$login?>">log-in</a> to get contact information for this roommate!</div>
+      </div>
+    </div>
+  </div>
+  <?php endif;//!contact_allowed?>
+
   <?=$active ? null : '<div class="text-center alert alert-danger">Your request is disabled and no one can view it. <a href="./properties/Roommate/edit">Update your roommate request</a> to enable</div>'?>
   <h3>
     Ready to move: <?=$move_in_date?>
@@ -164,5 +166,4 @@
     <?=$description?>
   </p>
   <?php endif;?>
-</div>
 </div>
