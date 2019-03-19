@@ -637,6 +637,32 @@ class Manager extends Base
         $template->setModuleTemplate('properties', 'manager/view.html');
         return $template->get();
     }
+    
+    private function emailApplication(Resource $manager)
+    {
+        $vars = $this->contactInformation();
+        $vars['company_name'] = $manager->company_name;
+        $vars['first_name'] = $manager->first_name;
+        $vars['last_name'] = $manager->last_name;
+        $vars['phone'] = $manager->phone;
+        $template = new \phpws2\Template($vars);
+        $template->setModuleTemplate('properties', 'emails/ApplicationNotice.html');
+        $content = $template->get();
+
+        if (SWIFT_MAIL_TRANSPORT_TYPE == 1) {
+            $transport = new \Swift_SmtpTransport(SWIFT_MAIL_TRANSPORT_PARAMETER);
+        } else {
+            $transport = new \Swift_SendmailTransport(SWIFT_MAIL_TRANSPORT_PARAMETER);
+        }
+
+        $message = \Swift_Message::newInstance();
+        $message->setSubject('New manager account application');
+        $message->setFrom($vars['our_email']);
+        $message->setTo($vars['our_email']);
+        $message->setBody($content, 'text/html');
+        $mailer = new \Swift_Mailer($transport);
+        $mailer->send($message);
+    }
 
     public function signup(\Canopy\Request $request)
     {
@@ -645,14 +671,14 @@ class Manager extends Base
         if (is_array($manager)) {
             return $manager;
         }
-
         try {
             $manager->active = false;
             $manager->approved = false;
             $this->saveResource($manager);
+            $this->emailApplication($manager);
         } catch (\Exception $e) {
             \phpws2\Error::log($e);
-            $json = array('status' => 'fail', 'error' => 'An unrecoverable error occurred.');
+            return array('status' => 'fail', 'error' => 'An unrecoverable error occurred.');
         }
         $json = array('status' => 'success');
         return $json;
