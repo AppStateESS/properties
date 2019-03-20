@@ -56,7 +56,7 @@ const SortableItem = SortableElement(({value, deletePhoto,rotate}) => {
   const item = {
     display: 'inline-block',
     listStyleType: 'none',
-    zIndex: 1000,
+    zIndex: 10000,
     width: '150px',
     height: '230px',
     border: '1px solid #c3c3c3',
