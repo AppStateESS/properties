@@ -2,8 +2,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Overlay from '@essappstate/canopy-react-overlay'
-import Thumb from './Thumb.jsx'
-import {SortableContainer} from 'react-sortable-hoc'
+import SortableList from './SortableList'
 import Dropzone from 'react-dropzone-uploader'
 import 'react-dropzone-uploader/dist/styles.css'
 
@@ -24,7 +23,6 @@ export default class ImageOverlay extends Component {
     if (this.props.currentPhotos.length > 0) {
       currentImages = (
         <SortableList
-          helperClass="sortableHelper"
           items={this.props.currentPhotos}
           axis={'xy'}
           loadToContainerEdges={true}
@@ -70,23 +68,3 @@ ImageOverlay.propTypes = {
   onSortEnd: PropTypes.func,
   show: PropTypes.bool
 }
-
-const SortableList = SortableContainer(({items, deletePhoto, rotate}) => {
-  const valign = {
-    verticalAlign: 'top'
-  }
-  return (
-    <ul style={valign}>
-      {
-        items.map((value, index) => {
-          return <Thumb
-            {...value}
-            index={index}
-            key={`item-${index}`}
-            rotate={rotate.bind(this, value, index)}
-            deletePhoto={deletePhoto.bind(this, value, index)}/>
-        })
-      }
-    </ul>
-  )
-})
