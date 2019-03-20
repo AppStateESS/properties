@@ -23,13 +23,13 @@ export default class PropertyImage extends Component {
       'clearNewPhotos',
       'deletePhoto',
       'onSortEnd',
-      'rotate',
+      'rotate'
     ]
     bindMethods(methods, this)
   }
 
   componentDidMount() {
-    $('#edit-photo-button').click(()=>this.overlayOn())
+    $('#edit-photo-button').click(() => this.overlayOn())
     if (currentPhotos.length > 0) {
       this.setState({currentPhotos: currentPhotos})
     }
@@ -66,17 +66,21 @@ export default class PropertyImage extends Component {
           }
           newPhotos.push(data.photo)
           status[key] = data.success
-          this.setState({status: status, currentPhotos: currentPhotos, newPhotos: newPhotos})
+          this.setState(
+            {status: status, currentPhotos: currentPhotos, newPhotos: newPhotos}
+          )
         }.bind(this),
         error: function () {
-          alert('Sorry but your file is unacceptable. It may be of the wrong type or too large. Please try again.')
+          alert(
+            'Sorry but your file is unacceptable. It may be of the wrong type or too large.' +
+            ' Please try again.'
+          )
         }.bind(this)
       })
     }.bind(this))
   }
 
-  onSortEnd(movement)
-  {
+  onSortEnd(movement) {
     const {oldIndex, newIndex} = movement
     const newPosition = this.state.currentPhotos[newIndex].porder
     const movingPhotoId = this.state.currentPhotos[oldIndex].id
@@ -137,14 +141,14 @@ export default class PropertyImage extends Component {
       success: function () {
         this.forceUpdate()
       }.bind(this),
-      error: function () {}.bind(this),
+      error: function () {}.bind(this)
     })
   }
 
   render() {
-    let overlay
-    if (this.state.show) {
-      overlay = (<ImageOverlay
+    return (
+      <ImageOverlay
+        show={this.state.show}
         rotate={this.rotate}
         deletePhoto={this.deletePhoto}
         close={this.overlayOff}
@@ -153,12 +157,7 @@ export default class PropertyImage extends Component {
         newPhotos={this.state.newPhotos}
         currentPhotos={this.state.currentPhotos}
         status={this.state.status}
-        onSortEnd={this.onSortEnd}/>)
-    }
-    return (
-      <div>
-        {overlay}
-      </div>
+        onSortEnd={this.onSortEnd}/>
     )
   }
 }

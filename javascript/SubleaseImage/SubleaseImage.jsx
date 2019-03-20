@@ -14,7 +14,7 @@ export default class SubleaseImage extends Component {
       show: false,
       newPhotos: [],
       currentPhotos: [],
-      status: [],
+      status: []
     }
     const methods = [
       'overlayOn',
@@ -23,13 +23,13 @@ export default class SubleaseImage extends Component {
       'clearNewPhotos',
       'delete',
       'onSortEnd',
-      'rotate',
+      'rotate'
     ]
     bindMethods(methods, this)
   }
 
   componentDidMount() {
-    $('#edit-photo-button').click(()=>this.overlayOn())
+    $('#edit-photo-button').click(() => this.overlayOn())
     if (currentPhotos.length > 0) {
       this.setState({currentPhotos: currentPhotos})
     }
@@ -67,12 +67,15 @@ export default class SubleaseImage extends Component {
           newPhotos.push(data.photo)
           status[key] = data.success
           this.setState(
-            {status: status, currentPhotos: currentPhotos, newPhotos: newPhotos,}
+            {status: status, currentPhotos: currentPhotos, newPhotos: newPhotos}
           )
         }.bind(this),
         error: function () {
-          alert('Sorry but your file is unacceptable. It may be of the wrong type or too large. Please try again.')
-        }.bind(this),
+          alert(
+            'Sorry but your file is unacceptable. It may be of the wrong type or too large.' +
+            ' Please try again.'
+          )
+        }.bind(this)
       })
     }.bind(this))
   }
@@ -82,7 +85,7 @@ export default class SubleaseImage extends Component {
   }
 
   overlayOff() {
-    this.setState({show: false, newPhotos: [],})
+    this.setState({show: false, newPhotos: []})
     loadPhotos.callback()
   }
 
@@ -97,7 +100,7 @@ export default class SubleaseImage extends Component {
       success: function () {
         this.forceUpdate()
       }.bind(this),
-      error: function () {}.bind(this),
+      error: function () {}.bind(this)
     })
   }
 
@@ -113,12 +116,12 @@ export default class SubleaseImage extends Component {
         }
         this.setState({currentPhotos: photos})
       }.bind(this),
-      error: function () {}.bind(this),
+      error: function () {}.bind(this)
     })
   }
 
   onSortEnd(movement) {
-    const {oldIndex, newIndex,} = movement
+    const {oldIndex, newIndex} = movement
     const newPosition = this.state.currentPhotos[newIndex].porder
     const movingPhotoId = this.state.currentPhotos[oldIndex].id
     $.ajax({
@@ -126,10 +129,10 @@ export default class SubleaseImage extends Component {
       data: {
         subleaseId: subleaseId,
         varname: 'move',
-        newPosition: newPosition,
+        newPosition: newPosition
       },
       dataType: 'json',
-      type: 'patch',
+      type: 'patch'
     }).done(function (data) {
       if (data.success) {
         this.setState({
@@ -140,10 +143,10 @@ export default class SubleaseImage extends Component {
   }
 
   render() {
-    let overlay
-    if (this.state.show) {
-      overlay = (
+    return (
+      <div>
         <ImageOverlay
+          show={this.state.show}
           deletePhoto={this.delete}
           rotate={this.rotate}
           close={this.overlayOff}
@@ -153,11 +156,8 @@ export default class SubleaseImage extends Component {
           currentPhotos={this.state.currentPhotos}
           onSortEnd={this.onSortEnd}
           status={this.state.status}/>
-      )
-    }
-    return (<div>
-      {overlay}
-    </div>)
+      </div>
+    )
   }
 }
 
