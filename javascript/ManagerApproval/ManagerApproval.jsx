@@ -227,7 +227,7 @@ export default class ManagerApproval extends Component {
 
       const email = `mailto:${value.email_address}`
       return (
-        <div className="card card-info" key={key}>
+        <div className="card card-info mb-3" key={key}>
           <div className="card-header">
             <span className="lead">{value.company_name}</span>
             <div className="float-right">
