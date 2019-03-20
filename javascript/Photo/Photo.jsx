@@ -51,7 +51,7 @@ export default class Photo extends Component {
         showNav={true}
         slideInterval={4000}/>)
     } else {
-      images = <div className="well text-center text-muted pointer" onClick={this.editPhotos}><i className="fa fa-camera fa-5x"></i><br />No photos</div>
+      images = <div className="text-center text-muted pointer" onClick={this.editPhotos}><i className="fa fa-camera fa-5x"></i><br />No photos</div>
     }
     return (
       <div>{images}</div>
