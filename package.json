@@ -11,6 +11,7 @@
     "@essappstate/canopy-react-buttongroup": "^0.2.0",
     "@essappstate/canopy-react-inputfield": "^0.2.0",
     "@essappstate/canopy-react-overlay": "^0.2.0",
+    "array-move": "^1.0.0",
     "assets-webpack-plugin": "^3.9.10",
     "babel-loader": "^8.0.5",
     "browser-sync": "^2.26.3",

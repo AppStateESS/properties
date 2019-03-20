@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import ImageOverlay from '../Mixin/Photo/ImageOverlay.jsx'
 import bindMethods from '../Mixin/Helper/Bind.js'
-import {arrayMove} from 'react-sortable-hoc'
+import arrayMove from 'array-move'
 
 /* global $, propertyId, currentPhotos */
 
