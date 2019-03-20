@@ -82,9 +82,22 @@ h2.sublease-title {
 }
 
 .dropzone {
-  border-style: dashed;
-  border-radius: 6px;
-  min-height: 220px;
-  max-height: 440px;
-  overflow: auto;
+  position: relative;
+    border-style: dashed;
+    border-radius: 6px;
+    min-height: 300px;
+    max-height : 440px;
+    overflow: auto;
+    text-align : center;
+    
+    .dzu-inputLabel {
+      color: #989898;
+    }
+    
+    .dzu-previewContainer {
+      padding : 20px 3%;
+      .dzu-previewImage {
+        max-height : 60px;
+      }
+    }
 }
