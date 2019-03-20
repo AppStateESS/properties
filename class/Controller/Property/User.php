@@ -49,7 +49,7 @@ class User extends \properties\Controller\SubController
     {
         if (isset($_SERVER['HTTP_REFERER']) && stristr($_SERVER['HTTP_REFERER'],
                         'properties/Property/list')) {
-            NavBar::addItem('<button class="btn btn-outline-dark navbar-btn" onClick="window.history.back()"><i class="fa fa-list"></i>&nbsp;Back to list</button>');
+            NavBar::addItem('<a class="btn btn-link navbar-btn" onClick="window.history.back()"><i class="fa fa-list"></i>&nbsp;Back to list</a>');
         }
         \Layout::addToStyleList('mod/properties/css/property/view.css');
         return $this->factory->view($this->id, false);
