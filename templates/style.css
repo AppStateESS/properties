@@ -1,86 +1,109 @@
 .fa.required {
-    color : #FF6C6C;
+  color: #FF6C6C;
 }
 
 .error-highlight {
-    border-color : red;
+  border-color: red;
 }
 
 .company-name {
-    font-size : 1.3em;
-    font-weight : bold;
+  font-size: 1.3em;
+  font-weight: bold;
 }
 
 .manager-row {
-    font-size : 1.2em;
-    border : 1px solid #b3b3b3;
-    padding : 5px;
-    border-radius : 5px;
-    margin-bottom : 1em;
+  font-size: 1.2em;
+  border: 1px solid #b3b3b3;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 1em;
 }
 
 .link-button {
-    margin-right : 5px;
+  margin-right: 5px;
 }
 
 .pointer {
-    cursor:pointer;
+  cursor: pointer;
 }
 
 .form-section {
-    padding-bottom: 1em;
-    border-bottom : 1px solid #e3e3e3;
-    margin-bottom : 1em;
+  padding-bottom: 1em;
+  border-bottom: 1px solid #e3e3e3;
+  margin-bottom: 1em;
 }
 
 .form-section a {
-    font-size : 1.2em;
-    color: #337AB7;
+  font-size: 1.2em;
+  color: #337AB7;
 }
 
 .helperClass {
-    z-index: 1200;
-
+  z-index: 1200;
 }
 
 .handle:hover {
-    cursor : move;
+  cursor: move;
 }
 
 div.alert a {
-    color: inherit;
-    font-weight: bold;
+  color: inherit;
+  font-weight: bold;
 }
 
 .navbar-nav a.navbar-btn {
-    padding : 6px 12px;
-    margin : 8px 0px;
+  padding: 6px 12px;
+  margin: 8px 0px;
 }
 
 .dropdown-toggle {
-    z-index: 100;
+  z-index: 100;
 }
 
 .list-unstyled {
-    margin : 0px;
+  margin: 0px;
 }
 
 .property-thumbnail {
-    display: block;
-    height: 100%;
-    margin-bottom: 6px;
-    border: 1px solid transparent;
-    background-position: 50% 50%;
-    background-size : cover;
-    background-repeat: no-repeat;
+  display: block;
+  height: 100%;
+  margin-bottom: 6px;
+  border: 1px solid transparent;
+  background-position: 50% 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .img-column {
-    height : 200px;
+  height: 200px;
 }
 
 @media screen and (max-width: 768px) {
-    .img-column {
-        height : 280px;
-    }
+  .img-column {
+    height: 280px;
+  }
+}
+
+.image-gallery {
+  width: 100%;
+  height: auto;
+}
+
+.image-gallery-slide img {
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  object-fit: cover;
+  overflow: hidden;
+  object-position: center center;
+}
+
+.fullscreen .image-gallery-slide img {
+  max-height: 100vh;
+}
+
+.image-gallery-thumbnail {
+  max-height : 100px;
+  max-width : 100px;
+  overflow: hidden;
 }
