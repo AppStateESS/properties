@@ -61,7 +61,7 @@ EOF;
 EOF;
         \Layout::addToStyleList('mod/properties/css/sublease/view.css');
         NavBar::addOption($link);
-        NavBar::addOption('<a class="dropdown-item" id="edit-photo-button" class="pointer"><i class="fa fa-camera"></i>&nbsp;Edit photos</a>');
+        NavBar::addOption('<a class="dropdown-item pointer" id="edit-photo-button"><i class="fa fa-camera"></i>&nbsp;Edit photos</a>');
         $deleteLink = <<<EOF
 <a onClick="banUser.callback()" class="pointer dropdown-item"><i class="fa fa-ban"></i>&nbsp;Delete and ban user</a>
 EOF;
