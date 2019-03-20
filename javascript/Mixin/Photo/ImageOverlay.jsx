@@ -2,10 +2,10 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Overlay from '@essappstate/canopy-react-overlay'
-import Dropzone from 'react-dropzone'
 import Thumb from './Thumb.jsx'
-import ImageFrame from './ImageFrame.jsx'
 import {SortableContainer} from 'react-sortable-hoc'
+import Dropzone from 'react-dropzone-uploader'
+import 'react-dropzone-uploader/dist/styles.css'
 
 export default class ImageOverlay extends Component {
   constructor(props) {
@@ -13,56 +13,45 @@ export default class ImageOverlay extends Component {
   }
 
   render() {
-    const paddingTop = {
-      paddingTop: '2%'
-    }
     let photos = (
-      <div style={paddingTop}>
+      <div key="1">
         <i className="fa fa-camera fa-5x"></i><br/>
         <h4>Click to browse<br/>- or -<br/>drag image(s) here</h4>
       </div>
     )
-    if (this.props.newPhotos.length > 0) {
-      photos = this.props.newPhotos.map(function (value, key) {
-        let status
-        if (this.props.status[key] !== undefined) {
-          status = this.props.status[key]
-        }
-        return <ImageFrame key={key} image={value} status={status}/>
-      }.bind(this))
-    }
 
     let currentImages
     if (this.props.currentPhotos.length > 0) {
-      currentImages = <SortableList
-        helperClass="sortableHelper"
-        items={this.props.currentPhotos}
-        axis={'xy'}
-        loadToContainerEdges={true}
-        onSortEnd={this.props.onSortEnd}
-        deletePhoto={this.props.deletePhoto}
-        rotate={this.props.rotate}
-        useDragHandle={true}/>
+      currentImages = (
+        <SortableList
+          helperClass="sortableHelper"
+          items={this.props.currentPhotos}
+          axis={'xy'}
+          loadToContainerEdges={true}
+          onSortEnd={this.props.onSortEnd}
+          deletePhoto={this.props.deletePhoto}
+          rotate={this.props.rotate}
+          useDragHandle={true}/>
+      )
     }
 
     return (
-      <Overlay close={this.props.close} title="Update images">
+      <Overlay close={this.props.close} title="Update images" show={this.props.show}>
         <div>
           <Dropzone
-            ref="dropzone"
-            onDrop={this.props.update}
-            className="dropzone text-center pointer">
-            {photos}
-          </Dropzone>
-          <div>
-            <button className="btn btn-outline-dark" onClick={this.props.clear}>Clear</button>
-          </div>
-          <hr/>
-          <div className="clearfix"></div>
-          <div>
-            <h4>Current</h4>
-            {currentImages}
-          </div>
+            classNames={{
+              dropzone: 'dropzone'
+            }}
+            canRestart={false}
+            getUploadParams={this.props.update}
+            inputContent={photos}
+            inputWithFilesContent="Click here to upload more images"
+            accept="image/*"/>
+        </div>
+        <hr className="clearfix"/>
+        <div>
+          <h4>Current</h4>
+          {currentImages}
         </div>
       </Overlay>
     )
@@ -79,6 +68,7 @@ ImageOverlay.propTypes = {
   currentPhotos: PropTypes.array,
   status: PropTypes.array,
   onSortEnd: PropTypes.func,
+  show: PropTypes.bool
 }
 
 const SortableList = SortableContainer(({items, deletePhoto, rotate}) => {

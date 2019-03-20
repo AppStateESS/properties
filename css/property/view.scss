@@ -60,11 +60,24 @@ h3.property-address {
 }
 
 .dropzone {
+  position: relative;
     border-style: dashed;
     border-radius: 6px;
-    min-height: 220px;
+    min-height: 300px;
     max-height : 440px;
     overflow: auto;
+    text-align : center;
+    
+    .dzu-inputLabel {
+      color: #989898;
+    }
+    
+    .dzu-previewContainer {
+      padding : 20px 3%;
+      .dzu-previewImage {
+        max-height : 60px;
+      }
+    }
 }
 
 .description .card-body {
