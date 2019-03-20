@@ -95,8 +95,7 @@ abstract class Place extends Base
                 'pets_allowed');
         $this->proptype = new \phpws2\Variable\SmallInteger(0, 'proptype');
         $this->proptype->setRange(0, 20);
-        $this->no_smoking = new \phpws2\Variable\BooleanVar(false,
-                'no_smoking');
+        $this->no_smoking = new \phpws2\Variable\BooleanVar(false, 'no_smoking');
         $this->timeout = new Variable\IntegerVar(time(), 'timeout');
         $this->trash_type = new \phpws2\Variable\SmallInteger(0, 'trash_type');
         $this->tv_type = new \phpws2\Variable\SmallInteger(0, 'tv_type');
@@ -105,6 +104,7 @@ abstract class Place extends Base
         $this->utilities_inc = new \phpws2\Variable\BooleanVar(false,
                 'utilities_inc');
         $this->thumbnail = new Variable\StringVar(null, 'thumbnail');
+        $this->thumbnail->allowNull(true);
         $this->thumbnail->setIsTableColumn(false);
         $this->doNotSave('thumbnail');
     }
@@ -278,4 +278,5 @@ abstract class Place extends Base
         $forward = time() + PROPERTIES_FORWARD_TIMEOUT;
         $this->timeout->set($forward);
     }
+
 }
