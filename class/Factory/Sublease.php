@@ -22,6 +22,7 @@ use properties\Resource\Sublease as Resource;
 use properties\Factory\Sublease\Photo as SubPhoto;
 use phpws2\Database;
 use phpws2\Settings;
+use properties\Factory\NavBar;
 
 class Sublease extends Base
 {
@@ -89,8 +90,19 @@ class Sublease extends Base
         }
     }
 
+    public function backLink()
+    {
+        if (isset($_SERVER['HTTP_REFERER']) && stristr($_SERVER['HTTP_REFERER'],
+                        'properties/Sublease/list')) {
+            NavBar::addItem('<a class="btn btn-link navbar-btn pointer" onClick="window.history.back()"><i class="fa fa-list"></i>&nbsp;Back to list</a>');
+        } else {
+            NavBar::addItem('<a class="btn btn-link navbar-btn" href="./properties/Sublease/list"><i class="fa fa-list"></i>&nbsp;Back to list</a>');
+        }
+    }
+
     public function view($sublease, $admin = false)
     {
+        $this->backLink();
         if (empty($sublease)) {
             throw new \properties\Exception\ResourceNotFound($sublease);
         }
@@ -107,7 +119,8 @@ class Sublease extends Base
         } else {
             $tpl = $sublease->view();
             $tpl['inactive_warning'] = $sublease->active ? false : true;
-            $tpl['photo'] = $this->reactView('subleasephoto');
+            //$tpl['photo'] = $this->reactView('subleasephoto');
+            $tpl['photo'] = $this->reactView('PhotoGallery');
             $tpl['photoupdate'] = $admin ? $this->reactView('subleaseimage') : null;
             $photoFactory = new SubPhoto;
             $tpl['current_photos'] = json_encode($photoFactory->thumbs($sublease->id));
@@ -118,7 +131,7 @@ class Sublease extends Base
                 $tpl['ban_user'] = $tpl['user_id'] = null;
             }
             $seconds_left = $sublease->timeout - time();
-            if ($admin){
+            if ($admin) {
                 if ($seconds_left > 0) {
                     $days_left = floor($seconds_left / 86400);
                     $tpl['inactive_notice'] = "This sublease will remain active for $days_left more days.";
@@ -128,6 +141,8 @@ class Sublease extends Base
             } else {
                 $tpl['inactive_notice'] = null;
             }
+            $tpl['otherInformationTemplate'] = PHPWS_SOURCE_DIR . 'mod/properties/templates/sublease/OtherInformation.html';
+            $tpl['amenitiesTemplate'] = PHPWS_SOURCE_DIR . 'mod/properties/templates/sublease/Amenities.html';
             $template = new \phpws2\Template($tpl);
             $template->setModuleTemplate('properties', 'sublease/view.html');
         }
