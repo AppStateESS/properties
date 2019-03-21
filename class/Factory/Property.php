@@ -10,12 +10,14 @@ namespace properties\Factory;
 
 use phpws2\Database;
 use phpws2\Settings;
+use phpws2\Template;
 use properties\Resource\Property as Resource;
 use properties\Factory\Property\Photo as PropPhoto;
 use properties\Factory\Manager;
 use properties\Controller\Property as Controller;
 use properties\Exception\MissingInput;
 use properties\Exception\PrivilegeMissing;
+use properties\Factory\NavBar;
 
 /**
  * Description of PropertyFactory
@@ -160,8 +162,8 @@ class Property extends Base
         try {
             $hide = array('active', 'company_name', 'heat_type', 'created',
                 'updated', 'thumbnail', 'timeout');
-            
-            $r->loadPutByType($request,$hide);
+
+            $r->loadPutByType($request, $hide);
             $heat_type = $request->pullPutVar('heat_type');
             if (empty($heat_type)) {
                 $heat_type = array();
@@ -174,8 +176,19 @@ class Property extends Base
         }
     }
 
+    public function backLink()
+    {
+        if (isset($_SERVER['HTTP_REFERER']) && stristr($_SERVER['HTTP_REFERER'],
+                        'properties/Property/list')) {
+            NavBar::addItem('<a class="btn btn-link navbar-btn pointer" onClick="window.history.back()"><i class="fa fa-list"></i>&nbsp;Back to list</a>');
+        } else {
+            NavBar::addItem('<a class="btn btn-link navbar-btn" href="./properties/Property/list"><i class="fa fa-list"></i>&nbsp;Back to list</a>');
+        }
+    }
+
     public function view($property, $admin = false)
     {
+        $this->backLink();
         if (empty($property)) {
             throw new \properties\Exception\ResourceNotFound($property);
         }
@@ -202,10 +215,17 @@ class Property extends Base
             }
         }
 
+        $tpl['amenitiesTemplate'] = PHPWS_SOURCE_DIR . 'mod/properties/templates/property/Amenities.html';
+        $tpl['petsTemplate'] = PHPWS_SOURCE_DIR . 'mod/properties/templates/property/Pets.html';
+        $tpl['otherInformationTemplate'] = PHPWS_SOURCE_DIR . 'mod/properties/templates/property/OtherInformation.html';
+        $tpl['expensesTemplate'] = PHPWS_SOURCE_DIR . 'mod/properties/templates/property/Expenses.html';
+        $tpl['utilitiesTemplate'] = PHPWS_SOURCE_DIR . 'mod/properties/templates/property/Utilities.html';
+        $tpl['imburseTemplate'] = PHPWS_SOURCE_DIR . 'mod/properties/templates/property/Imburse.html';
+
         $this->includeVendor();
         $photoFactory = new PropPhoto;
         $tpl['inactive_warning'] = $property->active == 0;
-        $tpl['current_photos'] = json_encode($photoFactory->thumbs($property->id));
+        $tpl['currentPhotos'] = json_encode($photoFactory->thumbs($property->id));
         $tpl['id'] = $property->id;
         $tpl['photoupdate'] = null;
         $tpl['delete'] = null;
@@ -222,7 +242,7 @@ class Property extends Base
             $tpl['photoupdate'] = $this->reactView('propertyimage', false);
             $tpl['delete'] = $this->reactView('propertydelete', false);
         }
-        $tpl['photo'] = $this->reactView('photo', false);
+        $tpl['photo'] = $this->reactView('PhotoGallery');
 
         $template = new \phpws2\Template($tpl);
         $template->setModuleTemplate('properties', 'property/view.html');
