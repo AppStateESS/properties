@@ -119,7 +119,6 @@ class Sublease extends Base
         } else {
             $tpl = $sublease->view();
             $tpl['inactive_warning'] = $sublease->active ? false : true;
-            //$tpl['photo'] = $this->reactView('subleasephoto');
             $tpl['photo'] = $this->reactView('PhotoGallery');
             $tpl['photoupdate'] = $admin ? $this->reactView('subleaseimage') : null;
             $photoFactory = new SubPhoto;
