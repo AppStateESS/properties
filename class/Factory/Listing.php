@@ -214,13 +214,12 @@ abstract class Listing
 
     public function prepare($view = false)
     {
-        if ((int) $this->limit <= 0 || (int) $this->limit > 20) {
-            $this->limit = 20;
+        if ((int) $this->limit <= 0 || (int) $this->limit > 10) {
+            $this->limit = 10;
         }
 
         $offset = $this->offset * $this->limit;
-
-        $this->db->setLimit($this->limit, $offset);
+        $this->db->setLimit($this->limit + 1, $offset);
         $this->addSearch();
         switch ($this->sort_by) {
             case 'rentall':

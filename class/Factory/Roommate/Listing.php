@@ -59,8 +59,9 @@ class Listing
         if ((int) $this->limit <= 0 || (int) $this->limit > 10) {
             $this->limit = 10;
         }
+        
         $offset = $this->offset * $this->limit;
-        $db->setLimit($this->limit, $offset);
+        $db->setLimit($this->limit + 1, $offset);
 
         if ($this->identify) {
             $tbl->addField('email');
@@ -100,7 +101,12 @@ class Listing
             return array();
         }
 
-        if (count($result) < $this->limit) {
+        $totalRows = count($result);
+        if ($totalRows > $this->limit) {
+            $this->more_rows = true;
+            // one more row was pulled just for testing
+             array_pop($result);
+        } else {
             $this->more_rows = false;
         }
 

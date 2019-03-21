@@ -77,19 +77,36 @@ class Listing extends \properties\Factory\Listing
         $this->addConditionals();
         if ($view) {
             $result = $this->db->selectAsResources('\properties\Resource\Property');
-            if (is_null($result) || count($result) < $this->limit) {
-                $this->more_rows = false;
-            }
             if (empty($result)) {
+                $this->more_rows = false;
                 return array();
             }
+            $totalRows = count($result);
+            if ($totalRows > $this->limit) {
+                $this->more_rows = true;
+                // one more row was pulled just for testing
+                array_pop($result);
+            } else {
+                $this->more_rows = false;
+            }
+
             foreach ($result as $prop) {
                 $listing[] = $prop->view();
             }
             return $listing;
         } else {
             $result = $this->db->select();
-            if (count($result) < $this->limit) {
+            if (empty($result)) {
+                $this->more_rows = false;
+                return array();
+            }
+
+            $totalRows = count($result);
+            if ($totalRows > $this->limit) {
+                $this->more_rows = true;
+                // one more row was pulled just for testing
+                array_pop($result);
+            } else {
                 $this->more_rows = false;
             }
             return $result;
