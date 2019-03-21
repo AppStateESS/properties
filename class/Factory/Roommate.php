@@ -31,13 +31,13 @@ class Roommate extends Base
         return new \properties\Resource\Roommate;
     }
 
-    public function listing(\Canopy\Request $request, $identify = false)
+    public function listing(\Canopy\Request $request, $identify = false, $allowSearchName = false)
     {
         $listing = new Roommate\Listing;
         $listing->identify = $identify;
+        $listing->allowSearchName = $allowSearchName;
         $listing->pullVariables($request);
         $result = $listing->get();
-        $this->more_rows = $listing->more_rows;
         return $result;
     }
 
@@ -148,6 +148,11 @@ class Roommate extends Base
      */
     public function roommateTimeoutPast()
     {
+        if (isset($_SESSION['PROPERTIES_RECENT_TIMEOUT_CHECK'])) {
+            return;
+        } else {
+            $_SESSION['PROPERTIES_RECENT_TIMEOUT_CHECK'] = true;
+        }
         $timeout = Settings::get('properties', 'roommate_timeout');
         return $timeout < time();
     }

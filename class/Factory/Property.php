@@ -120,6 +120,11 @@ class Property extends Base
      */
     public function propertyTimeoutPast()
     {
+        if (isset($_SESSION['PROPERTIES_RECENT_TIMEOUT_CHECK'])) {
+            return;
+        } else {
+            $_SESSION['PROPERTIES_RECENT_TIMEOUT_CHECK'] = true;
+        }
         $timeout = Settings::get('properties', 'property_timeout');
         return $timeout < time();
     }
