@@ -1,299 +1,96 @@
 <script type="text/javascript">
   const propertyId = <?=$id?>;
-  let currentPhotos = <?=$current_photos?>;
-
+  let currentPhotos = <?=$currentPhotos?>;
+  
   const activate = function() {
     $.ajax({
-      url: './properties/Property/' + propertyId,
+    url: './properties/Property/' + propertyId,
       data: {
-        varname: 'active',
+      varname: 'active',
         value: 1
       },
       dataType: 'json',
       type: 'patch'
-    }).done(function() {
-      location.reload()
-    })
-  }
-
+      }).done(function() {
+        location.reload()
+        })
+        }
+        
 </script>
-  <?=$delete?>
-    <?=$photoupdate?>
-      <?=$inactive_warning ? '<div class="alert alert-danger"><i class="fa fa-ban"></i> Notice: this property is currently not active. <button onClick="activate()" class="float-right btn btn-success btn-sm">Reactivate</button></div>' : null;?>
-        <?= isset($manager_warning) ? '<div class="alert alert-danger">' . $manager_warning . '</div>' : null;?>
-          <div class="property-view">
-            <div class="row">
-              <div class="header col-md-7 col-lg-8">
-                <h2 class="property-title"><?=$name?></h2>
-                <h3 class="property-address"><a href="<?=$property_map_address?>" target="_blank"><i class="fa fa-map"></i>&nbsp;<?=$address?></a></h3>
-                <div>
-                  <?=$bedroom_no?> bed,
-                    <?=$bathroom_no?> bath
-                      <?=$proptype?> -
-                        <?= '$', $monthly_rent, ' ', $lease_type?>
-                </div>
-                <div>Availability:
-                  <?=$move_in_date?>
-                </div>
-              </div>
-
-              <div class="col-md-5 contact-info col-lg-4">
-                <div class="card">
-                  <div class="card-header"><a href="./properties/Manager/<?=$contact_id?>/view"><h4><?=$company_name?></h4></a></div>
-                  <div class="card-body">
-                    <ul class="list-unstyled">
-                      <?php if (!empty($company_url)):?>
-                      <li style="width: 100%;overflow: hidden;white-space:nowrap"><a href="<?=$company_url?>" target="_blank"><i class="fas fa-link"></i>&nbsp;<?=preg_replace('/^http:\/\//', '', $company_url)?></a></li>
-                      <?php endif;?>
-                      <li><a href="<?=$phone_tel?>" target="_blank"><i class="fa fa-phone"></i>&nbsp;<?=$phone?></a></li>
-                      <li><a href="mailto:<?=$email_address?>" target="_blank"><i class="far fa-envelope"></i>&nbsp;<?=$email_address?></a></li>
-                      <?php if (!empty($company_address)):?>
-                      <li><a href="<?=$company_map_address?>" target="_blank"><i class="fa fa-map"></i>&nbsp;<?=$company_address?></a></li>
-                      <?php endif;?>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <?php if (!empty($description)):?>
-            <div class="description card card-primary">
-              <div class="card-body">
-                <?=$description?>
-              </div>
-            </div>
-            <?php endif; ?>
-            <hr />
-            <div class="row">
-              <div class="col-md-6 order-md-1">
-                <?=$photo?>
-              </div>
-              <div class="col-md-6">
-                <?php if ($has_amenities): ?>
-                <div style="margin-bottom:2em">
-                  <h4>
-          <span class="fa-lg">
-            <i class="far fa-gem" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
-          </span>
-          Amenities/Features</h4>
-                  <ul>
-                    <?php if ($close_to_campus):?>
-                    <li>Walking distance to campus</li>
-                    <?php endif; ?>
-                    <?php if ($no_smoking):?>
-                    <li>Smoke free</li>
-                    <?php endif;?>
-                    <?php if ($furnished):?>
-                    <li>Furnished</li>
-                    <?php endif; ?>
-                    <?php if ($airconditioning === '1'):?>
-                    <li>Air Conditioning</li>
-                    <?php endif; ?>
-                    <?php if ($high_speed):?>
-                    <li>High speed Internet</li>
-                    <?php endif;?>
-                    <?php if ($dishwasher === '1'):?>
-                    <li>Dishwasher</li>
-                    <?php endif; ?>
-                    <?php if ($utilities_inc):?>
-                    <li>Utilities included</li>
-                    <?php endif;?>
-                    <?php if ($clubhouse === '1'):?>
-                    <li>Clubhouse</li>
-                    <?php endif; ?>
-                    <?php if ($appalcart === '1'):?>
-                    <li>AppalCART</li>
-                    <?php endif; ?>
-                    <?php if ($workout_room):?>
-                    <li>Workout room</li>
-                    <?php endif;?>
-                    <?php if ($pool):?>
-                    <li>Pool</li>
-                    <?php endif;?>
-                    <?php if ($pets_allowed === '1'): ?>
-                    <li>Pets allowed</li>
-                    <?php endif;?>
-                  </ul>
-                </div>
-                <?php endif;// has_amenities?>
-                <?php if ($pets_allowed === '1'): ?>
-                <h4>
-        <span class="fa-lg">
-           <i class="fas fa-paw" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
-        </span> Pets allowed
-      </h4>
-                <?php if (empty($pet_type) && empty($pet_fee) && empty($pet_deposit)): ?>
-                <p>Contact our office for details.</p>
-                <?php endif;?>
-                <table class="table table-striped info-table">
-                  <?php if (!empty($pet_type)):?>
-                  <tr>
-                    <th>Allowed pet types</th>
-                    <td>
-                      <?=$pet_type?>
-                    </td>
-                  </tr>
-                  <?php endif; ?>
-                  <?php if ($pet_fee):?>
-                  <tr>
-                    <th>Monthly fee</th>
-                    <td>$
-                      <?=$pet_fee?>
-                    </td>
-                  </tr>
-                  <?php endif; ?>
-                  <?php if ($pet_deposit):?>
-                  <tr>
-                    <th>Deposit</th>
-                    <td>$
-                      <?=$pet_deposit?> <small class="text-muted">(<?=$pet_dep_refund?>)</small></td>
-                  </tr>
-                  <?php endif; ?>
-                </table>
-                <?php endif; ?>
-
-                <h4>
-        <span class="fa-lg">
-           <i class="fas fa-check" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
-        </span> Other information</h4>
-                <table class="table table-striped info-table">
-                  <tr>
-                    <th>Distance to campus</th>
-                    <td>
-                      <?=$campus_distance?>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>Contract length</th>
-                    <td>
-                      <?=$contract_length?>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>Parking per unit</th>
-                    <td>
-                      <?=$parking_per_unit?>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>Student preference</th>
-                    <td>
-                      <?=$student_type?>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>Smoking</th>
-                    <td>
-                      <?=$no_smoking?>
-                    </td>
-                  </tr>
-                </table>
-                <?php if ($admin_fee_amt > 0 || $security_amt > 0 || $clean_fee_amt > 0 || $parking_fee > 0 || $other_fees > 0): ?>
-                <h4>
-        <span class="fa-lg">
-           <i class="fas fa-money-bill-alt" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
-        </span>
-        Expenses</h4>
-                <table class="table table-striped info-table">
-                  <?php if ($admin_fee_amt > 0):?>
-                  <tr>
-                    <th>Administrative</th>
-                    <td>$
-                      <?=$admin_fee_amt?> <small class="text-muted">(<?=$admin_fee_refund?>)</small></td>
-                  </tr>
-                  <?php endif; ?>
-
-                  <?php if ($security_amt > 0):?>
-                  <tr>
-                    <th>Security fee</th>
-                    <td>$
-                      <?=$security_amt?> <small class="text-muted">(<?=$security_refund?>)</small></td>
-                  </tr>
-                  <?php endif; ?>
-                  <?php if ($clean_fee_amt > 0):?>
-                  <tr>
-                    <th>Cleaning fee</small>
-                    </th>
-                    <td>$
-                      <?=$clean_fee_amt?> <small class="text-muted">(<?=$clean_fee_refund?>)</td>
-        </tr>
-        <?php endif;?>
-        <?php if ($parking_fee > 0): ?>
-        <tr>
-          <th>Parking fee</th>
-          <td>$<?=$parking_fee?></td>
-        </tr>
-        <?php endif;?>
-        <?php if (!empty($other_fees)): ?>
-        <tr>
-          <th>Other</th>
-          <td><?=$other_fees?></td>
-        </tr>
-        <?php endif;?>
-      </table>
-      <?php endif; ?>
-      <h4>
-        <span class="fa-lg">
-          <i class="fas fa-plug" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
-        </span>
-        Utilities</h4>
-      <table class="table table-striped info-table">
-        <tr>
-          <th>Laundry</th>
-          <td><?=$laundry_type?>
-          </td>
-        </tr>
-        <tr>
-          <th>Internet</th>
-          <td><?=$internet_type?>
-          </td>
-        </tr>
-        <tr>
-          <th>Trash</th>
-          <td><?=$trash_type?>
-          </td>
-        </tr>
-        <tr>
-          <th>Television</th>
-          <td><?=$tv_type?>
-          </td>
-        </tr>
-        <tr>
-          <th>Heat Type</th>
-          <td><?=$heat_type?>
-          </td>
-        </tr>
-      </table>
-      <?php if ($util_water > 0 || $util_trash > 0 || $util_power > 0 || $util_cable > 0 || $util_internet > 0 || $util_phone > 0 || $util_fuel):?>
-      <h4>
-        <span class="fa-stack">
-          <i class="fa fa-circle fa-stack-2x"></i>
-          <i class="fa fa-credit-card fa-stack-1x fa-inverse"></i>
-        </span>Utility imbursing
-      </h4>
-      <table class="table table-striped info-table">
-        <?php if ($util_water > 0):?>
-        <tr><th style="width:20%">Water</th><td>$<?=$util_water?></td></tr>
-        <?php endif; ?>
-        <?php if ($util_cable > 0):?>
-        <tr><th style="width:20%">Cable</th><td>$<?=$util_cable?></td></tr>
-        <?php endif; ?>
-        <?php if ($util_internet > 0):?>
-        <tr><th style="width:20%">Internet</th><td>$<?=$util_internet?></td></tr>
-        <?php endif; ?>
-        <?php if ($util_phone > 0):?>
-        <tr><th style="width:20%">Phone</th><td>$<?=$util_phone?></td></tr>
-        <?php endif; ?>
-        <?php if ($util_trash > 0):?>
-        <tr><th style="width:20%">Trash</th><td>$<?=$util_trash?></td></tr>
-        <?php endif; ?>
-        <?php if ($util_power > 0):?>
-        <tr><th style="width:20%">Power</th><td>$<?=$util_power?></td></tr>
-        <?php endif; ?>
-        <?php if ($util_fuel > 0):?>
-        <tr><th style="width:20%">Fuel/Gas</th><td>$<?=$util_fuel?></td></tr>
-        <?php endif; ?>
-      </table>
-      <?php endif; ?>
+<?=$delete?>
+<?=$photoupdate?>
+<?php if($inactive_warning):?>
+<div class="alert alert-danger">
+  <i class="fa fa-ban"></i> Notice: this property is currently not active. <button onClick="activate()" class="float-right btn btn-success btn-sm">Reactivate</button>
+</div>
+<?php endif; //inactive_warning ?>
+<?php if(isset($manager_warning)):?>
+<div class="alert alert-danger"><?=$manager_warning?></div>
+<?php endif;?>
+<div class="property-view">
+  <div class="row">
+    <div class="header col-md-7 col-lg-8">
+      <h2 class="property-title"><?=$name?></h2>
+      <h3 class="property-address"><a href="<?=$property_map_address?>" target="_blank"><i class="fa fa-map"></i>&nbsp;<?=$address?></a></h3>
+      <div>
+        <?=$bedroom_no?> bed,
+        <?=$bathroom_no?> bath
+        <?=$proptype?> -
+        <?= '$', $monthly_rent, ' ', $lease_type?>
+      </div>
+      <div>Availability:
+        <?=$move_in_date?>
+      </div>
     </div>
+
+    <div class="col-md-5 contact-info col-lg-4">
+      <div class="card">
+        <div class="card-header"><a href="./properties/Manager/<?=$contact_id?>/view"><h4><?=$company_name?></h4></a></div>
+        <div class="card-body">
+          <ul class="list-unstyled">
+            <?php if (!empty($company_url)):?>
+            <li style="width: 100%;overflow: hidden;white-space:nowrap"><a href="<?=$company_url?>" target="_blank"><i class="fas fa-link"></i>&nbsp;<?=preg_replace('/^http:\/\//', '', $company_url)?></a></li>
+            <?php endif;?>
+            <li><a href="<?=$phone_tel?>" target="_blank"><i class="fa fa-phone"></i>&nbsp;<?=$phone?></a></li>
+            <li><a href="mailto:<?=$email_address?>" target="_blank"><i class="far fa-envelope"></i>&nbsp;<?=$email_address?></a></li>
+            <?php if (!empty($company_address)):?>
+            <li><a href="<?=$company_map_address?>" target="_blank"><i class="fa fa-map"></i>&nbsp;<?=$company_address?></a></li>
+            <?php endif;?>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <?php if (!empty($description)):?>
+  <div class="description card card-primary">
+    <div class="card-body">
+      <div class="card-text"><?=$description?></div>
+    </div>
+  </div>
+  <?php endif;//description ?>
+  <hr />
+  <div class="mb-4">
+    <?=$photo?>
+    <div style="clear:both"></div>
+  </div>
+  <hr />
+  <div class="row">
+    <div class="col-md-6"><?php include $otherInformationTemplate; ?></div>
+    <div class="col-md-6"><?php include $utilitiesTemplate; ?></div>
+    <?php if ($admin_fee_amt > 0 || $security_amt > 0 || $clean_fee_amt > 0 || $parking_fee > 0 || $other_fees > 0): ?>
+    <div class="col-md-6">
+    <?php include $expensesTemplate; ?>
+    </div>
+    <?php endif; ?>
+    <?php if ($has_amenities): ?>
+    <div class="col-md-6"><?php include $amenitiesTemplate; ?></div>
+    <?php endif;// has_amenities?>
+    <?php if ($pets_allowed === '1'): ?>
+    <div class="col-md-6"><?php include $petsTemplate; ?></div>
+    <?php endif; ?>
+  
+    <?php if ($util_water > 0 || $util_trash > 0 || $util_power > 0 || $util_cable > 0 || $util_internet > 0 || $util_phone > 0 || $util_fuel):?>
+    <div class="col-md-6"><?php include $imburseTemplate; ?></div>
+    <?php endif; ?>
   </div>
 </div>

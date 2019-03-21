@@ -90,7 +90,7 @@ div.alert a {
 }
 
 .image-gallery-slide img {
-  width: 100%;
+  width : inherit !important;
   height: auto;
   max-height: 300px;
   object-fit: cover;

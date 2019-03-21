@@ -1,0 +1,34 @@
+<h4>
+  <span class="fa-lg">
+    <i class="far fa-gem" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+  </span>
+  Amenities/Features</h4>
+<ul>
+  <?php if ($close_to_campus):?>
+  <li>Walking distance to campus</li>
+  <?php endif; ?>
+  <?php if ($no_smoking):?>
+  <li>Smoke free</li>
+  <?php endif;?>
+  <?php if ($furnished):?>
+  <li>Furnished</li>
+  <?php endif; ?>
+  <?php if ($airconditioning === '1'):?>
+  <li>Air Conditioning</li>
+  <?php endif; ?>
+  <?php if ($high_speed):?>
+  <li>High speed Internet</li>
+  <?php endif;?>
+  <?php if ($dishwasher === '1'):?>
+  <li>Dishwasher</li>
+  <?php endif; ?>
+  <?php if ($utilities_inc):?>
+  <li>Utilities included</li>
+  <?php endif;?>
+  <?php if ($appalcart === '1'):?>
+  <li>AppalCART</li>
+  <?php endif; ?>
+  <?php if ($pets_allowed === '1'): ?>
+  <li>Pets allowed</li>
+  <?php endif;?>
+</ul>

@@ -1,0 +1,31 @@
+<h4>
+  <i class="fas fa-check" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+  Other information</h4>
+<table class="table table-striped">
+  <tr>
+    <th>Distance from campus:</th>
+    <td><?=$campus_distance?></td>
+  </tr>
+  <tr>
+    <th>Sublease ends:</th>
+    <td><?=$move_out_date?></td>
+  </tr>
+  <tr>
+    <th>Parking per unit</th>
+    <td><?=$parking_per_unit?></td>
+  </tr>
+  <tr>
+    <th>Smoking</th>
+    <td><?=$no_smoking?></td>
+  </tr>
+  <tr>
+    <th>Pets allowed</th>
+    <td><?=$pets_allowed ? 'Yes':'No'?></td>
+  </tr>
+  <?php if(!empty($additional_fees)):?>
+  <tr>
+    <th>Additional fees</th>
+    <td><?=$additional_fees?></td>
+  </tr>
+  <?php endif;?>
+</table>
