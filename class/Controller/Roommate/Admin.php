@@ -35,13 +35,20 @@ class Admin extends User
     {
         return $this->factory->reactView('roommatelist');
     }
-    
+
+    protected function listJsonCommand(\Canopy\Request $request)
+    {
+        $json['roommates'] = $this->factory->listing($request, false, true);
+        $json['more_rows'] = $this->factory->more_rows;
+        $json['admin'] = true;
+        return $json;
+    }
+
     protected function deleteCommand(Request $request)
     {
         $roommate = $this->factory->load($this->id);
         return $this->factory->delete($roommate);
     }
-    
 
     public function getHtml(Request $request)
     {
@@ -54,9 +61,10 @@ class Admin extends User
         $button = $this->deleteButton();
         \properties\Factory\NavBar::addItem($button);
     }
-    
+
     private function deleteButton()
-    {   $id = $this->id;
+    {
+        $id = $this->id;
         return <<<EOF
 <button class="btn btn-sm btn-outline-danger navbar-btn" data-id="$id" id="delete-roommate"><i class="fa fa-times"></i>&nbsp;Delete roommate request</button>
 EOF;

@@ -33,6 +33,8 @@ class Listing
     public $limit = 10;
     public $moveinnow = false;
     public $offset = 0;
+    public $searchName;
+    public $allowSearchName = false;
 
     public function pullVariables(\Canopy\Request $request)
     {
@@ -44,6 +46,9 @@ class Listing
         $this->pets = $request->pullGetString('pets', true);
         $this->smoking = $request->pullGetString('smoking', true);
         $this->moveinnow = $request->pullGetBoolean('moveinnow', true);
+        if ($this->allowSearchName) {
+            $this->searchName = $request->pullGetString('searchName', true);
+        }
     }
 
     public function get()
@@ -94,7 +99,7 @@ class Listing
             $this->more_rows = false;
             return array();
         }
-            
+
         if (count($result) < $this->limit) {
             $this->more_rows = false;
         }
@@ -139,9 +144,13 @@ class Listing
         if ($this->smoking) {
             $tbl->addFieldConditional('smoking', $this->smoking);
         }
-        
+
         if ($this->moveinnow) {
             $tbl->addFieldConditional('move_in_date', time(), '<');
+        }
+        
+        if ($this->allowSearchName && !empty($this->searchName)) {
+            $tbl->addFieldConditional('name', "%{$this->searchName}%", 'like');
         }
     }
 

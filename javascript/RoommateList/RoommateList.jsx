@@ -11,6 +11,7 @@ import {profileLabel} from '../Mixin/Objects/ProfileData.js'
 export default class RoommateList extends Component {
   constructor(props) {
     super(props)
+    this.admin = false
     this.error = false
     this.state = {
       roommates: null,
@@ -33,10 +34,17 @@ export default class RoommateList extends Component {
         moveinnow: 0,
         offset: 0
       },
+      searchName: '',
       moreRows: true
     }
     bindMethods([
-      'updateSearchVars', 'reset', 'showMore', 'updateMoveIn'
+      'updateSearchVars',
+      'reset',
+      'showMore',
+      'updateMoveIn',
+      'load',
+      'updateSearchName',
+      'clearSearchName'
     ], this)
   }
 
@@ -83,6 +91,12 @@ export default class RoommateList extends Component {
     this.setState({labels: labels})
   }
 
+  updateSearchName(e) {
+    let value = e.target.value
+    value = value.replace(/\W/, '')
+    this.setState({searchName: value})
+  }
+
   updateSearchVars(varname, value) {
     let searchVars = this.state.searchVars
     let labels = this.state.labels
@@ -97,15 +111,23 @@ export default class RoommateList extends Component {
   updateMoveIn(value) {
     let searchVars = this.state.searchVars
     searchVars.moveinnow = value
-    this.setState({searchVars}, this.load())
+    this.setState({
+      searchVars
+    }, this.load())
   }
 
   load() {
     const sendData = this.state.searchVars
+    if (this.admin) {
+      sendData.searchName = this.state.searchName
+    }
     if (this.state.searchVars.offset > 0) {
       sendData.offset = this.state.searchVars.offset
     }
     $.getJSON('./properties/Roommate/list', sendData).done(function (data) {
+      if (data.admin) {
+        this.admin = true
+      }
       if (this.state.searchVars.offset > 0) {
         if (data.roommates.length == 0 || this.state.roommates == null) {
           this.clearVars()
@@ -126,6 +148,10 @@ export default class RoommateList extends Component {
     }.bind(this))
   }
 
+  clearSearchName() {
+    this.setState({searchName: ''}, this.load)
+  }
+
   render() {
     let rows
 
@@ -138,8 +164,8 @@ export default class RoommateList extends Component {
     if (this.state.roommates === null) {
       return <Waiting label="Roommates"/>
     } else if (this.state.roommates.length === 0) {
-      rows = <div className="well">
-        <p>No roommates found.</p>
+      rows = <div className="alert alert-info">
+        <div className="lead text-center">No roommates found.</div>
       </div>
     } else {
       rows = this.state.roommates.map(function (value, key) {
@@ -154,10 +180,29 @@ export default class RoommateList extends Component {
       </div>
     }
 
+    let searchName
+    if (this.admin) {
+      searchName = (
+        <div className="input-group mb-3">
+          <input
+            type="text"
+            name="searchName"
+            className="form-control"
+            placeholder="Search names..."
+            value={this.state.searchName}
+            onChange={this.updateSearchName}/>
+          <div className="input-group-append">
+            <button className="btn btn-success" onClick={this.load}>Search</button>
+            <button className="btn btn-danger" onClick={this.clearSearchName}>Clear</button>
+          </div>
+        </div>
+      )
+    }
     return (
       <div>
         <h2>Roommate listing</h2>
         {message}
+        {searchName}
         <SearchBar
           updateMoveIn={this.updateMoveIn}
           updateSearchVars={this.updateSearchVars}

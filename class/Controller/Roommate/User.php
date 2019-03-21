@@ -67,7 +67,7 @@ class User extends \properties\Controller\SubController
 
     protected function listJsonCommand(\Canopy\Request $request)
     {
-        $json['roommates'] = $this->factory->listing($request, false);
+        $json['roommates'] = $this->factory->listing($request, false, false);
         $json['more_rows'] = $this->factory->more_rows;
         return $json;
     }
