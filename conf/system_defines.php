@@ -32,8 +32,8 @@ define('HT_WOODSTOVE', 6);
 define('HT_GAS', 7);
 
 // Currently coded to use square thumbs, height not used
-define('PROP_THUMBNAIL_WIDTH', 100);
-//define('PROP_THUMBNAIL_HEIGHT', 100);
+define('PROP_THUMBNAIL_WIDTH', 180);
+define('PROP_THUMBNAIL_HEIGHT', 180);
 
 define('TV_NONE', 0);
 define('TV_CABLE', 1);

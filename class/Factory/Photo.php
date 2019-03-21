@@ -78,13 +78,19 @@ abstract class Photo extends Base
         }
         $tbl->addField('id');
         $tbl->addField('path');
+        $tbl->addField('width');
+        $tbl->addField('height');
         $tbl->addField('porder');
         $tbl->addOrderBy('porder');
         $db->loadSelectStatement();
         while ($row = $db->fetch()) {
+            $thumbnailPath = $this->thumbnailed($row['path']);
             $stamp = '?x=' . time();
-            $row['thumbnail'] = $this->thumbnailed($row['path']) . $stamp;
-            $row['original'] = $row['path'] . $stamp;
+            $row['thumbnail'] =  $thumbnailPath . $stamp;
+            list($twidth, $theight) = getimagesize($thumbnailPath);
+            $row['thumbnailWidth'] = $twidth;
+            $row['thumbnailHeight'] = $theight;
+            $row['src'] = $row['path'] . $stamp;
             $rows[] = $row;
         }
         return $rows;
@@ -178,18 +184,7 @@ abstract class Photo extends Base
         $thumbnail = $this->thumbnailed($photo->path);
         $source_path = $photo->path;
 
-        if ($photo->width != $photo->height) {
-            if ($photo->width < $photo->height) {
-                $crop_size = $photo->width;
-            } else {
-                $crop_size = $photo->height;
-            }
-            \phpws\PHPWS_File::cropImage($source_path, $thumbnail, $crop_size,
-                    $crop_size);
-            $source_path = $thumbnail;
-        }
-
-        \phpws\PHPWS_File::scaleImage($source_path, $thumbnail, 100, 100);
+        \phpws\PHPWS_File::scaleImage($source_path, $thumbnail, 600, PROP_THUMBNAIL_HEIGHT);
     }
 
     public function removePhotos($item_id)
