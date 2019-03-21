@@ -25,6 +25,7 @@ class NavBar
     public static $options;
     public static $title = 'Administrate';
     public static $has_run = false;
+    public static $approval;
 
     public static function view(\Canopy\Request $request)
     {
@@ -53,11 +54,26 @@ class NavBar
         $vars['home'] = \Canopy\Server::getSiteUrl();
         $vars['title'] = self::$title;
         $vars['current_area'] = self::getNavTitle($request);
+        $vars['approval'] = self::getApproval();
         $template = new \phpws2\Template($vars);
         $template->setModuleTemplate('properties', 'navbar.html');
         $content = $template->get();
 
         \Layout::plug($content, 'NAV_LINKS');
+    }
+    
+    private static function getApproval() {
+        $needApproval = self::$approval;
+        if (empty($needApproval)) {
+            return;
+        }
+        $label = ($needApproval == 1) ? "$needApproval manager needs approval" : "$needApproval managers need approval";
+        $link = "<button onClick=\"location.href='properties/Manager/approval'\" class=\"btn btn-sm btn-outline-dark navbar-btn mr-2\">$label</button>";
+        return $link;
+    }
+
+    public static function setApproval($approval) {
+        self::$approval = $approval;
     }
 
     private static function getNavTitle(\Canopy\Request $request)
@@ -75,7 +91,7 @@ class NavBar
             return 'Main menu';
         }
     }
-
+    
     public static function addItem($item)
     {
         self::$items[] = $item;
