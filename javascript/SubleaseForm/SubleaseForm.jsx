@@ -169,7 +169,7 @@ export default class SubleaseForm extends Base {
   }
 
   scrollUp() {
-    this.refs.PageTop.scrollIntoView()
+    $('#PageTop').scrollIntoView()
   }
 
   setValue(varname, value) {
@@ -338,7 +338,7 @@ export default class SubleaseForm extends Base {
     }
 
     return (
-      <div ref="PageTop" className="sublease-form">
+      <div id="PageTop" className="sublease-form">
         <h2>{suffixTitle}&nbsp;my sublease</h2>
         {message}
         {contactAlert}
