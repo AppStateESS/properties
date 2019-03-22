@@ -158,7 +158,7 @@ export default class Settings extends Component {
         {message}
         <form>
           <div className="row">
-            <div className="col-sm-6 col-md-3">
+            <div className="col-md-6">
               <div className="form-group">
                 <InputField
                   label="Approval email"
@@ -173,7 +173,7 @@ export default class Settings extends Component {
                   blur={this.checkApprovalEmail}/>
               </div>
             </div>
-            <div className="col-sm-6 col-md-3">
+            <div className="col-md-6">
               <div className="form-group">
                 <InputField
                   label="Site email"
@@ -188,7 +188,7 @@ export default class Settings extends Component {
                   blur={this.checkSiteEmail}/>
               </div>
             </div>
-            <div className="col-sm-6 col-md-3">
+            <div className="col-md-6">
               <div className="form-group">
                 <InputField
                   label="Contact name"
@@ -198,7 +198,7 @@ export default class Settings extends Component {
                   change={this.setValue.bind(this, 'our_name')}/>
               </div>
             </div>
-            <div className="col-sm-6 col-md-3">
+            <div className="col-md-6">
               <div className="form-group">
                 <InputField
                   label="Contact phone"
