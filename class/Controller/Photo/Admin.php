@@ -39,7 +39,8 @@ class Admin extends Manager
         $variableName = $request->pullPatchString('varname');
         switch ($variableName) {
             case 'move':
-                $this->factory->sort($photo, $request->pullPatchInteger('newPosition'));
+                $this->factory->sort($photo,
+                        $request->pullPatchInteger('newPosition'));
                 break;
         }
         return array('success' => true);
