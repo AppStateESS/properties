@@ -1,5 +1,7 @@
 <h4>
-  <i class="fas fa-paw fa-lg" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+  <span class="fa-lg">
+    <i class="fas fa-paw fa-lg" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+  </span>
   Pets allowed
 </h4>
 <?php if (empty($pet_type) && empty($pet_fee) && empty($pet_deposit)): ?>
@@ -26,7 +28,8 @@
   <tr>
     <th>Deposit</th>
     <td>$
-      <?=$pet_deposit?> <small class="text-muted">(<?=$pet_dep_refund?>)</small>
+      <?=$pet_deposit?>
+      <small class="text-muted">(<?=$pet_dep_refund?>)</small>
     </td>
   </tr>
   <?php endif; ?>

@@ -1,5 +1,7 @@
 <h4>
-  <i class="fas fa-money-bill-alt" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+  <span class="fa-lg">
+    <i class="fas fa-money-bill-alt" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+  </span>
   Expenses
 </h4>
 <table class="table table-striped info-table">
@@ -7,22 +9,27 @@
   <tr>
     <th>Administrative</th>
     <td>$
-      <?=$admin_fee_amt?> <small class="text-muted">(<?=$admin_fee_refund?>)</small></td>
+      <?=$admin_fee_amt?>
+      <small class="text-muted">(<?=$admin_fee_refund?>)</small>
+    </td>
   </tr>
   <?php endif; ?>
   <?php if ($security_amt > 0):?>
   <tr>
     <th>Security fee</th>
     <td>$
-      <?=$security_amt?> <small class="text-muted">(<?=$security_refund?>)</small></td>
+      <?=$security_amt?>
+      <small class="text-muted">(<?=$security_refund?>)</small>
+    </td>
   </tr>
   <?php endif; ?>
   <?php if ($clean_fee_amt > 0):?>
   <tr>
     <th>Cleaning fee</small>
-    </th>
-    <td>$
-      <?=$clean_fee_amt?> <small class="text-muted">(<?=$clean_fee_refund?>)</td>
+  </th>
+  <td>$
+    <?=$clean_fee_amt?>
+    <small class="text-muted">(<?=$clean_fee_refund?>)</td>
   </tr>
   <?php endif;?>
   <?php if ($parking_fee > 0): ?>

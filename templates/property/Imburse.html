@@ -1,27 +1,50 @@
 <h4>
-  <i class="fas fa-credit-card fa-lg" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+  <span class="fa-lg">
+    <i class="fas fa-credit-card fa-lg" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
+  </span>
   Utility imbursing
 </h4>
 <table class="table table-striped info-table">
   <?php if ($util_water > 0):?>
-  <tr><th style="width:20%">Water</th><td>$<?=$util_water?></td></tr>
+  <tr>
+    <th style="width:20%">Water</th>
+    <td>$<?=$util_water?></td>
+  </tr>
   <?php endif; ?>
   <?php if ($util_cable > 0):?>
-  <tr><th style="width:20%">Cable</th><td>$<?=$util_cable?></td></tr>
+  <tr>
+    <th style="width:20%">Cable</th>
+    <td>$<?=$util_cable?></td>
+  </tr>
   <?php endif; ?>
   <?php if ($util_internet > 0):?>
-  <tr><th style="width:20%">Internet</th><td>$<?=$util_internet?></td></tr>
+  <tr>
+    <th style="width:20%">Internet</th>
+    <td>$<?=$util_internet?></td>
+  </tr>
   <?php endif; ?>
   <?php if ($util_phone > 0):?>
-  <tr><th style="width:20%">Phone</th><td>$<?=$util_phone?></td></tr>
+  <tr>
+    <th style="width:20%">Phone</th>
+    <td>$<?=$util_phone?></td>
+  </tr>
   <?php endif; ?>
   <?php if ($util_trash > 0):?>
-  <tr><th style="width:20%">Trash</th><td>$<?=$util_trash?></td></tr>
+  <tr>
+    <th style="width:20%">Trash</th>
+    <td>$<?=$util_trash?></td>
+  </tr>
   <?php endif; ?>
   <?php if ($util_power > 0):?>
-  <tr><th style="width:20%">Power</th><td>$<?=$util_power?></td></tr>
+  <tr>
+    <th style="width:20%">Power</th>
+    <td>$<?=$util_power?></td>
+  </tr>
   <?php endif; ?>
   <?php if ($util_fuel > 0):?>
-  <tr><th style="width:20%">Fuel/Gas</th><td>$<?=$util_fuel?></td></tr>
+  <tr>
+    <th style="width:20%">Fuel/Gas</th>
+    <td>$<?=$util_fuel?></td>
+  </tr>
   <?php endif; ?>
 </table>
