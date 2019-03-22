@@ -3,7 +3,6 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import ImageOverlay from '../Mixin/Photo/ImageOverlay.jsx'
 import bindMethods from '../Mixin/Helper/Bind.js'
-import arrayMove from 'array-move'
 
 /* global $, propertyId, currentPhotos */
 
@@ -12,7 +11,6 @@ export default class PropertyImage extends Component {
     super(props)
     this.state = {
       show: false,
-      newPhotos: [],
       currentPhotos: [],
       status: []
     }
@@ -20,10 +18,10 @@ export default class PropertyImage extends Component {
       'overlayOn',
       'overlayOff',
       'addPhotos',
-      'clearNewPhotos',
       'deletePhoto',
       'onSortEnd',
-      'rotate'
+      'rotate',
+      'load'
     ]
     bindMethods(methods, this)
   }
@@ -35,16 +33,24 @@ export default class PropertyImage extends Component {
     }
   }
 
-  clearNewPhotos() {
-    this.setState({newPhotos: []})
+  load() {
+    $.ajax({
+      url: './properties/Photo',
+      data: {
+        propertyId
+      },
+      dataType: 'json',
+      type: 'get',
+      success: (data) => {
+        this.setState({currentPhotos: data})
+      },
+      error: () => {}
+    })
   }
 
   addPhotos(photos) {
     let status = this.state.status
-    let newPhotos = []
-    let currentPhotos = []
-    this.clearNewPhotos()
-    $.each(photos, function (key, value) {
+    $.each(photos, (key, value) => {
       let formData = new FormData()
       formData.append('propertyId', propertyId)
       formData.append('photo', value)
@@ -57,18 +63,14 @@ export default class PropertyImage extends Component {
         processData: false,
         contentType: false,
         success: (data) => {
-          currentPhotos = this.state.currentPhotos
           if (data.success === true) {
-            currentPhotos.push(data.photo)
+            this.load()
           } else if (data.success === false) {
             alert(data.error)
             return
           }
-          newPhotos.push(data.photo)
           status[key] = data.success
-          this.setState(
-            {status: status, currentPhotos: currentPhotos, newPhotos: newPhotos}
-          )
+          this.setState({status: status})
         },
         error: () => {
           alert(
@@ -77,7 +79,7 @@ export default class PropertyImage extends Component {
           )
         }
       })
-    }.bind(this))
+    })
   }
 
   onSortEnd(movement) {
@@ -95,9 +97,7 @@ export default class PropertyImage extends Component {
       type: 'patch',
       success: (data) => {
         if (data.success) {
-          const currentPhotos = this.state.currentPhotos
-          const updatedPhotos = arrayMove(currentPhotos, oldIndex, newIndex)
-          this.setState({currentPhotos: updatedPhotos})
+          this.load()
         }
       }
     })
@@ -108,11 +108,11 @@ export default class PropertyImage extends Component {
   }
 
   overlayOff() {
-    this.setState({show: false, newPhotos: []})
+    this.setState({show: false})
     window.loadProp()
   }
 
-  deletePhoto(photo, key) {
+  deletePhoto(photo) {
     $.ajax({
       url: './properties/Photo/' + photo.id,
       data: {
@@ -120,14 +120,10 @@ export default class PropertyImage extends Component {
       },
       dataType: 'json',
       method: 'DELETE',
-      success: function (data) {
-        let photos = this.state.currentPhotos
-        if (data.success === true) {
-          photos.splice(key, 1)
-        }
-        this.setState({currentPhotos: photos})
-      }.bind(this),
-      error: function () {}.bind(this)
+      success: () => {
+        this.load()
+      },
+      error: () =>{}
     })
   }
 
@@ -139,10 +135,10 @@ export default class PropertyImage extends Component {
       },
       dataType: 'json',
       type: 'put',
-      success: function () {
+      success: () => {
         this.forceUpdate()
-      }.bind(this),
-      error: function () {}.bind(this)
+      },
+      error: () => {}
     })
   }
 
@@ -153,9 +149,7 @@ export default class PropertyImage extends Component {
         rotate={this.rotate}
         deletePhoto={this.deletePhoto}
         close={this.overlayOff}
-        clear={this.clearNewPhotos}
         update={this.addPhotos}
-        newPhotos={this.state.newPhotos}
         currentPhotos={this.state.currentPhotos}
         status={this.state.status}
         onSortEnd={this.onSortEnd}/>
