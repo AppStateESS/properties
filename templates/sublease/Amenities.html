@@ -3,32 +3,32 @@
     <i class="far fa-gem" data-fa-transform="shrink-7" data-fa-mask="fas fa-circle"></i>
   </span>
   Amenities/Features</h4>
-<ul>
+<table class="table table-striped">
   <?php if ($close_to_campus):?>
-  <li>Walking distance to campus</li>
+  <tr><td>Walking distance to campus</td></tr>
   <?php endif; ?>
   <?php if ($no_smoking):?>
-  <li>Smoke free</li>
+  <tr><td>Smoke free</td></tr>
   <?php endif;?>
   <?php if ($furnished):?>
-  <li>Furnished</li>
+  <tr><td>Furnished</td></tr>
   <?php endif; ?>
   <?php if ($airconditioning === '1'):?>
-  <li>Air Conditioning</li>
+  <tr><td>Air Conditioning</td></tr>
   <?php endif; ?>
   <?php if ($high_speed):?>
-  <li>High speed Internet</li>
+  <tr><td>High speed Internet</td></tr>
   <?php endif;?>
   <?php if ($dishwasher === '1'):?>
-  <li>Dishwasher</li>
+  <tr><td>Dishwasher</td></tr>
   <?php endif; ?>
   <?php if ($utilities_inc):?>
-  <li>Utilities included</li>
+  <tr><td>Utilities included</td></tr>
   <?php endif;?>
   <?php if ($appalcart === '1'):?>
-  <li>AppalCART</li>
+  <tr><td>AppalCART</td></tr>
   <?php endif; ?>
   <?php if ($pets_allowed === '1'): ?>
-  <li>Pets allowed</li>
+  <tr><td>Pets allowed</td></tr>
   <?php endif;?>
-</ul>
+</table>
