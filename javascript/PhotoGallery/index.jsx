@@ -21,7 +21,6 @@ export default class PhotoGallery extends Component {
     $.getJSON('./properties/Photo/list', {propertyId: propertyId}).done(
       function (data) {
         this.setState({photos: data})
-        currentPhotos = data
       }.bind(this)
     )
   }
@@ -30,7 +29,6 @@ export default class PhotoGallery extends Component {
     $.getJSON('./properties/SubleasePhoto/list', {subleaseId: subleaseId}).done(
       function (data) {
         this.setState({photos: data})
-        currentPhotos = data
       }.bind(this)
     )
   }
