@@ -61,8 +61,6 @@ ImageOverlay.propTypes = {
   update: PropTypes.func,
   deletePhoto: PropTypes.func,
   rotate: PropTypes.func,
-  clear: PropTypes.func,
-  newPhotos: PropTypes.array,
   currentPhotos: PropTypes.array,
   status: PropTypes.array,
   onSortEnd: PropTypes.func,
