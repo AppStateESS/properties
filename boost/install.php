@@ -50,6 +50,14 @@ function properties_install(&$content)
         $tbl->addDataType('inquiry_date', 'int');
         $tbl->addDataType('inquiry_type', 'varchar')->setSize('20');
         $tbl->create();
+        
+        $db = \phpws2\Database::getDB();
+        $tbl = $db->buildTable('prop_banned');
+        $tbl->addPrimaryIndexId();
+        $dt2 = $tbl->addDataType('user_id', 'varchar');
+        $dt3 = $tbl->addDataType('reason', 'varchar');
+        $tbl->create();
+        
     } catch (\Exception $e) {
         \phpws2\Error::log($e);
         $db->buildTable($manager->getTable())->drop(true);
