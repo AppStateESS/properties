@@ -9,12 +9,15 @@ import ButtonGroup from '@essappstate/canopy-react-buttongroup'
 import Base from '../Mixin/Edit/Base.jsx'
 import Range from '../Mixin/Helper/Range.js'
 import empty from '../Mixin/Helper/Empty.js'
+import Help from '../Mixin/Html/Help.jsx'
 import './style.css'
 
 export default class Basic extends Base {
   constructor(props) {
     super(props)
-    this.state = {hasError : false}
+    this.state = {
+      hasError: false
+    }
     const methods = ['setMoveIn', 'updateParking', 'updateRent']
     bindMethods(methods, this)
   }
@@ -35,7 +38,7 @@ export default class Basic extends Base {
   }
 
   setMoveIn(a) {
-    const date = new Date(a).getTime()/1000
+    const date = new Date(a).getTime() / 1000
     this.props.setValue('move_in_date', date)
   }
 
@@ -49,12 +52,17 @@ export default class Basic extends Base {
     return [
       {
         value: '0',
-        label: <span>
-            <i className="fa fa-users"></i>&nbsp; Per unit</span>
+        label: (
+          <span>
+            <i className="fa fa-users"></i>&nbsp; Per unit
+          </span>
+        )
       }, {
         value: '1',
-        label: <span>
+        label: (
+          <span>
             <i className="fa fa-user"></i>&nbsp; Per tenant</span>
+        )
       }
     ]
   }
@@ -84,6 +92,17 @@ export default class Basic extends Base {
     const buttonspace = {
       paddingTop: '43px'
     }
+
+    let googleAddress
+    if (property.address.length > 10) {
+      googleAddress = (
+        <small>
+          <a href={this.googleize(property.address)} target="_index">View on Google Maps</a>&nbsp;<Help
+            title="If Google Maps can't find the location, you may want to refine the address"/>
+        </small>
+      )
+    }
+
     return (
       <div className="container-fluid">
         <div className="row">
@@ -93,8 +112,8 @@ export default class Basic extends Base {
               label="Title"
               value={property.name}
               errorMessage={this.props.errors.name
-              ? 'Title may not be empty'
-              : null}
+                ? 'Title may not be empty'
+                : null}
               change={this.props.setValue.bind(null, 'name')}
               required={true}/>
           </div>
@@ -107,22 +126,20 @@ export default class Basic extends Base {
               type="text"
               placeholder="Street, City, State, Zip code"
               errorMessage={this.props.errors.address
-              ? 'Address may not be empty'
-              : null}
+                ? 'Address may not be empty'
+                : null}
               value={property.address}
               change={this.props.setValue.bind(null, 'address')}
-              required={true}/> {(property.address.length > 10)
-              ? <small>
-                  <a href={this.googleize(property.address)} target="_blank">View on Google Maps</a>
-                </small>
-              : null}
+              required={true}/>
+            <div>{googleAddress}</div>
+
           </div>
         </div>
         <div className="row">
           <div className="col-sm-12">
             <label>Description</label>
             <textarea
-              rows="5"
+              rows="8"
               className="form-control"
               placeholder="Description is not searchable. Be sure to use other settings as well."
               name="description"
@@ -133,7 +150,6 @@ export default class Basic extends Base {
         <div className="row">
           <div className="col-sm-5 col-7">
             <InputField
-              ref="monthlyRent"
               name="monthly_rent"
               type="type"
               label="Monthly rent"
@@ -141,8 +157,8 @@ export default class Basic extends Base {
               maxLength={4}
               wrap={this.dollarize}
               errorMessage={this.props.errors.monthly_rent
-              ? 'Rent amount may not be empty'
-              : null}
+                ? 'Rent amount may not be empty'
+                : null}
               value={property.monthly_rent}
               change={this.updateRent}
               required={true}/>
