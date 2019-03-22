@@ -45,6 +45,7 @@ export default class SubleaseRow extends Row {
       }
       image = <div className="property-thumbnail" style={thumbStyle}></div>
     }
+    
     return (
       <div className="row sublease-row">
         <div className="col-sm-4 img-column">
@@ -63,6 +64,7 @@ export default class SubleaseRow extends Row {
                 <strong>Availability:</strong>&nbsp; {sublease.move_in_date}</div>
               <div className="end-date">
                 <strong>Sublease end date:</strong>&nbsp; {sublease.move_out_date}</div>
+                <div className="small"><strong>Last updated:</strong> {sublease.updated}</div>
             </div>
             <div className="col-sm-5 col-md-4">
               <div className="icon-listing">
