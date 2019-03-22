@@ -1,6 +1,7 @@
 <script type="text/javascript">
-  const propertyId = <?=$id?>; let currentPhotos =
-  <?=$currentPhotos?>; let loadProp = () => {}
+  const propertyId = <?=$id?>;
+  const currentPhotos = <?=$currentPhotos?>;
+  let loadProp = () => {}
   const activate = function () {
     $.ajax({
       url: './properties/Property/' + propertyId,
