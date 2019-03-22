@@ -278,6 +278,7 @@ export default class SubleaseForm extends Base {
       return <Waiting message="Checking for previous sublease..."/>
     }
     const {sublease} = this.state
+    
     let parking = Range(sublease.parking_per_unit)
     let message
     if (this.state.message !== null) {
@@ -414,7 +415,6 @@ export default class SubleaseForm extends Base {
               <Help
                 title="Enter the total amount the subleaser will pay per month, not the rent for the whole unit"/>
               <InputField
-                ref="monthlyRent"
                 name="monthly_rent"
                 type="type"
                 wrap={this.dollarize}
@@ -461,7 +461,7 @@ export default class SubleaseForm extends Base {
           </div>
         </div>
         <div className="row">
-          <div className="col-sm-6">
+          <div className="col-md-5">
             <div>
               <label>Parking spaces per unit</label>
               <input
@@ -479,7 +479,7 @@ export default class SubleaseForm extends Base {
               handle={this.updateParking}
               activeColor="success"/>
           </div>
-          <div className="col-sm-6">
+          <div className="col-md-7">
             <label>Miles from campus</label>
             <ButtonGroup
               name="campus_distance"
@@ -554,7 +554,7 @@ export default class SubleaseForm extends Base {
           </div>
         </div>
         <div className="row">
-          <div className="col-md-8 col-sm-12">
+          <div className="col-lg-8 col-sm-12">
             <label>Internet</label><br/>
             <ButtonGroup
               name="internet_type"
@@ -563,7 +563,7 @@ export default class SubleaseForm extends Base {
               handle={this.setIntegerValue.bind(this, 'internet_type')}
               activeColor="success"/>
           </div>
-          <div className="col-md-4 col-sm-12">
+          <div className="col-lg-4 col-sm-12">
             <label>Television</label><br/>
             <ButtonGroup
               name="tv_type"
