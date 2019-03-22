@@ -4,14 +4,13 @@
   "description": "Online property manager",
   "dependencies": {},
   "devDependencies": {
-    "@babel/core": "^7.3.4",
-    "@babel/preset-env": "^7.3.4",
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
     "@babel/preset-react": "^7.0.0",
     "@essappstate/canopy-react-bigcheckbox": "^0.2.0",
     "@essappstate/canopy-react-buttongroup": "^0.2.0",
     "@essappstate/canopy-react-inputfield": "^0.2.0",
     "@essappstate/canopy-react-overlay": "^0.2.0",
-    "array-move": "^1.0.0",
     "assets-webpack-plugin": "^3.9.10",
     "babel-loader": "^8.0.5",
     "browser-sync": "^2.26.3",
@@ -21,9 +20,9 @@
     "es6-promise": "^4.2.6",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",
-    "react": "^16.8.4",
+    "react": "^16.8.5",
     "react-date-picker": "^7.3.0",
-    "react-dom": "^16.8.4",
+    "react-dom": "^16.8.5",
     "react-dropzone-uploader": "^2.7.0",
     "react-grid-gallery": "^0.5.4",
     "react-modal": "^3.8.1",
@@ -33,7 +32,7 @@
     "strip-loader": "^0.1.2",
     "style-loader": "^0.23.1",
     "webpack": "^4.29.6",
-    "webpack-cli": "^3.2.3"
+    "webpack-cli": "^3.3.0"
   },
   "scripts": {
     "dev": "webpack --mode development --watch",
