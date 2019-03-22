@@ -1,27 +1,27 @@
 <script type="text/javascript">
-  const propertyId = <?=$id?>;
-  let currentPhotos = <?=$currentPhotos?>;
-  
-  const activate = function() {
+  const propertyId = <?=$id?>; let currentPhotos =
+  <?=$currentPhotos?>; let loadProp = () => {}
+  const activate = function () {
     $.ajax({
-    url: './properties/Property/' + propertyId,
+      url: './properties/Property/' + propertyId,
       data: {
-      varname: 'active',
+        varname: 'active',
         value: 1
       },
       dataType: 'json',
       type: 'patch'
-      }).done(function() {
-        location.reload()
-        })
-        }
-        
+    }).done(function () {
+      location.reload()
+    })
+  }
 </script>
 <?=$delete?>
 <?=$photoupdate?>
 <?php if($inactive_warning):?>
 <div class="alert alert-danger">
-  <i class="fa fa-ban"></i> Notice: this property is currently not active. <button onClick="activate()" class="float-right btn btn-success btn-sm">Reactivate</button>
+  <i class="fa fa-ban"></i>
+  Notice: this property is currently not active.
+  <button onclick="activate()" class="float-right btn btn-success btn-sm">Reactivate</button>
 </div>
 <?php endif; //inactive_warning ?>
 <?php if(isset($manager_warning)):?>
@@ -31,30 +31,51 @@
   <div class="row">
     <div class="header col-md-7 col-lg-8">
       <h2 class="property-title"><?=$name?></h2>
-      <h3 class="property-address"><a href="<?=$property_map_address?>" target="_blank"><i class="fa fa-map"></i>&nbsp;<?=$address?></a></h3>
+      <h3 class="property-address">
+        <a href="<?=$property_map_address?>" target="_blank">
+          <i class="fa fa-map"></i>&nbsp;<?=$address?></a>
+      </h3>
       <div>
-        <?=$bedroom_no?> bed,
-        <?=$bathroom_no?> bath
-        <?=$proptype?> -
+        <?=$bedroom_no?>
+        bed,
+        <?=$bathroom_no?>
+        bath
+        <?=$proptype?>
+        -
         <?= '$', $monthly_rent, ' ', $lease_type?>
       </div>
       <div>Availability:
         <?=$move_in_date?>
       </div>
     </div>
-
     <div class="col-md-5 contact-info col-lg-4">
       <div class="card">
-        <div class="card-header"><a href="./properties/Manager/<?=$contact_id?>/view"><h4><?=$company_name?></h4></a></div>
+        <div class="card-header">
+          <a href="./properties/Manager/<?=$contact_id?>/view">
+            <h4><?=$company_name?></h4>
+          </a>
+        </div>
         <div class="card-body">
           <ul class="list-unstyled">
             <?php if (!empty($company_url)):?>
-            <li style="width: 100%;overflow: hidden;white-space:nowrap"><a href="<?=$company_url?>" target="_blank"><i class="fas fa-link"></i>&nbsp;<?=preg_replace('/^http:\/\//', '', $company_url)?></a></li>
+            <li style="width: 100%;overflow: hidden;white-space:nowrap">
+              <a href="<?=$company_url?>" target="_blank">
+                <i class="fas fa-link"></i>&nbsp;<?=preg_replace('/^http:\/\//', '', $company_url)?></a>
+            </li>
             <?php endif;?>
-            <li><a href="<?=$phone_tel?>" target="_blank"><i class="fa fa-phone"></i>&nbsp;<?=$phone?></a></li>
-            <li><a href="mailto:<?=$email_address?>" target="_blank"><i class="far fa-envelope"></i>&nbsp;<?=$email_address?></a></li>
+            <li>
+              <a href="<?=$phone_tel?>" target="_blank">
+                <i class="fa fa-phone"></i>&nbsp;<?=$phone?></a>
+            </li>
+            <li>
+              <a href="mailto:<?=$email_address?>" target="_blank">
+                <i class="far fa-envelope"></i>&nbsp;<?=$email_address?></a>
+            </li>
             <?php if (!empty($company_address)):?>
-            <li><a href="<?=$company_map_address?>" target="_blank"><i class="fa fa-map"></i>&nbsp;<?=$company_address?></a></li>
+            <li>
+              <a href="<?=$company_map_address?>" target="_blank">
+                <i class="fa fa-map"></i>&nbsp;<?=$company_address?></a>
+            </li>
             <?php endif;?>
           </ul>
         </div>
@@ -68,18 +89,18 @@
     </div>
   </div>
   <?php endif;//description ?>
-  <hr />
+  <hr/>
   <div class="mb-4">
     <?=$photo?>
     <div style="clear:both"></div>
   </div>
-  <hr />
+  <hr/>
   <div class="row">
     <div class="col-md-6"><?php include $otherInformationTemplate; ?></div>
     <div class="col-md-6"><?php include $utilitiesTemplate; ?></div>
     <?php if ($admin_fee_amt > 0 || $security_amt > 0 || $clean_fee_amt > 0 || $parking_fee > 0 || $other_fees > 0): ?>
     <div class="col-md-6">
-    <?php include $expensesTemplate; ?>
+      <?php include $expensesTemplate; ?>
     </div>
     <?php endif; ?>
     <?php if ($has_amenities): ?>
@@ -88,7 +109,6 @@
     <?php if ($pets_allowed === '1'): ?>
     <div class="col-md-6"><?php include $petsTemplate; ?></div>
     <?php endif; ?>
-  
     <?php if ($util_water > 0 || $util_trash > 0 || $util_power > 0 || $util_cable > 0 || $util_internet > 0 || $util_phone > 0 || $util_fuel):?>
     <div class="col-md-6"><?php include $imburseTemplate; ?></div>
     <?php endif; ?>

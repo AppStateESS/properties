@@ -1,11 +1,12 @@
 <script type="text/javascript">
-  let loadPhotos = () => {
-  }
+  const subleaseId = '<?=$id?>';
+  let currentPhotos = <?=$current_photos?>;
+  
+  let loadSub = () => {}
+  
   let banUser = () => {
   }
-  let currentPhotos = <?=$current_photos?>;
   const userId = '<?=$user_id?>';
-  const subleaseId = '<?=$id?>';
 </script>
 <div class="sublease-view">
   <?php if($inactive_warning):?>
@@ -50,7 +51,7 @@
     </div>
     <?php if ($has_amenities): ?>
     <div class="col-md-6">
-      <?php include $amenitiesTemplate; ?></div>
+      <?php include $amenitiesTemplate; ?>
     </div>
     <?php endif;// has_amenities?>
   </div>
