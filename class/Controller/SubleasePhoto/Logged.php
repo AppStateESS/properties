@@ -59,12 +59,12 @@ class Logged extends User
         $this->factory->delete($photo);
         return array('success' => true);
     }
-    
+
     protected function rotatePutCommand(Request $request)
     {
         $photo = $this->factory->load($this->id);
         $this->factory->rotate($photo, $request->pullPutInteger('direction'));
-        return array('success'=>1);
+        return array('success' => 1);
     }
 
 }
