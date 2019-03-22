@@ -86,7 +86,7 @@ export default class SubleaseImage extends Component {
 
   overlayOff() {
     this.setState({show: false, newPhotos: []})
-    loadPhotos.callback()
+    window.loadSub()
   }
 
   rotate(photo, key, direction) {

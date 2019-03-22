@@ -108,7 +108,7 @@ export default class PropertyImage extends Component {
 
   overlayOff() {
     this.setState({show: false, newPhotos: []})
-    window.loadPhotos()
+    window.loadProp()
   }
 
   deletePhoto(photo, key) {
