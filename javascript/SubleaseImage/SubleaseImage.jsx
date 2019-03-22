@@ -3,16 +3,14 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import ImageOverlay from '../Mixin/Photo/ImageOverlay.jsx'
 import bindMethods from '../Mixin/Helper/Bind.js'
-import arrayMove from 'array-move'
 
-/* global $, subleaseId, loadPhotos, currentPhotos */
+/* global $, subleaseId, currentPhotos */
 
 export default class SubleaseImage extends Component {
   constructor(props) {
     super(props)
     this.state = {
       show: false,
-      newPhotos: [],
       currentPhotos: [],
       status: []
     }
@@ -20,10 +18,10 @@ export default class SubleaseImage extends Component {
       'overlayOn',
       'overlayOff',
       'addPhotos',
-      'clearNewPhotos',
       'delete',
       'onSortEnd',
-      'rotate'
+      'rotate',
+      'load'
     ]
     bindMethods(methods, this)
   }
@@ -34,17 +32,23 @@ export default class SubleaseImage extends Component {
       this.setState({currentPhotos: currentPhotos})
     }
   }
-
-  clearNewPhotos() {
-    this.setState({newPhotos: []})
+  
+  load() {
+    $.ajax({
+      url: './properties/SubleasePhoto',
+      data: {subleaseId},
+      dataType: 'json',
+      type: 'get',
+      success: (data)=>{
+        this.setState({currentPhotos: data})
+      },
+      error: ()=>{}
+    })
   }
 
   addPhotos(photos) {
     let status = this.state.status
-    let newPhotos = []
-    let currentPhotos = []
-    this.clearNewPhotos()
-    $.each(photos, function (key, value) {
+    $.each(photos, (key, value) => {
       let formData = new FormData()
       formData.append('photo', value)
       formData.append('subleaseId', subleaseId)
@@ -56,28 +60,26 @@ export default class SubleaseImage extends Component {
         dataType: 'json',
         processData: false,
         contentType: false,
-        success: function (data) {
-          currentPhotos = this.state.currentPhotos
+        success: (data) => {
           if (data.success === true) {
-            currentPhotos.push(data.photo)
+            this.load()
           } else if (data.success === false) {
             alert(data.error)
             return
           }
-          newPhotos.push(data.photo)
           status[key] = data.success
           this.setState(
-            {status: status, currentPhotos: currentPhotos, newPhotos: newPhotos}
+            {status: status}
           )
-        }.bind(this),
-        error: function () {
+        },
+        error: () => {
           alert(
             'Sorry but your file is unacceptable. It may be of the wrong type or too large.' +
             ' Please try again.'
           )
-        }.bind(this)
+        }
       })
-    }.bind(this))
+    })
   }
 
   overlayOn() {
@@ -85,7 +87,7 @@ export default class SubleaseImage extends Component {
   }
 
   overlayOff() {
-    this.setState({show: false, newPhotos: []})
+    this.setState({show: false})
     window.loadSub()
   }
 
@@ -97,26 +99,24 @@ export default class SubleaseImage extends Component {
       },
       dataType: 'json',
       type: 'put',
-      success: function () {
+      success: () => {
         this.forceUpdate()
-      }.bind(this),
-      error: function () {}.bind(this)
+      },
+      error: ()=> {}
     })
   }
 
-  delete(photo, key) {
+  delete(photo) {
     $.ajax({
       url: './properties/SubleasePhoto/' + photo.id,
       dataType: 'json',
       method: 'DELETE',
-      success: function (data) {
-        let photos = this.state.currentPhotos
-        if (data.success === true) {
-          photos.splice(key, 1)
+      success: (data) => {
+        if (data.success) {
+          this.load()
         }
-        this.setState({currentPhotos: photos})
-      }.bind(this),
-      error: function () {}.bind(this)
+      },
+      error: ()=> {}
     })
   }
 
@@ -132,14 +132,13 @@ export default class SubleaseImage extends Component {
         newPosition: newPosition
       },
       dataType: 'json',
-      type: 'patch'
-    }).done(function (data) {
-      if (data.success) {
-        this.setState({
-          currentPhotos: arrayMove(this.state.currentPhotos, oldIndex, newIndex)
-        })
+      type: 'patch',
+      success: (data) => {
+        if (data.success) {
+          this.load()
+        }
       }
-    }.bind(this))
+    })
   }
 
   render() {
@@ -150,9 +149,7 @@ export default class SubleaseImage extends Component {
           deletePhoto={this.delete}
           rotate={this.rotate}
           close={this.overlayOff}
-          clear={this.clearNewPhotos}
           update={this.addPhotos}
-          newPhotos={this.state.newPhotos}
           currentPhotos={this.state.currentPhotos}
           onSortEnd={this.onSortEnd}
           status={this.state.status}/>
