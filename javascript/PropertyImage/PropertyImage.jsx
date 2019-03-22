@@ -56,7 +56,7 @@ export default class PropertyImage extends Component {
         dataType: 'json',
         processData: false,
         contentType: false,
-        success: function (data) {
+        success: (data) => {
           currentPhotos = this.state.currentPhotos
           if (data.success === true) {
             currentPhotos.push(data.photo)
@@ -69,13 +69,13 @@ export default class PropertyImage extends Component {
           this.setState(
             {status: status, currentPhotos: currentPhotos, newPhotos: newPhotos}
           )
-        }.bind(this),
-        error: function () {
+        },
+        error: () => {
           alert(
             'Sorry but your file is unacceptable. It may be of the wrong type or too large.' +
             ' Please try again.'
           )
-        }.bind(this)
+        }
       })
     }.bind(this))
   }
@@ -92,14 +92,15 @@ export default class PropertyImage extends Component {
         newPosition: newPosition
       },
       dataType: 'json',
-      type: 'patch'
-    }).done(function (data) {
-      if (data.success) {
-        this.setState({
-          currentPhotos: arrayMove(this.state.currentPhotos, oldIndex, newIndex)
-        })
+      type: 'patch',
+      success: (data) => {
+        if (data.success) {
+          const currentPhotos = this.state.currentPhotos
+          const updatedPhotos = arrayMove(currentPhotos, oldIndex, newIndex)
+          this.setState({currentPhotos: updatedPhotos})
+        }
       }
-    }.bind(this))
+    })
   }
 
   overlayOn() {
