@@ -1,0 +1,35 @@
+<div class="<?=$columns?>">
+  <fieldset>
+    <legend>About me</legend>
+    <?php if (!empty($politics)):?>
+    <p>
+      <strong>My politics lean towards...</strong><br />
+      <?=$politics?>
+    </p>
+    <?php endif;//politics?>
+    <?php if (!empty($free_time)):?>
+    <p>
+      <strong>In my free time:</strong><br />
+      <?=$free_time?>
+    </p>
+    <?php endif;//free_time?>
+    <?php if (!empty($loudness)):?>
+    <p>
+      <strong>I'd describe my volume as...</strong><br />
+      <?=$loudness?>
+    </p>
+    <?php endif;//loudness?>
+    <?php if (!empty($music)):?>
+    <p>
+      <strong>Music I enjoy:</strong><br />
+      <?=implode(', ', $music)?>
+    </p>
+    <?php endif;//music?>
+    <?php if (!empty($languages)):?>
+    <p>
+      <strong>The languages I speak:</strong><br />
+      <?=implode(', ', $languages)?>
+    </p>
+    <?php endif;//languages?>
+  </fieldset>
+</div>

@@ -1,0 +1,35 @@
+<div class="<?=$columns?>">
+  <fieldset>
+    <legend>College life</legend>
+    <?php if (!empty($major)):?>
+    <p>
+      <strong>My major...</strong><br />
+      <?=$major?>
+    </p>
+    <?php endif;//major?>
+    <?php if (!empty($focus)):?>
+    <p>
+      <strong>My focus...</strong><br />
+      <?=$focus?>
+    </p>
+    <?php endif;//focus?>
+    <?php if (!empty($wake_time)):?>
+    <p>
+      <strong>I tend to wake up around...</strong><br />
+      <?=$wake_time?>
+    </p>
+    <?php endif;//wake_time?>
+    <?php if (!empty($sleep_time)):?>
+    <p>
+      <strong>I tend to go to bed around...</strong><br />
+      <?=$sleep_time?>
+    </p>
+    <?php endif;//sleep_time?>
+    <?php if (!empty($study_time)):?>
+    <p>
+      <strong>I tend to study...</strong><br />
+      <?=$study_time?>
+    </p>
+    <?php endif;//study_time?>
+  </fieldset>
+</div>

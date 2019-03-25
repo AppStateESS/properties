@@ -1,0 +1,33 @@
+<div class="contact-info card mb-3">
+  <div class="card-header bg-primary text-white">
+    <h2 class="text-center m-0"><?=$name?></h2>
+  </div>
+  <div class="card-body">
+    <div class="email">
+      <a href="mailto:<?=$email?>">
+        <i class="far fa-envelope"></i>&nbsp;<?=$email?></a>
+    </div>
+    <div class="phone">
+      <a href="tel:+1<?=$phone?>">
+        <i class="fa fa-phone"></i>&nbsp;<?=$phone_format?>
+      </a>
+    </div>
+    <?php if ($social_media): ?>
+    <?php if (!empty($facebook)):?>
+    <a class="social" href="<?=$facebook?>">
+      <i class="fab fa-facebook fa-lg"></i>
+    </a>
+    <?php endif;//facebook?>
+    <?php if (!empty($twitter)):?>
+    <a class="social" href="<?=$twitter?>">
+      <i class="fab fa-twitter fa-lg"></i>
+    </a>
+    <?php endif;//twitter?>
+    <?php if (!empty($instagram)):?>
+    <a class="social" href="<?=$instagram?>">
+      <i class="fab fa-instagram fa-lg"></i>
+    </a>
+    <?php endif; //instagram?>
+    <?php endif;//social_media?>
+  </div>
+</div>

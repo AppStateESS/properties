@@ -1,0 +1,29 @@
+<div class="<?=$columns?>">
+  <fieldset>
+    <legend>Living habits</legend>
+    <?php if (!empty($overnighter)):?>
+    <p>
+      <strong>Late guests...</strong><br />
+      <?=$overnighter?>
+    </p>
+    <?php endif;//overnight?>
+    <?php if (!empty($cleanliness)):?>
+    <p>
+      <strong>Cleanliness...</strong><br />
+      <?=$cleanliness?>
+    </p>
+    <?php endif;//clean?>
+    <?php if (!empty($smoking)):?>
+    <p>
+      <strong>Smoking:</strong><br />
+      <?=$smoking?>
+    </p>
+    <?php endif;//smoking?>
+    <?php if (!empty($pets)):?>
+    <p>
+      <strong>Pets:</strong><br />
+      <?=$pets?>
+    </p>
+    <?php endif;//pets?>
+  </fieldset>
+</div>
