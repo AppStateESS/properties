@@ -289,18 +289,25 @@ export default class SubleaseForm extends Base {
     }
 
     let activateButton
+    let deactivateButton
+    let showActivate = 'd-inline'
+    let showDeactivate = 'd-inline'
     if (sublease.id > 0) {
       if (empty(sublease.active)) {
-        activateButton = (
-          <div onClick={this.activate} className="lead pointer text-muted">
-            <i className="fa fa-toggle-off"></i>&nbsp; Sublease inactive</div>
-        )
+        showDeactivate = 'd-none'
       } else {
-        activateButton = (
-          <div onClick={this.deactivate} className="lead pointer text-success">
-            <i className="fa fa-toggle-on"></i>&nbsp; Sublease active</div>
-        )
+        showActivate = 'd-none'
       }
+
+      activateButton = (
+        <div key="1" onClick={this.activate} className={`lead pointer text-muted ${showActivate}`}>
+          <i className="fa fa-toggle-off"></i>&nbsp; Sublease inactive</div>
+      )
+
+      deactivateButton = (
+        <div key="2" onClick={this.deactivate} className={`lead pointer text-success ${showDeactivate}`}>
+          <i className="fa fa-toggle-on"></i>&nbsp; Sublease active</div>
+      )
     }
 
     let contactAlert
@@ -343,7 +350,7 @@ export default class SubleaseForm extends Base {
         {message}
         {contactAlert}
         <div className="text-align mb-1">
-          {activateButton}
+          {activateButton}{deactivateButton}
         </div>
         <div className="row">
           <div className="col-sm-6">
