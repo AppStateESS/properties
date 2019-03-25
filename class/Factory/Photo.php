@@ -85,8 +85,11 @@ abstract class Photo extends Base
         $db->loadSelectStatement();
         while ($row = $db->fetch()) {
             $thumbnailPath = $this->thumbnailed($row['path']);
+            if (!is_file($thumbnailPath)) {
+                continue;
+            }
             $stamp = '?x=' . time();
-            $row['thumbnail'] =  $thumbnailPath . $stamp;
+            $row['thumbnail'] = $thumbnailPath . $stamp;
             list($twidth, $theight) = getimagesize($thumbnailPath);
             $row['thumbnailWidth'] = $twidth;
             $row['thumbnailHeight'] = $theight;
@@ -147,11 +150,10 @@ abstract class Photo extends Base
             $scale_height = floor(PROP_MAX_IMAGE_HEIGHT / $ratio);
         }
 
-        \phpws\PHPWS_File::scaleImage($file, $file, $scale_width,
-                $scale_height);
+        \phpws\PHPWS_File::scaleImage($file, $file, $scale_width, $scale_height);
 
         return \phpws\PHPWS_File::cropImage($file, $file, PROP_MAX_IMAGE_WIDTH,
-                PROP_MAX_IMAGE_HEIGHT);
+                        PROP_MAX_IMAGE_HEIGHT);
     }
 
     public function moveImage($pic, $owner_id)
@@ -184,7 +186,8 @@ abstract class Photo extends Base
         $thumbnail = $this->thumbnailed($photo->path);
         $source_path = $photo->path;
 
-        \phpws\PHPWS_File::scaleImage($source_path, $thumbnail, 600, PROP_THUMBNAIL_HEIGHT);
+        \phpws\PHPWS_File::scaleImage($source_path, $thumbnail, 600,
+                PROP_THUMBNAIL_HEIGHT);
     }
 
     public function removePhotos($item_id)
@@ -217,7 +220,7 @@ abstract class Photo extends Base
         if (!isset($_FILES) || empty($_FILES)) {
             return array('error' => 'No files uploaded');
         }
-        
+
         $pic = $_FILES['photo'];
 
         try {
