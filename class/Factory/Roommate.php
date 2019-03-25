@@ -24,20 +24,25 @@ use phpws2\Database;
 
 class Roommate extends Base
 {
+
     public $more_rows = true;
-    
+
     protected function build()
     {
         return new \properties\Resource\Roommate;
     }
 
-    public function listing(\Canopy\Request $request, $identify = false, $allowSearchName = false)
+    public function listing(\Canopy\Request $request, $identify = false,
+            $allowSearchName = false)
     {
         $listing = new Roommate\Listing;
         $listing->identify = $identify;
         $listing->allowSearchName = $allowSearchName;
         $listing->pullVariables($request);
         $result = $listing->get();
+        if (empty($result)) {
+            $this->more_rows = false;
+        }
         return $result;
     }
 
@@ -115,7 +120,7 @@ class Roommate extends Base
     {
         \Layout::addToStyleList('mod/properties/css/roommate/view.css');
         try {
-        $roommate = $this->load($id);
+            $roommate = $this->load($id);
         } catch (\properties\Exception\ResourceNotFound $e) {
             \phpws2\Error::errorPage('404');
         }
