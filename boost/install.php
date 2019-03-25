@@ -36,28 +36,33 @@ function properties_install(&$content)
         $user_id = $sub_table->getDataType('user_id');
         $sublease_index = new \phpws2\Database\Unique($user_id);
         $sublease_index->add();
-        
+
         $subphoto = new \properties\Resource\SubleasePhoto;
         $subphoto->createTable($db);
         $subphoto_tbl = $db->buildTable($subphoto->getTable());
         $sid = $subphoto_tbl->getDataType('sid');
         $photo_index = new \phpws2\Database\ForeignKey($sid, $sublease_id);
         $photo_index->add();
-        
+
         $db = \phpws2\Database::getDB();
         $tbl = $db->buildTable('prop_inquiry');
         $tbl->addDataType('contact_id', 'int');
         $tbl->addDataType('inquiry_date', 'int');
         $tbl->addDataType('inquiry_type', 'varchar')->setSize('20');
         $tbl->create();
-        
+
+        $db = \phpws2\Database::getDB();
+        $roommate_table = $db->addTable('prop_roommate');
+        $roommate_table->drop(true);
+        $roommate = new \properties\Resource\Roommate;
+        $roommate->createTable($db);
+
         $db = \phpws2\Database::getDB();
         $tbl = $db->buildTable('prop_banned');
         $tbl->addPrimaryIndexId();
         $dt2 = $tbl->addDataType('user_id', 'varchar');
         $dt3 = $tbl->addDataType('reason', 'varchar');
         $tbl->create();
-        
     } catch (\Exception $e) {
         \phpws2\Error::log($e);
         $db->buildTable($manager->getTable())->drop(true);
