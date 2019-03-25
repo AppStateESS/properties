@@ -137,8 +137,18 @@ class Roommate extends Base
             $view['politics'] = $this->getPolitics();
 
             //Triggers
+            $view['about_me'] = !($this->politics->isEmpty() && $this->free_time->isEmpty() && $this->loudness->isEmpty() && $this->music->isEmpty() && $this->languages->isEmpty());
             $view['college_life'] = !($this->major->isEmpty() && $this->focus->isEmpty() && $this->wake_time->isEmpty() && $this->sleep_time->isEmpty() && $this->study_time->isEmpty());
             $view['living_habits'] = !($this->overnighter->isEmpty() && $this->cleanliness->isEmpty() && $this->smoking->isEmpty() && $this->pets->isEmpty());
+            
+            $columns = 0;
+            $columns += (int) $view['about_me'];
+            $columns += (int) $view['college_life'];
+            $columns += (int) $view['living_habits'];
+            $columns += (int) $view['hobbies'];
+            
+           $view['columns'] = $columns > 2 ? 'col-md-4 col-sm-6' : 'col-sm-6';
+            
             $view['social_media'] = !($this->facebook->isEmpty() && $this->twitter->isEmpty() && $this->instagram->isEmpty());
         } else {
             $view['languages'] = $this->languages->get();
