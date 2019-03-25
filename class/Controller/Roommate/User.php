@@ -48,7 +48,7 @@ class User extends \properties\Controller\SubController
     {
         if (isset($_SERVER['HTTP_REFERER']) && stristr($_SERVER['HTTP_REFERER'],
                         'properties/Roommate/list')) {
-            \properties\Factory\NavBar::addItem('<button class="btn btn-outline-dark btn-sm navbar-btn mr-1" onClick="window.history.back()"><i class="fa fa-list"></i>&nbsp;Back to list</button>');
+            \properties\Factory\NavBar::addItem('<button class="btn btn-link navbar-btn mr-1" onClick="window.history.back()"><i class="fa fa-list"></i>&nbsp;Back to list</button>');
         }
     }
     
