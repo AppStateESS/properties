@@ -39,7 +39,7 @@ class Dropdown extends Component {
 
 
     return (
-      <div className="dropdown">
+      <div className="dropdown mr-1 mb-1">
         <button
           className={buttonClass}
           type="button"
