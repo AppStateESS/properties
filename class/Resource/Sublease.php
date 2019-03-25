@@ -48,6 +48,7 @@ class Sublease extends Place
     public function view()
     {
         $view = parent::view();
+        unset($view['user_id']);
 
         if ($this->isCloseToCampus() || $this->furnished->get() || 
                 $this->airconditioning->get() ||
