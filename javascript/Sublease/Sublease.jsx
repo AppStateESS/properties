@@ -30,27 +30,36 @@ export default class Property extends Base {
     if (this.searchVars.offset > 0) {
       sendData.offset = this.searchVars.offset
     }
-    $.getJSON('./properties/Sublease', sendData).done(function (data) {
-      if (data.active_button !== undefined) {
-        this.showActiveButton = data.active_button
-      }
-      if (this.searchVars.offset > 0) {
-        if (data.subleases.length == 0 || this.state.subleases == null) {
-          this.clearSearch()
-          return
+
+    $.ajax({
+      url: './properties/Sublease',
+      data: sendData,
+      dataType: 'json',
+      type: 'get',
+      success: (data) => {
+        if (data.active_button !== undefined) {
+          this.showActiveButton = data.active_button
         }
-        this.setState({
-          subleases: this.state.subleases.concat(data.subleases),
-          moreRows: data.more_rows,
-        })
-      } else {
-        this.setState({subleases: data.subleases, moreRows: data.more_rows,})
+        if (this.searchVars.offset > 0) {
+          if (data.subleases.length == 0 || this.state.subleases == null) {
+            this.clearSearch()
+            return
+          }
+          this.setState({
+            subleases: this.state.subleases.concat(data.subleases),
+            moreRows: data.more_rows
+          })
+        } else {
+          this.setState({subleases: data.subleases, moreRows: data.more_rows})
+        }
+        ReactTooltip.rebuild()
+      },
+      error: () => {
+        this.setState({loading: false})
+        this.setMessage('Error: failure pulling subleases')
       }
-      ReactTooltip.rebuild()
-    }.bind(this)).fail(function () {
-      this.setState({loading: false})
-      this.setMessage('Error: failure pulling subleases')
-    }.bind(this))
+    })
+
   }
 
   updateLink() {
