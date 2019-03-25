@@ -19,6 +19,7 @@
 namespace properties\Controller\Sublease;
 
 use Canopy\Request;
+use phpws2\Template;
 use properties\Factory\NavBar;
 
 class Logged extends User
@@ -146,6 +147,7 @@ class Logged extends User
             NavBar::setTitle('My Sublease');
             NavBar::addOption('<a class="dropdown-item" href="properties/Sublease/' . $this->user_sublease->getId() . '"><i class="far fa-building"></i>&nbsp;View my sublease</a>');
             NavBar::addOption('<a class="dropdown-item" href="properties/Sublease/edit"><i class="fa fa-edit"></i>&nbsp;Update my sublease</a>');
+            NavBar::addOption('<a class="dropdown-item pointer" href="properties/Sublease/confirmDelete"><i class="fa fa-trash"></i>&nbsp;Delete my sublease</a>');
             if ($photo) {
                 NavBar::addOption('<a class="pointer dropdown-item" id="edit-photo-button"><i class="fa fa-camera"></i>&nbsp;Edit photos</a>');
             }
@@ -163,6 +165,20 @@ class Logged extends User
         } else {
             throw new \properties\Exception\PrivilegeMissing;
         }
+    }
+
+    public function confirmDeleteHtmlCommand(Request $request)
+    {
+        $vars['id'] = $this->user_sublease->id;
+        $template = new Template($vars);
+        $template->setModuleTemplate('properties', 'sublease/ConfirmDelete.html');
+        return $template->get();
+    }
+
+    public function deleteHtmlCommand(Request $request)
+    {
+        $this->factory->delete($this->user_sublease);
+        \Canopy\Server::forward('./properties/Sublease');
     }
 
 }

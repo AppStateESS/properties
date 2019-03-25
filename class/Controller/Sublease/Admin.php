@@ -63,10 +63,22 @@ EOF;
         NavBar::addOption($link);
         NavBar::addOption('<a class="dropdown-item pointer" id="edit-photo-button"><i class="fa fa-camera"></i>&nbsp;Edit photos</a>');
         $deleteLink = <<<EOF
-<a onClick="banUser.callback()" class="pointer dropdown-item"><i class="fa fa-ban"></i>&nbsp;Delete and ban user</a>
+<a onClick="deleteSublease()" class="pointer dropdown-item"><i class="fa fa-trash"></i>&nbsp;Delete sublease</a>
 EOF;
         NavBar::addOption($deleteLink);
+        $deleteBanLink = <<<EOF
+<a onClick="banUser.callback()" class="pointer dropdown-item"><i class="fa fa-ban"></i>&nbsp;Delete and ban user</a>
+EOF;
+        NavBar::addOption($deleteBanLink);
         return $this->factory->view($this->id, true);
+    }
+    
+    public function deleteHtmlCommand(Request $request)
+    {
+        $subleaseId = (int) $request->shiftCommand();
+        $sublease = $this->factory->load($subleaseId);
+        $this->factory->delete($sublease);
+        \Canopy\Server::forward('./properties/Sublease');
     }
 
     protected function jsonPatchCommand(Request $request)

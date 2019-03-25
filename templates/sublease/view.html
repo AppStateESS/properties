@@ -6,6 +6,13 @@
   
   let banUser = () => {
   }
+  
+  const deleteSublease = () => {
+    if (confirm('Are you sure you want to delete this sublease?')) {
+      location.href = './properties/Sublease/delete/' + subleaseId;
+    }
+  }
+  
   const userId = '<?=$user_id?>';
 </script>
 <div class="sublease-view">
