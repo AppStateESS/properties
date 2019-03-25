@@ -32,6 +32,7 @@ export default class RoommateRow extends Component {
           <a href={`./properties/Roommate/${roommate.id}`}><h4 className="mb-0">
             <strong>Move in:</strong>&nbsp; {roommate.move_in_date}
           </h4></a>
+          Updated: {roommate.updated}
         </div>
         <div className="card-body">
           <div className="card-text">
