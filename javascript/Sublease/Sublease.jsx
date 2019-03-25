@@ -70,6 +70,13 @@ export default class Property extends Base {
   }
 
   render() {
+    const showMore = this.state.moreRows === true
+      ? (
+        <div className="text-center">
+          <button className="btn btn-primary" onClick={this.showMore}>Show more results</button>
+        </div>
+      )
+      : null
     return (
       <div className="sublease-list">
         <h2>Subleases</h2>
@@ -84,13 +91,7 @@ export default class Property extends Base {
           sortType={this.sortType}
           facilities={false}
           toggle={this.toggle}/>
-        <Listing subleases={this.state.subleases} search={!empty(this.search)}/> {
-          this.state.moreRows === true
-            ? <div className="text-center">
-                <button className="btn btn-primary" onClick={this.showMore}>Show more results</button>
-              </div>
-            : null
-        }
+        <Listing subleases={this.state.subleases} search={!empty(this.search)}/> {showMore}
       </div>
     )
   }
