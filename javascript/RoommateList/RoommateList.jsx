@@ -22,7 +22,8 @@ export default class RoommateList extends Component {
         free_time: 'Spends free time',
         sleep_time: 'Bed time preference',
         smoking: 'Smoking',
-        moveinnow: ''
+        moveinnow: '',
+        ordering: 'List order',
       },
       searchVars: {
         focus: null,
@@ -32,7 +33,8 @@ export default class RoommateList extends Component {
         smoking: null,
         free_time: null,
         moveinnow: 0,
-        offset: 0
+        offset: 0,
+        ordering: ''
       },
       searchName: '',
       moreRows: true
@@ -72,7 +74,9 @@ export default class RoommateList extends Component {
       pets: null,
       smoking: null,
       free_time: null,
-      offset: 0
+      moveinnow: 0,
+      offset: 0,
+      ordering: '',
     }
     this.setState({
       searchVars: searchVars
@@ -149,7 +153,9 @@ export default class RoommateList extends Component {
   }
 
   clearSearchName() {
-    this.setState({searchName: ''}, this.load)
+    this.setState({
+      searchName: ''
+    }, this.load)
   }
 
   render() {

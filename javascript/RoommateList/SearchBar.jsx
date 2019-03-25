@@ -148,19 +148,25 @@ export default class SearchBar extends Component {
         label: 'I like relaxing alone'
       }
     ]
+    
+    const ordering = [
+      {handleClick: this.props.updateSearchVars.bind(null, 'ordering', 'desc'), label: 'Show newest first'},
+      {handleClick: this.props.updateSearchVars.bind(null, 'ordering', 'asc'), label: 'Show oldest first'},
+    ]
 
     const {labels} = this.props
 
     return (
       <div className="card card-default mb-2">
         <div className="card-body">
-          <div className="d-flex justify-content-between flex-wrap mb-2">
+          <div className="d-flex justify-content-start flex-wrap mb-2">
             <Dropdown small={true} label={labels.focus} options={focus}/>
             <Dropdown small={true} label={labels.wake_time} options={wakeTime}/>
             <Dropdown small={true} label={labels.pets} options={pets}/>
             <Dropdown small={true} label={labels.free_time} options={freeTime}/>
             <Dropdown small={true} label={labels.sleep_time} options={sleepTime}/>
             <Dropdown small={true} label={labels.smoking} options={smoking}/>
+            <Dropdown small={true} label={labels.ordering} options={ordering}/>
           </div>
           <div className="text-center">
             <div className="d-block mx-auto">

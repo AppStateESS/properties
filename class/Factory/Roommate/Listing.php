@@ -33,6 +33,7 @@ class Listing
     public $limit = 10;
     public $moveinnow = false;
     public $offset = 0;
+    public $ordering;
     public $searchName;
     public $allowSearchName = false;
 
@@ -46,6 +47,7 @@ class Listing
         $this->pets = $request->pullGetString('pets', true);
         $this->smoking = $request->pullGetString('smoking', true);
         $this->moveinnow = $request->pullGetBoolean('moveinnow', true);
+        $this->ordering = $request->pullGetString('ordering', true);
         if ($this->allowSearchName) {
             $this->searchName = $request->pullGetString('searchName', true);
         }
@@ -62,6 +64,12 @@ class Listing
         
         $offset = $this->offset * $this->limit;
         $db->setLimit($this->limit + 1, $offset);
+        
+        if ($this->ordering === 'desc') {
+            $tbl->addOrderBy('updated', 'desc');
+        } elseif ($this->ordering === 'asc') {
+            $tbl->addOrderBy('updated', 'asc');
+        }
 
         if ($this->identify) {
             $tbl->addField('email');

@@ -40,6 +40,10 @@ export const profileLabel = {
     'sometimes': 'I sometimes smoke',
     'outside': 'I smoke, but do so outside',
     'inside': 'I smoke inside'
+  },
+  ordering: {
+    'desc' : 'Show newest first',
+    'asc' : 'Show oldest first'
   }
 }
 
