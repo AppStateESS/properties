@@ -3,6 +3,7 @@ import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import Waiting from '../Mixin/Html/Waiting.jsx'
 import SubleaseRow from './SubleaseRow.jsx'
+import ReactTooltip from 'react-tooltip'
 
 export default class Listing extends Component {
   constructor(props) {
@@ -17,9 +18,7 @@ export default class Listing extends Component {
       return <Waiting label="subleases"/>
     } else if (list.length === 0) {
       if (this.props.search === true) {
-        return (
-          <div className="lead">No subleases found. Try a different search?</div>
-        )
+        return (<div className="lead">No subleases found. Try a different search?</div>)
       } else {
         return <div className="lead">No subleases found.</div>
       }
@@ -29,7 +28,9 @@ export default class Listing extends Component {
         return <SubleaseRow sublease={value} key={key}/>
       }.bind(this))
       return (
-        <div className="listing">{rows}</div>
+        <div className="listing">{rows}
+          <ReactTooltip type="light" border={true} effect="solid"/>
+        </div>
       )
     }
 
