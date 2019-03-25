@@ -77,7 +77,10 @@ export default class ActivityReport extends Component {
   deactivate(value) {
     return $.ajax({
       url: 'properties/Manager/' + value.id,
-      data : {varname: 'active', value: 0},
+      data: {
+        varname: 'active',
+        value: 0
+      },
       dataType: 'json',
       type: 'patch'
     })
@@ -126,21 +129,24 @@ export default class ActivityReport extends Component {
     listing = this.state.listing.map(function (value, key) {
       return <ManagerRow value={value} key={key} toggle={this.toggle.bind(this, key)}/>
     }.bind(this))
+    const cbStyle = {
+      width: '80px'
+    }
 
+    const activeStyle = {
+      width: '100px'
+    }
     return (
       <div className="scroll-table">
         <table className="table table-striped">
-          <thead>
+          <tbody>
             <tr>
-              <th style={{
-                width: '100px'
-              }}><input type="checkbox" onChange={this.toggleAll} checked={this.selected}/></th>
-              <th>Active</th>
+              <th style={cbStyle}><input type="checkbox" onChange={this.toggleAll} checked={this.selected}/></th>
+              <th style={activeStyle}>Active</th>
               <th>Company</th>
+              <th>Properties</th>
               <th>Last logged</th>
             </tr>
-          </thead>
-          <tbody>
             {listing}
           </tbody>
         </table>
@@ -154,9 +160,11 @@ export default class ActivityReport extends Component {
   }
 
   load() {
-    $.getJSON('./properties/Reports/inactivity', {date: this.state.activityDate}).done(function (data) {
-      this.setState({listing: data.list})
-    }.bind(this))
+    $.getJSON('./properties/Reports/inactivity', {date: this.state.activityDate}).done(
+      function (data) {
+        this.setState({listing: data.list})
+      }.bind(this)
+    )
   }
 
   render() {
@@ -173,7 +181,7 @@ export default class ActivityReport extends Component {
     return (
       <div>
         <h2>Manager activity</h2>
-        <label>Show before:</label>
+        <label>Show before:</label>&nbsp;
         <DatePicker
           dateFormat="YYYY-MM-DD"
           onChange={this.setActivityDate}

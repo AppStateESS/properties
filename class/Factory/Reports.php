@@ -39,8 +39,20 @@ class Reports extends Base
         $this->pullVariables($request);
         $db = Database::getDB();
         $c = $db->addTable('prop_contacts');
+        $p = $db->addTable('properties', null, false);
+        $cond = new \phpws2\Database\Conditional($db, $c->getField('id'),
+                $p->getField('contact_id'), '=');
+        $db->joinResources($c, $p, $cond, 'left');
+        $exp = new \phpws2\Database\Expression('count(' . $p->getField('id') . ')',
+                'count');
+        $db->addExpression($exp);
+        $c->addField('id');
+        $c->addField('active');
+        $c->addField('company_name');
+        $c->addField('last_log');
         $c->addFieldConditional('last_log', $this->date, '<');
         $c->addOrderBy('last_log');
+        $db->setGroupBy($c->getField('id'));
         $result = $db->select();
         return $result;
     }
