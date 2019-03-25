@@ -9,13 +9,16 @@ export default class Row extends Component {
   petsAllowed(petsAllowed) {
     if (petsAllowed === '1') {
       return (
-      <span className="fa-3x amenity-icon" data-placement="top" data-tip="Pet friendly">
-        <i
-          className="fas fa-paw"
-          data-fa-transform="shrink-8"
-          data-fa-mask="fas fa-square"></i>
-      </span>
-    )
+        <span
+          className="fa-3x amenity-icon"
+          data-placement="top"
+          data-tip="Pet friendly">
+          <i
+            className="fas fa-paw"
+            data-fa-transform="shrink-8"
+            data-fa-mask="fas fa-square"></i>
+        </span>
+      )
     }
   }
 
@@ -35,7 +38,10 @@ export default class Row extends Component {
   closeToCampus(close) {
     if (close === true) {
       return (
-        <span className="fa-3x amenity-icon" data-placement="top" data-tip="Walking distance to campus">
+        <span
+          className="fa-3x amenity-icon"
+          data-placement="top"
+          data-tip="Walking distance to campus">
           <i
             className="fas fa-street-view"
             data-fa-transform="shrink-8"
@@ -48,7 +54,10 @@ export default class Row extends Component {
   appalcart(appalcart) {
     if (appalcart === '1') {
       return (
-        <span className="fa-3x amenity-icon" data-placement="top" data-tip="On AppalCART route">
+        <span
+          className="fa-3x amenity-icon"
+          data-placement="top"
+          data-tip="On AppalCART route">
           <i
             className="fas fa-bus"
             data-fa-transform="shrink-8"
@@ -74,7 +83,10 @@ export default class Row extends Component {
   washer(washer) {
     if (washer === true) {
       return (
-        <span className="fa-3x amenity-icon" data-placement="top" data-tip="Washer/Dryer in unit">
+        <span
+          className="fa-3x amenity-icon"
+          data-placement="top"
+          data-tip="Washer/Dryer in unit">
           <i
             className="fas fa-archive"
             data-fa-transform="shrink-8"
@@ -87,7 +99,10 @@ export default class Row extends Component {
   utilities(included) {
     if (included === '1') {
       return (
-        <span className="fa-3x amenity-icon" data-placement="top" data-tip="Utilities included in rent">
+        <span
+          className="fa-3x amenity-icon"
+          data-placement="top"
+          data-tip="Utilities included in rent">
           <i
             className="fas fa-plug"
             data-fa-transform="shrink-8"
@@ -100,7 +115,10 @@ export default class Row extends Component {
   smoking(smoke_free) {
     if (smoke_free === true) {
       return (
-        <span className="fa-3x amenity-icon" data-placement="bottom" data-tip="Smoke free">
+        <span
+          className="fa-3x amenity-icon"
+          data-placement="bottom"
+          data-tip="Smoke free">
           <i
             className="fas fa-fire-extinguisher"
             data-fa-transform="shrink-8"
