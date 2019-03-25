@@ -237,7 +237,7 @@ class Property extends Base
         $tpl['photo_edit_button'] = null;
         if ($admin) {
             $property_id = $property->id;
-            NavBar::addOption('<a class="dropdown-item" id="delete-property-button"><i class="far fa-trash-alt"></i>&nbsp;Delete property</a>',
+            NavBar::addOption('<a class="dropdown-item pointer" id="delete-property-button"><i class="far fa-trash-alt"></i>&nbsp;Delete property</a>',
                     true);
             NavBar::addOption("<a class='dropdown-item' href='properties/Property/$property_id/edit'><i class='fa fa-edit'></i>&nbsp;Edit property</a>",
                     true);
