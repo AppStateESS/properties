@@ -75,7 +75,6 @@ class Logged extends User
 
     public function getHtml(Request $request)
     {
-        $this->backToList();
         return parent::getHtml($request);
     }
 

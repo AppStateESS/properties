@@ -78,14 +78,6 @@ EOF;
         \properties\Factory\NavBar::addItem($button);
     }
 
-    protected function backToList()
-    {
-        if (isset($_SERVER['HTTP_REFERER']) && stristr($_SERVER['HTTP_REFERER'],
-                        'properties/Sublease/list')) {
-            \properties\Factory\NavBar::addItem('<button class="btn btn-outline-dark navbar-btn mr-1" onClick="window.history.back()"><i class="fa fa-list"></i>&nbsp;Back to list</button>');
-        }
-    }
-
     protected function updateTimeouts()
     {
         if ($this->factory->subleaseTimeoutPast()) {
