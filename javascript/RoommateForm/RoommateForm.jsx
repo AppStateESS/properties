@@ -22,7 +22,7 @@ export default class RoommateForm extends Component {
     this.state = {
       roommate: RoommateObject,
       errors: {},
-      message: null,
+      message: null
     }
 
     bindMethods([
@@ -39,7 +39,7 @@ export default class RoommateForm extends Component {
       'checkFacebook',
       'checkInstagram',
       'checkDescription',
-      'checkTwitter',
+      'checkTwitter'
     ], this)
   }
 
@@ -86,7 +86,7 @@ export default class RoommateForm extends Component {
   setMessage(text, type) {
     const message = {
       text: text,
-      type: type,
+      type: type
     }
     this.setState({message: message})
   }
@@ -110,8 +110,11 @@ export default class RoommateForm extends Component {
           }
         }.bind(this),
         error: function () {
-          this.setMessage('A server error prevented this property from saving.', 'danger')
-        }.bind(this),
+          this.setMessage(
+            'A server error prevented this property from saving.',
+            'danger'
+          )
+        }.bind(this)
       })
     } else {
       $('html, body').animate({
@@ -121,7 +124,7 @@ export default class RoommateForm extends Component {
   }
 
   setMoveIn(a) {
-    const date = new Date(a).getTime()/1000
+    const date = new Date(a).getTime() / 1000
     this.setValue('move_in_date', date)
   }
 
@@ -153,7 +156,7 @@ export default class RoommateForm extends Component {
       this.setError('email', 'Email may not be empty')
       return false
     } else if (!CheckValues.isEmail(this.state.roommate.email)) {
-      this.setError('email', 'Email not formatted propertly')
+      this.setError('email', 'Email not formatted properly')
       return false
     } else {
       this.setError('email', null)
@@ -259,19 +262,18 @@ export default class RoommateForm extends Component {
     this.sendActive('0')
   }
 
-  sendActive(value)
-  {
+  sendActive(value) {
     $.ajax({
       url: './properties/Roommate/' + this.state.roommate.id,
       data: {
         varname: 'active',
-        value: value,
+        value: value
       },
       dataType: 'json',
       type: 'patch',
       success: function () {
         this.setValue('active', value)
-      }.bind(this),
+      }.bind(this)
     })
   }
 
@@ -326,17 +328,17 @@ export default class RoommateForm extends Component {
         <div className="text-align mb-1">
           {activateButton}
         </div>
-        <p className="alert alert-info">This service is for students looking to meet
-          others to share a residence. If you are looking for someone to assume a
-          sublease, please use our&nbsp;<strong>
+        <div className="alert alert-info">
+          This service is for students looking to meet others to share a residence. If you
+          are looking for someone to assume a sublease, please use our&nbsp;<strong>
             <a href="./properties/Sublease">sublease section</a>
           </strong>&nbsp;instead.
-        </p>
+        </div>
         {message}
         <div className="row mb-1">
           <div className="col-sm-6">
             <label>I am ready to be a roommate after
-            </label>
+            </label>&nbsp;
             <DatePicker
               onChange={this.setMoveIn}
               value={this.formatDate(roommate.move_in_date)}/>
@@ -353,6 +355,7 @@ export default class RoommateForm extends Component {
                 roommate. Leave out any information repeated below and any contact information
                 you wish to keep from anonymous users.</div>
               <textarea
+                rows="6"
                 placeholder="e.g. Looking for single semester roommate."
                 className="form-control"
                 onChange={this.setValue.bind(this, 'description')}
@@ -432,7 +435,7 @@ export default class RoommateForm extends Component {
           </div>
           <p className="alert alert-info">Contact information will be shown to other
             logged in students only. If you wish for people to have contact information
-            without logging in, put it in the "Introduction" section above.</p>
+            without logging in, put it in the &quot;Introduction&quot; section above.</p>
           {saveContinue}
         </fieldset>
         <fieldset>
