@@ -2,25 +2,20 @@ sudo: false
 language: php
 php:
 - 7
-
 install:
 - nvm install 6
 - npm install
-
 script:
 - ".travis-build/phplint ."
-#- phpunit
-
 after_success:
 - npm run build
 - rm -rf node_modules
 - tar -czf properties.tar.gz *
-
 deploy:
   provider: releases
   skip_cleanup: true
   api_key:
-    secure: TtX0sXkg24KUrb3Luy4QsiNQ4PofMl4cnnsSmchHhpNNFef5Lf3GmBfFEdk4qhMDleAzpfit42OUUwVJ0xY7o60SnKqFmkBlw1EKX0p2m8FxG/QK6QnxONgXsBh6huabvXaioZJstV5cVeKtGdPVxYbH6auVwbPXFd2bcMuX9rR2PjOMu6gtHHW34rUpkk0kkdgvmlP6htGEZRVlZbmnM1qfSBziCVNsRflAeFx2YjQb+M81m9t310RSmEOSnOl86SYhwF34+oYTn/WVtWgD2cSGqBhq/RQ9VTYlCl6raMvAv2gNxUbB3bJaHzEQjrOFt21WBOOfH4t3ZOlNCZ0O82krCBIkzSc+2XRy/pKkkG7XdbCG4Ncp7WUU+KbmbJQBtvlOzEiBfz1p6YaJFGUr3/TpI3jygubFYxrE58CiEzH1NPUNlakvZ94oXnqdcpfiQ8JTyH5aU4EJzzg57GVMn4NvZcuscQlM5QsM8+TS7w0ePh05WRslaRr5JA2khRgTSpt5mILQIvu9cid4cM36n3HDC3jTbxGFlesoso26W3q1bsa6Nt/oOSsqtHr0GJfjtnOxWK7QjHg+mpjSTWfwF7Cnh3zcRFVSNu7rrq4jkUfhl1Na4/OzvacV/rt+RjCt8v3/Vapu8Wt2JH4absGMpDUc1XpvpCatiLqvKiPgKcQ=
+    secure: vAkvWZGYnoiscwkdIXdlFd1Jce2smFEzYjGALhiK36aBjIkEIIebEZCoxEcqpgRmzhNe1J40aFDdQvMoDW6FVjo6XzLl9qFQW4FArt7xdxQblk0r7rOP3l1C39GvDay4+YLJzC0nhdCve+PAgJkKEtrJoQ+mTumjJGjJG73mVIOgHcCrjZQCIrRWo+W3xJ2+OScV69wjRiB9Mu1OBKGRQGC8zW5bRzIpjZxtTlZlY8cL3r2ko5aPxMN34WRK42i/uGUIAKztPlK2TsTLf8AF1uBLN9ErEP+eV5fzZkxSwBNjWLJbm+/0AwVfNJgMy+jaSglDeWn2c/jr1y1jD0qSRaIKO7GgIIp2WS3unCU5cEu1tFC+iZgTaERb4o1YU7uSc0ePzRGKjaSRacfDJm3776uBbwPHNXYNPiq3AruBgY5NmfS5DnEIVJVVWkSGiwx31n4VbKR6zNfAk4qHRHQiVuJULS+Lm64zMcnioJTKDmsxIoDxhcbdvroXj57aMhSfIFpqn7J4O2ALPgFIi8KFb352SVjNHA7bHt7vtqEyWm+JxXPSYRyef+wPk0Cml0HBgvUXLxnZMCPeFXdTE2euSXzYEK9uvxIsUOOPrhnLe8LUxuXAeT7qSzjegul2AP/lgyhfbiFZIFdGKew+SrVXqd++6bhWNKzV1M5HDC0srEs=
   file: properties.tar.gz
   overwrite: true
   on:
