@@ -151,7 +151,7 @@ class PropertyUpgrade
             case $this->compare('2.2.0'):
                 $methodName = $this->getMethodName('2.2.0');
                 $this->$methodName($content);
-                
+
             case $this->compare('2.2.1'):
                 $methodName = $this->getMethodName('2.2.1');
                 $this->$methodName($content);
@@ -392,27 +392,28 @@ class PropertyUpgrade
     public function v2_2_0(&$content)
     {
         $updates = array(
-        'Updated to Canopy',
-        'Fixed: Removed Created date from roommate listing.',
-        'Fixed: Users can\'t delete roommates.',
-        'Fixed: Admin can\'t search roommates',
-        'Fixed: Show more rows button is not dependable',
-        'Fixed: Create a contact toggle on sublease',
-        'Fixed: Roommate form completion is confusing',
-        'Fixed: Sublease: show when it was posted.',
-        'Fixed: Roommate ordering.',
-        'Fixed: Wording changes.',
-        'Fixed: roommates needs a next page button.',
-        'Fixed: Description text box is too small.',
-        'Fixed: Manager activity report should show property count.',
-        'Fixed: Sorting bugged.',
-        'Fixed: Roommate listing needs pagination and sorting.',
+            'Updated to Canopy',
+            'Fixed: Removed Created date from roommate listing.',
+            'Fixed: Users can\'t delete roommates.',
+            'Fixed: Admin can\'t search roommates',
+            'Fixed: Show more rows button is not dependable',
+            'Fixed: Create a contact toggle on sublease',
+            'Fixed: Roommate form completion is confusing',
+            'Fixed: Sublease: show when it was posted.',
+            'Fixed: Roommate ordering.',
+            'Fixed: Wording changes.',
+            'Fixed: roommates needs a next page button.',
+            'Fixed: Description text box is too small.',
+            'Fixed: Manager activity report should show property count.',
+            'Fixed: Sorting bugged.',
+            'Fixed: Roommate listing needs pagination and sorting.',
         );
         $this->addContent($content, '2.2.0', $updates);
     }
-    
-    public function v2_2_1(&$content) {
-        $updates = array('Prevent duplicate defines for SwiftMailer', 'Fixed report date selector', 'Fixed double fa-lg in views.', 'Removed default report selection');
+
+    public function v2_2_1(&$content)
+    {
+        $updates = array('Prevent duplicate defines for SwiftMailer', 'Fixed report date selector', 'Fixed double fa-lg in views.', 'Removed default report selection', 'Fixed manager report header.');
         $this->addContent($content, '2.2.1', $updates);
     }
 
