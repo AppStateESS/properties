@@ -13,8 +13,7 @@ class Reports extends Component {
     super(props)
 
     this.state = {
-      //report: null,
-      report: 'inactiveManagers',
+      report: null,
       activityDate: this.today,
       inactiveList: 0,
       propertyCount: 0,
