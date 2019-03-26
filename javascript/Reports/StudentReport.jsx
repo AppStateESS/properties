@@ -1,6 +1,5 @@
 'use strict'
 import React, {Component} from 'react'
-import moment from 'moment'
 import DatePicker from 'react-date-picker'
 import Waiting from '../Mixin/Html/Waiting.jsx'
 import bindMethods from '../Mixin/Helper/Bind.js'
@@ -17,7 +16,7 @@ export default class StudentReport extends Component {
       searchDate: new Date,
       listing: null,
       checkAll: false,
-      moreRows: false,
+      moreRows: false
     }
     const methods = [
       'load',
@@ -78,12 +77,15 @@ export default class StudentReport extends Component {
     }
     const {searchDate} = this.state
     const formatDate = `${searchDate.getFullYear()}-${searchDate.getMonth() + 1}-${searchDate.getDate()}`
-    
+
     sendData.date = formatDate
 
     $.getJSON('./properties/Reports/students', sendData).done(function (data) {
       if (this.offset > 0) {
-        this.setState({listing: this.state.listing.concat(data.list), moreRows: data.more_rows})
+        this.setState({
+          listing: this.state.listing.concat(data.list),
+          moreRows: data.more_rows
+        })
       } else {
         this.setState({listing: data.list, moreRows: data.more_rows})
       }
@@ -148,8 +150,12 @@ export default class StudentReport extends Component {
           <thead>
             <tr>
               <th style={{
-                width: '100px'
-              }}><input type="checkbox" defaultValue="1" onChange={this.toggleAll} defaultChecked={this.selected}/></th>
+                  width: '100px'
+                }}><input
+                type="checkbox"
+                defaultValue="1"
+                onChange={this.toggleAll}
+                defaultChecked={this.selected}/></th>
               <th>User name</th>
               <th>Last logged</th>
             </tr>
@@ -173,6 +179,13 @@ export default class StudentReport extends Component {
       )
     }
     const searchDate = new Date(this.state.searchDate)
+    const moreButton = this.state.moreRows === true
+      ? (
+        <div className="text-center">
+          <button className="btn btn-primary" onClick={this.showMore}>Show more results</button>
+        </div>
+      )
+      : null
     return (
       <div>
         <h2>Student report</h2>
@@ -186,8 +199,7 @@ export default class StudentReport extends Component {
         <div className="student-listing">
           {this.getListing()}
         </div>
-        {this.state.moreRows === true ?
-        <div className="text-center"><button className="btn btn-primary" onClick={this.showMore}>Show more results</button></div> : null}
+        {moreButton}
       </div>
     )
   }

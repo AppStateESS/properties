@@ -17,15 +17,14 @@ export default class StudentRow extends Component {
     } else {
       lastLog = moment(value.last_logged * 1000).format('YYYY-MM-DD')
     }
+    const colStyle = {width: '100px'}
     return (
       <tr>
-        <td style={{
-          width: '100px'
-        }}><input
+        <td style={colStyle}><input
           type="checkbox"
           defaultValue="1"
           onChange={this.props.toggle}
-          defaultChecked={value.checked}/></td>
+          checked={value.checked}/></td>
         <td>{value.username}</td>
         <td>{lastLog}</td>
       </tr>
