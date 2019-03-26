@@ -151,6 +151,10 @@ class PropertyUpgrade
             case $this->compare('2.2.0'):
                 $methodName = $this->getMethodName('2.2.0');
                 $this->$methodName($content);
+                
+            case $this->compare('2.2.1'):
+                $methodName = $this->getMethodName('2.2.1');
+                $this->$methodName($content);
         }
         return $content;
     }
@@ -405,6 +409,11 @@ class PropertyUpgrade
         'Fixed: Roommate listing needs pagination and sorting.',
         );
         $this->addContent($content, '2.2.0', $updates);
+    }
+    
+    public function v2_2_1(&$content) {
+        $updates = array('Prevent duplicate defines for SwiftMailer', 'Fixed report date selector', 'Fixed double fa-lg in views.', 'Removed default report selection');
+        $this->addContent($content, '2.2.1', $updates);
     }
 
     private function addContent(&$content, $version, array $changes)
