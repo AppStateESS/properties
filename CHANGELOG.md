@@ -1,8 +1,10 @@
 # Change Log
 
-## [v2.2.0](https://github.com/AppStateESS/properties/tree/HEAD)
+## [v2.2.1](https://github.com/AppStateESS/properties/tree/v2.2.1) (2019-03-26)
+[Full Changelog](https://github.com/AppStateESS/properties/compare/v2.2.0...v2.2.1)
 
-[Full Changelog](https://github.com/AppStateESS/properties/compare/v2.1.8...HEAD)
+## [v2.2.0](https://github.com/AppStateESS/properties/tree/v2.2.0) (2019-03-26)
+[Full Changelog](https://github.com/AppStateESS/properties/compare/v2.1.8...v2.2.0)
 
 **Closed issues:**
 
