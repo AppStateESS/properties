@@ -72,13 +72,12 @@ class Admin extends \properties\Controller\SubController
         }
         $filepath = '/tmp/' . time() . rand(0, 10) . '.csv';
         $file = fopen($filepath, 'w');
-        $keys = array_diff($unused_values, array_keys($listing[0]));
+        $keys = array_diff(array_keys($listing[0]), $unused_values);
         fputcsv($file, $keys);
         foreach ($listing as $row) {
             // these variables aren't needed in a report
             foreach ($unused_values as $v) {
                 unset($row[$v]);
-                
             }
             fputcsv($file, $row);
         }
