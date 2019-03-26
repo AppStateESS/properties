@@ -161,7 +161,6 @@ export default class ActivityReport extends Component {
   load() {
     const {activityDate} = this.state
     const formatDate = `${activityDate.getFullYear()}-${activityDate.getMonth() + 1}-${activityDate.getDate()}`
-    console.log(formatDate)
     $.getJSON('./properties/Reports/inactivity', {date: formatDate}).done(
       function (data) {
         this.setState({listing: data.list})
