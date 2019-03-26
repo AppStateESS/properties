@@ -147,6 +147,10 @@ class PropertyUpgrade
             case $this->compare('2.1.8'):
                 $methodName = $this->getMethodName('2.1.8');
                 $this->$methodName($content);
+
+            case $this->compare('2.2.0'):
+                $methodName = $this->getMethodName('2.2.0');
+                $this->$methodName($content);
         }
         return $content;
     }
@@ -379,6 +383,28 @@ class PropertyUpgrade
     {
         $updates = array('Hard-coding redirect url to get around IE problem.', 'Password change warning goes away faster.');
         $this->addContent($content, '2.1.8', $updates);
+    }
+
+    public function v2_2_0(&$content)
+    {
+        $updates = array(
+        'Updated to Canopy',
+        'Fixed: Removed Created date from roommate listing.',
+        'Fixed: Users can\'t delete roommates.',
+        'Fixed: Admin can\'t search roommates',
+        'Fixed: Show more rows button is not dependable',
+        'Fixed: Create a contact toggle on sublease',
+        'Fixed: Roommate form completion is confusing',
+        'Fixed: Sublease: show when it was posted.',
+        'Fixed: Roommate ordering.',
+        'Fixed: Wording changes.',
+        'Fixed: roommates needs a next page button.',
+        'Fixed: Description text box is too small.',
+        'Fixed: Manager activity report should show property count.',
+        'Fixed: Sorting bugged.',
+        'Fixed: Roommate listing needs pagination and sorting.',
+        );
+        $this->addContent($content, '2.2.0', $updates);
     }
 
     private function addContent(&$content, $version, array $changes)
