@@ -194,11 +194,11 @@ export default class SearchBar extends Component {
     if (this.props.showActiveButton) {
       if (this.props.searchVars.showinactive === true) {
         activeButton = <button
-          className="btn btn-info btn-sm ml-1"
+          className="btn btn-info btn-sm mr-1"
           onClick={this.props.updateSearchVars.bind(null, 'showinactive', false)}>Hide inactive</button>
       } else {
         activeButton = <button
-          className="btn btn-info btn-sm ml-1"
+          className="btn btn-info btn-sm mr-1"
           onClick={this.props.updateSearchVars.bind(null, 'showinactive', true)}>Show inactive</button>
       }
     }
@@ -237,7 +237,7 @@ export default class SearchBar extends Component {
                     onChange={this.props.updateSearchString}/>
                   <span className="input-group-btn">
                     <button
-                      className="btn btn-outline-secondary btn-sm"
+                      className="btn btn-outline-secondary btn-sm mr-1"
                       type="button"
                       onClick={this.clearSearch}>Clear</button>
                   </span>
@@ -248,7 +248,7 @@ export default class SearchBar extends Component {
               <div><Dropdown small={true} label={minpriceLabel} options={minprice}/></div>
               <div><Dropdown small={true} label={maxpriceLabel} options={maxprice}/></div>
               <div>
-                <button className="btn btn-success btn-sm" onClick={this.props.resetConditions}>Reset</button>
+                <button className="btn btn-success btn-sm mr-1" onClick={this.props.resetConditions}>Reset</button>
               </div>
               <div>{activeButton}</div>
               <div>
