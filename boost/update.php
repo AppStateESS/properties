@@ -413,7 +413,7 @@ class PropertyUpgrade
 
     public function v2_2_1(&$content)
     {
-        $updates = array('Prevent duplicate defines for SwiftMailer', 'Fixed report date selector', 'Fixed double fa-lg in views.', 'Removed default report selection', 'Fixed manager report header.');
+        $updates = array('Prevent duplicate defines for SwiftMailer', 'Fixed report date selector', 'Fixed double fa-lg in views.', 'Removed default report selection', 'Fixed manager report header.', 'Fixed student activity date entry.');
         $this->addContent($content, '2.2.1', $updates);
     }
 
