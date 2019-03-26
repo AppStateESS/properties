@@ -1,6 +1,5 @@
 'use strict'
 import React, {Component} from 'react'
-import moment from 'moment'
 import DatePicker from 'react-date-picker'
 import Waiting from '../Mixin/Html/Waiting.jsx'
 import bindMethods from '../Mixin/Helper/Bind.js'
@@ -13,7 +12,7 @@ export default class ActivityReport extends Component {
     super(props)
     this.selected = false
     this.state = {
-      activityDate: moment().subtract(1, 'year').format('YYYY-MM-DD'),
+      activityDate: new Date,
       listing: null,
       checkAll: false
     }
@@ -160,7 +159,10 @@ export default class ActivityReport extends Component {
   }
 
   load() {
-    $.getJSON('./properties/Reports/inactivity', {date: this.state.activityDate}).done(
+    const {activityDate} = this.state
+    const formatDate = `${activityDate.getFullYear()}-${activityDate.getMonth() + 1}-${activityDate.getDate()}`
+    console.log(formatDate)
+    $.getJSON('./properties/Reports/inactivity', {date: formatDate}).done(
       function (data) {
         this.setState({listing: data.list})
       }.bind(this)
