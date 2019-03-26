@@ -131,7 +131,7 @@ export default class Row extends Component {
   airconditioner(airconditioning) {
     if (airconditioning === '1') {
       return (
-        <span className="fa-3x amenity-icon" data-placement="top" data-tip="Dishwasher">
+        <span className="fa-3x amenity-icon" data-placement="top" data-tip="Air Conditioner">
           <i
             className="fas fa-snowflake"
             data-fa-transform="shrink-8"
