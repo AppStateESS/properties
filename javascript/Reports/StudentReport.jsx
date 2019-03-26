@@ -14,7 +14,7 @@ export default class StudentReport extends Component {
     this.offset = 0
     this.selected = false
     this.state = {
-      searchDate: moment().subtract(1, 'year').format('YYYY-MM-DD'),
+      searchDate: new Date,
       listing: null,
       checkAll: false,
       moreRows: false,
@@ -76,7 +76,10 @@ export default class StudentReport extends Component {
     if (this.offset > 0) {
       sendData.offset = this.offset
     }
-    sendData.date = this.state.searchDate
+    const {searchDate} = this.state
+    const formatDate = `${searchDate.getFullYear()}-${searchDate.getMonth() + 1}-${searchDate.getDate()}`
+    
+    sendData.date = formatDate
 
     $.getJSON('./properties/Reports/students', sendData).done(function (data) {
       if (this.offset > 0) {
