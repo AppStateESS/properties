@@ -155,6 +155,10 @@ class PropertyUpgrade
             case $this->compare('2.2.1'):
                 $methodName = $this->getMethodName('2.2.1');
                 $this->$methodName($content);
+                
+            case $this->compare('2.2.2'):
+                $methodName = $this->getMethodName('2.2.2');
+                $this->$methodName($content);
         }
         return $content;
     }
@@ -415,6 +419,12 @@ class PropertyUpgrade
     {
         $updates = array('Prevent duplicate defines for SwiftMailer', 'Fixed report date selector', 'Fixed double fa-lg in views.', 'Removed default report selection', 'Fixed manager report header.', 'Fixed student activity date entry.');
         $this->addContent($content, '2.2.1', $updates);
+    }
+    
+    public function v2_2_2(&$content)
+    {
+        $updates = array('Fixed no null variable bug.');
+        $this->addContent($content, '2.2.2', $updates);
     }
 
     private function addContent(&$content, $version, array $changes)

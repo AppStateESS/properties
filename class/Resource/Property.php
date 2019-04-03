@@ -64,11 +64,13 @@ class Property extends Place
         $this->heat_type = new Variable\ArrayVar(null, 'heat_type');
         $this->heat_type->allowNull(true);
         $this->other_fees = new Variable\StringVar('', 'other_fees');
+        $this->other_fees->allowNull(true);
         $this->parking_fee = new Variable\IntegerVar(0, 'parking_fee');
         $this->pet_deposit = new Variable\IntegerVar(0, 'pet_deposit');
         $this->pet_dep_refund = new Variable\BooleanVar(false, 'pet_dep_refund');
         $this->pet_fee = new Variable\IntegerVar(0, 'pet_fee');
         $this->pet_type = new Variable\StringVar('', 'pet_type');
+        $this->pet_type->allowNull(true);
         $this->pool = new Variable\BooleanVar(false, 'pool');
         $this->security_amt = new Variable\IntegerVar(0, 'security_amt');
         $this->security_refund = new Variable\BooleanVar(false,
