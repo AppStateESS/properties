@@ -12,15 +12,17 @@ export default class PropertyImage extends Component {
     this.state = {
       show: false,
       currentPhotos: [],
-      status: []
+      loading: false,
+      errors: false
     }
     const methods = [
       'overlayOn',
       'overlayOff',
-      'addPhotos',
+      'addPhoto',
       'deletePhoto',
       'onSortEnd',
       'rotate',
+      'pushPhoto',
       'load'
     ]
     bindMethods(methods, this)
@@ -34,6 +36,7 @@ export default class PropertyImage extends Component {
   }
 
   load() {
+    this.setState({loading: true, errors: false})
     $.ajax({
       url: './properties/Photo',
       data: {
@@ -42,19 +45,25 @@ export default class PropertyImage extends Component {
       dataType: 'json',
       type: 'get',
       success: (data) => {
-        this.setState({currentPhotos: data})
+        this.setState({currentPhotos: data, loading: false})
       },
       error: () => {}
     })
   }
 
-  addPhotos(photos) {
-    let status = this.state.status
-    $.each(photos, (key, value) => {
-      let formData = new FormData()
+  pushPhoto(photo) {
+    const {currentPhotos} = this.state
+    currentPhotos.push(photo)
+    this.setState({currentPhotos})
+  }
+
+  addPhoto(photos) {
+    const promises = []
+    photos.forEach((photo) => {
+      const formData = new FormData()
       formData.append('propertyId', propertyId)
-      formData.append('photo', value)
-      $.ajax({
+      formData.append('photo', photo.file)
+      const promise = $.ajax({
         url: './properties/Photo',
         type: 'POST',
         data: formData,
@@ -64,21 +73,17 @@ export default class PropertyImage extends Component {
         contentType: false,
         success: (data) => {
           if (data.success === true) {
-            this.load()
+            this.pushPhoto(data.photo)
           } else if (data.success === false) {
-            alert(data.error)
-            return
+            throw data.error
           }
-          status[key] = data.success
-          this.setState({status: status})
         },
-        error: () => {
-          alert(
-            'Sorry but your file is unacceptable. It may be of the wrong type or too large.' +
-            ' Please try again.'
-          )
-        }
       })
+
+      promises.push(promise)
+    })
+    Promise.all(promises).catch(() => {
+      this.setState({errors : true})
     })
   }
 
@@ -123,7 +128,7 @@ export default class PropertyImage extends Component {
       success: () => {
         this.load()
       },
-      error: () =>{}
+      error: () => {}
     })
   }
 
@@ -149,9 +154,10 @@ export default class PropertyImage extends Component {
         rotate={this.rotate}
         deletePhoto={this.deletePhoto}
         close={this.overlayOff}
-        update={this.addPhotos}
+        update={this.addPhoto}
+        errors={this.state.errors}
         currentPhotos={this.state.currentPhotos}
-        status={this.state.status}
+        loading={this.state.loading}
         onSortEnd={this.onSortEnd}/>
     )
   }

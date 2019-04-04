@@ -12,15 +12,17 @@ export default class SubleaseImage extends Component {
     this.state = {
       show: false,
       currentPhotos: [],
-      status: []
+      loading: false,
+      errors: false
     }
     const methods = [
       'overlayOn',
       'overlayOff',
-      'addPhotos',
+      'addPhoto',
       'delete',
       'onSortEnd',
       'rotate',
+      'pushPhoto',
       'load'
     ]
     bindMethods(methods, this)
@@ -32,27 +34,36 @@ export default class SubleaseImage extends Component {
       this.setState({currentPhotos: currentPhotos})
     }
   }
-  
+
   load() {
+    this.setState({loading: true, errors: false})
     $.ajax({
       url: './properties/SubleasePhoto',
-      data: {subleaseId},
+      data: {
+        subleaseId
+      },
       dataType: 'json',
       type: 'get',
-      success: (data)=>{
-        this.setState({currentPhotos: data})
+      success: (data) => {
+        this.setState({currentPhotos: data, loading: false})
       },
-      error: ()=>{}
+      error: () => {}
     })
   }
 
-  addPhotos(photos) {
-    let status = this.state.status
-    $.each(photos, (key, value) => {
+  pushPhoto(photo) {
+    const {currentPhotos} = this.state
+    currentPhotos.push(photo)
+    this.setState({currentPhotos})
+  }
+
+  addPhoto(photos) {
+    const promises = []
+    photos.forEach((photo) => {
       let formData = new FormData()
-      formData.append('photo', value)
+      formData.append('photo', photo.file)
       formData.append('subleaseId', subleaseId)
-      $.ajax({
+      const promise = $.ajax({
         url: './properties/SubleasePhoto',
         type: 'POST',
         data: formData,
@@ -62,23 +73,16 @@ export default class SubleaseImage extends Component {
         contentType: false,
         success: (data) => {
           if (data.success === true) {
-            this.load()
+            this.pushPhoto(data.photo)
           } else if (data.success === false) {
-            alert(data.error)
-            return
+            throw data.error
           }
-          status[key] = data.success
-          this.setState(
-            {status: status}
-          )
-        },
-        error: () => {
-          alert(
-            'Sorry but your file is unacceptable. It may be of the wrong type or too large.' +
-            ' Please try again.'
-          )
         }
       })
+      promises.push(promise)
+    })
+    Promise.all(promises).catch(() => {
+      this.setState({errors: true})
     })
   }
 
@@ -102,7 +106,7 @@ export default class SubleaseImage extends Component {
       success: () => {
         this.forceUpdate()
       },
-      error: ()=> {}
+      error: () => {}
     })
   }
 
@@ -116,7 +120,7 @@ export default class SubleaseImage extends Component {
           this.load()
         }
       },
-      error: ()=> {}
+      error: () => {}
     })
   }
 
@@ -149,10 +153,11 @@ export default class SubleaseImage extends Component {
           deletePhoto={this.delete}
           rotate={this.rotate}
           close={this.overlayOff}
-          update={this.addPhotos}
+          update={this.addPhoto}
+          errors={this.state.errors}
           currentPhotos={this.state.currentPhotos}
           onSortEnd={this.onSortEnd}
-          status={this.state.status}/>
+          loading={this.state.loading}/>
       </div>
     )
   }
