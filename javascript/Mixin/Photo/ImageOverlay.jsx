@@ -12,7 +12,7 @@ export default class ImageOverlay extends Component {
   }
 
   render() {
-    let photos = (
+    let uploadPrompt = (
       <div key="1">
         <i className="fa fa-camera fa-5x"></i><br/>
         <h4>Click to browse<br/>- or -<br/>drag image(s) here</h4>
@@ -20,7 +20,10 @@ export default class ImageOverlay extends Component {
     )
 
     let currentImages
-    if (this.props.currentPhotos.length > 0) {
+    if (this.props.loading) {
+      currentImages = <h2 className="text-center">
+        <i className="fas fa-spinner fa-spin"></i>&nbsp;Loading images...</h2>
+    } else if (this.props.currentPhotos.length > 0) {
       currentImages = (
         <SortableList
           items={this.props.currentPhotos}
@@ -33,6 +36,11 @@ export default class ImageOverlay extends Component {
       )
     }
 
+    let errorMessage
+    if (this.props.errors) {
+      errorMessage = <div className="alert alert-danger text-center">Some errors occurred during image upload.</div>
+    }
+
     return (
       <Overlay close={this.props.close} title="Update images" show={this.props.show}>
         <div>
@@ -41,12 +49,16 @@ export default class ImageOverlay extends Component {
               dropzone: 'dropzone'
             }}
             canRestart={false}
-            getUploadParams={this.props.update}
-            inputContent={photos}
-            inputWithFilesContent="Click here to upload more images"
+            minSizeBytes={1024}
+            maxSizeBytes={5242880}
+            submitButtonContent="Upload all selected images"
+            inputContent={uploadPrompt}
+            autoUpload={false}
+            onSubmit={this.props.update}
+            inputWithFilesContent="Click here to add more images"
             accept="image/*"/>
         </div>
-        <hr className="clearfix"/>
+        <hr className="clearfix"/> {errorMessage}
         <div>
           <h4>Current</h4>
           {currentImages}
@@ -62,7 +74,12 @@ ImageOverlay.propTypes = {
   deletePhoto: PropTypes.func,
   rotate: PropTypes.func,
   currentPhotos: PropTypes.array,
-  status: PropTypes.array,
+  errors: PropTypes.bool,
+  loading: PropTypes.bool,
   onSortEnd: PropTypes.func,
   show: PropTypes.bool
+}
+
+ImageOverlay.defaultProps = {
+  loading: false
 }
