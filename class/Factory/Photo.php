@@ -237,7 +237,8 @@ abstract class Photo extends Base
             $this->makeThumbnail($photo);
             $photo->porder = $this->getMaxOrder($photo->{$this->item_column}) + 1;
             self::saveResource($photo);
-            $result['photo'] = array('original' => $photo->path, 'thumbnail' => $photo->getThumbnail(), 'id' => $photo->getId(), 'porder' => $photo->porder);
+            $result['photo'] = $photo->getStringVars();
+            $result['photo']['thumbnail'] = $photo->getThumbnail();
             $result['success'] = true;
         } catch (properties\Exception\FileSaveFailure $e) {
             $result['success'] = false;
