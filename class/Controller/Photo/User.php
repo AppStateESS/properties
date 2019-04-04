@@ -21,7 +21,7 @@ namespace properties\Controller\Photo;
 class User extends \properties\Controller\SubController
 {
     /**
-     * @var \properties\Factory\Sublease\Photo 
+     * @var \properties\Factory\Property\Photo 
      */
     protected $factory;
     
