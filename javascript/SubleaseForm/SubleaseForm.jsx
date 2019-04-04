@@ -169,7 +169,7 @@ export default class SubleaseForm extends Base {
   }
 
   scrollUp() {
-    $('#PageTop').scrollIntoView()
+    window.scrollTo({top: 50, left: 0, behavior: 'smooth'})
   }
 
   setValue(varname, value) {
@@ -300,12 +300,18 @@ export default class SubleaseForm extends Base {
       }
 
       activateButton = (
-        <div key="1" onClick={this.activate} className={`lead pointer text-muted ${showActivate}`}>
+        <div
+          key="1"
+          onClick={this.activate}
+          className={`lead pointer text-muted ${showActivate}`}>
           <i className="fa fa-toggle-off"></i>&nbsp; Sublease inactive</div>
       )
 
       deactivateButton = (
-        <div key="2" onClick={this.deactivate} className={`lead pointer text-success ${showDeactivate}`}>
+        <div
+          key="2"
+          onClick={this.deactivate}
+          className={`lead pointer text-success ${showDeactivate}`}>
           <i className="fa fa-toggle-on"></i>&nbsp; Sublease active</div>
       )
     }
