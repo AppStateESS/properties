@@ -159,6 +159,10 @@ class PropertyUpgrade
             case $this->compare('2.2.2'):
                 $methodName = $this->getMethodName('2.2.2');
                 $this->$methodName($content);
+                
+            case $this->compare('2.2.3'):
+                $methodName = $this->getMethodName('2.2.3');
+                $this->$methodName($content);
         }
         return $content;
     }
@@ -425,6 +429,12 @@ class PropertyUpgrade
     {
         $updates = array('Fixed no null variable bug.');
         $this->addContent($content, '2.2.2', $updates);
+    }
+    
+    public function v2_2_3(&$content)
+    {
+        $updates = array('Fixed image upload.', 'Added error messages on broken uploads.', 'Added image size limit.');
+        $this->addContent($content, '2.2.3', $updates);
     }
 
     private function addContent(&$content, $version, array $changes)
