@@ -142,6 +142,17 @@ class Sublease extends Base
             }
             $tpl['otherInformationTemplate'] = PHPWS_SOURCE_DIR . 'mod/properties/templates/sublease/OtherInformation.html';
             $tpl['amenitiesTemplate'] = PHPWS_SOURCE_DIR . 'mod/properties/templates/sublease/Amenities.html';
+            if ($sublease->hideContact && !\Current_User::isLogged()) {
+                $tpl['hideContact'] = true;
+            } else {
+                $tpl['hideContact'] = false;
+            }
+            $auth = \Current_User::getAuthorization();
+            if (isset($auth->login_link)) {
+                $tpl['login'] = $auth->login_link;
+            } else {
+                $tpl['login'] = \Canopy\Server::getSiteUrl() . 'admin';
+            }
             $template = new \phpws2\Template($tpl);
             $template->setModuleTemplate('properties', 'sublease/view.html');
         }
@@ -200,7 +211,7 @@ class Sublease extends Base
     public function patch(\properties\Resource\Sublease $sublease, $param,
             $value)
     {
-        static $allowed_params = array('active');
+        static $allowed_params = array('active', 'hideContact');
 
         if (!in_array($param, $allowed_params)) {
             throw new \Exception('Parameter may not be patched');

@@ -16,6 +16,8 @@ import CheckValues from '../Mixin/Helper/CheckValues.js'
 import moment from 'moment'
 import Help from '../Mixin/Html/Help.jsx'
 import UtilityFunctions from '../Mixin/Edit/UtilityFunctions.js'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faToggleOn, faToggleOff} from '@fortawesome/free-solid-svg-icons'
 import './style.css'
 
 /* global $, subleaseCurrent */
@@ -41,7 +43,9 @@ export default class SubleaseForm extends Base {
       'setMoveIn',
       'setMoveOut',
       'updateParking',
-      'sendActive'
+      'sendActive',
+      'hideContact',
+      'showContact'
     ]
     bindMethods(methods, this)
   }
@@ -244,6 +248,36 @@ export default class SubleaseForm extends Base {
     ]
   }
 
+  hideContact() {
+    $.ajax({
+      url: './properties/Sublease/' + this.state.sublease.id,
+      data: {
+        varname: 'hideContact',
+        value: true
+      },
+      dataType: 'json',
+      type: 'patch',
+      success: function () {
+        this.setValue('hideContact', true)
+      }.bind(this)
+    })
+  }
+
+  showContact() {
+    $.ajax({
+      url: './properties/Sublease/' + this.state.sublease.id,
+      data: {
+        varname: 'hideContact',
+        value: false
+      },
+      dataType: 'json',
+      type: 'patch',
+      success: function () {
+        this.setValue('hideContact', false)
+      }.bind(this)
+    })
+  }
+
   updateRent(e) {
     const rent = e.target.value.replace(/[^\d]/g, '')
     this.setError('monthly_rent', empty(rent))
@@ -288,40 +322,35 @@ export default class SubleaseForm extends Base {
         onClose={this.unsetMessage}/>
     }
 
+    let hideContactButton
+    if (empty(sublease.hideContact)) {
+      hideContactButton = (
+        <div key="1" onClick={this.hideContact} className="lead pointer text-success"><FontAwesomeIcon icon={faToggleOn}/>&nbsp;Contact information shown to everyone</div>
+      )
+    } else {
+      hideContactButton = (
+        <div key="2" onClick={this.showContact} className="lead pointer text-danger"><FontAwesomeIcon icon={faToggleOff}/>&nbsp;Contact information shown only to other students.</div>
+      )
+    }
+
     let activateButton
-    let deactivateButton
-    let showActivate = 'd-inline'
-    let showDeactivate = 'd-inline'
     if (sublease.id > 0) {
       if (empty(sublease.active)) {
-        showDeactivate = 'd-none'
+        activateButton = (
+          <div key="3" onClick={this.activate} className="lead pointer text-danger"><FontAwesomeIcon icon={faToggleOff}/>&nbsp;Sublease inactive</div>
+        )
       } else {
-        showActivate = 'd-none'
+        activateButton = (
+          <div key="4" onClick={this.deactivate} className="lead pointer text-success"><FontAwesomeIcon icon={faToggleOn}/>&nbsp;Sublease active</div>
+        )
       }
-
-      activateButton = (
-        <div
-          key="1"
-          onClick={this.activate}
-          className={`lead pointer text-muted ${showActivate}`}>
-          <i className="fa fa-toggle-off"></i>&nbsp; Sublease inactive</div>
-      )
-
-      deactivateButton = (
-        <div
-          key="2"
-          onClick={this.deactivate}
-          className={`lead pointer text-success ${showDeactivate}`}>
-          <i className="fa fa-toggle-on"></i>&nbsp; Sublease active</div>
-      )
     }
 
     let contactAlert
     if (this.state.sublease.id === 0) {
       contactAlert = (
         <div className="alert alert-info">
-          <strong>Notice:</strong>&nbsp; a sublease listing requires contact information.<br/>
-          Use our&nbsp;<a href="./properties/Roommate">roommate section</a>&nbsp;ifyouwanttokeep your contact information available only to other students.</div>
+          <strong>Notice:</strong>&nbsp; a sublease listing requires contact information.</div>
       )
     }
 
@@ -355,8 +384,8 @@ export default class SubleaseForm extends Base {
         <h2>{suffixTitle}&nbsp;my sublease</h2>
         {message}
         {contactAlert}
-        <div className="text-align mb-1">
-          {activateButton}{deactivateButton}
+        <div className="mb-1">
+          {activateButton}
         </div>
         <div className="row">
           <div className="col-sm-6">
@@ -397,6 +426,7 @@ export default class SubleaseForm extends Base {
               onChange={this.setValue.bind(this, 'description')}/>
           </div>
         </div>
+        {hideContactButton}
         <div className="row">
           <div className="col-sm-6">
             <InputField

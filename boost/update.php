@@ -163,6 +163,10 @@ class PropertyUpgrade
             case $this->compare('2.2.3'):
                 $methodName = $this->getMethodName('2.2.3');
                 $this->$methodName($content);
+                
+            case $this->compare('2.3.0'):
+                $methodName = $this->getMethodName('2.3.0');
+                $this->$methodName($content);
         }
         return $content;
     }
@@ -435,6 +439,16 @@ class PropertyUpgrade
     {
         $updates = array('Fixed image upload.', 'Added error messages on broken uploads.', 'Added image size limit.');
         $this->addContent($content, '2.2.3', $updates);
+    }
+    
+    public function v2_3_0(&$content)
+    {
+        $db = Database::getDB();
+        $tbl = $db->addTable('prop_sublease');
+        $hideContact = new \phpws2\Database\Datatype\Boolean($tbl, 'hideContact');
+        $hideContact->add();
+        $updates = array('Sublease admins may hide contact information.');
+        $this->addContent($content, '2.3.0', $updates);
     }
 
     private function addContent(&$content, $version, array $changes)

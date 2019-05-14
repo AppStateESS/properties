@@ -33,8 +33,12 @@
       <div class="card card-success">
         <div class="card-header"><h4>Contact information</h4></div>
         <div class="card-body">
+          <?php if($hideContact):?>
+          <p><a href="<?=$login?>">Log in for contact information.</a></p>
+          <?php else: ?>
           <a href="<?=$contact_phone_tel?>" target="_blank"><i class="fa fa-phone"></i>&nbsp;<?=$contact_phone?></a><br />
           <a href="mailto:<?=$contact_email?>" target="_blank"><i class="far fa-envelope"></i>&nbsp;Email</a>
+          <?php endif; ?>
         </div>
       </div>
     </div>

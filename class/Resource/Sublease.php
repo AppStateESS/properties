@@ -29,6 +29,7 @@ class Sublease extends Place
     protected $landlord_perm;
     protected $move_out_date;
     protected $user_id;
+    protected $hideContact;
     protected $table = 'prop_sublease';
 
     public function __construct()
@@ -43,6 +44,7 @@ class Sublease extends Place
         $this->landlord_perm = new Variable\BooleanVar(false, 'landlord_perm');
         $this->move_out_date = new Variable\DateVar(time() + 86400*180, 'move_out_date');
         $this->user_id = new Variable\IntegerVar(0, 'user_id');
+        $this->hideContact = new Variable\BooleanVar(false, 'hideContact');
     }
 
     public function view()
