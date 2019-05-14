@@ -36,7 +36,7 @@ export default class PhotoGallery extends Component {
   render() {
     return (
       <div>
-        <Gallery images={this.state.photos} maxRows={2} enableImageSelection={false}/>
+        <Gallery images={this.state.photos} maxRows={2} backdropClosesModal={true}/>
       </div>
     )
   }
