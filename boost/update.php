@@ -167,6 +167,10 @@ class PropertyUpgrade
             case $this->compare('2.3.0'):
                 $methodName = $this->getMethodName('2.3.0');
                 $this->$methodName($content);
+                
+            case $this->compare('2.3.1'):
+                $methodName = $this->getMethodName('2.3.1');
+                $this->$methodName($content);
         }
         return $content;
     }
@@ -449,6 +453,13 @@ class PropertyUpgrade
         $hideContact->add();
         $updates = array('Sublease admins may hide contact information.');
         $this->addContent($content, '2.3.0', $updates);
+    }
+    
+    public function v2_3_1(&$content)
+    {
+        $updates = array('Updated NPM libraries.');
+        $updates = array('Fixed sticky all check button in student report.');
+        $this->addContent($content, '2.3.1', $updates);
     }
 
     private function addContent(&$content, $version, array $changes)
