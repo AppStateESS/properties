@@ -44,7 +44,11 @@ class Admin extends \properties\Controller\SubController
     
     protected function studentsJsonCommand(Request $request)
     {
-        $json['list'] = $this->factory->getStudents($request);
+        $studentList = $this->factory->getStudents($request);
+        foreach ($studentList as &$s) {
+            $s['checked'] = false;
+        }
+        $json['list'] = $studentList;
         $json['more_rows'] = $this->factory->more_rows;
         return $json;
     }
