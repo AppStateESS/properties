@@ -36,7 +36,7 @@ class Controller extends Base
         $major_controller = filter_var($request->shiftCommand(),
                 FILTER_SANITIZE_STRING);
 
-        if (empty($major_controller)) {
+        if (empty($major_controller) || preg_match('/\W/', $major_controller)) {
             \Canopy\Server::forward('properties/Property/list/');
         }
 
