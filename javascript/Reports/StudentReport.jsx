@@ -13,7 +13,7 @@ export default class StudentReport extends Component {
     this.offset = 0
     this.selected = false
     this.state = {
-      searchDate: new Date,
+      searchDate: new Date(),
       listing: null,
       checkAll: false,
       moreRows: false
@@ -52,7 +52,7 @@ export default class StudentReport extends Component {
   toggleAll() {
     const listing = this.state.listing
     const checkAll = !this.state.checkAll
-    listing.map(function (value) {
+    listing.map(function(value) {
       value.checked = checkAll
     })
     this.setState({listing: listing, checkAll: checkAll})
@@ -65,7 +65,7 @@ export default class StudentReport extends Component {
   }
 
   showActions() {
-    this.selected = this.state.listing.some(function (value) {
+    this.selected = this.state.listing.some(function(value) {
       return value.checked === true
     })
   }
@@ -76,20 +76,23 @@ export default class StudentReport extends Component {
       sendData.offset = this.offset
     }
     const {searchDate} = this.state
-    const formatDate = `${searchDate.getFullYear()}-${searchDate.getMonth() + 1}-${searchDate.getDate()}`
+    const formatDate = `${searchDate.getFullYear()}-${searchDate.getMonth() +
+      1}-${searchDate.getDate()}`
 
     sendData.date = formatDate
 
-    $.getJSON('./properties/Reports/students', sendData).done(function (data) {
-      if (this.offset > 0) {
-        this.setState({
-          listing: this.state.listing.concat(data.list),
-          moreRows: data.more_rows
-        })
-      } else {
-        this.setState({listing: data.list, moreRows: data.more_rows})
-      }
-    }.bind(this))
+    $.getJSON('./properties/Reports/students', sendData).done(
+      function(data) {
+        if (this.offset > 0) {
+          this.setState({
+            listing: this.state.listing.concat(data.list),
+            moreRows: data.more_rows
+          })
+        } else {
+          this.setState({listing: data.list, moreRows: data.more_rows})
+        }
+      }.bind(this)
+    )
   }
 
   delete(value) {
@@ -106,24 +109,28 @@ export default class StudentReport extends Component {
     }
     let holdEvent = []
 
-    this.state.listing.forEach(function (value) {
-      if (value.checked === true) {
-        holdEvent.push(this.delete(value))
-      }
-    }.bind(this))
+    this.state.listing.forEach(
+      function(value) {
+        if (value.checked === true) {
+          holdEvent.push(this.delete(value))
+        }
+      }.bind(this)
+    )
 
-    $.when.apply(null, holdEvent).done(function () {
-      this.selected = false
-      this.offset = 0
-      this.setState({checkAll: false})
-      this.load()
-    }.bind(this))
+    $.when.apply(null, holdEvent).done(
+      function() {
+        this.selected = false
+        this.offset = 0
+        this.setState({checkAll: false})
+        this.load()
+      }.bind(this)
+    )
   }
 
   getListing() {
     switch (this.state.listing) {
       case null:
-        return <Waiting label="students"/>
+        return <Waiting label="students" />
 
       case 0:
         return <p>Choose a date and refresh the listing.</p>
@@ -140,29 +147,39 @@ export default class StudentReport extends Component {
 
   getRows() {
     let listing
-    listing = this.state.listing.map(function (value, key) {
-      return <StudentRow value={value} key={key} toggle={this.toggle.bind(this, key)}/>
-    }.bind(this))
+    listing = this.state.listing.map(
+      function(value, key) {
+        return (
+          <StudentRow
+            value={value}
+            key={key}
+            toggle={this.toggle.bind(this, key)}
+          />
+        )
+      }.bind(this)
+    )
 
     return (
       <div className="scroll-table">
         <table className="table table-striped">
           <thead>
             <tr>
-              <th style={{
+              <th
+                style={{
                   width: '100px'
-                }}><input
-                type="checkbox"
-                defaultValue="1"
-                onChange={this.toggleAll}
-                defaultChecked={this.selected}/></th>
+                }}>
+                <input
+                  type="checkbox"
+                  value={this.state.checkAll}
+                  onChange={this.toggleAll}
+                  checked={this.state.checkAll}
+                />
+              </th>
               <th>User name</th>
               <th>Last logged</th>
             </tr>
           </thead>
-          <tbody>
-            {listing}
-          </tbody>
+          <tbody>{listing}</tbody>
         </table>
       </div>
     )
@@ -174,31 +191,36 @@ export default class StudentReport extends Component {
     if (this.selected) {
       actions = (
         <span>
-          <button className="ml-1 btn btn-danger" onClick={this.deleteStudent}>Delete</button>
+          <button className="ml-1 btn btn-danger" onClick={this.deleteStudent}>
+            Delete
+          </button>
         </span>
       )
     }
     const searchDate = new Date(this.state.searchDate)
-    const moreButton = this.state.moreRows === true
-      ? (
+    const moreButton =
+      this.state.moreRows === true ? (
         <div className="text-center">
-          <button className="btn btn-primary" onClick={this.showMore}>Show more results</button>
+          <button className="btn btn-primary" onClick={this.showMore}>
+            Show more results
+          </button>
         </div>
-      )
-      : null
+      ) : null
     return (
       <div>
         <h2>Student report</h2>
         <DatePicker
           dateFormat="YYYY-MM-DD"
           onChange={this.setSearchDate}
-          value={searchDate}/>
-        <button className="ml-1 btn btn-primary" onClick={this.load}>Refresh listing</button>
-        {actions}{deleteAll}
-        <hr/>
-        <div className="student-listing">
-          {this.getListing()}
-        </div>
+          value={searchDate}
+        />
+        <button className="ml-1 btn btn-primary" onClick={this.load}>
+          Refresh listing
+        </button>
+        {actions}
+        {deleteAll}
+        <hr />
+        <div className="student-listing">{this.getListing()}</div>
         {moreButton}
       </div>
     )

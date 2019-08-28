@@ -20,11 +20,14 @@ export default class StudentRow extends Component {
     const colStyle = {width: '100px'}
     return (
       <tr>
-        <td style={colStyle}><input
-          type="checkbox"
-          defaultValue="1"
-          onChange={this.props.toggle}
-          checked={value.checked}/></td>
+        <td style={colStyle}>
+          <input
+            type="checkbox"
+            value={value.id}
+            onChange={this.props.toggle}
+            checked={value.checked}
+          />
+        </td>
         <td>{value.username}</td>
         <td>{lastLog}</td>
       </tr>
