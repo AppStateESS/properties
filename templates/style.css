@@ -33,9 +33,13 @@
   margin-bottom: 1em;
 }
 
-.form-section a {
+.form-section .nav li a {
   font-size: 1.2em;
   color: #337AB7;
+}
+
+.form-section .nav li.active a {
+  color: white
 }
 
 .helperClass {
