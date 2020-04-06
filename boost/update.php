@@ -16,7 +16,7 @@ function properties_update(&$content, $currentVersion)
 }
 
 /**
- * 
+ *
  * public function v0_0_0() {
  *  //logic
  *  $changes = array();
@@ -155,21 +155,25 @@ class PropertyUpgrade
             case $this->compare('2.2.1'):
                 $methodName = $this->getMethodName('2.2.1');
                 $this->$methodName($content);
-                
+
             case $this->compare('2.2.2'):
                 $methodName = $this->getMethodName('2.2.2');
                 $this->$methodName($content);
-                
+
             case $this->compare('2.2.3'):
                 $methodName = $this->getMethodName('2.2.3');
                 $this->$methodName($content);
-                
+
             case $this->compare('2.3.0'):
                 $methodName = $this->getMethodName('2.3.0');
                 $this->$methodName($content);
-                
+
             case $this->compare('2.3.1'):
                 $methodName = $this->getMethodName('2.3.1');
+                $this->$methodName($content);
+
+            case $this->compare('2.3.2'):
+                $methodName = $this->getMethodName('2.3.2');
                 $this->$methodName($content);
         }
         return $content;
@@ -432,19 +436,19 @@ class PropertyUpgrade
         $updates = array('Prevent duplicate defines for SwiftMailer', 'Fixed report date selector', 'Fixed double fa-lg in views.', 'Removed default report selection', 'Fixed manager report header.', 'Fixed student activity date entry.');
         $this->addContent($content, '2.2.1', $updates);
     }
-    
+
     public function v2_2_2(&$content)
     {
         $updates = array('Fixed no null variable bug.');
         $this->addContent($content, '2.2.2', $updates);
     }
-    
+
     public function v2_2_3(&$content)
     {
         $updates = array('Fixed image upload.', 'Added error messages on broken uploads.', 'Added image size limit.');
         $this->addContent($content, '2.2.3', $updates);
     }
-    
+
     public function v2_3_0(&$content)
     {
         $db = Database::getDB();
@@ -454,12 +458,18 @@ class PropertyUpgrade
         $updates = array('Sublease admins may hide contact information.');
         $this->addContent($content, '2.3.0', $updates);
     }
-    
+
     public function v2_3_1(&$content)
     {
         $updates = array('Updated NPM libraries.');
         $updates = array('Fixed sticky all check button in student report.');
         $this->addContent($content, '2.3.1', $updates);
+    }
+
+    public function v2_3_2(&$content)
+    {
+        $updates = array('Updated NPM libraries.');
+        $this->addContent($content, '2.3.2', $updates);
     }
 
     private function addContent(&$content, $version, array $changes)
