@@ -175,6 +175,9 @@ class PropertyUpgrade
             case $this->compare('2.3.2'):
                 $methodName = $this->getMethodName('2.3.2');
                 $this->$methodName($content);
+            case $this->compare('2.3.3'):
+                $methodName = $this->getMethodName('2.3.3');
+                $this->$methodName($content);
         }
         return $content;
     }
@@ -470,6 +473,12 @@ class PropertyUpgrade
     {
         $updates = array('Updated NPM libraries.');
         $this->addContent($content, '2.3.2', $updates);
+    }
+
+    public function v2_3_3(&$content)
+    {
+        $updates = array('Updated NPM libraries.');
+        $this->addContent($content, '2.3.3', $updates);
     }
 
     private function addContent(&$content, $version, array $changes)
